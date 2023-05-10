@@ -1,0 +1,16 @@
+.sidebarContainer {
+  height: calc(100vh - 64px);
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 16px 0 18px;
+    font-size: 16px;
+    white-space: nowrap;
+    svg {
+      font-size: 16px;
+      min-width: 24px;
+      cursor: pointer;
+    }
+  }
+}
