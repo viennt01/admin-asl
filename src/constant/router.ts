@@ -1,0 +1,15 @@
+export const ROUTERS = {
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+  HOME: '/',
+  CONTAINER: '/container',
+  BOOKING: '/booking',
+  PRICE: '/price',
+  CUSTOMER: '/customer',
+  SUPPLIER: '/supplier',
+  DEPOT: '/depot',
+  LOCATION: '/location',
+  COST_TYPE: '/cost-type',
+  CALCULATION_UNIT: '/calculation-unit',
+  CURRENCY: '/currency',
+};
