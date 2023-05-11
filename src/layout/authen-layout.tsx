@@ -1,12 +1,9 @@
 import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Space, Avatar, Image } from 'antd';
+import { Space, Avatar } from 'antd';
 import { Layout } from 'antd';
-import { ROUTERS } from '@/constant/router';
-import { useRouter } from 'next/router';
 import { Typography } from 'antd';
 
-// import { AppContext } from '@/app-context';
 import AppSider from './components/app-sider';
 import Head from 'next/head';
 
@@ -19,43 +16,33 @@ interface Props {
 }
 
 export function AppLayout(props: Props) {
-  const router = useRouter();
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Head>
-        {/* <link rel="favicon" href={merchantInfo?.config?.favicon_url} /> */}
-        {/* <link rel="shortcut icon" href={merchantInfo?.config?.favicon_url} /> */}
+        <link rel="favicon" href="/images/gls-logo.ico" />
+        <link rel="shortcut icon" href="/images/gls-logo.ico" />
       </Head>
-      <Header
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          padding: '0 24px',
-          background: '#adadad',
-          height: HEADER_HEIGHT,
-        }}
-      >
-        <Space style={{ width: '100%', justifyContent: 'space-between' }}>
-          <Image
-            style={{ maxHeight: 40, cursor: 'pointer' }}
-            src="https://images.pexels.com/photos/1391498/pexels-photo-1391498.jpeg?auto=compress&cs=tinysrgb&w=800"
-            alt="logo"
-            preview={false}
-            onClick={() => router.push(ROUTERS.HOME)}
-          />
-          <Space
-            style={{ cursor: 'pointer' }}
-            // onClick={handleToggleUserInfoCollapse}
-          >
-            <Avatar style={{ display: 'block' }} icon={<UserOutlined />} />
-            Thanh Viên
-          </Space>
-        </Space>
-      </Header>
+      <AppSider />
       <Layout>
-        <AppSider />
+        <Header
+          style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+            padding: '0 24px',
+            background: '#fff',
+            height: HEADER_HEIGHT,
+            borderBottom: '1px solid',
+          }}
+        >
+          <Space style={{ width: '100%', justifyContent: 'space-between' }}>
+            <div></div>
+            <Space style={{ cursor: 'pointer' }}>
+              <Avatar style={{ display: 'block' }} icon={<UserOutlined />} />
+              Thanh Viên
+            </Space>
+          </Space>
+        </Header>
         <Content
           style={{
             padding: '0 24px',
@@ -65,7 +52,7 @@ export function AppLayout(props: Props) {
         >
           <main>{props.children}</main>
           <Footer style={{ textAlign: 'center' }}>
-            <Text disabled>{process.env.VERSION}</Text>
+            <Text disabled>GLS @2023 Created by GLS</Text>
           </Footer>
         </Content>
       </Layout>
