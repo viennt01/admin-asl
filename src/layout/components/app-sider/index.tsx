@@ -11,7 +11,7 @@ import {
   UserOutlined,
   BankOutlined,
 } from '@ant-design/icons';
-import { Button, MenuProps } from 'antd';
+import { Button, MenuProps, Image } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -110,9 +110,18 @@ const AppSider = () => {
         >
           <Col flex={1}>
             <Title className={style.title}>
-              {!collapsed && 'DASHBOARD ADMIN'}
+              {!collapsed && (
+                <Image
+                  preview={false}
+                  style={{ paddingRight: '8px', cursor: 'pointer' }}
+                  src="/images/gls-logo.jpg"
+                  onClick={() => router.push(ROUTERS.HOME)}
+                  alt="logo"
+                />
+              )}
               <MenuOutlined onClick={() => setCollapsed((prev) => !prev)} />
             </Title>
+            {!collapsed && <hr style={{ width: '60%' }} />}
             <Menu
               selectedKeys={[selectedKey]}
               onClick={handleClickMenuItem}

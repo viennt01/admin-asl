@@ -1,4 +1,4 @@
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Card } from 'antd';
 
 export default function DashboardPage() {
   return (
@@ -7,7 +7,18 @@ export default function DashboardPage() {
         <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
       </Breadcrumb>
 
-      <h1>Dashboard</h1>
+      <Card
+        bordered={false}
+        style={{
+          width: 'fit-content',
+          margin: '0 0 24px auto',
+        }}
+        bodyStyle={{
+          padding: 12,
+        }}
+      >
+        <h1>Dashboard</h1>
+      </Card>
     </>
   );
 }
