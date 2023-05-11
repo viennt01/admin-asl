@@ -1,0 +1,15 @@
+@import '@/styles/variable.scss';
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $gray;
+  
+}
+.content {
+  max-width: 500px;
+  width: 100%;
+  background-color: $white;
+}
