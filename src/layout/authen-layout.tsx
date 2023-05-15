@@ -1,13 +1,11 @@
-import React from 'react';
 import { UserOutlined } from '@ant-design/icons';
-import { Space, Avatar } from 'antd';
-import { Layout } from 'antd';
-import { Typography } from 'antd';
-
-import AppSider from './components/app-sider';
+import { Avatar, Layout, Space, Typography } from 'antd';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React from 'react';
+import AppSider from './components/app-sider';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 const { Header, Content, Footer } = Layout;
 const HEADER_HEIGHT = 64;
 
@@ -16,6 +14,8 @@ interface Props {
 }
 
 export function AppLayout(props: Props) {
+  const router = useRouter();
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Head>
@@ -36,7 +36,9 @@ export function AppLayout(props: Props) {
           }}
         >
           <Space style={{ width: '100%', justifyContent: 'space-between' }}>
-            <div></div>
+            <Title level={4} style={{ marginBottom: '0' }}>
+              {router.pathname.slice(1).toUpperCase()}
+            </Title>
             <Space style={{ cursor: 'pointer' }}>
               <Avatar style={{ display: 'block' }} icon={<UserOutlined />} />
               Thanh Viên
