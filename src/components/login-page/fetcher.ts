@@ -2,7 +2,7 @@ import { post, ResponseWithPayload } from '@/fetcher';
 import { API_AUTHENTICATE } from '@/fetcher/endpoint';
 
 export interface LoginData {
-  email: string;
+  username: string;
   password: string;
 }
 
