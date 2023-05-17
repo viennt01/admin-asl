@@ -9,8 +9,8 @@ export default function DashboardPage() {
   const [responsive, setResponsive] = useState(false);
   const today = new Date();
   return (
-    <div style={{ margin: '32px 0' }}>
-      <Breadcrumb style={{ margin: '16px 0' }}>
+    <div style={{ margin: '15px 0' }}>
+      <Breadcrumb style={{ marginBottom: '15px' }}>
         <Breadcrumb.Item>/Dashboard</Breadcrumb.Item>
       </Breadcrumb>
       <RcResizeObserver

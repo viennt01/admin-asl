@@ -1,15 +1,69 @@
 @import '@/styles/variable.scss';
 
 .container {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: $gray;
-  
+  background: linear-gradient(126.4deg, rgba(129, 240, 182, 0.801) 42.86%, #C2F0D9 62.61%, rgb(255, 255, 255) 90.66%, rgb(255, 255, 255) 100%);
 }
 .content {
-  max-width: 500px;
-  width: 100%;
+  max-width: 900px;
+  width: 80%;
+  height: 80%;
   background-color: $white;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.265) 0px 3px 6px;
+}
+
+.cover{
+  position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  height: 100%;
+}
+
+.cover .left{
+  padding-left: 5%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cover .right{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -15%;
+  background: rgba(0, 166, 80, 0.543);
+  width: 620px;
+  height: 1100px;
+  transform: skew(-20deg);
+}
+
+.img__cover__print{
+  margin-top: 12%;
+  margin-left: 8%;
+  display: flex;
+  align-items: center;
+  height: 500px;
+  transform: skew(20deg);
+}
+
+.circles {
+  position: absolute;
+  top: 2%;
+  left: 12%;
+  width: 1050px;
+}
+
+.circlesBottom {
+  position: absolute;
+  bottom: 0;
+  width: 900px;
 }
