@@ -42,20 +42,24 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem('Trang chủ', ROUTERS.HOME, <HomeOutlined />),
-  getItem('Báo giá', ROUTERS.PRICE, <AccountBookOutlined />),
+  getItem('Dashboard', ROUTERS.HOME, <HomeOutlined />),
+  getItem('Quotation', ROUTERS.PRICE, <AccountBookOutlined />),
   getItem('Booking', ROUTERS.BOOKING, <ContainerOutlined />),
-  getItem('Đối tượng', '1', <TeamOutlined />, [
-    getItem('Khách hàng', ROUTERS.CUSTOMER, <UserOutlined />),
-    getItem('Nhà cung cấp', ROUTERS.SUPPLIER, <BankOutlined />),
+  getItem('Participant ', '1', <TeamOutlined />, [
+    getItem('Customer', ROUTERS.CUSTOMER, <UserOutlined />),
+    getItem('Supplier', ROUTERS.SUPPLIER, <BankOutlined />),
   ]),
   getItem('Master data', '2', <AppstoreOutlined />, [
-    getItem('Cảng', ROUTERS.DEPOT, <AppstoreOutlined />),
-    getItem('Địa điểm', ROUTERS.LOCATION, <AppstoreOutlined />),
-    getItem('Loại chi phí', ROUTERS.COST_TYPE, <AppstoreOutlined />),
-    getItem('Loại container', ROUTERS.CONTAINER, <AppstoreOutlined />),
-    getItem('Đơn vị tính', ROUTERS.CALCULATION_UNIT, <AppstoreOutlined />),
-    getItem('Tiền tệ', ROUTERS.CURRENCY, <AppstoreOutlined />),
+    getItem('Port', ROUTERS.DEPOT, <AppstoreOutlined />),
+    getItem('Location', ROUTERS.LOCATION, <AppstoreOutlined />),
+    getItem('Types of expenses', ROUTERS.COST_TYPE, <AppstoreOutlined />),
+    getItem('Type of container', ROUTERS.CONTAINER, <AppstoreOutlined />),
+    getItem(
+      'Unit of measurement',
+      ROUTERS.CALCULATION_UNIT,
+      <AppstoreOutlined />
+    ),
+    getItem('Currency', ROUTERS.CURRENCY, <AppstoreOutlined />),
   ]),
 ];
 

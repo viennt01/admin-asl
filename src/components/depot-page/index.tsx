@@ -167,7 +167,7 @@ export default function DepotPage() {
   };
   return (
     <>
-      {/* <Card style={{ marginBottom: '16px', width: '100%' }}>
+      {/* <Card style={{ marginBottom: '15px', width: '100%' }}>
         <Breadcrumb>
           <Breadcrumb.Item>DEPOT</Breadcrumb.Item>
         </Breadcrumb>
