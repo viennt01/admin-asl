@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {
   LogoutOutlined,
   HomeOutlined,
-  MenuOutlined,
   AppstoreOutlined,
   AccountBookOutlined,
   ContainerOutlined,
@@ -24,6 +23,10 @@ const { Text, Title } = Typography;
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
+
+interface Props {
+  collapsed?: boolean;
+}
 
 function getItem(
   label: React.ReactNode,
@@ -59,10 +62,9 @@ const items: MenuItem[] = [
   ]),
 ];
 
-const AppSider = () => {
+const AppSider = ({ collapsed }: Props) => {
   const router = useRouter();
   const [modal, contextHolder] = Modal.useModal();
-  const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState(ROUTERS.HOME);
 
   const handleClickMenuItem = (path: MenuInfo) => {
@@ -99,7 +101,6 @@ const AppSider = () => {
         collapsed={collapsed}
         theme="light"
         breakpoint="xl"
-        onCollapse={(value) => setCollapsed(value)}
       >
         <Row
           style={{
@@ -119,7 +120,17 @@ const AppSider = () => {
                   alt="logo"
                 />
               )}
-              <MenuOutlined onClick={() => setCollapsed((prev) => !prev)} />
+              <Image
+                preview={false}
+                style={{
+                  paddingRight: '8px',
+                  cursor: 'pointer',
+                  height: '20px',
+                }}
+                src="/images/gls-logo.ico"
+                onClick={() => router.push(ROUTERS.HOME)}
+                alt="logo"
+              />
             </Title>
             {!collapsed && <hr style={{ width: '60%' }} />}
             <Menu

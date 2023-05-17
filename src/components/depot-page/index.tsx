@@ -1,12 +1,14 @@
 import {
   DeleteOutlined,
   EditOutlined,
-  PlusOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
 import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
+import CreateDepot from './create-depot';
+import { ROUTERS } from '@/constant/router';
+import { useRouter } from 'next/router';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -27,7 +29,9 @@ const STATUS_CAPACITY_LABELS = {
 };
 
 export default function DepotPage() {
+  const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
   interface DataType {
     key: number;
     age: number;
@@ -158,20 +162,26 @@ export default function DepotPage() {
       fixed: 'right',
       width: 50,
       align: 'center',
-      render: () => <EditOutlined />,
+      dataIndex: 'key',
+      render: (value) => (
+        <Button
+          onClick={() => handleEditCustomer(value)}
+          icon={<EditOutlined />}
+        ></Button>
+      ),
     },
   ];
+
+  const handleEditCustomer = (id: string) => {
+    router.push(ROUTERS.DEPOT_EDIT(id));
+  };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
+
   return (
     <>
-      {/* <Card style={{ marginBottom: '16px', width: '100%' }}>
-        <Breadcrumb>
-          <Breadcrumb.Item>DEPOT</Breadcrumb.Item>
-        </Breadcrumb>
-      </Card> */}
       <Card bordered={false} style={{ margin: '16px 0' }}>
         <Row>
           <Col flex={1}>
@@ -195,13 +205,7 @@ export default function DepotPage() {
             </Form>
           </Col>
           <Col>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              style={{ marginRight: '4px' }}
-            >
-              Thêm cảng
-            </Button>
+            <CreateDepot />
             <Button type="primary" danger icon={<DeleteOutlined />}>
               Xoá cảng
             </Button>
