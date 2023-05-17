@@ -8,6 +8,7 @@ export const ROUTERS = {
   CUSTOMER: '/customer',
   SUPPLIER: '/supplier',
   DEPOT: '/depot',
+  DEPOT_EDIT: (depotId: string) => `/depot/edit/${depotId}`,
   LOCATION: '/location',
   COST_TYPE: '/cost-type',
   CALCULATION_UNIT: '/calculation-unit',

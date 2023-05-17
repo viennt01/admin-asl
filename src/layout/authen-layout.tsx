@@ -1,8 +1,8 @@
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, MenuOutlined } from '@ant-design/icons';
 import { Avatar, Layout, Space, Typography } from 'antd';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import AppSider from './components/app-sider';
 
 const { Text, Title } = Typography;
@@ -15,6 +15,7 @@ interface Props {
 
 export function AppLayout(props: Props) {
   const router = useRouter();
+  const [collapsed, setCollapsed] = useState(true);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -22,7 +23,7 @@ export function AppLayout(props: Props) {
         <link rel="favicon" href="/images/gls-logo.ico" />
         <link rel="shortcut icon" href="/images/gls-logo.ico" />
       </Head>
-      <AppSider />
+      <AppSider collapsed={collapsed} />
       <Layout>
         <Header
           style={{
@@ -36,9 +37,12 @@ export function AppLayout(props: Props) {
           }}
         >
           <Space style={{ width: '100%', justifyContent: 'space-between' }}>
-            <Title level={4} style={{ marginBottom: '0' }}>
-              {router.pathname.slice(1).toUpperCase()}
-            </Title>
+            <Space>
+              <MenuOutlined onClick={() => setCollapsed((prev) => !prev)} />
+              <Title level={4} style={{ marginBottom: '0' }}>
+                {router.pathname.slice(1).toUpperCase()}
+              </Title>
+            </Space>
             <Space style={{ cursor: 'pointer' }}>
               <Avatar style={{ display: 'block' }} icon={<UserOutlined />} />
               Thanh Viên
