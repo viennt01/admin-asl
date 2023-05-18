@@ -5,11 +5,13 @@ import {
   HomeOutlined,
   MenuOutlined,
   AppstoreOutlined,
-  AccountBookOutlined,
+  SolutionOutlined,
   ContainerOutlined,
   TeamOutlined,
   UserOutlined,
   BankOutlined,
+  DollarOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
@@ -43,16 +45,16 @@ function getItem(
 
 const items: MenuItem[] = [
   getItem('Dashboard', ROUTERS.HOME, <HomeOutlined />),
-  getItem('Quotation', ROUTERS.PRICE, <AccountBookOutlined />),
-  getItem('Booking', ROUTERS.BOOKING, <ContainerOutlined />),
+  getItem('Quotation', ROUTERS.PRICE, <ContainerOutlined />),
+  getItem('Booking', ROUTERS.BOOKING, <SolutionOutlined />),
   getItem('Participant ', '1', <TeamOutlined />, [
     getItem('Customer', ROUTERS.CUSTOMER, <UserOutlined />),
     getItem('Supplier', ROUTERS.SUPPLIER, <BankOutlined />),
   ]),
   getItem('Master data', '2', <AppstoreOutlined />, [
     getItem('Port', ROUTERS.DEPOT, <AppstoreOutlined />),
-    getItem('Location', ROUTERS.LOCATION, <AppstoreOutlined />),
-    getItem('Types of expenses', ROUTERS.COST_TYPE, <AppstoreOutlined />),
+    getItem('Location', ROUTERS.LOCATION, <EnvironmentOutlined />),
+    getItem('Types of expenses', ROUTERS.COST_TYPE, <DollarOutlined />),
     getItem('Type of container', ROUTERS.CONTAINER, <AppstoreOutlined />),
     getItem(
       'Unit of measurement',
