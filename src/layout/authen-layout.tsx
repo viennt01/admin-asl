@@ -1,11 +1,11 @@
-import { UserOutlined, MenuOutlined } from '@ant-design/icons';
-import { Avatar, Layout, Space, Typography } from 'antd';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
 import AppSider from './components/app-sider';
+import { Avatar, Breadcrumb, Layout, Space, Typography, Badge } from 'antd';
+import { UserOutlined, MenuOutlined, BellOutlined } from '@ant-design/icons';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
 const HEADER_HEIGHT = 64;
 
@@ -16,6 +16,15 @@ interface Props {
 export function AppLayout(props: Props) {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
+  console.log(
+    'router',
+    router.asPath.split('/').filter(function (item) {
+      return item !== '';
+    })
+  );
+  const titleHeader = router.asPath.split('/').filter(function (item) {
+    return item !== '';
+  });
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -39,11 +48,31 @@ export function AppLayout(props: Props) {
           <Space style={{ width: '100%', justifyContent: 'space-between' }}>
             <Space>
               <MenuOutlined onClick={() => setCollapsed((prev) => !prev)} />
-              <Title level={4} style={{ marginBottom: '0' }}>
-                {router.pathname.slice(1).toUpperCase()}
-              </Title>
+              <Breadcrumb style={{ margin: '16px 0' }}>
+                {titleHeader.map((item, index) => (
+                  <Breadcrumb.Item key={index}>
+                    {item
+                      .split('-')
+                      .map(function (word) {
+                        return word.charAt(0).toUpperCase() + word.slice(1);
+                      })
+                      .join(' ')}
+                  </Breadcrumb.Item>
+                ))}
+              </Breadcrumb>
             </Space>
             <Space style={{ cursor: 'pointer' }}>
+              <Space
+                style={{
+                  cursor: 'pointer',
+                  margin: '0px 8px 0px 0px',
+                  height: '40px',
+                }}
+              >
+                <Badge size="default" count={5}>
+                  <BellOutlined style={{ fontSize: '26px' }} />
+                </Badge>
+              </Space>
               <Avatar style={{ display: 'block' }} icon={<UserOutlined />} />
               Thanh Viên
             </Space>

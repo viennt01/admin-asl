@@ -55,11 +55,19 @@ const items: MenuItem[] = [
   getItem('Master data', '2', <AppstoreOutlined />, [
     getItem('Port', ROUTERS.DEPOT, <AppstoreOutlined />),
     getItem('Location', ROUTERS.LOCATION, <AppstoreOutlined />),
-    getItem('Types of expenses', ROUTERS.COST_TYPE, <AppstoreOutlined />),
-    getItem('Type of container', ROUTERS.CONTAINER, <AppstoreOutlined />),
+    getItem(
+      'Types of expenses',
+      ROUTERS.TYPES_OF_EXPENSES,
+      <AppstoreOutlined />
+    ),
+    getItem(
+      'Type of container',
+      ROUTERS.TYPES_OF_CONTAINER,
+      <AppstoreOutlined />
+    ),
     getItem(
       'Unit of measurement',
-      ROUTERS.CALCULATION_UNIT,
+      ROUTERS.UNIT_OF_MEASUREMENT,
       <AppstoreOutlined />
     ),
     getItem('Currency', ROUTERS.CURRENCY, <AppstoreOutlined />),
