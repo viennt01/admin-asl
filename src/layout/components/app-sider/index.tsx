@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {
   LogoutOutlined,
   HomeOutlined,
-  MenuOutlined,
   AppstoreOutlined,
   SolutionOutlined,
   ContainerOutlined,
@@ -26,6 +25,10 @@ const { Text, Title } = Typography;
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>['items'][number];
+
+interface Props {
+  collapsed?: boolean;
+}
 
 function getItem(
   label: React.ReactNode,
@@ -54,21 +57,24 @@ const items: MenuItem[] = [
   getItem('Master data', '2', <AppstoreOutlined />, [
     getItem('Port', ROUTERS.DEPOT, <AppstoreOutlined />),
     getItem('Location', ROUTERS.LOCATION, <EnvironmentOutlined />),
-    getItem('Types of expenses', ROUTERS.COST_TYPE, <DollarOutlined />),
-    getItem('Type of container', ROUTERS.CONTAINER, <AppstoreOutlined />),
+    getItem('Types of expenses', ROUTERS.TYPES_OF_EXPENSES, <DollarOutlined />),
+    getItem(
+      'Type of container',
+      ROUTERS.TYPES_OF_CONTAINER,
+      <AppstoreOutlined />
+    ),
     getItem(
       'Unit of measurement',
-      ROUTERS.CALCULATION_UNIT,
+      ROUTERS.UNIT_OF_MEASUREMENT,
       <AppstoreOutlined />
     ),
     getItem('Currency', ROUTERS.CURRENCY, <AppstoreOutlined />),
   ]),
 ];
 
-const AppSider = () => {
+const AppSider = ({ collapsed }: Props) => {
   const router = useRouter();
   const [modal, contextHolder] = Modal.useModal();
-  const [collapsed, setCollapsed] = useState(false);
   const [selectedKey, setSelectedKey] = useState(ROUTERS.HOME);
 
   const handleClickMenuItem = (path: MenuInfo) => {
@@ -105,7 +111,6 @@ const AppSider = () => {
         collapsed={collapsed}
         theme="light"
         breakpoint="xl"
-        onCollapse={(value) => setCollapsed(value)}
       >
         <Row
           style={{
@@ -125,7 +130,17 @@ const AppSider = () => {
                   alt="logo"
                 />
               )}
-              <MenuOutlined onClick={() => setCollapsed((prev) => !prev)} />
+              <Image
+                preview={false}
+                style={{
+                  paddingRight: '8px',
+                  cursor: 'pointer',
+                  height: '20px',
+                }}
+                src="/images/gls-logo.ico"
+                onClick={() => router.push(ROUTERS.HOME)}
+                alt="logo"
+              />
             </Title>
             {!collapsed && <hr style={{ width: '60%' }} />}
             <Menu
