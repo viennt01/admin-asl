@@ -46,8 +46,8 @@ export default function CreateCalculationUnit() {
       submitTimeout={2000}
       onFinish={async (values) => {
         await waitTime(2000);
-        console.log(values);
         message.success('提交成功');
+        console.log(values);
         return true;
       }}
     >
