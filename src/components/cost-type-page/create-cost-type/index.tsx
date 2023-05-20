@@ -5,15 +5,15 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Form, message } from 'antd';
+import { Button, Form } from 'antd';
 
-const waitTime = (time = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
+// const waitTime = (time = 100) => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve(true);
+//     }, time);
+//   });
+// };
 export default function CreateCostType() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   return (
@@ -21,35 +21,33 @@ export default function CreateCostType() {
       name: string;
       company: string;
     }>
-      title="Thêm loại chi phí mới"
+      title="Add new type of expense"
       trigger={
         <Button
           type="primary"
           icon={<PlusOutlined />}
           style={{ marginRight: '4px' }}
         >
-          Thêm loại chi phí mới
+          Add new type of expense
         </Button>
       }
       submitter={{
         searchConfig: {
-          submitText: 'Thêm loại chi phí',
-          resetText: 'Huỷ',
+          submitText: 'Add type of expenses',
+          resetText: 'Cancel',
         },
       }}
       form={form}
       autoFocusFirstInput
       modalProps={{
         destroyOnClose: true,
-        onCancel: () => console.log('run'),
       }}
-      submitTimeout={2000}
-      onFinish={async (values) => {
-        await waitTime(2000);
-        console.log(values);
-        message.success('提交成功');
-        return true;
-      }}
+      // submitTimeout={2000}
+      // onFinish={async (values) => {
+      //   await waitTime(2000);
+      //   message.success('提交成功');
+      //   return true;
+      // }}
     >
       <ProForm.Group>
         <ProFormText

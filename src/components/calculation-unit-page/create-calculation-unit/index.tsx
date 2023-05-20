@@ -21,27 +21,26 @@ export default function CreateCalculationUnit() {
       name: string;
       company: string;
     }>
-      title="Thêm đơn vị tính mới"
+      title="Add new Unit of measurement"
       trigger={
         <Button
           type="primary"
           icon={<PlusOutlined />}
           style={{ marginRight: '4px' }}
         >
-          Thêm đơn vị tính mới
+          Add new Unit of measurement
         </Button>
       }
       submitter={{
         searchConfig: {
-          submitText: 'Thêm đơn vị tính',
-          resetText: 'Huỷ',
+          submitText: 'Add Unit of measurement',
+          resetText: 'Cancel',
         },
       }}
       form={form}
       autoFocusFirstInput
       modalProps={{
         destroyOnClose: true,
-        onCancel: () => console.log('run'),
       }}
       submitTimeout={2000}
       onFinish={async (values) => {

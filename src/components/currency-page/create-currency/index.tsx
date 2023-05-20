@@ -5,15 +5,15 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Form, message } from 'antd';
+import { Button, Form } from 'antd';
 
-const waitTime = (time = 100) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, time);
-  });
-};
+// const waitTime = (time = 100) => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve(true);
+//     }, time);
+//   });
+// };
 export default function CreateCurrency() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   return (
@@ -21,35 +21,33 @@ export default function CreateCurrency() {
       name: string;
       company: string;
     }>
-      title="Thêm tiền tệ mới"
+      title="Add new currency"
       trigger={
         <Button
           type="primary"
           icon={<PlusOutlined />}
           style={{ marginRight: '4px' }}
         >
-          Thêm tiền tệ mới
+          Add new currency
         </Button>
       }
       submitter={{
         searchConfig: {
-          submitText: 'Thêm tiền tệ',
-          resetText: 'Huỷ',
+          submitText: 'Add currency',
+          resetText: 'Cancel',
         },
       }}
       form={form}
       autoFocusFirstInput
       modalProps={{
         destroyOnClose: true,
-        onCancel: () => console.log('run'),
       }}
-      submitTimeout={2000}
-      onFinish={async (values) => {
-        await waitTime(2000);
-        console.log(values);
-        message.success('提交成功');
-        return true;
-      }}
+      // submitTimeout={2000}
+      // onFinish={async (values) => {
+      //   await waitTime(2000);
+      //   message.success('提交成功');
+      //   return true;
+      // }}
     >
       <ProForm.Group>
         <ProFormText

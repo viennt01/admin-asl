@@ -19,14 +19,14 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-const STATUS_CAPACITY_COLORS = {
-  Full: '#31AFFE',
-  NotFull: '#616887',
-};
-const STATUS_CAPACITY_LABELS = {
-  Full: 'Đầy',
-  NotFull: 'Nửa đầy',
-};
+// const STATUS_CAPACITY_COLORS = {
+//   Full: '#31AFFE',
+//   NotFull: '#616887',
+// };
+// const STATUS_CAPACITY_LABELS = {
+//   Full: 'Đầy',
+//   NotFull: 'Nửa đầy',
+// };
 
 export default function LocationPage() {
   const router = useRouter();
@@ -37,10 +37,13 @@ export default function LocationPage() {
     age: number;
     name: string;
     address: string;
+    addressType: string;
+    phoneNumner: string;
     totalContainer: number;
     capacity: number;
     capacityState: string;
     companyName: string;
+    email: string;
     status: string;
   }
 
@@ -51,17 +54,29 @@ export default function LocationPage() {
       age: 32,
       name: `Vũng Tàu ${i}`,
       address: 'Vũng Tàu',
+      addressType: 'Nhận hàng',
+      phoneNumner: '0964582355',
       totalContainer: 100,
       capacity: 3,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
       companyName: 'Công ty cổ phần Cảng Vũng Tàu',
+      email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Tên Cảng',
+      title: 'Mã số',
+      width: 100,
+      dataIndex: 'key',
+      key: 'key',
+      fixed: 'left',
+      align: 'center',
+      sorter: (a, b) => a.key - b.key,
+    },
+    {
+      title: 'Tên Địa điểm',
       width: 150,
       dataIndex: 'name',
       key: 'name',
@@ -82,46 +97,32 @@ export default function LocationPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Mã số',
-      width: 100,
-      dataIndex: 'key',
-      key: 'key',
-      fixed: 'left',
+      title: 'Địa chỉ',
+      width: 200,
+      dataIndex: 'address',
+      key: 'address',
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
-    },
-    { title: 'Địa chỉ', dataIndex: 'address', key: 'address', align: 'center' },
-    {
-      title: 'Số lượng container',
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
-      align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
-      title: 'Sức chứa (TEUS)',
-      dataIndex: 'capacity',
-      key: 'capacity',
+      title: 'Loại địa điểm',
+      width: 150,
+      dataIndex: 'addressType',
+      key: 'addressType',
       align: 'center',
-      sorter: (a, b) => a.capacity - b.capacity,
     },
     {
-      title: 'Trạng thái sức chứa',
-      dataIndex: 'capacityState',
-      key: 'capacityState',
+      title: 'Số điện thoại',
+      width: 150,
+      dataIndex: 'phoneNumner',
+      key: 'phoneNumner',
       align: 'center',
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_CAPACITY_COLORS[value as keyof typeof STATUS_CAPACITY_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_CAPACITY_LABELS[value as keyof typeof STATUS_CAPACITY_LABELS]}
-        </Tag>
-      ),
+    },
+    {
+      title: 'Email',
+      width: 200,
+      dataIndex: 'email',
+      key: 'email',
+      align: 'center',
     },
     {
       title: 'Công ty quản lý',
@@ -173,7 +174,7 @@ export default function LocationPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.DEPOT_EDIT(id));
+    router.push(ROUTERS.LOCATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -207,7 +208,7 @@ export default function LocationPage() {
           <Col>
             <CreateLocation />
             <Button type="primary" danger icon={<DeleteOutlined />}>
-              Xoá cảng
+              Delete
             </Button>
           </Col>
         </Row>
@@ -215,7 +216,7 @@ export default function LocationPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={'Danh sách cảng'}
+        title={'Danh sách địa điểm nhận/trả hàng'}
       >
         <Table
           rowSelection={{

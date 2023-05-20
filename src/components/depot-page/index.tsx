@@ -61,6 +61,15 @@ export default function DepotPage() {
 
   const columns: ColumnsType<DataType> = [
     {
+      title: 'Mã số',
+      width: 100,
+      dataIndex: 'key',
+      key: 'key',
+      fixed: 'left',
+      align: 'center',
+      sorter: (a, b) => a.key - b.key,
+    },
+    {
       title: 'Tên Cảng',
       width: 150,
       dataIndex: 'name',
@@ -80,15 +89,6 @@ export default function DepotPage() {
       filterMode: 'tree',
       filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: 'Mã số',
-      width: 100,
-      dataIndex: 'key',
-      key: 'key',
-      fixed: 'left',
-      align: 'center',
-      sorter: (a, b) => a.key - b.key,
     },
     { title: 'Địa chỉ', dataIndex: 'address', key: 'address', align: 'center' },
     {
@@ -207,7 +207,7 @@ export default function DepotPage() {
           <Col>
             <CreateDepot />
             <Button type="primary" danger icon={<DeleteOutlined />}>
-              Xoá cảng
+              Delete
             </Button>
           </Col>
         </Row>

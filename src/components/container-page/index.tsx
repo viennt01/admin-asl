@@ -19,14 +19,14 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-const STATUS_CAPACITY_COLORS = {
-  Full: '#31AFFE',
-  NotFull: '#616887',
-};
-const STATUS_CAPACITY_LABELS = {
-  Full: 'Đầy',
-  NotFull: 'Nửa đầy',
-};
+// const STATUS_CAPACITY_COLORS = {
+//   Full: '#31AFFE',
+//   NotFull: '#616887',
+// };
+// const STATUS_CAPACITY_LABELS = {
+//   Full: 'Đầy',
+//   NotFull: 'Nửa đầy',
+// };
 
 export default function ContainerPage() {
   const router = useRouter();
@@ -40,6 +40,10 @@ export default function ContainerPage() {
     totalContainer: number;
     capacity: number;
     capacityState: string;
+    size: number;
+    containerStatus: string;
+    rentCost: number;
+    price: number;
     companyName: string;
     status: string;
   }
@@ -49,38 +53,21 @@ export default function ContainerPage() {
     data.push({
       key: i,
       age: 32,
-      name: `Vũng Tàu ${i}`,
+      name: i % 2 === 0 ? 'Thường' : 'Hở mái',
       address: 'Vũng Tàu',
       totalContainer: 100,
       capacity: 3,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
+      size: i % 2 === 0 ? 40 : 20,
+      containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
+      rentCost: 100000,
+      price: 100000000,
       companyName: 'Công ty cổ phần Cảng Vũng Tàu',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
 
   const columns: ColumnsType<DataType> = [
-    {
-      title: 'Tên Cảng',
-      width: 150,
-      dataIndex: 'name',
-      key: 'name',
-      fixed: 'left',
-      align: 'center',
-      filters: [
-        {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
-        },
-        {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
     {
       title: 'Mã số',
       width: 100,
@@ -90,43 +77,62 @@ export default function ContainerPage() {
       align: 'center',
       sorter: (a, b) => a.key - b.key,
     },
-    { title: 'Địa chỉ', dataIndex: 'address', key: 'address', align: 'center' },
     {
-      title: 'Số lượng container',
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
+      title: 'Loại Container',
+      width: 150,
+      dataIndex: 'name',
+      key: 'name',
+      fixed: 'left',
       align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
+      filters: [
+        {
+          text: 'Thường',
+          value: 'Thường',
+        },
+        {
+          text: 'Hở mái',
+          value: 'Hở mái',
+        },
+        {
+          text: 'Lạnh',
+          value: 'Lạnh',
+        },
+      ],
+      filterMode: 'tree',
+      filterSearch: true,
+      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Sức chứa (TEUS)',
-      dataIndex: 'capacity',
-      key: 'capacity',
+      title: 'Kích thước (feet)',
+      dataIndex: 'size',
+      key: 'size',
       align: 'center',
-      sorter: (a, b) => a.capacity - b.capacity,
+      sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Trạng thái sức chứa',
-      dataIndex: 'capacityState',
-      key: 'capacityState',
+      title: 'Vị trí',
+      dataIndex: 'address',
+      key: 'address',
       align: 'center',
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_CAPACITY_COLORS[value as keyof typeof STATUS_CAPACITY_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_CAPACITY_LABELS[value as keyof typeof STATUS_CAPACITY_LABELS]}
-        </Tag>
-      ),
+      sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Công ty quản lý',
-      dataIndex: 'companyName',
-      key: 'companyName',
+      title: 'Tình trạng',
+      width: 300,
+      dataIndex: 'containerStatus',
+      key: 'containerStatus',
+      align: 'center',
+    },
+    {
+      title: 'Giá thuê (ngày/VND)',
+      dataIndex: 'rentCost',
+      key: 'rentCost',
+      align: 'center',
+    },
+    {
+      title: 'Giá bán (ngày/VND)',
+      dataIndex: 'price',
+      key: 'price',
       align: 'center',
     },
     {
@@ -173,7 +179,7 @@ export default function ContainerPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.DEPOT_EDIT(id));
+    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -207,7 +213,7 @@ export default function ContainerPage() {
           <Col>
             <CreateContainer />
             <Button type="primary" danger icon={<DeleteOutlined />}>
-              Xoá cảng
+              Delete
             </Button>
           </Col>
         </Row>

@@ -19,14 +19,14 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-const STATUS_CAPACITY_COLORS = {
-  Full: '#31AFFE',
-  NotFull: '#616887',
-};
-const STATUS_CAPACITY_LABELS = {
-  Full: 'Đầy',
-  NotFull: 'Nửa đầy',
-};
+// const STATUS_CAPACITY_COLORS = {
+//   Full: '#31AFFE',
+//   NotFull: '#616887',
+// };
+// const STATUS_CAPACITY_LABELS = {
+//   Full: 'Đầy',
+//   NotFull: 'Nửa đầy',
+// };
 
 export default function CurrencyPage() {
   const router = useRouter();
@@ -36,8 +36,12 @@ export default function CurrencyPage() {
     key: number;
     age: number;
     name: string;
+    nameCurrency: string;
+    bank: string;
     address: string;
     totalContainer: number;
+    price: number;
+    sell: number;
     capacity: number;
     capacityState: string;
     companyName: string;
@@ -49,9 +53,13 @@ export default function CurrencyPage() {
     data.push({
       key: i,
       age: 32,
-      name: `Vũng Tàu ${i}`,
+      name: 'USD',
+      nameCurrency: 'Đô la Mỹ',
+      bank: 'ACB',
       address: 'Vũng Tàu',
       totalContainer: 100,
+      price: 23375,
+      sell: 26098,
       capacity: 3,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
       companyName: 'Công ty cổ phần Cảng Vũng Tàu',
@@ -61,27 +69,6 @@ export default function CurrencyPage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Tên Cảng',
-      width: 150,
-      dataIndex: 'name',
-      key: 'name',
-      fixed: 'left',
-      align: 'center',
-      filters: [
-        {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
-        },
-        {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
       title: 'Mã số',
       width: 100,
       dataIndex: 'key',
@@ -90,44 +77,98 @@ export default function CurrencyPage() {
       align: 'center',
       sorter: (a, b) => a.key - b.key,
     },
-    { title: 'Địa chỉ', dataIndex: 'address', key: 'address', align: 'center' },
     {
-      title: 'Số lượng container',
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
+      title: 'Ngoại tệ',
+      width: 150,
+      dataIndex: 'name',
+      key: 'name',
+      fixed: 'left',
+      align: 'center',
+      filters: [
+        {
+          text: 'USD',
+          value: 'USD',
+        },
+        {
+          text: 'EUR',
+          value: 'EUR',
+        },
+      ],
+      filterMode: 'tree',
+      filterSearch: true,
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: 'Tên ngoại tệ',
+      width: 150,
+      dataIndex: 'nameCurrency',
+      key: 'nameCurrency',
+      align: 'center',
+      filters: [
+        {
+          text: 'Đô la Mỹ',
+          value: 'Đô la Mỹ',
+        },
+        {
+          text: 'Đồng Euro',
+          value: 'Đồng Euro',
+        },
+      ],
+      filterMode: 'tree',
+      filterSearch: true,
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: 'Ngân hàng',
+      width: 150,
+      dataIndex: 'bank',
+      key: 'bank',
+      align: 'center',
+      filters: [
+        {
+          text: 'ABBank',
+          value: 'ABBank',
+        },
+        {
+          text: 'ACB',
+          value: 'ACB',
+        },
+        {
+          text: 'BIDV',
+          value: 'BIDV',
+        },
+      ],
+      filterMode: 'tree',
+      filterSearch: true,
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: 'Mua tiền mặt',
+      dataIndex: 'price',
+      key: 'price',
       align: 'center',
       sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
-      title: 'Sức chứa (TEUS)',
-      dataIndex: 'capacity',
-      key: 'capacity',
+      title: 'Mua chuyển khoản',
+      dataIndex: 'price',
+      key: 'price',
       align: 'center',
-      sorter: (a, b) => a.capacity - b.capacity,
+      sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
-      title: 'Trạng thái sức chứa',
-      dataIndex: 'capacityState',
-      key: 'capacityState',
+      title: 'Bán tiền mặt',
+      dataIndex: 'sell',
+      key: 'sell',
       align: 'center',
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_CAPACITY_COLORS[value as keyof typeof STATUS_CAPACITY_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_CAPACITY_LABELS[value as keyof typeof STATUS_CAPACITY_LABELS]}
-        </Tag>
-      ),
+      sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
-      title: 'Công ty quản lý',
-      dataIndex: 'companyName',
-      key: 'companyName',
+      title: 'Bán chuyển khoản',
+      dataIndex: 'sell',
+      key: 'sell',
       align: 'center',
+      sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
       title: 'Trạng thái',
@@ -173,7 +214,7 @@ export default function CurrencyPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.DEPOT_EDIT(id));
+    router.push(ROUTERS.CURRENCY_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -207,7 +248,7 @@ export default function CurrencyPage() {
           <Col>
             <CreateCurrency />
             <Button type="primary" danger icon={<DeleteOutlined />}>
-              Xoá cảng
+              Delete
             </Button>
           </Col>
         </Row>
