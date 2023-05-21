@@ -1,27 +1,118 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import AppSider from './components/app-sider';
-import { Avatar, Breadcrumb, Layout, Space, Typography, Badge } from 'antd';
-import { UserOutlined, MenuOutlined, BellOutlined } from '@ant-design/icons';
+import {
+  Avatar,
+  Breadcrumb,
+  Layout,
+  Space,
+  Typography,
+  Badge,
+  Image,
+  Dropdown,
+} from 'antd';
+import {
+  UserOutlined,
+  MenuOutlined,
+  BellOutlined,
+  DownOutlined,
+} from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+import { appLocalStorage } from '@/utils/localstorage';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
 const HEADER_HEIGHT = 64;
-
+const WIDTH_FLAG = 36;
 interface Props {
   children: React.ReactNode;
 }
 
+enum Language {
+  'VI' = 'vi',
+  'EN' = 'en',
+}
+
+const items: MenuProps['items'] = [
+  {
+    label: (
+      <Space>
+        <Image
+          preview={false}
+          width={WIDTH_FLAG}
+          src={'/images/en.png'}
+          alt="en"
+        />
+        <span>English</span>
+      </Space>
+    ),
+    key: Language.EN,
+  },
+  {
+    type: 'divider',
+  },
+  {
+    label: (
+      <Space>
+        <Image
+          preview={false}
+          width={WIDTH_FLAG}
+          src={'/images/vi.png'}
+          alt="vi"
+        />
+        <span>Vietnamese</span>
+      </Space>
+    ),
+    key: Language.VI,
+  },
+];
+
+interface SelectLanguage {
+  languageSelected: Language;
+  setLanguage: (language: Language) => void;
+  router: NextRouter;
+}
+
+const SelectLanguage = ({
+  languageSelected,
+  setLanguage,
+  router,
+}: SelectLanguage) => {
+  const onClick: MenuProps['onClick'] = ({ key }) => {
+    setLanguage(key as Language);
+    const { pathname, asPath, query } = router;
+    router.replace({ pathname, query }, asPath, { locale: key });
+    appLocalStorage.set(LOCAL_STORAGE_KEYS.LANGUAGE, key);
+  };
+  return (
+    <div>
+      <Dropdown
+        // overlayClassName={style.languageMenu}
+        menu={{ items, onClick }}
+        arrow={{ pointAtCenter: true }}
+        placement="bottomLeft"
+        trigger={['click']}
+      >
+        <Space>
+          <Image
+            preview={false}
+            width={WIDTH_FLAG}
+            alt=""
+            src={`/images/${languageSelected}.png`}
+          />
+          <DownOutlined />
+        </Space>
+      </Dropdown>
+    </div>
+  );
+};
+
 export function AppLayout(props: Props) {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
-  console.log(
-    'router',
-    router.asPath.split('/').filter(function (item) {
-      return item !== '';
-    })
-  );
+  const [languageSelected, setLanguage] = useState(Language.EN);
   const titleHeader = router.asPath.split('/').filter(function (item) {
     return item !== '';
   });
@@ -38,7 +129,7 @@ export function AppLayout(props: Props) {
           style={{
             position: 'sticky',
             top: 0,
-            zIndex: 1,
+            zIndex: 999,
             padding: '0 24px',
             background: '#fff',
             height: HEADER_HEIGHT,
@@ -62,6 +153,11 @@ export function AppLayout(props: Props) {
               </Breadcrumb>
             </Space>
             <Space style={{ cursor: 'pointer' }}>
+              <SelectLanguage
+                languageSelected={languageSelected}
+                setLanguage={setLanguage}
+                router={router}
+              />
               <Space
                 style={{
                   cursor: 'pointer',

@@ -6,6 +6,7 @@ import { ConfigProvider } from 'antd';
 import { AppLayout } from '@/layout/authen-layout';
 import { Inter } from '@next/font/google';
 import Head from 'next/head';
+import { appWithTranslation } from 'next-i18next';
 // import AppContextProvider from '@/app-context';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,7 +21,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export default function App({ Component, pageProps }: AppPropsWithLayout) {
+function App({ Component, pageProps }: AppPropsWithLayout) {
   const L = Component.Layout ? Component.Layout : AppLayout;
   return (
     <ConfigProvider
@@ -46,3 +47,5 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     </ConfigProvider>
   );
 }
+
+export default appWithTranslation(App);

@@ -1,3 +1,4 @@
+
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -12,9 +13,10 @@
   ],
   "plugins": ["prettier"],
   "rules": {
-    "no-unused-vars": "error",
     "@next/next/no-img-element": 0,
-    "react/react-in-jsx-scope": 0
+    "react/react-in-jsx-scope": 0,
+    "no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": "error"
   },
   "env": {
     "browser": true,

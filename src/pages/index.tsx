@@ -19,3 +19,6 @@ function Home() {
 }
 
 export default withAuthentication(Home);
+
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'dashboard']);

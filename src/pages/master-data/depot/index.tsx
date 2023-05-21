@@ -14,3 +14,5 @@ function Depot() {
 }
 
 export default withAuthentication(Depot);
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'port']);

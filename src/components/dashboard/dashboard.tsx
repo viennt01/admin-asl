@@ -1,5 +1,4 @@
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
-import { Breadcrumb } from 'antd';
 import RcResizeObserver from 'rc-resize-observer';
 import { useState } from 'react';
 
@@ -10,9 +9,6 @@ export default function DashboardPage() {
   const today = new Date();
   return (
     <div style={{ margin: '15px 0' }}>
-      <Breadcrumb style={{ marginBottom: '15px' }}>
-        <Breadcrumb.Item>/Dashboard</Breadcrumb.Item>
-      </Breadcrumb>
       <RcResizeObserver
         key="resize-observer"
         onResize={(offset) => {

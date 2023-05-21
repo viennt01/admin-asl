@@ -9,6 +9,7 @@ import { Key, useState } from 'react';
 import CreateDepot from './create-depot';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
+import useI18n from '@/i18n/useI18N';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -31,6 +32,7 @@ const STATUS_CAPACITY_LABELS = {
 export default function DepotPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { translate: translatePort } = useI18n('port');
 
   interface DataType {
     key: number;
@@ -215,7 +217,7 @@ export default function DepotPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={'Danh sách cảng'}
+        title={translatePort('title')}
       >
         <Table
           rowSelection={{

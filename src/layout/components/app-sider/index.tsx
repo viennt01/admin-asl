@@ -20,6 +20,7 @@ import { MenuInfo } from 'rc-menu/lib/interface';
 import { Modal, Typography } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import useI18n from '@/i18n/useI18N';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -46,36 +47,84 @@ function getItem(
   } as MenuItem;
 }
 
-const items: MenuItem[] = [
-  getItem('Dashboard', ROUTERS.HOME, <HomeOutlined />),
-  getItem('Quotation', ROUTERS.PRICE, <ContainerOutlined />),
-  getItem('Booking', ROUTERS.BOOKING, <SolutionOutlined />),
-  getItem('Participant ', '1', <TeamOutlined />, [
-    getItem('Customer', ROUTERS.CUSTOMER, <UserOutlined />),
-    getItem('Supplier', ROUTERS.SUPPLIER, <BankOutlined />),
-  ]),
-  getItem('Master data', '2', <AppstoreOutlined />, [
-    getItem('Port', ROUTERS.DEPOT, <AppstoreOutlined />),
-    getItem('Location', ROUTERS.LOCATION, <EnvironmentOutlined />),
-    getItem('Types of expenses', ROUTERS.TYPES_OF_EXPENSES, <DollarOutlined />),
-    getItem(
-      'Type of container',
-      ROUTERS.TYPES_OF_CONTAINER,
-      <AppstoreOutlined />
-    ),
-    getItem(
-      'Unit of measurement',
-      ROUTERS.UNIT_OF_MEASUREMENT,
-      <AppstoreOutlined />
-    ),
-    getItem('Currency', ROUTERS.CURRENCY, <AppstoreOutlined />),
-  ]),
-];
-
 const AppSider = ({ collapsed }: Props) => {
   const router = useRouter();
   const [modal, contextHolder] = Modal.useModal();
   const [selectedKey, setSelectedKey] = useState(ROUTERS.HOME);
+  const { translate: translateCommon } = useI18n('common');
+
+  const items: MenuItem[] = [
+    getItem(`${translateCommon('dashboard')}`, ROUTERS.HOME, <HomeOutlined />),
+    getItem(
+      `${translateCommon('quotation')}`,
+      ROUTERS.PRICE,
+      <ContainerOutlined />
+    ),
+    getItem(
+      `${translateCommon('booking')}`,
+      ROUTERS.BOOKING,
+      <SolutionOutlined />
+    ),
+    getItem(`${translateCommon('participant')}`, '1', <TeamOutlined />, [
+      getItem(
+        `${translateCommon('customer')}`,
+        ROUTERS.CUSTOMER,
+        <UserOutlined />
+      ),
+      getItem(
+        `${translateCommon('supplier')}`,
+        ROUTERS.SUPPLIER,
+        <BankOutlined />
+      ),
+    ]),
+    getItem(`${translateCommon('masterData')}`, '2', <AppstoreOutlined />, [
+      getItem(
+        `${translateCommon('port')}`,
+        ROUTERS.DEPOT,
+        <AppstoreOutlined />
+      ),
+      getItem(
+        `${translateCommon('location')}`,
+        ROUTERS.LOCATION,
+        <EnvironmentOutlined />
+      ),
+      getItem(
+        `${translateCommon('typeOfExpenses')}`,
+        ROUTERS.TYPES_OF_EXPENSES,
+        <DollarOutlined />
+      ),
+      getItem(
+        `${translateCommon('typeOfContainer')}`,
+        ROUTERS.TYPES_OF_CONTAINER,
+        <AppstoreOutlined />
+      ),
+      getItem(
+        `${translateCommon('unitOfMeasurement')}`,
+        ROUTERS.UNIT_OF_MEASUREMENT,
+        <AppstoreOutlined />
+      ),
+      getItem(
+        `${translateCommon('currency')}`,
+        ROUTERS.CURRENCY,
+        <AppstoreOutlined />
+      ),
+    ]),
+  ];
+
+  // const ENROUTER = {
+  //   HOME: [],
+  //   BOOKING: ['Booking'],
+  //   PRICE: ['Price'],
+  //   CUSTOMER: ['Participant', 'Customer'],
+  //   SUPPLIER: ['Participant', 'Supplier'],
+  //   DEPOT: ['Master data', 'Depot'],
+  //   DEPOT_EDIT: ['Master data', 'Depot', 'Edit'],
+  //   LOCATION: ['Master data', 'Location'],
+  //   TYPES_OF_CONTAINER: ['Master data', 'Type of container'],
+  //   TYPES_OF_EXPENSES: ['Master data', 'Type of Expenses'],
+  //   UNIT_OF_MEASUREMENT: ['Master data', 'Unit of measurement'],
+  //   CURRENCY: ['Master data', 'Currency'],
+  // };
 
   const handleClickMenuItem = (path: MenuInfo) => {
     setSelectedKey(path.key);
