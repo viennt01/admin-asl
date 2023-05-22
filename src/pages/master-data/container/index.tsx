@@ -14,3 +14,5 @@ function Container() {
 }
 
 export default withAuthentication(Container);
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'typeOfContainer']);

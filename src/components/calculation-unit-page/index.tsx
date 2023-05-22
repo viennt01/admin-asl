@@ -9,6 +9,7 @@ import { Key, useState } from 'react';
 import CreateCalculationUnit from './create-calculation-unit';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
+import useI18n from '@/i18n/useI18N';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -31,6 +32,8 @@ const STATUS_LABELS = {
 export default function CalculationUnitPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { translate: translateUnitOfMeasurement } =
+    useI18n('unitOfMeasurement');
 
   interface DataType {
     key: number;
@@ -205,7 +208,7 @@ export default function CalculationUnitPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={'Danh sách cảng'}
+        title={translateUnitOfMeasurement('title')}
       >
         <Table
           rowSelection={{

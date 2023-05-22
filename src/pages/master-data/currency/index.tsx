@@ -14,3 +14,5 @@ function Currency() {
 }
 
 export default withAuthentication(Currency);
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'currency']);

@@ -9,6 +9,7 @@ import { Key, useState } from 'react';
 import CreateCurrency from './create-currency';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
+import useI18n from '@/i18n/useI18N';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -31,6 +32,7 @@ const STATUS_LABELS = {
 export default function CurrencyPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { translate: translateCurrency } = useI18n('currency');
 
   interface DataType {
     key: number;
@@ -256,7 +258,7 @@ export default function CurrencyPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={'Danh sách cảng'}
+        title={translateCurrency('title')}
       >
         <Table
           rowSelection={{

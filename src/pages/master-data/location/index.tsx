@@ -14,3 +14,5 @@ function Location() {
 }
 
 export default withAuthentication(Location);
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'location']);
