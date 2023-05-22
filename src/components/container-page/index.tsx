@@ -9,6 +9,7 @@ import { Key, useState } from 'react';
 import CreateContainer from './create-container';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
+import useI18n from '@/i18n/useI18N';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -31,6 +32,7 @@ const STATUS_LABELS = {
 export default function ContainerPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { translate: translateTypeOfContainer } = useI18n('typeOfContainer');
 
   interface DataType {
     key: number;
@@ -221,7 +223,7 @@ export default function ContainerPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={'Danh sách cảng'}
+        title={translateTypeOfContainer('title')}
       >
         <Table
           rowSelection={{

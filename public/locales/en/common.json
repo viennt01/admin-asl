@@ -8,8 +8,8 @@
     "masterData": "Master data",
     "port": "Port",
     "location": "Location",
-    "typeOfExpenses": "Type of expenses",
-    "typeOfContainer": "Type of container",
-    "unitOfMeasurement": "Unit of measurement",
+    "type_of_expenses": "Type of expenses",
+    "type_of_container": "Type of container",
+    "unit_of_measurement": "Unit of measurement",
     "currency": "Currency"
 }

@@ -94,6 +94,7 @@ const SelectLanguage = ({
         arrow={{ pointAtCenter: true }}
         placement="bottomLeft"
         trigger={['click']}
+        overlayStyle={{ top: '8%' }}
       >
         <Space>
           <Image

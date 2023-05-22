@@ -9,6 +9,7 @@ import { Key, useState } from 'react';
 import CreateLocation from './create-location';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
+import useI18n from '@/i18n/useI18N';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -31,6 +32,7 @@ const STATUS_LABELS = {
 export default function LocationPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { translate: translateLocation } = useI18n('location');
 
   interface DataType {
     key: number;
@@ -216,7 +218,7 @@ export default function LocationPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={'Danh sách địa điểm nhận/trả hàng'}
+        title={translateLocation('title')}
       >
         <Table
           rowSelection={{

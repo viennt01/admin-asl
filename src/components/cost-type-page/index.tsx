@@ -9,6 +9,7 @@ import { Key, useState } from 'react';
 import CreateCostType from './create-cost-type';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
+import useI18n from '@/i18n/useI18N';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -31,6 +32,7 @@ const STATUS_LABELS = {
 export default function CostTypePage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { translate: translateTypeOfExpenses } = useI18n('typeOfExpenses');
 
   interface DataType {
     key: number;
@@ -202,7 +204,7 @@ export default function CostTypePage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={'Danh sách cảng'}
+        title={translateTypeOfExpenses('title')}
       >
         <Table
           rowSelection={{
