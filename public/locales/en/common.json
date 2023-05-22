@@ -1,0 +1,15 @@
+{
+    "dashboard": "Dashboard",
+    "quotation": "Quotation",
+    "booking": "Booking",
+    "participant": "Participant",
+    "customer": "Customer",
+    "supplier": "Supplier",
+    "masterData": "Master data",
+    "port": "Port",
+    "location": "Location",
+    "typeOfExpenses": "Type of expenses",
+    "typeOfContainer": "Type of container",
+    "unitOfMeasurement": "Unit of measurement",
+    "currency": "Currency"
+}
