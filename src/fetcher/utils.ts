@@ -1,7 +1,8 @@
 class Headers {
   headers = {
     Authorization: '',
-    'content-type': 'application/json',
+    Accept: 'text/plain',
+    'Content-Type': 'application/json-patch+json',
   };
 
   setToken(token: string | null) {

@@ -14,53 +14,83 @@ import {
 } from 'antd';
 import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
-import { ERROR_CODE } from '@/constant/error-code';
 import { API_MESSAGE } from '@/constant/message';
 import { headers } from '@/fetcher/utils';
-
+import { useEffect, useState } from 'react';
 const initialValues: LoginData = {
   username: '',
   password: '',
+  ipAddress: 'string',
+  deviceName: 'string',
 };
 
-// const { Title } = Typography;
-
 export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
+  const [ip, setIp] = useState();
+  const deviceName = navigator.userAgent;
+  const getIp = async () => {
+    const response = await fetch('https://api.ipify.org/?format=json');
+    const data = await response.json();
+    setIp(data.ip);
+  };
   const onFinish = (values: LoginData) => {
-    headers.setToken('res.payload');
-    appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, 'res.payload');
-    router.push(ROUTERS.HOME);
-    return;
-    const data: LoginData = values;
+    setIsLoading(true);
+    if (!ip) {
+      setIsLoading(false);
+      return;
+    }
+    const data = {
+      username: values.username,
+      password: values.password,
+      ipAddress: ip,
+      deviceName: deviceName,
+    };
     login(data)
       .then((res) => {
-        if (res.error_code === ERROR_CODE.SUCCESS) {
-          headers.setToken(res.payload);
-          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.payload);
+        if (res.status) {
+          headers.setToken(res.data.accessToken);
+          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.accessToken);
           router.push(ROUTERS.HOME);
-        }
-      })
-      .catch((err) => {
-        const res = JSON.parse(err.message);
-        if (res.error_code === ERROR_CODE.INCORRECT) {
+          setIsLoading(false);
+          return;
+        } else {
           notiApi.error({
             message: '',
             description: res.message,
             placement: 'topRight',
             duration: 3,
           });
+          setIsLoading(false);
           return;
         }
-        notiApi.error({
-          message: '',
-          description: API_MESSAGE.ERROR,
-          placement: 'topRight',
-          duration: 3,
-        });
+      })
+      .catch((err) => {
+        const res = JSON.parse(err.message);
+        if (!res.error_code) {
+          notiApi.error({
+            message: '',
+            description: res.message,
+            placement: 'topRight',
+            duration: 3,
+          });
+          setIsLoading(false);
+          return;
+        } else {
+          notiApi.error({
+            message: '',
+            description: API_MESSAGE.ERROR,
+            placement: 'topRight',
+            duration: 3,
+          });
+          setIsLoading(false);
+        }
       });
   };
+  useEffect(() => {
+    getIp();
+  }, []);
 
   return (
     <div className={style.container}>
@@ -239,6 +269,7 @@ export default function LoginPage() {
                     }}
                   >
                     <Button
+                      loading={isLoading}
                       type="primary"
                       style={{
                         height: '40px',

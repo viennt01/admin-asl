@@ -1,14 +1,14 @@
-import { ERROR_CODE } from '@/constant/error-code';
+import { STATUS_CODE } from '@/constant/error-code';
 import { headers as configHeaders } from './utils';
 
 export interface ResponseWithPayload<R> {
-  error_code: ERROR_CODE;
+  status: STATUS_CODE;
   message: string;
-  payload: R;
+  data: R;
 }
 
 export interface ResponseWithoutPayload {
-  error_code: ERROR_CODE;
+  error_code: STATUS_CODE;
   message: string;
 }
 
@@ -90,6 +90,24 @@ export const post =
     const fetchPromise = requestWithTimeout(
       fetch(`${getGateway(gw)}${url}`, {
         headers: { ...configHeaders.headers, ...headers },
+        ...options,
+        method: 'POST',
+        body: JSON.stringify(data),
+      }),
+      timeout
+    );
+    return fetchResolver(fetchPromise);
+  };
+
+export const postLogin =
+  <T, R>({ data, options, gw, timeout }: CRUDProps<T>) =>
+  (url: string): Promise<R> => {
+    const fetchPromise = requestWithTimeout(
+      fetch(`${getGateway(gw)}${url}`, {
+        headers: {
+          Accept: 'text/plain',
+          'Content-Type': 'application/json-patch+json',
+        },
         ...options,
         method: 'POST',
         body: JSON.stringify(data),

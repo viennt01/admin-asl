@@ -3,7 +3,7 @@ import { Button, Result } from 'antd';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
 
-function Error() {
+const Error: React.FC = () => {
   const router = useRouter();
   const handleChangePage = () => {
     router.push(ROUTERS.HOME);
@@ -20,6 +20,6 @@ function Error() {
       }
     />
   );
-}
+};
 
 export default Error;
