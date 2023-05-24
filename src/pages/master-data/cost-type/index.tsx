@@ -14,3 +14,5 @@ function CostType() {
 }
 
 export default withAuthentication(CostType);
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'typeOfExpenses']);

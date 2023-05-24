@@ -11,6 +11,10 @@ import {
   BankOutlined,
   DollarOutlined,
   EnvironmentOutlined,
+  ProfileOutlined,
+  InboxOutlined,
+  CalculatorOutlined,
+  GoldOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
@@ -78,35 +82,31 @@ const AppSider = ({ collapsed }: Props) => {
       ),
     ]),
     getItem(`${translateCommon('masterData')}`, '2', <AppstoreOutlined />, [
-      getItem(
-        `${translateCommon('port')}`,
-        ROUTERS.DEPOT,
-        <AppstoreOutlined />
-      ),
+      getItem(`${translateCommon('port')}`, ROUTERS.DEPOT, <GoldOutlined />),
       getItem(
         `${translateCommon('location')}`,
         ROUTERS.LOCATION,
         <EnvironmentOutlined />
       ),
       getItem(
-        `${translateCommon('typeOfExpenses')}`,
+        `${translateCommon('type_of_expenses')}`,
         ROUTERS.TYPES_OF_EXPENSES,
-        <DollarOutlined />
+        <ProfileOutlined />
       ),
       getItem(
-        `${translateCommon('typeOfContainer')}`,
+        `${translateCommon('type_of_container')}`,
         ROUTERS.TYPES_OF_CONTAINER,
-        <AppstoreOutlined />
+        <InboxOutlined />
       ),
       getItem(
-        `${translateCommon('unitOfMeasurement')}`,
+        `${translateCommon('unit_of_measurement')}`,
         ROUTERS.UNIT_OF_MEASUREMENT,
-        <AppstoreOutlined />
+        <CalculatorOutlined />
       ),
       getItem(
         `${translateCommon('currency')}`,
         ROUTERS.CURRENCY,
-        <AppstoreOutlined />
+        <DollarOutlined />
       ),
     ]),
   ];

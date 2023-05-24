@@ -7,8 +7,8 @@ const version = process.env.VERSION || '0.1.0';
 
 const API_MAIN_GW = {
   dev: 'https://glsapi.azurewebsites.net/api',
-  staging: '',
-  production: '',
+  staging: 'https://glsapi.azurewebsites.net/api',
+  production: 'https://glsapi.azurewebsites.net/api',
 };
 
 const env = {

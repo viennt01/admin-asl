@@ -14,3 +14,5 @@ function CalculationUnit() {
 }
 
 export default withAuthentication(CalculationUnit);
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'unitOfMeasurement']);
