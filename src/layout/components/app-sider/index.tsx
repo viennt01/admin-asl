@@ -69,7 +69,7 @@ const AppSider = ({ collapsed }: Props) => {
       ROUTERS.BOOKING,
       <SolutionOutlined />
     ),
-    getItem(`${translateCommon('participant')}`, '1', <TeamOutlined />, [
+    getItem(`${translateCommon('parner')}`, '1', <TeamOutlined />, [
       getItem(
         `${translateCommon('customer')}`,
         ROUTERS.CUSTOMER,
@@ -82,7 +82,7 @@ const AppSider = ({ collapsed }: Props) => {
       ),
     ]),
     getItem(`${translateCommon('masterData')}`, '2', <AppstoreOutlined />, [
-      getItem(`${translateCommon('port')}`, ROUTERS.DEPOT, <GoldOutlined />),
+      getItem(`${translateCommon('port')}`, ROUTERS.PORT, <GoldOutlined />),
       getItem(
         `${translateCommon('location')}`,
         ROUTERS.LOCATION,
@@ -99,8 +99,8 @@ const AppSider = ({ collapsed }: Props) => {
         <InboxOutlined />
       ),
       getItem(
-        `${translateCommon('unit_of_measurement')}`,
-        ROUTERS.UNIT_OF_MEASUREMENT,
+        `${translateCommon('unit')}`,
+        ROUTERS.UNIT,
         <CalculatorOutlined />
       ),
       getItem(
@@ -115,14 +115,14 @@ const AppSider = ({ collapsed }: Props) => {
   //   HOME: [],
   //   BOOKING: ['Booking'],
   //   PRICE: ['Price'],
-  //   CUSTOMER: ['Participant', 'Customer'],
-  //   SUPPLIER: ['Participant', 'Supplier'],
+  //   CUSTOMER: ['Parner', 'Customer'],
+  //   SUPPLIER: ['Parner', 'Supplier'],
   //   DEPOT: ['Master data', 'Depot'],
   //   DEPOT_EDIT: ['Master data', 'Depot', 'Edit'],
   //   LOCATION: ['Master data', 'Location'],
   //   TYPES_OF_CONTAINER: ['Master data', 'Type of container'],
   //   TYPES_OF_EXPENSES: ['Master data', 'Type of Expenses'],
-  //   UNIT_OF_MEASUREMENT: ['Master data', 'Unit of measurement'],
+  //   UNIT: ['Master data', 'Unit'],
   //   CURRENCY: ['Master data', 'Currency'],
   // };
 

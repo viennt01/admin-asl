@@ -6,7 +6,7 @@ import {
 import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
-import CreateSupplier from './create-supplier';
+import CreateUnit from './create-unit';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -20,23 +20,30 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-export default function SupplierPage() {
+// const STATUS_CAPACITY_COLORS = {
+//   Full: '#31AFFE',
+//   NotFull: '#616887',
+// };
+// const STATUS_CAPACITY_LABELS = {
+//   Full: 'Đầy',
+//   NotFull: 'Nửa đầy',
+// };
+
+export default function CalculationUnitPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateSupplier } = useI18n('supplier');
+  const { translate: translateUnit } = useI18n('unit');
 
   interface DataType {
     key: number;
     age: number;
-    name: string;
     address: string;
-    addressType: string;
-    phoneNumner: string;
     totalContainer: number;
     capacity: number;
     capacityState: string;
     companyName: string;
-    email: string;
+    internationalCode: string;
+    description: string;
     status: string;
   }
 
@@ -45,15 +52,13 @@ export default function SupplierPage() {
     data.push({
       key: i,
       age: 32,
-      name: `Vũng Tàu ${i}`,
       address: 'Vũng Tàu',
-      addressType: 'Nhận hàng',
-      phoneNumner: '0964582355',
       totalContainer: 100,
       capacity: 3,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
       companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      email: 'abcd@gmail.com',
+      internationalCode: 'FOT',
+      description: 'Đơn vị đo trong hệ đo lường Anh',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
@@ -69,58 +74,15 @@ export default function SupplierPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tên Địa điểm',
-      width: 150,
-      dataIndex: 'name',
-      key: 'name',
-      fixed: 'left',
-      align: 'center',
-      filters: [
-        {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
-        },
-        {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: 'Địa chỉ',
-      width: 200,
-      dataIndex: 'address',
-      key: 'address',
+      title: 'Mã quốc tế',
+      dataIndex: 'internationalCode',
+      key: 'internationalCode',
       align: 'center',
     },
     {
-      title: 'Loại địa điểm',
-      width: 150,
-      dataIndex: 'addressType',
-      key: 'addressType',
-      align: 'center',
-    },
-    {
-      title: 'Số điện thoại',
-      width: 150,
-      dataIndex: 'phoneNumner',
-      key: 'phoneNumner',
-      align: 'center',
-    },
-    {
-      title: 'Email',
-      width: 200,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-    },
-    {
-      title: 'Công ty quản lý',
-      dataIndex: 'companyName',
-      key: 'companyName',
+      title: 'Mô tả',
+      dataIndex: 'description',
+      key: 'description',
       align: 'center',
     },
     {
@@ -130,7 +92,7 @@ export default function SupplierPage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Sử dụng',
           value: 'Active',
         },
         {
@@ -167,7 +129,7 @@ export default function SupplierPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.SUPPLIER_EDIT(id));
+    router.push(ROUTERS.UNIT_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -199,7 +161,7 @@ export default function SupplierPage() {
             </Form>
           </Col>
           <Col>
-            <CreateSupplier />
+            <CreateUnit />
             <Button type="primary" danger icon={<DeleteOutlined />}>
               Delete
             </Button>
@@ -209,7 +171,7 @@ export default function SupplierPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={translateSupplier('title')}
+        title={translateUnit('title')}
       >
         <Table
           rowSelection={{

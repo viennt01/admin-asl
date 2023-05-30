@@ -42,7 +42,6 @@ export default function ContainerPage() {
     totalContainer: number;
     capacity: number;
     capacityState: string;
-    size: number;
     containerStatus: string;
     rentCost: number;
     price: number;
@@ -55,12 +54,11 @@ export default function ContainerPage() {
     data.push({
       key: i,
       age: 32,
-      name: i % 2 === 0 ? 'Thường' : 'Hở mái',
+      name: i % 2 === 0 ? '40DC' : '40HC',
       address: 'Vũng Tàu',
       totalContainer: 100,
       capacity: 3,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      size: i % 2 === 0 ? 40 : 20,
       containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
       rentCost: 100000,
       price: 100000000,
@@ -88,28 +86,21 @@ export default function ContainerPage() {
       align: 'center',
       filters: [
         {
-          text: 'Thường',
-          value: 'Thường',
+          text: '40DC',
+          value: '40DC',
         },
         {
-          text: 'Hở mái',
-          value: 'Hở mái',
+          text: '40HC',
+          value: '40HC',
         },
         {
-          text: 'Lạnh',
-          value: 'Lạnh',
+          text: '40OT',
+          value: '40OT',
         },
       ],
       filterMode: 'tree',
       filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: 'Kích thước (feet)',
-      dataIndex: 'size',
-      key: 'size',
-      align: 'center',
-      sorter: (a, b) => a.key - b.key,
     },
     {
       title: 'Vị trí',
