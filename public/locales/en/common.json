@@ -2,7 +2,7 @@
     "dashboard": "Dashboard",
     "quotation": "Quotation",
     "booking": "Booking",
-    "participant": "Participant",
+    "parner": "Parner",
     "customer": "Customer",
     "supplier": "Supplier",
     "masterData": "Master data",
@@ -10,6 +10,6 @@
     "location": "Location",
     "type_of_expenses": "Type of expenses",
     "type_of_container": "Type of container",
-    "unit_of_measurement": "Unit of measurement",
+    "unit": "Unit",
     "currency": "Currency"
 }

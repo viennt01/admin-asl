@@ -2,15 +2,15 @@
     "dashboard": "Trang chủ",
     "quotation": "Báo giá",
     "booking": "Booking",
-    "participant": "Đối tượng",
-    "customer": "Kháck hàng",
+    "parner": "Đối tượng",
+    "customer": "Khách hàng",
     "supplier": "Nhà cung cấp",
     "masterData": "Master data",
     "port": "Cảng",
     "location": "Địa điểm",
     "type_of_expenses": "Loại chi phí",
     "type_of_container": "Loại container",
-    "unit_of_measurement": "Đơn vị tính",
+    "unit": "Đơn vị",
     "currency": "Tiền tệ"
 
 }
