@@ -78,58 +78,10 @@ export default function LocationTypePage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateTypeOfLocation('name'),
-      width: 150,
-      dataIndex: 'name',
-      key: 'name',
-      fixed: 'left',
-      align: 'center',
-      filters: [
-        {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
-        },
-        {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: translateTypeOfLocation('address'),
-      width: 200,
-      dataIndex: 'address',
-      key: 'address',
-      align: 'center',
-    },
-    {
       title: translateTypeOfLocation('type_of_address'),
       width: 150,
       dataIndex: 'addressType',
       key: 'addressType',
-      align: 'center',
-    },
-    {
-      title: translateTypeOfLocation('phone'),
-      width: 150,
-      dataIndex: 'phoneNumner',
-      key: 'phoneNumner',
-      align: 'center',
-    },
-    {
-      title: translateTypeOfLocation('email'),
-      width: 200,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-    },
-    {
-      title: translateTypeOfLocation('company'),
-      dataIndex: 'companyName',
-      key: 'companyName',
       align: 'center',
     },
     {

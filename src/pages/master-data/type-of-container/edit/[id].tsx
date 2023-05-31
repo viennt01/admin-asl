@@ -14,11 +14,14 @@ function CustomerEditPage() {
 }
 
 export default withAuthentication(CustomerEditPage);
-// import { getStatic } from '@/lib/getStaticProps';
-// export const getStaticProps = getStatic(['common', 'type-of-container']);
-// export async function getStaticPaths() {
-//   return {
-//     paths: [`/master-data/type-of-container/edit/[id]`, { params: { id: '0' } }],
-//     fallback: false,
-//   };
-// }
+import { getStatic } from '@/lib/getStaticProps';
+export const getStaticProps = getStatic(['common', 'type-of-container']);
+export async function getStaticPaths() {
+  return {
+    paths: [
+      `/master-data/type-of-container/edit/[id]`,
+      { params: { id: '0' } },
+    ],
+    fallback: false,
+  };
+}

@@ -213,7 +213,7 @@ const AppSider = ({ collapsed }: Props) => {
               icon={<LogoutOutlined />}
               onClick={handleClickLogout}
             >
-              {collapsed ? '' : 'Sign out'}
+              {collapsed ? '' : `${translateCommon('sign_out')}`}
             </Button>
           </Col>
         </Row>
