@@ -70,7 +70,7 @@ export default function LocationTypePage() {
   const columns: ColumnsType<DataType> = [
     {
       title: translateTypeOfLocation('code'),
-      width: 150,
+      width: 250,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -79,10 +79,20 @@ export default function LocationTypePage() {
     },
     {
       title: translateTypeOfLocation('type_of_address'),
-      width: 150,
+      width: 450,
       dataIndex: 'addressType',
       key: 'addressType',
       align: 'center',
+      filters: [
+        {
+          text: 'Nhận hàng',
+          value: 'Nhận hàng',
+        },
+        {
+          text: 'Trả Hàng',
+          value: 'Trả Hàng',
+        },
+      ],
     },
     {
       title: translateTypeOfLocation('status'),

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import EditUnit from '@/components/unit-page/unit-edit';
 
-function CustomerEditPage() {
+function UnitEditPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function CustomerEditPage() {
   );
 }
 
-export default withAuthentication(CustomerEditPage);
+export default withAuthentication(UnitEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'unit']);
 export async function getStaticPaths() {

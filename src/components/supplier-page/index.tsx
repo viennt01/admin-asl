@@ -29,14 +29,9 @@ export default function SupplierPage() {
     key: number;
     age: number;
     name: string;
-    address: string;
-    addressType: string;
-    phoneNumner: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
-    email: string;
+    service: string;
+    number: number;
+    money: string;
     status: string;
   }
 
@@ -45,23 +40,18 @@ export default function SupplierPage() {
     data.push({
       key: i,
       age: 32,
-      name: `Vũng Tàu ${i}`,
-      address: 'Vũng Tàu',
-      addressType: 'Nhận hàng',
-      phoneNumner: '0964582355',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      email: 'abcd@gmail.com',
+      name: `Đông Á`,
+      service: 'Đóng hàng',
+      number: 100,
+      money: `560.000.000`,
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số',
-      width: 100,
+      title: translateSupplier('code'),
+      width: 200,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -69,20 +59,20 @@ export default function SupplierPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tên Địa điểm',
-      width: 150,
+      title: translateSupplier('name'),
+      width: 250,
       dataIndex: 'name',
       key: 'name',
       fixed: 'left',
       align: 'center',
       filters: [
         {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
+          text: 'Vận chuyển',
+          value: 'Vận chuyển',
         },
         {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
+          text: 'Đóng hàng',
+          value: 'Đóng hàng',
         },
       ],
       filterMode: 'tree',
@@ -90,41 +80,28 @@ export default function SupplierPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Địa chỉ',
+      title: translateSupplier('service'),
+      width: 300,
+      dataIndex: 'service',
+      key: 'service',
+      align: 'center',
+    },
+    {
+      title: translateSupplier('number'),
       width: 200,
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'number',
+      key: 'number',
       align: 'center',
     },
     {
-      title: 'Loại địa điểm',
-      width: 150,
-      dataIndex: 'addressType',
-      key: 'addressType',
+      title: translateSupplier('money'),
+      width: 250,
+      dataIndex: 'money',
+      key: 'money',
       align: 'center',
     },
     {
-      title: 'Số điện thoại',
-      width: 150,
-      dataIndex: 'phoneNumner',
-      key: 'phoneNumner',
-      align: 'center',
-    },
-    {
-      title: 'Email',
-      width: 200,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-    },
-    {
-      title: 'Công ty quản lý',
-      dataIndex: 'companyName',
-      key: 'companyName',
-      align: 'center',
-    },
-    {
-      title: 'Trạng thái',
+      title: translateSupplier('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',

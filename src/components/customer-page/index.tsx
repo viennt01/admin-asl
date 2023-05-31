@@ -27,15 +27,11 @@ export default function CustomerPage() {
 
   interface DataType {
     key: number;
-    age: number;
+    number: number;
     name: string;
+    dob: string;
     address: string;
-    addressType: string;
     phoneNumner: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
     email: string;
     status: string;
   }
@@ -44,15 +40,11 @@ export default function CustomerPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i,
-      age: 32,
-      name: `Vũng Tàu ${i}`,
-      address: 'Vũng Tàu',
-      addressType: 'Nhận hàng',
+      number: 150,
+      name: `Nguyễn Văn A`,
+      dob: `25/5/1986`,
+      address: 'Hồ Chí Minh',
       phoneNumner: '0964582355',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
       email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
@@ -60,8 +52,8 @@ export default function CustomerPage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số',
-      width: 100,
+      title: translateCustomer('code'),
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -69,20 +61,16 @@ export default function CustomerPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tên Địa điểm',
-      width: 150,
+      title: translateCustomer('name'),
+      width: 250,
       dataIndex: 'name',
       key: 'name',
       fixed: 'left',
       align: 'center',
       filters: [
         {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
-        },
-        {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
+          text: 'Đông Á',
+          value: 'Đông Á',
         },
       ],
       filterMode: 'tree',
@@ -90,24 +78,31 @@ export default function CustomerPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Địa chỉ',
+      title: translateCustomer('number'),
       width: 200,
+      dataIndex: 'number',
+      key: 'number',
+      align: 'center',
+    },
+    {
+      title: translateCustomer('dob'),
+      width: 300,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
     },
     {
-      title: 'Loại địa điểm',
-      width: 150,
-      dataIndex: 'addressType',
-      key: 'addressType',
-      align: 'center',
-    },
-    {
-      title: 'Số điện thoại',
+      title: translateCustomer('phone'),
       width: 150,
       dataIndex: 'phoneNumner',
       key: 'phoneNumner',
+      align: 'center',
+    },
+    {
+      title: translateCustomer('address'),
+      width: 300,
+      dataIndex: 'address',
+      key: 'address',
       align: 'center',
     },
     {
@@ -115,12 +110,6 @@ export default function CustomerPage() {
       width: 200,
       dataIndex: 'email',
       key: 'email',
-      align: 'center',
-    },
-    {
-      title: 'Công ty quản lý',
-      dataIndex: 'companyName',
-      key: 'companyName',
       align: 'center',
     },
     {

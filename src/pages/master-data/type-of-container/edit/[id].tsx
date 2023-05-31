@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import EditTypeOfContainer from '@/components/type-of-container-page/type-of-container-edit';
 
-function CustomerEditPage() {
+function TypeOfContainerEditPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function CustomerEditPage() {
   );
 }
 
-export default withAuthentication(CustomerEditPage);
+export default withAuthentication(TypeOfContainerEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'type-of-container']);
 export async function getStaticPaths() {

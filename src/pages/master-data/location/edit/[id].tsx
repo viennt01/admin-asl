@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import EditLocation from '@/components/location-page/location-edit';
 
-function CustomerEditPage() {
+function LocationEditPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function CustomerEditPage() {
   );
 }
 
-export default withAuthentication(CustomerEditPage);
+export default withAuthentication(LocationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'location']);
 export async function getStaticPaths() {

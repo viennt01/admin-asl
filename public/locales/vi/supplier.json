@@ -1,3 +1,9 @@
 {
-    "title": "Danh sách nhà cung cấp"
+    "title": "Danh sách nhà cung cấp",
+    "code": "Mã nhà cung cấp",
+    "name": "Tên nhà cung cấp",
+    "service": "Dịch vụ cung cấp",
+    "number": "Số lượng giao dịch",
+    "money": "Số tiền giao dịch",
+    "status":"Trạng thái"
 }

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import EditBooking from '@/components/booking-page/booking-edit';
 
-function CustomerEditPage() {
+function BookingEditPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function CustomerEditPage() {
   );
 }
 
-export default withAuthentication(CustomerEditPage);
+export default withAuthentication(BookingEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'booking']);
 export async function getStaticPaths() {

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import EditCurrency from '@/components/currency-page/currency-edit';
 
-function CustomerEditPage() {
+function CurrencyEditPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function CustomerEditPage() {
   );
 }
 
-export default withAuthentication(CustomerEditPage);
+export default withAuthentication(CurrencyEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'currency']);
 export async function getStaticPaths() {
