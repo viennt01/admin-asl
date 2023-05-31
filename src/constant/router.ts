@@ -29,4 +29,9 @@ export const ROUTERS = {
   CURRENCY: '/master-data/currency',
   CURRENCY_EDIT: (currencyId: string) =>
     `/master-data/currency/edit/${currencyId}`,
+  STAFF: '/system/staff',
+  STAFF_EDIT: (staffId: string) => `/system/staff/edit/${staffId}`,
+  PERMISSION: '/system/permission',
+  PERMISSION_EDIT: (permissionId: string) =>
+    `/system/permission/edit/${permissionId}`,
 };

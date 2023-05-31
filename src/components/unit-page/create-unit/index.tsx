@@ -7,6 +7,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Form, message } from 'antd';
+import useI18n from '@/i18n/useI18N';
 
 const waitTime = (time = 100) => {
   return new Promise((resolve) => {
@@ -17,6 +18,8 @@ const waitTime = (time = 100) => {
 };
 export default function CreateUnit() {
   const [form] = Form.useForm<{ name: string; company: string }>();
+  const { translate: translateCommon } = useI18n('common');
+
   return (
     <ModalForm<{
       name: string;
@@ -32,9 +35,10 @@ export default function CreateUnit() {
             backgroundColor: COLORS.BRIGHT,
             color: COLORS.PRIMARY,
             borderColor: COLORS.PRIMARY,
+            fontWeight: '500',
           }}
         >
-          Add new Unit
+          {translateCommon('add')}
         </Button>
       }
       submitter={{

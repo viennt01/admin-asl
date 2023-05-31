@@ -25,6 +25,7 @@ export default function LocationPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateLocation } = useI18n('location');
+  const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
     key: number;
@@ -103,6 +104,16 @@ export default function LocationPage() {
       dataIndex: 'addressType',
       key: 'addressType',
       align: 'center',
+      filters: [
+        {
+          text: 'Nhận hàng',
+          value: 'Nhận hàng',
+        },
+        {
+          text: 'Trả Hàng',
+          value: 'Trả Hàng',
+        },
+      ],
     },
     {
       title: translateLocation('phone'),
@@ -177,14 +188,14 @@ export default function LocationPage() {
 
   return (
     <>
-      <Card bordered={false} style={{ margin: '16px 0' }}>
+      <Card bordered={false} style={{ margin: '10px 0' }}>
         <Row>
           <Col flex={1}>
             <Form name="search_form">
               <Space wrap>
                 <Form.Item style={{ margin: 0 }} name="keyword">
                   <Input
-                    placeholder="Keyword"
+                    placeholder="Please input to search...."
                     allowClear
                     style={{ minWidth: 140 }}
                   />
@@ -212,9 +223,10 @@ export default function LocationPage() {
                 backgroundColor: COLORS.RED,
                 color: COLORS.WHITE,
                 borderColor: COLORS.RED,
+                fontWeight: '500',
               }}
             >
-              Delete
+              {translateCommon('delete')}
             </Button>
           </Col>
         </Row>

@@ -13,5 +13,10 @@
     "type_of_container": "Loại container",
     "unit": "Đơn vị",
     "currency": "Tiền tệ",
-    "sign_out": "Đăng xuất"
+    "system": "Hệ thống",
+    "staff": "Nhân viên",
+    "permission": "Phân quyền",
+    "sign_out": "Đăng xuất",
+    "add": "Thêm",
+    "delete": "Xóa"
 }

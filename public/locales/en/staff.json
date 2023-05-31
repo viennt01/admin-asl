@@ -1,0 +1,16 @@
+{
+    "title": "List of Staff",
+    "image": "Image",
+    "code": "Staff Code",
+    "account":"Account",
+    "full_name": "Full Name",
+    "sex": "Sex",
+    "dob": "Date of birth",
+    "phone": "Phone number",
+    "address": "Address",
+    "email": "Email",
+    "CCCD_Visa":"CCCD/Visa",
+    "working_branch":"Working branch",
+    "position":"Position",
+    "status":"Status"
+}
