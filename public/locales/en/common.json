@@ -12,5 +12,6 @@
     "type_of_expenses": "Type of expenses",
     "type_of_container": "Type of container",
     "unit": "Unit",
-    "currency": "Currency"
+    "currency": "Currency",
+    "sign_out": "Sign out"
 }

@@ -12,6 +12,6 @@
     "type_of_expenses": "Loại chi phí",
     "type_of_container": "Loại container",
     "unit": "Đơn vị",
-    "currency": "Tiền tệ"
-
+    "currency": "Tiền tệ",
+    "sign_out": "Đăng xuất"
 }
