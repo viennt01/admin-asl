@@ -6,7 +6,7 @@ import {
 import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
-import CreateContainer from './create-container';
+import CreateLocationType from './create-type-of-location';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -29,23 +29,23 @@ const STATUS_LABELS = {
 //   NotFull: 'Nửa đầy',
 // };
 
-export default function ContainerPage() {
+export default function LocationTypePage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateTypeOfContainer } = useI18n('typeOfContainer');
+  const { translate: translateTypeOfLocation } = useI18n('typeOfLocation');
 
   interface DataType {
     key: number;
     age: number;
     name: string;
     address: string;
+    addressType: string;
+    phoneNumner: string;
     totalContainer: number;
     capacity: number;
     capacityState: string;
-    containerStatus: string;
-    rentCost: number;
-    price: number;
     companyName: string;
+    email: string;
     status: string;
   }
 
@@ -54,23 +54,23 @@ export default function ContainerPage() {
     data.push({
       key: i,
       age: 32,
-      name: i % 2 === 0 ? '40DC' : '40HC',
+      name: `Vũng Tàu ${i}`,
       address: 'Vũng Tàu',
+      addressType: 'Nhận hàng',
+      phoneNumner: '0964582355',
       totalContainer: 100,
       capacity: 3,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
-      rentCost: 100000,
-      price: 100000000,
       companyName: 'Công ty cổ phần Cảng Vũng Tàu',
+      email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số',
-      width: 100,
+      title: translateTypeOfLocation('code'),
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -78,7 +78,7 @@ export default function ContainerPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Loại Container',
+      title: translateTypeOfLocation('name'),
       width: 150,
       dataIndex: 'name',
       key: 'name',
@@ -86,16 +86,12 @@ export default function ContainerPage() {
       align: 'center',
       filters: [
         {
-          text: '40DC',
-          value: '40DC',
+          text: 'Vũng Tàu 1',
+          value: 'Vũng Tàu 1',
         },
         {
-          text: '40HC',
-          value: '40HC',
-        },
-        {
-          text: '40OT',
-          value: '40OT',
+          text: 'Vũng Tàu 2',
+          value: 'Vũng Tàu 2',
         },
       ],
       filterMode: 'tree',
@@ -103,33 +99,41 @@ export default function ContainerPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Vị trí',
+      title: translateTypeOfLocation('address'),
+      width: 200,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tình trạng',
-      width: 300,
-      dataIndex: 'containerStatus',
-      key: 'containerStatus',
+      title: translateTypeOfLocation('type_of_address'),
+      width: 150,
+      dataIndex: 'addressType',
+      key: 'addressType',
       align: 'center',
     },
     {
-      title: 'Giá thuê (ngày/VND)',
-      dataIndex: 'rentCost',
-      key: 'rentCost',
+      title: translateTypeOfLocation('phone'),
+      width: 150,
+      dataIndex: 'phoneNumner',
+      key: 'phoneNumner',
       align: 'center',
     },
     {
-      title: 'Giá bán (ngày/VND)',
-      dataIndex: 'price',
-      key: 'price',
+      title: translateTypeOfLocation('email'),
+      width: 200,
+      dataIndex: 'email',
+      key: 'email',
       align: 'center',
     },
     {
-      title: 'Trạng thái',
+      title: translateTypeOfLocation('company'),
+      dataIndex: 'companyName',
+      key: 'companyName',
+      align: 'center',
+    },
+    {
+      title: translateTypeOfLocation('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',
@@ -172,7 +176,7 @@ export default function ContainerPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
+    router.push(ROUTERS.TYPE_OF_LOCATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -204,7 +208,7 @@ export default function ContainerPage() {
             </Form>
           </Col>
           <Col>
-            <CreateContainer />
+            <CreateLocationType />
             <Button type="primary" danger icon={<DeleteOutlined />}>
               Delete
             </Button>
@@ -214,7 +218,7 @@ export default function ContainerPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={translateTypeOfContainer('title')}
+        title={translateTypeOfLocation('title')}
       >
         <Table
           rowSelection={{

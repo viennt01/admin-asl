@@ -14,7 +14,7 @@ import { Button, Form } from 'antd';
 //     }, time);
 //   });
 // };
-export default function CreateContainer() {
+export default function CreateTypeOfContainer() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   return (
     <ModalForm<{

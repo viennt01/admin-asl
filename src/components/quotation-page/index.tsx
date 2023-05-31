@@ -6,7 +6,7 @@ import {
 import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
-import CreatePort from './create-port';
+import CreateQuotation from './create-quotation';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -29,10 +29,10 @@ const STATUS_CAPACITY_LABELS = {
   NotFull: 'Nửa đầy',
 };
 
-export default function PortPage() {
+export default function QuotationPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePort } = useI18n('port');
+  const { translate: translateQuotation } = useI18n('quotation');
 
   interface DataType {
     key: number;
@@ -63,7 +63,7 @@ export default function PortPage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: translatePort('code'),
+      title: 'Mã cảng',
       width: 150,
       dataIndex: 'key',
       key: 'key',
@@ -72,7 +72,7 @@ export default function PortPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translatePort('name'),
+      title: 'Tên Cảng',
       width: 150,
       dataIndex: 'name',
       key: 'name',
@@ -92,28 +92,23 @@ export default function PortPage() {
       filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
+    { title: 'Địa chỉ', dataIndex: 'address', key: 'address', align: 'center' },
     {
-      title: translatePort('address'),
-      dataIndex: 'address',
-      key: 'address',
-      align: 'center',
-    },
-    {
-      title: translatePort('quantity'),
+      title: 'Số lượng container',
       dataIndex: 'totalContainer',
       key: 'totalContainer',
       align: 'center',
       sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
-      title: translatePort('capacity'),
+      title: 'Sức chứa (TEUS)',
       dataIndex: 'capacity',
       key: 'capacity',
       align: 'center',
       sorter: (a, b) => a.capacity - b.capacity,
     },
     {
-      title: translatePort('status_capacity'),
+      title: 'Trạng thái sức chứa',
       dataIndex: 'capacityState',
       key: 'capacityState',
       align: 'center',
@@ -131,13 +126,13 @@ export default function PortPage() {
       ),
     },
     {
-      title: translatePort('company'),
+      title: 'Công ty quản lý',
       dataIndex: 'companyName',
       key: 'companyName',
       align: 'center',
     },
     {
-      title: translatePort('status'),
+      title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
       align: 'center',
@@ -180,7 +175,7 @@ export default function PortPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.PORT_EDIT(id));
+    router.push(ROUTERS.QUOTATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -212,7 +207,7 @@ export default function PortPage() {
             </Form>
           </Col>
           <Col>
-            <CreatePort />
+            <CreateQuotation />
             <Button type="primary" danger icon={<DeleteOutlined />}>
               Delete
             </Button>
@@ -222,7 +217,7 @@ export default function PortPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={translatePort('title')}
+        title={translateQuotation('title')}
       >
         <Table
           rowSelection={{

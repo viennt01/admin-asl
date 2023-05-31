@@ -7,7 +7,7 @@ import {
   HomeOutlined,
 } from '@ant-design/icons';
 
-export default function EditContainer() {
+export default function EditTypeOfContainer() {
   return (
     <Card bordered={false} style={{ margin: '16px 0' }}>
       <Descriptions title="THÔNG TIN CHI TIẾT CỦA CẢNG" column={2}>

@@ -1,3 +1,11 @@
 {
-    "title": "List port"
+    "title": "List of port",
+    "code": "Port Code",
+    "name": "Port Name",
+    "address": "Address",
+    "quantity": "Number of Containers",
+    "capacity": "Port capacity",
+    "status_capacity": "Status of capacity",
+    "company":"Management Company",
+    "status":"Status"
 }

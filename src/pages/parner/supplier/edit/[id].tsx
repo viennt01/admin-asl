@@ -14,3 +14,11 @@ function CustomerEditPage() {
 }
 
 export default withAuthentication(CustomerEditPage);
+// import { getStatic } from '@/lib/getStaticProps';
+// export const getStaticProps = getStatic(['common', 'supplier']);
+// export async function getStaticPaths() {
+//   return {
+//     paths: [`/parner/supplier/edit/[id]`, { params: { id: '0' } }],
+//     fallback: false,
+//   };
+// }

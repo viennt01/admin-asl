@@ -60,8 +60,8 @@ export default function LocationPage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số',
-      width: 100,
+      title: translateLocation('code'),
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -69,7 +69,7 @@ export default function LocationPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tên Địa điểm',
+      title: translateLocation('name'),
       width: 150,
       dataIndex: 'name',
       key: 'name',
@@ -90,41 +90,41 @@ export default function LocationPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Địa chỉ',
+      title: translateLocation('address'),
       width: 200,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
     },
     {
-      title: 'Loại địa điểm',
+      title: translateLocation('type_of_address'),
       width: 150,
       dataIndex: 'addressType',
       key: 'addressType',
       align: 'center',
     },
     {
-      title: 'Số điện thoại',
+      title: translateLocation('phone'),
       width: 150,
       dataIndex: 'phoneNumner',
       key: 'phoneNumner',
       align: 'center',
     },
     {
-      title: 'Email',
+      title: translateLocation('email'),
       width: 200,
       dataIndex: 'email',
       key: 'email',
       align: 'center',
     },
     {
-      title: 'Công ty quản lý',
+      title: translateLocation('company'),
       dataIndex: 'companyName',
       key: 'companyName',
       align: 'center',
     },
     {
-      title: 'Trạng thái',
+      title: translateLocation('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',

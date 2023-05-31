@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import BookingPage from '@/components/booking-page';
 
-function Container() {
+function Booking() {
   return (
     <>
       <Head>
@@ -13,6 +13,6 @@ function Container() {
   );
 }
 
-export default withAuthentication(Container);
+export default withAuthentication(Booking);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'booking']);

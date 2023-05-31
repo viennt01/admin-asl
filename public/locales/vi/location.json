@@ -1,3 +1,11 @@
 {
-    "title": "Danh sách địa điểm nhận/trả hàng"
+    "title": "Danh sách địa điểm nhận/trả hàng",
+    "code": "Mã địa chỉ",
+    "name": "Tên địa chỉ",
+    "address": "Địa chỉ",
+    "type_of_address": "Loại địa chỉ",
+    "phone": "Số điện thoại",
+    "email": "Email",
+    "company":"Công ty quản lý",
+    "status":"Trạng thái"
 }

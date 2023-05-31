@@ -8,6 +8,7 @@
     "masterData": "Master data",
     "port": "Port",
     "location": "Location",
+    "type_of_location": "Type of Location",
     "type_of_expenses": "Type of expenses",
     "type_of_container": "Type of container",
     "unit": "Unit",

@@ -14,3 +14,11 @@ function CustomerEditPage() {
 }
 
 export default withAuthentication(CustomerEditPage);
+// import { getStatic } from '@/lib/getStaticProps';
+// export const getStaticProps = getStatic(['common', 'location']);
+// export async function getStaticPaths() {
+//   return {
+//     paths: [`/master-data/location/edit/[id]`, { params: { id: '0' } }],
+//     fallback: false,
+//   };
+// }
