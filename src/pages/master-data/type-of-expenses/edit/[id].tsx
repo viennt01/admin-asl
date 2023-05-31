@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import EditExpensesType from '@/components/type-of-expenses-page/type-of-expenses-edit';
 
-function CustomerEditPage() {
+function TypeOfExpensesEditPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function CustomerEditPage() {
   );
 }
 
-export default withAuthentication(CustomerEditPage);
+export default withAuthentication(TypeOfExpensesEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'type-of-expenses']);
 export async function getStaticPaths() {

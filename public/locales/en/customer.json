@@ -1,3 +1,11 @@
 {
-    "title": "List of customer"
+    "title": "List of customer",
+    "code": "Customer Code",
+    "name": "Customer Name",
+    "number": "Number of transactions",
+    "dob": "Date of birth",
+    "phone": "Phone number",
+    "address": "Address",
+    "email": "Email",
+    "status":"Status"
 }

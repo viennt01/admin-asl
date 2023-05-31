@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import EditLocationType from '@/components/type-of-location-page/type-of-location-edit';
 
-function CustomerEditPage() {
+function TypeOfLocationEditPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function CustomerEditPage() {
   );
 }
 
-export default withAuthentication(CustomerEditPage);
+export default withAuthentication(TypeOfLocationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'type-of-location']);
 export async function getStaticPaths() {

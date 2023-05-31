@@ -1,3 +1,11 @@
 {
-    "title": "Danh sách khách hàng"
+    "title": "Danh sách khách hàng",
+    "code": "Mã khách hàng",
+    "name": "Tên khách hàng",
+    "number": "Số lượng giao dịch",
+    "dob": "Ngày sinh",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ",
+    "email": "Email",
+    "status":"Trạng thái"
 }

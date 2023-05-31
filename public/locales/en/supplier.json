@@ -1,3 +1,9 @@
 {
-    "title": "List of supplier"
+    "title": "List of supplier",
+    "code": "Supplier Code",
+    "name": "Supplier Name",
+    "service": "Service provided",
+    "number": "Number of transactions",
+    "money": "Transaction amount",
+    "status":"Status"
 }
