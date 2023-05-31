@@ -61,7 +61,7 @@ const AppSider = ({ collapsed }: Props) => {
     getItem(`${translateCommon('dashboard')}`, ROUTERS.HOME, <HomeOutlined />),
     getItem(
       `${translateCommon('quotation')}`,
-      ROUTERS.PRICE,
+      ROUTERS.QUOTATION,
       <ContainerOutlined />
     ),
     getItem(
@@ -97,6 +97,11 @@ const AppSider = ({ collapsed }: Props) => {
         `${translateCommon('type_of_container')}`,
         ROUTERS.TYPES_OF_CONTAINER,
         <InboxOutlined />
+      ),
+      getItem(
+        `${translateCommon('type_of_location')}`,
+        ROUTERS.TYPE_OF_LOCATION,
+        <EnvironmentOutlined />
       ),
       getItem(
         `${translateCommon('unit')}`,

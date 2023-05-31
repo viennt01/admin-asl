@@ -8,6 +8,7 @@
     "masterData": "Master data",
     "port": "Cảng",
     "location": "Địa điểm",
+    "type_of_location": "Loại địa điểm",
     "type_of_expenses": "Loại chi phí",
     "type_of_container": "Loại container",
     "unit": "Đơn vị",

@@ -1,24 +1,24 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditPort from '@/components/port-page/port-edit';
+import EditTypeOfContainer from '@/components/type-of-container-page/type-of-container-edit';
 
 function CustomerEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Port Edit</title>
+        <title>GLS | Type Of Container Edit</title>
       </Head>
-      <EditPort />
+      <EditTypeOfContainer />
     </>
   );
 }
 
 export default withAuthentication(CustomerEditPage);
 // import { getStatic } from '@/lib/getStaticProps';
-// export const getStaticProps = getStatic(['common', 'port']);
+// export const getStaticProps = getStatic(['common', 'type-of-container']);
 // export async function getStaticPaths() {
 //   return {
-//     paths: [`/master-data/port/edit/[id]`, { params: { id: '0' } }],
+//     paths: [`/master-data/type-of-container/edit/[id]`, { params: { id: '0' } }],
 //     fallback: false,
 //   };
 // }

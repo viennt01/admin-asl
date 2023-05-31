@@ -65,7 +65,7 @@ export default function ExpensesTypePage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã phí',
+      title: translateTypeOfExpenses('code'),
       width: 200,
       dataIndex: 'key',
       key: 'key',
@@ -74,7 +74,7 @@ export default function ExpensesTypePage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tên chi phí',
+      title: translateTypeOfExpenses('name'),
       width: 450,
       dataIndex: 'name',
       key: 'name',
@@ -95,14 +95,14 @@ export default function ExpensesTypePage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'VAT',
+      title: translateTypeOfExpenses('VAT'),
       width: 250,
       dataIndex: 'price',
       key: 'price',
       align: 'center',
     },
     {
-      title: 'Trạng thái',
+      title: translateTypeOfExpenses('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',

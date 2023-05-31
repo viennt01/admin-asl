@@ -1,3 +1,10 @@
 {
-    "title": "Danh sách tiền tệ"
+    "title": "Danh sách tiền tệ",
+    "code": "Mã tiền tệ",
+    "currency": "Ngoại tệ",
+    "name": "Tên ngoại tệ",
+    "bank": "Ngân hàng",
+    "VND_exchange_rate": "Tỉ giá VND",
+    "USD_exchange_rate": "Tỉ giá USD",
+    "status":"Trạng thái"
 }

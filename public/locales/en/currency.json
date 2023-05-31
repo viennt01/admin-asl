@@ -1,3 +1,10 @@
 {
-    "title": "List of currency"
+    "title": "List of currency",
+    "code": "Currency Code",
+    "currency": "Currency",
+    "name": "Currency Name",
+    "bank": "Bank",
+    "VND_exchange_rate": "VND exchange rate",
+    "USD_exchange_rate": "USD exchange rate",
+    "status":"Status"
 }

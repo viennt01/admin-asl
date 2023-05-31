@@ -1,3 +1,10 @@
 {
-    "title": "Danh sách Container"
+    "title": "Danh sách Container",
+    "code": "Mã số Container",
+    "type_of_container": "Loại Container",
+    "location": "Vị trí",
+    "containerStatus": "Tình trạng",
+    "rentCost":"Giá thuê",
+    "price":"Giá bán",
+    "status":"Trạng thái"
 }

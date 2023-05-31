@@ -6,7 +6,7 @@ import {
 import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
-import CreatePort from './create-port';
+import CreateTypeOfContainer from './create-type-of-container';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -20,19 +20,19 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-const STATUS_CAPACITY_COLORS = {
-  Full: '#31AFFE',
-  NotFull: '#616887',
-};
-const STATUS_CAPACITY_LABELS = {
-  Full: 'Đầy',
-  NotFull: 'Nửa đầy',
-};
+// const STATUS_CAPACITY_COLORS = {
+//   Full: '#31AFFE',
+//   NotFull: '#616887',
+// };
+// const STATUS_CAPACITY_LABELS = {
+//   Full: 'Đầy',
+//   NotFull: 'Nửa đầy',
+// };
 
-export default function PortPage() {
+export default function TypeOfContainerPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePort } = useI18n('port');
+  const { translate: translateTypeOfContainer } = useI18n('typeOfContainer');
 
   interface DataType {
     key: number;
@@ -42,6 +42,9 @@ export default function PortPage() {
     totalContainer: number;
     capacity: number;
     capacityState: string;
+    containerStatus: string;
+    rentCost: number;
+    price: number;
     companyName: string;
     status: string;
   }
@@ -51,11 +54,14 @@ export default function PortPage() {
     data.push({
       key: i,
       age: 32,
-      name: `Vũng Tàu ${i}`,
+      name: i % 2 === 0 ? '40DC' : '40HC',
       address: 'Vũng Tàu',
       totalContainer: 100,
       capacity: 3,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
+      containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
+      rentCost: 100000,
+      price: 100000000,
       companyName: 'Công ty cổ phần Cảng Vũng Tàu',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
@@ -63,7 +69,7 @@ export default function PortPage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: translatePort('code'),
+      title: translateTypeOfContainer('code'),
       width: 150,
       dataIndex: 'key',
       key: 'key',
@@ -72,20 +78,24 @@ export default function PortPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translatePort('name'),
-      width: 150,
+      title: translateTypeOfContainer('type_of_container'),
+      width: 250,
       dataIndex: 'name',
       key: 'name',
       fixed: 'left',
       align: 'center',
       filters: [
         {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
+          text: '40DC',
+          value: '40DC',
         },
         {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
+          text: '40HC',
+          value: '40HC',
+        },
+        {
+          text: '40OT',
+          value: '40OT',
         },
       ],
       filterMode: 'tree',
@@ -93,51 +103,34 @@ export default function PortPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translatePort('address'),
+      title: translateTypeOfContainer('location'),
+      width: 300,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
+      sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translatePort('quantity'),
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
-      align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
-    },
-    {
-      title: translatePort('capacity'),
-      dataIndex: 'capacity',
-      key: 'capacity',
-      align: 'center',
-      sorter: (a, b) => a.capacity - b.capacity,
-    },
-    {
-      title: translatePort('status_capacity'),
-      dataIndex: 'capacityState',
-      key: 'capacityState',
-      align: 'center',
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_CAPACITY_COLORS[value as keyof typeof STATUS_CAPACITY_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_CAPACITY_LABELS[value as keyof typeof STATUS_CAPACITY_LABELS]}
-        </Tag>
-      ),
-    },
-    {
-      title: translatePort('company'),
-      dataIndex: 'companyName',
-      key: 'companyName',
+      title: translateTypeOfContainer('containerStatus'),
+      width: 300,
+      dataIndex: 'containerStatus',
+      key: 'containerStatus',
       align: 'center',
     },
     {
-      title: translatePort('status'),
+      title: translateTypeOfContainer('rentCost'),
+      dataIndex: 'rentCost',
+      key: 'rentCost',
+      align: 'center',
+    },
+    {
+      title: translateTypeOfContainer('price'),
+      dataIndex: 'price',
+      key: 'price',
+      align: 'center',
+    },
+    {
+      title: translateTypeOfContainer('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',
@@ -180,7 +173,7 @@ export default function PortPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.PORT_EDIT(id));
+    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -212,7 +205,7 @@ export default function PortPage() {
             </Form>
           </Col>
           <Col>
-            <CreatePort />
+            <CreateTypeOfContainer />
             <Button type="primary" danger icon={<DeleteOutlined />}>
               Delete
             </Button>
@@ -222,7 +215,7 @@ export default function PortPage() {
       <Card
         style={{ marginTop: '24px' }}
         bordered={false}
-        title={translatePort('title')}
+        title={translateTypeOfContainer('title')}
       >
         <Table
           rowSelection={{

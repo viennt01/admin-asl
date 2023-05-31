@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ContainerPage from '@/components/container-page';
+import TypeOfContainerPage from '@/components/type-of-container-page';
 
-function Container() {
+function TypeOfContainer() {
   return (
     <>
       <Head>
-        <title>GLS | CONTAINER</title>
+        <title>GLS | TYPE OF CONTAINER</title>
       </Head>
-      <ContainerPage />
+      <TypeOfContainerPage />
     </>
   );
 }
 
-export default withAuthentication(Container);
+export default withAuthentication(TypeOfContainer);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'typeOfContainer']);

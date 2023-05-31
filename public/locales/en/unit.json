@@ -1,3 +1,7 @@
 {
-    "title": "List of unit"
+    "title": "List of unit",
+    "code": "Unit Code",
+    "international_code": "International code",
+    "description": "Description",
+    "status":"Status"
 }

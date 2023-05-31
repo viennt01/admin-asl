@@ -1,3 +1,11 @@
 {
-    "title": "Danh sách cảng"
+    "title": "Danh sách cảng",
+    "code": "Mã số Cảng",
+    "name": "Tên Cảng",
+    "address": "Địa chỉ",
+    "quantity": "Số lượng Container",
+    "capacity": "Sức chứa của Cảng",
+    "status_capacity": "Trạng thái của sức chứa",
+    "company":"Công ty quản lý",
+    "status":"Trạng thái"
 }

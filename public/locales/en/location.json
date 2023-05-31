@@ -1,3 +1,11 @@
 {
-    "title": "List of location"
+    "title": "List of location",
+    "code": "Location Code",
+    "name": "Location Name",
+    "address": "Address",
+    "type_of_address": "Type of Location",
+    "phone": "Phone number",
+    "email": "Email",
+    "company":"Management Company",
+    "status":"Status"
 }

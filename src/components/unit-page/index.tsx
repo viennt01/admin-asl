@@ -65,8 +65,8 @@ export default function CalculationUnitPage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số',
-      width: 100,
+      title: translateUnit('code'),
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -74,19 +74,19 @@ export default function CalculationUnitPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Mã quốc tế',
+      title: translateUnit('international_code'),
       dataIndex: 'internationalCode',
       key: 'internationalCode',
       align: 'center',
     },
     {
-      title: 'Mô tả',
+      title: translateUnit('description'),
       dataIndex: 'description',
       key: 'description',
       align: 'center',
     },
     {
-      title: 'Trạng thái',
+      title: translateUnit('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',

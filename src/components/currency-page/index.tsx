@@ -71,8 +71,8 @@ export default function CurrencyPage() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số',
-      width: 100,
+      title: translateCurrency('code'),
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -80,7 +80,7 @@ export default function CurrencyPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Ngoại tệ',
+      title: translateCurrency('currency'),
       width: 150,
       dataIndex: 'name',
       key: 'name',
@@ -101,8 +101,8 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Tên ngoại tệ',
-      width: 150,
+      title: translateCurrency('name'),
+      width: 250,
       dataIndex: 'nameCurrency',
       key: 'nameCurrency',
       align: 'center',
@@ -121,8 +121,8 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Ngân hàng',
-      width: 150,
+      title: translateCurrency('bank'),
+      width: 200,
       dataIndex: 'bank',
       key: 'bank',
       align: 'center',
@@ -145,35 +145,21 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Mua tiền mặt',
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
-    },
-    {
-      title: 'Mua chuyển khoản',
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
-    },
-    {
-      title: 'Bán tiền mặt',
+      title: translateCurrency('VND_exchange_rate'),
       dataIndex: 'sell',
       key: 'sell',
       align: 'center',
       sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
-      title: 'Bán chuyển khoản',
+      title: translateCurrency('USD_exchange_rate'),
       dataIndex: 'sell',
       key: 'sell',
       align: 'center',
       sorter: (a, b) => a.totalContainer - b.totalContainer,
     },
     {
-      title: 'Trạng thái',
+      title: translateCurrency('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',
