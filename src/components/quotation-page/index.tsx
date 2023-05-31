@@ -10,6 +10,7 @@ import CreateQuotation from './create-quotation';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
+import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
   Active: '#31AFFE',
@@ -201,14 +202,26 @@ export default function QuotationPage() {
                   type="primary"
                   htmlType="submit"
                   icon={<SearchOutlined />}
-                  style={{ width: 'fit-content', padding: '0 32px' }}
-                ></Button>
+                  style={{
+                    width: 'fit-content',
+                    padding: '0 32px',
+                    backgroundColor: COLORS.BLUE,
+                    borderColor: COLORS.BLACK,
+                  }}
+                />
               </Space>
             </Form>
           </Col>
           <Col>
             <CreateQuotation />
-            <Button type="primary" danger icon={<DeleteOutlined />}>
+            <Button
+              icon={<DeleteOutlined />}
+              style={{
+                backgroundColor: COLORS.RED,
+                color: COLORS.WHITE,
+                borderColor: COLORS.RED,
+              }}
+            >
               Delete
             </Button>
           </Col>

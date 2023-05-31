@@ -1,3 +1,4 @@
+import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   ModalForm,
@@ -26,7 +27,12 @@ export default function CreateLocation() {
         <Button
           type="primary"
           icon={<PlusOutlined />}
-          style={{ marginRight: '4px' }}
+          style={{
+            marginRight: '4px',
+            backgroundColor: COLORS.BRIGHT,
+            color: COLORS.PRIMARY,
+            borderColor: COLORS.PRIMARY,
+          }}
         >
           Add new location
         </Button>

@@ -16,7 +16,7 @@ import {
   CalculatorOutlined,
   GoldOutlined,
 } from '@ant-design/icons';
-import { Button, MenuProps, Image } from 'antd';
+import { Button, MenuProps, Image, ConfigProvider } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -25,6 +25,7 @@ import { Modal, Typography } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import useI18n from '@/i18n/useI18N';
+import COLORS from '@/constant/color';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -158,66 +159,74 @@ const AppSider = ({ collapsed }: Props) => {
   return (
     <>
       {contextHolder}
-      <Sider
-        className={style.sidebarContainer}
-        width={280}
-        collapsedWidth={60}
-        collapsed={collapsed}
-        theme="light"
-        breakpoint="xl"
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: COLORS.PRIMARY,
+          },
+        }}
       >
-        <Row
-          style={{
-            flexDirection: 'column',
-            height: '100%',
-            flexWrap: 'nowrap',
-          }}
+        <Sider
+          className={style.sidebarContainer}
+          width={280}
+          collapsedWidth={60}
+          collapsed={collapsed}
+          theme="light"
+          breakpoint="xl"
         >
-          <Col flex={1}>
-            <Title className={style.title}>
-              {!collapsed && (
+          <Row
+            style={{
+              flexDirection: 'column',
+              height: '100%',
+              flexWrap: 'nowrap',
+            }}
+          >
+            <Col flex={1}>
+              <Title className={style.title}>
+                {!collapsed && (
+                  <Image
+                    preview={false}
+                    style={{ paddingRight: '8px', cursor: 'pointer' }}
+                    src="/images/gls-logo.jpg"
+                    onClick={() => router.push(ROUTERS.HOME)}
+                    alt="logo"
+                  />
+                )}
                 <Image
                   preview={false}
-                  style={{ paddingRight: '8px', cursor: 'pointer' }}
-                  src="/images/gls-logo.jpg"
+                  style={{
+                    paddingRight: '8px',
+                    cursor: 'pointer',
+                    height: '20px',
+                  }}
+                  src="/images/gls-logo.ico"
                   onClick={() => router.push(ROUTERS.HOME)}
                   alt="logo"
                 />
-              )}
-              <Image
-                preview={false}
-                style={{
-                  paddingRight: '8px',
-                  cursor: 'pointer',
-                  height: '20px',
-                }}
-                src="/images/gls-logo.ico"
-                onClick={() => router.push(ROUTERS.HOME)}
-                alt="logo"
+              </Title>
+              {!collapsed && <hr style={{ width: '60%' }} />}
+              <Menu
+                selectedKeys={[selectedKey]}
+                onClick={handleClickMenuItem}
+                mode="inline"
+                items={items}
               />
-            </Title>
-            {!collapsed && <hr style={{ width: '60%' }} />}
-            <Menu
-              selectedKeys={[selectedKey]}
-              onClick={handleClickMenuItem}
-              mode="inline"
-              items={items}
-            />
-          </Col>
-          <Col style={{ textAlign: 'center' }}>
-            <Button
-              style={{ margin: '24px 0' }}
-              type="primary"
-              size="large"
-              danger
-              icon={<LogoutOutlined />}
-              onClick={handleClickLogout}
-            >
-              {collapsed ? '' : `${translateCommon('sign_out')}`}
-            </Button>
-          </Col>
-        </Row>
-      </Sider>
+            </Col>
+            <Col style={{ textAlign: 'center' }}>
+              <Button
+                style={{ margin: '24px 0' }}
+                type="primary"
+                size="large"
+                danger
+                icon={<LogoutOutlined />}
+                onClick={handleClickLogout}
+              >
+                {collapsed ? '' : `${translateCommon('sign_out')}`}
+              </Button>
+            </Col>
+          </Row>
+        </Sider>
+      </ConfigProvider>
     </>
   );
 };
