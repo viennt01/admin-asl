@@ -16,9 +16,15 @@ function BookingEditPage() {
 export default withAuthentication(BookingEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'booking']);
-export async function getStaticPaths() {
+export const getStaticPaths = async ({ locales }: { locales: [] }) => {
+  const ids: string[] = [];
+  const paths = ids.map(() =>
+    locales.map(() => ({
+      params: {},
+    }))
+  );
   return {
-    paths: [`/booking/edit/[id]`, { params: { id: '0' } }],
-    fallback: false,
+    paths,
+    fallback: true,
   };
-}
+};

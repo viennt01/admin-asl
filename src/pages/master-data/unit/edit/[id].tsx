@@ -16,9 +16,15 @@ function UnitEditPage() {
 export default withAuthentication(UnitEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'unit']);
-export async function getStaticPaths() {
+export const getStaticPaths = async ({ locales }: { locales: [] }) => {
+  const ids: string[] = [];
+  const paths = ids.map(() =>
+    locales.map(() => ({
+      params: {},
+    }))
+  );
   return {
-    paths: [`/master-data/unit/edit/[id]`, { params: { id: '0' } }],
-    fallback: false,
+    paths,
+    fallback: true,
   };
-}
+};
