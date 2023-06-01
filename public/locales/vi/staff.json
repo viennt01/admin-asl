@@ -1,0 +1,16 @@
+{
+    "title": "Danh sách nhân viên",
+    "code": "Mã nhân viên",
+    "image": "Hình ảnh",
+    "account":"Tài khoản",
+    "full_name": "Họ và tên",
+    "sex": "Giới tính",
+    "dob": "Ngày sinh",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ",
+    "email": "Email",
+    "CCCD_Visa":"CCCD/Visa",
+    "working_branch":"Chi nhánh làm việc",
+    "position":"Chức vụ",
+    "status":"Status"
+}

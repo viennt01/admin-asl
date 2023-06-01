@@ -7,6 +7,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
+import useI18n from '@/i18n/useI18N';
 
 // const waitTime = (time = 100) => {
 //   return new Promise((resolve) => {
@@ -17,6 +18,8 @@ import { Button, Form } from 'antd';
 // };
 export default function CreateCurrency() {
   const [form] = Form.useForm<{ name: string; company: string }>();
+  const { translate: translateCommon } = useI18n('common');
+
   return (
     <ModalForm<{
       name: string;
@@ -32,9 +35,10 @@ export default function CreateCurrency() {
             backgroundColor: COLORS.BRIGHT,
             color: COLORS.PRIMARY,
             borderColor: COLORS.PRIMARY,
+            fontWeight: '500',
           }}
         >
-          Add new currency
+          {translateCommon('add')}
         </Button>
       }
       submitter={{

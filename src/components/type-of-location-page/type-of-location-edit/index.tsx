@@ -9,7 +9,7 @@ import {
 
 export default function EditTypeOfLocation() {
   return (
-    <Card bordered={false} style={{ margin: '16px 0' }}>
+    <Card bordered={false} style={{ margin: '10px 0' }}>
       <Descriptions title="THÔNG TIN CHI TIẾT CỦA LOẠI ĐỊA CHỈ" column={2}>
         <Descriptions.Item label={<UserOutlined />}>
           Công ty Cảng quốc tế SP-PSA

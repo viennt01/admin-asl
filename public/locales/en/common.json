@@ -13,5 +13,10 @@
     "type_of_container": "Type of container",
     "unit": "Unit",
     "currency": "Currency",
-    "sign_out": "Sign out"
+    "system": "System",
+    "staff": "Staff",
+    "permission": "Permission",
+    "sign_out": "Sign out",
+    "add": "Add",
+    "delete": "Delete"
 }

@@ -14,6 +14,9 @@ import {
   ProfileOutlined,
   InboxOutlined,
   CalculatorOutlined,
+  ClusterOutlined,
+  ApartmentOutlined,
+  UsergroupAddOutlined,
   GoldOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image, ConfigProvider } from 'antd';
@@ -115,6 +118,18 @@ const AppSider = ({ collapsed }: Props) => {
         <DollarOutlined />
       ),
     ]),
+    getItem(`${translateCommon('system')}`, '3', <ClusterOutlined />, [
+      getItem(
+        `${translateCommon('staff')}`,
+        ROUTERS.STAFF,
+        <UsergroupAddOutlined />
+      ),
+      getItem(
+        `${translateCommon('permission')}`,
+        ROUTERS.PERMISSION,
+        <ApartmentOutlined />
+      ),
+    ]),
   ];
 
   // const ENROUTER = {
@@ -210,6 +225,7 @@ const AppSider = ({ collapsed }: Props) => {
                 onClick={handleClickMenuItem}
                 mode="inline"
                 items={items}
+                style={{ fontWeight: '500' }}
               />
             </Col>
             <Col style={{ textAlign: 'center' }}>

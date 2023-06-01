@@ -34,6 +34,7 @@ export default function QuotationPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateQuotation } = useI18n('quotation');
+  const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
     key: number;
@@ -185,14 +186,14 @@ export default function QuotationPage() {
 
   return (
     <>
-      <Card bordered={false} style={{ margin: '16px 0' }}>
+      <Card bordered={false} style={{ margin: '10px 0' }}>
         <Row>
           <Col flex={1}>
             <Form name="search_form">
               <Space wrap>
                 <Form.Item style={{ margin: 0 }} name="keyword">
                   <Input
-                    placeholder="Keyword"
+                    placeholder="Please input to search...."
                     allowClear
                     style={{ minWidth: 140 }}
                   />
@@ -220,9 +221,10 @@ export default function QuotationPage() {
                 backgroundColor: COLORS.RED,
                 color: COLORS.WHITE,
                 borderColor: COLORS.RED,
+                fontWeight: '500',
               }}
             >
-              Delete
+              {translateCommon('delete')}
             </Button>
           </Col>
         </Row>
