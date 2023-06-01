@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge, Card, Descriptions } from 'antd';
+import useI18n from '@/i18n/useI18N';
 import {
   UserOutlined,
   MailOutlined,
@@ -8,9 +9,14 @@ import {
 } from '@ant-design/icons';
 
 export default function EditTypeOfLocation() {
+  const { translate: translateTypeOfLocation } = useI18n('typeOfLocation');
+
   return (
     <Card bordered={false} style={{ margin: '10px 0' }}>
-      <Descriptions title="THÔNG TIN CHI TIẾT CỦA LOẠI ĐỊA CHỈ" column={2}>
+      <Descriptions
+        title={translateTypeOfLocation('type_of_address_information')}
+        column={2}
+      >
         <Descriptions.Item label={<UserOutlined />}>
           Công ty Cảng quốc tế SP-PSA
         </Descriptions.Item>
@@ -27,14 +33,18 @@ export default function EditTypeOfLocation() {
       <hr style={{ width: '70%', marginBottom: '24px' }} color="#BBBBBB" />
 
       <Descriptions column={2}>
-        <Descriptions.Item label="Số lượng container">
+        <Descriptions.Item
+          label={translateTypeOfLocation('quantity_container')}
+        >
           100.000.000{' '}
         </Descriptions.Item>
-        <Descriptions.Item label="Sức chứa">181</Descriptions.Item>
-        <Descriptions.Item label="Trạng thái">
+        <Descriptions.Item label={translateTypeOfLocation('capacity')}>
+          181
+        </Descriptions.Item>
+        <Descriptions.Item label={translateTypeOfLocation('status')}>
           <Badge status="processing" text="Hoạt động bình thường" />
         </Descriptions.Item>
-        <Descriptions.Item label="Trạng thái sức chứa">
+        <Descriptions.Item label={translateTypeOfLocation('capacity_status')}>
           <Badge status="error" text="Đầy" />
         </Descriptions.Item>
       </Descriptions>
