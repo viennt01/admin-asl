@@ -168,7 +168,11 @@ const AppSider = ({ collapsed }: Props) => {
   };
 
   useEffect(() => {
-    setSelectedKey(router.pathname ?? ROUTERS.HOME);
+    if (router.pathname.slice(-5) === '/[id]') {
+      setSelectedKey(router.pathname.substring(0, router.pathname.length - 10));
+    } else {
+      setSelectedKey(router.pathname ?? ROUTERS.HOME);
+    }
   }, [router]);
 
   return (

@@ -16,9 +16,15 @@ function StaffEditPage() {
 export default withAuthentication(StaffEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'staff']);
-export async function getStaticPaths() {
+export const getStaticPaths = async ({ locales }: { locales: [] }) => {
+  const ids: string[] = [];
+  const paths = ids.map(() =>
+    locales.map(() => ({
+      params: {},
+    }))
+  );
   return {
-    paths: [`/system/staff/edit/[id]`, { params: { id: '0' } }],
-    fallback: false,
+    paths,
+    fallback: true,
   };
-}
+};

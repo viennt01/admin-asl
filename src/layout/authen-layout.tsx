@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import AppSider from './components/app-sider';
@@ -21,6 +21,7 @@ import {
 import type { MenuProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import { LANGUAGE } from '@/constant';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -28,11 +29,6 @@ const HEADER_HEIGHT = 64;
 const WIDTH_FLAG = 36;
 interface Props {
   children: React.ReactNode;
-}
-
-enum Language {
-  'VI' = 'vi',
-  'EN' = 'en',
 }
 
 const items: MenuProps['items'] = [
@@ -48,7 +44,7 @@ const items: MenuProps['items'] = [
         <span>English</span>
       </Space>
     ),
-    key: Language.EN,
+    key: LANGUAGE.EN,
   },
   {
     type: 'divider',
@@ -65,13 +61,13 @@ const items: MenuProps['items'] = [
         <span>Vietnamese</span>
       </Space>
     ),
-    key: Language.VI,
+    key: LANGUAGE.VI,
   },
 ];
 
 interface SelectLanguage {
-  languageSelected: Language;
-  setLanguage: (language: Language) => void;
+  languageSelected: string;
+  setLanguage: (language: string) => void;
   router: NextRouter;
 }
 
@@ -81,7 +77,7 @@ const SelectLanguage = ({
   router,
 }: SelectLanguage) => {
   const onClick: MenuProps['onClick'] = ({ key }) => {
-    setLanguage(key as Language);
+    setLanguage(key as string);
     const { pathname, asPath, query } = router;
     router.replace({ pathname, query }, asPath, { locale: key });
     appLocalStorage.set(LOCAL_STORAGE_KEYS.LANGUAGE, key);
@@ -113,10 +109,17 @@ const SelectLanguage = ({
 export function AppLayout(props: Props) {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
-  const [languageSelected, setLanguage] = useState(Language.EN);
+  const [languageSelected, setLanguage] = useState<string>(LANGUAGE.EN);
   const titleHeader = router.asPath.split('/').filter(function (item) {
     return item !== '';
   });
+  console.log('titleHeader', router.pathname);
+
+  useEffect(() => {
+    setLanguage(
+      appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
+    );
+  }, [languageSelected]);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
