@@ -13,11 +13,11 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
+  Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
@@ -38,33 +38,19 @@ export default function TypeOfContainerPage() {
 
   interface DataType {
     key: number;
-    age: number;
     name: string;
-    address: string;
+    details: string;
     totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    containerStatus: string;
-    rentCost: number;
-    price: number;
-    companyName: string;
     status: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
-      age: 32,
-      name: i % 2 === 0 ? '40DC' : '40HC',
-      address: 'Vũng Tàu',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
-      rentCost: 100000,
-      price: 100000000,
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
+      key: i + 1,
+      name: i % 2 === 0 ? '40DC' : '45HC',
+      details: i % 2 === 0 ? 'Cont 40' : 'Cont 45',
+      totalContainer: i % 2 === 0 ? 2000 : 1500,
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
@@ -105,31 +91,19 @@ export default function TypeOfContainerPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateTypeOfContainer('location'),
+      title: translateTypeOfContainer('detail'),
+      width: 350,
+      dataIndex: 'details',
+      key: 'details',
+      align: 'center',
+    },
+    {
+      title: translateTypeOfContainer('number_container'),
       width: 300,
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'totalContainer',
+      key: 'totalContainer',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
-    },
-    {
-      title: translateTypeOfContainer('containerStatus'),
-      width: 300,
-      dataIndex: 'containerStatus',
-      key: 'containerStatus',
-      align: 'center',
-    },
-    {
-      title: translateTypeOfContainer('rentCost'),
-      dataIndex: 'rentCost',
-      key: 'rentCost',
-      align: 'center',
-    },
-    {
-      title: translateTypeOfContainer('price'),
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
     },
     {
       title: translateTypeOfContainer('status'),
@@ -138,7 +112,7 @@ export default function TypeOfContainerPage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -228,7 +202,7 @@ export default function TypeOfContainerPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateTypeOfContainer('title')}
       >
@@ -238,6 +212,7 @@ export default function TypeOfContainerPage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}

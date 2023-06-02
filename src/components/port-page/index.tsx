@@ -13,11 +13,11 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
+  Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
@@ -51,7 +51,7 @@ export default function PortPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
+      key: i + 1,
       age: 32,
       name: `Vũng Tàu ${i}`,
       address: 'Vũng Tàu',
@@ -66,7 +66,7 @@ export default function PortPage() {
   const columns: ColumnsType<DataType> = [
     {
       title: translatePort('code'),
-      width: 150,
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -96,6 +96,7 @@ export default function PortPage() {
     },
     {
       title: translatePort('address'),
+      width: 250,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
@@ -145,7 +146,7 @@ export default function PortPage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -192,7 +193,7 @@ export default function PortPage() {
   return (
     <>
       <Card bordered={false} style={{ margin: '10px 0' }}>
-        <Row>
+        <Row style={{ padding: 'unset' }}>
           <Col flex={1}>
             <Form name="search_form">
               <Space wrap>
@@ -235,7 +236,7 @@ export default function PortPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translatePort('title')}
       >
@@ -245,6 +246,7 @@ export default function PortPage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}

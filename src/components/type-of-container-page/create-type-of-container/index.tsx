@@ -25,7 +25,7 @@ export default function CreateTypeOfContainer() {
       name: string;
       company: string;
     }>
-      title="Add new container"
+      title="Add new type of container"
       trigger={
         <Button
           type="primary"
@@ -43,7 +43,7 @@ export default function CreateTypeOfContainer() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add container',
+          submitText: 'Add type of container',
           resetText: 'Cancel',
         },
       }}
@@ -109,7 +109,7 @@ export default function CreateTypeOfContainer() {
           request={async () => [
             {
               value: '1',
-              label: 'Hoạt động',
+              label: 'Active',
             },
             {
               value: '2',
@@ -142,7 +142,7 @@ export default function CreateTypeOfContainer() {
           request={async () => [
             {
               value: '1',
-              label: 'Hoạt động',
+              label: 'Active',
             },
             {
               value: '2',

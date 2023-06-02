@@ -13,11 +13,11 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
+  Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
@@ -45,7 +45,7 @@ export default function LocationPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
+      key: i + 1,
       age: 32,
       name: `Vũng Tàu ${i}`,
       address: 'Vũng Tàu',
@@ -99,8 +99,8 @@ export default function LocationPage() {
       align: 'center',
     },
     {
-      title: translateLocation('type_of_address'),
-      width: 150,
+      title: translateLocation('type_of_location'),
+      width: 250,
       dataIndex: 'addressType',
       key: 'addressType',
       align: 'center',
@@ -142,7 +142,7 @@ export default function LocationPage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -232,7 +232,7 @@ export default function LocationPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateLocation('title')}
       >
@@ -242,6 +242,7 @@ export default function LocationPage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}

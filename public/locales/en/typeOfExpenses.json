@@ -1,6 +1,6 @@
 {
     "title": "List types of Expenses",
-    "code": "Expense Code",
+    "code": "Expense No",
     "name": "Expense Name",
     "VAT": "VAT",
     "status":"Status"

@@ -1,3 +1,15 @@
 {
-    "title": "List of Booking"
+    "title": "List of Booking",
+    "code_booking": "Booking No",
+    "address": "Empty-handed",
+    "container_code": "Container No",
+    "port_name": "Port of discharge",
+    "slot": "Slot",
+    "route": "Route",
+    "note": "Note",
+    "name_customer": "Shipper",
+    "name_supplier": "Supplier",
+    "name_cnee": "Consignee (Cnee)",
+    "date_create": "Creation date",
+    "status":"Status"
 }

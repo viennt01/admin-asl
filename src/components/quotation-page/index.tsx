@@ -13,11 +13,11 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
+  Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
@@ -51,7 +51,7 @@ export default function QuotationPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
+      key: i + 1,
       age: 32,
       name: `Vũng Tàu ${i}`,
       address: 'Vũng Tàu',
@@ -140,7 +140,7 @@ export default function QuotationPage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -230,7 +230,7 @@ export default function QuotationPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateQuotation('title')}
       >
@@ -240,6 +240,7 @@ export default function QuotationPage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}

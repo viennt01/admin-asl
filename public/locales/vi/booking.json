@@ -1,3 +1,15 @@
 {
-    "title": "Danh sách booking"
+    "title": "Danh sách booking",
+    "code_booking": "Số Booking",
+    "route": "Tuyến đường",
+    "container_code": "Mã Container",
+    "address": "Nơi lấy rỗng",
+    "port_name": "Cảng hạ hàng",
+    "slot": "Slot",
+    "note": "Ghi chú",
+    "name_customer": "Tên chủ hàng",
+    "name_supplier": "Tên nhà cung cấp",
+    "name_cnee": "Người nhận hàng (Cnee)",
+    "date_create": "Ngày tạo",
+    "status":"Trạng thái"
 }

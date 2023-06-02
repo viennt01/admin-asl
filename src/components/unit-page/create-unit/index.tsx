@@ -110,7 +110,7 @@ export default function CreateUnit() {
           request={async () => [
             {
               value: '1',
-              label: 'Hoạt động',
+              label: 'Active',
             },
             {
               value: '2',
@@ -143,7 +143,7 @@ export default function CreateUnit() {
           request={async () => [
             {
               value: '1',
-              label: 'Hoạt động',
+              label: 'Active',
             },
             {
               value: '2',

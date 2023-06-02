@@ -137,12 +137,12 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/partner/customer': [
-      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+    '/parner/customer': [
+      { title: `${translateCommon('parner')}` },
       { title: `${translateCommon('customer')}` },
     ],
-    '/partner/customer/edit/[id]': [
-      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+    '/parner/customer/edit/[id]': [
+      { title: `${translateCommon('parner')}` },
       {
         title: (
           <Link href={ROUTERS.CUSTOMER}>{translateCommon('customer')}</Link>
@@ -150,12 +150,12 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/partner/supplier': [
-      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+    '/parner/supplier': [
+      { title: `${translateCommon('parner')}` },
       { title: `${translateCommon('supplier')}` },
     ],
-    '/partner/supplier/edit/[id]': [
-      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+    '/parner/supplier/edit/[id]': [
+      { title: `${translateCommon('parner')}` },
       {
         title: (
           <Link href={ROUTERS.SUPPLIER}>{translateCommon('supplier')}</Link>
@@ -164,20 +164,29 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/port': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: `${translateCommon('port')}` },
     ],
     '/master-data/port/edit/[id]': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
+    '/master-data/depot': [
+      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('depot')}` },
+    ],
+    '/master-data/depot/edit/[id]': [
+      { title: `${translateCommon('masterData')}` },
+      { title: <Link href={ROUTERS.DEPOT}>{translateCommon('depot')}</Link> },
+      { title: `${translateCommon('detail')}` },
+    ],
     '/master-data/location': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: `${translateCommon('location')}` },
     ],
     '/master-data/location/edit/[id]': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       {
         title: (
           <Link href={ROUTERS.LOCATION}>{translateCommon('location')}</Link>
@@ -185,12 +194,25 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
+    '/master-data/container': [
+      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('container')}` },
+    ],
+    '/master-data/container/edit/[id]': [
+      { title: `${translateCommon('masterData')}` },
+      {
+        title: (
+          <Link href={ROUTERS.CONTAINER}>{translateCommon('container')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
     '/master-data/type-of-expenses': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: `${translateCommon('type_of_expenses')}` },
     ],
     '/master-data/type-of-expenses/edit/[id]': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_EXPENSES}>
@@ -201,11 +223,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/type-of-container': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: `${translateCommon('type_of_container')}` },
     ],
     '/master-data/type-of-container/edit/[id]': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>
@@ -216,11 +238,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/type-of-location': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: `${translateCommon('type_of_location')}` },
     ],
     '/master-data/type-of-location/edit/[id]': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       {
         title: (
           <Link href={ROUTERS.TYPE_OF_LOCATION}>
@@ -231,20 +253,20 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/unit': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: `${translateCommon('unit')}` },
     ],
     '/master-data/unit/edit/[id]': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/currency': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       { title: `${translateCommon('currency')}` },
     ],
     '/master-data/currency/edit/[id]': [
-      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('masterData')}` },
       {
         title: (
           <Link href={ROUTERS.CURRENCY}>{translateCommon('currency')}</Link>

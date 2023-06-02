@@ -13,12 +13,12 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
-  DeActive: 'Tạm ngừng',
+  Active: 'Active',
+  DeActive: 'DeActive',
 };
 
 export default function StaffPage() {
@@ -48,7 +48,7 @@ export default function StaffPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
+      key: i + 1,
       number: 150,
       image: `https://cdn.pixabay.com.jpg`,
       code: `DA123456`,
@@ -62,7 +62,7 @@ export default function StaffPage() {
       CCCD_Visa: '12345',
       working_branch: 'Hồ Chí Minh',
       position: 'Sale',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      status: i % 6 === 0 ? 'DeActive' : 'Active',
     });
   }
 
@@ -176,11 +176,11 @@ export default function StaffPage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Active',
           value: 'Active',
         },
         {
-          text: 'Tạm ngừng',
+          text: 'DeActive',
           value: 'DeActive',
         },
       ],
@@ -266,7 +266,7 @@ export default function StaffPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateStaff('title')}
       >
