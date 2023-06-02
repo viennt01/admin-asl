@@ -22,6 +22,9 @@ import type { MenuProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { LANGUAGE } from '@/constant';
+import Link from 'next/link';
+import { ROUTERS } from '@/constant/router';
+import useI18n from '@/i18n/useI18N';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -85,7 +88,6 @@ const SelectLanguage = ({
   return (
     <div>
       <Dropdown
-        // overlayClassName={style.languageMenu}
         menu={{ items, onClick }}
         arrow={{ pointAtCenter: true }}
         placement="bottomLeft"
@@ -107,20 +109,173 @@ const SelectLanguage = ({
 };
 
 export function AppLayout(props: Props) {
+  const { translate: translateCommon } = useI18n('common');
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   const [languageSelected, setLanguage] = useState<string>(LANGUAGE.EN);
-  const titleHeader = router.asPath.split('/').filter(function (item) {
-    return item !== '';
-  });
-  console.log('titleHeader', router.pathname);
 
   useEffect(() => {
     setLanguage(
       appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
     );
   }, [languageSelected]);
-
+  const ROUTER_HEADER = {
+    '/': [{ title: `${translateCommon('dashboard')}` }],
+    '/quotation': [{ title: `${translateCommon('quotation')}` }],
+    '/quotation/edit/[id]': [
+      {
+        title: (
+          <Link href={ROUTERS.QUOTATION}>{translateCommon('quotation')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/booking': [{ title: `${translateCommon('booking')}` }],
+    '/booking/edit/[id]': [
+      {
+        title: <Link href={ROUTERS.BOOKING}>{translateCommon('booking')}</Link>,
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/partner/customer': [
+      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+      { title: `${translateCommon('customer')}` },
+    ],
+    '/partner/customer/edit/[id]': [
+      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.CUSTOMER}>{translateCommon('customer')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/partner/supplier': [
+      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+      { title: `${translateCommon('supplier')}` },
+    ],
+    '/partner/supplier/edit/[id]': [
+      { title: <Link href={''}>{translateCommon('partner')}</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.SUPPLIER}>{translateCommon('supplier')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/port': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('port')}` },
+    ],
+    '/master-data/port/edit/[id]': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/location': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('location')}` },
+    ],
+    '/master-data/location/edit/[id]': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.LOCATION}>{translateCommon('location')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/type-of-expenses': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('type_of_expenses')}` },
+    ],
+    '/master-data/type-of-expenses/edit/[id]': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.TYPES_OF_EXPENSES}>
+            {translateCommon('type_of_expenses')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/type-of-container': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('type_of_container')}` },
+    ],
+    '/master-data/type-of-container/edit/[id]': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.TYPES_OF_CONTAINER}>
+            {translateCommon('type_of_container')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/type-of-location': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('type_of_location')}` },
+    ],
+    '/master-data/type-of-location/edit/[id]': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_OF_LOCATION}>
+            {translateCommon('type_of_location')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/unit': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('unit')}` },
+    ],
+    '/master-data/unit/edit/[id]': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/currency': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      { title: `${translateCommon('currency')}` },
+    ],
+    '/master-data/currency/edit/[id]': [
+      { title: <Link href={''}>`${translateCommon('masterData')}`</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.CURRENCY}>{translateCommon('currency')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/system/staff': [
+      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      { title: `${translateCommon('staff')}` },
+    ],
+    '/system/staff/edit/[id]': [
+      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      { title: <Link href={ROUTERS.STAFF}>{translateCommon('staff')}</Link> },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/system/permission': [
+      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      { title: `${translateCommon('permission')}` },
+    ],
+    '/system/permission/edit/[id]': [
+      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      {
+        title: (
+          <Link href={ROUTERS.PERMISSION}>{translateCommon('permission')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/404': [{ title: `${translateCommon('error')}` }],
+  };
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Head>
@@ -143,18 +298,10 @@ export function AppLayout(props: Props) {
           <Space style={{ width: '100%', justifyContent: 'space-between' }}>
             <Space>
               <MenuOutlined onClick={() => setCollapsed((prev) => !prev)} />
-              <Breadcrumb style={{ margin: '16px 0' }}>
-                {titleHeader.map((item, index) => (
-                  <Breadcrumb.Item key={index}>
-                    {item
-                      .split('-')
-                      .map(function (word) {
-                        return word.charAt(0).toUpperCase() + word.slice(1);
-                      })
-                      .join(' ')}
-                  </Breadcrumb.Item>
-                ))}
-              </Breadcrumb>
+              <Breadcrumb
+                style={{ margin: '16px 0' }}
+                items={ROUTER_HEADER[router.pathname as never]}
+              />
             </Space>
             <Space style={{ cursor: 'pointer' }}>
               <SelectLanguage

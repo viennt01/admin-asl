@@ -2,7 +2,7 @@
     "dashboard": "Dashboard",
     "quotation": "Quotation",
     "booking": "Booking",
-    "parner": "Parner",
+    "partner": "Partner",
     "customer": "Customer",
     "supplier": "Supplier",
     "masterData": "Master data",
@@ -18,5 +18,7 @@
     "permission": "Permission",
     "sign_out": "Sign out",
     "add": "Add",
-    "delete": "Delete"
+    "delete": "Delete",
+    "detail": "Detail",
+    "error": "Error"
 }

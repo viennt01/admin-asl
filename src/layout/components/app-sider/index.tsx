@@ -132,21 +132,6 @@ const AppSider = ({ collapsed }: Props) => {
     ]),
   ];
 
-  // const ENROUTER = {
-  //   HOME: [],
-  //   BOOKING: ['Booking'],
-  //   PRICE: ['Price'],
-  //   CUSTOMER: ['Parner', 'Customer'],
-  //   SUPPLIER: ['Parner', 'Supplier'],
-  //   DEPOT: ['Master data', 'Depot'],
-  //   DEPOT_EDIT: ['Master data', 'Depot', 'Edit'],
-  //   LOCATION: ['Master data', 'Location'],
-  //   TYPES_OF_CONTAINER: ['Master data', 'Type of container'],
-  //   TYPES_OF_EXPENSES: ['Master data', 'Type of Expenses'],
-  //   UNIT: ['Master data', 'Unit'],
-  //   CURRENCY: ['Master data', 'Currency'],
-  // };
-
   const handleClickMenuItem = (path: MenuInfo) => {
     setSelectedKey(path.key);
     router.push(path.key);

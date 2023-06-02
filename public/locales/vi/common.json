@@ -2,7 +2,7 @@
     "dashboard": "Trang chủ",
     "quotation": "Báo giá",
     "booking": "Booking",
-    "parner": "Đối tượng",
+    "partner": "Đối tượng",
     "customer": "Khách hàng",
     "supplier": "Nhà cung cấp",
     "masterData": "Master data",
@@ -18,5 +18,7 @@
     "permission": "Phân quyền",
     "sign_out": "Đăng xuất",
     "add": "Thêm",
-    "delete": "Xóa"
+    "delete": "Xóa",
+    "detail": "Chi tiết",
+    "error": "Lỗi"
 }
