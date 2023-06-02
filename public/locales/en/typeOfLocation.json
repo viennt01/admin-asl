@@ -2,5 +2,9 @@
     "title": "List type of Location",
     "code": "Type of Location Code",
     "type_of_address": "Type of Location",
-    "status":"Status"
+    "status":"Status",
+    "type_of_address_information":"DETAILS OF ADDRESS TYPE",
+    "quantity_container":"Number of containers",
+    "capacity":"Capacity",
+    "capacity_status":"Capacity Status"
 }

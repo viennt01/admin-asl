@@ -2,5 +2,9 @@
     "title": "Danh sách loại địa điểm",
     "code": "Mã loại địa chỉ",
     "type_of_address": "Loại địa chỉ",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "type_of_address_information":"THÔNG TIN CHI TIẾT CỦA LOẠI ĐỊA CHỈ",
+    "quantity_container":"Số lượng container",
+    "capacity":"Sức chứa",
+    "capacity_status":"Trạng thái sức chứa"
 }

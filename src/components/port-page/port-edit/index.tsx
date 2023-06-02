@@ -1,5 +1,6 @@
 import React from 'react';
 import { Badge, Card, Descriptions } from 'antd';
+import useI18n from '@/i18n/useI18N';
 import {
   UserOutlined,
   MailOutlined,
@@ -8,9 +9,11 @@ import {
 } from '@ant-design/icons';
 
 export default function EditPort() {
+  const { translate: translatePort } = useI18n('port');
+
   return (
     <Card bordered={false} style={{ margin: '10px 0' }}>
-      <Descriptions title="THÔNG TIN CHI TIẾT CỦA CẢNG" column={2}>
+      <Descriptions title={translatePort('information_port')} column={2}>
         <Descriptions.Item label={<UserOutlined />}>
           Công ty Cảng quốc tế SP-PSA
         </Descriptions.Item>
@@ -27,14 +30,16 @@ export default function EditPort() {
       <hr style={{ width: '70%', marginBottom: '24px' }} color="#BBBBBB" />
 
       <Descriptions column={2}>
-        <Descriptions.Item label="Số lượng container">
+        <Descriptions.Item label={translatePort('quantity_container')}>
           100.000.000{' '}
         </Descriptions.Item>
-        <Descriptions.Item label="Sức chứa">181</Descriptions.Item>
-        <Descriptions.Item label="Trạng thái">
+        <Descriptions.Item label={translatePort('capacity_label')}>
+          181
+        </Descriptions.Item>
+        <Descriptions.Item label={translatePort('status')}>
           <Badge status="processing" text="Hoạt động bình thường" />
         </Descriptions.Item>
-        <Descriptions.Item label="Trạng thái sức chứa">
+        <Descriptions.Item label={translatePort('status_capacity')}>
           <Badge status="error" text="Đầy" />
         </Descriptions.Item>
       </Descriptions>
