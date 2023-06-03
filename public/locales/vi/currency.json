@@ -4,7 +4,10 @@
     "currency": "Ngoại tệ",
     "name": "Tên ngoại tệ",
     "bank": "Ngân hàng",
-    "VND_exchange_rate": "Tỉ giá VND",
-    "USD_exchange_rate": "Tỉ giá USD",
+    "exchange_rate": "Tỉ giá",
+    "cash_buy": "Tiền mặt (Mua)",
+    "cash_sell": "Tiền mặt (Bán)",
+    "transfer_buy": "Chuyển khoản (Mua)",
+    "transfer_sell": "Chuyển khoản (Bán)",
     "status":"Trạng thái"
 }

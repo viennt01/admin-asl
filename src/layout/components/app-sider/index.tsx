@@ -87,10 +87,27 @@ const AppSider = ({ collapsed }: Props) => {
     ]),
     getItem(`${translateCommon('masterData')}`, '2', <AppstoreOutlined />, [
       getItem(`${translateCommon('port')}`, ROUTERS.PORT, <GoldOutlined />),
+      getItem(`${translateCommon('depot')}`, ROUTERS.DEPOT, <GoldOutlined />),
       getItem(
         `${translateCommon('location')}`,
         ROUTERS.LOCATION,
         <EnvironmentOutlined />
+      ),
+
+      getItem(
+        `${translateCommon('container')}`,
+        ROUTERS.CONTAINER,
+        <InboxOutlined />
+      ),
+      getItem(
+        `${translateCommon('unit')}`,
+        ROUTERS.UNIT,
+        <CalculatorOutlined />
+      ),
+      getItem(
+        `${translateCommon('currency')}`,
+        ROUTERS.CURRENCY,
+        <DollarOutlined />
       ),
       getItem(
         `${translateCommon('type_of_expenses')}`,
@@ -106,16 +123,6 @@ const AppSider = ({ collapsed }: Props) => {
         `${translateCommon('type_of_location')}`,
         ROUTERS.TYPE_OF_LOCATION,
         <EnvironmentOutlined />
-      ),
-      getItem(
-        `${translateCommon('unit')}`,
-        ROUTERS.UNIT,
-        <CalculatorOutlined />
-      ),
-      getItem(
-        `${translateCommon('currency')}`,
-        ROUTERS.CURRENCY,
-        <DollarOutlined />
       ),
     ]),
     getItem(`${translateCommon('system')}`, '3', <ClusterOutlined />, [
@@ -214,12 +221,17 @@ const AppSider = ({ collapsed }: Props) => {
                 onClick={handleClickMenuItem}
                 mode="inline"
                 items={items}
-                style={{ fontWeight: '500' }}
+                style={{
+                  marginTop: '16px',
+                  fontWeight: '500',
+                  height: '76vh',
+                  overflowY: 'auto',
+                }}
               />
             </Col>
             <Col style={{ textAlign: 'center' }}>
               <Button
-                style={{ margin: '24px 0' }}
+                style={{ margin: '12px 0 20px 0' }}
                 type="primary"
                 size="large"
                 danger

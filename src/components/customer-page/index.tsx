@@ -13,11 +13,11 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
+  Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
@@ -41,7 +41,7 @@ export default function CustomerPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
+      key: i + 1,
       number: 150,
       name: `Nguyễn Văn A`,
       dob: `25/5/1986`,
@@ -89,8 +89,8 @@ export default function CustomerPage() {
     {
       title: translateCustomer('dob'),
       width: 300,
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'dob',
+      key: 'dob',
       align: 'center',
     },
     {
@@ -121,7 +121,7 @@ export default function CustomerPage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -211,7 +211,7 @@ export default function CustomerPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateCustomer('title')}
       >
@@ -221,6 +221,7 @@ export default function CustomerPage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}

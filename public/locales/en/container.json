@@ -1,0 +1,10 @@
+{
+    "title": "List of Container",
+    "code": "Container No",
+    "type_of_container": "Type of Container",
+    "location": "Location",
+    "containerStatus": "Condition of Container",
+    "rentCost":"Rent cost (VND)",
+    "price":"Price (VND)",
+    "status":"Status"
+}

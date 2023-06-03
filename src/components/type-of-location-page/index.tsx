@@ -13,11 +13,11 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
+  Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
@@ -54,11 +54,11 @@ export default function LocationTypePage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
+      key: i + 1,
       age: 32,
       name: `Vũng Tàu ${i}`,
       address: 'Vũng Tàu',
-      addressType: 'Nhận hàng',
+      addressType: i % 2 === 0 ? 'Trả hàng' : 'Nhận hàng',
       phoneNumner: '0964582355',
       totalContainer: 100,
       capacity: 3,
@@ -80,7 +80,7 @@ export default function LocationTypePage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateTypeOfLocation('type_of_address'),
+      title: translateTypeOfLocation('type_of_location'),
       width: 450,
       dataIndex: 'addressType',
       key: 'addressType',
@@ -103,7 +103,7 @@ export default function LocationTypePage() {
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -193,7 +193,7 @@ export default function LocationTypePage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateTypeOfLocation('title')}
       >
@@ -203,6 +203,7 @@ export default function LocationTypePage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}

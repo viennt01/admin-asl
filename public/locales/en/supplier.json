@@ -1,6 +1,6 @@
 {
     "title": "List of Supplier",
-    "code": "Supplier Code",
+    "code": "Supplier No",
     "name": "Supplier Name",
     "service": "Service provided",
     "number": "Number of transactions",

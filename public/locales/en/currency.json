@@ -1,10 +1,13 @@
 {
     "title": "List of Currency",
-    "code": "Currency Code",
-    "currency": "Currency",
-    "name": "Currency Name",
+    "code": "Currency No",
+    "currency_from": "Currency From",
+    "currency_to": "Currency To",
     "bank": "Bank",
-    "VND_exchange_rate": "VND exchange rate",
-    "USD_exchange_rate": "USD exchange rate",
+    "exchange_rate": "Exchange rate",
+    "cash_buy": "Cash (Buy)",
+    "cash_sell": "Cash (Sell)",
+    "transfer_buy": "Transfer (Buy)",
+    "transfer_sell": "Transfer (Sell)",
     "status":"Status"
 }

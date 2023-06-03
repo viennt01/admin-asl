@@ -13,12 +13,12 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  Increase: '#00A651',
+  Reduce: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
-  DeActive: 'Tạm ngừng',
+  Increase: 'Tăng',
+  Reduce: 'Giảm',
 };
 
 // const STATUS_CAPACITY_COLORS = {
@@ -38,43 +38,33 @@ export default function CurrencyPage() {
 
   interface DataType {
     key: number;
-    age: number;
     name: string;
-    nameCurrency: string;
+    currencyTo: string;
     bank: string;
-    address: string;
-    totalContainer: number;
+    exchangeRate: number;
     price: number;
     sell: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
     status: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
-      age: 32,
+      key: i + 1,
       name: 'USD',
-      nameCurrency: 'Đô la Mỹ',
+      currencyTo: 'VND',
       bank: 'ACB',
-      address: 'Vũng Tàu',
-      totalContainer: 100,
+      exchangeRate: 26098,
       price: 23375,
       sell: 26098,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      status: i % 2 === 1 ? 'Increase' : 'Reduce',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
       title: translateCurrency('code'),
-      width: 150,
+      width: 120,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -82,7 +72,7 @@ export default function CurrencyPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateCurrency('currency'),
+      title: translateCurrency('currency_from'),
       width: 150,
       dataIndex: 'name',
       key: 'name',
@@ -103,19 +93,20 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('name'),
-      width: 250,
-      dataIndex: 'nameCurrency',
-      key: 'nameCurrency',
+      title: translateCurrency('currency_to'),
+      width: 120,
+      fixed: 'left',
+      dataIndex: 'currencyTo',
+      key: 'currencyTo',
       align: 'center',
       filters: [
         {
-          text: 'Đô la Mỹ',
-          value: 'Đô la Mỹ',
+          text: 'USD',
+          value: 'USD',
         },
         {
-          text: 'Đồng Euro',
-          value: 'Đồng Euro',
+          text: 'Euro',
+          value: 'Euro',
         },
       ],
       filterMode: 'tree',
@@ -124,7 +115,7 @@ export default function CurrencyPage() {
     },
     {
       title: translateCurrency('bank'),
-      width: 200,
+      width: 180,
       dataIndex: 'bank',
       key: 'bank',
       align: 'center',
@@ -147,32 +138,59 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('VND_exchange_rate'),
-      dataIndex: 'sell',
-      key: 'sell',
+      title: translateCurrency('exchange_rate'),
+      width: 150,
+      dataIndex: 'exchangeRate',
+      key: 'exchangeRate',
       align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
+      sorter: (a, b) => a.exchangeRate - b.exchangeRate,
     },
     {
-      title: translateCurrency('USD_exchange_rate'),
+      title: translateCurrency('cash_buy'),
+      width: 150,
       dataIndex: 'sell',
       key: 'sell',
       align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
+      sorter: (a, b) => a.sell - b.sell,
+    },
+    {
+      title: translateCurrency('cash_sell'),
+      width: 150,
+      dataIndex: 'price',
+      key: 'price',
+      align: 'center',
+      sorter: (a, b) => a.sell - b.sell,
+    },
+    {
+      title: translateCurrency('transfer_buy'),
+      width: 150,
+      dataIndex: 'sell',
+      key: 'sell',
+      align: 'center',
+      sorter: (a, b) => a.sell - b.sell,
+    },
+    {
+      title: translateCurrency('transfer_sell'),
+      width: 150,
+      dataIndex: 'price',
+      key: 'price',
+      align: 'center',
+      sorter: (a, b) => a.sell - b.sell,
     },
     {
       title: translateCurrency('status'),
       dataIndex: 'status',
+      fixed: 'right',
       key: 'status',
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
-          value: 'Active',
+          text: 'Tăng',
+          value: 'Increase',
         },
         {
-          text: 'Tạm ngừng',
-          value: 'DeActive',
+          text: 'Giảm',
+          value: 'Reduce',
         },
       ],
       // onFilter: (value: string, record) => record.address.startsWith(value),
@@ -257,7 +275,7 @@ export default function CurrencyPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateCurrency('title')}
       >
@@ -267,6 +285,7 @@ export default function CurrencyPage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}

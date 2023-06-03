@@ -3,7 +3,7 @@
     "code": "Mã địa chỉ",
     "name": "Tên địa chỉ",
     "address": "Địa chỉ",
-    "type_of_address": "Loại địa chỉ",
+    "type_of_location": "Loại địa chỉ",
     "phone": "Số điện thoại",
     "email": "Email",
     "company":"Công ty quản lý",

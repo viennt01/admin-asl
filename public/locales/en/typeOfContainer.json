@@ -1,10 +1,8 @@
 {
     "title": "List type of Container",
-    "code": "Container Code",
+    "code": "Container No",
     "type_of_container": "Type of Container",
-    "location": "Location",
-    "containerStatus": "Condition of Container",
-    "rentCost":"Rent cost",
-    "price":"Price",
+    "detail": "Details",
+    "number_container": "Quantity",
     "status":"Status"
 }

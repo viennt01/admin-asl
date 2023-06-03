@@ -14,7 +14,7 @@ export default function EditTypeOfLocation() {
   return (
     <Card bordered={false} style={{ margin: '10px 0' }}>
       <Descriptions
-        title={translateTypeOfLocation('type_of_address_information')}
+        title={translateTypeOfLocation('type_of_location_information')}
         column={2}
       >
         <Descriptions.Item label={<UserOutlined />}>

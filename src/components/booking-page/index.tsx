@@ -13,22 +13,23 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#31AFFE',
-  DeActive: '#616887',
+  SaveAsDraft: '#837F7F',
+  Pending: '#EDEA9A',
+  Approved: '#C7EDBA',
+  Processing: '#31AFFE',
+  Delayed: '#E1A966',
+  Completed: '#00A651',
+  Cancel: '#616887',
 };
 const STATUS_LABELS = {
-  Active: 'Hoạt động',
-  DeActive: 'Tạm ngừng',
+  SaveAsDraft: 'Save As Draft',
+  Pending: 'Pending',
+  Approved: 'Approved',
+  Processing: 'Processing',
+  Delayed: 'Delayed',
+  Completed: 'Completed',
+  Cancel: 'Cancel',
 };
-
-// const STATUS_CAPACITY_COLORS = {
-//   Full: '#31AFFE',
-//   NotFull: '#616887',
-// };
-// const STATUS_CAPACITY_LABELS = {
-//   Full: 'Đầy',
-//   NotFull: 'Nửa đầy',
-// };
 
 export default function BookingPage() {
   const router = useRouter();
@@ -38,41 +39,41 @@ export default function BookingPage() {
 
   interface DataType {
     key: number;
-    age: number;
-    name: string;
     address: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    containerStatus: string;
-    rentCost: number;
-    price: number;
-    companyName: string;
+    codeContainer: number;
+    portName: string;
+    slot: number;
+    route: string;
+    note: string;
+    nameCustomer: string;
+    nameSupplier: string;
+    nameCnee: string;
+    dateCreate: string;
     status: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
-      age: 32,
-      name: i % 2 === 0 ? '40DC' : '40HC',
-      address: 'Vũng Tàu',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
-      rentCost: 100000,
-      price: 100000000,
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      key: i + 1,
+      address: i % 2 === 0 ? 'Vũng Tàu' : 'Hồ Chí Minh',
+      codeContainer: i,
+      portName: i % 2 === 0 ? 'Vũng Tàu' : 'Hồ Chí Minh',
+      slot: i + 1,
+      route: 'Hồ Chí Minh - Hải Phòng',
+      note: i % 2 === 0 ? 'Hàng dễ vỡ - cẩn thận' : 'Mặt hàng đông lạnh',
+      nameCustomer: i % 2 === 0 ? 'Nguyễn Văn A' : 'Trần Thị B',
+      nameSupplier: i % 2 === 0 ? 'Công ty CP A' : 'Công ty CP B',
+      nameCnee: i % 2 === 0 ? 'Trương Văn A' : 'Nguyễn Ngọc B',
+      dateCreate: '10/05/2023',
+      status: i % 2 === 1 ? 'Processing' : 'Completed',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số',
-      width: 100,
+      title: translateBooking('code_booking'),
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -80,69 +81,110 @@ export default function BookingPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Loại Container',
-      width: 150,
-      dataIndex: 'name',
-      key: 'name',
+      title: translateBooking('route'),
+      width: 300,
       fixed: 'left',
+      dataIndex: 'route',
+      key: 'route',
       align: 'center',
-      filters: [
-        {
-          text: '40DC',
-          value: '40DC',
-        },
-        {
-          text: '40HC',
-          value: '40HC',
-        },
-        {
-          text: '40OT',
-          value: '40OT',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: 'Vị trí',
-      dataIndex: 'address',
-      key: 'address',
+      title: translateBooking('container_code'),
+      width: 150,
+      dataIndex: 'codeContainer',
+      key: 'codeContainer',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tình trạng',
+      title: translateBooking('address'),
       width: 300,
-      dataIndex: 'containerStatus',
-      key: 'containerStatus',
+      dataIndex: 'address',
+      key: 'address',
       align: 'center',
     },
     {
-      title: 'Giá thuê (ngày/VND)',
-      dataIndex: 'rentCost',
-      key: 'rentCost',
+      title: translateBooking('port_name'),
+      width: 250,
+      dataIndex: 'portName',
+      key: 'portName',
       align: 'center',
     },
     {
-      title: 'Giá bán (ngày/VND)',
-      dataIndex: 'price',
-      key: 'price',
+      title: translateBooking('slot'),
+      dataIndex: 'slot',
+      key: 'slot',
+      align: 'center',
+      sorter: (a, b) => a.key - b.key,
+    },
+    {
+      title: translateBooking('note'),
+      width: 350,
+      dataIndex: 'note',
+      key: 'note',
       align: 'center',
     },
     {
-      title: 'Trạng thái',
+      title: translateBooking('name_customer'),
+      width: 250,
+      dataIndex: 'nameCustomer',
+      key: 'nameCustomer',
+      align: 'center',
+    },
+    {
+      title: translateBooking('name_supplier'),
+      width: 250,
+      dataIndex: 'nameSupplier',
+      key: 'nameSupplier',
+      align: 'center',
+    },
+    {
+      title: translateBooking('name_cnee'),
+      width: 250,
+      dataIndex: 'nameCnee',
+      key: 'nameCnee',
+      align: 'center',
+    },
+    {
+      title: translateBooking('date_create'),
+      width: 150,
+      dataIndex: 'dateCreate',
+      key: 'dateCreate',
+      align: 'center',
+    },
+    {
+      title: translateBooking('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',
       filters: [
         {
-          text: 'Hoạt động',
-          value: 'Active',
+          text: 'Save As Draft',
+          value: 'SaveAsDraft',
         },
         {
-          text: 'Tạm ngừng',
-          value: 'DeActive',
+          text: 'Pending',
+          value: 'Pending',
+        },
+        {
+          text: 'Approved',
+          value: 'Approved',
+        },
+        {
+          text: 'Delayed',
+          value: 'Delayed',
+        },
+        {
+          text: 'Pending',
+          value: 'Pending',
+        },
+        {
+          text: 'Completed',
+          value: 'Completed',
+        },
+        {
+          text: 'Cancel',
+          value: 'Cancel',
         },
       ],
       // onFilter: (value: string, record) => record.address.startsWith(value),
@@ -227,7 +269,7 @@ export default function BookingPage() {
         </Row>
       </Card>
       <Card
-        style={{ marginTop: '24px' }}
+        style={{ marginTop: '15px' }}
         bordered={false}
         title={translateBooking('title')}
       >
@@ -237,6 +279,7 @@ export default function BookingPage() {
             selectedRowKeys: selectedRowKeys,
             onChange: handleSelectionChange,
           }}
+          size="small"
           columns={columns}
           dataSource={data}
           scroll={{ x: 'max-content' }}
