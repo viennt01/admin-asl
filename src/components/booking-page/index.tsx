@@ -263,7 +263,7 @@ export default function BookingPage() {
                 fontWeight: '500',
               }}
             >
-              {translateCommon('delete')}
+              {translateCommon('button_delete')}
             </Button>
           </Col>
         </Row>

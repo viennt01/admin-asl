@@ -120,7 +120,7 @@ export function AppLayout(props: Props) {
     );
   }, [languageSelected]);
   const ROUTER_HEADER = {
-    '/': [{ title: `${translateCommon('dashboard')}` }],
+    '/': [{ title: `${translateCommon('home')}` }],
     '/quotation': [{ title: `${translateCommon('quotation')}` }],
     '/quotation/edit/[id]': [
       {
@@ -137,12 +137,12 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/parner/customer': [
-      { title: `${translateCommon('parner')}` },
+    '/partner/customer': [
+      { title: `${translateCommon('partner')}` },
       { title: `${translateCommon('customer')}` },
     ],
-    '/parner/customer/edit/[id]': [
-      { title: `${translateCommon('parner')}` },
+    '/partner/customer/edit/[id]': [
+      { title: `${translateCommon('partner')}` },
       {
         title: (
           <Link href={ROUTERS.CUSTOMER}>{translateCommon('customer')}</Link>
@@ -150,12 +150,12 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/parner/supplier': [
-      { title: `${translateCommon('parner')}` },
+    '/partner/supplier': [
+      { title: `${translateCommon('partner')}` },
       { title: `${translateCommon('supplier')}` },
     ],
-    '/parner/supplier/edit/[id]': [
-      { title: `${translateCommon('parner')}` },
+    '/partner/supplier/edit/[id]': [
+      { title: `${translateCommon('partner')}` },
       {
         title: (
           <Link href={ROUTERS.SUPPLIER}>{translateCommon('supplier')}</Link>
