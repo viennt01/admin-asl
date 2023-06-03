@@ -205,7 +205,7 @@ export default function CustomerPage() {
                 fontWeight: '500',
               }}
             >
-              {translateCommon('delete')}
+              {translateCommon('button_delete')}
             </Button>
           </Col>
         </Row>

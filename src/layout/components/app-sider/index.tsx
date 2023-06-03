@@ -62,7 +62,7 @@ const AppSider = ({ collapsed }: Props) => {
   const { translate: translateCommon } = useI18n('common');
 
   const items: MenuItem[] = [
-    getItem(`${translateCommon('dashboard')}`, ROUTERS.HOME, <HomeOutlined />),
+    getItem(`${translateCommon('home')}`, ROUTERS.HOME, <HomeOutlined />),
     getItem(
       `${translateCommon('quotation')}`,
       ROUTERS.QUOTATION,
@@ -73,7 +73,7 @@ const AppSider = ({ collapsed }: Props) => {
       ROUTERS.BOOKING,
       <SolutionOutlined />
     ),
-    getItem(`${translateCommon('parner')}`, '1', <TeamOutlined />, [
+    getItem(`${translateCommon('partner')}`, '1', <TeamOutlined />, [
       getItem(
         `${translateCommon('customer')}`,
         ROUTERS.CUSTOMER,
@@ -148,7 +148,7 @@ const AppSider = ({ collapsed }: Props) => {
     modal.confirm({
       centered: true,
       icon: <LogoutOutlined />,
-      content: <Text>Do you want to sign out?</Text>,
+      content: <Text>{translateCommon('notification_sign_out')}</Text>,
       onOk() {
         appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
         router.push(ROUTERS.LOGIN);

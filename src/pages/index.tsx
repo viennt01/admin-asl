@@ -1,4 +1,4 @@
-import DashboardPage from '@/components/dashboard/dashboard';
+import DashboardPage from '@/components/home/home';
 import withAuthentication from '@/hook/useAuthentication';
 import { Inter } from '@next/font/google';
 import Head from 'next/head';
@@ -21,4 +21,4 @@ function Home() {
 export default withAuthentication(Home);
 
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'dashboard']);
+export const getStaticProps = getStatic(['common', 'home']);

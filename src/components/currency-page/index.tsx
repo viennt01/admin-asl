@@ -94,7 +94,7 @@ export default function CurrencyPage() {
     },
     {
       title: translateCurrency('currency_to'),
-      width: 120,
+      width: 180,
       fixed: 'left',
       dataIndex: 'currencyTo',
       key: 'currencyTo',
@@ -112,6 +112,14 @@ export default function CurrencyPage() {
       filterMode: 'tree',
       filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateCurrency('exchange_rate'),
+      width: 150,
+      dataIndex: 'exchangeRate',
+      key: 'exchangeRate',
+      align: 'center',
+      sorter: (a, b) => a.exchangeRate - b.exchangeRate,
     },
     {
       title: translateCurrency('bank'),
@@ -138,14 +146,6 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('exchange_rate'),
-      width: 150,
-      dataIndex: 'exchangeRate',
-      key: 'exchangeRate',
-      align: 'center',
-      sorter: (a, b) => a.exchangeRate - b.exchangeRate,
-    },
-    {
       title: translateCurrency('cash_buy'),
       width: 150,
       dataIndex: 'sell',
@@ -163,7 +163,7 @@ export default function CurrencyPage() {
     },
     {
       title: translateCurrency('transfer_buy'),
-      width: 150,
+      width: 200,
       dataIndex: 'sell',
       key: 'sell',
       align: 'center',
@@ -171,7 +171,7 @@ export default function CurrencyPage() {
     },
     {
       title: translateCurrency('transfer_sell'),
-      width: 150,
+      width: 200,
       dataIndex: 'price',
       key: 'price',
       align: 'center',
@@ -269,7 +269,7 @@ export default function CurrencyPage() {
                 fontWeight: '500',
               }}
             >
-              {translateCommon('delete')}
+              {translateCommon('button_delete')}
             </Button>
           </Col>
         </Row>

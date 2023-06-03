@@ -38,7 +38,7 @@ export default function CreatePort() {
             fontWeight: '500',
           }}
         >
-          {translateCommon('add')}
+          {translateCommon('button_add')}
         </Button>
       }
       submitter={{

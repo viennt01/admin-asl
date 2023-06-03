@@ -38,7 +38,7 @@ export default function CreateDepot() {
             fontWeight: '500',
           }}
         >
-          {translateCommon('add')}
+          {translateCommon('button_add')}
         </Button>
       }
       submitter={{

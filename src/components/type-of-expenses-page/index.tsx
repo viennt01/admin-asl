@@ -194,7 +194,7 @@ export default function ExpensesTypePage() {
                 fontWeight: '500',
               }}
             >
-              {translateCommon('delete')}
+              {translateCommon('button_delete')}
             </Button>
           </Col>
         </Row>

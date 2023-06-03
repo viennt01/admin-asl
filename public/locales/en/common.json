@@ -1,8 +1,8 @@
 {
-    "dashboard": "Dashboard",
+    "home": "Home",
     "quotation": "Quotation",
     "booking": "Booking",
-    "parner": "Parner",
+    "partner": "Partner",
     "customer": "Customer",
     "supplier": "Supplier",
     "masterData": "Master data",
@@ -19,8 +19,11 @@
     "staff": "Staff",
     "permission": "Permission",
     "sign_out": "Sign out",
-    "add": "Add",
-    "delete": "Delete",
+    "notification_sign_out": "Do you want to sign out of your account?",
+    "notification_404": "Sorry, the page you visited does not exist.",
+    "button_back_home": "Back Home",
+    "button_add": "Add",
+    "button_delete": "Delete",
     "detail": "Detail",
     "error": "Error"
 }

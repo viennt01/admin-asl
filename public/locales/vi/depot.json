@@ -3,7 +3,7 @@
     "depot_no": "Mã số Depot",
     "depot_name": "Tên Depot",
     "address": "Địa chỉ",
-    "brach_depot":"Chi nhánh",
+    "branch_depot":"Chi nhánh",
     "companny_mamagement_depot": "Công ty quản lý Depot",
     "description": "Mô tả",
     "status_depot":"Trạng thái"

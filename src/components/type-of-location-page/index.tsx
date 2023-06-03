@@ -187,7 +187,7 @@ export default function LocationTypePage() {
                 fontWeight: '500',
               }}
             >
-              {translateCommon('delete')}
+              {translateCommon('button_delete')}
             </Button>
           </Col>
         </Row>
