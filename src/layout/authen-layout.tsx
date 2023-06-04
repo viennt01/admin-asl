@@ -2,22 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import AppSider from './components/app-sider';
+import AuthenLayout from './authen-layout.module.scss';
 import {
   Avatar,
   Breadcrumb,
   Layout,
   Space,
   Typography,
-  Badge,
   Image,
   Dropdown,
 } from 'antd';
-import {
-  UserOutlined,
-  MenuOutlined,
-  BellOutlined,
-  DownOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, MenuOutlined, DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
@@ -164,29 +159,29 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/port': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('port')}` },
     ],
     '/master-data/port/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/depot': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('depot')}` },
     ],
     '/master-data/depot/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: <Link href={ROUTERS.DEPOT}>{translateCommon('depot')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/location': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('location')}` },
     ],
     '/master-data/location/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       {
         title: (
           <Link href={ROUTERS.LOCATION}>{translateCommon('location')}</Link>
@@ -195,11 +190,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/container': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('container')}` },
     ],
     '/master-data/container/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       {
         title: (
           <Link href={ROUTERS.CONTAINER}>{translateCommon('container')}</Link>
@@ -207,12 +202,60 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
+    '/master-data/unit': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit')}` },
+    ],
+    '/master-data/unit/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/exchange-rate': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('exchange_rate')}` },
+    ],
+    '/master-data/exchange-rate/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      {
+        title: (
+          <Link href={ROUTERS.CURRENCY}>
+            {translateCommon('exchange_rate')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/currency': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('currency')}` },
+    ],
+    '/master-data/currency/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      {
+        title: (
+          <Link href={ROUTERS.CURRENCY}>{translateCommon('currency')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/bank': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('bank')}` },
+    ],
+    '/master-data/bank/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      {
+        title: <Link href={ROUTERS.BANK}>{translateCommon('bank')}</Link>,
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
     '/master-data/type-of-expenses': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('type_of_expenses')}` },
     ],
     '/master-data/type-of-expenses/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_EXPENSES}>
@@ -223,11 +266,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/type-of-container': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('type_of_container')}` },
     ],
     '/master-data/type-of-container/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>
@@ -238,38 +281,16 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/type-of-location': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('type_of_location')}` },
     ],
     '/master-data/type-of-location/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
+      { title: `${translateCommon('master_data')}` },
       {
         title: (
           <Link href={ROUTERS.TYPE_OF_LOCATION}>
             {translateCommon('type_of_location')}
           </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-    '/master-data/unit': [
-      { title: `${translateCommon('masterData')}` },
-      { title: `${translateCommon('unit')}` },
-    ],
-    '/master-data/unit/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
-      { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
-      { title: `${translateCommon('detail')}` },
-    ],
-    '/master-data/currency': [
-      { title: `${translateCommon('masterData')}` },
-      { title: `${translateCommon('currency')}` },
-    ],
-    '/master-data/currency/edit/[id]': [
-      { title: `${translateCommon('masterData')}` },
-      {
-        title: (
-          <Link href={ROUTERS.CURRENCY}>{translateCommon('currency')}</Link>
         ),
       },
       { title: `${translateCommon('detail')}` },
@@ -335,12 +356,25 @@ export function AppLayout(props: Props) {
                 style={{
                   cursor: 'pointer',
                   margin: '0px 8px 0px 0px',
-                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '64px',
                 }}
               >
-                <Badge size="default" count={5}>
-                  <BellOutlined style={{ fontSize: '26px' }} />
-                </Badge>
+                <div className={AuthenLayout.notification}>
+                  <svg viewBox="-10 0 35 20">
+                    <path
+                      className={AuthenLayout.notificationBell}
+                      d="M14 12v1H0v-1l0.73-0.58c0.77-0.77 0.81-3.55 1.19-4.42 0.77-3.77 4.08-5 4.08-5 0-0.55 0.45-1 1-1s1 0.45 1 1c0 0 3.39 1.23 4.16 5 0.38 1.88 0.42 3.66 1.19 4.42l0.66 0.58z"
+                    ></path>
+                    <path
+                      className={AuthenLayout.notificationBellClapper}
+                      d="M7 15.7c1.11 0 2-0.89 2-2H5c0 1.11 0.89 2 2 2z"
+                    ></path>
+                  </svg>
+                  <span className={AuthenLayout.notificationNumber}></span>
+                </div>
               </Space>
               <Avatar style={{ display: 'block' }} icon={<UserOutlined />} />
               Thanh Viên

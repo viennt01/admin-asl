@@ -16,7 +16,7 @@ import useI18n from '@/i18n/useI18N';
 //     }, time);
 //   });
 // };
-export default function CreateStaff() {
+export default function CreateExchangeRate() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
 
@@ -25,7 +25,7 @@ export default function CreateStaff() {
       name: string;
       company: string;
     }>
-      title="Add new staff"
+      title="Add new exchange rate"
       trigger={
         <Button
           type="primary"
@@ -43,7 +43,7 @@ export default function CreateStaff() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add staff',
+          submitText: 'Add Exchange Rate',
           resetText: 'Cancel',
         },
       }}

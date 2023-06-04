@@ -33,8 +33,8 @@ export default function CreateQuotation() {
           style={{
             marginRight: '4px',
             backgroundColor: COLORS.BRIGHT,
-            color: COLORS.PRIMARY,
-            borderColor: COLORS.PRIMARY,
+            color: COLORS.GREEN,
+            borderColor: COLORS.GREEN,
             fontWeight: '500',
           }}
         >

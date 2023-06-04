@@ -6,7 +6,7 @@ import {
 import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
-import CreateCurrency from './create-currency';
+import CreateBank from './create-bank';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -17,29 +17,26 @@ const STATUS_COLORS = {
   DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Sử dụng',
-  DeActive: 'Ngừng sử dụng',
+  Active: 'Hoạt động',
+  DeActive: 'Ngừng hoạt động',
 };
 
-// const STATUS_CAPACITY_COLORS = {
-//   Full: '#31AFFE',
-//   NotFull: '#616887',
-// };
-// const STATUS_CAPACITY_LABELS = {
-//   Full: 'Đầy',
-//   NotFull: 'Nửa đầy',
-// };
-
-export default function CurrencyPage() {
+export default function BankPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateCurrency } = useI18n('currency');
+  const { translate: translateBank } = useI18n('bank');
   const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
     key: number;
-    currencyName: string;
-    currencyDescription: string;
+    bankLogo: string;
+    bankName: string;
+    bankAccountNumber: string;
+    bankHotlinePhoneNumber: string;
+    bankEmail: string;
+    bankAddress: string;
+    bankBranch: string;
+    bankNote: string;
     status: string;
   }
 
@@ -47,16 +44,22 @@ export default function CurrencyPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      currencyName: 'USD',
-      currencyDescription: 'Đô la Mỹ',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      bankLogo: 'https://cdn.pixabay.com.jpg',
+      bankName: 'Vietcombank',
+      bankAccountNumber: '1234567989',
+      bankHotlinePhoneNumber: '1900 545413',
+      bankEmail: 'Vietcombank@gamil.com',
+      bankAddress: '50A Đặng Văn Bi, Bình Thọ, Thủ Đức, Thành phố Hồ Chí Minh',
+      bankBranch: 'Hồ Chí Minh',
+      bankNote: 'Ngân Hàng TMCP Ngoại Thương Việt Nam (Vietcombank)',
+      status: i % 5 === 1 ? 'DeActive' : 'Active',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
-      title: translateCurrency('code'),
-      width: 120,
+      title: translateBank('bank_no'),
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -64,20 +67,20 @@ export default function CurrencyPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateCurrency('currency_name'),
+      title: translateBank('bank_name'),
       width: 300,
-      dataIndex: 'currencyName',
-      key: 'currencyName',
+      dataIndex: 'bankName',
+      key: 'bankName',
       fixed: 'left',
       align: 'center',
       filters: [
         {
-          text: 'USD',
-          value: 'USD',
+          text: 'Vietcombank',
+          value: 'Vietcombank',
         },
         {
-          text: 'EUR',
-          value: 'EUR',
+          text: 'BIDV',
+          value: 'BIDV',
         },
       ],
       filterMode: 'tree',
@@ -85,26 +88,66 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('currency_description'),
-      width: 350,
-      dataIndex: 'currencyDescription',
-      key: 'currencyDescription',
+      title: translateBank('bank_account_number'),
+      width: 200,
+      dataIndex: 'bankAccountNumber',
+      key: 'bankAccountNumber',
       align: 'center',
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('status'),
+      title: translateBank('bank_hotline_phone_number'),
+      width: 250,
+      dataIndex: 'bankHotlinePhoneNumber',
+      key: 'bankHotlinePhoneNumber',
+      align: 'center',
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateBank('bank_email'),
+      width: 250,
+      dataIndex: 'bankEmail',
+      key: 'bankEmail',
+      align: 'center',
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateBank('bank_address'),
+      width: 500,
+      dataIndex: 'bankAddress',
+      key: 'bankAddress',
+      align: 'center',
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateBank('bank_branch'),
+      width: 200,
+      dataIndex: 'bankBranch',
+      key: 'bankBranch',
+      align: 'center',
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateBank('bank_note'),
+      width: 550,
+      dataIndex: 'bankNote',
+      key: 'bankNote',
+      align: 'center',
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateBank('status'),
       dataIndex: 'status',
       fixed: 'right',
       key: 'status',
       align: 'center',
       filters: [
         {
-          text: 'Sử dụng',
+          text: 'Hoạt động',
           value: 'Active',
         },
         {
-          text: 'Ngừng sử dụng',
+          text: 'Ngừng hoạt động',
           value: 'DeActive',
         },
       ],
@@ -137,7 +180,7 @@ export default function CurrencyPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.CURRENCY_EDIT(id));
+    router.push(ROUTERS.BANK_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -174,7 +217,7 @@ export default function CurrencyPage() {
             </Form>
           </Col>
           <Col>
-            <CreateCurrency />
+            <CreateBank />
             <Button
               icon={<DeleteOutlined />}
               style={{
@@ -192,7 +235,7 @@ export default function CurrencyPage() {
       <Card
         style={{ marginTop: '15px' }}
         bordered={false}
-        title={translateCurrency('title')}
+        title={translateBank('title')}
       >
         <Table
           rowSelection={{

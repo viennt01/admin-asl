@@ -1,0 +1,98 @@
+$bg: #232A3D;
+$c: #00A651;
+$n: #FF4C13;
+$d: 55px;
+$t: 2.2s;
+
+.notification {
+    position: relative;
+    width: $d;
+    height: 64px;
+
+    svg {
+        width: $d;
+        height: 64px;
+
+        >path {
+            fill: $c;
+        }
+    }
+
+    .notificationBell {
+        animation: bell $t linear infinite;
+        transform-origin: 50% 0%;
+    }
+
+    .notificationBellClapper {
+        animation: bellClapper $t .1s linear infinite;
+    }
+
+    .notificationNumber {
+        position: absolute;
+        top: 14px;
+        left: 48%;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        background-color: $n;
+        border: 4px solid $n;
+        color: $c;
+        text-align: center;
+        animation: notification $t linear;
+    }
+}
+
+@keyframes bell {
+    0%, 25%, 75%, 100% {
+        transform: rotate(0deg);
+    }
+
+    40% {
+        transform: rotate(10deg);
+    }
+
+    45% {
+        transform: rotate(-10deg);
+    }
+
+    55% {
+        transform: rotate(8deg);
+    }
+
+    60% {
+        transform: rotate(-8deg);
+    }
+}
+
+@keyframes bellClapper {
+    0%, 25%, 75%, 100% {
+        transform: translateX(0);
+    }
+
+    40% {
+        transform: translateX(-.15em);
+    }
+
+    45% {
+        transform: translateX(.15em);
+    }
+
+    55% {
+        transform: translateX(-.1em);
+    }
+
+    60% {
+        transform: translateX(.1em);
+    }
+}
+
+@keyframes notification {
+
+    0%, 25%, 75%, 100% {
+        opacity: 1;
+    }
+
+    30%, 70% {
+        opacity: 0;
+    }
+}
