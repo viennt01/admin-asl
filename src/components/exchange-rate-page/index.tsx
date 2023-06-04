@@ -6,19 +6,19 @@ import {
 import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
-import CreateCurrency from './create-currency';
+import CreateExchangeRate from './create-exchange-rate';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Active: '#00A651',
-  DeActive: '#ED1C27',
+  Increase: '#00A651',
+  Reduce: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Active: 'Sử dụng',
-  DeActive: 'Ngừng sử dụng',
+  Increase: 'Tăng',
+  Reduce: 'Giảm',
 };
 
 // const STATUS_CAPACITY_COLORS = {
@@ -30,16 +30,20 @@ const STATUS_LABELS = {
 //   NotFull: 'Nửa đầy',
 // };
 
-export default function CurrencyPage() {
+export default function ExchangeRatePage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateCurrency } = useI18n('currency');
+  const { translate: translateExchangeRate } = useI18n('exchangeRate');
   const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
     key: number;
-    currencyName: string;
-    currencyDescription: string;
+    currencyFrom: string;
+    currencyTo: string;
+    bank: string;
+    exchangeRate: number;
+    price: number;
+    sell: number;
     status: string;
   }
 
@@ -47,15 +51,19 @@ export default function CurrencyPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      currencyName: 'USD',
-      currencyDescription: 'Đô la Mỹ',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      currencyFrom: 'USD',
+      currencyTo: 'VND',
+      bank: 'ACB',
+      exchangeRate: 26098,
+      price: 23375,
+      sell: 26098,
+      status: i % 2 === 1 ? 'Increase' : 'Reduce',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
-      title: translateCurrency('code'),
+      title: translateExchangeRate('code'),
       width: 120,
       dataIndex: 'key',
       key: 'key',
@@ -64,10 +72,10 @@ export default function CurrencyPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateCurrency('currency_name'),
-      width: 300,
-      dataIndex: 'currencyName',
-      key: 'currencyName',
+      title: translateExchangeRate('currency_from'),
+      width: 150,
+      dataIndex: 'currencyFrom',
+      key: 'currencyFrom',
       fixed: 'left',
       align: 'center',
       filters: [
@@ -85,27 +93,104 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('currency_description'),
-      width: 350,
-      dataIndex: 'currencyDescription',
-      key: 'currencyDescription',
+      title: translateExchangeRate('currency_to'),
+      width: 180,
+      fixed: 'left',
+      dataIndex: 'currencyTo',
+      key: 'currencyTo',
       align: 'center',
+      filters: [
+        {
+          text: 'USD',
+          value: 'USD',
+        },
+        {
+          text: 'Euro',
+          value: 'Euro',
+        },
+      ],
+      filterMode: 'tree',
+      filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('status'),
+      title: translateExchangeRate('exchange_rate'),
+      width: 150,
+      dataIndex: 'exchangeRate',
+      key: 'exchangeRate',
+      align: 'center',
+      sorter: (a, b) => a.exchangeRate - b.exchangeRate,
+    },
+    {
+      title: translateExchangeRate('bank'),
+      width: 180,
+      dataIndex: 'bank',
+      key: 'bank',
+      align: 'center',
+      filters: [
+        {
+          text: 'ABBank',
+          value: 'ABBank',
+        },
+        {
+          text: 'ACB',
+          value: 'ACB',
+        },
+        {
+          text: 'BIDV',
+          value: 'BIDV',
+        },
+      ],
+      filterMode: 'tree',
+      filterSearch: true,
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateExchangeRate('cash_buy'),
+      width: 150,
+      dataIndex: 'sell',
+      key: 'sell',
+      align: 'center',
+      sorter: (a, b) => a.sell - b.sell,
+    },
+    {
+      title: translateExchangeRate('cash_sell'),
+      width: 150,
+      dataIndex: 'price',
+      key: 'price',
+      align: 'center',
+      sorter: (a, b) => a.sell - b.sell,
+    },
+    {
+      title: translateExchangeRate('transfer_buy'),
+      width: 200,
+      dataIndex: 'sell',
+      key: 'sell',
+      align: 'center',
+      sorter: (a, b) => a.sell - b.sell,
+    },
+    {
+      title: translateExchangeRate('transfer_sell'),
+      width: 200,
+      dataIndex: 'price',
+      key: 'price',
+      align: 'center',
+      sorter: (a, b) => a.sell - b.sell,
+    },
+    {
+      title: translateExchangeRate('status'),
       dataIndex: 'status',
       fixed: 'right',
       key: 'status',
       align: 'center',
       filters: [
         {
-          text: 'Sử dụng',
-          value: 'Active',
+          text: 'Tăng',
+          value: 'Increase',
         },
         {
-          text: 'Ngừng sử dụng',
-          value: 'DeActive',
+          text: 'Giảm',
+          value: 'Reduce',
         },
       ],
       // onFilter: (value: string, record) => record.address.startsWith(value),
@@ -137,7 +222,7 @@ export default function CurrencyPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.CURRENCY_EDIT(id));
+    router.push(ROUTERS.EXCHANGE_RATE_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -174,7 +259,7 @@ export default function CurrencyPage() {
             </Form>
           </Col>
           <Col>
-            <CreateCurrency />
+            <CreateExchangeRate />
             <Button
               icon={<DeleteOutlined />}
               style={{
@@ -192,7 +277,7 @@ export default function CurrencyPage() {
       <Card
         style={{ marginTop: '15px' }}
         bordered={false}
-        title={translateCurrency('title')}
+        title={translateExchangeRate('title')}
       >
         <Table
           rowSelection={{

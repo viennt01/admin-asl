@@ -20,6 +20,16 @@ export const ROUTERS = {
   CONTAINER: '/master-data/container',
   CONTAINER_EDIT: (containerId: string) =>
     `/master-data/container/edit/${containerId}`,
+  UNIT: '/master-data/unit',
+  UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
+  EXCHANGE_RATE: '/master-data/exchange-rate',
+  EXCHANGE_RATE_EDIT: (exchangeRateId: string) =>
+    `/master-data/exchange-rate/edit/${exchangeRateId}`,
+  CURRENCY: '/master-data/currency',
+  CURRENCY_EDIT: (currencyId: string) =>
+    `/master-data/currency/edit/${currencyId}`,
+  BANK: '/master-data/bank',
+  BANK_EDIT: (bankId: string) => `/master-data/bank/edit/${bankId}`,
   TYPE_OF_LOCATION: '/master-data/type-of-location',
   TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
     `/master-data/type-of-location/edit/${typeOfLocationId}`,
@@ -29,11 +39,6 @@ export const ROUTERS = {
   TYPES_OF_EXPENSES: '/master-data/type-of-expenses',
   TYPES_OF_EXPENSES_EDIT: (typeOfExpenseId: string) =>
     `/master-data/type-of-expenses/edit/${typeOfExpenseId}`,
-  UNIT: '/master-data/unit',
-  UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
-  CURRENCY: '/master-data/currency',
-  CURRENCY_EDIT: (currencyId: string) =>
-    `/master-data/currency/edit/${currencyId}`,
   STAFF: '/system/staff',
   STAFF_EDIT: (staffId: string) => `/system/staff/edit/${staffId}`,
   PERMISSION: '/system/permission',

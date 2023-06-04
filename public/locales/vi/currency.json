@@ -1,13 +1,7 @@
 {
     "title": "Danh sách tiền tệ",
     "code": "Mã tiền tệ",
-    "currency_from": "Tiền tệ chuyển từ",
-    "currency_to": "Tiền tệ chuyển  sang",
-    "bank": "Ngân hàng",
-    "exchange_rate": "Tỉ giá",
-    "cash_buy": "Tiền mặt (Mua)",
-    "cash_sell": "Tiền mặt (Bán)",
-    "transfer_buy": "Chuyển khoản (Mua)",
-    "transfer_sell": "Chuyển khoản (Bán)",
+    "currency_name": "Tên tiền tệ",
+    "currency_description": "Mô tả",
     "status":"Trạng thái"
 }
