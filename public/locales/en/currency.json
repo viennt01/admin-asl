@@ -1,13 +1,7 @@
 {
     "title": "List of Currency",
     "code": "Currency No",
-    "currency_from": "Currency From",
-    "currency_to": "Currency To",
-    "bank": "Bank",
-    "exchange_rate": "Exchange rate",
-    "cash_buy": "Cash (Buy)",
-    "cash_sell": "Cash (Sell)",
-    "transfer_buy": "Transfer (Buy)",
-    "transfer_sell": "Transfer (Sell)",
+    "currency_name": "Currency Name",
+    "currency_description": "Description",
     "status":"Status"
 }

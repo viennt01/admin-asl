@@ -1,0 +1,13 @@
+{
+    "title": "Danh sách tỉ giá tiền tệ",
+    "code": "Số thứ tự",
+    "currency_from": "Tiền tệ chuyển từ",
+    "currency_to": "Tiền tệ chuyển  sang",
+    "bank": "Ngân hàng",
+    "exchange_rate": "Tỉ giá",
+    "cash_buy": "Tiền mặt (Mua)",
+    "cash_sell": "Tiền mặt (Bán)",
+    "transfer_buy": "Chuyển khoản (Mua)",
+    "transfer_sell": "Chuyển khoản (Bán)",
+    "status":"Trạng thái"
+}

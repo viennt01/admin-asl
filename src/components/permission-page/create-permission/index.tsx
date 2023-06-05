@@ -33,12 +33,12 @@ export default function CreatePermission() {
           style={{
             marginRight: '4px',
             backgroundColor: COLORS.BRIGHT,
-            color: COLORS.PRIMARY,
-            borderColor: COLORS.PRIMARY,
+            color: COLORS.GREEN,
+            borderColor: COLORS.GREEN,
             fontWeight: '500',
           }}
         >
-          {translateCommon('add')}
+          {translateCommon('button_add')}
         </Button>
       }
       submitter={{

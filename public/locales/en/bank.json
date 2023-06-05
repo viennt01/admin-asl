@@ -1,0 +1,13 @@
+{
+    "title": "List of Currency",
+    "bank_no": "Bank No",
+    "bank_logo": "Logo",
+    "bank_name": "Bank name",
+    "bank_account_number": "Bank account number",
+    "bank_hotline_phone_number": "Hotline phone number",
+    "bank_email": "Email",
+    "bank_address": "Address",
+    "bank_branch": "Bank branch",
+    "bank_note": "Note",
+    "status":"Status"
+}

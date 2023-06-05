@@ -66,7 +66,7 @@ export default function PortPage() {
   const columns: ColumnsType<DataType> = [
     {
       title: translatePort('code'),
-      width: 100,
+      width: 150,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -230,7 +230,7 @@ export default function PortPage() {
                 fontWeight: '500',
               }}
             >
-              {translateCommon('delete')}
+              {translateCommon('button_delete')}
             </Button>
           </Col>
         </Row>

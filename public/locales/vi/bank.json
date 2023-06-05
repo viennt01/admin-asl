@@ -1,0 +1,13 @@
+{
+    "title": "Danh sách Ngân Hàng",
+    "bank_no": "Mã Ngân Hàng",
+    "bank_logo": "Logo",
+    "bank_name": "Tên Ngân Hàng",
+    "bank_account_number": "Số tài khoản Ngân Hàng",
+    "bank_hotline_phone_number": "Số điện thoại Hotline",
+    "bank_email": "Email",
+    "bank_address": "Địa chỉ",
+    "bank_branch": "Chi nhánh Ngân Hàng",
+    "bank_note": "Ghi chú",
+    "status":"Trạng thái"
+}

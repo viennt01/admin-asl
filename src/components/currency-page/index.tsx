@@ -13,12 +13,12 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
 const STATUS_COLORS = {
-  Increase: '#00A651',
-  Reduce: '#ED1C27',
+  Active: '#00A651',
+  DeActive: '#ED1C27',
 };
 const STATUS_LABELS = {
-  Increase: 'Tăng',
-  Reduce: 'Giảm',
+  Active: 'Sử dụng',
+  DeActive: 'Ngừng sử dụng',
 };
 
 // const STATUS_CAPACITY_COLORS = {
@@ -38,12 +38,8 @@ export default function CurrencyPage() {
 
   interface DataType {
     key: number;
-    name: string;
-    currencyTo: string;
-    bank: string;
-    exchangeRate: number;
-    price: number;
-    sell: number;
+    currencyName: string;
+    currencyDescription: string;
     status: string;
   }
 
@@ -51,13 +47,9 @@ export default function CurrencyPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      name: 'USD',
-      currencyTo: 'VND',
-      bank: 'ACB',
-      exchangeRate: 26098,
-      price: 23375,
-      sell: 26098,
-      status: i % 2 === 1 ? 'Increase' : 'Reduce',
+      currencyName: 'USD',
+      currencyDescription: 'Đô la Mỹ',
+      status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
 
@@ -72,10 +64,10 @@ export default function CurrencyPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateCurrency('currency_from'),
-      width: 150,
-      dataIndex: 'name',
-      key: 'name',
+      title: translateCurrency('currency_name'),
+      width: 300,
+      dataIndex: 'currencyName',
+      key: 'currencyName',
       fixed: 'left',
       align: 'center',
       filters: [
@@ -93,89 +85,12 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('currency_to'),
-      width: 120,
-      fixed: 'left',
-      dataIndex: 'currencyTo',
-      key: 'currencyTo',
+      title: translateCurrency('currency_description'),
+      width: 350,
+      dataIndex: 'currencyDescription',
+      key: 'currencyDescription',
       align: 'center',
-      filters: [
-        {
-          text: 'USD',
-          value: 'USD',
-        },
-        {
-          text: 'Euro',
-          value: 'Euro',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: translateCurrency('bank'),
-      width: 180,
-      dataIndex: 'bank',
-      key: 'bank',
-      align: 'center',
-      filters: [
-        {
-          text: 'ABBank',
-          value: 'ABBank',
-        },
-        {
-          text: 'ACB',
-          value: 'ACB',
-        },
-        {
-          text: 'BIDV',
-          value: 'BIDV',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: translateCurrency('exchange_rate'),
-      width: 150,
-      dataIndex: 'exchangeRate',
-      key: 'exchangeRate',
-      align: 'center',
-      sorter: (a, b) => a.exchangeRate - b.exchangeRate,
-    },
-    {
-      title: translateCurrency('cash_buy'),
-      width: 150,
-      dataIndex: 'sell',
-      key: 'sell',
-      align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
-    },
-    {
-      title: translateCurrency('cash_sell'),
-      width: 150,
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
-    },
-    {
-      title: translateCurrency('transfer_buy'),
-      width: 150,
-      dataIndex: 'sell',
-      key: 'sell',
-      align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
-    },
-    {
-      title: translateCurrency('transfer_sell'),
-      width: 150,
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
     },
     {
       title: translateCurrency('status'),
@@ -185,12 +100,12 @@ export default function CurrencyPage() {
       align: 'center',
       filters: [
         {
-          text: 'Tăng',
-          value: 'Increase',
+          text: 'Sử dụng',
+          value: 'Active',
         },
         {
-          text: 'Giảm',
-          value: 'Reduce',
+          text: 'Ngừng sử dụng',
+          value: 'DeActive',
         },
       ],
       // onFilter: (value: string, record) => record.address.startsWith(value),
@@ -269,7 +184,7 @@ export default function CurrencyPage() {
                 fontWeight: '500',
               }}
             >
-              {translateCommon('delete')}
+              {translateCommon('button_delete')}
             </Button>
           </Col>
         </Row>

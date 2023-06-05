@@ -17,6 +17,7 @@ import {
   ClusterOutlined,
   ApartmentOutlined,
   UsergroupAddOutlined,
+  FundOutlined,
   GoldOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image, ConfigProvider } from 'antd';
@@ -62,7 +63,7 @@ const AppSider = ({ collapsed }: Props) => {
   const { translate: translateCommon } = useI18n('common');
 
   const items: MenuItem[] = [
-    getItem(`${translateCommon('dashboard')}`, ROUTERS.HOME, <HomeOutlined />),
+    getItem(`${translateCommon('home')}`, ROUTERS.HOME, <HomeOutlined />),
     getItem(
       `${translateCommon('quotation')}`,
       ROUTERS.QUOTATION,
@@ -73,7 +74,7 @@ const AppSider = ({ collapsed }: Props) => {
       ROUTERS.BOOKING,
       <SolutionOutlined />
     ),
-    getItem(`${translateCommon('parner')}`, '1', <TeamOutlined />, [
+    getItem(`${translateCommon('partner')}`, '1', <TeamOutlined />, [
       getItem(
         `${translateCommon('customer')}`,
         ROUTERS.CUSTOMER,
@@ -85,7 +86,7 @@ const AppSider = ({ collapsed }: Props) => {
         <BankOutlined />
       ),
     ]),
-    getItem(`${translateCommon('masterData')}`, '2', <AppstoreOutlined />, [
+    getItem(`${translateCommon('master_data')}`, '2', <AppstoreOutlined />, [
       getItem(`${translateCommon('port')}`, ROUTERS.PORT, <GoldOutlined />),
       getItem(`${translateCommon('depot')}`, ROUTERS.DEPOT, <GoldOutlined />),
       getItem(
@@ -105,10 +106,16 @@ const AppSider = ({ collapsed }: Props) => {
         <CalculatorOutlined />
       ),
       getItem(
+        `${translateCommon('exchange_rate')}`,
+        ROUTERS.EXCHANGE_RATE,
+        <FundOutlined />
+      ),
+      getItem(
         `${translateCommon('currency')}`,
         ROUTERS.CURRENCY,
         <DollarOutlined />
       ),
+      getItem(`${translateCommon('bank')}`, ROUTERS.BANK, <BankOutlined />),
       getItem(
         `${translateCommon('type_of_expenses')}`,
         ROUTERS.TYPES_OF_EXPENSES,
@@ -148,7 +155,7 @@ const AppSider = ({ collapsed }: Props) => {
     modal.confirm({
       centered: true,
       icon: <LogoutOutlined />,
-      content: <Text>Do you want to sign out?</Text>,
+      content: <Text>{translateCommon('notification_sign_out')}</Text>,
       onOk() {
         appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
         router.push(ROUTERS.LOGIN);
@@ -173,7 +180,7 @@ const AppSider = ({ collapsed }: Props) => {
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: COLORS.PRIMARY,
+            colorPrimary: COLORS.GREEN,
           },
         }}
       >
@@ -217,6 +224,7 @@ const AppSider = ({ collapsed }: Props) => {
               </Title>
               {!collapsed && <hr style={{ width: '60%' }} />}
               <Menu
+                className={style.antMenu}
                 selectedKeys={[selectedKey]}
                 onClick={handleClickMenuItem}
                 mode="inline"
@@ -224,7 +232,7 @@ const AppSider = ({ collapsed }: Props) => {
                 style={{
                   marginTop: '16px',
                   fontWeight: '500',
-                  height: '76vh',
+                  // height: '75vh',
                   overflowY: 'auto',
                 }}
               />
