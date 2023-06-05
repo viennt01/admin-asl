@@ -1,16 +1,22 @@
-import {
-  DeleteOutlined,
-  EditOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
-import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { Key, useState } from 'react';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Card, ConfigProvider, Tag } from 'antd';
+import React, { Key, useEffect, useRef, useState } from 'react';
 import CreateBooking from './create-booking';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
+import { ProColumns, ProTable } from '@ant-design/pro-components';
+import enUS from 'antd/lib/locale/en_US';
+import vi_VN from 'antd/lib/locale/vi_VN';
+import { appLocalStorage } from '@/utils/localstorage';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+
+import { SearchOutlined } from '@ant-design/icons';
+import type { InputRef } from 'antd';
+import { Input, Space } from 'antd';
+import type { FilterConfirmProps } from 'antd/es/table/interface';
+import Highlighter from 'react-highlight-words';
 
 const STATUS_COLORS = {
   SaveAsDraft: '#837F7F',
@@ -34,16 +40,17 @@ const STATUS_LABELS = {
 export default function BookingPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [locale, setLocale] = useState(enUS);
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
     key: number;
-    address: string;
+    route: string;
     codeContainer: number;
+    address: string;
     portName: string;
     slot: number;
-    route: string;
     note: string;
     nameCustomer: string;
     nameSupplier: string;
@@ -70,7 +77,119 @@ export default function BookingPage() {
     });
   }
 
-  const columns: ColumnsType<DataType> = [
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef<InputRef>(null);
+
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText('');
+  };
+
+  type DataIndex = keyof DataType;
+
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ProColumns<DataType> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const columns: ProColumns<DataType>[] = [
     {
       title: translateBooking('code_booking'),
       width: 150,
@@ -87,6 +206,7 @@ export default function BookingPage() {
       dataIndex: 'route',
       key: 'route',
       align: 'center',
+      ...getColumnSearchProps('route'),
     },
     {
       title: translateBooking('container_code'),
@@ -95,6 +215,7 @@ export default function BookingPage() {
       key: 'codeContainer',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('codeContainer'),
     },
     {
       title: translateBooking('address'),
@@ -102,6 +223,7 @@ export default function BookingPage() {
       dataIndex: 'address',
       key: 'address',
       align: 'center',
+      ...getColumnSearchProps('address'),
     },
     {
       title: translateBooking('port_name'),
@@ -109,6 +231,7 @@ export default function BookingPage() {
       dataIndex: 'portName',
       key: 'portName',
       align: 'center',
+      ...getColumnSearchProps('portName'),
     },
     {
       title: translateBooking('slot'),
@@ -116,6 +239,7 @@ export default function BookingPage() {
       key: 'slot',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('slot'),
     },
     {
       title: translateBooking('note'),
@@ -123,6 +247,7 @@ export default function BookingPage() {
       dataIndex: 'note',
       key: 'note',
       align: 'center',
+      ...getColumnSearchProps('note'),
     },
     {
       title: translateBooking('name_customer'),
@@ -130,6 +255,7 @@ export default function BookingPage() {
       dataIndex: 'nameCustomer',
       key: 'nameCustomer',
       align: 'center',
+      ...getColumnSearchProps('nameCustomer'),
     },
     {
       title: translateBooking('name_supplier'),
@@ -137,6 +263,7 @@ export default function BookingPage() {
       dataIndex: 'nameSupplier',
       key: 'nameSupplier',
       align: 'center',
+      ...getColumnSearchProps('nameSupplier'),
     },
     {
       title: translateBooking('name_cnee'),
@@ -144,6 +271,7 @@ export default function BookingPage() {
       dataIndex: 'nameCnee',
       key: 'nameCnee',
       align: 'center',
+      ...getColumnSearchProps('nameCnee'),
     },
     {
       title: translateBooking('date_create'),
@@ -151,6 +279,7 @@ export default function BookingPage() {
       dataIndex: 'dateCreate',
       key: 'dateCreate',
       align: 'center',
+      ...getColumnSearchProps('dateCreate'),
     },
     {
       title: translateBooking('status'),
@@ -189,6 +318,8 @@ export default function BookingPage() {
       ],
       // onFilter: (value: string, record) => record.address.startsWith(value),
       filterSearch: true,
+      ...getColumnSearchProps('status'),
+
       render: (value) => (
         <Tag
           color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
@@ -208,7 +339,7 @@ export default function BookingPage() {
       dataIndex: 'key',
       render: (value) => (
         <Button
-          onClick={() => handleEditCustomer(value)}
+          onClick={() => handleEditCustomer(value as string)}
           icon={<EditOutlined />}
         ></Button>
       ),
@@ -222,38 +353,46 @@ export default function BookingPage() {
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
+  useEffect(() => {
+    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
+      case 'en':
+        setLocale(enUS);
+        break;
+      case 'vi':
+        setLocale(vi_VN);
+        break;
+      default:
+        setLocale(vi_VN);
+        break;
+    }
+  }, [router]);
 
   return (
-    <>
-      <Card bordered={false} style={{ margin: '10px 0' }}>
-        <Row>
-          <Col flex={1}>
-            <Form name="search_form">
-              <Space wrap>
-                <Form.Item style={{ margin: 0 }} name="keyword">
-                  <Input
-                    placeholder="Please input to search...."
-                    allowClear
-                    style={{ minWidth: 140 }}
-                  />
-                </Form.Item>
-
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  icon={<SearchOutlined />}
-                  style={{
-                    width: 'fit-content',
-                    padding: '0 32px',
-                    backgroundColor: COLORS.BLUE,
-                    borderColor: COLORS.BLACK,
-                  }}
-                />
-              </Space>
-            </Form>
-          </Col>
-          <Col>
-            <CreateBooking />
+    <Card bordered={false} style={{ margin: '24px 0' }}>
+      <ConfigProvider locale={locale}>
+        <ProTable<DataType>
+          rowKey="key"
+          dataSource={data}
+          rowSelection={{
+            type: 'checkbox',
+            selectedRowKeys: selectedRowKeys,
+            onChange: handleSelectionChange,
+          }}
+          pagination={{
+            position: ['bottomCenter'],
+            showTotal: () => '',
+            showSizeChanger: true,
+          }}
+          columns={columns}
+          search={false}
+          dateFormatter="string"
+          headerTitle={translateBooking('title')}
+          scroll={{ x: 'max-content' }}
+          options={{
+            search: true,
+          }}
+          toolBarRender={() => [
+            <CreateBooking key={'create'} />,
             <Button
               icon={<DeleteOutlined />}
               style={{
@@ -262,30 +401,13 @@ export default function BookingPage() {
                 borderColor: COLORS.RED,
                 fontWeight: '500',
               }}
+              key={'delete'}
             >
-              {translateCommon('button_delete')}
-            </Button>
-          </Col>
-        </Row>
-      </Card>
-      <Card
-        style={{ marginTop: '15px' }}
-        bordered={false}
-        title={translateBooking('title')}
-      >
-        <Table
-          rowSelection={{
-            type: 'checkbox',
-            selectedRowKeys: selectedRowKeys,
-            onChange: handleSelectionChange,
-          }}
-          size="small"
-          columns={columns}
-          dataSource={data}
-          scroll={{ x: 'max-content' }}
-          pagination={{ position: ['bottomCenter'] }}
+              {translateCommon('delete')}
+            </Button>,
+          ]}
         />
-      </Card>
-    </>
+      </ConfigProvider>
+    </Card>
   );
 }
