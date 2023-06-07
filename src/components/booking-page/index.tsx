@@ -1,5 +1,5 @@
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, ConfigProvider, Tag } from 'antd';
+import { Button, ConfigProvider, Tag } from 'antd';
 import React, { Key, useEffect, useRef, useState } from 'react';
 import CreateBooking from './create-booking';
 import { ROUTERS } from '@/constant/router';
@@ -17,6 +17,7 @@ import type { InputRef } from 'antd';
 import { Input, Space } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
+import { FOOTER_HEIGHT, HEADER_HEIGHT } from '@/layout/authen-layout';
 
 const STATUS_COLORS = {
   SaveAsDraft: '#837F7F',
@@ -36,6 +37,20 @@ const STATUS_LABELS = {
   Completed: 'Completed',
   Cancel: 'Cancel',
 };
+interface DataType {
+  key: number;
+  route: string;
+  codeContainer: number;
+  address: string;
+  portName: string;
+  slot: number;
+  note: string;
+  nameCustomer: string;
+  nameSupplier: string;
+  nameCnee: string;
+  dateCreate: string;
+  status: string;
+}
 
 export default function BookingPage() {
   const router = useRouter();
@@ -43,21 +58,10 @@ export default function BookingPage() {
   const [locale, setLocale] = useState(enUS);
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateCommon } = useI18n('common');
-
-  interface DataType {
-    key: number;
-    route: string;
-    codeContainer: number;
-    address: string;
-    portName: string;
-    slot: number;
-    note: string;
-    nameCustomer: string;
-    nameSupplier: string;
-    nameCnee: string;
-    dateCreate: string;
-    status: string;
-  }
+  // const [heightTable, setHeightTable] = useState(700);
+  const [heightTableHeaderTitle, setHeightTableHeaderTitle] = useState(47);
+  const [heightTablePagination, setHeightTablePagination] = useState(24);
+  const headerTable = 64;
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
@@ -368,46 +372,69 @@ export default function BookingPage() {
   }, [router]);
 
   return (
-    <Card bordered={false} style={{ margin: '24px 0' }}>
-      <ConfigProvider locale={locale}>
-        <ProTable<DataType>
-          rowKey="key"
-          dataSource={data}
-          rowSelection={{
-            type: 'checkbox',
-            selectedRowKeys: selectedRowKeys,
-            onChange: handleSelectionChange,
-          }}
-          pagination={{
-            position: ['bottomCenter'],
-            showTotal: () => '',
-            showSizeChanger: true,
-          }}
-          columns={columns}
-          search={false}
-          dateFormatter="string"
-          headerTitle={translateBooking('title')}
-          scroll={{ x: 'max-content' }}
-          options={{
-            search: true,
-          }}
-          toolBarRender={() => [
-            <CreateBooking key={'create'} />,
-            <Button
-              icon={<DeleteOutlined />}
-              style={{
-                backgroundColor: COLORS.RED,
-                color: COLORS.WHITE,
-                borderColor: COLORS.RED,
-                fontWeight: '500',
-              }}
-              key={'delete'}
-            >
-              {translateCommon('delete')}
-            </Button>,
-          ]}
-        />
-      </ConfigProvider>
-    </Card>
+    <ConfigProvider locale={locale}>
+      <ProTable<DataType>
+        onSizeChange={(size) => {
+          switch (size) {
+            case 'large':
+              setHeightTableHeaderTitle(77);
+              setHeightTablePagination(32);
+              break;
+            case 'middle':
+              setHeightTableHeaderTitle(47);
+              setHeightTablePagination(24);
+              break;
+            case 'small':
+              setHeightTableHeaderTitle(39);
+              setHeightTablePagination(24);
+              break;
+            default:
+              setHeightTableHeaderTitle(47);
+              setHeightTablePagination(24);
+              break;
+          }
+        }}
+        style={{ marginTop: '8px' }}
+        rowKey="key"
+        dataSource={data}
+        rowSelection={{
+          type: 'checkbox',
+          selectedRowKeys: selectedRowKeys,
+          onChange: handleSelectionChange,
+        }}
+        pagination={{
+          position: ['bottomCenter'],
+          showTotal: () => '',
+          showSizeChanger: true,
+        }}
+        columns={columns}
+        search={false}
+        dateFormatter="string"
+        // headerTitle={translateBooking('title')}
+        scroll={{
+          x: 'max-content',
+          y: `calc(100vh - (${HEADER_HEIGHT}px + 8px) - ${FOOTER_HEIGHT}px - ${headerTable}px - ${heightTablePagination}px - ${heightTableHeaderTitle}px - 16px*2)`,
+        }}
+        options={{
+          fullScreen: true,
+          search: true,
+        }}
+        toolBarRender={() => [
+          <CreateBooking key={'create'} />,
+          <Button
+            icon={<DeleteOutlined />}
+            style={{
+              backgroundColor: COLORS.RED,
+              color: COLORS.WHITE,
+              borderColor: COLORS.RED,
+              fontWeight: '500',
+            }}
+            key={'delete'}
+          >
+            {translateCommon('delete')}
+          </Button>,
+        ]}
+      />
+    </ConfigProvider>
   );
 }
