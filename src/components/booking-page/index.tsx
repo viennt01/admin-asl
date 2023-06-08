@@ -17,7 +17,7 @@ import type { InputRef } from 'antd';
 import { Input, Space } from 'antd';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import Highlighter from 'react-highlight-words';
-import { FOOTER_HEIGHT, HEADER_HEIGHT } from '@/layout/authen-layout';
+import style from './index.module.scss';
 
 const STATUS_COLORS = {
   SaveAsDraft: '#837F7F',
@@ -58,10 +58,6 @@ export default function BookingPage() {
   const [locale, setLocale] = useState(enUS);
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateCommon } = useI18n('common');
-  // const [heightTable, setHeightTable] = useState(700);
-  const [heightTableHeaderTitle, setHeightTableHeaderTitle] = useState(47);
-  const [heightTablePagination, setHeightTablePagination] = useState(24);
-  const headerTable = 64;
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
@@ -374,26 +370,7 @@ export default function BookingPage() {
   return (
     <ConfigProvider locale={locale}>
       <ProTable<DataType>
-        onSizeChange={(size) => {
-          switch (size) {
-            case 'large':
-              setHeightTableHeaderTitle(77);
-              setHeightTablePagination(32);
-              break;
-            case 'middle':
-              setHeightTableHeaderTitle(47);
-              setHeightTablePagination(24);
-              break;
-            case 'small':
-              setHeightTableHeaderTitle(39);
-              setHeightTablePagination(24);
-              break;
-            default:
-              setHeightTableHeaderTitle(47);
-              setHeightTablePagination(24);
-              break;
-          }
-        }}
+        className={style.table}
         style={{ marginTop: '8px' }}
         rowKey="key"
         dataSource={data}
@@ -410,11 +387,11 @@ export default function BookingPage() {
         columns={columns}
         search={false}
         dateFormatter="string"
-        // headerTitle={translateBooking('title')}
+        headerTitle={translateBooking('title')}
         scroll={{
           x: 'max-content',
-          y: `calc(100vh - (${HEADER_HEIGHT}px + 8px) - ${FOOTER_HEIGHT}px - ${headerTable}px - ${heightTablePagination}px - ${heightTableHeaderTitle}px - 16px*2)`,
         }}
+        sticky={{ offsetHeader: 0 }}
         options={{
           fullScreen: true,
           search: true,
