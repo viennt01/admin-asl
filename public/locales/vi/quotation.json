@@ -1,3 +1,12 @@
 {
-    "title": "Danh sách báo giá"
+    "title": "Danh sách báo giá",
+    "quotation_no": "Mã báo giá",
+    "customer_name": "Tên khách hàng",
+    "receipt_of_goods": "Nhận hàng",
+    "delivery": "Giao hàng",
+    "fee": "Cước",
+    "empty_get_or_return": "Nhận/TRả rỗng",
+    "item_type": "Loại hàng",
+    "effective_date": "Ngày hiệu lực",
+    "creator": "Người tạo"
 }

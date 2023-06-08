@@ -1,6 +1,6 @@
 {
     "title": "Danh sách booking",
-    "code_booking": "Số Booking",
+    "code_booking": "Mã Booking",
     "route": "Tuyến đường",
     "container_code": "Mã Container",
     "address": "Nơi lấy rỗng",

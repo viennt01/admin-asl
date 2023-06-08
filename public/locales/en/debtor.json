@@ -1,0 +1,21 @@
+{
+    "title": "List of Debtor",
+    "the_occurrence": "The Occurrence",
+    "debtor_code": "Debtor No",
+    "debtor_name": "Name",
+    "debtor_tax_code": "Tax code",
+    "debtor_address": "Address",
+    "debtor_phone": "Phone Number",
+    "debtor_email": "Email",
+    "contact": "Contact",
+    "position": "Position",
+    "classification": "Classification",
+    "account_number": "Account number",
+    "bank_name": "Bank name",
+    "province_or_City": "Province/City",
+    "part": "Part",
+    "branch": "Branch",
+    "customer_name": "Shipper",
+    "note": "Note",
+    "creator": "Creator"
+}
