@@ -1,3 +1,12 @@
 {
-    "title": "List of Quotation"
+    "title": "List of Quotation",
+    "quotation_no": "Quotation No",
+    "customer_name": "Customer Name",
+    "receipt_of_goods": "Receipt of goods",
+    "delivery": "Delivery",
+    "fee": "Fee",
+    "empty_get_or_return": "Empty Get/Return",
+    "item_type": "Item Type",
+    "effective_date": "Effective Date",
+    "creator": "Creator"
 }

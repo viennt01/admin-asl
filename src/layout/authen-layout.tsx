@@ -23,7 +23,8 @@ import useI18n from '@/i18n/useI18N';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
-const HEADER_HEIGHT = 64;
+export const HEADER_HEIGHT = 64;
+export const FOOTER_HEIGHT = 38;
 const WIDTH_FLAG = 36;
 interface Props {
   children: React.ReactNode;
@@ -389,7 +390,13 @@ export function AppLayout(props: Props) {
           }}
         >
           <main>{props.children}</main>
-          <Footer style={{ textAlign: 'center' }}>
+          <Footer
+            style={{
+              textAlign: 'center',
+              padding: '8px 0',
+              height: `${FOOTER_HEIGHT}px`,
+            }}
+          >
             <Text disabled>GLS @2023 Created by GLS</Text>
           </Footer>
         </Content>

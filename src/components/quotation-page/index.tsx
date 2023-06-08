@@ -3,7 +3,7 @@ import {
   EditOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Col, Form, Input, Row, Space, Table, Tag } from 'antd';
+import { Button, Card, Col, Form, Input, Row, Space, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { Key, useState } from 'react';
 import CreateQuotation from './create-quotation';
@@ -12,23 +12,23 @@ import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 
-const STATUS_COLORS = {
-  Active: '#00A651',
-  DeActive: '#ED1C27',
-};
-const STATUS_LABELS = {
-  Active: 'Active',
-  DeActive: 'Tạm ngừng',
-};
+// const STATUS_COLORS = {
+//   Active: '#00A651',
+//   DeActive: '#ED1C27',
+// };
+// const STATUS_LABELS = {
+//   Active: 'Active',
+//   DeActive: 'Tạm ngừng',
+// };
 
-const STATUS_CAPACITY_COLORS = {
-  Full: '#31AFFE',
-  NotFull: '#616887',
-};
-const STATUS_CAPACITY_LABELS = {
-  Full: 'Đầy',
-  NotFull: 'Nửa đầy',
-};
+// const STATUS_CAPACITY_COLORS = {
+//   Full: '#31AFFE',
+//   NotFull: '#616887',
+// };
+// const STATUS_CAPACITY_LABELS = {
+//   Full: 'Đầy',
+//   NotFull: 'Nửa đầy',
+// };
 
 export default function QuotationPage() {
   const router = useRouter();
@@ -38,128 +38,93 @@ export default function QuotationPage() {
 
   interface DataType {
     key: number;
-    age: number;
-    name: string;
-    address: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
-    status: string;
+    quotationNo: string;
+    customerName: string;
+    receiptOfGoods: string;
+    delivery: string;
+    fee: string;
+    emptyGetOrReturn: string;
+    itemType: string;
+    effectiveDate: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      age: 32,
-      name: `Vũng Tàu ${i}`,
-      address: 'Vũng Tàu',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      quotationNo: '123456',
+      customerName: 'Nguyễn Văn A',
+      receiptOfGoods: 'Nhận hàng',
+      delivery: 'Giao hàng',
+      fee: '500000',
+      emptyGetOrReturn: 'Nhận/TRả rỗng',
+      itemType: 'Thực Phẩm',
+      effectiveDate: 'Ngày hiệu lực',
+      creator: 'Trần Thị A',
     });
   }
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã cảng',
+      title: translateQuotation('quotation_no'),
       width: 150,
-      dataIndex: 'key',
-      key: 'key',
+      dataIndex: 'quotationNo',
+      key: 'quotationNo',
       fixed: 'left',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: 'Tên Cảng',
+      title: translateQuotation('customer_name'),
       width: 150,
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'customerName',
+      key: 'customerName',
       fixed: 'left',
       align: 'center',
-      filters: [
-        {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
-        },
-        {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
-    { title: 'Địa chỉ', dataIndex: 'address', key: 'address', align: 'center' },
     {
-      title: 'Số lượng container',
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
-      align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
-    },
-    {
-      title: 'Sức chứa (TEUS)',
-      dataIndex: 'capacity',
-      key: 'capacity',
-      align: 'center',
-      sorter: (a, b) => a.capacity - b.capacity,
-    },
-    {
-      title: 'Trạng thái sức chứa',
-      dataIndex: 'capacityState',
-      key: 'capacityState',
-      align: 'center',
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_CAPACITY_COLORS[value as keyof typeof STATUS_CAPACITY_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_CAPACITY_LABELS[value as keyof typeof STATUS_CAPACITY_LABELS]}
-        </Tag>
-      ),
-    },
-    {
-      title: 'Công ty quản lý',
-      dataIndex: 'companyName',
-      key: 'companyName',
+      title: translateQuotation('receipt_of_goods'),
+      dataIndex: 'receiptOfGoods',
+      key: 'receiptOfGoods',
       align: 'center',
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      key: 'status',
+      title: translateQuotation('delivery'),
+      dataIndex: 'delivery',
+      key: 'delivery',
       align: 'center',
-      filters: [
-        {
-          text: 'Active',
-          value: 'Active',
-        },
-        {
-          text: 'Tạm ngừng',
-          value: 'DeActive',
-        },
-      ],
-      // onFilter: (value: string, record) => record.address.startsWith(value),
-      filterSearch: true,
-      render: (value) => (
-        <Tag
-          color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
-        </Tag>
-      ),
+    },
+    {
+      title: translateQuotation('fee'),
+      dataIndex: 'fee',
+      key: 'fee',
+      align: 'center',
+    },
+    {
+      title: translateQuotation('empty_get_or_return'),
+      dataIndex: 'emptyGetOrReturn',
+      key: 'emptyGetOrReturn',
+      align: 'center',
+    },
+    {
+      title: translateQuotation('item_type'),
+      dataIndex: 'itemType',
+      key: 'itemType',
+      align: 'center',
+    },
+    {
+      title: translateQuotation('effective_date'),
+      dataIndex: 'effectiveDate',
+      key: 'effectiveDate',
+      align: 'center',
+    },
+    {
+      title: translateQuotation('creator'),
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

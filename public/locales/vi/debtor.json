@@ -1,0 +1,21 @@
+{
+    "title": "Danh sách đối tượng công nợ",
+    "the_occurrence": "Năm phát sinh",
+    "debtor_code": "Mã",
+    "debtor_name": "Tên",
+    "debtor_tax_code": "Mã số thuế",
+    "debtor_address": "Địa chỉ",
+    "debtor_phone": "Số điện thoại",
+    "debtor_email": "Email",
+    "contact": "Người liên hệ",
+    "position": "Chức vụ",
+    "classification": "Phân loại",
+    "account_number": "Số tài khoản",
+    "bank_name": "Tên Ngân Hàng",
+    "province_or_City": "Tỉnh/Thành phố",
+    "part": "Bộ phận",
+    "branch": "Chi nhánh",
+    "customer_name": "Chủ hàng",
+    "note": "Ghi chú",
+    "creator": "Người tạo"
+}

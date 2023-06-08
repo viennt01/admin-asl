@@ -108,14 +108,14 @@ export default function CustomerPage() {
       align: 'center',
     },
     {
-      title: 'Email',
+      title: translateCustomer('email'),
       width: 200,
       dataIndex: 'email',
       key: 'email',
       align: 'center',
     },
     {
-      title: 'Trạng thái',
+      title: translateCustomer('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',
