@@ -16,28 +16,28 @@ export const ROUTERS = {
   PORT_EDIT: (portId: string) => `/master-data/port/edit/${portId}`,
   DEPOT: '/master-data/depot',
   DEPOT_EDIT: (depotId: string) => `/master-data/depot/edit/${depotId}`,
-  LOCATION: '/master-data/location',
+  LOCATION: '/master-data/location-catalog/location',
   LOCATION_EDIT: (locationId: string) =>
-    `/master-data/location/edit/${locationId}`,
-  CONTAINER: '/master-data/container',
+    `/master-data/location-catalog/location/edit/${locationId}`,
+  CONTAINER: '/master-data/container-catalog/container',
   CONTAINER_EDIT: (containerId: string) =>
-    `/master-data/container/edit/${containerId}`,
+    `/master-data/container-catalog/container/edit/${containerId}`,
   UNIT: '/master-data/unit',
   UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
-  EXCHANGE_RATE: '/master-data/exchange-rate',
+  EXCHANGE_RATE: '/master-data/accountant/exchange-rate',
   EXCHANGE_RATE_EDIT: (exchangeRateId: string) =>
-    `/master-data/exchange-rate/edit/${exchangeRateId}`,
-  CURRENCY: '/master-data/currency',
+    `/master-data/accountant/exchange-rate/edit/${exchangeRateId}`,
+  CURRENCY: '/master-data/accountant/currency',
   CURRENCY_EDIT: (currencyId: string) =>
-    `/master-data/currency/edit/${currencyId}`,
-  BANK: '/master-data/bank',
-  BANK_EDIT: (bankId: string) => `/master-data/bank/edit/${bankId}`,
-  TYPE_OF_LOCATION: '/master-data/type-of-location',
+    `/master-data/accountant/currency/edit/${currencyId}`,
+  BANK: '/master-data/accountant/bank',
+  BANK_EDIT: (bankId: string) => `/master-data/accountant/bank/edit/${bankId}`,
+  TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
   TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
-    `/master-data/type-of-location/edit/${typeOfLocationId}`,
-  TYPES_OF_CONTAINER: '/master-data/type-of-container',
+    `/master-data/location-catalog/type-of-location/edit/${typeOfLocationId}`,
+  TYPES_OF_CONTAINER: '/master-data/container-catalog/type-of-container',
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string) =>
-    `/master-data/type-of-container/edit/${typeOfContainerId}`,
+    `/master-data/container-catalog/type-of-container/edit/${typeOfContainerId}`,
   TYPES_OF_EXPENSES: '/master-data/type-of-expenses',
   TYPES_OF_EXPENSES_EDIT: (typeOfExpenseId: string) =>
     `/master-data/type-of-expenses/edit/${typeOfExpenseId}`,

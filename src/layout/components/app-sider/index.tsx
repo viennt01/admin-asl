@@ -96,46 +96,61 @@ const AppSider = ({ collapsed }: Props) => {
       getItem(`${translateCommon('port')}`, ROUTERS.PORT, <GoldOutlined />),
       getItem(`${translateCommon('depot')}`, ROUTERS.DEPOT, <GoldOutlined />),
       getItem(
-        `${translateCommon('location')}`,
-        ROUTERS.LOCATION,
-        <EnvironmentOutlined />
+        `${translateCommon('container_catalog')}`,
+        '4',
+        <InboxOutlined />,
+        [
+          getItem(
+            `${translateCommon('container')}`,
+            ROUTERS.CONTAINER,
+            <InboxOutlined />
+          ),
+          getItem(
+            `${translateCommon('type_of_container')}`,
+            ROUTERS.TYPES_OF_CONTAINER,
+            <InboxOutlined />
+          ),
+        ]
       ),
-
-      getItem(
-        `${translateCommon('container')}`,
-        ROUTERS.CONTAINER,
-        <InboxOutlined />
-      ),
-      getItem(
-        `${translateCommon('unit')}`,
-        ROUTERS.UNIT,
-        <CalculatorOutlined />
-      ),
-      getItem(
-        `${translateCommon('exchange_rate')}`,
-        ROUTERS.EXCHANGE_RATE,
-        <FundOutlined />
-      ),
-      getItem(
-        `${translateCommon('currency')}`,
-        ROUTERS.CURRENCY,
-        <DollarOutlined />
-      ),
-      getItem(`${translateCommon('bank')}`, ROUTERS.BANK, <BankOutlined />),
       getItem(
         `${translateCommon('type_of_expenses')}`,
         ROUTERS.TYPES_OF_EXPENSES,
         <ProfileOutlined />
       ),
       getItem(
-        `${translateCommon('type_of_container')}`,
-        ROUTERS.TYPES_OF_CONTAINER,
-        <InboxOutlined />
+        `${translateCommon('location_catalog')}`,
+        '5',
+        <EnvironmentOutlined />,
+        [
+          getItem(
+            `${translateCommon('location')}`,
+            ROUTERS.LOCATION,
+            <EnvironmentOutlined />
+          ),
+          getItem(
+            `${translateCommon('type_of_location')}`,
+            ROUTERS.TYPE_OF_LOCATION,
+            <EnvironmentOutlined />
+          ),
+        ]
       ),
+      getItem(`${translateCommon('accountant')}`, '6', <DollarOutlined />, [
+        getItem(
+          `${translateCommon('exchange_rate')}`,
+          ROUTERS.EXCHANGE_RATE,
+          <FundOutlined />
+        ),
+        getItem(
+          `${translateCommon('currency')}`,
+          ROUTERS.CURRENCY,
+          <DollarOutlined />
+        ),
+        getItem(`${translateCommon('bank')}`, ROUTERS.BANK, <BankOutlined />),
+      ]),
       getItem(
-        `${translateCommon('type_of_location')}`,
-        ROUTERS.TYPE_OF_LOCATION,
-        <EnvironmentOutlined />
+        `${translateCommon('unit')}`,
+        ROUTERS.UNIT,
+        <CalculatorOutlined />
       ),
     ]),
     getItem(`${translateCommon('system')}`, '3', <ClusterOutlined />, [
