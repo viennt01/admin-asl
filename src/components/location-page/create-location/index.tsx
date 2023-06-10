@@ -1,11 +1,6 @@
 import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
+import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
 
@@ -19,13 +14,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateLocation() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateAddLocation } = useI18n('location');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new location"
+      title={translateAddLocation('information_add_location')}
       trigger={
         <Button
           type="primary"
@@ -62,97 +58,44 @@ export default function CreateLocation() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="NameLocation"
+          label={translateAddLocation('name')}
+          placeholder={translateAddLocation('name_placeholder')}
         />
 
         <ProFormText
           width="md"
           name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          label={translateAddLocation('address')}
+          placeholder={translateAddLocation('address_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
+          name="TypeOfLocation"
+          label={translateAddLocation('type_of_location')}
+          placeholder={translateAddLocation('type_of_location_placeholder')}
         />
+        <ProFormText
+          width="md"
+          name="Phone"
+          label={translateAddLocation('phone')}
+          placeholder={translateAddLocation('phone_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormText
           width="md"
           name="Email"
-          label="Email"
-          placeholder="Nhập email"
+          label={translateAddLocation('email')}
+          placeholder={translateAddLocation('email_placeholder')}
         />
-      </ProForm.Group>
-      <ProForm.Group>
         <ProFormText
           width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+          name="Company"
+          label={translateAddLocation('company')}
+          placeholder={translateAddLocation('company_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

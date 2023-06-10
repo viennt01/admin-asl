@@ -1,11 +1,6 @@
 import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
+import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
 
@@ -19,13 +14,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateDepot() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateAddDepot } = useI18n('depot');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new depot"
+      title={translateAddDepot('information_add_depot')}
       trigger={
         <Button
           type="primary"
@@ -43,8 +39,8 @@ export default function CreateDepot() {
       }
       submitter={{
         searchConfig: {
-          resetText: 'Cancel',
-          submitText: 'Add port',
+          resetText: 'Hủy',
+          submitText: 'Thêm kho chứa',
         },
       }}
       form={form}
@@ -62,97 +58,39 @@ export default function CreateDepot() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="DepotName"
+          label={translateAddDepot('depot_name')}
+          placeholder={translateAddDepot('depot_name_placeholder')}
         />
-
         <ProFormText
           width="md"
           name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          label={translateAddDepot('address')}
+          placeholder={translateAddDepot('address_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
+          name="BranchDepot"
+          label={translateAddDepot('branch_depot')}
+          placeholder={translateAddDepot('branch_depot_placeholder')}
         />
         <ProFormText
           width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
+          name="CompannyMamagementDepot"
+          label={translateAddDepot('companny_mamagement_depot')}
+          placeholder={translateAddDepot(
+            'companny_mamagement_depot_placeholder'
+          )}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
-          width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+          width="lg"
+          name="Description"
+          label={translateAddDepot('description')}
+          placeholder={translateAddDepot('description_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

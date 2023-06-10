@@ -25,7 +25,7 @@ export default function CreateBooking() {
       name: string;
       company: string;
     }>
-      title="Add new booking"
+      title="Thêm mới booking"
       trigger={
         <Button
           type="primary"
@@ -43,8 +43,8 @@ export default function CreateBooking() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add booking',
-          resetText: 'Cancel',
+          submitText: 'Thêm',
+          resetText: 'Hủy',
         },
       }}
       form={form}
@@ -62,39 +62,38 @@ export default function CreateBooking() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="ContainerCode"
+          label="Mã Container"
+          placeholder="Nhập mã container"
         />
 
         <ProFormText
           width="md"
           name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          label="Nơi lấy rỗng"
+          placeholder="Nhập nơi lấy rỗng"
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
+          name="PortName"
+          label="Cảng hạ hàng"
+          placeholder="Nhập cảng hạ hàng"
         />
         <ProFormText
           width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
+          name="Route"
+          label="Tuyến đường"
+          placeholder="Nhập tuyến đường"
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
           name="TotalContainer"
-          placeholder="Nhập số lượng container"
           label="Số lượng container"
+          placeholder="Nhập số lượng container"
           rules={[
             {
               // required: true,

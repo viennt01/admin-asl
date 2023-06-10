@@ -397,7 +397,10 @@ export function AppLayout(props: Props) {
               height: `${FOOTER_HEIGHT}px`,
             }}
           >
-            <Text disabled>GLS @2023 Created by GLS</Text>
+            <Text disabled>
+              ©2023 Existing GLS website. All Rights Reserved | Design by Softek
+              Solution
+            </Text>
           </Footer>
         </Content>
       </Layout>

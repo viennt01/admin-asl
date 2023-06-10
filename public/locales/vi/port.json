@@ -10,5 +10,14 @@
     "status":"Trạng thái",
     "information_port": "THÔNG TIN CHI TIẾT CỦA CẢNG",
     "quantity_container": "Số lượng container",
-    "capacity_label": "Sức chứa"
+    "capacity_label": "Sức chứa",
+    "information_add_port": "Thêm mới cảng",
+    "new_port_title": "Tên cảng mới",
+    "new_port_placeholder": "Nhập tên cảng mới",
+    "new_port_tooltip": "Tên được đăng ký ở bộ giao thông vận tải",
+    "address_placeholder": "Nhập địa chỉ",
+    "quantity_container_placeholder": "Nhập số lượng container",
+    "capacity_placeholder": "Nhập sức chứa của cảng",
+    "company_placeholder": "Nhập công ty quản lý",
+    "status_capacity_placeholder": "Chọn trạng thái sức chứa"
 }

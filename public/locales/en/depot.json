@@ -6,5 +6,11 @@
     "branch_depot":"Branch",
     "companny_mamagement_depot": "Management Company",
     "description": "Description",
-    "status_depot":"Status"
+    "status_depot":"Status",
+    "information_add_depot": "Add new Depot",
+    "depot_name_placeholder": "Enter the Depot name",
+    "address_placeholder": "Enter address",
+    "branch_depot_placeholder": "Enter branch",
+    "companny_mamagement_depot_placeholder": "Enter Depot management company",
+    "description_placeholder": "Enter description"
 }

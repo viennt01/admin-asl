@@ -6,5 +6,12 @@
     "containerStatus": "Condition of Container",
     "rentCost":"Rent cost (VND)",
     "price":"Price (VND)",
-    "status":"Status"
+    "status":"Status",
+    "information_add_container": "Add new Container",
+    "code_placeholder": "Enter the Container no",
+    "type_of_container_placeholder": "Enter Container type",
+    "location_placeholder": "Enter location",
+    "container_status_placeholder": "Select the status of the Container",
+    "rent_cost_placeholder": "Enter rent cost",
+    "price_placeholder": "Enter price"
 }

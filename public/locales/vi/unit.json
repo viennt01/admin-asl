@@ -3,5 +3,8 @@
     "code": "Mã đơn vị",
     "international_code": "Mã quốc tế",
     "description": "Mô tả",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "information_add_unit": "Thêm mới đơn vị tính",
+    "international_code_placeholder": "Nhập mã quốc tế",
+    "description_placeholder": "Nhập mô tả"
 }

@@ -4,7 +4,14 @@
     "type_of_container": "Loại Container",
     "location": "Vị trí",
     "containerStatus": "Tình trạng của Container",
-    "rentCost":"Giá thuê (VND)",
-    "price":"Giá bán (VND)",
-    "status":"Trạng thái"
+    "rentCost": "Giá thuê (VND)",
+    "price": "Giá bán (VND)",
+    "status": "Trạng thái",
+    "information_add_container": "Thêm mới Container",
+    "code_placeholder": "Nhập mã số Container",
+    "type_of_container_placeholder": "Nhập loại Container",
+    "location_placeholder": "Nhập vị trí",
+    "container_status_placeholder": "Chọn tình trạng của Container",
+    "rent_cost_placeholder": "Nhập giá thuê",
+    "price_placeholder": "Nhập giá bán"
 }

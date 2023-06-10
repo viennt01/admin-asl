@@ -6,5 +6,11 @@
     "branch_depot":"Chi nhánh",
     "companny_mamagement_depot": "Công ty quản lý Depot",
     "description": "Mô tả",
-    "status_depot":"Trạng thái"
+    "status_depot":"Trạng thái",
+    "information_add_depot": "Thêm mới Depot",
+    "depot_name_placeholder": "Nhập tên Depot",
+    "address_placeholder": "Nhập địa chỉ",
+    "branch_depot_placeholder": "Nhập chi nhánh",
+    "companny_mamagement_depot_placeholder": "Nhập công ty quản lý Depot",
+    "description_placeholder": "Nhập mô tả"
 }
