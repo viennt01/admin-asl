@@ -19,13 +19,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateContainer() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateAddContainer } = useI18n('container');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new container"
+      title={translateAddContainer('information_add_container')}
       trigger={
         <Button
           type="primary"
@@ -62,97 +63,70 @@ export default function CreateContainer() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="CodeContainer"
+          label={translateAddContainer('code')}
+          placeholder={translateAddContainer('code_placeholder')}
         />
 
         <ProFormText
           width="md"
-          name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          name="TypeOfContainer"
+          label={translateAddContainer('type_of_container')}
+          placeholder={translateAddContainer('type_of_container_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
-        />
-        <ProFormText
-          width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
+          name="Location"
+          label={translateAddContainer('location')}
+          placeholder={translateAddContainer('location_placeholder')}
         />
         <ProFormSelect
           request={async () => [
             {
               value: '1',
-              label: 'Active',
+              label: 'Đang cho thuê',
             },
             {
               value: '2',
-              label: 'Ngừng hoạt động',
+              label: 'Yêu cầu vệ sinh',
             },
           ]}
           width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
+          name="ContainerStatus"
+          label={translateAddContainer('containerStatus')}
+          placeholder={translateAddContainer('container_status_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
+          name="RentCost"
+          label={translateAddContainer('rentCost')}
+          placeholder={translateAddContainer('rent_cost_placeholder')}
           rules={[
             {
               // required: true,
               type: 'number',
               min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
+              message: 'Vui lòng nhập giá thuê',
             },
           ]}
         />
-        <ProFormSelect
-          request={async () => [
+        <ProFormText
+          width="md"
+          name="Price"
+          label={translateAddContainer('price')}
+          placeholder={translateAddContainer('price_placeholder')}
+          rules={[
             {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
+              // required: true,
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập giá bán',
             },
           ]}
-          width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
         />
       </ProForm.Group>
     </ModalForm>

@@ -19,13 +19,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateExchangeRate() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateAddExchangeRate } = useI18n('exchangeRate');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new exchange rate"
+      title={translateAddExchangeRate('information_add_exchange_rate')} //"Add new exchange rate"
       trigger={
         <Button
           type="primary"
@@ -60,99 +61,120 @@ export default function CreateExchangeRate() {
       // }}
     >
       <ProForm.Group>
-        <ProFormText
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'USD',
+            },
+            {
+              value: '2',
+              label: 'VND',
+            },
+            {
+              value: '3',
+              label: 'Euro',
+            },
+          ]}
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="CurrencyFrom"
+          label={translateAddExchangeRate('currency_from')}
+          placeholder={translateAddExchangeRate('currency_from_placeholder')}
         />
 
-        <ProFormText
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'USD',
+            },
+            {
+              value: '2',
+              label: 'VND',
+            },
+            {
+              value: '3',
+              label: 'Euro',
+            },
+          ]}
           width="md"
-          name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          name="CurrencyTo"
+          label={translateAddExchangeRate('currency_to')}
+          placeholder={translateAddExchangeRate('currency_to_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
+          name="ExchangeRate"
+          label={translateAddExchangeRate('exchange_rate')}
+          placeholder={translateAddExchangeRate('exchange_rate_placeholder')}
         />
         <ProFormText
           width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
+          name="Bank"
+          label={translateAddExchangeRate('bank')}
+          placeholder={translateAddExchangeRate('bank_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
+          name="CashBuy"
+          label={translateAddExchangeRate('cash_buy')}
+          placeholder={translateAddExchangeRate('cash_buy_placeholder')}
           rules={[
             {
               // required: true,
               type: 'number',
               min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
+              message: 'Vui lòng nhập tiền mặt (mua)',
             },
           ]}
         />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
         <ProFormText
           width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
+          name="CashSell"
+          label={translateAddExchangeRate('cash_sell')}
+          placeholder={translateAddExchangeRate('cash_sell_placeholder')}
           rules={[
             {
               // required: true,
               type: 'number',
               min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
+              message: 'Vui lòng nhập tiền mặt (bán)',
             },
           ]}
         />
-        <ProFormSelect
-          request={async () => [
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="TransferBuy"
+          label={translateAddExchangeRate('transfer_buy')}
+          placeholder={translateAddExchangeRate('transfer_buy_placeholder')}
+          rules={[
             {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
+              // required: true,
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập số tiền chuyển khoản (Mua)',
             },
           ]}
+        />
+        <ProFormText
           width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+          name="TransferSell"
+          label={translateAddExchangeRate('transfer_sell')}
+          placeholder={translateAddExchangeRate('transfer_sell_placeholder')}
+          rules={[
+            {
+              // required: true,
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập số tiền chuyển khoản (Bán)',
+            },
+          ]}
         />
       </ProForm.Group>
     </ModalForm>

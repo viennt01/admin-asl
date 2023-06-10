@@ -5,9 +5,18 @@
     "currency_to": "Currency To",
     "bank": "Bank",
     "exchange_rate": "Exchange rate",
-    "cash_buy": "Cash (Buy)",
-    "cash_sell": "Cash (Sell)",
-    "transfer_buy": "Transfer (Buy)",
-    "transfer_sell": "Transfer (Sell)",
-    "status":"Status"
+    "cash_buy": "Cash (buy)",
+    "cash_sell": "Cash (sell)",
+    "transfer_buy": "Transfer (buy)",
+    "transfer_sell": "Transfer (sell)",
+    "status": "Status",
+    "information_add_exchange_rate": "Add new currency rates",
+    "currency_from_placeholder": "Choose currency to convert from",
+    "currency_to_placeholder": "Choose currency to convert to",
+    "exchange_rate_placeholder": "Enter the exchange rate",
+    "bank_placeholder": "Enter bank",
+    "cash_buy_placeholder": "Enter cash (buy)",
+    "cash_sell_placeholder": "Enter cash (sell)",
+    "transfer_buy_placeholder": "Enter the transfer (buy)",
+    "transfer_sell_placeholder": "Enter the transfer (sell)"
 }

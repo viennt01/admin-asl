@@ -10,5 +10,14 @@
     "status":"Status",
     "information_port": "PORT DETAILS INFORMATION",
     "quantity_container": "Number of containers",
-    "capacity_label": "Capacity"
+    "capacity_label": "Capacity",
+    "information_add_port": "Add new port",
+    "new_port_title": "New port name",
+    "new_port_placeholder": "Enter new port name",
+    "new_port_tooltip": "The name is registered at the Ministry of Transport",
+    "address_placeholder": "Enter address",
+    "quantity_container_placeholder": "Enter the number of containers",
+    "capacity_placeholder": "Enter the port capacity",
+    "company_placeholder": "Enter the management company",
+    "status_capacity_placeholder": "Select capacity status"
 }

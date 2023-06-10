@@ -7,5 +7,12 @@
     "phone": "Phone number",
     "email": "Email",
     "company":"Management Company",
-    "status":"Status"
+    "status":"Status",
+    "information_add_location": "Add new location",
+    "name_placeholder": "Enter the address name",
+    "address_placeholder": "Enter address",
+    "type_of_location_placeholder": "Enter address type",
+    "phone_placeholder": "Enter phone number",
+    "email_placeholder": "Enter email",
+    "company_placeholder": "Enter the management company"
 }
