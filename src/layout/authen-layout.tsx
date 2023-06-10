@@ -177,12 +177,14 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.DEPOT}>{translateCommon('depot')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/location': [
+    '/master-data/location-catalog/location': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('location_catalog')}` },
       { title: `${translateCommon('location')}` },
     ],
-    '/master-data/location/edit/[id]': [
+    '/master-data/location-catalog/location/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('location_catalog')}` },
       {
         title: (
           <Link href={ROUTERS.LOCATION}>{translateCommon('location')}</Link>
@@ -190,12 +192,31 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/container': [
+    '/master-data/location-catalog/type-of-location': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('location_catalog')}` },
+      { title: `${translateCommon('type_of_location')}` },
+    ],
+    '/master-data/location-catalog/type-of-location/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('location_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_OF_LOCATION}>
+            {translateCommon('type_of_location')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/container-catalog/container': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('container_catalog')}` },
       { title: `${translateCommon('container')}` },
     ],
-    '/master-data/container/edit/[id]': [
+    '/master-data/container-catalog/container/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('container_catalog')}` },
       {
         title: (
           <Link href={ROUTERS.CONTAINER}>{translateCommon('container')}</Link>
@@ -212,12 +233,14 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/exchange-rate': [
+    '/master-data/accountant/exchange-rate': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('accountant')}` },
       { title: `${translateCommon('exchange_rate')}` },
     ],
-    '/master-data/exchange-rate/edit/[id]': [
+    '/master-data/accountant/exchange-rate/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('accountant')}` },
       {
         title: (
           <Link href={ROUTERS.CURRENCY}>
@@ -227,12 +250,14 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/currency': [
+    '/master-data/accountant/currency': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('accountant')}` },
       { title: `${translateCommon('currency')}` },
     ],
-    '/master-data/currency/edit/[id]': [
+    '/master-data/accountant/currency/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('accountant')}` },
       {
         title: (
           <Link href={ROUTERS.CURRENCY}>{translateCommon('currency')}</Link>
@@ -240,12 +265,14 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/bank': [
+    '/master-data/accountant/bank': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('accountant')}` },
       { title: `${translateCommon('bank')}` },
     ],
-    '/master-data/bank/edit/[id]': [
+    '/master-data/accountant/bank/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('accountant')}` },
       {
         title: <Link href={ROUTERS.BANK}>{translateCommon('bank')}</Link>,
       },
@@ -266,31 +293,18 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/type-of-container': [
+    '/master-data/container-catalog/type-of-container': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('container_catalog')}` },
       { title: `${translateCommon('type_of_container')}` },
     ],
-    '/master-data/type-of-container/edit/[id]': [
+    '/master-data/container-catalog/type-of-container/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('container_catalog')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>
             {translateCommon('type_of_container')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-    '/master-data/type-of-location': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('type_of_location')}` },
-    ],
-    '/master-data/type-of-location/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
-      {
-        title: (
-          <Link href={ROUTERS.TYPE_OF_LOCATION}>
-            {translateCommon('type_of_location')}
           </Link>
         ),
       },
