@@ -1,11 +1,6 @@
 import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
-import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
+import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
 
@@ -19,13 +14,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateTypeOfContainer() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateAddTypeOfContainer } = useI18n('typeOfContainer');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new type of container"
+      title={translateAddTypeOfContainer('information_add_type_of_container')}
       trigger={
         <Button
           type="primary"
@@ -43,7 +39,7 @@ export default function CreateTypeOfContainer() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add type of container',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -61,98 +57,36 @@ export default function CreateTypeOfContainer() {
     >
       <ProForm.Group>
         <ProFormText
-          width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          width="xl"
+          name="TypeOfContainer"
+          label={translateAddTypeOfContainer('type_of_container')}
+          placeholder={translateAddTypeOfContainer(
+            'type_of_container_placeholder'
+          )}
         />
 
         <ProFormText
-          width="md"
-          name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          width="xl"
+          name="Detail"
+          label={translateAddTypeOfContainer('detail')}
+          placeholder={translateAddTypeOfContainer('detail_placeholder')}
         />
-      </ProForm.Group>
-      <ProForm.Group>
+
         <ProFormText
-          width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
-        />
-        <ProFormText
-          width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
+          width="xl"
+          name="NumberContainer"
+          label={translateAddTypeOfContainer('number_container')}
+          placeholder={translateAddTypeOfContainer(
+            'number_container_placeholder'
+          )}
           rules={[
             {
               // required: true,
               type: 'number',
               min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
+              message: 'Vui lòng nhập số lượng container',
             },
           ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
         />
       </ProForm.Group>
     </ModalForm>

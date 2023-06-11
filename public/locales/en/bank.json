@@ -9,5 +9,13 @@
     "bank_address": "Address",
     "bank_branch": "Bank branch",
     "bank_note": "Note",
-    "status":"Status"
+    "status":"Status",
+    "information_add_bank": "Add new bank",
+    "bank_name_placeholder": "Enter the bank name",
+    "bank_account_number_placeholder": "Enter the bank account number",
+    "bank_hotline_phone_number_placeholder": "Enter the Hotline phone number",
+    "bank_email_placeholder": "Enter the email",
+    "bank_address_placeholder": "Enter the bank address",
+    "bank_branch_placeholder": "Choose the bank branch",
+    "bank_note_placeholder": "Enter the note"
 }

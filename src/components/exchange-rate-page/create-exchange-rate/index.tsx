@@ -106,15 +106,15 @@ export default function CreateExchangeRate() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="ExchangeRate"
-          label={translateAddExchangeRate('exchange_rate')}
-          placeholder={translateAddExchangeRate('exchange_rate_placeholder')}
-        />
-        <ProFormText
-          width="md"
           name="Bank"
           label={translateAddExchangeRate('bank')}
           placeholder={translateAddExchangeRate('bank_placeholder')}
+        />
+        <ProFormText
+          width="md"
+          name="ExchangeRate"
+          label={translateAddExchangeRate('exchange_rate')}
+          placeholder={translateAddExchangeRate('exchange_rate_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>

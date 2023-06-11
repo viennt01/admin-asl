@@ -3,5 +3,8 @@
     "code": "Mã chi phí",
     "name": "Tên chi phí",
     "VAT": "VAT",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "information_add_type_of_expenses": "Thêm mới loại chi phí",
+    "name_placeholder": "Nhập tên chi phí",
+    "VAT_placeholder": "Nhập VAT"
 }

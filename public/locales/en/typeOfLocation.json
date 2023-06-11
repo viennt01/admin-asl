@@ -6,5 +6,7 @@
     "type_of_location_information":"DETAILS OF ADDRESS TYPE",
     "quantity_container":"Number of containers",
     "capacity":"Capacity",
-    "capacity_status":"Capacity Status"
+    "capacity_status":"Capacity Status",
+    "information_add_type_of_location": "Add new type of location",
+    "type_of_location_placeholder": "Enter the address type"
 }

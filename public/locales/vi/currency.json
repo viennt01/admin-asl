@@ -3,5 +3,8 @@
     "code": "Mã tiền tệ",
     "currency_name": "Tên tiền tệ",
     "currency_description": "Mô tả",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "information_add_currency": "Thêm mới tiền tệ",
+    "currency_name_placeholder": "Nhập tên tiền tệ",
+    "currency_description_placeholder": "Nhập mô tả"
 }

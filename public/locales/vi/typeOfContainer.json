@@ -4,5 +4,9 @@
     "type_of_container": "Loại Container",
     "detail": "Chi tiết",
     "number_container": "Số lượng Container",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "information_add_type_of_container": "Thêm mới loại container",
+    "type_of_container_placeholder": "Nhập loại container",
+    "detail_placeholder": "Nhập chi tiết",
+    "number_container_placeholder": "Nhập số lượng container"
 }

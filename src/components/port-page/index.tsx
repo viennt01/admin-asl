@@ -374,7 +374,7 @@ export default function PortPage() {
             }}
             key={'delete'}
           >
-            {translateCommon('delete')}
+            {translateCommon('button_delete')}
           </Button>,
         ]}
       />
