@@ -39,15 +39,19 @@ const STATUS_LABELS = {
 };
 interface DataType {
   key: number;
-  route: string;
-  codeContainer: number;
-  address: string;
-  portName: string;
-  slot: number;
-  note: string;
-  nameCustomer: string;
+  bookingCode: string;
+  portOfLoading: string;
+  portOfDischarge: string;
+  container: string;
   nameSupplier: string;
+  package: string;
+  nameCustomer: string;
   nameCnee: string;
+  placeOfDelivery: string;
+  note: string;
+  etd: string;
+  eta: string;
+  userCreate: string;
   dateCreate: string;
   status: string;
 }
@@ -62,17 +66,21 @@ export default function BookingPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i + 1,
-      address: i % 2 === 0 ? 'Vũng Tàu' : 'Hồ Chí Minh',
-      codeContainer: i,
-      portName: i % 2 === 0 ? 'Vũng Tàu' : 'Hồ Chí Minh',
-      slot: i + 1,
-      route: 'Hồ Chí Minh - Hải Phòng',
+      key: i,
+      bookingCode: '10-48973-VNL/V26-A',
+      portOfLoading: i % 2 === 0 ? 'Hải Phòng' : 'Hồ Chí Minh',
+      portOfDischarge: i % 2 === 0 ? 'Hồ Chí Minh' : 'Long Beach, USA',
+      container: 'GLSU4824373',
+      nameSupplier: 'Công ty TNHH Dịch vụ Tiếp Vận Toàn Cầu (GLS)',
+      package: i % 2 === 0 ? 'Sữa' : 'Gạo',
+      nameCustomer: i % 2 === 0 ? 'Vũ Văn Nguyên' : 'Lê Công Tuấn',
+      nameCnee: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
+      placeOfDelivery: 'KCN Vsip 1, Thuận An, Bình Dương',
       note: i % 2 === 0 ? 'Hàng dễ vỡ - cẩn thận' : 'Mặt hàng đông lạnh',
-      nameCustomer: i % 2 === 0 ? 'Nguyễn Văn A' : 'Trần Thị B',
-      nameSupplier: i % 2 === 0 ? 'Công ty CP A' : 'Công ty CP B',
-      nameCnee: i % 2 === 0 ? 'Trương Văn A' : 'Nguyễn Ngọc B',
-      dateCreate: '10/05/2023',
+      etd: i % 2 === 0 ? '14/05/2023' : '16/05/2023',
+      eta: i % 2 === 0 ? '14/06/2023' : '16/06/2023',
+      userCreate: i % 2 === 0 ? 'Trương Văn A' : 'Nguyễn Ngọc B',
+      dateCreate: i % 2 === 0 ? '10/05/2023' : '12/05/2023',
       status: i % 2 === 1 ? 'Processing' : 'Completed',
     });
   }
@@ -191,8 +199,8 @@ export default function BookingPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateBooking('code_booking'),
-      width: 150,
+      title: translateBooking('no_booking'),
+      width: 80,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -200,54 +208,55 @@ export default function BookingPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateBooking('route'),
-      width: 300,
+      title: translateBooking('code_booking'),
+      width: 200,
       fixed: 'left',
-      dataIndex: 'route',
-      key: 'route',
+      dataIndex: 'bookingCode',
+      key: 'bookingCode',
       align: 'center',
-      ...getColumnSearchProps('route'),
+      ...getColumnSearchProps('bookingCode'),
+    },
+    {
+      title: translateBooking('port_of_loading'),
+      width: 250,
+      fixed: 'left',
+      dataIndex: 'portOfLoading',
+      key: 'portOfLoading',
+      align: 'center',
+      ...getColumnSearchProps('portOfLoading'),
+    },
+    {
+      title: translateBooking('port_of_discharge'),
+      width: 250,
+      dataIndex: 'portOfDischarge',
+      key: 'portOfDischarge',
+      align: 'center',
+      sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('portOfDischarge'),
     },
     {
       title: translateBooking('container_code'),
-      width: 150,
-      dataIndex: 'codeContainer',
-      key: 'codeContainer',
-      align: 'center',
-      sorter: (a, b) => a.key - b.key,
-      ...getColumnSearchProps('codeContainer'),
-    },
-    {
-      title: translateBooking('address'),
       width: 300,
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'container',
+      key: 'container',
       align: 'center',
-      ...getColumnSearchProps('address'),
+      ...getColumnSearchProps('container'),
     },
     {
-      title: translateBooking('port_name'),
-      width: 250,
-      dataIndex: 'portName',
-      key: 'portName',
-      align: 'center',
-      ...getColumnSearchProps('portName'),
-    },
-    {
-      title: translateBooking('slot'),
-      dataIndex: 'slot',
-      key: 'slot',
-      align: 'center',
-      sorter: (a, b) => a.key - b.key,
-      ...getColumnSearchProps('slot'),
-    },
-    {
-      title: translateBooking('note'),
+      title: translateBooking('name_supplier'),
       width: 350,
-      dataIndex: 'note',
-      key: 'note',
+      dataIndex: 'nameSupplier',
+      key: 'nameSupplier',
       align: 'center',
-      ...getColumnSearchProps('note'),
+      ...getColumnSearchProps('nameSupplier'),
+    },
+    {
+      title: translateBooking('package'),
+      width: 250,
+      dataIndex: 'package',
+      key: 'package',
+      align: 'center',
+      ...getColumnSearchProps('package'),
     },
     {
       title: translateBooking('name_customer'),
@@ -258,20 +267,52 @@ export default function BookingPage() {
       ...getColumnSearchProps('nameCustomer'),
     },
     {
-      title: translateBooking('name_supplier'),
-      width: 250,
-      dataIndex: 'nameSupplier',
-      key: 'nameSupplier',
-      align: 'center',
-      ...getColumnSearchProps('nameSupplier'),
-    },
-    {
       title: translateBooking('name_cnee'),
       width: 250,
       dataIndex: 'nameCnee',
       key: 'nameCnee',
       align: 'center',
       ...getColumnSearchProps('nameCnee'),
+    },
+    {
+      title: translateBooking('place_of_delivery'),
+      width: 250,
+      dataIndex: 'placeOfDelivery',
+      key: 'placeOfDelivery',
+      align: 'center',
+      ...getColumnSearchProps('placeOfDelivery'),
+    },
+    {
+      title: translateBooking('note'),
+      width: 350,
+      dataIndex: 'note',
+      key: 'note',
+      align: 'center',
+      ...getColumnSearchProps('note'),
+    },
+    {
+      title: translateBooking('etd'),
+      width: 150,
+      dataIndex: 'etd',
+      key: 'etd',
+      align: 'center',
+      ...getColumnSearchProps('etd'),
+    },
+    {
+      title: translateBooking('eta'),
+      width: 150,
+      dataIndex: 'eta',
+      key: 'eta',
+      align: 'center',
+      ...getColumnSearchProps('eta'),
+    },
+    {
+      title: translateBooking('user_create'),
+      width: 250,
+      dataIndex: 'userCreate',
+      key: 'userCreate',
+      align: 'center',
+      ...getColumnSearchProps('userCreate'),
     },
     {
       title: translateBooking('date_create'),
@@ -286,6 +327,7 @@ export default function BookingPage() {
       dataIndex: 'status',
       key: 'status',
       align: 'center',
+      width: 150,
       filters: [
         {
           text: 'Save As Draft',
