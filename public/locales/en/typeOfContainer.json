@@ -4,5 +4,9 @@
     "type_of_container": "Type of Container",
     "detail": "Details",
     "number_container": "Quantity",
-    "status":"Status"
+    "status":"Status",
+    "information_add_type_of_container": "Add new type of container",
+    "type_of_container_placeholder": "Enter the container type",
+    "detail_placeholder": "Enter details",
+    "number_container_placeholder": "Enter the number of containers"
 }

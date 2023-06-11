@@ -3,5 +3,8 @@
     "code": "Currency No",
     "currency_name": "Currency Name",
     "currency_description": "Description",
-    "status":"Status"
+    "status":"Status",
+    "information_add_currency": "Add new currency",
+    "currency_name_placeholder": "Enter the currency name",
+    "currency_description_placeholder": "Enter the description"
 }

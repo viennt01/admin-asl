@@ -63,14 +63,14 @@ export default function CreateUnit() {
     >
       <ProForm.Group>
         <ProFormText
-          width="md"
+          width="xl"
           name="InternationalCode"
           label={translateAddUnit('international_code')}
           placeholder={translateAddUnit('international_code_placeholder')}
         />
 
         <ProFormTextArea
-          width="md"
+          width="xl"
           name="Description"
           label={translateAddUnit('description')}
           placeholder={translateAddUnit('description_placeholder')}

@@ -5,6 +5,7 @@ import {
   ProForm,
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
@@ -19,13 +20,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateBank() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateAddBank } = useI18n('bank');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new bank"
+      title={translateAddBank('information_add_bank')}
       trigger={
         <Button
           type="primary"
@@ -43,7 +45,7 @@ export default function CreateBank() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add bank',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -62,97 +64,74 @@ export default function CreateBank() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="BankName"
+          label={translateAddBank('bank_name')}
+          placeholder={translateAddBank('bank_name_placeholder')}
         />
 
         <ProFormText
           width="md"
-          name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          name="BankAccountNumber"
+          label={translateAddBank('bank_account_number')}
+          placeholder={translateAddBank('bank_account_number_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
+          name="BankHotlinePhoneNumber"
+          label={translateAddBank('bank_hotline_phone_number')}
+          placeholder={translateAddBank(
+            'bank_hotline_phone_number_placeholder'
+          )}
         />
+
         <ProFormText
           width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
+          name="BankEmail"
+          label={translateAddBank('bank_email')}
+          placeholder={translateAddBank('bank_email_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
+          name="BankAddress"
+          label={translateAddBank('bank_address')}
+          placeholder={translateAddBank('bank_address_placeholder')}
         />
+
         <ProFormSelect
           request={async () => [
             {
               value: '1',
-              label: 'Active',
+              label: 'Hồ Chí Minh',
             },
             {
               value: '2',
-              label: 'Ngừng hoạt động',
+              label: 'Thành phố Hà Nội',
+            },
+            {
+              value: '3',
+              label: 'Tỉnh Hà Giang',
+            },
+            {
+              value: '4',
+              label: 'Tỉnh Cao Bằng',
             },
           ]}
           width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
+          name="BankBranch"
+          label={translateAddBank('bank_branch')}
+          placeholder={translateAddBank('bank_branch_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+        <ProFormTextArea
+          width="xl"
+          name="BankNote"
+          label={translateAddBank('bank_note')}
+          placeholder={translateAddBank('bank_note_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>
