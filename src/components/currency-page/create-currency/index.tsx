@@ -3,8 +3,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   ModalForm,
   ProForm,
+  ProFormSelect,
   ProFormText,
-  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
@@ -26,7 +26,7 @@ export default function CreateCurrency() {
       name: string;
       company: string;
     }>
-      title={translateAddCurrency('information_add_currency')}
+      title={translateAddCurrency('information_add_currency')} //"Add new exchange rate"
       trigger={
         <Button
           type="primary"
@@ -44,7 +44,7 @@ export default function CreateCurrency() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add',
+          submitText: 'Add Currency',
           resetText: 'Cancel',
         },
       }}
@@ -61,18 +61,120 @@ export default function CreateCurrency() {
       // }}
     >
       <ProForm.Group>
-        <ProFormText
-          width="xl"
-          name="CurrencyName"
-          label={translateAddCurrency('currency_name')}
-          placeholder={translateAddCurrency('currency_name_placeholder')}
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'USD',
+            },
+            {
+              value: '2',
+              label: 'VND',
+            },
+            {
+              value: '3',
+              label: 'Euro',
+            },
+          ]}
+          width="md"
+          name="CurrencyFrom"
+          label={translateAddCurrency('currency_from')}
+          placeholder={translateAddCurrency('currency_from_placeholder')}
         />
 
-        <ProFormTextArea
-          width="xl"
-          name="CurrencyDescription"
-          label={translateAddCurrency('currency_description')}
-          placeholder={translateAddCurrency('currency_description_placeholder')}
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'USD',
+            },
+            {
+              value: '2',
+              label: 'VND',
+            },
+            {
+              value: '3',
+              label: 'Euro',
+            },
+          ]}
+          width="md"
+          name="CurrencyTo"
+          label={translateAddCurrency('currency_to')}
+          placeholder={translateAddCurrency('currency_to_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="Bank"
+          label={translateAddCurrency('bank')}
+          placeholder={translateAddCurrency('bank_placeholder')}
+        />
+        <ProFormText
+          width="md"
+          name="Currency"
+          label={translateAddCurrency('exchange_rate')}
+          placeholder={translateAddCurrency('exchange_rate_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="CashBuy"
+          label={translateAddCurrency('cash_buy')}
+          placeholder={translateAddCurrency('cash_buy_placeholder')}
+          rules={[
+            {
+              // required: true,
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập tiền mặt (mua)',
+            },
+          ]}
+        />
+        <ProFormText
+          width="md"
+          name="CashSell"
+          label={translateAddCurrency('cash_sell')}
+          placeholder={translateAddCurrency('cash_sell_placeholder')}
+          rules={[
+            {
+              // required: true,
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập tiền mặt (bán)',
+            },
+          ]}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="TransferBuy"
+          label={translateAddCurrency('transfer_buy')}
+          placeholder={translateAddCurrency('transfer_buy_placeholder')}
+          rules={[
+            {
+              // required: true,
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập số tiền chuyển khoản (Mua)',
+            },
+          ]}
+        />
+        <ProFormText
+          width="md"
+          name="TransferSell"
+          label={translateAddCurrency('transfer_sell')}
+          placeholder={translateAddCurrency('transfer_sell_placeholder')}
+          rules={[
+            {
+              // required: true,
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập số tiền chuyển khoản (Bán)',
+            },
+          ]}
         />
       </ProForm.Group>
     </ModalForm>
