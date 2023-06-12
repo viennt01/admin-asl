@@ -3,20 +3,27 @@ import {
   EditOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Col, Form, Input, Row, Space, Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { Key, useState } from 'react';
+import { Button, ConfigProvider, Input, InputRef, Space } from 'antd';
+import { Key, useEffect, useRef, useState } from 'react';
 import CreateDebtor from './create-debtor';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
+import { ProColumns, ProTable } from '@ant-design/pro-components';
+import enUS from 'antd/lib/locale/en_US';
+import vi_VN from 'antd/lib/locale/vi_VN';
+import { appLocalStorage } from '@/utils/localstorage';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import Highlighter from 'react-highlight-words';
+import { FilterConfirmProps } from 'antd/es/table/interface';
 
 export default function DebtorPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateDebtor } = useI18n('debtor');
   const { translate: translateCommon } = useI18n('common');
+  const [locale, setLocale] = useState(enUS);
 
   interface DataType {
     key: number;
@@ -65,7 +72,119 @@ export default function DebtorPage() {
     });
   }
 
-  const columns: ColumnsType<DataType> = [
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef<InputRef>(null);
+
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText('');
+  };
+
+  type DataIndex = keyof DataType;
+
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ProColumns<DataType> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const columns: ProColumns<DataType>[] = [
     {
       title: translateDebtor('the_occurrence'),
       width: 150,
@@ -82,6 +201,7 @@ export default function DebtorPage() {
       key: 'debtorCode',
       fixed: 'left',
       align: 'center',
+      ...getColumnSearchProps('debtorCode'),
     },
     {
       title: translateDebtor('debtor_name'),
@@ -90,6 +210,7 @@ export default function DebtorPage() {
       key: 'debtorName',
       fixed: 'left',
       align: 'center',
+      ...getColumnSearchProps('debtorName'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
@@ -98,6 +219,7 @@ export default function DebtorPage() {
       dataIndex: 'debtorTaxCode',
       key: 'debtorTaxCode',
       align: 'center',
+      ...getColumnSearchProps('debtorTaxCode'),
     },
     {
       title: translateDebtor('debtor_address'),
@@ -105,6 +227,7 @@ export default function DebtorPage() {
       dataIndex: 'debtorAddress',
       key: 'debtorAddress',
       align: 'center',
+      ...getColumnSearchProps('debtorAddress'),
     },
     {
       title: translateDebtor('debtor_phone'),
@@ -112,6 +235,7 @@ export default function DebtorPage() {
       dataIndex: 'debtorPhone',
       key: 'debtorPhone',
       align: 'center',
+      ...getColumnSearchProps('debtorPhone'),
     },
     {
       title: translateDebtor('debtor_email'),
@@ -119,6 +243,7 @@ export default function DebtorPage() {
       dataIndex: 'debtorEmail',
       key: 'debtorEmail',
       align: 'center',
+      ...getColumnSearchProps('debtorEmail'),
     },
     {
       title: translateDebtor('contact'),
@@ -126,6 +251,7 @@ export default function DebtorPage() {
       dataIndex: 'contact',
       key: 'contact',
       align: 'center',
+      ...getColumnSearchProps('contact'),
     },
     {
       title: translateDebtor('position'),
@@ -133,6 +259,7 @@ export default function DebtorPage() {
       dataIndex: 'position',
       key: 'position',
       align: 'center',
+      ...getColumnSearchProps('position'),
     },
     {
       title: translateDebtor('classification'),
@@ -140,6 +267,7 @@ export default function DebtorPage() {
       dataIndex: 'classification',
       key: 'classification',
       align: 'center',
+      ...getColumnSearchProps('classification'),
     },
     {
       title: translateDebtor('account_number'),
@@ -147,6 +275,7 @@ export default function DebtorPage() {
       dataIndex: 'accountNumber',
       key: 'accountNumber',
       align: 'center',
+      ...getColumnSearchProps('accountNumber'),
     },
     {
       title: translateDebtor('bank_name'),
@@ -154,6 +283,7 @@ export default function DebtorPage() {
       dataIndex: 'contact',
       key: 'contact',
       align: 'center',
+      ...getColumnSearchProps('contact'),
     },
     {
       title: translateDebtor('province_or_City'),
@@ -161,6 +291,7 @@ export default function DebtorPage() {
       dataIndex: 'provinceOrCity',
       key: 'provinceOrCity',
       align: 'center',
+      ...getColumnSearchProps('provinceOrCity'),
     },
     {
       title: translateDebtor('part'),
@@ -168,6 +299,7 @@ export default function DebtorPage() {
       dataIndex: 'part',
       key: 'part',
       align: 'center',
+      ...getColumnSearchProps('part'),
     },
     {
       title: translateDebtor('branch'),
@@ -175,6 +307,7 @@ export default function DebtorPage() {
       dataIndex: 'branch',
       key: 'branch',
       align: 'center',
+      ...getColumnSearchProps('branch'),
     },
     {
       title: translateDebtor('customer_name'),
@@ -182,6 +315,7 @@ export default function DebtorPage() {
       dataIndex: 'customerName',
       key: 'customerName',
       align: 'center',
+      ...getColumnSearchProps('customerName'),
     },
     {
       title: translateDebtor('note'),
@@ -189,6 +323,7 @@ export default function DebtorPage() {
       dataIndex: 'note',
       key: 'note',
       align: 'center',
+      ...getColumnSearchProps('note'),
     },
     {
       title: translateDebtor('creator'),
@@ -196,6 +331,7 @@ export default function DebtorPage() {
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',
+      ...getColumnSearchProps('creator'),
     },
     {
       key: 'operation',
@@ -205,7 +341,7 @@ export default function DebtorPage() {
       dataIndex: 'key',
       render: (value) => (
         <Button
-          onClick={() => handleEditDebtor(value)}
+          onClick={() => handleEditDebtor(value as string)}
           icon={<EditOutlined />}
         ></Button>
       ),
@@ -220,69 +356,64 @@ export default function DebtorPage() {
     setSelectedRowKeys(selectedRowKeys);
   };
 
-  return (
-    <>
-      <Card bordered={false} style={{ margin: '10px 0' }}>
-        <Row>
-          <Col flex={1}>
-            <Form name="search_form">
-              <Space wrap>
-                <Form.Item style={{ margin: 0 }} name="keyword">
-                  <Input
-                    placeholder="Please input to search...."
-                    allowClear
-                    style={{ minWidth: 140 }}
-                  />
-                </Form.Item>
+  useEffect(() => {
+    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
+      case 'en':
+        setLocale(enUS);
+        break;
+      case 'vi':
+        setLocale(vi_VN);
+        break;
+      default:
+        setLocale(vi_VN);
+        break;
+    }
+  }, [router]);
 
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  icon={<SearchOutlined />}
-                  style={{
-                    width: 'fit-content',
-                    padding: '0 32px',
-                    backgroundColor: COLORS.BLUE,
-                    borderColor: COLORS.BLACK,
-                  }}
-                />
-              </Space>
-            </Form>
-          </Col>
-          <Col>
-            <CreateDebtor />
-            <Button
-              icon={<DeleteOutlined />}
-              style={{
-                backgroundColor: COLORS.RED,
-                color: COLORS.WHITE,
-                borderColor: COLORS.RED,
-                fontWeight: '500',
-              }}
-            >
-              {translateCommon('button_delete')}
-            </Button>
-          </Col>
-        </Row>
-      </Card>
-      <Card
-        style={{ marginTop: '15px' }}
-        bordered={false}
-        title={translateDebtor('title')}
-      >
-        <Table
-          rowSelection={{
-            type: 'checkbox',
-            selectedRowKeys: selectedRowKeys,
-            onChange: handleSelectionChange,
-          }}
-          size="small"
-          columns={columns}
-          dataSource={data}
-          scroll={{ x: 'max-content' }}
-          pagination={{ position: ['bottomCenter'] }}
-        />
-      </Card>
-    </>
+  return (
+    <ConfigProvider locale={locale}>
+      <ProTable<DataType>
+        style={{ marginTop: '8px' }}
+        rowKey="key"
+        dataSource={data}
+        rowSelection={{
+          type: 'checkbox',
+          selectedRowKeys: selectedRowKeys,
+          onChange: handleSelectionChange,
+        }}
+        pagination={{
+          position: ['bottomCenter'],
+          showTotal: () => '',
+          showSizeChanger: true,
+        }}
+        columns={columns}
+        search={false}
+        dateFormatter="string"
+        headerTitle={translateDebtor('title')}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky={{ offsetHeader: 0 }}
+        options={{
+          fullScreen: true,
+          search: true,
+        }}
+        toolBarRender={() => [
+          <CreateDebtor key={'create'} />,
+          <Button
+            icon={<DeleteOutlined />}
+            style={{
+              backgroundColor: COLORS.RED,
+              color: COLORS.WHITE,
+              borderColor: COLORS.RED,
+              fontWeight: '500',
+            }}
+            key={'delete'}
+          >
+            {translateCommon('button_delete')}
+          </Button>,
+        ]}
+      />
+    </ConfigProvider>
   );
 }

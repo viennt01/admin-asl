@@ -41,7 +41,6 @@ export default function PortPage() {
   const { translate: translatePort } = useI18n('port');
   const { translate: translateCommon } = useI18n('common');
   const [locale, setLocale] = useState(enUS);
-
   interface DataType {
     key: number;
     age: number;
@@ -213,6 +212,7 @@ export default function PortPage() {
     {
       title: translatePort('name'),
       dataIndex: 'name',
+      width: 150,
       key: 'name',
       fixed: 'left',
       align: 'center',
@@ -221,19 +221,20 @@ export default function PortPage() {
     {
       title: translatePort('address'),
       dataIndex: 'address',
+      width: 250,
       key: 'address',
       align: 'center',
       ...getColumnSearchProps('address'),
     },
     {
       title: translatePort('quantity'),
+      width: 220,
       dataIndex: 'totalContainer',
       key: 'totalContainer',
       align: 'center',
       sorter: (a, b) => a.totalContainer - b.totalContainer,
       ...getColumnSearchProps('totalContainer'),
       ellipsis: true,
-      width: '10%',
     },
     {
       title: translatePort('capacity'),
@@ -243,10 +244,11 @@ export default function PortPage() {
       sorter: (a, b) => a.capacity - b.capacity,
       ...getColumnSearchProps('capacity'),
       ellipsis: true,
-      width: '10%',
+      width: 200,
     },
     {
       title: translatePort('status_capacity'),
+      width: 200,
       dataIndex: 'capacityState',
       key: 'capacityState',
       align: 'center',
