@@ -1,43 +1,131 @@
-import React from 'react';
-import { Badge, Card, Descriptions } from 'antd';
+import COLORS from '@/constant/color';
+import { ROUTERS } from '@/constant/router';
+import useI18n from '@/i18n/useI18N';
 import {
-  UserOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  HomeOutlined,
-} from '@ant-design/icons';
+  Button,
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  ConfigProvider,
+} from 'antd';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
+export interface FormValues {
+  type_of_container: string;
+  detail_placeholder: string;
+  number_container: string;
+}
+
+const initialValue = {
+  type_of_container: '',
+  detail_placeholder: '',
+  number_container: '',
+};
+
+const { Title } = Typography;
 
 export default function EditContainer() {
-  return (
-    <Card bordered={false} style={{ margin: '10px 0' }}>
-      <Descriptions title="THÔNG TIN CHI TIẾT CỦA CONTAINER" column={2}>
-        <Descriptions.Item label={<UserOutlined />}>
-          Công ty Cảng quốc tế SP-PSA
-        </Descriptions.Item>
-        <Descriptions.Item label={<MailOutlined />}>
-          thanhviennguyen01@gmail.com
-        </Descriptions.Item>
-        <Descriptions.Item label={<PhoneOutlined />}>
-          1810000000
-        </Descriptions.Item>
-        <Descriptions.Item label={<HomeOutlined />}>
-          Thành phố Hồ Chí Minh
-        </Descriptions.Item>
-      </Descriptions>
-      <hr style={{ width: '70%', marginBottom: '24px' }} color="#BBBBBB" />
+  const router = useRouter();
+  const [form] = Form.useForm<FormValues>();
+  const { id } = router.query;
+  const { translate: translateAddTypeOfContainer } = useI18n('typeOfContainer');
 
-      <Descriptions column={2}>
-        <Descriptions.Item label="Số lượng container">
-          100.000.000{' '}
-        </Descriptions.Item>
-        <Descriptions.Item label="Sức chứa">181</Descriptions.Item>
-        <Descriptions.Item label="Trạng thái">
-          <Badge status="processing" text="Hoạt động bình thường" />
-        </Descriptions.Item>
-        <Descriptions.Item label="Trạng thái sức chứa">
-          <Badge status="error" text="Đầy" />
-        </Descriptions.Item>
-      </Descriptions>
-    </Card>
+  useEffect(() => {
+    if (!id) return;
+  }, [router, form]);
+
+  const onFinish = (formValues: FormValues) => {
+    console.log(formValues);
+  };
+  return (
+    <div style={{ padding: '24px 0' }}>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: COLORS.GREEN,
+          },
+        }}
+      >
+        <Form
+          form={form}
+          initialValues={initialValue}
+          onFinish={onFinish}
+          labelCol={{ span: 4 }}
+          autoComplete="off"
+          labelAlign="left"
+        >
+          <Card style={{ marginBottom: 24 }}>
+            <Row justify={'center'}>
+              <Col>
+                <Title level={3}>Edit a container</Title>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={24} md={24}>
+                <Form.Item
+                  label={translateAddTypeOfContainer('type_of_container')}
+                  name="type_of_container"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateAddTypeOfContainer(
+                      'type_of_container_placeholder'
+                    )}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  label={translateAddTypeOfContainer('number_container')}
+                  name="email"
+                  rules={[{ required: true, message: 'Please input email' }]}
+                >
+                  <Input
+                    placeholder={translateAddTypeOfContainer(
+                      'number_container_placeholder'
+                    )}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label={translateAddTypeOfContainer('detail')}
+                  name="detail_placeholder"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input.TextArea
+                    placeholder={translateAddTypeOfContainer(
+                      'detail_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Card>
+          <Card>
+            <Row gutter={12}>
+              <Col>
+                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
+                  Cancel
+                </Button>
+              </Col>
+              <Col>
+                <Button type="primary" htmlType="submit">
+                  Save
+                </Button>
+              </Col>
+            </Row>
+          </Card>
+        </Form>
+      </ConfigProvider>
+    </div>
   );
 }
