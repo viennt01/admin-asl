@@ -200,7 +200,7 @@ export default function BookingPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateBooking('no_booking'),
-      width: 80,
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',

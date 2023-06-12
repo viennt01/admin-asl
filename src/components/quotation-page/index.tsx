@@ -229,6 +229,7 @@ export default function QuotationPage() {
     },
     {
       title: translateQuotation('effective_date'),
+      width: 150,
       dataIndex: 'effectiveDate',
       key: 'effectiveDate',
       align: 'center',
@@ -236,6 +237,7 @@ export default function QuotationPage() {
     },
     {
       title: translateQuotation('creator'),
+      width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',

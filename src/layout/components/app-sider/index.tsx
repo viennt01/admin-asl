@@ -17,7 +17,6 @@ import {
   ClusterOutlined,
   ApartmentOutlined,
   UsergroupAddOutlined,
-  FundOutlined,
   UserSwitchOutlined,
   GoldOutlined,
 } from '@ant-design/icons';
@@ -135,11 +134,6 @@ const AppSider = ({ collapsed }: Props) => {
         ]
       ),
       getItem(`${translateCommon('accountant')}`, '6', <DollarOutlined />, [
-        getItem(
-          `${translateCommon('exchange_rate')}`,
-          ROUTERS.EXCHANGE_RATE,
-          <FundOutlined />
-        ),
         getItem(
           `${translateCommon('currency')}`,
           ROUTERS.CURRENCY,

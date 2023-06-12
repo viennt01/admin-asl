@@ -233,23 +233,6 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/accountant/exchange-rate': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('accountant')}` },
-      { title: `${translateCommon('exchange_rate')}` },
-    ],
-    '/master-data/accountant/exchange-rate/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('accountant')}` },
-      {
-        title: (
-          <Link href={ROUTERS.CURRENCY}>
-            {translateCommon('exchange_rate')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
     '/master-data/accountant/currency': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('accountant')}` },

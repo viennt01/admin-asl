@@ -24,9 +24,6 @@ export const ROUTERS = {
     `/master-data/container-catalog/container/edit/${containerId}`,
   UNIT: '/master-data/unit',
   UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
-  EXCHANGE_RATE: '/master-data/accountant/exchange-rate',
-  EXCHANGE_RATE_EDIT: (exchangeRateId: string) =>
-    `/master-data/accountant/exchange-rate/edit/${exchangeRateId}`,
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_EDIT: (currencyId: string) =>
     `/master-data/accountant/currency/edit/${currencyId}`,

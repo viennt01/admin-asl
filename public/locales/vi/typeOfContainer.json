@@ -1,6 +1,6 @@
 {
     "title": "Danh sách Container",
-    "code": "Mã số loại Container",
+    "code": "Số thứ tự",
     "type_of_container": "Loại Container",
     "detail": "Chi tiết",
     "number_container": "Số lượng Container",
