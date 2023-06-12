@@ -3,38 +3,27 @@ import {
   EditOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, Card, Col, Form, Input, Row, Space, Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { Key, useState } from 'react';
+import { Button, ConfigProvider, Input, InputRef, Space } from 'antd';
+import { Key, useEffect, useRef, useState } from 'react';
 import CreateQuotation from './create-quotation';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
-
-// const STATUS_COLORS = {
-//   Active: '#00A651',
-//   DeActive: '#ED1C27',
-// };
-// const STATUS_LABELS = {
-//   Active: 'Active',
-//   DeActive: 'Tạm ngừng',
-// };
-
-// const STATUS_CAPACITY_COLORS = {
-//   Full: '#31AFFE',
-//   NotFull: '#616887',
-// };
-// const STATUS_CAPACITY_LABELS = {
-//   Full: 'Đầy',
-//   NotFull: 'Nửa đầy',
-// };
+import { ProColumns, ProTable } from '@ant-design/pro-components';
+import enUS from 'antd/lib/locale/en_US';
+import vi_VN from 'antd/lib/locale/vi_VN';
+import { appLocalStorage } from '@/utils/localstorage';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import Highlighter from 'react-highlight-words';
+import { FilterConfirmProps } from 'antd/es/table/interface';
 
 export default function QuotationPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateQuotation } = useI18n('quotation');
   const { translate: translateCommon } = useI18n('common');
+  const [locale, setLocale] = useState(enUS);
 
   interface DataType {
     key: number;
@@ -65,7 +54,119 @@ export default function QuotationPage() {
     });
   }
 
-  const columns: ColumnsType<DataType> = [
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef<InputRef>(null);
+
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText('');
+  };
+
+  type DataIndex = keyof DataType;
+
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ProColumns<DataType> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({ closeDropdown: false });
+              setSearchText((selectedKeys as string[])[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const columns: ProColumns<DataType>[] = [
     {
       title: translateQuotation('quotation_no'),
       width: 150,
@@ -82,49 +183,62 @@ export default function QuotationPage() {
       key: 'customerName',
       fixed: 'left',
       align: 'center',
+      ...getColumnSearchProps('customerName'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
       title: translateQuotation('receipt_of_goods'),
+      width: 250,
       dataIndex: 'receiptOfGoods',
       key: 'receiptOfGoods',
       align: 'center',
+      ...getColumnSearchProps('receiptOfGoods'),
     },
     {
       title: translateQuotation('delivery'),
       dataIndex: 'delivery',
       key: 'delivery',
       align: 'center',
+      ...getColumnSearchProps('delivery'),
+      width: 200,
     },
     {
       title: translateQuotation('fee'),
       dataIndex: 'fee',
       key: 'fee',
       align: 'center',
+      ...getColumnSearchProps('fee'),
+      width: 150,
     },
     {
       title: translateQuotation('empty_get_or_return'),
+      width: 250,
       dataIndex: 'emptyGetOrReturn',
       key: 'emptyGetOrReturn',
       align: 'center',
+      ...getColumnSearchProps('emptyGetOrReturn'),
     },
     {
       title: translateQuotation('item_type'),
       dataIndex: 'itemType',
+      width: 200,
       key: 'itemType',
       align: 'center',
+      ...getColumnSearchProps('itemType'),
     },
     {
       title: translateQuotation('effective_date'),
       dataIndex: 'effectiveDate',
       key: 'effectiveDate',
       align: 'center',
+      ...getColumnSearchProps('effectiveDate'),
     },
     {
       title: translateQuotation('creator'),
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',
+      ...getColumnSearchProps('creator'),
     },
     {
       key: 'operation',
@@ -134,7 +248,7 @@ export default function QuotationPage() {
       dataIndex: 'key',
       render: (value) => (
         <Button
-          onClick={() => handleEditCustomer(value)}
+          onClick={() => handleEditCustomer(value as string)}
           icon={<EditOutlined />}
         ></Button>
       ),
@@ -149,69 +263,64 @@ export default function QuotationPage() {
     setSelectedRowKeys(selectedRowKeys);
   };
 
-  return (
-    <>
-      <Card bordered={false} style={{ margin: '10px 0' }}>
-        <Row>
-          <Col flex={1}>
-            <Form name="search_form">
-              <Space wrap>
-                <Form.Item style={{ margin: 0 }} name="keyword">
-                  <Input
-                    placeholder="Please input to search...."
-                    allowClear
-                    style={{ minWidth: 140 }}
-                  />
-                </Form.Item>
+  useEffect(() => {
+    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
+      case 'en':
+        setLocale(enUS);
+        break;
+      case 'vi':
+        setLocale(vi_VN);
+        break;
+      default:
+        setLocale(vi_VN);
+        break;
+    }
+  }, [router]);
 
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  icon={<SearchOutlined />}
-                  style={{
-                    width: 'fit-content',
-                    padding: '0 32px',
-                    backgroundColor: COLORS.BLUE,
-                    borderColor: COLORS.BLACK,
-                  }}
-                />
-              </Space>
-            </Form>
-          </Col>
-          <Col>
-            <CreateQuotation />
-            <Button
-              icon={<DeleteOutlined />}
-              style={{
-                backgroundColor: COLORS.RED,
-                color: COLORS.WHITE,
-                borderColor: COLORS.RED,
-                fontWeight: '500',
-              }}
-            >
-              {translateCommon('button_delete')}
-            </Button>
-          </Col>
-        </Row>
-      </Card>
-      <Card
-        style={{ marginTop: '15px' }}
-        bordered={false}
-        title={translateQuotation('title')}
-      >
-        <Table
-          rowSelection={{
-            type: 'checkbox',
-            selectedRowKeys: selectedRowKeys,
-            onChange: handleSelectionChange,
-          }}
-          size="small"
-          columns={columns}
-          dataSource={data}
-          scroll={{ x: 'max-content' }}
-          pagination={{ position: ['bottomCenter'] }}
-        />
-      </Card>
-    </>
+  return (
+    <ConfigProvider locale={locale}>
+      <ProTable<DataType>
+        style={{ marginTop: '8px' }}
+        rowKey="key"
+        dataSource={data}
+        rowSelection={{
+          type: 'checkbox',
+          selectedRowKeys: selectedRowKeys,
+          onChange: handleSelectionChange,
+        }}
+        pagination={{
+          position: ['bottomCenter'],
+          showTotal: () => '',
+          showSizeChanger: true,
+        }}
+        columns={columns}
+        search={false}
+        dateFormatter="string"
+        headerTitle={translateQuotation('title')}
+        scroll={{
+          x: 'max-content',
+        }}
+        sticky={{ offsetHeader: 0 }}
+        options={{
+          fullScreen: true,
+          search: true,
+        }}
+        toolBarRender={() => [
+          <CreateQuotation key={'create'} />,
+          <Button
+            icon={<DeleteOutlined />}
+            style={{
+              backgroundColor: COLORS.RED,
+              color: COLORS.WHITE,
+              borderColor: COLORS.RED,
+              fontWeight: '500',
+            }}
+            key={'delete'}
+          >
+            {translateCommon('button_delete')}
+          </Button>,
+        ]}
+      />
+    </ConfigProvider>
   );
 }
