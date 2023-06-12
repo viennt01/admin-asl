@@ -43,7 +43,11 @@ $t: 2.2s;
 }
 
 @keyframes bell {
-    0%, 25%, 75%, 100% {
+
+    0%,
+    25%,
+    75%,
+    100% {
         transform: rotate(0deg);
     }
 
@@ -65,7 +69,11 @@ $t: 2.2s;
 }
 
 @keyframes bellClapper {
-    0%, 25%, 75%, 100% {
+
+    0%,
+    25%,
+    75%,
+    100% {
         transform: translateX(0);
     }
 
@@ -88,11 +96,96 @@ $t: 2.2s;
 
 @keyframes notification {
 
-    0%, 25%, 75%, 100% {
+    0%,
+    25%,
+    75%,
+    100% {
         opacity: 1;
     }
 
-    30%, 70% {
+    30%,
+    70% {
         opacity: 0;
+    }
+}
+
+// Dropdown Language
+.selectMenu {
+    width: 180px;
+    position: relative;
+
+    .selectBtn {
+        display: flex;
+        height: 45px;
+        background: #fff;
+        padding: 20px;
+        font-size: 18px;
+        font-weight: 400;
+        border-radius: 8px;
+        align-items: center;
+        cursor: pointer;
+        justify-content: space-between;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease-in-out;
+
+        .layoutChooseImage {
+            img {
+                margin-right: 10px;
+            }
+        }
+
+        .selectBtnIcon {
+            font-size: 25px;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+
+    .options {
+        position: absolute;
+        padding: 20px;
+        margin-top: 10px;
+        border-radius: 8px;
+        background: #fff;
+        display: none;
+        right: 0;
+        -webkit-box-shadow: 4px 4px 10px -1px #43b758;
+        -moz-box-shadow: 4px 4px 10px -1px #43b758;
+        box-shadow: 4px 4px 10px -1px #43b758;
+    }
+
+    &.active {
+        .selectBtn {
+            -webkit-box-shadow: 4px 4px 10px -1px #43b758;
+            -moz-box-shadow: 4px 4px 10px -1px #43b758;
+            box-shadow: 4px 4px 10px -1px #43b758;
+
+            .selectBtnIcon {
+                transform: rotate(-180deg);
+            }
+        }
+
+        .options {
+            display: block;
+
+            .option {
+                display: flex;
+                height: 55px;
+                cursor: pointer;
+                padding: 0 16px;
+                border-radius: 8px;
+                align-items: center;
+                background: #fff;
+
+                &:hover {
+                    background: #F2F2F2;
+                }
+
+                .optionText {
+                    font-size: 18px;
+                    color: #333;
+                    margin-left: 10px;
+                }
+            }
+        }
     }
 }
