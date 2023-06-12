@@ -17,6 +17,7 @@ import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import Highlighter from 'react-highlight-words';
 import { FilterConfirmProps } from 'antd/es/table/interface';
+import style from './index.module.scss';
 
 const STATUS_COLORS = {
   Active: '#00A651',
@@ -285,6 +286,7 @@ export default function LocationTypePage() {
   return (
     <ConfigProvider locale={locale}>
       <ProTable<DataType>
+        className={style.table}
         style={{ marginTop: '8px' }}
         rowKey="key"
         dataSource={data}

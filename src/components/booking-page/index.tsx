@@ -450,7 +450,7 @@ export default function BookingPage() {
             }}
             key={'delete'}
           >
-            {translateCommon('delete')}
+            {translateCommon('button_delete')}
           </Button>,
         ]}
       />

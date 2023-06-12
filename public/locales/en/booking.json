@@ -10,10 +10,10 @@
     "note": "Note",
     "etd": "ETD",
     "eta": "ETA",
-    "user_create": "User Create",
+    "user_create": "Creator",
     "name_customer": "Shipper",
     "name_supplier": "Supplier",
     "name_cnee": "Consignee (Cnee)",
-    "date_create": "Creation date",
+    "date_create": "Date created",
     "status":"Status"
 }
