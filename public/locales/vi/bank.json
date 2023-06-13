@@ -1,6 +1,7 @@
 {
     "title": "Danh sách ngân hàng",
-    "bank_no": "Mã ngân hàng",
+    "bank_no": "Số thứ tự",
+    "bank_code": "Mã ngân hàng",
     "bank_logo": "Logo",
     "bank_name": "Tên ngân hàng",
     "bank_account_number": "Số tài khoản ngân hàng",
@@ -10,6 +11,8 @@
     "bank_branch": "Chi nhánh ngân hàng",
     "bank_note": "Ghi chú",
     "status":"Trạng thái",
+    "date_creator": "Ngày tạo",
+    "user_creator": "Người tạo",
     "information_add_bank": "Thêm mới ngân hàng",
     "bank_name_placeholder": "Nhập tên ngân hàng",
     "bank_account_number_placeholder": "Nhập số tài khoản ngân hàng",

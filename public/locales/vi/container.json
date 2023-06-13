@@ -1,5 +1,6 @@
 {
     "title": "Danh sách Container",
+    "containerNo": "Số thứ tự",
     "code": "Mã số Container",
     "type_of_container": "Loại Container",
     "location": "Vị trí",

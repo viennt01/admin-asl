@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
@@ -46,31 +47,28 @@ export default function ContainerPage() {
 
   interface DataType {
     key: number;
+    containerCode: string;
     typeOfContainer: string;
     address: string;
-    totalContainer: number;
-    capacity: number;
     capacityState: string;
     containerStatus: string;
     rentCost: number;
     price: number;
-    companyName: string;
     status: string;
   }
 
   const data: DataType[] = [];
+
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      typeOfContainer: i % 2 === 0 ? '40DC' : '40HC',
-      address: 'Vũng Tàu',
-      totalContainer: 100,
-      capacity: 3,
+      containerCode: i % 2 === 0 ? 'GMDU3070079' : 'VCLU3070079',
+      typeOfContainer: i % 2 === 0 ? '45HC' : '20DC',
+      address: i % 2 === 0 ? 'Cảng Cát Lái' : 'Cảng tân cảng Phú Hữu',
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
       containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
-      rentCost: 100000,
-      price: 100000000,
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
+      rentCost: i % 2 === 0 ? 100000 : 5000,
+      price: i % 2 === 0 ? 100000000 : 2000,
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
@@ -189,8 +187,8 @@ export default function ContainerPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateContainer('code'),
-      width: 200,
+      title: translateContainer('containerNo'),
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -198,11 +196,19 @@ export default function ContainerPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
+      title: translateContainer('code'),
+      width: 200,
+      dataIndex: 'containerCode',
+      key: 'containerCode',
+      fixed: 'left',
+      align: 'center',
+      ...getColumnSearchProps('containerCode'),
+    },
+    {
       title: translateContainer('type_of_container'),
-      width: 250,
+      width: 150,
       dataIndex: 'typeOfContainer',
       key: 'typeOfContainer',
-      fixed: 'left',
       align: 'center',
       ...getColumnSearchProps('typeOfContainer'),
       filters: [
@@ -234,7 +240,7 @@ export default function ContainerPage() {
     },
     {
       title: translateContainer('containerStatus'),
-      width: 300,
+      width: 200,
       dataIndex: 'containerStatus',
       key: 'containerStatus',
       align: 'center',

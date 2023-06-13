@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
@@ -46,33 +47,16 @@ export default function LocationTypePage() {
 
   interface DataType {
     key: number;
-    age: number;
-    name: string;
-    address: string;
     addressType: string;
-    phoneNumner: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
-    email: string;
     status: string;
   }
 
   const data: DataType[] = [];
+
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      age: 32,
-      name: `Vũng Tàu ${i}`,
-      address: 'Vũng Tàu',
       addressType: i % 2 === 0 ? 'Trả hàng' : 'Nhận hàng',
-      phoneNumner: '0964582355',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
@@ -191,8 +175,8 @@ export default function LocationTypePage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateTypeOfLocation('code'),
-      width: 250,
+      title: translateTypeOfLocation('type_of_location_no'),
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -220,7 +204,7 @@ export default function LocationTypePage() {
     {
       title: translateTypeOfLocation('status'),
       dataIndex: 'status',
-      width: 150,
+      width: 120,
       key: 'status',
       align: 'center',
       filters: [

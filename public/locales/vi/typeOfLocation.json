@@ -1,6 +1,6 @@
 {
     "title": "Danh sách loại địa điểm",
-    "code": "Mã loại địa chỉ",
+    "type_of_location_no": "Số thứ tự",
     "type_of_location": "Loại địa chỉ",
     "status":"Trạng thái",
     "type_of_location_information":"THÔNG TIN CHI TIẾT CỦA LOẠI ĐỊA CHỈ",

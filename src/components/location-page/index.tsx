@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
@@ -37,34 +38,34 @@ export default function LocationPage() {
 
   interface DataType {
     key: number;
-    age: number;
+    locationCode: string;
     name: string;
     address: string;
     addressType: string;
     phoneNumner: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
     email: string;
     status: string;
+    dateCreator: string;
+    userCreator: string;
   }
 
   const data: DataType[] = [];
+
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      age: 32,
-      name: `Vũng Tàu ${i}`,
-      address: 'Vũng Tàu',
-      addressType: 'Nhận hàng',
-      phoneNumner: '0964582355',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      email: 'abcd@gmail.com',
+      locationCode: i % 2 === 0 ? 'DD0119524' : 'DD0119521',
+      name: i % 2 === 0 ? 'Vinafco Depot' : 'Phú Thọ',
+      address:
+        i % 2 === 0
+          ? '	Vinafco Depot'
+          : 'Thôn Thọ Bình,Xã Tân Dân,Huyện Khoái Châu, Tỉnh Hưng Yên + Xã Vạn Xuân, Huyện Tam Nông, Tỉnh Phú Thọ',
+      addressType: i % 2 === 0 ? 'Nhận hàng' : 'Trả hàng',
+      phoneNumner: i % 2 === 0 ? '0964582355' : '0942558459',
+      email: i % 2 === 0 ? 'vinafcodepot@gmail.com' : 'phutho@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreator: '14/06/2023',
+      userCreator: 'Admin',
     });
   }
 
@@ -182,8 +183,8 @@ export default function LocationPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateLocation('code'),
-      width: 150,
+      title: translateLocation('location_no'),
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -191,21 +192,29 @@ export default function LocationPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateLocation('name'),
+      title: translateLocation('code'),
       width: 150,
+      dataIndex: 'locationCode',
+      key: 'locationCode',
+      align: 'center',
+      fixed: 'left',
+      ...getColumnSearchProps('locationCode'),
+    },
+    {
+      title: translateLocation('name'),
+      width: 200,
       dataIndex: 'name',
       key: 'name',
       ...getColumnSearchProps('name'),
-      fixed: 'left',
       align: 'center',
       filters: [
         {
-          text: 'Vũng Tàu 1',
-          value: 'Vũng Tàu 1',
+          text: 'Vinafco Depot',
+          value: 'Vinafco Depot',
         },
         {
-          text: 'Vũng Tàu 2',
-          value: 'Vũng Tàu 2',
+          text: 'Phú Thọ',
+          value: 'Phú Thọ',
         },
       ],
       filterMode: 'tree',
@@ -213,8 +222,16 @@ export default function LocationPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
+      title: translateLocation('email'),
+      width: 250,
+      dataIndex: 'email',
+      key: 'email',
+      align: 'center',
+      ...getColumnSearchProps('email'),
+    },
+    {
       title: translateLocation('address'),
-      width: 200,
+      width: 380,
       dataIndex: 'address',
       ...getColumnSearchProps('address'),
       key: 'address',
@@ -222,7 +239,7 @@ export default function LocationPage() {
     },
     {
       title: translateLocation('type_of_location'),
-      width: 250,
+      width: 160,
       dataIndex: 'addressType',
       key: 'addressType',
       align: 'center',
@@ -239,31 +256,16 @@ export default function LocationPage() {
     },
     {
       title: translateLocation('phone'),
-      width: 150,
+      width: 200,
       dataIndex: 'phoneNumner',
       key: 'phoneNumner',
+      align: 'center',
       ...getColumnSearchProps('phoneNumner'),
-      align: 'center',
-    },
-    {
-      title: translateLocation('email'),
-      width: 200,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-      ...getColumnSearchProps('email'),
-    },
-    {
-      title: translateLocation('company'),
-      dataIndex: 'companyName',
-      key: 'companyName',
-      align: 'center',
-      ...getColumnSearchProps('companyName'),
     },
     {
       title: translateLocation('status'),
       dataIndex: 'status',
-      width: 150,
+      width: 120,
       key: 'status',
       align: 'center',
       filters: [
@@ -288,6 +290,20 @@ export default function LocationPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateLocation('date_creator'),
+      width: 100,
+      dataIndex: 'dateCreator',
+      key: 'dateCreator',
+      align: 'center',
+    },
+    {
+      title: translateLocation('user_creator'),
+      width: 150,
+      dataIndex: 'userCreator',
+      key: 'userCreator',
+      align: 'center',
     },
     {
       key: 'operation',

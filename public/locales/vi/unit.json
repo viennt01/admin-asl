@@ -1,6 +1,6 @@
 {
     "title": "Danh sách đơn vị tính",
-    "code": "Mã đơn vị",
+    "code": "Số thứ tự",
     "international_code": "Mã quốc tế",
     "description": "Mô tả",
     "status":"Trạng thái",

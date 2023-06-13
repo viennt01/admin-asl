@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
@@ -32,6 +33,7 @@ const STATUS_CAPACITY_COLORS = {
   Full: '#31AFFE',
   NotFull: '#616887',
 };
+
 const STATUS_CAPACITY_LABELS = {
   Full: 'Đầy',
   NotFull: 'Nửa đầy',
@@ -45,7 +47,6 @@ export default function PortPage() {
   const [locale, setLocale] = useState(enUS);
   interface DataType {
     key: number;
-    age: number;
     name: string;
     address: string;
     totalContainer: number;
@@ -56,16 +57,22 @@ export default function PortPage() {
   }
 
   const data: DataType[] = [];
+
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      age: 32,
-      name: `Vũng Tàu ${i}`,
-      address: 'Vũng Tàu',
-      totalContainer: 100,
-      capacity: 3,
+      name: i % 2 === 0 ? 'Cảng Cát Lái' : 'Cảng tân cảng Phú Hữu',
+      address:
+        i % 2 === 0
+          ? '1295B Đường Nguyễn Thị Định, Phường Cát Lái, Quận 2, TP Hồ Chí Minh, Việt Nam'
+          : 'Khu phố 04, Phường Phú Hữu, Quận 9, TP Hồ Chí Minh',
+      totalContainer: i % 2 === 0 ? 1000000 : 5000,
+      capacity: i % 2 === 0 ? 3 : 2,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
+      companyName:
+        i % 2 === 0
+          ? 'Công ty Tân Cảng Sài Gòn'
+          : 'Công ty TNHH MTV Cảng Bến Nghé',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }
@@ -185,7 +192,7 @@ export default function PortPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translatePort('code'),
-      width: 150,
+      width: 120,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -223,14 +230,14 @@ export default function PortPage() {
     {
       title: translatePort('address'),
       dataIndex: 'address',
-      width: 250,
+      width: 300,
       key: 'address',
       align: 'center',
       ...getColumnSearchProps('address'),
     },
     {
       title: translatePort('quantity'),
-      width: 220,
+      width: 200,
       dataIndex: 'totalContainer',
       key: 'totalContainer',
       align: 'center',
