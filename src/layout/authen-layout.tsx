@@ -344,20 +344,20 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
     '/system/staff': [
-      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      { title: `${translateCommon('system')}` },
       { title: `${translateCommon('staff')}` },
     ],
     '/system/staff/edit/[id]': [
-      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      { title: `${translateCommon('system')}` },
       { title: <Link href={ROUTERS.STAFF}>{translateCommon('staff')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
     '/system/permission': [
-      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      { title: `${translateCommon('system')}` },
       { title: `${translateCommon('permission')}` },
     ],
     '/system/permission/edit/[id]': [
-      { title: <Link href={''}>{translateCommon('system')}</Link> },
+      { title: `${translateCommon('system')}` },
       {
         title: (
           <Link href={ROUTERS.PERMISSION}>{translateCommon('permission')}</Link>
