@@ -1,48 +1,270 @@
-import React from 'react';
-import { Badge, Card, Descriptions } from 'antd';
+import COLORS from '@/constant/color';
+import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import {
-  UserOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  HomeOutlined,
-} from '@ant-design/icons';
+  Button,
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  ConfigProvider,
+  Cascader,
+  CascaderProps,
+  Select,
+} from 'antd';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
+export interface FormValues {
+  code: string;
+  type_of_container: string;
+  location: string;
+  detail_location: string;
+  rentCost: string;
+  price: string;
+}
+
+const initialValue = {
+  code: '',
+  type_of_container: '',
+  location: '',
+  detail_location: '',
+  rentCost: '',
+  price: '',
+};
+
+const { Title } = Typography;
 
 export default function EditDepot() {
-  const { translate: translateDepot } = useI18n('depot');
+  const { translate: translateAddDepot } = useI18n('depot');
+  const router = useRouter();
+  const [form] = Form.useForm<FormValues>();
+  const { id } = router.query;
+
+  useEffect(() => {
+    if (!id) return;
+  }, [router, form]);
+
+  const onFinish = (formValues: FormValues) => {
+    console.log(formValues);
+  };
+  interface DataNodeType {
+    value: string;
+    label: string;
+    children?: DataNodeType[];
+  }
+  const residences: CascaderProps<DataNodeType>['options'] = [
+    {
+      value: 'Thành phố Hồ Chí Minh',
+      label: 'Thành phố Hồ Chí Minh',
+      children: [
+        {
+          value: 'Gò Vấp',
+          label: 'Gò Vấp',
+          children: [
+            {
+              value: 'Phường 1',
+              label: 'Phường 1',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      value: 'Hà Nội',
+      label: 'Hà Nội',
+      children: [
+        {
+          value: 'Huyện Ba Vì',
+          label: 'Huyện Ba Vì',
+          children: [
+            {
+              value: 'Xã Ba Trại',
+              label: 'Xã Ba Trại',
+            },
+          ],
+        },
+      ],
+    },
+  ];
 
   return (
-    <Card bordered={false} style={{ margin: '10px 0' }}>
-      <Descriptions title={translateDepot('information_depot')} column={2}>
-        <Descriptions.Item label={<UserOutlined />}>
-          Công ty Cảng quốc tế SP-PSA
-        </Descriptions.Item>
-        <Descriptions.Item label={<MailOutlined />}>
-          thanhviennguyen01@gmail.com
-        </Descriptions.Item>
-        <Descriptions.Item label={<PhoneOutlined />}>
-          1810000000
-        </Descriptions.Item>
-        <Descriptions.Item label={<HomeOutlined />}>
-          Thành phố Hồ Chí Minh
-        </Descriptions.Item>
-      </Descriptions>
-      <hr style={{ width: '70%', marginBottom: '24px' }} color="#BBBBBB" />
+    <div style={{ padding: '24px 0' }}>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: COLORS.GREEN,
+          },
+        }}
+      >
+        <Form
+          form={form}
+          initialValues={initialValue}
+          onFinish={onFinish}
+          autoComplete="off"
+          layout="vertical"
+        >
+          <Card style={{ marginBottom: 24 }}>
+            <Row justify={'center'}>
+              <Col>
+                <Title level={3}>Edit a port</Title>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddDepot('depot_name')}
+                  name="depot_name"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateAddDepot('depot_name_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddDepot('depot_no')}
+                  name="depot_no"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateAddDepot('depot_no_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddDepot('address')}
+                  name="location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Cascader options={residences} />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddDepot('address')}
+                  name="detail_location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input placeholder="Nhập vị trí cụ thể" />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddDepot('branch_depot')}
+                  name="branch_depot"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateAddDepot('branch_depot_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddDepot('companny_mamagement_depot')}
+                  name="companny_mamagement_depot"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateAddDepot(
+                      'companny_mamagement_depot_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={3} span={24}>
+                <Form.Item
+                  label={translateAddDepot('status_depot')}
+                  name="status_depot"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Pending',
+                        label: 'Pending',
+                      },
+                      {
+                        value: 'Active',
+                        label: 'Active',
+                      },
+                      {
+                        value: 'Deactivate',
+                        label: 'Deactivate',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={24} span={24}>
+                <Form.Item
+                  label={translateAddDepot('description')}
+                  name="status_depot"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Input.TextArea
+                    placeholder={translateAddDepot('description_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Card>
 
-      <Descriptions column={2}>
-        <Descriptions.Item label={translateDepot('quantity_container')}>
-          100.000.000{' '}
-        </Descriptions.Item>
-        <Descriptions.Item label={translateDepot('capacity_label')}>
-          181
-        </Descriptions.Item>
-        <Descriptions.Item label={translateDepot('status')}>
-          <Badge status="processing" text="Hoạt động bình thường" />
-        </Descriptions.Item>
-        <Descriptions.Item label={translateDepot('status_capacity')}>
-          <Badge status="error" text="Đầy" />
-        </Descriptions.Item>
-      </Descriptions>
-    </Card>
+          <Card>
+            <Row gutter={12}>
+              <Col>
+                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
+                  Cancel
+                </Button>
+              </Col>
+              <Col>
+                <Button type="primary" htmlType="submit">
+                  Save
+                </Button>
+              </Col>
+            </Row>
+          </Card>
+        </Form>
+      </ConfigProvider>
+    </div>
   );
 }
