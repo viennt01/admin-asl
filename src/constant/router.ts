@@ -8,8 +8,6 @@ export const ROUTERS = {
   QUOTATION_EDIT: (quotationId: string) => `/quotation/edit/${quotationId}`,
   CUSTOMER: '/partner/customer',
   CUSTOMER_EDIT: (customerId: string) => `/partner/customer/edit/${customerId}`,
-  DEBTOR: '/partner/debtor',
-  DEBTOR_EDIT: (debtorId: string) => `/partner/debtor/edit/${debtorId}`,
   SUPPLIER: '/partner/supplier',
   SUPPLIER_EDIT: (supplierId: string) => `/partner/supplier/edit/${supplierId}`,
   PORT: '/master-data/port',
