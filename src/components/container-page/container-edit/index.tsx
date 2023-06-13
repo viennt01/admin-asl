@@ -10,20 +10,29 @@ import {
   Row,
   Col,
   ConfigProvider,
+  Cascader,
+  CascaderProps,
+  Select,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export interface FormValues {
+  code: string;
   type_of_container: string;
-  detail_placeholder: string;
-  number_container: string;
+  location: string;
+  detail_location: string;
+  rentCost: string;
+  price: string;
 }
 
 const initialValue = {
+  code: '',
   type_of_container: '',
-  detail_placeholder: '',
-  number_container: '',
+  location: '',
+  detail_location: '',
+  rentCost: '',
+  price: '',
 };
 
 const { Title } = Typography;
@@ -32,7 +41,7 @@ export default function EditContainer() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
-  const { translate: translateAddTypeOfContainer } = useI18n('typeOfContainer');
+  const { translate: translateAddContainer } = useI18n('container');
 
   useEffect(() => {
     if (!id) return;
@@ -41,6 +50,45 @@ export default function EditContainer() {
   const onFinish = (formValues: FormValues) => {
     console.log(formValues);
   };
+  interface DataNodeType {
+    value: string;
+    label: string;
+    children?: DataNodeType[];
+  }
+  const residences: CascaderProps<DataNodeType>['options'] = [
+    {
+      value: 'Thành phố Hồ Chí Minh',
+      label: 'Thành phố Hồ Chí Minh',
+      children: [
+        {
+          value: 'Gò Vấp',
+          label: 'Gò Vấp',
+          children: [
+            {
+              value: 'Phường 1',
+              label: 'Phường 1',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      value: 'Hà Nội',
+      label: 'Hà Nội',
+      children: [
+        {
+          value: 'Huyện Ba Vì',
+          label: 'Huyện Ba Vì',
+          children: [
+            {
+              value: 'Xã Ba Trại',
+              label: 'Xã Ba Trại',
+            },
+          ],
+        },
+      ],
+    },
+  ];
   return (
     <div style={{ padding: '24px 0' }}>
       <ConfigProvider
@@ -54,9 +102,8 @@ export default function EditContainer() {
           form={form}
           initialValues={initialValue}
           onFinish={onFinish}
-          labelCol={{ span: 4 }}
           autoComplete="off"
-          labelAlign="left"
+          layout="vertical"
         >
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
@@ -64,11 +111,11 @@ export default function EditContainer() {
                 <Title level={3}>Edit a container</Title>
               </Col>
             </Row>
-            <Row>
-              <Col lg={24} md={24}>
+            <Row gutter={16}>
+              <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateAddTypeOfContainer('type_of_container')}
-                  name="type_of_container"
+                  label={translateAddContainer('code')}
+                  name="code"
                   rules={[
                     {
                       required: true,
@@ -77,35 +124,75 @@ export default function EditContainer() {
                   ]}
                 >
                   <Input
-                    placeholder={translateAddTypeOfContainer(
-                      'type_of_container_placeholder'
-                    )}
+                    placeholder={translateAddContainer('code_placeholder')}
                   />
                 </Form.Item>
-
+              </Col>
+              <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateAddTypeOfContainer('number_container')}
-                  name="email"
+                  label={translateAddContainer('type_of_container')}
+                  name="type_of_container"
                   rules={[{ required: true, message: 'Please input email' }]}
                 >
-                  <Input
-                    placeholder={translateAddTypeOfContainer(
-                      'number_container_placeholder'
+                  <Select
+                    placeholder={translateAddContainer(
+                      'type_of_container_placeholder'
                     )}
+                    options={[
+                      {
+                        value: '40DC',
+                        label: '40DC',
+                      },
+                      {
+                        value: '40HC',
+                        label: '40HC',
+                      },
+                    ]}
                   />
                 </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateAddTypeOfContainer('detail')}
-                  name="detail_placeholder"
+                  label={translateAddContainer('location')}
+                  name="location"
                   rules={[
                     { required: true, message: 'Please input last name' },
                   ]}
                 >
-                  <Input.TextArea
-                    placeholder={translateAddTypeOfContainer(
-                      'detail_placeholder'
-                    )}
-                  />
+                  <Cascader options={residences} />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddContainer('location')}
+                  name="detail_location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input placeholder="Nhập vị trí cụ thể" />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddContainer('rentCost')}
+                  name="rentCost"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input prefix="Đ" suffix="VNĐ" />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateAddContainer('price')}
+                  name="price"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input prefix="Đ" suffix="VNĐ" />
                 </Form.Item>
               </Col>
             </Row>
