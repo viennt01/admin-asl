@@ -15,7 +15,7 @@ function TypeOfLocationEditPage() {
 
 export default withAuthentication(TypeOfLocationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'type-of-location']);
+export const getStaticProps = getStatic(['common', 'typeOfLocation']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>
