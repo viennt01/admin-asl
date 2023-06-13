@@ -3,17 +3,23 @@ import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import AppSider from './components/app-sider';
 import AuthenLayout from './authen-layout.module.scss';
+import { Avatar, Breadcrumb, Layout, Space, Typography } from 'antd';
+// import {
+//   Avatar,
+//   Breadcrumb,
+//   Layout,
+//   Space,
+//   Typography,
+//   Image,
+//   Dropdown,
+// } from 'antd';
 import {
-  Avatar,
-  Breadcrumb,
-  Layout,
-  Space,
-  Typography,
-  Image,
-  Dropdown,
-} from 'antd';
-import { UserOutlined, MenuOutlined, DownOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+  UserOutlined,
+  MenuOutlined,
+  CaretDownOutlined,
+} from '@ant-design/icons';
+// import { UserOutlined, MenuOutlined, DownOutlined } from '@ant-design/icons';
+// import type { MenuProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { LANGUAGE } from '@/constant';
@@ -30,76 +36,113 @@ interface Props {
   children: React.ReactNode;
 }
 
-const items: MenuProps['items'] = [
-  {
-    label: (
-      <Space>
-        <Image
-          preview={false}
-          width={WIDTH_FLAG}
-          src={'/images/en.png'}
-          alt="en"
-        />
-        <span>English</span>
-      </Space>
-    ),
-    key: LANGUAGE.EN,
-  },
-  {
-    type: 'divider',
-  },
-  {
-    label: (
-      <Space>
-        <Image
-          preview={false}
-          width={WIDTH_FLAG}
-          src={'/images/vi.png'}
-          alt="vi"
-        />
-        <span>Vietnamese</span>
-      </Space>
-    ),
-    key: LANGUAGE.VI,
-  },
-];
+// const items: MenuProps['items'] = [
+//   {
+//     label: (
+//       <Space>
+//         <Image
+//           preview={false}
+//           width={WIDTH_FLAG}
+//           src={'/images/en.png'}
+//           alt="en"
+//         />
+//         <span>English</span>
+//       </Space>
+//     ),
+//     key: LANGUAGE.EN,
+//   },
+//   {
+//     type: 'divider',
+//   },
+//   {
+//     label: (
+//       <Space>
+//         <Image
+//           preview={false}
+//           width={WIDTH_FLAG}
+//           src={'/images/vi.png'}
+//           alt="vi"
+//         />
+//         <span>Vietnamese</span>
+//       </Space>
+//     ),
+//     key: LANGUAGE.VI,
+//   },
+// ];
 
+const items = [
+  { value: '/images/en.png', label: 'English', key: LANGUAGE.EN },
+  { value: '/images/vi.png', label: 'Vietnamese', key: LANGUAGE.VI },
+];
 interface SelectLanguage {
   languageSelected: string;
+  languageSelectedName: string;
+  classActiveDropdown: string;
   setLanguage: (language: string) => void;
+  setLanguageSelectedName: (languageName: string) => void;
+  setClassActiveDropdown: (className: string) => void;
   router: NextRouter;
 }
 
 const SelectLanguage = ({
   languageSelected,
+  classActiveDropdown,
+  languageSelectedName,
+  setClassActiveDropdown,
   setLanguage,
+  setLanguageSelectedName,
   router,
 }: SelectLanguage) => {
-  const onClick: MenuProps['onClick'] = ({ key }) => {
+  function onClickChangeLanguage(key: string, label: string) {
     setLanguage(key as string);
+    setLanguageSelectedName(label);
     const { pathname, asPath, query } = router;
     router.replace({ pathname, query }, asPath, { locale: key });
     appLocalStorage.set(LOCAL_STORAGE_KEYS.LANGUAGE, key);
-  };
+  }
+
+  function onClickShowPopupLanguage() {
+    if (classActiveDropdown === 'active') {
+      setClassActiveDropdown('');
+    } else {
+      setClassActiveDropdown('active');
+    }
+  }
+
   return (
     <div>
-      <Dropdown
-        menu={{ items, onClick }}
-        arrow={{ pointAtCenter: true }}
-        placement="bottomLeft"
-        trigger={['click']}
-        overlayStyle={{ top: '8%' }}
+      <div
+        className={`${AuthenLayout.selectMenu} ${
+          classActiveDropdown != '' ? AuthenLayout.active : ''
+        }`}
       >
-        <Space>
-          <Image
-            preview={false}
-            width={WIDTH_FLAG}
-            alt=""
-            src={`/images/${languageSelected}.png`}
-          />
-          <DownOutlined />
-        </Space>
-      </Dropdown>
+        <div
+          className={AuthenLayout.selectBtn}
+          onClick={onClickShowPopupLanguage}
+        >
+          <div className={AuthenLayout.layoutChooseImage}>
+            <img
+              src={`/images/${languageSelected}.png`}
+              alt=""
+              width={WIDTH_FLAG}
+            />
+            <span>{languageSelectedName}</span>
+          </div>
+          <CaretDownOutlined className={AuthenLayout.selectBtnIcon} />
+        </div>
+        <ul className={AuthenLayout.options}>
+          {items.map(({ value, label, key }, index) => (
+            <li
+              key={index}
+              onClick={() => onClickChangeLanguage(key, label)}
+              className={AuthenLayout.option}
+            >
+              <img src={value} alt={label} />
+              <span className={AuthenLayout.optionText}>{label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
@@ -109,12 +152,19 @@ export function AppLayout(props: Props) {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   const [languageSelected, setLanguage] = useState<string>(LANGUAGE.EN);
+  const [classActiveDropdown, setClassActiveDropdown] = useState('');
+  const [languageSelectedName, setLanguageSelectedName] = useState('');
 
   useEffect(() => {
     setLanguage(
       appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
     );
   }, [languageSelected]);
+
+  useEffect(() => {
+    setLanguageSelectedName('English');
+  }, [languageSelectedName]);
+
   const ROUTER_HEADER = {
     '/': [{ title: `${translateCommon('home')}` }],
     '/quotation': [{ title: `${translateCommon('quotation')}` }],
@@ -347,7 +397,11 @@ export function AppLayout(props: Props) {
             <Space style={{ cursor: 'pointer' }}>
               <SelectLanguage
                 languageSelected={languageSelected}
+                classActiveDropdown={classActiveDropdown}
+                languageSelectedName={languageSelectedName}
                 setLanguage={setLanguage}
+                setClassActiveDropdown={setClassActiveDropdown}
+                setLanguageSelectedName={setLanguageSelectedName}
                 router={router}
               />
               <Space
