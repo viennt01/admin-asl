@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
@@ -46,20 +47,29 @@ export default function TypeOfContainerPage() {
 
   interface DataType {
     key: number;
+    typeContainerNo: string;
     name: string;
     details: string;
+    teus: number;
     totalContainer: number;
     status: string;
+    dateCreator: string;
+    userCreator: string;
   }
 
   const data: DataType[] = [];
+
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      name: i % 2 === 0 ? '40DC' : '45HC',
-      details: i % 2 === 0 ? 'Cont 40' : 'Cont 45',
+      typeContainerNo: i % 2 === 0 ? 'LC0014797' : 'LC0014792',
+      name: i % 2 === 0 ? '40N' : '40RF',
+      details: i % 2 === 0 ? 'Cont 40 nhẹ' : 'Cont 40 lạnh',
+      teus: i % 2 === 0 ? 2 : 1,
       totalContainer: i % 2 === 0 ? 2000 : 1500,
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      status: i % 2 === 0 ? 'Active' : 'DeActive',
+      dateCreator: '14/06/2023',
+      userCreator: 'Admin',
     });
   }
 
@@ -178,7 +188,7 @@ export default function TypeOfContainerPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateTypeOfContainer('code'),
-      width: 200,
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -186,11 +196,19 @@ export default function TypeOfContainerPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
+      title: translateTypeOfContainer('container_no'),
+      width: 180,
+      dataIndex: 'typeContainerNo',
+      key: 'typeContainerNo',
+      align: 'center',
+      fixed: 'left',
+      ...getColumnSearchProps('typeContainerNo'),
+    },
+    {
       title: translateTypeOfContainer('type_of_container'),
-      width: 220,
+      width: 200,
       dataIndex: 'name',
       key: 'name',
-      fixed: 'left',
       align: 'center',
       filters: [
         {
@@ -219,6 +237,14 @@ export default function TypeOfContainerPage() {
       ...getColumnSearchProps('details'),
     },
     {
+      title: translateTypeOfContainer('teus'),
+      width: 100,
+      dataIndex: 'teus',
+      key: 'teus',
+      align: 'center',
+      ...getColumnSearchProps('teus'),
+    },
+    {
       title: translateTypeOfContainer('number_container'),
       width: 200,
       dataIndex: 'totalContainer',
@@ -230,7 +256,7 @@ export default function TypeOfContainerPage() {
       title: translateTypeOfContainer('status'),
       dataIndex: 'status',
       key: 'status',
-      width: 150,
+      width: 120,
       align: 'center',
       filters: [
         {
@@ -254,6 +280,20 @@ export default function TypeOfContainerPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateTypeOfContainer('date_creator'),
+      width: 100,
+      dataIndex: 'dateCreator',
+      key: 'dateCreator',
+      align: 'center',
+    },
+    {
+      title: translateTypeOfContainer('user_creator'),
+      width: 150,
+      dataIndex: 'userCreator',
+      key: 'userCreator',
+      align: 'center',
     },
     {
       key: 'operation',

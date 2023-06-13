@@ -1,6 +1,7 @@
 {
     "title": "List of Currency",
-    "bank_no": "Bank No",
+    "bank_no": "No",
+    "bank_code": "Bank code",
     "bank_logo": "Logo",
     "bank_name": "Bank name",
     "bank_account_number": "Bank account number",
@@ -10,6 +11,8 @@
     "bank_branch": "Bank branch",
     "bank_note": "Note",
     "status":"Status",
+    "date_creator": "Date Creator",
+    "user_creator": "User Creator",
     "information_add_bank": "Add new bank",
     "bank_name_placeholder": "Enter the bank name",
     "bank_account_number_placeholder": "Enter the bank account number",

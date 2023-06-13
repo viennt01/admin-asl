@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
@@ -46,30 +47,25 @@ export default function ExpensesTypePage() {
 
   interface DataType {
     key: number;
-    age: number;
+    typeOfExpensesCode: string;
     name: string;
-    address: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
-    price: number;
     status: string;
+    dateCreator: string;
+    userCreator: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      age: 32,
-      name: `Vũng Tàu ${i}`,
-      address: 'Vũng Tàu',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
-      price: 200000,
+      typeOfExpensesCode: `CP${i + 1}`,
+      name:
+        i % 2 === 0
+          ? 'Chi phí nguyên vật liệu'
+          : 'Chi phí dịch vụ mua ngoài, thuê ngoài',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreator: '14/06/2023',
+      userCreator: 'Admin',
     });
   }
 
@@ -187,8 +183,8 @@ export default function ExpensesTypePage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateTypeOfExpenses('code'),
-      width: 200,
+      title: translateTypeOfExpenses('add_type_of_expenses_no'),
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -196,12 +192,20 @@ export default function ExpensesTypePage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
+      title: translateTypeOfExpenses('code'),
+      width: 180,
+      dataIndex: 'typeOfExpensesCode',
+      key: 'typeOfExpensesCode',
+      align: 'center',
+      fixed: 'left',
+      ...getColumnSearchProps('typeOfExpensesCode'),
+    },
+    {
       title: translateTypeOfExpenses('name'),
       width: 450,
       dataIndex: 'name',
       key: 'name',
       ...getColumnSearchProps('name'),
-      fixed: 'left',
       align: 'center',
       filters: [
         {
@@ -218,18 +222,11 @@ export default function ExpensesTypePage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateTypeOfExpenses('VAT'),
-      width: 250,
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      ...getColumnSearchProps('price'),
-    },
-    {
       title: translateTypeOfExpenses('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',
+      width: 120,
       filters: [
         {
           text: 'Active',
@@ -252,6 +249,20 @@ export default function ExpensesTypePage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateTypeOfExpenses('date_creator'),
+      width: 100,
+      dataIndex: 'dateCreator',
+      key: 'dateCreator',
+      align: 'center',
+    },
+    {
+      title: translateTypeOfExpenses('user_creator'),
+      width: 150,
+      dataIndex: 'userCreator',
+      key: 'userCreator',
+      align: 'center',
     },
     {
       key: 'operation',

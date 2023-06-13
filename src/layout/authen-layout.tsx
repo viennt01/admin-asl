@@ -3,23 +3,13 @@ import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import AppSider from './components/app-sider';
 import AuthenLayout from './authen-layout.module.scss';
-import { Avatar, Breadcrumb, Layout, Space, Typography } from 'antd';
-// import {
-//   Avatar,
-//   Breadcrumb,
-//   Layout,
-//   Space,
-//   Typography,
-//   Image,
-//   Dropdown,
-// } from 'antd';
+import { Avatar, Breadcrumb, Layout, Space, Typography, Button } from 'antd';
 import {
   UserOutlined,
   MenuOutlined,
   CaretDownOutlined,
+  LockOutlined,
 } from '@ant-design/icons';
-// import { UserOutlined, MenuOutlined, DownOutlined } from '@ant-design/icons';
-// import type { MenuProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { LANGUAGE } from '@/constant';
@@ -32,48 +22,16 @@ const { Header, Content, Footer } = Layout;
 export const HEADER_HEIGHT = 64;
 export const FOOTER_HEIGHT = 38;
 const WIDTH_FLAG = 36;
+
 interface Props {
   children: React.ReactNode;
 }
-
-// const items: MenuProps['items'] = [
-//   {
-//     label: (
-//       <Space>
-//         <Image
-//           preview={false}
-//           width={WIDTH_FLAG}
-//           src={'/images/en.png'}
-//           alt="en"
-//         />
-//         <span>English</span>
-//       </Space>
-//     ),
-//     key: LANGUAGE.EN,
-//   },
-//   {
-//     type: 'divider',
-//   },
-//   {
-//     label: (
-//       <Space>
-//         <Image
-//           preview={false}
-//           width={WIDTH_FLAG}
-//           src={'/images/vi.png'}
-//           alt="vi"
-//         />
-//         <span>Vietnamese</span>
-//       </Space>
-//     ),
-//     key: LANGUAGE.VI,
-//   },
-// ];
 
 const items = [
   { value: '/images/en.png', label: 'English', key: LANGUAGE.EN },
   { value: '/images/vi.png', label: 'Vietnamese', key: LANGUAGE.VI },
 ];
+
 interface SelectLanguage {
   languageSelected: string;
   languageSelectedName: string;
@@ -154,6 +112,7 @@ export function AppLayout(props: Props) {
   const [languageSelected, setLanguage] = useState<string>(LANGUAGE.EN);
   const [classActiveDropdown, setClassActiveDropdown] = useState('');
   const [languageSelectedName, setLanguageSelectedName] = useState('');
+  const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
 
   useEffect(() => {
     setLanguage(
@@ -164,6 +123,14 @@ export function AppLayout(props: Props) {
   useEffect(() => {
     setLanguageSelectedName('English');
   }, [languageSelectedName]);
+
+  function onClickShowPopupAvatar() {
+    if (classActiveAvatarPopup === 'active') {
+      setClassActiveAvatarPopup('');
+    } else {
+      setClassActiveAvatarPopup('active');
+    }
+  }
 
   const ROUTER_HEADER = {
     '/': [{ title: `${translateCommon('home')}` }],
@@ -428,8 +395,42 @@ export function AppLayout(props: Props) {
                   <span className={AuthenLayout.notificationNumber}></span>
                 </div>
               </Space>
-              <Avatar style={{ display: 'block' }} icon={<UserOutlined />} />
-              Thanh Viên
+              <div>
+                <div
+                  onClick={onClickShowPopupAvatar}
+                  className={AuthenLayout.userAvatar}
+                >
+                  <Avatar
+                    style={{ display: 'block', marginRight: '10px' }}
+                    icon={<UserOutlined />}
+                  />
+                  Thanh Viên
+                </div>
+                <div
+                  className={`${AuthenLayout.userMenu} ${
+                    classActiveAvatarPopup != '' ? AuthenLayout.active : ''
+                  }`}
+                >
+                  <ul>
+                    <li>
+                      <Button
+                        className={AuthenLayout.userMenuButton}
+                        icon={<UserOutlined />}
+                      >
+                        My Profile
+                      </Button>
+                    </li>
+                    <li>
+                      <Button
+                        className={AuthenLayout.userMenuButton}
+                        icon={<LockOutlined />}
+                      >
+                        Change Password
+                      </Button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </Space>
           </Space>
         </Header>

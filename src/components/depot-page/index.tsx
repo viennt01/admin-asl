@@ -46,15 +46,24 @@ export default function DepotPage() {
   }
 
   const data: DataType[] = [];
+
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      depotName: i % 2 === 1 ? 'Hồ Chí Minh' : 'Vũng Tàu',
-      depotAddress: i % 2 === 1 ? 'Hồ Chí Minh' : 'Vũng Tàu',
-      depotBranch: i % 2 === 1 ? 'Hồ Chí Minh' : 'Vũng Tàu',
+      depotName: i % 2 === 1 ? 'ICD Transimex' : 'ICD TANAMEXCO',
+      depotAddress:
+        i % 2 === 1
+          ? '7/1, Ấp Bình Thọ, Phường Trường Thọ, Quận Thủ Đức, Thành phố Hồ Chí Minh'
+          : '429/10 Xa lộ Hà Nội P. Trường Thọ, Q.Thủ Đức, TP. Hồ Chí Minh',
+      depotBranch: 'Hồ Chí Minh',
       companyName:
-        i % 2 === 1 ? 'Công ty cổ phần A' : 'Công ty cổ phần Cảng Vũng Tàu',
-      description: 'abc',
+        i % 2 === 1
+          ? 'Công ty cổ phần Transimex'
+          : 'Công Ty TNHH MTV Sản Xuất Thương Mại Xuất Nhập Khẩu Tây Nam',
+      description:
+        i % 2 === 1
+          ? 'ICD Transimex hoạt động kinh doanh trong các lĩnh vực khai thác, quản lý vận chuyển, giao nhận container xuất nhập khẩu và nội địa.'
+          : 'ICD Tanamexco có tổng diện tích hơn 13.2 ha và vị trí vô cùng thuận lợi trong hoạt động khai thác cảng',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
     });
   }

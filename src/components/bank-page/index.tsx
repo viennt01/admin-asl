@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Hoạt động',
   DeActive: 'Ngừng hoạt động',
@@ -37,6 +38,7 @@ export default function BankPage() {
 
   interface DataType {
     key: number;
+    bankCode: string;
     bankLogo: string;
     bankName: string;
     bankAccountNumber: string;
@@ -46,21 +48,35 @@ export default function BankPage() {
     bankBranch: string;
     bankNote: string;
     status: string;
+    dateCreator: string;
+    userCreator: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      bankLogo: 'https://cdn.pixabay.com.jpg',
-      bankName: 'Vietcombank',
-      bankAccountNumber: '1234567989',
-      bankHotlinePhoneNumber: '1900 545413',
-      bankEmail: 'Vietcombank@gamil.com',
-      bankAddress: '50A Đặng Văn Bi, Bình Thọ, Thủ Đức, Thành phố Hồ Chí Minh',
+      bankCode: i % 2 === 0 ? 'BFTVVNVX' : 'MSCBVNVX',
+      bankLogo:
+        i % 2 === 0
+          ? 'https://9746c6837f.vws.vegacdn.vn/posts/files/thong-tin-ve-ngan-hang-vietcombank.jpg'
+          : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Logo_MB_new.png/1200px-Logo_MB_new.png',
+      bankName: i % 2 === 0 ? 'Vietcombank' : 'MBBank',
+      bankAccountNumber: i % 2 === 0 ? '1234567989' : '9897654321',
+      bankHotlinePhoneNumber: i % 2 === 0 ? '1900545413' : '1900 54 54 26',
+      bankEmail: i % 2 === 0 ? 'vietcombank@gamil.com' : 'mbbank@gmail.com',
+      bankAddress:
+        i % 2 === 0
+          ? '69 Bùi Thị Xuân, phường Phạm Ngũ Lão, Quận 1, thành phố Hồ Chí Minh'
+          : '172 Hai Bà Trưng, phường Đa Kao, Quận 1, thành phố Hồ Chí Minh',
       bankBranch: 'Hồ Chí Minh',
-      bankNote: 'Ngân Hàng TMCP Ngoại Thương Việt Nam (Vietcombank)',
+      bankNote:
+        i % 2 === 0
+          ? 'Ngân Hàng TMCP Ngoại Thương Việt Nam (Vietcombank)'
+          : 'Ngân hàng Quân đội (MBbank)',
       status: i % 5 === 1 ? 'DeActive' : 'Active',
+      dateCreator: '14/06/2023',
+      userCreator: 'Admin',
     });
   }
 
@@ -179,7 +195,7 @@ export default function BankPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateBank('bank_no'),
-      width: 150,
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -187,8 +203,17 @@ export default function BankPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
+      title: translateBank('bank_code'),
+      width: 180,
+      dataIndex: 'bankCode',
+      key: 'bankCode',
+      fixed: 'left',
+      align: 'center',
+      ...getColumnSearchProps('bankCode'),
+    },
+    {
       title: translateBank('bank_name'),
-      width: 300,
+      width: 200,
       dataIndex: 'bankName',
       key: 'bankName',
       fixed: 'left',
@@ -207,7 +232,7 @@ export default function BankPage() {
     },
     {
       title: translateBank('bank_hotline_phone_number'),
-      width: 250,
+      width: 200,
       dataIndex: 'bankHotlinePhoneNumber',
       key: 'bankHotlinePhoneNumber',
       align: 'center',
@@ -252,7 +277,7 @@ export default function BankPage() {
     },
     {
       title: translateBank('status'),
-      width: 150,
+      width: 120,
       dataIndex: 'status',
       key: 'status',
       align: 'center',
@@ -278,6 +303,20 @@ export default function BankPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateBank('date_creator'),
+      width: 100,
+      dataIndex: 'dateCreator',
+      key: 'dateCreator',
+      align: 'center',
+    },
+    {
+      title: translateBank('user_creator'),
+      width: 150,
+      dataIndex: 'userCreator',
+      key: 'userCreator',
+      align: 'center',
     },
     {
       key: 'operation',

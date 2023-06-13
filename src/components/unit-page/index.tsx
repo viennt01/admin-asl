@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
@@ -45,12 +46,6 @@ export default function CalculationUnitPage() {
   const [locale, setLocale] = useState(enUS);
   interface DataType {
     key: number;
-    age: number;
-    address: string;
-    totalContainer: number;
-    capacity: number;
-    capacityState: string;
-    companyName: string;
     internationalCode: string;
     description: string;
     status: string;
@@ -60,12 +55,6 @@ export default function CalculationUnitPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      age: 32,
-      address: 'Vũng Tàu',
-      totalContainer: 100,
-      capacity: 3,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName: 'Công ty cổ phần Cảng Vũng Tàu',
       internationalCode: 'FOT',
       description: 'Đơn vị đo trong hệ đo lường Anh',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
@@ -187,7 +176,7 @@ export default function CalculationUnitPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateUnit('code'),
-      width: 150,
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -211,7 +200,7 @@ export default function CalculationUnitPage() {
     },
     {
       title: translateUnit('status'),
-      width: 150,
+      width: 120,
       dataIndex: 'status',
       key: 'status',
       align: 'center',
