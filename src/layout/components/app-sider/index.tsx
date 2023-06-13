@@ -17,7 +17,6 @@ import {
   ClusterOutlined,
   ApartmentOutlined,
   UsergroupAddOutlined,
-  UserSwitchOutlined,
   GoldOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image, ConfigProvider } from 'antd';
@@ -79,11 +78,6 @@ const AppSider = ({ collapsed }: Props) => {
         `${translateCommon('customer')}`,
         ROUTERS.CUSTOMER,
         <UserOutlined />
-      ),
-      getItem(
-        `${translateCommon('debtor')}`,
-        ROUTERS.DEBTOR,
-        <UserSwitchOutlined />
       ),
       getItem(
         `${translateCommon('supplier')}`,
