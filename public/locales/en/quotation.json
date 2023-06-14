@@ -8,5 +8,13 @@
     "empty_get_or_return": "Empty Get/Return",
     "item_type": "Item Type",
     "effective_date": "Effective Date",
-    "creator": "Creator"
+    "creator": "Creator",
+    "information_add_quotation": "Add new quotation",
+    "customer_name_placeholder": "Enter customer name",
+    "receipt_of_goods_placeholder": "Choose receipt of goods",
+    "delivery_placeholder": "Choose delivery",
+    "fee_placeholder": "Enter fee",
+    "empty_get_or_return_placeholder": "Choose empty get or return",
+    "item_type_placeholder": "Enter item type",
+    "effective_date_placeholder": "Choose effective date"
 }

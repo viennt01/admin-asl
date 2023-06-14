@@ -3,6 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   ModalForm,
   ProForm,
+  ProFormDatePicker,
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
@@ -19,13 +20,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateQuotation() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateQuotation } = useI18n('quotation');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new quotation"
+      title={translateQuotation('information_add_quotation')}
       trigger={
         <Button
           type="primary"
@@ -44,7 +46,7 @@ export default function CreateQuotation() {
       submitter={{
         searchConfig: {
           resetText: 'Cancel',
-          submitText: 'Add quotation',
+          submitText: 'Add',
         },
       }}
       form={form}
@@ -62,97 +64,90 @@ export default function CreateQuotation() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="CustomerName"
+          label={translateQuotation('customer_name')}
+          placeholder={translateQuotation('customer_name_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Đóng hàng',
+            },
+            {
+              value: '2',
+              label: 'Trả hàng',
+            },
+          ]}
+          width="md"
+          name="ReceiptOfGoods"
+          label={translateQuotation('receipt_of_goods')}
+          placeholder={translateQuotation('receipt_of_goods_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Đang Giao',
+            },
+            {
+              value: '2',
+              label: 'Chưa giao',
+            },
+          ]}
+          width="md"
+          name="Delivery"
+          label={translateQuotation('delivery')}
+          placeholder={translateQuotation('delivery_placeholder')}
         />
 
         <ProFormText
           width="md"
-          name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
-        />
-        <ProFormText
-          width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
+          name="Fee"
+          label={translateQuotation('fee')}
+          placeholder={translateQuotation('fee_placeholder')}
           rules={[
             {
-              // required: true,
               type: 'number',
               min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
+              message: 'Vui lòng nhập số cước',
             },
           ]}
         />
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormSelect
           request={async () => [
             {
               value: '1',
-              label: 'Active',
+              label: 'Nhận rỗng',
             },
             {
               value: '2',
-              label: 'Ngừng hoạt động',
+              label: 'Trả rỗng',
             },
           ]}
           width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
+          name="EmptyGetOrReturn"
+          label={translateQuotation('empty_get_or_return')}
+          placeholder={translateQuotation('empty_get_or_return_placeholder')}
         />
-      </ProForm.Group>
-      <ProForm.Group>
+
         <ProFormText
           width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
+          name="ItemType"
+          label={translateQuotation('item_type')}
+          placeholder={translateQuotation('item_type_placeholder')}
         />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
+
+        <ProFormDatePicker
           width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+          name="EffectiveDate"
+          label={translateQuotation('effective_date')}
+          placeholder={translateQuotation('effective_date_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

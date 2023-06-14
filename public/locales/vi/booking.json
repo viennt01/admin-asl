@@ -15,5 +15,17 @@
     "name_supplier": "Tên nhà cung cấp",
     "name_cnee": "Người nhận hàng (Cnee)",
     "date_create": "Ngày tạo",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "information_add_bank": "Thêm mới booking",
+    "port_of_loading_placeholder": "Nhập cảng chất hàng",
+    "port_of_discharge_placeholder": "Nhập cảng dỡ hàng",
+    "container_code_placeholder": "Chọn mã Container",
+    "name_supplier_placeholder": "Nhập tên nhà cung cấp",
+    "package_placeholder": "Nhập hàng hóa",
+    "name_customer_placeholder": "Nhập tên chủ hàng",
+    "name_cnee_placeholder": "Nhập người nhận hàng (Cnee)",
+    "place_of_delivery_placeholder": "Nhập địa điểm giao hàng",
+    "etd_placeholder": "Chọn ngày ETD",
+    "eta_placeholder": "Chọn ngày ETA",
+    "note_placeholder": "Nhập ghi chú"
 }

@@ -9,5 +9,12 @@
     "email": "Email",
     "status":"Trạng thái",
     "date_created": "Ngày tạo",
-    "creator": "Người tạo"
+    "creator": "Người tạo",
+    "information_add_customer": "Thêm mới khách hàng",
+    "name_placeholder": "Nhập tên khách hàng",
+    "number_placeholder": "Nhập số lượng giao dịch",
+    "dob_placeholder": "Chọn ngày sinh",
+    "phone_placeholder": "Nhập số điện thoại",
+    "address_placeholder": "Nhập địa chỉ",
+    "email_placeholder": "Nhập email"
 }

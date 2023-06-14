@@ -15,5 +15,17 @@
     "name_supplier": "Supplier",
     "name_cnee": "Consignee (Cnee)",
     "date_create": "Date created",
-    "status":"Status"
+    "status":"Status",
+    "information_add_bank": "Add new booking",
+    "port_of_loading_placeholder": "Enter port of loading",
+    "port_of_discharge_placeholder": "Enter port of discharge",
+    "container_code_placeholder": "Choose container code",
+    "name_supplier_placeholder": "Enter name supplier",
+    "package_placeholder": "Enter package",
+    "name_customer_placeholder": "Enter name customer",
+    "name_cnee_placeholder": "Enter name cnee",
+    "place_of_delivery_placeholder": "Enter place of delivery",
+    "etd_placeholder": "Choose date ETD",
+    "eta_placeholder": "Choose date ETA",
+    "note_placeholder": "Enter note"
 }

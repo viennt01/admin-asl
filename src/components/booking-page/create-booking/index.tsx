@@ -3,8 +3,10 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   ModalForm,
   ProForm,
+  ProFormDatePicker,
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
@@ -19,13 +21,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateBooking() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateBooking } = useI18n('booking');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Thêm mới booking"
+      title={translateBooking('information_add_bank')}
       trigger={
         <Button
           type="primary"
@@ -43,8 +46,8 @@ export default function CreateBooking() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Thêm',
-          resetText: 'Hủy',
+          submitText: 'Add',
+          resetText: 'Cancel',
         },
       }}
       form={form}
@@ -60,98 +63,116 @@ export default function CreateBooking() {
       // }}
     >
       <ProForm.Group>
-        <ProFormText
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Hải Phòng',
+            },
+            {
+              value: '2',
+              label: 'Hồ Chí Minh',
+            },
+          ]}
+          width="md"
+          name="PortOfLoading"
+          placeholder={translateBooking('port_of_loading')}
+          label={translateBooking('port_of_loading_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Hải Phòng',
+            },
+            {
+              value: '2',
+              label: 'Hồ Chí Minh',
+            },
+          ]}
+          width="md"
+          name="PortOfDischarge"
+          placeholder={translateBooking('port_of_discharge')}
+          label={translateBooking('port_of_discharge_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'GLSU4824373',
+            },
+            {
+              value: '2',
+              label: 'ASLU4824376',
+            },
+          ]}
           width="md"
           name="ContainerCode"
-          label="Mã Container"
-          placeholder="Nhập mã container"
+          placeholder={translateBooking('container_code')}
+          label={translateBooking('container_code_placeholder')}
         />
 
         <ProFormText
           width="md"
-          name="Address"
-          label="Nơi lấy rỗng"
-          placeholder="Nhập nơi lấy rỗng"
+          name="NameSupplier"
+          label={translateBooking('name_supplier')}
+          placeholder={translateBooking('name_supplier_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="PortName"
-          label="Cảng hạ hàng"
-          placeholder="Nhập cảng hạ hàng"
+          name="Package"
+          label={translateBooking('package')}
+          placeholder={translateBooking('package_placeholder')}
         />
+
         <ProFormText
           width="md"
-          name="Route"
-          label="Tuyến đường"
-          placeholder="Nhập tuyến đường"
+          name="NameCustomer"
+          label={translateBooking('name_customer')}
+          placeholder={translateBooking('name_customer_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="TotalContainer"
-          label="Số lượng container"
-          placeholder="Nhập số lượng container"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
+          name="NameCnee"
+          label={translateBooking('name_cnee')}
+          placeholder={translateBooking('name_cnee_placeholder')}
         />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
+
+        <ProFormText
           width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
+          name="PlaceOfDelivery"
+          label={translateBooking('place_of_delivery')}
+          placeholder={translateBooking('place_of_delivery_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
-        <ProFormText
+        <ProFormDatePicker
           width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
+          name="Etd"
+          label={translateBooking('etd')}
+          placeholder={translateBooking('etd_placeholder')}
         />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
+
+        <ProFormDatePicker
           width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+          name="Eta"
+          label={translateBooking('eta')}
+          placeholder={translateBooking('eta_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormTextArea
+          width="xl"
+          name="Note"
+          label={translateBooking('note')}
+          placeholder={translateBooking('note_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

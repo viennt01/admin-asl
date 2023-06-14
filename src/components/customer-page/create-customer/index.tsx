@@ -3,7 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   ModalForm,
   ProForm,
-  ProFormSelect,
+  ProFormDatePicker,
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
@@ -19,13 +19,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateCustomer() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateCustomer } = useI18n('customer');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new customer"
+      title={translateCustomer('information_add_customer')}
       trigger={
         <Button
           type="primary"
@@ -43,7 +44,7 @@ export default function CreateCustomer() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add customer',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -62,97 +63,53 @@ export default function CreateCustomer() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="NameCustomer"
+          label={translateCustomer('name')}
+          placeholder={translateCustomer('name_placeholder')}
         />
 
         <ProFormText
           width="md"
-          name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          name="NumberCustomer"
+          label={translateCustomer('number')}
+          placeholder={translateCustomer('number_placeholder')}
+          rules={[
+            {
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập số lượng giao dịch',
+            },
+          ]}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormDatePicker
+          width="md"
+          name="Dob"
+          label={translateCustomer('dob')}
+          placeholder={translateCustomer('dob_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
+          name="Phone"
+          label={translateCustomer('phone')}
+          placeholder={translateCustomer('phone_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
+          name="Address"
+          label={translateCustomer('address')}
+          placeholder={translateCustomer('address_placeholder')}
         />
+
         <ProFormText
           width="md"
           name="Email"
-          label="Email"
-          placeholder="Nhập email"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
-        />
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Ngừng hoạt động',
-            },
-          ]}
-          width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+          label={translateCustomer('email')}
+          placeholder={translateCustomer('email_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>
