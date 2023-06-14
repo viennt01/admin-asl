@@ -6,7 +6,7 @@ function UnitEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Unit Edit</title>
+        <title>GLS | UNIT EDIT</title>
       </Head>
       <EditUnit />
     </>
