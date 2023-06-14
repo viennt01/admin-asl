@@ -8,6 +8,8 @@
     "rentCost":"Rent cost (VND)",
     "price":"Price (VND)",
     "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator",
     "information_add_container": "Add new Container",
     "code_placeholder": "Enter the Container no",
     "type_of_container_placeholder": "Enter Container type",

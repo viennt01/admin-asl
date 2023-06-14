@@ -1,6 +1,7 @@
 {
     "title": "List of Port",
-    "code": "Port No",
+    "port_no": "No",
+    "code": "Port Code",
     "name": "Port Name",
     "address": "Address",
     "quantity": "Number of Containers",
@@ -8,6 +9,8 @@
     "status_capacity": "Status of capacity",
     "company":"Management Company",
     "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator",
     "information_port": "PORT DETAILS INFORMATION",
     "quantity_container": "Number of containers",
     "capacity_label": "Capacity",

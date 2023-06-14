@@ -55,6 +55,8 @@ export default function ContainerPage() {
     rentCost: number;
     price: number;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -70,6 +72,8 @@ export default function ContainerPage() {
       rentCost: i % 2 === 0 ? 100000 : 5000,
       price: i % 2 === 0 ? 100000000 : 2000,
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -266,7 +270,7 @@ export default function ContainerPage() {
       title: translateContainer('status'),
       dataIndex: 'status',
       key: 'status',
-      width: 150,
+      width: 120,
       align: 'center',
       filters: [
         {
@@ -290,6 +294,20 @@ export default function ContainerPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateContainer('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translateContainer('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

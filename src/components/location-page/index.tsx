@@ -45,8 +45,8 @@ export default function LocationPage() {
     phoneNumner: string;
     email: string;
     status: string;
-    dateCreator: string;
-    userCreator: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -64,8 +64,8 @@ export default function LocationPage() {
       phoneNumner: i % 2 === 0 ? '0964582355' : '0942558459',
       email: i % 2 === 0 ? 'vinafcodepot@gmail.com' : 'phutho@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
-      dateCreator: '14/06/2023',
-      userCreator: 'Admin',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -292,17 +292,17 @@ export default function LocationPage() {
       ),
     },
     {
-      title: translateLocation('date_creator'),
+      title: translateLocation('date_created'),
       width: 100,
-      dataIndex: 'dateCreator',
-      key: 'dateCreator',
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateLocation('user_creator'),
+      title: translateLocation('creator'),
       width: 150,
-      dataIndex: 'userCreator',
-      key: 'userCreator',
+      dataIndex: 'creator',
+      key: 'creator',
       align: 'center',
     },
     {

@@ -28,7 +28,6 @@ export default function QuotationPage() {
 
   interface DataType {
     key: number;
-    quotationNo: string;
     customerName: string;
     receiptOfGoods: string;
     delivery: string;
@@ -43,15 +42,14 @@ export default function QuotationPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      quotationNo: '123456',
-      customerName: 'Nguyễn Văn A',
-      receiptOfGoods: 'Nhận hàng',
-      delivery: 'Giao hàng',
-      fee: '500000',
-      emptyGetOrReturn: 'Nhận/TRả rỗng',
-      itemType: 'Thực Phẩm',
-      effectiveDate: 'Ngày hiệu lực',
-      creator: 'Trần Thị A',
+      customerName: i % 2 === 0 ? 'MVG Đình Vũ' : 'VIMC ĐÌNH VŨ',
+      receiptOfGoods: i % 2 === 0 ? 'Đóng hàng' : 'Trả hàng',
+      delivery: i % 2 === 0 ? 'Giao hàng' : 'Chưa giao',
+      fee: i % 2 === 0 ? '500000' : '20000',
+      emptyGetOrReturn: i % 2 === 0 ? 'Nhận rỗng' : 'Trả rỗng',
+      itemType: i % 2 === 0 ? 'Thực Phẩm' : 'Dầu Thực Vật Dabaco',
+      effectiveDate: i % 2 === 0 ? '14/6/2023' : '14/6/2022',
+      creator: 'Admin',
     });
   }
 
@@ -170,9 +168,9 @@ export default function QuotationPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateQuotation('quotation_no'),
-      width: 150,
-      dataIndex: 'quotationNo',
-      key: 'quotationNo',
+      width: 100,
+      dataIndex: 'key',
+      key: 'key',
       fixed: 'left',
       align: 'center',
       sorter: (a, b) => a.key - b.key,

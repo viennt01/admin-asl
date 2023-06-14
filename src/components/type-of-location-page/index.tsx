@@ -49,6 +49,8 @@ export default function LocationTypePage() {
     key: number;
     addressType: string;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -58,6 +60,8 @@ export default function LocationTypePage() {
       key: i + 1,
       addressType: i % 2 === 0 ? 'Trả hàng' : 'Nhận hàng',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -229,6 +233,20 @@ export default function LocationTypePage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateTypeOfLocation('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translateTypeOfLocation('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

@@ -49,6 +49,8 @@ export default function CalculationUnitPage() {
     internationalCode: string;
     description: string;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -58,6 +60,8 @@ export default function CalculationUnitPage() {
       internationalCode: 'FOT',
       description: 'Đơn vị đo trong hệ đo lường Anh',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -226,6 +230,20 @@ export default function CalculationUnitPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateUnit('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translateUnit('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

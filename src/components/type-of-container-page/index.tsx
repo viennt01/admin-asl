@@ -53,8 +53,8 @@ export default function TypeOfContainerPage() {
     teus: number;
     totalContainer: number;
     status: string;
-    dateCreator: string;
-    userCreator: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -68,8 +68,8 @@ export default function TypeOfContainerPage() {
       teus: i % 2 === 0 ? 2 : 1,
       totalContainer: i % 2 === 0 ? 2000 : 1500,
       status: i % 2 === 0 ? 'Active' : 'DeActive',
-      dateCreator: '14/06/2023',
-      userCreator: 'Admin',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -282,17 +282,17 @@ export default function TypeOfContainerPage() {
       ),
     },
     {
-      title: translateTypeOfContainer('date_creator'),
+      title: translateTypeOfContainer('date_created'),
       width: 100,
-      dataIndex: 'dateCreator',
-      key: 'dateCreator',
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateTypeOfContainer('user_creator'),
+      title: translateTypeOfContainer('creator'),
       width: 150,
-      dataIndex: 'userCreator',
-      key: 'userCreator',
+      dataIndex: 'creator',
+      key: 'creator',
       align: 'center',
     },
     {
