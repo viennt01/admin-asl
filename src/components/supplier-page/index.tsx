@@ -36,25 +36,31 @@ export default function SupplierPage() {
   const [locale, setLocale] = useState(enUS);
 
   interface DataType {
-    key: number;
-    age: number;
+    code: string;
     name: string;
     service: string;
     number: number;
-    money: string;
+    address: string;
+    phone: string;
+    email: string;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i + 1,
-      age: 32,
+      code: 'GLSS152',
       name: `Đông Á`,
       service: 'Đóng hàng',
       number: 100,
-      money: `560.000.000`,
+      address: 'Hồ Chí Minh',
+      phone: '0964582355',
+      email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -173,12 +179,12 @@ export default function SupplierPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateSupplier('code'),
-      width: 200,
-      dataIndex: 'key',
-      key: 'key',
+      width: 150,
+      dataIndex: 'code',
+      key: 'code',
       fixed: 'left',
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('code'),
     },
     {
       title: translateSupplier('name'),
@@ -200,19 +206,35 @@ export default function SupplierPage() {
     },
     {
       title: translateSupplier('number'),
-      width: 200,
+      width: 250,
       dataIndex: 'number',
       key: 'number',
       align: 'center',
       ...getColumnSearchProps('number'),
     },
     {
-      title: translateSupplier('money'),
+      title: translateSupplier('address'),
       width: 250,
-      dataIndex: 'money',
-      key: 'money',
+      dataIndex: 'address',
+      key: 'address',
       align: 'center',
-      ...getColumnSearchProps('money'),
+      ...getColumnSearchProps('address'),
+    },
+    {
+      title: translateSupplier('phone'),
+      width: 150,
+      dataIndex: 'phone',
+      key: 'phone',
+      align: 'center',
+      ...getColumnSearchProps('phone'),
+    },
+    {
+      title: translateSupplier('email'),
+      width: 180,
+      dataIndex: 'email',
+      key: 'email',
+      align: 'center',
+      ...getColumnSearchProps('email'),
     },
     {
       title: translateSupplier('status'),
@@ -242,6 +264,20 @@ export default function SupplierPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateSupplier('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translateSupplier('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

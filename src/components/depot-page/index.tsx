@@ -199,7 +199,7 @@ export default function DepotPage() {
     {
       title: translateDepot('depot_code'),
       dataIndex: 'depotCode',
-      width: 120,
+      width: 180,
       key: 'depotCode',
       fixed: 'left',
       align: 'center',

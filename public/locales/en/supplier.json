@@ -4,6 +4,10 @@
     "name": "Supplier Name",
     "service": "Service provided",
     "number": "Number of transactions",
-    "money": "Transaction amount",
-    "status":"Status"
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator"
 }
