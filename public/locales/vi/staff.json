@@ -10,7 +10,10 @@
     "address": "Địa chỉ",
     "email": "Email",
     "CCCD_Visa":"CCCD/Visa",
+    "nationality": "Quốc Tịch",
     "working_branch":"Chi nhánh làm việc",
     "position":"Chức vụ",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo"
 }

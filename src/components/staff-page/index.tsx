@@ -48,9 +48,12 @@ export default function StaffPage() {
     address: string;
     email: string;
     CCCD_Visa: string;
+    nationality: string;
     working_branch: string;
     position: string;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -69,9 +72,12 @@ export default function StaffPage() {
       phone: '0964582355',
       email: 'abcd@gmail.com',
       CCCD_Visa: '12345',
+      nationality: 'Việt Nam',
       working_branch: 'Hồ Chí Minh',
       position: 'Sale',
       status: i % 6 === 0 ? 'DeActive' : 'Active',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -225,7 +231,7 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('sex'),
-      width: 250,
+      width: 100,
       dataIndex: 'sex',
       key: 'sex',
       align: 'center',
@@ -245,7 +251,7 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('dob'),
-      width: 300,
+      width: 100,
       dataIndex: 'dob',
       key: 'dob',
       align: 'center',
@@ -254,8 +260,8 @@ export default function StaffPage() {
     {
       title: translateStaff('phone'),
       width: 150,
-      dataIndex: 'phoneNumner',
-      key: 'phoneNumner',
+      dataIndex: 'phone',
+      key: 'phone',
       align: 'center',
     },
     {
@@ -283,6 +289,14 @@ export default function StaffPage() {
       ...getColumnSearchProps('CCCD_Visa'),
     },
     {
+      title: translateStaff('nationality'),
+      width: 180,
+      dataIndex: 'nationality',
+      key: 'nationality',
+      align: 'center',
+      ...getColumnSearchProps('nationality'),
+    },
+    {
       title: translateStaff('working_branch'),
       width: 200,
       dataIndex: 'working_branch',
@@ -292,7 +306,7 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('position'),
-      width: 200,
+      width: 150,
       dataIndex: 'position',
       key: 'position',
       align: 'center',
@@ -326,6 +340,20 @@ export default function StaffPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateStaff('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translateStaff('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

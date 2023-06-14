@@ -45,6 +45,8 @@ export default function CustomerPage() {
     phoneNumner: string;
     email: string;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -59,6 +61,8 @@ export default function CustomerPage() {
       phoneNumner: '0964582355',
       email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -262,6 +266,20 @@ export default function CustomerPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateCustomer('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translateCustomer('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

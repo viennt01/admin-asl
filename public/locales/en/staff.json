@@ -10,7 +10,10 @@
     "address": "Address",
     "email": "Email",
     "CCCD_Visa":"Citizen Identity Card/Visa",
+    "nationality": "Nationality",
     "working_branch":"Working branch",
     "position":"Position",
-    "status":"Status"
+    "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator"
 }

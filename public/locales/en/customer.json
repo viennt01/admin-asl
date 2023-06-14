@@ -7,5 +7,7 @@
     "phone": "Phone number",
     "address": "Address",
     "email": "Email",
-    "status":"Status"
+    "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator"
 }
