@@ -6,7 +6,7 @@ function BankEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Bank Edit</title>
+        <title>GLS | BANK EDIT</title>
       </Head>
       <EditBank />
     </>

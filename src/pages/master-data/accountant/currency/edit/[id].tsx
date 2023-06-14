@@ -6,7 +6,7 @@ function CurrencyEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Currency Edit</title>
+        <title>GLS | CURRENCY EDIT</title>
       </Head>
       <EditCurrency />
     </>
