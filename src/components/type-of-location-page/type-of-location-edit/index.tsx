@@ -125,7 +125,7 @@ export default function EditTypeOfLocation() {
             </Row>
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
+                <Button onClick={() => router.push(ROUTERS.TYPE_OF_LOCATION)}>
                   Cancel
                 </Button>
               </Col>

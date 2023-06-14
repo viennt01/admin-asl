@@ -431,7 +431,7 @@ export default function EditSupplier() {
           >
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
+                <Button onClick={() => router.push(ROUTERS.SUPPLIER)}>
                   Cancel
                 </Button>
               </Col>

@@ -235,7 +235,7 @@ export default function EditLocation() {
             </Row>
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
+                <Button onClick={() => router.push(ROUTERS.LOCATION)}>
                   Cancel
                 </Button>
               </Col>

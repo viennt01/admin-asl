@@ -200,7 +200,7 @@ export default function EditContainer() {
           <Card>
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
+                <Button onClick={() => router.push(ROUTERS.CONTAINER)}>
                   Cancel
                 </Button>
               </Col>

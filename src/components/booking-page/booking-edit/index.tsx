@@ -386,7 +386,7 @@ export default function EditBooking() {
             </Card>
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
+                <Button onClick={() => router.push(ROUTERS.BOOKING)}>
                   Cancel
                 </Button>
               </Col>
