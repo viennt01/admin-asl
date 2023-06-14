@@ -7,5 +7,7 @@
     "phone": "Số điện thoại",
     "address": "Địa chỉ",
     "email": "Email",
-    "status":"Trạng thái"
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo"
 }
