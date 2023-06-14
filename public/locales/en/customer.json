@@ -9,5 +9,12 @@
     "email": "Email",
     "status":"Status",
     "date_created": "Date Created",
-    "creator": "Creator"
+    "creator": "Creator",
+    "information_add_customer": "Add new customer",
+    "name_placeholder": "Enter customer name",
+    "number_placeholder": "Enter number of transactions",
+    "dob_placeholder": "Choose date of birth",
+    "phone_placeholder": "Enter phone number",
+    "address_placeholder": "Enter address",
+    "email_placeholder": "Enter email"
 }

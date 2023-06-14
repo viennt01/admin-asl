@@ -23,6 +23,7 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'DeActive',
@@ -251,7 +252,7 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('dob'),
-      width: 100,
+      width: 120,
       dataIndex: 'dob',
       key: 'dob',
       align: 'center',
