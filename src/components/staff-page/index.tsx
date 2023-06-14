@@ -36,6 +36,7 @@ export default function StaffPage() {
   const [locale, setLocale] = useState(enUS);
   interface DataType {
     key: number;
+    staffNo: string;
     number: number;
     image: string;
     code: string;
@@ -56,6 +57,7 @@ export default function StaffPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
+      staffNo: 'GLS122',
       number: 150,
       image: `https://cdn.pixabay.com.jpg`,
       code: `DA123456`,
@@ -189,11 +191,11 @@ export default function StaffPage() {
     {
       title: translateStaff('code'),
       width: 150,
-      dataIndex: 'key',
-      key: 'key',
+      dataIndex: 'staffNo',
+      key: 'staffNo',
       fixed: 'left',
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('staffNo'),
     },
     {
       title: translateStaff('image'),

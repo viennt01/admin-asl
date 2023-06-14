@@ -37,6 +37,7 @@ export default function CustomerPage() {
 
   interface DataType {
     key: number;
+    code: string;
     number: number;
     name: string;
     dob: string;
@@ -50,6 +51,7 @@ export default function CustomerPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
+      code: 'GLS120',
       number: 150,
       name: `Nguyễn Văn A`,
       dob: `25/5/1986`,
@@ -176,11 +178,11 @@ export default function CustomerPage() {
     {
       title: translateCustomer('code'),
       width: 150,
-      dataIndex: 'key',
-      key: 'key',
+      dataIndex: 'code',
+      key: 'code',
       fixed: 'left',
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('code'),
     },
     {
       title: translateCustomer('name'),
@@ -202,7 +204,7 @@ export default function CustomerPage() {
     },
     {
       title: translateCustomer('dob'),
-      width: 300,
+      width: 150,
       dataIndex: 'dob',
       key: 'dob',
       align: 'center',
@@ -226,7 +228,7 @@ export default function CustomerPage() {
     },
     {
       title: translateCustomer('email'),
-      width: 200,
+      width: 180,
       dataIndex: 'email',
       key: 'email',
       align: 'center',

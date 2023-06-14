@@ -4,6 +4,10 @@
     "name": "Tên nhà cung cấp",
     "service": "Dịch vụ cung cấp",
     "number": "Số lượng giao dịch",
-    "money": "Số tiền giao dịch",
-    "status":"Trạng thái"
+    "address": "Địa chỉ",
+    "phone": "Điện thoại",
+    "email": "Email",
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo"
 }
