@@ -6,7 +6,7 @@ function SupplierEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | SUPPLIER Edit</title>
+        <title>GLS | SUPPLIER EDIT</title>
       </Head>
       <EditSupplier />
     </>
