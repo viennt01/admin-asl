@@ -3,6 +3,8 @@
     "type_of_location_no": "No",
     "type_of_location": "Type of Location",
     "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator",
     "type_of_location_information":"DETAILS OF ADDRESS TYPE",
     "quantity_container":"Number of containers",
     "capacity":"Capacity",

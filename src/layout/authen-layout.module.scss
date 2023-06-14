@@ -132,6 +132,10 @@ $t: 2.2s;
             img {
                 margin-right: 10px;
             }
+
+            span {
+                font-weight: 500;
+            }
         }
 
         &:hover {
@@ -192,9 +196,9 @@ $t: 2.2s;
                 }
 
                 .optionText {
-                    font-size: 18px;
                     color: #333;
                     margin-left: 10px;
+                    font-weight: 500;
                 }
             }
         }
@@ -214,7 +218,7 @@ $t: 2.2s;
     right: 20px;
     padding: 10px 20px;
     width: 200px;
-    background: #eeeeee;
+    background: #fff;
     border-radius: 15px;
     transition: 0.5s;
     visibility: hidden;
@@ -275,7 +279,7 @@ $t: 2.2s;
         right: 28px;
         width: 20px;
         height: 20px;
-        background: #EEEEEE;
+        background: #fff;
         transform: rotate(45deg);
     }
 }

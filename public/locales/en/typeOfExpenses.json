@@ -4,8 +4,8 @@
     "code": "Expense Code",
     "name": "Expense Name",
     "status":"Status",
-    "date_creator": "Date Creator",
-    "user_creator": "User Creator",
+    "date_created": "Date Created",
+    "creator": "Creator",
     "information_add_type_of_expenses": "Add new type of expense",
     "name_placeholder": "Enter the expense name",
     "VAT_placeholder": "Enter the VAT"

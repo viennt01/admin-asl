@@ -1,5 +1,6 @@
 {
     "title": "Danh sách cảng",
+    "port_no": "Số thứ tự",
     "code": "Mã số Cảng",
     "name": "Tên Cảng",
     "address": "Địa chỉ",
@@ -8,6 +9,8 @@
     "status_capacity": "Trạng thái của sức chứa",
     "company":"Công ty quản lý",
     "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
     "information_port": "THÔNG TIN CHI TIẾT CỦA CẢNG",
     "quantity_container": "Số lượng container",
     "capacity_label": "Sức chứa",

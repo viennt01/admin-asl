@@ -47,6 +47,7 @@ export default function PortPage() {
   const [locale, setLocale] = useState(enUS);
   interface DataType {
     key: number;
+    code: string;
     name: string;
     address: string;
     totalContainer: number;
@@ -54,6 +55,8 @@ export default function PortPage() {
     capacityState: string;
     companyName: string;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -61,6 +64,7 @@ export default function PortPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
+      code: i % 2 === 0 ? 'TCCL' : 'TCPH',
       name: i % 2 === 0 ? 'Cảng Cát Lái' : 'Cảng tân cảng Phú Hữu',
       address:
         i % 2 === 0
@@ -74,6 +78,8 @@ export default function PortPage() {
           ? 'Công ty Tân Cảng Sài Gòn'
           : 'Công ty TNHH MTV Cảng Bến Nghé',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -191,8 +197,8 @@ export default function PortPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translatePort('code'),
-      width: 120,
+      title: translatePort('port_no'),
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -219,18 +225,26 @@ export default function PortPage() {
       // },
     },
     {
+      title: translatePort('code'),
+      dataIndex: 'code',
+      width: 120,
+      key: 'code',
+      fixed: 'left',
+      align: 'center',
+      ...getColumnSearchProps('code'),
+    },
+    {
       title: translatePort('name'),
       dataIndex: 'name',
-      width: 150,
+      width: 250,
       key: 'name',
-      fixed: 'left',
       align: 'center',
       ...getColumnSearchProps('name'),
     },
     {
       title: translatePort('address'),
       dataIndex: 'address',
-      width: 300,
+      width: 400,
       key: 'address',
       align: 'center',
       ...getColumnSearchProps('address'),
@@ -285,6 +299,7 @@ export default function PortPage() {
       dataIndex: 'status',
       key: 'status',
       align: 'center',
+      width: 120,
       filters: [
         {
           text: 'Active',
@@ -307,6 +322,20 @@ export default function PortPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translatePort('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translatePort('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

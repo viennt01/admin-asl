@@ -66,7 +66,7 @@ export default function BookingPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i,
+      key: i + 1,
       bookingCode: '10-48973-VNL/V26-A',
       portOfLoading: i % 2 === 0 ? 'Hải Phòng' : 'Hồ Chí Minh',
       portOfDischarge: i % 2 === 0 ? 'Hồ Chí Minh' : 'Long Beach, USA',

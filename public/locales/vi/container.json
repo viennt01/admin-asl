@@ -8,6 +8,8 @@
     "rentCost": "Giá thuê (VND)",
     "price": "Giá bán (VND)",
     "status": "Trạng thái",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
     "information_add_container": "Thêm mới Container",
     "code_placeholder": "Nhập mã số Container",
     "type_of_container_placeholder": "Nhập loại Container",

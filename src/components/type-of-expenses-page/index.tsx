@@ -50,8 +50,8 @@ export default function ExpensesTypePage() {
     typeOfExpensesCode: string;
     name: string;
     status: string;
-    dateCreator: string;
-    userCreator: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -64,8 +64,8 @@ export default function ExpensesTypePage() {
           ? 'Chi phí nguyên vật liệu'
           : 'Chi phí dịch vụ mua ngoài, thuê ngoài',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
-      dateCreator: '14/06/2023',
-      userCreator: 'Admin',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -251,17 +251,17 @@ export default function ExpensesTypePage() {
       ),
     },
     {
-      title: translateTypeOfExpenses('date_creator'),
+      title: translateTypeOfExpenses('date_created'),
       width: 100,
-      dataIndex: 'dateCreator',
-      key: 'dateCreator',
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateTypeOfExpenses('user_creator'),
+      title: translateTypeOfExpenses('creator'),
       width: 150,
-      dataIndex: 'userCreator',
-      key: 'userCreator',
+      dataIndex: 'creator',
+      key: 'creator',
       align: 'center',
     },
     {

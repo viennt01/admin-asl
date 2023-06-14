@@ -37,12 +37,15 @@ export default function DepotPage() {
 
   interface DataType {
     key: number;
+    depotCode: string;
     depotName: string;
     depotAddress: string;
     depotBranch: string;
     companyName: string;
     description: string;
     status: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -50,6 +53,7 @@ export default function DepotPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
+      depotCode: i % 2 === 1 ? 'ICD Transimex' : 'ICD TANAMEXCO',
       depotName: i % 2 === 1 ? 'ICD Transimex' : 'ICD TANAMEXCO',
       depotAddress:
         i % 2 === 1
@@ -65,6 +69,8 @@ export default function DepotPage() {
           ? 'ICD Transimex hoạt động kinh doanh trong các lĩnh vực khai thác, quản lý vận chuyển, giao nhận container xuất nhập khẩu và nội địa.'
           : 'ICD Tanamexco có tổng diện tích hơn 13.2 ha và vị trí vô cùng thuận lợi trong hoạt động khai thác cảng',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -183,12 +189,21 @@ export default function DepotPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateDepot('depot_no'),
-      width: 150,
+      width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
+    },
+    {
+      title: translateDepot('depot_code'),
+      dataIndex: 'depotCode',
+      width: 120,
+      key: 'depotCode',
+      fixed: 'left',
+      align: 'center',
+      ...getColumnSearchProps('depotCode'),
     },
     {
       title: translateDepot('depot_name'),
@@ -236,6 +251,7 @@ export default function DepotPage() {
       dataIndex: 'status',
       key: 'status',
       align: 'center',
+      width: 120,
       ...getColumnSearchProps('status'),
       filters: [
         {
@@ -259,6 +275,20 @@ export default function DepotPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateDepot('date_created'),
+      width: 100,
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
+      align: 'center',
+    },
+    {
+      title: translateDepot('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
     },
     {
       key: 'operation',

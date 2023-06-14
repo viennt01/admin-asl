@@ -4,8 +4,8 @@
     "code": "Mã chi phí",
     "name": "Tên chi phí",
     "status":"Trạng thái",
-    "date_creator": "Ngày tạo",
-    "user_creator": "Người tạo",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
     "information_add_type_of_expenses": "Thêm mới loại chi phí",
     "name_placeholder": "Nhập tên chi phí",
     "VAT_placeholder": "Nhập VAT"

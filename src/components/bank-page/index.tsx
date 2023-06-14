@@ -48,8 +48,8 @@ export default function BankPage() {
     bankBranch: string;
     bankNote: string;
     status: string;
-    dateCreator: string;
-    userCreator: string;
+    dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
@@ -75,8 +75,8 @@ export default function BankPage() {
           ? 'Ngân Hàng TMCP Ngoại Thương Việt Nam (Vietcombank)'
           : 'Ngân hàng Quân đội (MBbank)',
       status: i % 5 === 1 ? 'DeActive' : 'Active',
-      dateCreator: '14/06/2023',
-      userCreator: 'Admin',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -305,17 +305,17 @@ export default function BankPage() {
       ),
     },
     {
-      title: translateBank('date_creator'),
+      title: translateBank('date_created'),
       width: 100,
-      dataIndex: 'dateCreator',
-      key: 'dateCreator',
+      dataIndex: 'dateCreated',
+      key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateBank('user_creator'),
+      title: translateBank('creator'),
       width: 150,
-      dataIndex: 'userCreator',
-      key: 'userCreator',
+      dataIndex: 'creator',
+      key: 'creator',
       align: 'center',
     },
     {

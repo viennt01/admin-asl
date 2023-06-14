@@ -4,6 +4,8 @@
     "international_code": "International code",
     "description": "Description",
     "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator",
     "information_add_unit": "Add new Unit",
     "international_code_placeholder": "Enter international code",
     "description_placeholder": "Enter description"
