@@ -6,7 +6,7 @@ function ContainerEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Container Edit</title>
+        <title>GLS | CONTAINER EDIT</title>
       </Head>
       <EditContainer />
     </>

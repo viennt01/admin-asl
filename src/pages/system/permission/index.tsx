@@ -6,7 +6,7 @@ function Permission() {
   return (
     <>
       <Head>
-        <title>GLS | STAFF</title>
+        <title>GLS | PERMISSION</title>
       </Head>
       <PermissionPage />
     </>

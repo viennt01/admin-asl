@@ -6,7 +6,7 @@ function StaffEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | LOCATION EDIT</title>
+        <title>GLS | STAFF EDIT</title>
       </Head>
       <EditStaff />
     </>

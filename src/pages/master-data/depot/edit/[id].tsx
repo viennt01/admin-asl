@@ -6,7 +6,7 @@ function DepotEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Depot Edit</title>
+        <title>GLS | DEPOT EDIT</title>
       </Head>
       <EditDepot />
     </>

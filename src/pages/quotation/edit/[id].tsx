@@ -6,7 +6,7 @@ function QuotationEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | QUOTATION Edit</title>
+        <title>GLS | QUOTATION EDIT</title>
       </Head>
       <EditQuotation />
     </>

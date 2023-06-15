@@ -6,7 +6,7 @@ function PermissionEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | LOCATION Edit</title>
+        <title>GLS | PERMISSION EDIT</title>
       </Head>
       <EditPermission />
     </>

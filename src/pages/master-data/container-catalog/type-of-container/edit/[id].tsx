@@ -6,7 +6,7 @@ function TypeOfContainerEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Type Of Container Edit</title>
+        <title>GLS | TYPE OF CONTAINER EDIT</title>
       </Head>
       <EditTypeOfContainer />
     </>

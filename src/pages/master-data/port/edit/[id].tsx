@@ -6,7 +6,7 @@ function PortEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Port Edit</title>
+        <title>GLS | PORT EDIT</title>
       </Head>
       <EditPort />
     </>

@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
       <Head>
-        <title>GLS | Dashboard</title>
+        <title>GLS | HOME</title>
       </Head>
       <main className={inter.className}>
         <DashboardPage />

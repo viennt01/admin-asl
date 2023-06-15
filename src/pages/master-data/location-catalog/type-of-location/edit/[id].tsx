@@ -6,7 +6,7 @@ function TypeOfLocationEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | Location Type Edit</title>
+        <title>GLS | LOCATION TYPE EDIT</title>
       </Head>
       <EditLocationType />
     </>

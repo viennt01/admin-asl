@@ -6,7 +6,7 @@ function BookingEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | BOOKING Edit</title>
+        <title>GLS | BOOKING EDIT</title>
       </Head>
       <EditBooking />
     </>

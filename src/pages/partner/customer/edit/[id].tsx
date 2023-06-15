@@ -6,7 +6,7 @@ function CustomerEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | LOCATION EDIT</title>
+        <title>GLS | CUSTOMER EDIT</title>
       </Head>
       <EditCustomer />
     </>
