@@ -36,12 +36,14 @@ export default function SupplierPage() {
   const [locale, setLocale] = useState(enUS);
 
   interface DataType {
-    code: string;
-    name: string;
+    supplierCode: string;
+    abbreviation: string;
+    supplierName: string;
     service: string;
-    number: number;
-    address: string;
+    numberOfTransaction: number;
     phone: string;
+    address: string;
+    country: string;
     email: string;
     status: string;
     dateCreated: string;
@@ -51,12 +53,14 @@ export default function SupplierPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      code: 'GLSS152',
-      name: `Đông Á`,
+      supplierCode: 'GLSS152',
+      abbreviation: `Dong A`,
+      supplierName: `Đông Á`,
       service: 'Đóng hàng',
-      number: 100,
-      address: 'Hồ Chí Minh',
+      numberOfTransaction: 100,
       phone: '0964582355',
+      address: 'Hồ Chí Minh',
+      country: 'Việt Nam',
       email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
@@ -180,20 +184,29 @@ export default function SupplierPage() {
     {
       title: translateSupplier('code'),
       width: 150,
-      dataIndex: 'code',
-      key: 'code',
+      dataIndex: 'supplierCode',
+      key: 'supplierCode',
       fixed: 'left',
       align: 'center',
-      ...getColumnSearchProps('code'),
+      ...getColumnSearchProps('supplierCode'),
+    },
+    {
+      title: translateSupplier('abbreviation'),
+      width: 250,
+      dataIndex: 'abbreviation',
+      key: 'abbreviation',
+      fixed: 'left',
+      align: 'center',
+      ...getColumnSearchProps('abbreviation'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
       title: translateSupplier('name'),
       width: 250,
-      dataIndex: 'name',
-      key: 'name',
-      fixed: 'left',
+      dataIndex: 'supplierName',
+      key: 'supplierName',
       align: 'center',
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps('supplierName'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
@@ -207,18 +220,10 @@ export default function SupplierPage() {
     {
       title: translateSupplier('number'),
       width: 250,
-      dataIndex: 'number',
-      key: 'number',
+      dataIndex: 'numberOfTransaction',
+      key: 'numberOfTransaction',
       align: 'center',
-      ...getColumnSearchProps('number'),
-    },
-    {
-      title: translateSupplier('address'),
-      width: 250,
-      dataIndex: 'address',
-      key: 'address',
-      align: 'center',
-      ...getColumnSearchProps('address'),
+      ...getColumnSearchProps('numberOfTransaction'),
     },
     {
       title: translateSupplier('phone'),
@@ -227,6 +232,22 @@ export default function SupplierPage() {
       key: 'phone',
       align: 'center',
       ...getColumnSearchProps('phone'),
+    },
+    {
+      title: translateSupplier('address'),
+      width: 500,
+      dataIndex: 'address',
+      key: 'address',
+      align: 'center',
+      ...getColumnSearchProps('address'),
+    },
+    {
+      title: translateSupplier('country'),
+      width: 150,
+      dataIndex: 'country',
+      key: 'country',
+      align: 'center',
+      ...getColumnSearchProps('country'),
     },
     {
       title: translateSupplier('email'),

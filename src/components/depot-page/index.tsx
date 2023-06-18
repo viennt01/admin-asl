@@ -37,6 +37,8 @@ export default function DepotPage() {
 
   interface DataType {
     key: number;
+    countryCode: string;
+    countryName: string;
     depotCode: string;
     depotName: string;
     depotAddress: string;
@@ -53,6 +55,8 @@ export default function DepotPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
+      countryCode: 'VN',
+      countryName: 'Vietnam',
       depotCode: i % 2 === 1 ? 'ICD Transimex' : 'ICD TANAMEXCO',
       depotName: i % 2 === 1 ? 'ICD Transimex' : 'ICD TANAMEXCO',
       depotAddress:
@@ -197,11 +201,27 @@ export default function DepotPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
+      title: translateDepot('country_code'),
+      dataIndex: 'countryCode',
+      width: 150,
+      key: 'countryCode',
+      align: 'center',
+      ...getColumnSearchProps('countryCode'),
+    },
+    {
+      title: translateDepot('country_name'),
+      width: 150,
+      dataIndex: 'countryName',
+      key: 'countryName',
+      align: 'center',
+      ...getColumnSearchProps('countryName'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
       title: translateDepot('depot_code'),
       dataIndex: 'depotCode',
       width: 180,
       key: 'depotCode',
-      fixed: 'left',
       align: 'center',
       ...getColumnSearchProps('depotCode'),
     },
@@ -210,14 +230,13 @@ export default function DepotPage() {
       width: 250,
       dataIndex: 'depotName',
       key: 'depotName',
-      fixed: 'left',
       align: 'center',
       ...getColumnSearchProps('depotName'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
       title: translateDepot('address'),
-      width: 300,
+      width: 500,
       dataIndex: 'depotAddress',
       key: 'depotAddress',
       align: 'center',
@@ -240,7 +259,7 @@ export default function DepotPage() {
     },
     {
       title: translateDepot('description'),
-      width: 350,
+      width: 550,
       dataIndex: 'description',
       key: 'description',
       align: 'center',

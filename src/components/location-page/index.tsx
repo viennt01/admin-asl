@@ -38,8 +38,10 @@ export default function LocationPage() {
 
   interface DataType {
     key: number;
+    countryCode: string;
+    countryName: string;
     locationCode: string;
-    name: string;
+    locationName: string;
     address: string;
     addressType: string;
     phoneNumner: string;
@@ -54,8 +56,10 @@ export default function LocationPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
+      countryCode: 'VN',
+      countryName: 'Vietnam',
       locationCode: i % 2 === 0 ? 'DD0119524' : 'DD0119521',
-      name: i % 2 === 0 ? 'Vinafco Depot' : 'Phú Thọ',
+      locationName: i % 2 === 0 ? 'Vinafco Depot' : 'Phú Thọ',
       address:
         i % 2 === 0
           ? '	Vinafco Depot'
@@ -192,20 +196,36 @@ export default function LocationPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
+      title: translateLocation('country_code'),
+      dataIndex: 'countryCode',
+      width: 150,
+      key: 'countryCode',
+      align: 'center',
+      ...getColumnSearchProps('countryCode'),
+    },
+    {
+      title: translateLocation('country_name'),
+      width: 150,
+      dataIndex: 'countryName',
+      key: 'countryName',
+      align: 'center',
+      ...getColumnSearchProps('countryName'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
       title: translateLocation('code'),
       width: 150,
       dataIndex: 'locationCode',
       key: 'locationCode',
       align: 'center',
-      fixed: 'left',
       ...getColumnSearchProps('locationCode'),
     },
     {
       title: translateLocation('name'),
       width: 200,
-      dataIndex: 'name',
-      key: 'name',
-      ...getColumnSearchProps('name'),
+      dataIndex: 'locationName',
+      key: 'locationName',
+      ...getColumnSearchProps('locationName'),
       align: 'center',
       filters: [
         {

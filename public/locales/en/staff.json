@@ -13,6 +13,8 @@
     "nationality": "Nationality",
     "working_branch":"Working branch",
     "position":"Position",
+    "department": "Department",
+    "manager": "Manager",
     "status":"Status",
     "date_created": "Date Created",
     "creator": "Creator"

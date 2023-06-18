@@ -4,7 +4,6 @@
     "container_no": "Container type code",
     "type_of_container": "Type of Container",
     "detail": "Details",
-    "number_container": "Quantity",
     "status":"Status",
     "teus": "Teus",
     "date_created": "Date Created",

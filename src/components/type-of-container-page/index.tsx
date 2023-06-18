@@ -51,7 +51,6 @@ export default function TypeOfContainerPage() {
     name: string;
     details: string;
     teus: number;
-    totalContainer: number;
     status: string;
     dateCreated: string;
     creator: string;
@@ -66,7 +65,6 @@ export default function TypeOfContainerPage() {
       name: i % 2 === 0 ? '40N' : '40RF',
       details: i % 2 === 0 ? 'Cont 40 nhẹ' : 'Cont 40 lạnh',
       teus: i % 2 === 0 ? 2 : 1,
-      totalContainer: i % 2 === 0 ? 2000 : 1500,
       status: i % 2 === 0 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
       creator: 'Admin',
@@ -243,14 +241,6 @@ export default function TypeOfContainerPage() {
       key: 'teus',
       align: 'center',
       ...getColumnSearchProps('teus'),
-    },
-    {
-      title: translateTypeOfContainer('number_container'),
-      width: 200,
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
-      align: 'center',
-      sorter: (a, b) => a.key - b.key,
     },
     {
       title: translateTypeOfContainer('status'),

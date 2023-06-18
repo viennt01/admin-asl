@@ -42,17 +42,21 @@ interface DataType {
   bookingCode: string;
   portOfLoading: string;
   portOfDischarge: string;
-  container: string;
-  nameSupplier: string;
+  containerCode: string;
   package: string;
-  nameCustomer: string;
-  nameCnee: string;
+  numberOfShipments: string;
+  weight: string;
+  volume: string;
   placeOfDelivery: string;
-  note: string;
   etd: string;
   eta: string;
-  userCreate: string;
+  nameCustomer: string;
+  nameSupplier: string;
+  nameCnee: string;
+  note: string;
+  saleman: string;
   dateCreate: string;
+  creator: string;
   status: string;
 }
 
@@ -70,17 +74,21 @@ export default function BookingPage() {
       bookingCode: '10-48973-VNL/V26-A',
       portOfLoading: i % 2 === 0 ? 'Hải Phòng' : 'Hồ Chí Minh',
       portOfDischarge: i % 2 === 0 ? 'Hồ Chí Minh' : 'Long Beach, USA',
-      container: 'GLSU4824373',
-      nameSupplier: 'Công ty TNHH Dịch vụ Tiếp Vận Toàn Cầu (GLS)',
+      containerCode: 'GLSU4824373',
       package: i % 2 === 0 ? 'Sữa' : 'Gạo',
-      nameCustomer: i % 2 === 0 ? 'Vũ Văn Nguyên' : 'Lê Công Tuấn',
-      nameCnee: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
+      numberOfShipments: i % 2 === 0 ? '10' : '4.7',
+      weight: i % 2 === 0 ? '2 ton' : '5 ton',
+      volume: i % 2 === 0 ? '6000' : '3000',
       placeOfDelivery: 'KCN Vsip 1, Thuận An, Bình Dương',
-      note: i % 2 === 0 ? 'Hàng dễ vỡ - cẩn thận' : 'Mặt hàng đông lạnh',
       etd: i % 2 === 0 ? '14/05/2023' : '16/05/2023',
       eta: i % 2 === 0 ? '14/06/2023' : '16/06/2023',
-      userCreate: i % 2 === 0 ? 'Trương Văn A' : 'Nguyễn Ngọc B',
+      nameCustomer: i % 2 === 0 ? 'Vũ Văn Nguyên' : 'Lê Công Tuấn',
+      nameSupplier: 'Công ty TNHH Dịch vụ Tiếp Vận Toàn Cầu (GLS)',
+      nameCnee: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
+      note: i % 2 === 0 ? 'Hàng dễ vỡ - cẩn thận' : 'Mặt hàng đông lạnh',
+      saleman: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
       dateCreate: i % 2 === 0 ? '10/05/2023' : '12/05/2023',
+      creator: i % 2 === 0 ? 'Trương Văn A' : 'Nguyễn Ngọc B',
       status: i % 2 === 1 ? 'Processing' : 'Completed',
     });
   }
@@ -219,7 +227,6 @@ export default function BookingPage() {
     {
       title: translateBooking('port_of_loading'),
       width: 250,
-      fixed: 'left',
       dataIndex: 'portOfLoading',
       key: 'portOfLoading',
       align: 'center',
@@ -237,18 +244,10 @@ export default function BookingPage() {
     {
       title: translateBooking('container_code'),
       width: 300,
-      dataIndex: 'container',
-      key: 'container',
+      dataIndex: 'containerCode',
+      key: 'containerCode',
       align: 'center',
-      ...getColumnSearchProps('container'),
-    },
-    {
-      title: translateBooking('name_supplier'),
-      width: 350,
-      dataIndex: 'nameSupplier',
-      key: 'nameSupplier',
-      align: 'center',
-      ...getColumnSearchProps('nameSupplier'),
+      ...getColumnSearchProps('containerCode'),
     },
     {
       title: translateBooking('package'),
@@ -259,20 +258,28 @@ export default function BookingPage() {
       ...getColumnSearchProps('package'),
     },
     {
-      title: translateBooking('name_customer'),
-      width: 250,
-      dataIndex: 'nameCustomer',
-      key: 'nameCustomer',
+      title: translateBooking('number_of_shipments'),
+      width: 180,
+      dataIndex: 'numberOfShipments',
+      key: 'numberOfShipments',
       align: 'center',
-      ...getColumnSearchProps('nameCustomer'),
+      ...getColumnSearchProps('numberOfShipments'),
     },
     {
-      title: translateBooking('name_cnee'),
-      width: 250,
-      dataIndex: 'nameCnee',
-      key: 'nameCnee',
+      title: translateBooking('weight'),
+      width: 180,
+      dataIndex: 'weight',
+      key: 'weight',
       align: 'center',
-      ...getColumnSearchProps('nameCnee'),
+      ...getColumnSearchProps('weight'),
+    },
+    {
+      title: translateBooking('volume'),
+      width: 180,
+      dataIndex: 'volume',
+      key: 'volume',
+      align: 'center',
+      ...getColumnSearchProps('volume'),
     },
     {
       title: translateBooking('place_of_delivery'),
@@ -281,14 +288,6 @@ export default function BookingPage() {
       key: 'placeOfDelivery',
       align: 'center',
       ...getColumnSearchProps('placeOfDelivery'),
-    },
-    {
-      title: translateBooking('note'),
-      width: 350,
-      dataIndex: 'note',
-      key: 'note',
-      align: 'center',
-      ...getColumnSearchProps('note'),
     },
     {
       title: translateBooking('etd'),
@@ -307,12 +306,44 @@ export default function BookingPage() {
       ...getColumnSearchProps('eta'),
     },
     {
-      title: translateBooking('user_create'),
+      title: translateBooking('name_customer'),
       width: 250,
-      dataIndex: 'userCreate',
-      key: 'userCreate',
+      dataIndex: 'nameCustomer',
+      key: 'nameCustomer',
       align: 'center',
-      ...getColumnSearchProps('userCreate'),
+      ...getColumnSearchProps('nameCustomer'),
+    },
+    {
+      title: translateBooking('name_supplier'),
+      width: 350,
+      dataIndex: 'nameSupplier',
+      key: 'nameSupplier',
+      align: 'center',
+      ...getColumnSearchProps('nameSupplier'),
+    },
+    {
+      title: translateBooking('name_cnee'),
+      width: 250,
+      dataIndex: 'nameCnee',
+      key: 'nameCnee',
+      align: 'center',
+      ...getColumnSearchProps('nameCnee'),
+    },
+    {
+      title: translateBooking('note'),
+      width: 350,
+      dataIndex: 'note',
+      key: 'note',
+      align: 'center',
+      ...getColumnSearchProps('note'),
+    },
+    {
+      title: translateBooking('saleman'),
+      width: 200,
+      dataIndex: 'saleman',
+      key: 'saleman',
+      align: 'center',
+      ...getColumnSearchProps('saleman'),
     },
     {
       title: translateBooking('date_create'),
@@ -321,6 +352,14 @@ export default function BookingPage() {
       key: 'dateCreate',
       align: 'center',
       ...getColumnSearchProps('dateCreate'),
+    },
+    {
+      title: translateBooking('creator'),
+      width: 200,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
+      ...getColumnSearchProps('creator'),
     },
     {
       title: translateBooking('status'),

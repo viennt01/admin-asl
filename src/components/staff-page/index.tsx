@@ -52,6 +52,8 @@ export default function StaffPage() {
     nationality: string;
     working_branch: string;
     position: string;
+    department: string;
+    manager: string;
     status: string;
     dateCreated: string;
     creator: string;
@@ -76,6 +78,8 @@ export default function StaffPage() {
       nationality: 'Việt Nam',
       working_branch: 'Hồ Chí Minh',
       position: 'Sale',
+      department: 'D03',
+      manager: 'Nguyễn Thị Y',
       status: i % 6 === 0 ? 'DeActive' : 'Active',
       dateCreated: '14/06/2023',
       creator: 'Admin',
@@ -267,7 +271,7 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('address'),
-      width: 300,
+      width: 500,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
@@ -304,6 +308,22 @@ export default function StaffPage() {
       key: 'working_branch',
       align: 'center',
       ...getColumnSearchProps('working_branch'),
+    },
+    {
+      title: translateStaff('department'),
+      width: 150,
+      dataIndex: 'department',
+      key: 'department',
+      align: 'center',
+      ...getColumnSearchProps('department'),
+    },
+    {
+      title: translateStaff('manager'),
+      width: 150,
+      dataIndex: 'manager',
+      key: 'manager',
+      align: 'center',
+      ...getColumnSearchProps('manager'),
     },
     {
       title: translateStaff('position'),

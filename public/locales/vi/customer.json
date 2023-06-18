@@ -1,19 +1,20 @@
 {
     "title": "Danh sách khách hàng",
     "code": "Mã khách hàng",
+    "abbreviation": "Tên viết tắt",
     "name": "Tên khách hàng",
     "number": "Số lượng giao dịch",
-    "dob": "Ngày sinh",
     "phone": "Số điện thoại",
     "address": "Địa chỉ",
+    "country": "Quốc gia",
     "email": "Email",
     "status":"Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+
     "information_add_customer": "Thêm mới khách hàng",
     "name_placeholder": "Nhập tên khách hàng",
     "number_placeholder": "Nhập số lượng giao dịch",
-    "dob_placeholder": "Chọn ngày sinh",
     "phone_placeholder": "Nhập số điện thoại",
     "address_placeholder": "Nhập địa chỉ",
     "email_placeholder": "Nhập email"

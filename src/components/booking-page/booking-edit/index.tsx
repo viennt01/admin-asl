@@ -19,6 +19,7 @@ import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import useI18n from '@/i18n/useI18N';
 
 interface DataNodeType {
   value: string;
@@ -50,6 +51,7 @@ export default function EditBooking() {
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const dateFormat = 'YYYY/MM/DD';
+  const { translate: translateBooking } = useI18n('booking');
 
   useEffect(() => {
     if (!id) return;
@@ -99,28 +101,10 @@ export default function EditBooking() {
       typeContainer: '40DC',
       status: 'Đang cho thuê',
     },
-    {
-      key: '2',
-      containerNo: 'GMDU 307 307 9',
-      typeContainer: '40HC',
-      status: 'Yêu cầu vệ sinh',
-    },
-    {
-      key: '3',
-      containerNo: 'GMDU 307 307 9',
-      typeContainer: '40DC',
-      status: 'Đang cho thuê',
-    },
-    {
-      key: '4',
-      containerNo: 'GMDU 307 307 9',
-      typeContainer: '40HC',
-      status: 'Yêu cầu vệ sinh',
-    },
   ];
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số container',
+      title: translateBooking('no_booking'),
       dataIndex: 'containerNo',
       align: 'center',
     },
@@ -160,7 +144,7 @@ export default function EditBooking() {
             <Row gutter={16}>
               <Col lg={12} span={24}>
                 <Form.Item
-                  label="Mã booking"
+                  label={translateBooking('no_booking')}
                   name="code_booking"
                   rules={[
                     {
