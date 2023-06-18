@@ -41,8 +41,9 @@ export default function BankPage() {
     bankCode: string;
     bankLogo: string;
     bankName: string;
-    bankAccountNumber: string;
-    bankHotlinePhoneNumber: string;
+    VNDAccountNumber: string;
+    USDAccountNumber: string;
+    phone: string;
     bankEmail: string;
     bankAddress: string;
     bankBranch: string;
@@ -62,8 +63,9 @@ export default function BankPage() {
           ? 'https://9746c6837f.vws.vegacdn.vn/posts/files/thong-tin-ve-ngan-hang-vietcombank.jpg'
           : 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Logo_MB_new.png/1200px-Logo_MB_new.png',
       bankName: i % 2 === 0 ? 'Vietcombank' : 'MBBank',
-      bankAccountNumber: i % 2 === 0 ? '1234567989' : '9897654321',
-      bankHotlinePhoneNumber: i % 2 === 0 ? '1900545413' : '1900 54 54 26',
+      VNDAccountNumber: i % 2 === 0 ? '1234567989' : '9897654321',
+      USDAccountNumber: i % 2 === 0 ? '1234567989' : '9897654321',
+      phone: i % 2 === 0 ? '1900545413' : '1900 54 54 26',
       bankEmail: i % 2 === 0 ? 'vietcombank@gamil.com' : 'mbbank@gmail.com',
       bankAddress:
         i % 2 === 0
@@ -222,21 +224,30 @@ export default function BankPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateBank('bank_account_number'),
+      title: translateBank('VND_account_number'),
       width: 200,
-      dataIndex: 'bankAccountNumber',
-      key: 'bankAccountNumber',
+      dataIndex: 'VNDAccountNumber',
+      key: 'VNDAccountNumber',
       align: 'center',
-      ...getColumnSearchProps('bankAccountNumber'),
+      ...getColumnSearchProps('VNDAccountNumber'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateBank('bank_hotline_phone_number'),
+      title: translateBank('USD_account_number'),
       width: 200,
-      dataIndex: 'bankHotlinePhoneNumber',
-      key: 'bankHotlinePhoneNumber',
+      dataIndex: 'USDAccountNumber',
+      key: 'USDAccountNumber',
       align: 'center',
-      ...getColumnSearchProps('bankHotlinePhoneNumber'),
+      ...getColumnSearchProps('USDAccountNumber'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateBank('phone'),
+      width: 200,
+      dataIndex: 'phone',
+      key: 'phone',
+      align: 'center',
+      ...getColumnSearchProps('phone'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {

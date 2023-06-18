@@ -3,7 +3,7 @@ import {
   EditOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
+import { Button, ConfigProvider, Input, InputRef, Space } from 'antd';
 import { Key, useEffect, useRef, useState } from 'react';
 import CreateCurrency from './create-currency';
 import { ROUTERS } from '@/constant/router';
@@ -19,24 +19,6 @@ import Highlighter from 'react-highlight-words';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import style from './index.module.scss';
 
-const STATUS_COLORS = {
-  Increase: '#00A651',
-  Reduce: '#ED1C27',
-};
-const STATUS_LABELS = {
-  Increase: 'Tăng',
-  Reduce: 'Giảm',
-};
-
-// const STATUS_CAPACITY_COLORS = {
-//   Full: '#31AFFE',
-//   NotFull: '#616887',
-// };
-// const STATUS_CAPACITY_LABELS = {
-//   Full: 'Đầy',
-//   NotFull: 'Nửa đầy',
-// };
-
 export default function CurrencyPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -45,26 +27,18 @@ export default function CurrencyPage() {
   const [locale, setLocale] = useState(enUS);
   interface DataType {
     key: number;
-    currencyFrom: string;
-    currencyTo: string;
-    bank: string;
-    exchangeRate: number;
-    price: number;
-    sell: number;
-    status: string;
+    currency: string;
+    exchangeRateToVND: number;
+    exchangeRateToUSD: number;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      currencyFrom: 'USD',
-      currencyTo: 'VND',
-      bank: 'ACB',
-      exchangeRate: 26098,
-      price: 23375,
-      sell: 26098,
-      status: i % 2 === 1 ? 'Increase' : 'Reduce',
+      currency: 'EUR',
+      exchangeRateToVND: 26098,
+      exchangeRateToUSD: 26098,
     });
   }
 
@@ -191,16 +165,16 @@ export default function CurrencyPage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateCurrency('currency_from'),
+      title: translateCurrency('currency'),
       width: 150,
-      dataIndex: 'currencyFrom',
-      key: 'currencyFrom',
+      dataIndex: 'currency',
+      key: 'currency',
       fixed: 'left',
       align: 'center',
       filters: [
         {
-          text: 'USD',
-          value: 'USD',
+          text: 'GBP',
+          value: 'GBP',
         },
         {
           text: 'EUR',
@@ -212,121 +186,22 @@ export default function CurrencyPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCurrency('currency_to'),
-      width: 180,
-      fixed: 'left',
-      dataIndex: 'currencyTo',
-      key: 'currencyTo',
-      align: 'center',
-      filters: [
-        {
-          text: 'USD',
-          value: 'USD',
-        },
-        {
-          text: 'Euro',
-          value: 'Euro',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: translateCurrency('exchange_rate'),
+      title: translateCurrency('exchange_rate_to_VND'),
       width: 150,
-      dataIndex: 'exchangeRate',
-      key: 'exchangeRate',
-      ...getColumnSearchProps('exchangeRate'),
+      dataIndex: 'exchangeRateToVND',
+      key: 'exchangeRateToVND',
+      ...getColumnSearchProps('exchangeRateToVND'),
       align: 'center',
-      sorter: (a, b) => a.exchangeRate - b.exchangeRate,
+      sorter: (a, b) => a.exchangeRateToVND - b.exchangeRateToVND,
     },
     {
-      title: translateCurrency('bank'),
-      width: 180,
-      dataIndex: 'bank',
-      key: 'bank',
-      ...getColumnSearchProps('bank'),
-      align: 'center',
-      filters: [
-        {
-          text: 'ABBank',
-          value: 'ABBank',
-        },
-        {
-          text: 'ACB',
-          value: 'ACB',
-        },
-        {
-          text: 'BIDV',
-          value: 'BIDV',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: translateCurrency('cash_buy'),
+      title: translateCurrency('exchange_rate_to_USD'),
       width: 150,
-      dataIndex: 'sell',
-      key: 'sell',
+      dataIndex: 'exchangeRateToUSD',
+      key: 'exchangeRateToUSD',
+      ...getColumnSearchProps('exchangeRateToUSD'),
       align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
-    },
-    {
-      title: translateCurrency('cash_sell'),
-      width: 150,
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
-    },
-    {
-      title: translateCurrency('transfer_buy'),
-      width: 200,
-      dataIndex: 'sell',
-      key: 'sell',
-      align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
-    },
-    {
-      title: translateCurrency('transfer_sell'),
-      width: 200,
-      dataIndex: 'price',
-      key: 'price',
-      align: 'center',
-      sorter: (a, b) => a.sell - b.sell,
-    },
-    {
-      title: translateCurrency('status'),
-      width: 150,
-      dataIndex: 'status',
-      fixed: 'right',
-      key: 'status',
-      align: 'center',
-      filters: [
-        {
-          text: 'Tăng',
-          value: 'Increase',
-        },
-        {
-          text: 'Giảm',
-          value: 'Reduce',
-        },
-      ],
-      // onFilter: (value: string, record) => record.address.startsWith(value),
-      filterSearch: true,
-      render: (value) => (
-        <Tag
-          color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
-        </Tag>
-      ),
+      sorter: (a, b) => a.exchangeRateToUSD - b.exchangeRateToUSD,
     },
     {
       key: 'operation',

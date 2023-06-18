@@ -55,6 +55,7 @@ export default function ContainerPage() {
     rentCost: number;
     price: number;
     status: string;
+    supplier: string;
     dateCreated: string;
     creator: string;
   }
@@ -71,6 +72,7 @@ export default function ContainerPage() {
       containerStatus: i % 2 === 0 ? 'Đang cho thuê' : 'Yêu cầu vệ sinh',
       rentCost: i % 2 === 0 ? 100000 : 5000,
       price: i % 2 === 0 ? 100000000 : 2000,
+      supplier: i % 2 === 1 ? 'Đông Á' : 'Cello Square',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
       creator: 'Admin',
@@ -265,6 +267,14 @@ export default function ContainerPage() {
       width: 200,
       align: 'center',
       ...getColumnSearchProps('price'),
+    },
+    {
+      title: translateContainer('supplier'),
+      width: 350,
+      dataIndex: 'supplier',
+      key: 'supplier',
+      align: 'center',
+      ...getColumnSearchProps('supplier'),
     },
     {
       title: translateContainer('status'),

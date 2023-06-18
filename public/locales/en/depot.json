@@ -1,7 +1,9 @@
 {
     "title": "List of Depot",
     "depot_no": "No",
-    "depot_code": "Depot Code",
+    "country_code": "Country No",
+    "country_name": "Country Name",
+    "depot_code": "Depot No",
     "depot_name": "Depot Name",
     "address": "Address",
     "branch_depot":"Branch",
@@ -10,6 +12,7 @@
     "status_depot":"Status",
     "date_created": "Date Created",
     "creator": "Creator",
+
     "information_add_depot": "Add new Depot",
     "depot_name_placeholder": "Enter the Depot name",
     "address_placeholder": "Enter address",

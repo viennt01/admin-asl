@@ -1,6 +1,8 @@
 {
     "title": "Danh sách địa điểm nhận/trả hàng",
     "location_no": "Số thứ tự",
+    "country_code": "Mã Quốc gia",
+    "country_name": "Tên Quốc gia",
     "code": "Mã địa chỉ",
     "name": "Tên địa chỉ",
     "address": "Địa chỉ",

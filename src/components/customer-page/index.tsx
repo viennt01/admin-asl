@@ -36,13 +36,13 @@ export default function CustomerPage() {
   const [locale, setLocale] = useState(enUS);
 
   interface DataType {
-    key: number;
-    code: string;
-    number: number;
-    name: string;
-    dob: string;
+    customerCode: string;
+    abbreviation: string;
+    customerName: string;
+    numberOfTransaction: number;
+    phone: string;
     address: string;
-    phoneNumner: string;
+    country: string;
     email: string;
     status: string;
     dateCreated: string;
@@ -52,13 +52,14 @@ export default function CustomerPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i + 1,
-      code: 'GLS120',
-      number: 150,
-      name: `Nguyễn Văn A`,
-      dob: `25/5/1986`,
-      address: 'Hồ Chí Minh',
-      phoneNumner: '0964582355',
+      customerCode: 'GLS120',
+      abbreviation: `MASAN CONSUMER`,
+      customerName: `CÔNG TY CP HÀNG TIÊU DÙNG MASAN`,
+      numberOfTransaction: 150,
+      phone: '0964582355',
+      address:
+        'MPlaza Saigon 39 Le Duan, Ben Nghe, District 1, Ho Chi Minh City, Vietnam',
+      country: 'Việt Nam',
       email: 'abcd@gmail.com',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
@@ -182,53 +183,62 @@ export default function CustomerPage() {
     {
       title: translateCustomer('code'),
       width: 150,
-      dataIndex: 'code',
-      key: 'code',
+      dataIndex: 'customerCode',
+      key: 'customerCode',
       fixed: 'left',
       align: 'center',
-      ...getColumnSearchProps('code'),
+      ...getColumnSearchProps('customerCode'),
+    },
+    {
+      title: translateCustomer('abbreviation'),
+      width: 250,
+      dataIndex: 'abbreviation',
+      key: 'abbreviation',
+      fixed: 'left',
+      align: 'center',
+      ...getColumnSearchProps('abbreviation'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
       title: translateCustomer('name'),
-      width: 250,
-      dataIndex: 'name',
-      key: 'name',
-      fixed: 'left',
+      width: 350,
+      dataIndex: 'customerName',
+      key: 'customerName',
       align: 'center',
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps('customerName'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
       title: translateCustomer('number'),
       width: 200,
-      dataIndex: 'number',
-      key: 'number',
+      dataIndex: 'numberOfTransaction',
+      key: 'numberOfTransaction',
       align: 'center',
-      ...getColumnSearchProps('number'),
-    },
-    {
-      title: translateCustomer('dob'),
-      width: 150,
-      dataIndex: 'dob',
-      key: 'dob',
-      align: 'center',
-      ...getColumnSearchProps('dob'),
+      ...getColumnSearchProps('numberOfTransaction'),
     },
     {
       title: translateCustomer('phone'),
       width: 150,
-      dataIndex: 'phoneNumner',
-      key: 'phoneNumner',
+      dataIndex: 'phone',
+      key: 'phone',
       align: 'center',
-      ...getColumnSearchProps('phoneNumner'),
+      ...getColumnSearchProps('phone'),
     },
     {
       title: translateCustomer('address'),
-      width: 300,
+      width: 500,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
       ...getColumnSearchProps('address'),
+    },
+    {
+      title: translateCustomer('country'),
+      width: 150,
+      dataIndex: 'country',
+      key: 'country',
+      align: 'center',
+      ...getColumnSearchProps('country'),
     },
     {
       title: translateCustomer('email'),

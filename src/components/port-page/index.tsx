@@ -47,11 +47,12 @@ export default function PortPage() {
   const [locale, setLocale] = useState(enUS);
   interface DataType {
     key: number;
-    code: string;
-    name: string;
+    countryCode: string;
+    countryName: string;
+    portCode: string;
+    portName: string;
     address: string;
     totalContainer: number;
-    capacity: number;
     capacityState: string;
     companyName: string;
     status: string;
@@ -64,14 +65,15 @@ export default function PortPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      code: i % 2 === 0 ? 'TCCL' : 'TCPH',
-      name: i % 2 === 0 ? 'Cảng Cát Lái' : 'Cảng tân cảng Phú Hữu',
+      countryCode: 'VN',
+      countryName: 'Vietnam',
+      portCode: i % 2 === 0 ? 'TCCL' : 'TCPH',
+      portName: i % 2 === 0 ? 'Cảng Cát Lái' : 'Cảng tân cảng Phú Hữu',
       address:
         i % 2 === 0
           ? '1295B Đường Nguyễn Thị Định, Phường Cát Lái, Quận 2, TP Hồ Chí Minh, Việt Nam'
           : 'Khu phố 04, Phường Phú Hữu, Quận 9, TP Hồ Chí Minh',
       totalContainer: i % 2 === 0 ? 1000000 : 5000,
-      capacity: i % 2 === 0 ? 3 : 2,
       capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
       companyName:
         i % 2 === 0
@@ -225,26 +227,42 @@ export default function PortPage() {
       // },
     },
     {
-      title: translatePort('code'),
-      dataIndex: 'code',
-      width: 120,
-      key: 'code',
-      fixed: 'left',
+      title: translatePort('country_code'),
+      dataIndex: 'countryCode',
+      width: 150,
+      key: 'countryCode',
       align: 'center',
-      ...getColumnSearchProps('code'),
+      ...getColumnSearchProps('countryCode'),
+    },
+    {
+      title: translatePort('country_name'),
+      width: 150,
+      dataIndex: 'countryName',
+      key: 'countryName',
+      align: 'center',
+      ...getColumnSearchProps('countryName'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translatePort('code'),
+      dataIndex: 'portCode',
+      width: 120,
+      key: 'portCode',
+      align: 'center',
+      ...getColumnSearchProps('portCode'),
     },
     {
       title: translatePort('name'),
-      dataIndex: 'name',
+      dataIndex: 'portName',
       width: 250,
-      key: 'name',
+      key: 'portName',
       align: 'center',
-      ...getColumnSearchProps('name'),
+      ...getColumnSearchProps('portName'),
     },
     {
       title: translatePort('address'),
       dataIndex: 'address',
-      width: 400,
+      width: 500,
       key: 'address',
       align: 'center',
       ...getColumnSearchProps('address'),
@@ -258,16 +276,6 @@ export default function PortPage() {
       sorter: (a, b) => a.totalContainer - b.totalContainer,
       ...getColumnSearchProps('totalContainer'),
       ellipsis: true,
-    },
-    {
-      title: translatePort('capacity'),
-      dataIndex: 'capacity',
-      key: 'capacity',
-      align: 'center',
-      sorter: (a, b) => a.capacity - b.capacity,
-      ...getColumnSearchProps('capacity'),
-      ellipsis: true,
-      width: 200,
     },
     {
       title: translatePort('status_capacity'),

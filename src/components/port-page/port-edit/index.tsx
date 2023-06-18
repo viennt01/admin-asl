@@ -127,7 +127,7 @@ export default function EditPort() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Mã số container',
+      title: 'Mã Container',
       dataIndex: 'containerNo',
       align: 'center',
     },

@@ -13,6 +13,8 @@
     "nationality": "Quốc Tịch",
     "working_branch":"Chi nhánh làm việc",
     "position":"Chức vụ",
+    "department": "Phòng ban",
+    "manager": "Trưởng phòng",
     "status":"Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo"
