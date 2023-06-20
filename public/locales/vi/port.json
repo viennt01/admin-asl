@@ -1,10 +1,9 @@
 {
     "title": "Danh sách cảng",
     "port_no": "Số thứ tự",
-    "country_code": "Mã Quốc gia",
-    "country_name": "Tên Quốc gia",
     "code": "Mã Cảng",
     "name": "Tên Cảng",
+    "country_name": "Quốc gia",
     "address": "Địa chỉ",
     "quantity": "Số lượng Container",
     "status_capacity": "Trạng thái của sức chứa",

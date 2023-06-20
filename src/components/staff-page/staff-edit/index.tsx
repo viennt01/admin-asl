@@ -105,7 +105,7 @@ export default function EditLStaff() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a staff</Title>
+                <Title level={3}>Edit Staff</Title>
               </Col>
             </Row>
             <Row gutter={16}>

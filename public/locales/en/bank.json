@@ -1,7 +1,7 @@
 {
     "title": "List of Currency",
     "bank_no": "No",
-    "bank_code": "Bank code",
+    "bank_code": "Bank No",
     "bank_logo": "Logo",
     "bank_name": "Bank name",
     "VND_account_number": "VND account number",

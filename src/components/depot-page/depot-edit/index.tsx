@@ -13,7 +13,9 @@ import {
   Cascader,
   CascaderProps,
   Select,
+  DatePicker,
 } from 'antd';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -42,6 +44,7 @@ export default function EditDepot() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
+  const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
     if (!id) return;
@@ -109,11 +112,29 @@ export default function EditDepot() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a port</Title>
+                <Title level={3}>Edit Depot</Title>
               </Col>
             </Row>
+
             <Row gutter={16}>
-              <Col lg={12} span={24}>
+              <Col lg={3} span={24}>
+                <Form.Item
+                  label={translateAddDepot('depot_code')}
+                  name="depot_code"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateAddDepot('depot_no_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={7} span={24}>
                 <Form.Item
                   label={translateAddDepot('depot_name')}
                   name="depot_name"
@@ -129,34 +150,8 @@ export default function EditDepot() {
                   />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateAddDepot('depot_no')}
-                  name="depot_no"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of container',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translateAddDepot('depot_no_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateAddDepot('address')}
-                  name="location"
-                  rules={[
-                    { required: true, message: 'Please input last name' },
-                  ]}
-                >
-                  <Cascader options={residences} />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={11} span={24}>
                 <Form.Item
                   label={translateAddDepot('address')}
                   name="detail_location"
@@ -167,7 +162,20 @@ export default function EditDepot() {
                   <Input placeholder="Nhập vị trí cụ thể" />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={3} span={24}>
+                <Form.Item
+                  label={translateAddDepot('country_name')}
+                  name="location"
+                  rules={[
+                    { required: true, message: 'Please select the country' },
+                  ]}
+                >
+                  <Cascader options={residences} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
                 <Form.Item
                   label={translateAddDepot('branch_depot')}
                   name="branch_depot"
@@ -183,7 +191,8 @@ export default function EditDepot() {
                   />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={8} span={24}>
                 <Form.Item
                   label={translateAddDepot('companny_mamagement_depot')}
                   name="companny_mamagement_depot"
@@ -201,6 +210,38 @@ export default function EditDepot() {
                   />
                 </Form.Item>
               </Col>
+
+              <Col lg={3} span={24}>
+                <Form.Item
+                  label={translateAddDepot('date_created')}
+                  name="dateCreated"
+                  rules={[
+                    { required: true, message: 'Please input date created' },
+                  ]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} span={24}>
+                <Form.Item
+                  label={translateAddDepot('creator')}
+                  name="creator"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input creator',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Creator" />
+                </Form.Item>
+              </Col>
+
               <Col lg={3} span={24}>
                 <Form.Item
                   label={translateAddDepot('status_depot')}

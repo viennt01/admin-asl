@@ -11,22 +11,20 @@ import {
   Col,
   ConfigProvider,
   Select,
-  Cascader,
-  CascaderProps,
-  DatePicker,
   Table,
-  InputNumber,
+  DatePicker,
 } from 'antd';
-import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
+import { ColumnsType } from 'antd/es/table';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import useI18n from '@/i18n/useI18N';
 
-interface DataNodeType {
-  value: string;
-  label: string;
-  children?: DataNodeType[];
-}
+// interface DataNodeType {
+//   value: string;
+//   label: string;
+//   children?: DataNodeType[];
+// }
 export interface FormValues {
   type_of_container: string;
   detail_placeholder: string;
@@ -37,6 +35,34 @@ interface DataType {
   containerNo: string;
   typeContainer: string;
   status: string;
+
+  full_name: string;
+  sex: string;
+  dob: string;
+  phone: string;
+  address: string;
+  email: string;
+  nationality: string;
+  position: string;
+
+  bookingCode: string;
+  portOfLoading: string;
+  portOfDischarge: string;
+  containerCode: string;
+  package: string;
+  numberOfShipments: string;
+  weight: string;
+  volume: string;
+  placeOfDelivery: string;
+  etd: string;
+  eta: string;
+  nameCustomer: string;
+  nameSupplier: string;
+  nameCnee: string;
+  note: string;
+  saleman: string;
+  dateCreate: string;
+  creator: string;
 }
 
 const initialValue = {
@@ -51,6 +77,7 @@ export default function EditSupplier() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
+  const { translate: translateSupplier } = useI18n('supplier');
   const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
@@ -60,58 +87,275 @@ export default function EditSupplier() {
   const onFinish = (formValues: FormValues) => {
     console.log(formValues);
   };
-  const residences: CascaderProps<DataNodeType>['options'] = [
+
+  // const residences: CascaderProps<DataNodeType>['options'] = [
+  //   {
+  //     value: 'Thành phố Hồ Chí Minh',
+  //     label: 'Thành phố Hồ Chí Minh',
+  //     children: [
+  //       {
+  //         value: 'Gò Vấp',
+  //         label: 'Gò Vấp',
+  //         children: [
+  //           {
+  //             value: 'Phường 1',
+  //             label: 'Phường 1',
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     value: 'Hà Nội',
+  //     label: 'Hà Nội',
+  //     children: [
+  //       {
+  //         value: 'Huyện Ba Vì',
+  //         label: 'Huyện Ba Vì',
+  //         children: [
+  //           {
+  //             value: 'Xã Ba Trại',
+  //             label: 'Xã Ba Trại',
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // ];
+
+  const dataTransHis: readonly any[] | undefined = [];
+
+  const columnsContactInfo: ColumnsType<DataType> = [
     {
-      value: 'Thành phố Hồ Chí Minh',
-      label: 'Thành phố Hồ Chí Minh',
-      children: [
-        {
-          value: 'Gò Vấp',
-          label: 'Gò Vấp',
-          children: [
-            {
-              value: 'Phường 1',
-              label: 'Phường 1',
-            },
-          ],
-        },
-      ],
+      title: 'Full name',
+      dataIndex: 'full_name',
+      align: 'center',
     },
     {
-      value: 'Hà Nội',
-      label: 'Hà Nội',
-      children: [
-        {
-          value: 'Huyện Ba Vì',
-          label: 'Huyện Ba Vì',
-          children: [
-            {
-              value: 'Xã Ba Trại',
-              label: 'Xã Ba Trại',
-            },
-          ],
-        },
-      ],
+      title: 'Sex',
+      dataIndex: 'sex',
+      align: 'center',
+    },
+    {
+      title: 'Date of birth',
+      dataIndex: 'dob',
+      align: 'center',
+    },
+    {
+      title: 'Phone Number',
+      dataIndex: 'phone',
+      align: 'center',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      align: 'center',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      align: 'center',
+    },
+    {
+      title: 'Nationality',
+      dataIndex: 'nationality',
+      align: 'center',
+    },
+    {
+      title: 'Position',
+      dataIndex: 'position',
+      align: 'center',
     },
   ];
-  const data: readonly any[] | undefined = [];
-  const columns: ColumnsType<DataType> = [
+
+  const columnsTransHis: ColumnsType<DataType> = [
     {
-      title: 'Mã số transaction',
+      title: 'Booking No',
+      dataIndex: 'bookingCode',
+      align: 'center',
+    },
+    {
+      title: 'Port of Loading',
+      dataIndex: 'portOfLoading',
+      align: 'center',
+    },
+    {
+      title: 'Port of Discharge',
+      dataIndex: 'portOfDischarge',
+      align: 'center',
+    },
+    {
+      title: 'Container No',
+      dataIndex: 'containerCode',
+      align: 'center',
+    },
+    {
+      title: 'Package',
+      dataIndex: 'package',
+      align: 'center',
+    },
+    {
+      title: 'Number of shipments',
+      dataIndex: 'numberOfShipments',
+      align: 'center',
+    },
+    {
+      title: 'Weight',
+      dataIndex: 'weight',
+      align: 'center',
+    },
+    {
+      title: 'Volume',
+      dataIndex: 'volume',
+      align: 'center',
+    },
+    {
+      title: 'Place of Delivery',
+      dataIndex: 'placeOfDelivery',
+      align: 'center',
+    },
+    {
+      title: 'ETD',
+      dataIndex: 'etd',
+      align: 'center',
+    },
+    {
+      title: 'ETA',
+      dataIndex: 'eta',
+      align: 'center',
+    },
+    {
+      title: 'Shipper',
+      dataIndex: 'nameCustomer',
+      align: 'center',
+    },
+    {
+      title: 'Supplier',
+      dataIndex: 'nameSupplier',
+      align: 'center',
+    },
+    {
+      title: 'Consignee (Cnee)',
+      dataIndex: 'nameCnee',
+      align: 'center',
+    },
+    {
+      title: 'Note',
+      dataIndex: 'note',
+      align: 'center',
+    },
+    {
+      title: 'Saleman',
+      dataIndex: 'saleman',
+      align: 'center',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Date created',
+      dataIndex: 'dateCreate',
+      align: 'center',
+    },
+    {
+      title: 'Creator',
+      dataIndex: 'creator',
+      align: 'center',
+    },
+  ];
+
+  const columnsReceivable: ColumnsType<DataType> = [
+    {
+      title: 'Invoice date',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Invoice No',
       dataIndex: 'containerNo',
       align: 'center',
     },
     {
-      title: 'Số tiền',
+      title: 'Invoice series',
       dataIndex: 'typeContainer',
       align: 'center',
     },
     {
-      title: 'Người gửi',
+      title: 'Amount exclude tax',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Tax (%)',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Tax Amount',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Total amount',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Issue by',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Status',
       dataIndex: 'status',
       align: 'center',
     },
   ];
+  const columnsPayable: ColumnsType<DataType> = [
+    {
+      title: 'Invoice date',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Invoice No',
+      dataIndex: 'containerNo',
+      align: 'center',
+    },
+    {
+      title: 'Invoice series',
+      dataIndex: 'typeContainer',
+      align: 'center',
+    },
+    {
+      title: 'Amount exclude tax',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Tax (%)',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Tax Amount',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Total amount',
+      dataIndex: 'status',
+      align: 'center',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      align: 'center',
+    },
+  ];
+
   return (
     <div style={{ padding: '24px 0' }}>
       <ConfigProvider
@@ -131,13 +375,13 @@ export default function EditSupplier() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a supplier</Title>
+                <Title level={3}>Edit Supplier</Title>
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={12} span={24}>
+              <Col lg={4} span={24}>
                 <Form.Item
-                  label="Supplier No"
+                  label={translateSupplier('code')}
                   name="code_supplier"
                   rules={[
                     {
@@ -149,43 +393,116 @@ export default function EditSupplier() {
                   <Input placeholder="Nhập mã supplier" />
                 </Form.Item>
               </Col>
+
               <Col lg={12} span={24}>
                 <Form.Item
-                  label="Supplier Name"
+                  label={translateSupplier('name')}
                   name="name_supplier"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Supplier Name',
+                      message: 'Please input supplier Name',
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập tên Supplier" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Service Provided"
-                  name="service_rovided"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Service Provided',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập tên Service Provided" />
+                  <Input placeholder="Nhập tên supplier" />
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={8} span={24}>
                 <Form.Item
-                  label="Branch"
-                  name="branch"
+                  label={translateSupplier('abbreviation')}
+                  name="abbreviation_supplier"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input branch',
+                      message: 'Please input Abbreviation of supplier',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Please input Abbreviation of supplier" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={16} span={24}>
+                <Form.Item
+                  label={translateSupplier('service')}
+                  name="name_supplier"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input Service provided',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Service provided" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translateSupplier('phone')}
+                  style={{ marginBottom: 0 }}
+                >
+                  <Form.Item
+                    name="phone_code"
+                    style={{ display: 'inline-block', width: 104 }}
+                  >
+                    <Select
+                      options={COUNTRY_CODES.map(({ dial_code, code }) => ({
+                        value: `${code}_${dial_code}`,
+                        label: dial_code,
+                      }))}
+                      showSearch
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name="Phone Number"
+                    style={{
+                      display: 'inline-block',
+                      width: 'calc(100% - 104px - 16px)',
+                      marginLeft: 16,
+                    }}
+                    rules={[
+                      {
+                        pattern: /^[0-9]{7,15}$/,
+                        message: 'Sai định dạng',
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Nhập số điện thoại"
+                      style={{
+                        width: '100%',
+                      }}
+                    />
+                  </Form.Item>
+                </Form.Item>
+              </Col>
+
+              <Col lg={19} span={24}>
+                <Form.Item
+                  label={translateSupplier('address')}
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input address',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Address" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={5} span={24}>
+                <Form.Item
+                  label={translateSupplier('country')}
+                  name="Country"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input Country',
                     },
                   ]}
                 >
@@ -204,30 +521,9 @@ export default function EditSupplier() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={7} span={24}>
                 <Form.Item
-                  label="Address"
-                  name="address"
-                  rules={[{ required: true, message: 'Please input address' }]}
-                >
-                  <Cascader options={residences} />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Address detail"
-                  name="detail_address"
-                  rules={[
-                    { required: true, message: 'Please input address detail' },
-                  ]}
-                >
-                  <Input placeholder="Nhập vị trí cụ thể" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Email"
+                  label={translateSupplier('email')}
                   name="email"
                   rules={[
                     {
@@ -240,91 +536,10 @@ export default function EditSupplier() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
-                <Form.Item label="Hot line" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="phone_code"
-                    style={{ display: 'inline-block', width: 104 }}
-                  >
-                    <Select
-                      size="large"
-                      options={COUNTRY_CODES.map(({ dial_code, code }) => ({
-                        value: `${code}_${dial_code}`,
-                        label: dial_code,
-                      }))}
-                      showSearch
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name="phone"
-                    style={{
-                      display: 'inline-block',
-                      width: 'calc(100% - 104px - 16px)',
-                      marginLeft: 16,
-                    }}
-                    rules={[
-                      {
-                        pattern: /^[0-9]{7,15}$/,
-                        message: 'Sai định dạng',
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder="Nhập số điện thoại"
-                      style={{
-                        width: '100%',
-                      }}
-                    />
-                  </Form.Item>
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
+              <Col lg={4} span={24}>
                 <Form.Item
-                  label="Number of transactions"
-                  name="number_of_transactions"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input number of transactions',
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    style={{ width: '100%' }}
-                    min={1}
-                    max={100000}
-                    defaultValue={3}
-                    placeholder="Please input number of transactions"
-                  />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Transaction amount"
-                  name="transaction_amount"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input transaction amount',
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    style={{ width: '100%' }}
-                    min={1}
-                    max={100000}
-                    defaultValue={100}
-                    placeholder="Please input transaction amount"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label="Date created"
-                  name="date_created"
+                  label={translateSupplier('date_created')}
+                  name="dateCreated"
                   rules={[
                     { required: true, message: 'Please input date created' },
                   ]}
@@ -336,34 +551,25 @@ export default function EditSupplier() {
                   />
                 </Form.Item>
               </Col>
-              <Col lg={8} span={24}>
+
+              <Col lg={9} span={24}>
                 <Form.Item
-                  label="Creator"
+                  label={translateSupplier('creator')}
                   name="creator"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of Creator',
+                      message: 'Please input creator',
                     },
                   ]}
                 >
-                  <Select
-                    options={[
-                      {
-                        value: 'Ngân',
-                        label: 'Ngân',
-                      },
-                      {
-                        value: 'Khoa',
-                        label: 'Khoa',
-                      },
-                    ]}
-                  />
+                  <Input placeholder="Nhập Creator" />
                 </Form.Item>
               </Col>
-              <Col lg={8} span={24}>
+
+              <Col lg={4} span={24}>
                 <Form.Item
-                  label="Status"
+                  label={translateSupplier('status')}
                   name="status"
                   rules={[
                     {
@@ -375,35 +581,19 @@ export default function EditSupplier() {
                   <Select
                     options={[
                       {
-                        value: 'Save As Draft',
-                        label: 'Save As Draft',
+                        value: 'Active',
+                        label: 'Active',
                       },
                       {
-                        value: 'Pending',
-                        label: 'Pending',
-                      },
-                      {
-                        value: 'Approved',
-                        label: 'Approved',
-                      },
-                      {
-                        value: 'Processing',
-                        label: 'Processing',
-                      },
-                      {
-                        value: 'Completed',
-                        label: 'Completed',
-                      },
-                      {
-                        value: 'Cancel',
-                        label: 'Cancel',
+                        value: 'Deactivate',
+                        label: 'Deactivate',
                       },
                     ]}
                   />
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={24} span={24}>
                 <Form.Item
                   label="Note"
                   name="note"
@@ -419,9 +609,66 @@ export default function EditSupplier() {
               </Col>
             </Row>
           </Card>
-          <Card style={{ marginBottom: 24 }} title="Transaction history">
-            <Table columns={columns} dataSource={data} />
+
+          <Card
+            style={{ marginBottom: 24 }}
+            title={
+              <Title
+                level={3}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Contact Information
+              </Title>
+            }
+          >
+            <Table columns={columnsContactInfo} dataSource={dataTransHis} />
           </Card>
+
+          <Card
+            style={{ marginBottom: 24 }}
+            title={
+              <Title
+                level={3}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Transaction history
+              </Title>
+            }
+          >
+            <Table columns={columnsTransHis} dataSource={dataTransHis} />
+          </Card>
+
+          <Card
+            style={{ marginBottom: 24 }}
+            title={
+              <Title
+                level={3}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Debt history
+              </Title>
+            }
+          >
+            <Card style={{ marginBottom: 24 }} title="Công nợ thu">
+              <Table columns={columnsReceivable} dataSource={dataTransHis} />
+            </Card>
+            <Card style={{ marginBottom: 24 }} title="Công nợ chi">
+              <Table columns={columnsPayable} dataSource={dataTransHis} />
+            </Card>
+          </Card>
+
           <Card
             style={{
               position: 'sticky',

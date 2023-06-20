@@ -8,6 +8,7 @@
     "address": "Address",
     "country": "Country",
     "email": "Email",
+    "saleman": "Saleman",
     "status":"Status",
     "date_created": "Date Created",
     "creator": "Creator",

@@ -1,9 +1,8 @@
 {
     "title": "List of Location",
     "location_no": "No",
-    "country_code": "Country No",
-    "country_name": "Country Name",
-    "code": "Location Code",
+    "country_name": "Country",
+    "code": "Location No",
     "name": "Location Name",
     "address": "Address",
     "type_of_location": "Type of Location",

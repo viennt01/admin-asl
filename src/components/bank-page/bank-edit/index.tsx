@@ -127,7 +127,7 @@ export default function EditBank() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a bank</Title>
+                <Title level={3}>Edit Bank</Title>
               </Col>
             </Row>
             <Row gutter={16}>

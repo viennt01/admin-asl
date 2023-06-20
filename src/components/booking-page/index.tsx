@@ -55,9 +55,9 @@ interface DataType {
   nameCnee: string;
   note: string;
   saleman: string;
+  status: string;
   dateCreate: string;
   creator: string;
-  status: string;
 }
 
 export default function BookingPage() {
@@ -87,9 +87,9 @@ export default function BookingPage() {
       nameCnee: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
       note: i % 2 === 0 ? 'Hàng dễ vỡ - cẩn thận' : 'Mặt hàng đông lạnh',
       saleman: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
+      status: i % 2 === 1 ? 'Processing' : 'Completed',
       dateCreate: i % 2 === 0 ? '10/05/2023' : '12/05/2023',
       creator: i % 2 === 0 ? 'Trương Văn A' : 'Nguyễn Ngọc B',
-      status: i % 2 === 1 ? 'Processing' : 'Completed',
     });
   }
 
@@ -346,22 +346,6 @@ export default function BookingPage() {
       ...getColumnSearchProps('saleman'),
     },
     {
-      title: translateBooking('date_create'),
-      width: 150,
-      dataIndex: 'dateCreate',
-      key: 'dateCreate',
-      align: 'center',
-      ...getColumnSearchProps('dateCreate'),
-    },
-    {
-      title: translateBooking('creator'),
-      width: 200,
-      dataIndex: 'creator',
-      key: 'creator',
-      align: 'center',
-      ...getColumnSearchProps('creator'),
-    },
-    {
       title: translateBooking('status'),
       dataIndex: 'status',
       key: 'status',
@@ -411,6 +395,22 @@ export default function BookingPage() {
           {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translateBooking('date_create'),
+      width: 150,
+      dataIndex: 'dateCreate',
+      key: 'dateCreate',
+      align: 'center',
+      ...getColumnSearchProps('dateCreate'),
+    },
+    {
+      title: translateBooking('creator'),
+      width: 200,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
+      ...getColumnSearchProps('creator'),
     },
     {
       key: 'operation',

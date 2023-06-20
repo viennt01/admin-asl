@@ -44,6 +44,7 @@ export default function CustomerPage() {
     address: string;
     country: string;
     email: string;
+    saleman: string;
     status: string;
     dateCreated: string;
     creator: string;
@@ -61,6 +62,7 @@ export default function CustomerPage() {
         'MPlaza Saigon 39 Le Duan, Ben Nghe, District 1, Ho Chi Minh City, Vietnam',
       country: 'Việt Nam',
       email: 'abcd@gmail.com',
+      saleman: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
       creator: 'Admin',
@@ -247,6 +249,14 @@ export default function CustomerPage() {
       key: 'email',
       align: 'center',
       ...getColumnSearchProps('email'),
+    },
+    {
+      title: translateCustomer('saleman'),
+      width: 200,
+      dataIndex: 'saleman',
+      key: 'saleman',
+      align: 'center',
+      ...getColumnSearchProps('saleman'),
     },
     {
       title: translateCustomer('status'),
