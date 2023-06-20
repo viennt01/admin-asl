@@ -1,10 +1,9 @@
 {
     "title": "List of Depot",
     "depot_no": "No",
-    "country_code": "Country No",
-    "country_name": "Country Name",
     "depot_code": "Depot No",
     "depot_name": "Depot Name",
+    "country_name": "Country",
     "address": "Address",
     "branch_depot":"Branch",
     "companny_mamagement_depot": "Management Company",

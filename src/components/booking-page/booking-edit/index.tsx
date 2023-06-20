@@ -138,7 +138,7 @@ export default function EditBooking() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a booking</Title>
+                <Title level={3}>Edit Booking</Title>
               </Col>
             </Row>
             <Row gutter={16}>
@@ -256,6 +256,7 @@ export default function EditBooking() {
                   />
                 </Form.Item>
               </Col>
+
               <Col lg={8} span={24}>
                 <Form.Item
                   label="ETA"
@@ -268,6 +269,7 @@ export default function EditBooking() {
                   />
                 </Form.Item>
               </Col>
+
               <Col lg={8} span={24}>
                 <Form.Item
                   label="Date created"

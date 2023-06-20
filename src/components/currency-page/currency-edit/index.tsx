@@ -60,7 +60,7 @@ export default function EditCurrency() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a currency</Title>
+                <Title level={3}>Edit Currency</Title>
               </Col>
             </Row>
             <Row gutter={16}>

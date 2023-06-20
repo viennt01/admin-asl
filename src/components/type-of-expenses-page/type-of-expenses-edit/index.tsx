@@ -15,6 +15,7 @@ import {
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import useI18n from '@/i18n/useI18N';
 
 export interface FormValues {
   type_of_container: string;
@@ -35,6 +36,7 @@ export default function EditExpensesType() {
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const dateFormat = 'YYYY/MM/DD';
+  const { translate: translateTypeOfExpenses } = useI18n('typeOfExpenses');
 
   useEffect(() => {
     if (!id) return;
@@ -63,13 +65,13 @@ export default function EditExpensesType() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a type of expenses</Title>
+                <Title level={3}>Edit type of Expense</Title>
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={12} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label="No"
+                  label={translateTypeOfExpenses('code')}
                   name="code"
                   rules={[
                     {
@@ -81,9 +83,25 @@ export default function EditExpensesType() {
                   <Input placeholder="Nhập mã" />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={14} span={24}>
                 <Form.Item
-                  label="Status"
+                  label={translateTypeOfExpenses('name')}
+                  name="name_customer"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input Expense Name',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập tên Expense Name" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translateTypeOfExpenses('status')}
                   name="status"
                   rules={[
                     {
@@ -107,38 +125,9 @@ export default function EditExpensesType() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label="Expense Name"
-                  name="name_customer"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Expense Name',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập tên Expense Name" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Expense Code"
-                  name="expense_code"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Expense Code',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập tên Expense Code" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Date created"
+                  label={translateTypeOfExpenses('date_created')}
                   name="date_created"
                   rules={[
                     { required: true, message: 'Please input date created' },
@@ -151,9 +140,10 @@ export default function EditExpensesType() {
                   />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={18} span={24}>
                 <Form.Item
-                  label="Creator"
+                  label={translateTypeOfExpenses('creator')}
                   name="creator"
                   rules={[
                     {

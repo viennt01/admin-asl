@@ -61,7 +61,7 @@ export default function EditTypeOfContainer() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit a type container</Title>
+                <Title level={3}>Edit type container</Title>
               </Col>
             </Row>
             <Row>
