@@ -379,7 +379,7 @@ export default function EditSupplier() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={4} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translateSupplier('code')}
                   name="code_supplier"
@@ -409,7 +409,7 @@ export default function EditSupplier() {
                 </Form.Item>
               </Col>
 
-              <Col lg={8} span={24}>
+              <Col lg={7} span={24}>
                 <Form.Item
                   label={translateSupplier('abbreviation')}
                   name="abbreviation_supplier"
@@ -424,7 +424,7 @@ export default function EditSupplier() {
                 </Form.Item>
               </Col>
 
-              <Col lg={16} span={24}>
+              <Col lg={17} span={24}>
                 <Form.Item
                   label={translateSupplier('service')}
                   name="name_supplier"
@@ -439,7 +439,7 @@ export default function EditSupplier() {
                 </Form.Item>
               </Col>
 
-              <Col lg={8} span={24}>
+              <Col lg={7} span={24}>
                 <Form.Item
                   label={translateSupplier('phone')}
                   style={{ marginBottom: 0 }}
@@ -480,21 +480,6 @@ export default function EditSupplier() {
                 </Form.Item>
               </Col>
 
-              <Col lg={19} span={24}>
-                <Form.Item
-                  label={translateSupplier('address')}
-                  name="address"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input address',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Address" />
-                </Form.Item>
-              </Col>
-
               <Col lg={5} span={24}>
                 <Form.Item
                   label={translateSupplier('country')}
@@ -518,6 +503,21 @@ export default function EditSupplier() {
                       },
                     ]}
                   />
+                </Form.Item>
+              </Col>
+
+              <Col lg={19} span={24}>
+                <Form.Item
+                  label={translateSupplier('address')}
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input address',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Address" />
                 </Form.Item>
               </Col>
 

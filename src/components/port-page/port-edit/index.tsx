@@ -198,7 +198,7 @@ export default function EditPort() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={3} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translatePort('code')}
                   tooltip={translatePort('code')}
@@ -214,7 +214,7 @@ export default function EditPort() {
                 </Form.Item>
               </Col>
 
-              <Col lg={7} span={24}>
+              <Col lg={12} span={24}>
                 <Form.Item
                   label={translatePort('name')}
                   name="name"
@@ -229,19 +229,50 @@ export default function EditPort() {
                 </Form.Item>
               </Col>
 
-              <Col lg={11} span={24}>
+              <Col lg={3} span={24}>
                 <Form.Item
-                  label={translatePort('address')}
-                  name="location"
+                  label={translatePort('quantity_container')}
+                  name="quantity_container"
                   rules={[
                     { required: true, message: 'Please input last name' },
                   ]}
                 >
-                  <Input placeholder="Nhập Address" />
+                  <InputNumber
+                    style={{ width: '100%' }}
+                    min={1}
+                    max={100000}
+                    defaultValue={3}
+                    placeholder={translatePort(
+                      'quantity_container_placeholder'
+                    )}
+                  />
                 </Form.Item>
               </Col>
 
-              <Col lg={3} span={24}>
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translatePort('status_capacity')}
+                  name="status_capacity"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Đầy',
+                        label: 'Đầy',
+                      },
+                      {
+                        value: 'Nửa đầy',
+                        label: 'Nửa đầy',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translatePort('country_name')}
                   name="countryName"
@@ -267,50 +298,19 @@ export default function EditPort() {
                 </Form.Item>
               </Col>
 
-              <Col lg={4} span={24}>
+              <Col lg={19} span={24}>
                 <Form.Item
-                  label={translatePort('quantity_container')}
-                  name="quantity_container"
+                  label={translatePort('address')}
+                  name="location"
                   rules={[
                     { required: true, message: 'Please input last name' },
                   ]}
                 >
-                  <InputNumber
-                    style={{ width: '100%' }}
-                    min={1}
-                    max={100000}
-                    defaultValue={3}
-                    placeholder={translatePort(
-                      'quantity_container_placeholder'
-                    )}
-                  />
+                  <Input placeholder="Nhập Address" />
                 </Form.Item>
               </Col>
 
-              <Col lg={5} span={24}>
-                <Form.Item
-                  label={translatePort('status_capacity')}
-                  name="status_capacity"
-                  rules={[
-                    { required: true, message: 'Please input last name' },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Đầy',
-                        label: 'Đầy',
-                      },
-                      {
-                        value: 'Nửa đầy',
-                        label: 'Nửa đầy',
-                      },
-                    ]}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={15} span={24}>
+              <Col lg={11} span={24}>
                 <Form.Item
                   label={translatePort('company')}
                   name="company"

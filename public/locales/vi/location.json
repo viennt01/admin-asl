@@ -11,6 +11,7 @@
     "status":"Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+    
     "information_add_location": "Thêm mới địa điểm",
     "name_placeholder": "Nhập tên địa chỉ",
     "address_placeholder": "Nhập địa chỉ",

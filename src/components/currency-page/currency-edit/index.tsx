@@ -9,10 +9,10 @@ import {
   Row,
   Col,
   ConfigProvider,
-  Select,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import useI18n from '@/i18n/useI18N';
 
 export interface FormValues {
   type_of_container: string;
@@ -32,6 +32,7 @@ export default function EditCurrency() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
+  const { translate: translateCurrency } = useI18n('currency');
 
   useEffect(() => {
     if (!id) return;
@@ -64,9 +65,9 @@ export default function EditCurrency() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={12} span={24}>
+              <Col lg={10} span={24}>
                 <Form.Item
-                  label="Currency From"
+                  label={translateCurrency('currency')}
                   name="currency_from"
                   rules={[
                     {
@@ -78,9 +79,9 @@ export default function EditCurrency() {
                   <Input placeholder="Nhập mã Currency From" />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+              <Col lg={7} span={24}>
                 <Form.Item
-                  label="Currency To"
+                  label={translateCurrency('exchange_rate_to_VND')}
                   name="currency-to"
                   rules={[
                     {
@@ -93,9 +94,9 @@ export default function EditCurrency() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={7} span={24}>
                 <Form.Item
-                  label="Exchange rate"
+                  label={translateCurrency('exchange_rate_to_USD')}
                   name="exchange_rate"
                   rules={[
                     {
@@ -105,115 +106,6 @@ export default function EditCurrency() {
                   ]}
                 >
                   <Input placeholder="Nhập Exchange rate" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Bank"
-                  name="bank"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Bank',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'BIDV',
-                        label: 'BIDV',
-                      },
-                      {
-                        value: 'VCB',
-                        label: 'VCB',
-                      },
-                    ]}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Cash (buy)"
-                  name="cash_buy"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of Cash (buy)',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Cash (buy)" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Cash (sell)"
-                  name="cash_sell"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of Cash (sell)',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Cash (sell)" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Transfer (buy)"
-                  name="transfer_buy"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of Transfer (buy)',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Transfer (buy)" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Transfer (sell)"
-                  name="transfer_sell"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of Transfer (sell)',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Transfer (sell)" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Status"
-                  name="status"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of status',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Increase',
-                        label: 'Increase',
-                      },
-                      {
-                        value: 'Decrease',
-                        label: 'Decrease',
-                      },
-                    ]}
-                  />
                 </Form.Item>
               </Col>
             </Row>

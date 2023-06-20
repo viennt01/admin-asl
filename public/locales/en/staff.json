@@ -16,6 +16,7 @@
     "department": "Department",
     "manager": "Manager",
     "status":"Status",
+    "note": "Note",
     "date_created": "Date Created",
     "creator": "Creator"
 }

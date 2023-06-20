@@ -8,8 +8,12 @@
     "teus": "Teus",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+
     "information_add_type_of_container": "Thêm mới loại container",
     "type_of_container_placeholder": "Nhập loại container",
     "detail_placeholder": "Nhập chi tiết",
+    "teus_placeholder": "Vui lòng nhập Tues",
+    "creator_placeholder": "Vui lòng nhập người tạo",
+    "date_created_placeholder": "Vui lòng  chọn ngày tạo",
     "number_container_placeholder": "Nhập số lượng container"
 }

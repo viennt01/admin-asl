@@ -11,7 +11,9 @@ import {
   Col,
   ConfigProvider,
   Select,
+  DatePicker,
 } from 'antd';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -33,7 +35,8 @@ export default function EditTypeOfLocation() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
-  const { translate: translateAddTypeOfLocation } = useI18n('typeOfContainer');
+  const { translate: translateTypeOfLocation } = useI18n('typeOfLocation');
+  const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
     if (!id) return;
@@ -65,27 +68,27 @@ export default function EditTypeOfLocation() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={12} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label={translateAddTypeOfLocation('type_of_location')}
-                  name="type_of_location"
+                  label={translateTypeOfLocation('type_of_location_no')}
+                  name="type_of_location_no"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of container',
+                      message: 'Please input type of location no',
                     },
                   ]}
                 >
                   <Input
-                    placeholder={translateAddTypeOfLocation(
+                    placeholder={translateTypeOfLocation(
                       'type_of_location_placeholder'
                     )}
                   />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+              <Col lg={18} span={24}>
                 <Form.Item
-                  label="Mã loại địa chỉ"
+                  label={translateTypeOfLocation('type_of_location')}
                   name="code_location"
                   rules={[
                     {
@@ -97,9 +100,9 @@ export default function EditTypeOfLocation() {
                   <Input placeholder="Nhập mã địa chỉ" />
                 </Form.Item>
               </Col>
-              <Col lg={3} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label="Status"
+                  label={translateTypeOfLocation('status')}
                   name="status_depot"
                   rules={[
                     {
@@ -120,6 +123,37 @@ export default function EditTypeOfLocation() {
                       },
                     ]}
                   />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translateTypeOfLocation('date_created')}
+                  name="dateCreated"
+                  rules={[
+                    { required: true, message: 'Please input date created' },
+                  ]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={14} span={24}>
+                <Form.Item
+                  label={translateTypeOfLocation('creator')}
+                  name="creator"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input creator',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Creator" />
                 </Form.Item>
               </Col>
             </Row>

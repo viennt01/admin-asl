@@ -13,11 +13,13 @@ import {
   Select,
   Cascader,
   CascaderProps,
-  Table,
+  DatePicker,
 } from 'antd';
-import { ColumnsType } from 'antd/es/table';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import useI18n from '@/i18n/useI18N';
+const dateFormat = 'YYYY/MM/DD';
 
 interface DataNodeType {
   value: string;
@@ -28,12 +30,6 @@ export interface FormValues {
   type_of_container: string;
   detail_placeholder: string;
   number_container: string;
-}
-interface DataType {
-  key: React.Key;
-  containerNo: string;
-  typeContainer: string;
-  status: string;
 }
 
 const initialValue = {
@@ -48,6 +44,7 @@ export default function EditBank() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
+  const { translate: translateBank } = useI18n('bank');
 
   useEffect(() => {
     if (!id) return;
@@ -90,24 +87,7 @@ export default function EditBank() {
       ],
     },
   ];
-  const data: readonly any[] | undefined = [];
-  const columns: ColumnsType<DataType> = [
-    {
-      title: 'Mã Container',
-      dataIndex: 'containerNo',
-      align: 'center',
-    },
-    {
-      title: 'Loại container',
-      dataIndex: 'typeContainer',
-      align: 'center',
-    },
-    {
-      title: 'Tình trạng container',
-      dataIndex: 'status',
-      align: 'center',
-    },
-  ];
+
   return (
     <div style={{ padding: '24px 0' }}>
       <Card style={{ marginBottom: 24 }}>
@@ -131,9 +111,9 @@ export default function EditBank() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={8} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
-                  label="Mã bank"
+                  label={translateBank('bank_code')}
                   name="code_bank"
                   rules={[
                     {
@@ -145,9 +125,10 @@ export default function EditBank() {
                   <Input placeholder="Nhập mã bank" />
                 </Form.Item>
               </Col>
-              <Col lg={8} span={24}>
+
+              <Col lg={13} span={24}>
                 <Form.Item
-                  label="Bank name"
+                  label={translateBank('bank_name')}
                   name="bank_name"
                   rules={[
                     {
@@ -159,78 +140,10 @@ export default function EditBank() {
                   <Input placeholder="Nhập Bank name" />
                 </Form.Item>
               </Col>
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label="Bank account number"
-                  name="bank_account_number"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Bank account number',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Bank account number" />
-                </Form.Item>
-              </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input email',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Email" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item label="Hot line" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="phone_code"
-                    style={{ display: 'inline-block', width: 104 }}
-                  >
-                    <Select
-                      size="large"
-                      options={COUNTRY_CODES.map(({ dial_code, code }) => ({
-                        value: `${code}_${dial_code}`,
-                        label: dial_code,
-                      }))}
-                      showSearch
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name="phone"
-                    style={{
-                      display: 'inline-block',
-                      width: 'calc(100% - 104px - 16px)',
-                      marginLeft: 16,
-                    }}
-                    rules={[
-                      {
-                        pattern: /^[0-9]{7,15}$/,
-                        message: 'Sai định dạng',
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder="Nhập số điện thoại"
-                      style={{
-                        width: '100%',
-                      }}
-                    />
-                  </Form.Item>
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Bank branch"
+                  label={translateBank('bank_branch')}
                   name="bank_branch"
                   rules={[
                     {
@@ -254,55 +167,105 @@ export default function EditBank() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={24} span={24}>
                 <Form.Item
-                  label="Address"
+                  label={translateBank('bank_address')}
                   name="location"
-                  rules={[{ required: true, message: 'Please input lAddress' }]}
+                  rules={[{ required: true, message: 'Please input Address' }]}
                 >
                   <Cascader options={residences} />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Địa điểm giao hàng cụ thể"
-                  name="detail_location"
-                  rules={[
-                    { required: true, message: 'Please input last name' },
-                  ]}
-                >
-                  <Input placeholder="Nhập vị trí cụ thể" />
-                </Form.Item>
-              </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
-                  label="Creator"
-                  name="creator"
+                  label={translateBank('VND_account_number')}
+                  name="VND_account_number"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of Creator',
+                      message: 'Please input Bank account number',
                     },
                   ]}
                 >
-                  <Select
-                    options={[
-                      {
-                        value: 'Ngân',
-                        label: 'Ngân',
-                      },
-                      {
-                        value: 'Khoa',
-                        label: 'Khoa',
-                      },
-                    ]}
-                  />
+                  <Input placeholder="Nhập Bank account number" />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={5} span={24}>
                 <Form.Item
-                  label="Status"
+                  label={translateBank('USD_account_number')}
+                  name="VND_account_number"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input Bank account number',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Bank account number" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={5} span={24}>
+                <Form.Item
+                  label={translateBank('phone')}
+                  style={{ marginBottom: 0 }}
+                >
+                  <Form.Item
+                    name="phone_code"
+                    style={{ display: 'inline-block', width: 100 }}
+                  >
+                    <Select
+                      options={COUNTRY_CODES.map(({ dial_code, code }) => ({
+                        value: `${code}_${dial_code}`,
+                        label: dial_code,
+                      }))}
+                      showSearch
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name="phone"
+                    style={{
+                      display: 'inline-block',
+                      width: 'calc(100% - 104px - 16px)',
+                      marginLeft: 16,
+                    }}
+                    rules={[
+                      {
+                        pattern: /^[0-9]{7,15}$/,
+                        message: 'Sai định dạng',
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Nhập số điện thoại"
+                      style={{
+                        width: '100%',
+                      }}
+                    />
+                  </Form.Item>
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} span={24}>
+                <Form.Item
+                  label={translateBank('bank_email')}
+                  name="bank_email"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input Bank email',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Bank email" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={3} span={24}>
+                <Form.Item
+                  label={translateBank('status')}
                   name="status"
                   rules={[
                     {
@@ -326,9 +289,40 @@ export default function EditBank() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
-                  label="Note"
+                  label={translateBank('date_created')}
+                  name="dateCreated"
+                  rules={[
+                    { required: true, message: 'Please input date created' },
+                  ]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={5} span={24}>
+                <Form.Item
+                  label={translateBank('creator')}
+                  name="creator"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of Creator',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Creator" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={14} span={24}>
+                <Form.Item
+                  label={translateBank('bank_note')}
                   name="note"
                   rules={[
                     {
@@ -341,9 +335,7 @@ export default function EditBank() {
                 </Form.Item>
               </Col>
             </Row>
-            <Card style={{ marginBottom: 24 }} title="Transaction history">
-              <Table columns={columns} dataSource={data} />
-            </Card>
+
             <Row gutter={12}>
               <Col>
                 <Button onClick={() => router.push(ROUTERS.BANK)}>

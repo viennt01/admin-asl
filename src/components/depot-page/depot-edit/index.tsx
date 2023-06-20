@@ -117,7 +117,7 @@ export default function EditDepot() {
             </Row>
 
             <Row gutter={16}>
-              <Col lg={3} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translateAddDepot('depot_code')}
                   name="depot_code"
@@ -134,7 +134,7 @@ export default function EditDepot() {
                 </Form.Item>
               </Col>
 
-              <Col lg={7} span={24}>
+              <Col lg={14} span={24}>
                 <Form.Item
                   label={translateAddDepot('depot_name')}
                   name="depot_name"
@@ -151,6 +151,18 @@ export default function EditDepot() {
                 </Form.Item>
               </Col>
 
+              <Col lg={5} span={24}>
+                <Form.Item
+                  label={translateAddDepot('country_name')}
+                  name="location"
+                  rules={[
+                    { required: true, message: 'Please select the country' },
+                  ]}
+                >
+                  <Cascader options={residences} />
+                </Form.Item>
+              </Col>
+
               <Col lg={11} span={24}>
                 <Form.Item
                   label={translateAddDepot('address')}
@@ -163,19 +175,7 @@ export default function EditDepot() {
                 </Form.Item>
               </Col>
 
-              <Col lg={3} span={24}>
-                <Form.Item
-                  label={translateAddDepot('country_name')}
-                  name="location"
-                  rules={[
-                    { required: true, message: 'Please select the country' },
-                  ]}
-                >
-                  <Cascader options={residences} />
-                </Form.Item>
-              </Col>
-
-              <Col lg={4} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translateAddDepot('branch_depot')}
                   name="branch_depot"
@@ -271,7 +271,7 @@ export default function EditDepot() {
                   />
                 </Form.Item>
               </Col>
-              <Col lg={24} span={24}>
+              <Col lg={12} span={24}>
                 <Form.Item
                   label={translateAddDepot('description')}
                   name="status_depot"
