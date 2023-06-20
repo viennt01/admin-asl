@@ -15,7 +15,7 @@ function TypeOfExpensesEditPage() {
 
 export default withAuthentication(TypeOfExpensesEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'type-of-expenses']);
+export const getStaticProps = getStatic(['common', 'typeOfExpenses']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>

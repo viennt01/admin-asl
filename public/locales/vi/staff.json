@@ -16,6 +16,7 @@
     "department": "Phòng ban",
     "manager": "Trưởng phòng",
     "status":"Trạng thái",
+    "note": "Ghi chú",
     "date_created": "Ngày tạo",
     "creator": "Người tạo"
 }

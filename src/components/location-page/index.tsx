@@ -234,14 +234,6 @@ export default function LocationPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateLocation('email'),
-      width: 250,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-      ...getColumnSearchProps('email'),
-    },
-    {
       title: translateLocation('address'),
       width: 380,
       dataIndex: 'address',
@@ -273,6 +265,14 @@ export default function LocationPage() {
       key: 'phoneNumner',
       align: 'center',
       ...getColumnSearchProps('phoneNumner'),
+    },
+    {
+      title: translateLocation('email'),
+      width: 250,
+      dataIndex: 'email',
+      key: 'email',
+      align: 'center',
+      ...getColumnSearchProps('email'),
     },
     {
       title: translateLocation('status'),

@@ -14,7 +14,9 @@ import {
   Select,
   Cascader,
   CascaderProps,
+  DatePicker,
 } from 'antd';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -41,7 +43,8 @@ export default function EditLocation() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
-  const { translate: translateAddLocation } = useI18n('location');
+  const { translate: translateLocation } = useI18n('location');
+  const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
     if (!id) return;
@@ -108,10 +111,10 @@ export default function EditLocation() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={12} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
-                  label={translateAddLocation('name')}
-                  name="type_of_location"
+                  label={translateLocation('code')}
+                  name="code_location"
                   rules={[
                     {
                       required: true,
@@ -119,15 +122,14 @@ export default function EditLocation() {
                     },
                   ]}
                 >
-                  <Input
-                    placeholder={translateAddLocation('name_placeholder')}
-                  />
+                  <Input placeholder={translateLocation('name_placeholder')} />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={14} span={24}>
                 <Form.Item
-                  label="Mã loại địa chỉ"
-                  name="code_location"
+                  label={translateLocation('name')}
+                  name="name_location"
                   rules={[
                     {
                       required: true,
@@ -138,10 +140,34 @@ export default function EditLocation() {
                   <Input placeholder="Nhập mã địa chỉ" />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={5} span={24}>
                 <Form.Item
-                  label={translateAddLocation('address')}
-                  name="location"
+                  label={translateLocation('type_of_location')}
+                  name="type_of_location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Nhận hàng',
+                        label: 'Nhận hàng',
+                      },
+                      {
+                        value: 'Trả hàng',
+                        label: 'Trả hàng',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={5} span={24}>
+                <Form.Item
+                  label={translateLocation('country_name')}
+                  name="country_name"
                   rules={[
                     { required: true, message: 'Please input last name' },
                   ]}
@@ -149,50 +175,22 @@ export default function EditLocation() {
                   <Cascader options={residences} />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={19} span={24}>
                 <Form.Item
-                  label={translateAddLocation('address')}
-                  name="detail_location"
+                  label={translateLocation('address')}
+                  name="address"
                   rules={[
                     { required: true, message: 'Please input last name' },
                   ]}
                 >
-                  <Input placeholder="Nhập vị trí cụ thể" />
+                  <Cascader options={residences} />
                 </Form.Item>
               </Col>
-              <Col lg={12} span={24}>
+
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input email',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Email" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateAddLocation('company')}
-                  name="company"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input number phone',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translateAddLocation('company_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateAddLocation('phone')}
+                  label={translateLocation('phone')}
                   style={{ marginBottom: 0 }}
                 >
                   <Form.Item
@@ -200,7 +198,6 @@ export default function EditLocation() {
                     style={{ display: 'inline-block', width: 104 }}
                   >
                     <Select
-                      size="large"
                       options={COUNTRY_CODES.map(({ dial_code, code }) => ({
                         value: `${code}_${dial_code}`,
                         label: dial_code,
@@ -223,8 +220,7 @@ export default function EditLocation() {
                     ]}
                   >
                     <Input
-                      size="large"
-                      placeholder={translateAddLocation('phone_placeholder')}
+                      placeholder={translateLocation('phone_placeholder')}
                       style={{
                         width: '100%',
                       }}
@@ -232,7 +228,54 @@ export default function EditLocation() {
                   </Form.Item>
                 </Form.Item>
               </Col>
+
+              <Col lg={7} span={24}>
+                <Form.Item
+                  label={translateLocation('email')}
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input email',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Email" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translateLocation('date_created')}
+                  name="dateCreated"
+                  rules={[
+                    { required: true, message: 'Please input date created' },
+                  ]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={7} span={24}>
+                <Form.Item
+                  label={translateLocation('creator')}
+                  name="creator"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input creator',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Creator" />
+                </Form.Item>
+              </Col>
             </Row>
+
             <Row gutter={12}>
               <Col>
                 <Button onClick={() => router.push(ROUTERS.LOCATION)}>

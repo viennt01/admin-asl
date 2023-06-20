@@ -5,6 +5,7 @@
     "status":"Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+    
     "type_of_location_information":"THÔNG TIN CHI TIẾT CỦA LOẠI ĐỊA CHỈ",
     "quantity_container":"Số lượng container",
     "capacity":"Sức chứa",

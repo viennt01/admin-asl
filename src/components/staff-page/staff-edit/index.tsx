@@ -14,10 +14,14 @@ import {
   Cascader,
   CascaderProps,
   DatePicker,
+  Image,
+  Tag,
+  Space,
 } from 'antd';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import useI18n from '@/i18n/useI18N';
 
 interface DataNodeType {
   value: string;
@@ -38,11 +42,22 @@ const initialValue = {
 
 const { Title } = Typography;
 
+const STATUS_COLORS = {
+  Active: '#00A651',
+  DeActive: '#ED1C27',
+};
+
+const STATUS_LABELS = {
+  Active: 'Active',
+  DeActive: 'DeActive',
+};
+
 export default function EditLStaff() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const dateFormat = 'YYYY/MM/DD';
+  const { translate: translateStaff } = useI18n('staff');
 
   useEffect(() => {
     if (!id) return;
@@ -108,188 +123,380 @@ export default function EditLStaff() {
                 <Title level={3}>Edit Staff</Title>
               </Col>
             </Row>
-            <Row gutter={16}>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Account"
-                  name="account"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Account',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Account" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Full Name"
-                  name="full-name"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Full Name',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Full Name" />
-                </Form.Item>
+
+            <Row>
+              <Col lg={19} span={24}>
+                <Row gutter={16}>
+                  <Col lg={5} span={24}>
+                    <Form.Item
+                      label={translateStaff('account')}
+                      name="account"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input Account',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập Account" />
+                    </Form.Item>
+                  </Col>
+
+                  {/* <Col lg={5} span={24}>
+                    <Form.Item
+                      label={translateStaff('account')}
+                      name="account"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input Account',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập Account" />
+                    </Form.Item>
+                  </Col> */}
+
+                  <Col lg={16} span={24}>
+                    <Form.Item
+                      label={translateStaff('full_name')}
+                      name="full-name"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input Full Name',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập Full Name" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={3} span={24}>
+                    <Form.Item
+                      label={translateStaff('sex')}
+                      name="sex"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input sex',
+                        },
+                      ]}
+                    >
+                      <Select
+                        options={[
+                          {
+                            value: 'Male',
+                            label: 'Male',
+                          },
+                          {
+                            value: 'Female',
+                            label: 'Female',
+                          },
+                        ]}
+                      />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={5} span={24}>
+                    <Form.Item
+                      label={translateStaff('dob')}
+                      name="date_birth"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input date of birth',
+                        },
+                      ]}
+                    >
+                      <DatePicker
+                        defaultValue={dayjs('2015/01/01', dateFormat)}
+                        format={dateFormat}
+                        style={{ width: '100%' }}
+                      />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={4} span={24}>
+                    <Form.Item
+                      label={translateStaff('nationality')}
+                      name="nationality"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input nationality',
+                        },
+                      ]}
+                    >
+                      <Select
+                        options={[
+                          {
+                            value: 'Việt Nam',
+                            label: 'Việt Nam',
+                          },
+                          {
+                            value: 'Mỹ',
+                            label: 'Mỹ',
+                          },
+                        ]}
+                      />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={6} span={24}>
+                    <Form.Item
+                      label={translateStaff('CCCD_Visa')}
+                      name="CCCD_Visa"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input Citizen Identity Card/Visa',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập Citizen Identity Card/Visa" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={9} span={24}>
+                    <Form.Item label="Hot line" style={{ marginBottom: 0 }}>
+                      <Form.Item
+                        name="phone_code"
+                        style={{ display: 'inline-block', width: 104 }}
+                      >
+                        <Select
+                          options={COUNTRY_CODES.map(({ dial_code, code }) => ({
+                            value: `${code}_${dial_code}`,
+                            label: dial_code,
+                          }))}
+                          showSearch
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        name={translateStaff('phone')}
+                        style={{
+                          display: 'inline-block',
+                          width: 'calc(100% - 104px - 16px)',
+                          marginLeft: 16,
+                        }}
+                        rules={[
+                          {
+                            pattern: /^[0-9]{7,15}$/,
+                            message: 'Sai định dạng',
+                          },
+                        ]}
+                      >
+                        <Input
+                          placeholder="Nhập số điện thoại"
+                          style={{
+                            width: '100%',
+                          }}
+                        />
+                      </Form.Item>
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={7} span={24}>
+                    <Form.Item
+                      label={translateStaff('email')}
+                      name="email"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input email',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập Email" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={17} span={24}>
+                    <Form.Item
+                      label={translateStaff('address')}
+                      name="address"
+                      rules={[
+                        { required: true, message: 'Please input Address' },
+                      ]}
+                    >
+                      <Cascader options={residences} />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={7} span={24}>
+                    <Form.Item
+                      label={translateStaff('working_branch')}
+                      name="working_branch"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input working branch',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập input working branch" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={4} span={24}>
+                    <Form.Item
+                      label={translateStaff('position')}
+                      name="position"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input nationality',
+                        },
+                      ]}
+                    >
+                      <Select
+                        options={[
+                          {
+                            value: 'Accountant',
+                            label: 'Accountant',
+                          },
+                          {
+                            value: 'Sale',
+                            label: 'Sale',
+                          },
+                          {
+                            value: 'Manager',
+                            label: 'Manager',
+                          },
+                        ]}
+                      />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={6} span={24}>
+                    <Form.Item
+                      label={translateStaff('department')}
+                      name="department"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input department',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập department" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={7} span={24}>
+                    <Form.Item
+                      label={translateStaff('manager')}
+                      name="manager"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input manager',
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập manager" />
+                    </Form.Item>
+                  </Col>
+
+                  <Col lg={5} span={24}>
+                    <Form.Item
+                      label={translateStaff('status')}
+                      name="status"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input type of status',
+                        },
+                      ]}
+                    >
+                      <Select
+                        options={[
+                          {
+                            value: 'Active',
+                            label: 'Active',
+                          },
+                          {
+                            value: 'Deactivate',
+                            label: 'Deactivate',
+                          },
+                        ]}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col lg={19} span={24}>
+                    <Form.Item
+                      label={translateStaff('note')}
+                      name="note"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please input note',
+                        },
+                      ]}
+                    >
+                      <Input.TextArea placeholder="Nhập ghi chú" />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Col>
 
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Sex"
-                  name="sex"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input sex',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Male',
-                        label: 'Male',
-                      },
-                      {
-                        value: 'Female',
-                        label: 'Female',
-                      },
-                    ]}
-                  />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Date of birth"
-                  name="date_birth"
-                  rules={[
-                    { required: true, message: 'Please input date of birth' },
-                  ]}
-                >
-                  <DatePicker
-                    defaultValue={dayjs('2015/01/01', dateFormat)}
-                    format={dateFormat}
-                    style={{ width: '100%' }}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input email',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Email" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item label="Hot line" style={{ marginBottom: 0 }}>
-                  <Form.Item
-                    name="phone_code"
-                    style={{ display: 'inline-block', width: 104 }}
-                  >
-                    <Select
-                      size="large"
-                      options={COUNTRY_CODES.map(({ dial_code, code }) => ({
-                        value: `${code}_${dial_code}`,
-                        label: dial_code,
-                      }))}
-                      showSearch
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name="Phone Number"
+              <Col
+                lg={5}
+                span={24}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'start',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '10px',
+                }}
+              >
+                <Space style={{ position: 'relative' }}>
+                  <Image
                     style={{
-                      display: 'inline-block',
-                      width: 'calc(100% - 104px - 16px)',
-                      marginLeft: 16,
+                      objectFit: 'cover',
+                      width: '160px',
+                      height: '160px',
+                      borderRadius: '50%',
                     }}
-                    rules={[
-                      {
-                        pattern: /^[0-9]{7,15}$/,
-                        message: 'Sai định dạng',
-                      },
-                    ]}
-                  >
-                    <Input
-                      size="large"
-                      placeholder="Nhập số điện thoại"
-                      style={{
-                        width: '100%',
-                      }}
-                    />
-                  </Form.Item>
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Address"
-                  name="address"
-                  rules={[{ required: true, message: 'Please input Address' }]}
-                >
-                  <Cascader options={residences} />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Address location"
-                  name="detail_location"
-                  rules={[{ required: true, message: 'Please input Address' }]}
-                >
-                  <Input placeholder="Nhập input detail address" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Status"
-                  name="status"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of status',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Active',
-                        label: 'Active',
-                      },
-                      {
-                        value: 'Deactivate',
-                        label: 'Deactivate',
-                      },
-                    ]}
+                    src="/images/anhstaff.jpeg"
+                    alt="Avatar"
                   />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Note"
-                  name="note"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input note',
-                    },
-                  ]}
+                </Space>
+
+                <Space style={{ position: 'absolute', top: '3%', right: 0 }}>
+                  <Tag
+                    color={STATUS_COLORS.Active}
+                    style={{
+                      margin: 0,
+                      padding: '5px 20px',
+                      fontWeight: 'bold',
+                      fontSize: '15px',
+                      borderRadius: '20px',
+                    }}
+                  >
+                    {STATUS_LABELS.Active}
+                  </Tag>
+                </Space>
+
+                <p
+                  style={{
+                    marginTop: '10px',
+                    fontSize: '18px',
+                    marginBottom: '0',
+                  }}
                 >
-                  <Input.TextArea placeholder="Nhập ghi chú" />
-                </Form.Item>
+                  ASL151200
+                </p>
+
+                <p
+                  style={{
+                    fontSize: '18px',
+                    marginBottom: '0',
+                  }}
+                >
+                  Nguyễn Thị Ngọc Ánh
+                </p>
               </Col>
             </Row>
 

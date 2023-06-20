@@ -278,7 +278,7 @@ export default function StaffPage() {
       ...getColumnSearchProps('address'),
     },
     {
-      title: 'Email',
+      title: translateStaff('email'),
       width: 200,
       dataIndex: 'email',
       key: 'email',

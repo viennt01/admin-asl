@@ -379,7 +379,7 @@ export default function EditLCustomer() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={4} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translateCustomer('code')}
                   name="code_customer"
@@ -409,7 +409,7 @@ export default function EditLCustomer() {
                 </Form.Item>
               </Col>
 
-              <Col lg={8} span={24}>
+              <Col lg={7} span={24}>
                 <Form.Item
                   label={translateCustomer('abbreviation')}
                   name="abbreviation_customer"
@@ -424,7 +424,48 @@ export default function EditLCustomer() {
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
+              <Col lg={5} span={24}>
+                <Form.Item
+                  label={translateCustomer('country')}
+                  name="Country"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input Country',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Hải Phòng',
+                        label: 'Hải Phòng',
+                      },
+                      {
+                        value: 'Hồ Chí Minh',
+                        label: 'Hồ Chí Minh',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateCustomer('address')}
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input address',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Address" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={7} span={24}>
                 <Form.Item
                   label={translateCustomer('phone')}
                   style={{ marginBottom: 0 }}
@@ -462,47 +503,6 @@ export default function EditLCustomer() {
                       }}
                     />
                   </Form.Item>
-                </Form.Item>
-              </Col>
-
-              <Col lg={13} span={24}>
-                <Form.Item
-                  label={translateCustomer('address')}
-                  name="address"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input address',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Address" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={5} span={24}>
-                <Form.Item
-                  label={translateCustomer('country')}
-                  name="Country"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Country',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Hải Phòng',
-                        label: 'Hải Phòng',
-                      },
-                      {
-                        value: 'Hồ Chí Minh',
-                        label: 'Hồ Chí Minh',
-                      },
-                    ]}
-                  />
                 </Form.Item>
               </Col>
 
@@ -569,7 +569,7 @@ export default function EditLCustomer() {
 
               <Col lg={4} span={24}>
                 <Form.Item
-                  label="Status"
+                  label={translateCustomer('status')}
                   name="status"
                   rules={[
                     {

@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import useI18n from '@/i18n/useI18N';
 
 export interface FormValues {
   type_of_container: string;
@@ -32,6 +33,7 @@ export default function EditUnit() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
+  const { translate: translateUnit } = useI18n('unit');
 
   useEffect(() => {
     if (!id) return;
@@ -64,10 +66,10 @@ export default function EditUnit() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={12} span={24}>
+              <Col lg={18} span={24}>
                 <Form.Item
-                  label="No"
-                  name="code"
+                  label={translateUnit('international_code')}
+                  name="international_code"
                   rules={[
                     {
                       required: true,
@@ -75,41 +77,13 @@ export default function EditUnit() {
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập mã" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="International code"
-                  name="international_code"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input International No',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập tên International No" />
+                  <Input placeholder="Nhập mã quốc tế" />
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label="Description"
-                  name="description"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input description',
-                    },
-                  ]}
-                >
-                  <Input.TextArea placeholder="Nhập ghi chú" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Status"
+                  label={translateUnit('status')}
                   name="status"
                   rules={[
                     {
@@ -130,6 +104,21 @@ export default function EditUnit() {
                       },
                     ]}
                   />
+                </Form.Item>
+              </Col>
+
+              <Col lg={24} span={24}>
+                <Form.Item
+                  label={translateUnit('description')}
+                  name="description"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input description',
+                    },
+                  ]}
+                >
+                  <Input.TextArea placeholder="Nhập ghi chú" />
                 </Form.Item>
               </Col>
             </Row>
