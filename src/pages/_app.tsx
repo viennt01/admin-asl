@@ -7,6 +7,13 @@ import { AppLayout } from '@/layout/authen-layout';
 import { Inter } from '@next/font/google';
 import Head from 'next/head';
 import { appWithTranslation } from 'next-i18next';
+import COLORS from '@/constant/color';
+import { useEffect, useState } from 'react';
+import enUS from 'antd/lib/locale/en_US';
+import vi_VN from 'antd/lib/locale/vi_VN';
+import { appLocalStorage } from '@/utils/localstorage';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import { useRouter } from 'next/router';
 // import AppContextProvider from '@/app-context';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -23,11 +30,28 @@ type AppPropsWithLayout = AppProps & {
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
   const L = Component.Layout ? Component.Layout : AppLayout;
+  const [locale, setLocale] = useState(enUS);
+  const router = useRouter();
+
+  useEffect(() => {
+    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
+      case 'en':
+        setLocale(enUS);
+        break;
+      case 'vi':
+        setLocale(vi_VN);
+        break;
+      default:
+        setLocale(vi_VN);
+        break;
+    }
+  }, [router]);
   return (
     <ConfigProvider
+      locale={locale}
       theme={{
         token: {
-          colorPrimary: '#2f54eb',
+          colorPrimary: COLORS.GREEN,
         },
         components: {
           Input: {},
