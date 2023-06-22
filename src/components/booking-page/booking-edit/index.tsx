@@ -20,6 +20,7 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useI18n from '@/i18n/useI18N';
+import CollapseCard from '@/components/commons/collapse-card';
 
 interface DataNodeType {
   value: string;
@@ -121,26 +122,27 @@ export default function EditBooking() {
   ];
   return (
     <div style={{ padding: '24px 0' }}>
-      <Card style={{ marginBottom: 24 }}>
-        <ConfigProvider
-          theme={{
-            token: {
-              colorPrimary: COLORS.GREEN,
-            },
-          }}
+      {/* <Card style={{ marginBottom: 24 }}> */}
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: COLORS.GREEN,
+          },
+        }}
+      >
+        <Form
+          form={form}
+          initialValues={initialValue}
+          onFinish={onFinish}
+          autoComplete="off"
+          layout="vertical"
         >
-          <Form
-            form={form}
-            initialValues={initialValue}
-            onFinish={onFinish}
-            autoComplete="off"
-            layout="vertical"
-          >
-            <Row justify={'center'}>
-              <Col>
-                <Title level={3}>Edit Booking</Title>
-              </Col>
-            </Row>
+          <Row justify={'center'}>
+            <Col>
+              <Title level={2}>Edit Booking</Title>
+            </Col>
+          </Row>
+          <Card style={{ marginBottom: 24 }}>
             <Row gutter={16}>
               <Col lg={12} span={24}>
                 <Form.Item
@@ -367,9 +369,477 @@ export default function EditBooking() {
                 </Form.Item>
               </Col>
             </Row>
-            <Card style={{ marginBottom: 24 }} title="Danh sách container">
-              <Table columns={columns} dataSource={data} />
-            </Card>
+          </Card>
+
+          <CollapseCard title="Thông tin cảng" style={{ marginBottom: '24px' }}>
+            <Row gutter={16}>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateBooking('no_booking')}
+                  name="code_booking"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of mã booking',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập mã booking" />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Package"
+                  name="package"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input package',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập package" />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Cảng chất hàng"
+                  name="port_of_loading"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Hải Phòng',
+                        label: 'Hải Phòng',
+                      },
+                      {
+                        value: 'Hồ Chí Minh',
+                        label: 'Hồ Chí Minh',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Cảng dỡ hàng"
+                  name="port_of_discharge"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Hải Phòng',
+                        label: 'Hải Phòng',
+                      },
+                      {
+                        value: 'Hồ Chí Minh',
+                        label: 'Hồ Chí Minh',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Địa điểm giao hàng"
+                  name="location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Cascader options={residences} />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Địa điểm giao hàng cụ thể"
+                  name="detail_location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input placeholder="Nhập vị trí cụ thể" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label="ETD"
+                  name="etd"
+                  rules={[{ required: true, message: 'Please input ETD' }]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label="ETA"
+                  name="eta"
+                  rules={[{ required: true, message: 'Please input ETA' }]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label="Date created"
+                  name="date_created"
+                  rules={[
+                    { required: true, message: 'Please input date created' },
+                  ]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Creator"
+                  name="creator"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of Creator',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Ngân',
+                        label: 'Ngân',
+                      },
+                      {
+                        value: 'Khoa',
+                        label: 'Khoa',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Status"
+                  name="status"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of status',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Save As Draft',
+                        label: 'Save As Draft',
+                      },
+                      {
+                        value: 'Pending',
+                        label: 'Pending',
+                      },
+                      {
+                        value: 'Approved',
+                        label: 'Approved',
+                      },
+                      {
+                        value: 'Processing',
+                        label: 'Processing',
+                      },
+                      {
+                        value: 'Completed',
+                        label: 'Completed',
+                      },
+                      {
+                        value: 'Cancel',
+                        label: 'Cancel',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Note"
+                  name="note"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input note',
+                    },
+                  ]}
+                >
+                  <Input.TextArea placeholder="Nhập ghi chú" />
+                </Form.Item>
+              </Col>
+            </Row>
+          </CollapseCard>
+
+          <CollapseCard title="Thông hàng hoá" style={{ marginBottom: '24px' }}>
+            <Row gutter={16}>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateBooking('no_booking')}
+                  name="code_booking"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of mã booking',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập mã booking" />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Package"
+                  name="package"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input package',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập package" />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Cảng chất hàng"
+                  name="port_of_loading"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Hải Phòng',
+                        label: 'Hải Phòng',
+                      },
+                      {
+                        value: 'Hồ Chí Minh',
+                        label: 'Hồ Chí Minh',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Cảng dỡ hàng"
+                  name="port_of_discharge"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of container',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Hải Phòng',
+                        label: 'Hải Phòng',
+                      },
+                      {
+                        value: 'Hồ Chí Minh',
+                        label: 'Hồ Chí Minh',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Địa điểm giao hàng"
+                  name="location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Cascader options={residences} />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Địa điểm giao hàng cụ thể"
+                  name="detail_location"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input placeholder="Nhập vị trí cụ thể" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label="ETD"
+                  name="etd"
+                  rules={[{ required: true, message: 'Please input ETD' }]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label="ETA"
+                  name="eta"
+                  rules={[{ required: true, message: 'Please input ETA' }]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label="Date created"
+                  name="date_created"
+                  rules={[
+                    { required: true, message: 'Please input date created' },
+                  ]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Creator"
+                  name="creator"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of Creator',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Ngân',
+                        label: 'Ngân',
+                      },
+                      {
+                        value: 'Khoa',
+                        label: 'Khoa',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Status"
+                  name="status"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of status',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Save As Draft',
+                        label: 'Save As Draft',
+                      },
+                      {
+                        value: 'Pending',
+                        label: 'Pending',
+                      },
+                      {
+                        value: 'Approved',
+                        label: 'Approved',
+                      },
+                      {
+                        value: 'Processing',
+                        label: 'Processing',
+                      },
+                      {
+                        value: 'Completed',
+                        label: 'Completed',
+                      },
+                      {
+                        value: 'Cancel',
+                        label: 'Cancel',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label="Note"
+                  name="note"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input note',
+                    },
+                  ]}
+                >
+                  <Input.TextArea placeholder="Nhập ghi chú" />
+                </Form.Item>
+              </Col>
+            </Row>
+          </CollapseCard>
+
+          <Card style={{ marginBottom: 24 }} title="Danh sách container">
+            <Table columns={columns} dataSource={data} />
+          </Card>
+
+          <Card
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              zIndex: 11,
+            }}
+          >
             <Row gutter={12}>
               <Col>
                 <Button onClick={() => router.push(ROUTERS.BOOKING)}>
@@ -382,9 +852,10 @@ export default function EditBooking() {
                 </Button>
               </Col>
             </Row>
-          </Form>
-        </ConfigProvider>
-      </Card>
+          </Card>
+        </Form>
+      </ConfigProvider>
+      {/* </Card> */}
     </div>
   );
 }

@@ -51,7 +51,7 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       locale={locale}
       theme={{
         token: {
-          colorPrimary: COLORS.GREEN,
+          colorPrimary: COLORS.PRIMARY,
         },
         components: {
           Input: {},

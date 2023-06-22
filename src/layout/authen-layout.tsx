@@ -337,8 +337,8 @@ export function AppLayout(props: Props) {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Head>
-        <link rel="favicon" href="/images/gls-logo.ico" />
-        <link rel="shortcut icon" href="/images/gls-logo.ico" />
+        <link rel="favicon" href="/images/asl-logo.png" />
+        <link rel="shortcut icon" href="/images/asl-logo.png" />
       </Head>
       <AppSider collapsed={collapsed} />
       <Layout>

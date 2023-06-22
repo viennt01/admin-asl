@@ -7,6 +7,7 @@ const COLORS = {
   BRIGHT: '#C7EDBA',
   BLUE: '#0300A6',
   BLACK: '#000000',
+  PRIMARY: '#03375e',
 };
 // update color => remmeber update color scss in styles
 

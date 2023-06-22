@@ -213,23 +213,29 @@ const AppSider = ({ collapsed }: Props) => {
                 {!collapsed && (
                   <Image
                     preview={false}
-                    style={{ paddingRight: '8px', cursor: 'pointer' }}
-                    src="/images/gls-logo.jpg"
+                    style={{
+                      paddingRight: '8px',
+                      cursor: 'pointer',
+                      width: '110px',
+                    }}
+                    src="/images/asl-logo.png"
                     onClick={() => router.push(ROUTERS.HOME)}
                     alt="logo"
                   />
                 )}
-                <Image
-                  preview={false}
-                  style={{
-                    paddingRight: '8px',
-                    cursor: 'pointer',
-                    height: '20px',
-                  }}
-                  src="/images/gls-logo.ico"
-                  onClick={() => router.push(ROUTERS.HOME)}
-                  alt="logo"
-                />
+                {collapsed && (
+                  <Image
+                    preview={false}
+                    style={{
+                      paddingRight: '8px',
+                      cursor: 'pointer',
+                      width: '50px',
+                    }}
+                    src="/images/asl-logo.png"
+                    onClick={() => router.push(ROUTERS.HOME)}
+                    alt="logo"
+                  />
+                )}
               </Title>
               {!collapsed && <hr style={{ width: '60%' }} />}
               <Menu
