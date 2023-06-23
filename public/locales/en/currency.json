@@ -6,12 +6,7 @@
     "exchange_rate_to_USD": "Exchange rate to USD",
     
     "information_add_currency": "Add new currency",
-    "currency_from_placeholder": "Choose currency to convert from",
-    "currency_to_placeholder": "Choose currency to convert to",
-    "currency_placeholder": "Enter the exchange rate",
-    "bank_placeholder": "Enter bank",
-    "cash_buy_placeholder": "Enter cash (buy)",
-    "cash_sell_placeholder": "Enter cash (sell)",
-    "transfer_buy_placeholder": "Enter the transfer (buy)",
-    "transfer_sell_placeholder": "Enter the transfer (sell)"
+    "currency_placeholder": "Choose currency",
+    "exchange_rate_to_VND_placeholder": "Enter exchange rate to VND",
+    "exchange_rate_to_USD_placeholder": "Enter exchange rate to USD"
 }

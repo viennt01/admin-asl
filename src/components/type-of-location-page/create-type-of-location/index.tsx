@@ -1,6 +1,11 @@
 import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
 
@@ -14,7 +19,7 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateTypeOfLocation() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
-  const { translate: translateAddTypeOfLocation } = useI18n('typeOfContainer');
+  const { translate: translateAddTypeOfLocation } = useI18n('typeOfLocation');
 
   return (
     <ModalForm<{
@@ -57,12 +62,29 @@ export default function CreateTypeOfLocation() {
     >
       <ProForm.Group>
         <ProFormText
-          width="xl"
+          width="md"
           name="TypeOfLocation"
           label={translateAddTypeOfLocation('type_of_location')}
           placeholder={translateAddTypeOfLocation(
             'type_of_location_placeholder'
           )}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
+            },
+          ]}
+          width="md"
+          name="Status"
+          label={translateAddTypeOfLocation('status')}
+          placeholder={translateAddTypeOfLocation('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

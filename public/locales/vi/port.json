@@ -21,7 +21,10 @@
     "new_port_tooltip": "Tên được đăng ký ở bộ giao thông vận tải",
     "address_placeholder": "Nhập địa chỉ",
     "quantity_container_placeholder": "Nhập số lượng container",
-    "capacity_placeholder": "Nhập sức chứa của cảng",
     "company_placeholder": "Nhập công ty quản lý",
-    "status_capacity_placeholder": "Chọn trạng thái sức chứa"
+    "status_capacity_placeholder": "Chọn trạng thái sức chứa",
+    "code_placeholder": "Nhập mã Cảng",
+    "code_tooltip": "Mã được đăng ký ở bộ giao thông vận tải",
+    "country_name_placeholder": "Chọn quốc gia",
+    "status_placeholder":"Chọn trạng thái"
 }

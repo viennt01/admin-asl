@@ -1,6 +1,11 @@
 import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
 
@@ -39,7 +44,7 @@ export default function CreateLocation() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add location',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -65,6 +70,31 @@ export default function CreateLocation() {
 
         <ProFormText
           width="md"
+          name="TypeOfLocation"
+          label={translateAddLocation('type_of_location')}
+          placeholder={translateAddLocation('type_of_location_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'VietNam',
+              label: 'Việt Nam',
+            },
+            {
+              value: 'US',
+              label: 'Mỹ',
+            },
+          ]}
+          width="md"
+          name="CountryName"
+          label={translateAddLocation('country_name')}
+          placeholder={translateAddLocation('country_name_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
           name="Address"
           label={translateAddLocation('address')}
           placeholder={translateAddLocation('address_placeholder')}
@@ -73,29 +103,34 @@ export default function CreateLocation() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="TypeOfLocation"
-          label={translateAddLocation('type_of_location')}
-          placeholder={translateAddLocation('type_of_location_placeholder')}
-        />
-        <ProFormText
-          width="md"
           name="Phone"
           label={translateAddLocation('phone')}
           placeholder={translateAddLocation('phone_placeholder')}
         />
-      </ProForm.Group>
-      <ProForm.Group>
+
         <ProFormText
           width="md"
           name="Email"
           label={translateAddLocation('email')}
           placeholder={translateAddLocation('email_placeholder')}
         />
-        <ProFormText
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'Active',
+              label: 'Active',
+            },
+            {
+              value: 'Deactive',
+              label: 'Deactive',
+            },
+          ]}
           width="md"
-          name="Company"
-          label={translateAddLocation('company')}
-          placeholder={translateAddLocation('company_placeholder')}
+          name="Status"
+          label={translateAddLocation('status')}
+          placeholder={translateAddLocation('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

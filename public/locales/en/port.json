@@ -1,9 +1,9 @@
 {
     "title": "List of Port",
     "port_no": "No",
-    "country_name": "Country",
     "code": "Port No",
     "name": "Port Name",
+    "country_name": "Country",
     "address": "Address",
     "quantity": "Number of Containers",
     "status_capacity": "Status of capacity",
@@ -21,7 +21,10 @@
     "new_port_tooltip": "The name is registered at the Ministry of Transport",
     "address_placeholder": "Enter address",
     "quantity_container_placeholder": "Enter the number of containers",
-    "capacity_placeholder": "Enter the port capacity",
     "company_placeholder": "Enter the management company",
-    "status_capacity_placeholder": "Select capacity status"
+    "status_capacity_placeholder": "Select capacity status",
+    "code_placeholder": "Enter code port",
+    "code_tooltip": "The code is registered at the Ministry of Transport",
+    "country_name_placeholder": "Choose country name",
+    "status_placeholder":"Choose status"
 }

@@ -7,9 +7,7 @@
     "creator": "Người tạo",
     
     "type_of_location_information":"THÔNG TIN CHI TIẾT CỦA LOẠI ĐỊA CHỈ",
-    "quantity_container":"Số lượng container",
-    "capacity":"Sức chứa",
-    "capacity_status":"Trạng thái sức chứa",
     "information_add_type_of_location": "Thêm mới loại địa điểm",
-    "type_of_location_placeholder": "Nhập loại địa chỉ"
+    "type_of_location_placeholder": "Nhập loại địa chỉ",
+    "status_placeholder": "Chọn trạng thái"
 }

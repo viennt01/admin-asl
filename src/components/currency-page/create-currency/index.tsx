@@ -26,7 +26,7 @@ export default function CreateCurrency() {
       name: string;
       company: string;
     }>
-      title={translateAddCurrency('information_add_currency')} //"Add new exchange rate"
+      title={translateAddCurrency('information_add_currency')}
       trigger={
         <Button
           type="primary"
@@ -44,7 +44,7 @@ export default function CreateCurrency() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add Currency',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -77,72 +77,20 @@ export default function CreateCurrency() {
             },
           ]}
           width="md"
-          name="CurrencyFrom"
-          label={translateAddCurrency('currency_from')}
-          placeholder={translateAddCurrency('currency_from_placeholder')}
+          name="Currency"
+          label={translateAddCurrency('currency')}
+          placeholder={translateAddCurrency('currency_placeholder')}
         />
 
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'USD',
-            },
-            {
-              value: '2',
-              label: 'VND',
-            },
-            {
-              value: '3',
-              label: 'Euro',
-            },
-          ]}
-          width="md"
-          name="CurrencyTo"
-          label={translateAddCurrency('currency_to')}
-          placeholder={translateAddCurrency('currency_to_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
         <ProFormText
           width="md"
-          name="Bank"
-          label={translateAddCurrency('bank')}
-          placeholder={translateAddCurrency('bank_placeholder')}
-        />
-        <ProFormText
-          width="md"
-          name="Currency"
-          label={translateAddCurrency('exchange_rate')}
-          placeholder={translateAddCurrency('exchange_rate_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="CashBuy"
-          label={translateAddCurrency('cash_buy')}
-          placeholder={translateAddCurrency('cash_buy_placeholder')}
+          name="ExchangeRateToVND"
+          label={translateAddCurrency('exchange_rate_to_VND')}
+          placeholder={translateAddCurrency('exchange_rate_to_VND_placeholder')}
           rules={[
             {
-              // required: true,
               type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập tiền mặt (mua)',
-            },
-          ]}
-        />
-        <ProFormText
-          width="md"
-          name="CashSell"
-          label={translateAddCurrency('cash_sell')}
-          placeholder={translateAddCurrency('cash_sell_placeholder')}
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập tiền mặt (bán)',
+              message: 'Vui lòng nhập tỉ giá sang VND',
             },
           ]}
         />
@@ -150,29 +98,13 @@ export default function CreateCurrency() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="TransferBuy"
-          label={translateAddCurrency('transfer_buy')}
-          placeholder={translateAddCurrency('transfer_buy_placeholder')}
+          name="ExchangeRateToUSD"
+          label={translateAddCurrency('exchange_rate_to_USD')}
+          placeholder={translateAddCurrency('exchange_rate_to_USD_placeholder')}
           rules={[
             {
-              // required: true,
               type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập số tiền chuyển khoản (Mua)',
-            },
-          ]}
-        />
-        <ProFormText
-          width="md"
-          name="TransferSell"
-          label={translateAddCurrency('transfer_sell')}
-          placeholder={translateAddCurrency('transfer_sell_placeholder')}
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập số tiền chuyển khoản (Bán)',
+              message: 'Vui lòng nhập tỉ giá sang USD',
             },
           ]}
         />

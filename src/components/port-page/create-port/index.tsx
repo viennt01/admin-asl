@@ -45,7 +45,7 @@ export default function CreatePort() {
       submitter={{
         searchConfig: {
           resetText: 'Cancel',
-          submitText: 'Add port',
+          submitText: 'Add',
         },
       }}
       form={form}
@@ -63,10 +63,36 @@ export default function CreatePort() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
+          name="CodePort"
+          label={translateAddPort('code')}
+          tooltip={translateAddPort('code_tooltip')}
+          placeholder={translateAddPort('code_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
+          name="NamePort"
           label={translateAddPort('new_port_title')}
           tooltip={translateAddPort('new_port_tooltip')}
           placeholder={translateAddPort('new_port_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'VietNam',
+              label: 'Việt Nam',
+            },
+            {
+              value: 'American',
+              label: 'Mỹ',
+            },
+          ]}
+          width="md"
+          name="CountryName"
+          label={translateAddPort('country_name')}
+          placeholder={translateAddPort('country_name_placeholder')}
         />
 
         <ProFormText
@@ -92,29 +118,15 @@ export default function CreatePort() {
             },
           ]}
         />
-        <ProFormText
-          width="md"
-          name="Capacity"
-          label={translateAddPort('capacity')}
-          placeholder={translateAddPort('capacity_placeholder')}
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa của cảng',
-            },
-          ]}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
+
         <ProFormText
           width="md"
           name="Company"
           label={translateAddPort('company')}
           placeholder={translateAddPort('company_placeholder')}
         />
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormSelect
           request={async () => [
             {
@@ -130,6 +142,23 @@ export default function CreatePort() {
           name="CapacityLabel"
           label={translateAddPort('status_capacity')}
           placeholder={translateAddPort('status_capacity_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
+            },
+          ]}
+          width="md"
+          name="Status"
+          label={translateAddPort('status')}
+          placeholder={translateAddPort('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

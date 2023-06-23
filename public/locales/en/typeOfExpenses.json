@@ -8,5 +8,5 @@
     "creator": "Creator",
     "information_add_type_of_expenses": "Add new type of expense",
     "name_placeholder": "Enter the expense name",
-    "VAT_placeholder": "Enter the VAT"
+    "status_placeholder":"Choose status"
 }

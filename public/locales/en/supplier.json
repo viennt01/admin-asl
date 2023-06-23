@@ -19,5 +19,8 @@
     "number_placeholder": "Enter number of transactions",
     "address_placeholder": "Enter address",
     "phone_placeholder": "Enter phone number",
-    "email_placeholder": "Enter email"
+    "email_placeholder": "Enter email",
+    "abbreviation_placeholder": "Enter abbreviation",
+    "country_placeholder": "Choose country",
+    "status_placeholder":"Choose status"
 }

@@ -18,9 +18,13 @@
     "information_add_bank": "Add new bank",
     "bank_name_placeholder": "Enter the bank name",
     "bank_account_number_placeholder": "Enter the bank account number",
-    "bank_hotline_phone_number_placeholder": "Enter the Hotline phone number",
     "bank_email_placeholder": "Enter the email",
     "bank_address_placeholder": "Enter the bank address",
     "bank_branch_placeholder": "Choose the bank branch",
-    "bank_note_placeholder": "Enter the note"
+    "bank_note_placeholder": "Enter the note",
+    "bank_code_placeholder": "Enter bank code",
+    "VND_account_number_placeholder": "Enter VND account number",
+    "USD_account_number_placeholder": "Enter USD account number",
+    "phone_placeholder": "Enter phone number",
+    "status_placeholder": "Choose status"
 }

@@ -117,9 +117,9 @@ export default function CreateBooking() {
 
         <ProFormText
           width="md"
-          name="NameSupplier"
-          label={translateBooking('name_supplier')}
-          placeholder={translateBooking('name_supplier_placeholder')}
+          name="package"
+          label={translateBooking('package')}
+          placeholder={translateBooking('package_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>

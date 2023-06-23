@@ -26,7 +26,7 @@ export default function CreateSupplier() {
       name: string;
       company: string;
     }>
-      title={translateSupplier('information_add_quotation')}
+      title={translateSupplier('information_add_supplier')}
       trigger={
         <Button
           type="primary"
@@ -63,11 +63,19 @@ export default function CreateSupplier() {
       <ProForm.Group>
         <ProFormText
           width="md"
+          name="Abbreviation"
+          label={translateSupplier('abbreviation')}
+          placeholder={translateSupplier('abbreviation_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
           name="NameSupplier"
           label={translateSupplier('name')}
           placeholder={translateSupplier('name_placeholder')}
         />
-
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormSelect
           request={async () => [
             {
@@ -80,8 +88,7 @@ export default function CreateSupplier() {
           label={translateSupplier('service')}
           placeholder={translateSupplier('service_placeholder')}
         />
-      </ProForm.Group>
-      <ProForm.Group>
+
         <ProFormText
           width="md"
           name="NumberSupplier"
@@ -94,12 +101,6 @@ export default function CreateSupplier() {
               message: 'Vui lòng nhập số lượng giao dịch',
             },
           ]}
-        />
-        <ProFormText
-          width="md"
-          name="Address"
-          label={translateSupplier('address')}
-          placeholder={translateSupplier('address_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
@@ -114,6 +115,48 @@ export default function CreateSupplier() {
           name="Email"
           label={translateSupplier('email')}
           placeholder={translateSupplier('email_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'VietNam',
+              label: 'Việt Nam',
+            },
+            {
+              value: 'American',
+              label: 'Mỹ',
+            },
+          ]}
+          width="sm"
+          name="CountryName"
+          label={translateSupplier('country')}
+          placeholder={translateSupplier('country_placeholder')}
+        />
+
+        <ProFormText
+          width="sm"
+          name="Address"
+          label={translateSupplier('address')}
+          placeholder={translateSupplier('address_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
+            },
+          ]}
+          width="sm"
+          name="Status"
+          label={translateSupplier('status')}
+          placeholder={translateSupplier('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

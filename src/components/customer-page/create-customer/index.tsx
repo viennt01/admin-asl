@@ -3,7 +3,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   ModalForm,
   ProForm,
-  ProFormDatePicker,
+  ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
@@ -63,11 +63,19 @@ export default function CreateCustomer() {
       <ProForm.Group>
         <ProFormText
           width="md"
+          name="Abbreviation"
+          label={translateCustomer('abbreviation')}
+          placeholder={translateCustomer('abbreviation_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
           name="NameCustomer"
           label={translateCustomer('name')}
           placeholder={translateCustomer('name_placeholder')}
         />
-
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormText
           width="md"
           name="NumberCustomer"
@@ -81,14 +89,6 @@ export default function CreateCustomer() {
             },
           ]}
         />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormDatePicker
-          width="md"
-          name="Dob"
-          label={translateCustomer('dob')}
-          placeholder={translateCustomer('dob_placeholder')}
-        />
 
         <ProFormText
           width="md"
@@ -98,18 +98,70 @@ export default function CreateCustomer() {
         />
       </ProForm.Group>
       <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'VietNam',
+              label: 'Việt Nam',
+            },
+            {
+              value: 'American',
+              label: 'Mỹ',
+            },
+          ]}
+          width="md"
+          name="CountryName"
+          label={translateCustomer('country')}
+          placeholder={translateCustomer('country_placeholder')}
+        />
+
         <ProFormText
           width="md"
           name="Address"
           label={translateCustomer('address')}
           placeholder={translateCustomer('address_placeholder')}
         />
-
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormText
-          width="md"
+          width="sm"
           name="Email"
           label={translateCustomer('email')}
           placeholder={translateCustomer('email_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Nguyễn Văn A',
+            },
+            {
+              value: '2',
+              label: 'Nguyễn Văn B',
+            },
+          ]}
+          width="sm"
+          name="Saleman"
+          label={translateCustomer('saleman')}
+          placeholder={translateCustomer('saleman_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
+            },
+          ]}
+          width="sm"
+          name="Status"
+          label={translateCustomer('status')}
+          placeholder={translateCustomer('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

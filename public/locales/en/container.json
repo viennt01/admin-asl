@@ -17,5 +17,7 @@
     "location_placeholder": "Enter location",
     "container_status_placeholder": "Select the status of the Container",
     "rent_cost_placeholder": "Enter rent cost",
-    "price_placeholder": "Enter price"
+    "price_placeholder": "Enter price",
+    "supplier_placeholder": "Enter supplier",
+    "status_placeholder": "Choose status"
 }
