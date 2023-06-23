@@ -146,21 +146,81 @@ export default function EditBooking() {
             <Row gutter={16}>
               <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateBooking('no_booking')}
+                  label={translateBooking('code_booking')}
                   name="code_booking"
+                >
+                  <Input placeholder="10-48973-VNL/V26-A" disabled />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateBooking('port_of_loading')}
+                  name="portOfLoading"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of mã booking',
+                      message: 'Please input port of loading',
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập mã booking" />
+                  <Input
+                    placeholder={translateBooking(
+                      'port_of_loading_placeholder'
+                    )}
+                  />
                 </Form.Item>
               </Col>
+
               <Col lg={12} span={24}>
                 <Form.Item
-                  label="Package"
+                  label={translateBooking('port_of_discharge')}
+                  name="portOfDischarge"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input port of discharge',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateBooking(
+                      'port_of_discharge_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateBooking('container_code')}
+                  name="containerCode"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please choose container code',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: '1',
+                        label: 'GLSU4824373',
+                      },
+                      {
+                        value: '2',
+                        label: 'GLSU4824373',
+                      },
+                    ]}
+                    placeholder={translateBooking('container_code_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateBooking('package')}
                   name="package"
                   rules={[
                     {
@@ -169,157 +229,140 @@ export default function EditBooking() {
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập package" />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Cảng chất hàng"
-                  name="port_of_loading"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of container',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Hải Phòng',
-                        label: 'Hải Phòng',
-                      },
-                      {
-                        value: 'Hồ Chí Minh',
-                        label: 'Hồ Chí Minh',
-                      },
-                    ]}
-                  />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Cảng dỡ hàng"
-                  name="port_of_discharge"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of container',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Hải Phòng',
-                        label: 'Hải Phòng',
-                      },
-                      {
-                        value: 'Hồ Chí Minh',
-                        label: 'Hồ Chí Minh',
-                      },
-                    ]}
+                  <Input
+                    placeholder={translateBooking('package_placeholder')}
                   />
                 </Form.Item>
               </Col>
 
               <Col lg={12} span={24}>
                 <Form.Item
-                  label="Địa điểm giao hàng"
-                  name="location"
+                  label={translateBooking('number_of_shipments')}
+                  name="numberOfShipments"
                   rules={[
-                    { required: true, message: 'Please input last name' },
+                    {
+                      required: true,
+                      message: 'Please input number of shipments',
+                    },
                   ]}
                 >
-                  <Cascader options={residences} />
-                </Form.Item>
-              </Col>
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Địa điểm giao hàng cụ thể"
-                  name="detail_location"
-                  rules={[
-                    { required: true, message: 'Please input last name' },
-                  ]}
-                >
-                  <Input placeholder="Nhập vị trí cụ thể" />
+                  <Input
+                    placeholder={translateBooking(
+                      'number_of_shipments_placeholder'
+                    )}
+                  />
                 </Form.Item>
               </Col>
 
-              <Col lg={8} span={24}>
+              <Col lg={12} span={24}>
                 <Form.Item
-                  label="ETD"
+                  label={translateBooking('weight')}
+                  name="weight"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input weight',
+                    },
+                  ]}
+                >
+                  <Input placeholder={translateBooking('weight_placeholder')} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateBooking('volume')}
+                  name="volume"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input volume',
+                    },
+                  ]}
+                >
+                  <Input placeholder={translateBooking('volume_placeholder')} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translateBooking('place_of_delivery')}
+                  name="placeOfDelivery"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input place of delivery',
+                    },
+                  ]}
+                >
+                  <Cascader
+                    options={residences}
+                    placeholder={translateBooking(
+                      'place_of_delivery_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} span={24}>
+                <Form.Item
+                  label={translateBooking('etd')}
                   name="etd"
-                  rules={[{ required: true, message: 'Please input ETD' }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input ETD',
+                    },
+                  ]}
                 >
                   <DatePicker
                     defaultValue={dayjs('2015/01/01', dateFormat)}
                     format={dateFormat}
+                    placeholder={translateBooking('etd_placeholder')}
                   />
                 </Form.Item>
               </Col>
 
-              <Col lg={8} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
-                  label="ETA"
+                  label={translateBooking('eta')}
                   name="eta"
                   rules={[{ required: true, message: 'Please input ETA' }]}
                 >
                   <DatePicker
                     defaultValue={dayjs('2015/01/01', dateFormat)}
                     format={dateFormat}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label="Date created"
-                  name="date_created"
-                  rules={[
-                    { required: true, message: 'Please input date created' },
-                  ]}
-                >
-                  <DatePicker
-                    defaultValue={dayjs('2015/01/01', dateFormat)}
-                    format={dateFormat}
+                    placeholder={translateBooking('eta_placeholder')}
                   />
                 </Form.Item>
               </Col>
 
               <Col lg={12} span={24}>
                 <Form.Item
-                  label="Creator"
-                  name="creator"
+                  label={translateBooking('note')}
+                  name="note"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of Creator',
+                      message: 'Please input note',
                     },
                   ]}
                 >
-                  <Select
-                    options={[
-                      {
-                        value: 'Ngân',
-                        label: 'Ngân',
-                      },
-                      {
-                        value: 'Khoa',
-                        label: 'Khoa',
-                      },
-                    ]}
+                  <Input.TextArea
+                    placeholder={translateBooking('note_placeholder')}
+                    rows={1}
                   />
                 </Form.Item>
               </Col>
+
               <Col lg={12} span={24}>
                 <Form.Item
-                  label="Status"
+                  label={translateBooking('status')}
                   name="status"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: 'Please input status',
                     },
                   ]}
                 >
@@ -350,22 +393,8 @@ export default function EditBooking() {
                         label: 'Cancel',
                       },
                     ]}
+                    placeholder={translateBooking('status_placeholder')}
                   />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label="Note"
-                  name="note"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input note',
-                    },
-                  ]}
-                >
-                  <Input.TextArea placeholder="Nhập ghi chú" />
                 </Form.Item>
               </Col>
             </Row>

@@ -44,7 +44,7 @@ export default function CreateContainer() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add container',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -127,6 +127,31 @@ export default function CreateContainer() {
               message: 'Vui lòng nhập giá bán',
             },
           ]}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="Supplier"
+          label={translateAddContainer('supplier')}
+          placeholder={translateAddContainer('supplier_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
+            },
+          ]}
+          width="md"
+          name="Status"
+          label={translateAddContainer('status')}
+          placeholder={translateAddContainer('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

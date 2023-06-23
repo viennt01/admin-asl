@@ -1,5 +1,5 @@
 import style from './index.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   LogoutOutlined,
   HomeOutlined,
@@ -24,7 +24,8 @@ import { Layout, Menu, Row, Col } from 'antd';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import { MenuInfo } from 'rc-menu/lib/interface';
-import { Modal, Typography } from 'antd';
+import { Modal, Typography, Tour } from 'antd';
+import type { TourProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import useI18n from '@/i18n/useI18N';
@@ -60,99 +61,194 @@ const AppSider = ({ collapsed }: Props) => {
   const [modal, contextHolder] = Modal.useModal();
   const [selectedKey, setSelectedKey] = useState(ROUTERS.HOME);
   const { translate: translateCommon } = useI18n('common');
+  const refHome = useRef(null);
+  const refQuotation = useRef(null);
+  const refBooking = useRef(null);
+  const refPartner = useRef(null);
+  const refMasterData = useRef(null);
+  const refSystem = useRef(null);
+  const refCustomer = useRef(null);
+  const refSupplier = useRef(null);
+  const refPort = useRef(null);
+  const refDepot = useRef(null);
+  const refContainerCatalog = useRef(null);
+  const refContainer = useRef(null);
+  const refTypeOfContainer = useRef(null);
+  const refTypeOfExpenses = useRef(null);
+  const refLocationCatalog = useRef(null);
+  const refLocation = useRef(null);
+  const refTypeOfLocation = useRef(null);
+  const refAccountant = useRef(null);
+  const refCurrency = useRef(null);
+  const refBank = useRef(null);
+  const refUnit = useRef(null);
+  const refStaff = useRef(null);
+  const refPermission = useRef(null);
+  const [openTour, setOpenTour] = useState<boolean>(true);
+  const steps: TourProps['steps'] = [
+    {
+      title: 'Trang chủ',
+      description: 'Màn hình thống kê dữ liệu.',
+      cover: <img alt="home page" src="images/HomeASL.png" />,
+      target: () => refHome.current,
+    },
+    {
+      title: 'Báo giá',
+      description: 'Màn hình quản lý báo giá của khách hàng.',
+      target: () => refQuotation.current,
+    },
+    {
+      title: 'Booking',
+      description: 'Màn hình quản lý đặt container.',
+      target: () => refBooking.current,
+    },
+    {
+      title: 'Đối tác',
+      description:
+        'Menu này bao gồm màn hình khách hàng và màn hình nhà cung cấp.',
+      target: () => refPartner.current,
+    },
+    {
+      title: 'Danh mục',
+      description:
+        'Menu này bao gồm màn hình cảng, depot, danh mục container, loại chi phí, danh mục địa điểm, kế toán và đơn vị.',
+      target: () => refMasterData.current,
+    },
+    {
+      title: 'Hệ thống',
+      description: 'Menu này bao gồm màn hình nhân viên và quyền hạn.',
+      target: () => refSystem.current,
+    },
+  ];
 
   const items: MenuItem[] = [
-    getItem(`${translateCommon('home')}`, ROUTERS.HOME, <HomeOutlined />),
+    getItem(
+      `${translateCommon('home')}`,
+      ROUTERS.HOME,
+      <HomeOutlined ref={refHome} />
+    ),
     getItem(
       `${translateCommon('quotation')}`,
       ROUTERS.QUOTATION,
-      <ContainerOutlined />
+      <ContainerOutlined ref={refQuotation} />
     ),
     getItem(
       `${translateCommon('booking')}`,
       ROUTERS.BOOKING,
-      <SolutionOutlined />
+      <SolutionOutlined ref={refBooking} />
     ),
-    getItem(`${translateCommon('partner')}`, '1', <TeamOutlined />, [
-      getItem(
-        `${translateCommon('customer')}`,
-        ROUTERS.CUSTOMER,
-        <UserOutlined />
-      ),
-      getItem(
-        `${translateCommon('supplier')}`,
-        ROUTERS.SUPPLIER,
-        <BankOutlined />
-      ),
-    ]),
-    getItem(`${translateCommon('master_data')}`, '2', <AppstoreOutlined />, [
-      getItem(`${translateCommon('port')}`, ROUTERS.PORT, <GoldOutlined />),
-      getItem(`${translateCommon('depot')}`, ROUTERS.DEPOT, <GoldOutlined />),
-      getItem(
-        `${translateCommon('container_catalog')}`,
-        '4',
-        <InboxOutlined />,
-        [
-          getItem(
-            `${translateCommon('container')}`,
-            ROUTERS.CONTAINER,
-            <InboxOutlined />
-          ),
-          getItem(
-            `${translateCommon('type_of_container')}`,
-            ROUTERS.TYPES_OF_CONTAINER,
-            <InboxOutlined />
-          ),
-        ]
-      ),
-      getItem(
-        `${translateCommon('type_of_expenses')}`,
-        ROUTERS.TYPES_OF_EXPENSES,
-        <ProfileOutlined />
-      ),
-      getItem(
-        `${translateCommon('location_catalog')}`,
-        '5',
-        <EnvironmentOutlined />,
-        [
-          getItem(
-            `${translateCommon('location')}`,
-            ROUTERS.LOCATION,
-            <EnvironmentOutlined />
-          ),
-          getItem(
-            `${translateCommon('type_of_location')}`,
-            ROUTERS.TYPE_OF_LOCATION,
-            <EnvironmentOutlined />
-          ),
-        ]
-      ),
-      getItem(`${translateCommon('accountant')}`, '6', <DollarOutlined />, [
+    getItem(
+      `${translateCommon('partner')}`,
+      '1',
+      <TeamOutlined ref={refPartner} />,
+      [
         getItem(
-          `${translateCommon('currency')}`,
-          ROUTERS.CURRENCY,
-          <DollarOutlined />
+          `${translateCommon('customer')}`,
+          ROUTERS.CUSTOMER,
+          <UserOutlined ref={refCustomer} />
         ),
-        getItem(`${translateCommon('bank')}`, ROUTERS.BANK, <BankOutlined />),
-      ]),
-      getItem(
-        `${translateCommon('unit')}`,
-        ROUTERS.UNIT,
-        <CalculatorOutlined />
-      ),
-    ]),
-    getItem(`${translateCommon('system')}`, '3', <ClusterOutlined />, [
-      getItem(
-        `${translateCommon('staff')}`,
-        ROUTERS.STAFF,
-        <UsergroupAddOutlined />
-      ),
-      getItem(
-        `${translateCommon('permission')}`,
-        ROUTERS.PERMISSION,
-        <ApartmentOutlined />
-      ),
-    ]),
+        getItem(
+          `${translateCommon('supplier')}`,
+          ROUTERS.SUPPLIER,
+          <BankOutlined ref={refSupplier} />
+        ),
+      ]
+    ),
+    getItem(
+      `${translateCommon('master_data')}`,
+      '2',
+      <AppstoreOutlined ref={refMasterData} />,
+      [
+        getItem(
+          `${translateCommon('port')}`,
+          ROUTERS.PORT,
+          <GoldOutlined ref={refPort} />
+        ),
+        getItem(
+          `${translateCommon('depot')}`,
+          ROUTERS.DEPOT,
+          <GoldOutlined ref={refDepot} />
+        ),
+        getItem(
+          `${translateCommon('container_catalog')}`,
+          '4',
+          <InboxOutlined ref={refContainerCatalog} />,
+          [
+            getItem(
+              `${translateCommon('container')}`,
+              ROUTERS.CONTAINER,
+              <InboxOutlined ref={refContainer} />
+            ),
+            getItem(
+              `${translateCommon('type_of_container')}`,
+              ROUTERS.TYPES_OF_CONTAINER,
+              <InboxOutlined ref={refTypeOfContainer} />
+            ),
+          ]
+        ),
+        getItem(
+          `${translateCommon('type_of_expenses')}`,
+          ROUTERS.TYPES_OF_EXPENSES,
+          <ProfileOutlined ref={refTypeOfExpenses} />
+        ),
+        getItem(
+          `${translateCommon('location_catalog')}`,
+          '5',
+          <EnvironmentOutlined ref={refLocationCatalog} />,
+          [
+            getItem(
+              `${translateCommon('location')}`,
+              ROUTERS.LOCATION,
+              <EnvironmentOutlined ref={refLocation} />
+            ),
+            getItem(
+              `${translateCommon('type_of_location')}`,
+              ROUTERS.TYPE_OF_LOCATION,
+              <EnvironmentOutlined ref={refTypeOfLocation} />
+            ),
+          ]
+        ),
+        getItem(
+          `${translateCommon('accountant')}`,
+          '6',
+          <DollarOutlined ref={refAccountant} />,
+          [
+            getItem(
+              `${translateCommon('currency')}`,
+              ROUTERS.CURRENCY,
+              <DollarOutlined ref={refCurrency} />
+            ),
+            getItem(
+              `${translateCommon('bank')}`,
+              ROUTERS.BANK,
+              <BankOutlined ref={refBank} />
+            ),
+          ]
+        ),
+        getItem(
+          `${translateCommon('unit')}`,
+          ROUTERS.UNIT,
+          <CalculatorOutlined ref={refUnit} />
+        ),
+      ]
+    ),
+    getItem(
+      `${translateCommon('system')}`,
+      '3',
+      <ClusterOutlined ref={refSystem} />,
+      [
+        getItem(
+          `${translateCommon('staff')}`,
+          ROUTERS.STAFF,
+          <UsergroupAddOutlined ref={refStaff} />
+        ),
+        getItem(
+          `${translateCommon('permission')}`,
+          ROUTERS.PERMISSION,
+          <ApartmentOutlined ref={refPermission} />
+        ),
+      ]
+    ),
   ];
 
   const handleClickMenuItem = (path: MenuInfo) => {
@@ -267,6 +363,7 @@ const AppSider = ({ collapsed }: Props) => {
           </Row>
         </Sider>
       </ConfigProvider>
+      <Tour open={openTour} onClose={() => setOpenTour(false)} steps={steps} />
     </>
   );
 };

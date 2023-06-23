@@ -18,5 +18,7 @@
     "location_placeholder": "Nhập vị trí",
     "container_status_placeholder": "Chọn tình trạng của Container",
     "rent_cost_placeholder": "Nhập giá thuê",
-    "price_placeholder": "Nhập giá bán"
+    "price_placeholder": "Nhập giá bán",
+    "supplier_placeholder": "Nhập tên nhà cung cấp",
+    "status_placeholder": "Chọn trạng thái"
 }

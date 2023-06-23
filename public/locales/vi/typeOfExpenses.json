@@ -8,5 +8,5 @@
     "creator": "Người tạo",
     "information_add_type_of_expenses": "Thêm mới loại chi phí",
     "name_placeholder": "Nhập tên chi phí",
-    "VAT_placeholder": "Nhập VAT"
+    "status_placeholder":"Chọn trạng thái"
 }

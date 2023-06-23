@@ -17,5 +17,8 @@
     "address_placeholder": "Enter address",
     "branch_depot_placeholder": "Enter branch",
     "companny_mamagement_depot_placeholder": "Enter Depot management company",
-    "description_placeholder": "Enter description"
+    "description_placeholder": "Enter description",
+    "depot_code_placeholder": "Enter Depot Code",
+    "country_name_placeholder": "Choose country name",
+    "status_depot_placeholder":"Choose status depot"
 }

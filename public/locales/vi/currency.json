@@ -6,12 +6,7 @@
     "exchange_rate_to_USD": "Tỉ giá sang USD",
     
     "information_add_currency": "Thêm mới tiền tệ",
-    "currency_from_placeholder": "Chọn tiền tệ chuyển từ",
-    "currency_to_placeholder": "Chọn tiền tệ chuyển sang",
-    "exchange_rate_placeholder": "Nhập tỉ giá",
-    "bank_placeholder": "Nhập ngân hàng",
-    "cash_buy_placeholder": "Nhập tiền mặt (mua)",
-    "cash_sell_placeholder": "Nhập tiền mặt (bán)",
-    "transfer_buy_placeholder": "Nhập số tiền chuyển khoản (mua)",
-    "transfer_sell_placeholder": "Nhập số tiền chuyển khoản (bán)"
+    "currency_placeholder": "Chọn tiền tệ",
+    "exchange_rate_to_VND_placeholder": "Nhập tỉ giá sang VND",
+    "exchange_rate_to_USD_placeholder": "Nhập tỉ giá sang USD"
 }

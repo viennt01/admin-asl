@@ -1,6 +1,11 @@
 import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
 
@@ -57,24 +62,27 @@ export default function CreateExpensesType() {
     >
       <ProForm.Group>
         <ProFormText
-          width="xl"
+          width="md"
           name="NameTypeOfExpenses"
           label={translateAddTypeOfExpenses('name')}
           placeholder={translateAddTypeOfExpenses('name_placeholder')}
         />
 
-        <ProFormText
-          width="xl"
-          name="VatTypeOfExpenses"
-          label={translateAddTypeOfExpenses('VAT')}
-          placeholder={translateAddTypeOfExpenses('VAT_placeholder')}
-          rules={[
+        <ProFormSelect
+          request={async () => [
             {
-              // required: true,
-              type: 'number',
-              message: 'Vui lòng nhập VAT',
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
             },
           ]}
+          width="md"
+          name="Status"
+          label={translateAddTypeOfExpenses('status')}
+          placeholder={translateAddTypeOfExpenses('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

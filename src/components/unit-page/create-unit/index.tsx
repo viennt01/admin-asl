@@ -44,7 +44,7 @@ export default function CreateUnit() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add Unit',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -63,14 +63,14 @@ export default function CreateUnit() {
     >
       <ProForm.Group>
         <ProFormText
-          width="xl"
+          width="md"
           name="InternationalCode"
           label={translateAddUnit('international_code')}
           placeholder={translateAddUnit('international_code_placeholder')}
         />
 
         <ProFormTextArea
-          width="xl"
+          width="md"
           name="Description"
           label={translateAddUnit('description')}
           placeholder={translateAddUnit('description_placeholder')}

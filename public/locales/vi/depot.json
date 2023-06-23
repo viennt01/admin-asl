@@ -16,5 +16,8 @@
     "address_placeholder": "Nhập địa chỉ",
     "branch_depot_placeholder": "Nhập chi nhánh",
     "companny_mamagement_depot_placeholder": "Nhập công ty quản lý Depot",
-    "description_placeholder": "Nhập mô tả"
+    "description_placeholder": "Nhập mô tả",
+    "depot_code_placeholder": "Nhập mã Depot",
+    "country_name_placeholder": "Chọn quốc gia",
+    "status_depot_placeholder":"Chọn trạng thái"
 }

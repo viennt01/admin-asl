@@ -118,11 +118,11 @@ export function AppLayout(props: Props) {
     setLanguage(
       appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
     );
-  }, [languageSelected]);
 
-  useEffect(() => {
-    setLanguageSelectedName('English');
-  }, [languageSelectedName]);
+    languageSelected === 'en'
+      ? setLanguageSelectedName('English')
+      : setLanguageSelectedName('Vietnamese');
+  }, [languageSelected, languageSelectedName]);
 
   function onClickShowPopupAvatar() {
     if (classActiveAvatarPopup === 'active') {

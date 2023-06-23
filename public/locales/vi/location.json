@@ -18,5 +18,6 @@
     "type_of_location_placeholder": "Nhập loại địa chỉ",
     "phone_placeholder": "Nhập số điện thoại",
     "email_placeholder": "Nhập email",
-    "company_placeholder": "Nhập công ty quản lý"
+    "country_name_placeholder": "Chọn quốc gia",
+    "status_placeholder": "Chọn trạng thái"
 }

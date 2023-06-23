@@ -1,6 +1,12 @@
 import COLORS from '@/constant/color';
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProForm, ProFormText } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
+} from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
 
@@ -57,7 +63,7 @@ export default function CreateTypeOfContainer() {
     >
       <ProForm.Group>
         <ProFormText
-          width="xl"
+          width="md"
           name="TypeOfContainer"
           label={translateAddTypeOfContainer('type_of_container')}
           placeholder={translateAddTypeOfContainer(
@@ -66,27 +72,42 @@ export default function CreateTypeOfContainer() {
         />
 
         <ProFormText
-          width="xl"
+          width="md"
+          name="Teus"
+          label={translateAddTypeOfContainer('teus')}
+          placeholder={translateAddTypeOfContainer('teus_placeholder')}
+          rules={[
+            {
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập teus',
+            },
+          ]}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormTextArea
+          width="md"
           name="Detail"
           label={translateAddTypeOfContainer('detail')}
           placeholder={translateAddTypeOfContainer('detail_placeholder')}
         />
 
-        <ProFormText
-          width="xl"
-          name="NumberContainer"
-          label={translateAddTypeOfContainer('number_container')}
-          placeholder={translateAddTypeOfContainer(
-            'number_container_placeholder'
-          )}
-          rules={[
+        <ProFormSelect
+          request={async () => [
             {
-              // required: true,
-              type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập số lượng container',
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
             },
           ]}
+          width="md"
+          name="Status"
+          label={translateAddTypeOfContainer('status')}
+          placeholder={translateAddTypeOfContainer('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

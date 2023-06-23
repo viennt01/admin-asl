@@ -64,26 +64,39 @@ export default function CreateBank() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="BankName"
-          label={translateAddBank('bank_name')}
-          placeholder={translateAddBank('bank_name_placeholder')}
+          name="BankCode"
+          label={translateAddBank('bank_code')}
+          placeholder={translateAddBank('bank_code_placeholder')}
         />
 
         <ProFormText
           width="md"
-          name="BankAccountNumber"
-          label={translateAddBank('bank_account_number')}
-          placeholder={translateAddBank('bank_account_number_placeholder')}
+          name="BankName"
+          label={translateAddBank('bank_name')}
+          placeholder={translateAddBank('bank_name_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="BankHotlinePhoneNumber"
-          label={translateAddBank('bank_hotline_phone_number')}
-          placeholder={translateAddBank(
-            'bank_hotline_phone_number_placeholder'
-          )}
+          name="VNDAccountNumber"
+          label={translateAddBank('VND_account_number')}
+          placeholder={translateAddBank('VND_account_number_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
+          name="USDAccountNumber"
+          label={translateAddBank('USD_account_number')}
+          placeholder={translateAddBank('USD_account_number_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="PhoneNumber"
+          label={translateAddBank('phone')}
+          placeholder={translateAddBank('phone_placeholder')}
         />
 
         <ProFormText
@@ -94,13 +107,6 @@ export default function CreateBank() {
         />
       </ProForm.Group>
       <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="BankAddress"
-          label={translateAddBank('bank_address')}
-          placeholder={translateAddBank('bank_address_placeholder')}
-        />
-
         <ProFormSelect
           request={async () => [
             {
@@ -125,13 +131,37 @@ export default function CreateBank() {
           label={translateAddBank('bank_branch')}
           placeholder={translateAddBank('bank_branch_placeholder')}
         />
+
+        <ProFormText
+          width="md"
+          name="BankAddress"
+          label={translateAddBank('bank_address')}
+          placeholder={translateAddBank('bank_address_placeholder')}
+        />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormTextArea
-          width="xl"
+          width="md"
           name="BankNote"
           label={translateAddBank('bank_note')}
           placeholder={translateAddBank('bank_note_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Active',
+            },
+            {
+              value: '2',
+              label: 'Tạm ngừng',
+            },
+          ]}
+          width="md"
+          name="Status"
+          label={translateAddBank('status')}
+          placeholder={translateAddBank('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

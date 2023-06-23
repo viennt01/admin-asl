@@ -111,7 +111,6 @@ $t: 2.2s;
 
 // Dropdown Language
 .selectMenu {
-    width: 150px;
     position: relative;
 
     .selectBtn {
@@ -129,6 +128,8 @@ $t: 2.2s;
         transition: all 0.3s ease-in-out;
 
         .layoutChooseImage {
+            margin-right: 10px;
+
             img {
                 margin-right: 10px;
             }

@@ -3,8 +3,10 @@ import { PlusOutlined } from '@ant-design/icons';
 import {
   ModalForm,
   ProForm,
+  ProFormDatePicker,
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
@@ -19,13 +21,14 @@ import useI18n from '@/i18n/useI18N';
 export default function CreateStaff() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
+  const { translate: translateStaff } = useI18n('staff');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title="Add new staff"
+      title={translateStaff('information_add_staff')}
       trigger={
         <Button
           type="primary"
@@ -43,7 +46,7 @@ export default function CreateStaff() {
       }
       submitter={{
         searchConfig: {
-          submitText: 'Add staff',
+          submitText: 'Add',
           resetText: 'Cancel',
         },
       }}
@@ -62,97 +65,150 @@ export default function CreateStaff() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NameCompany"
-          label="Tên cảng mới"
-          tooltip="Tên được đăng ký ở bộ giao thông vận tải"
-          placeholder="Nhập tên cảng mới"
+          name="FullName"
+          label={translateStaff('full_name')}
+          placeholder={translateStaff('full_name_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'Male',
+              label: 'Nam',
+            },
+            {
+              value: 'Female',
+              label: 'Nữ',
+            },
+          ]}
+          width="md"
+          name="Gender"
+          label={translateStaff('gender')}
+          placeholder={translateStaff('gender_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormDatePicker
+          width="md"
+          name="Dob"
+          label={translateStaff('dob')}
+          placeholder={translateStaff('dob_placeholder')}
+        />
+
+        <ProFormSelect
+          request={async () => [
+            {
+              value: 'VietNam',
+              label: 'Việt Nam',
+            },
+            {
+              value: 'American',
+              label: 'Mỹ',
+            },
+          ]}
+          width="md"
+          name="Nationality"
+          label={translateStaff('nationality')}
+          placeholder={translateStaff('nationality_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="CCCDVisa"
+          label={translateStaff('CCCD_Visa')}
+          placeholder={translateStaff('CCCD_Visa_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
+          name="PhoneNumber"
+          label={translateStaff('phone')}
+          placeholder={translateStaff('phone_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="Email"
+          label={translateStaff('email')}
+          placeholder={translateStaff('email_placeholder')}
         />
 
         <ProFormText
           width="md"
           name="Address"
-          label="Địa chỉ"
-          placeholder="Nhập địa chỉ"
+          label={translateStaff('address')}
+          placeholder={translateStaff('address_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="NumberPhone"
-          label="Số điện thoại"
-          placeholder="Nhập số điện thoại"
+          name="WorkingBranch"
+          label={translateStaff('working_branch')}
+          placeholder={translateStaff('working_branch_placeholder')}
         />
-        <ProFormText
-          width="md"
-          name="Email"
-          label="Email"
-          placeholder="Nhập email"
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="TotalContainer"
-          placeholder="Nhập số lượng container"
-          label="Số lượng container"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
-        />
+
         <ProFormSelect
           request={async () => [
             {
-              value: '1',
-              label: 'Active',
+              value: 'Accountant',
+              label: 'Accountant',
             },
             {
-              value: '2',
-              label: 'Ngừng hoạt động',
+              value: 'Sale',
+              label: 'Sale',
+            },
+            {
+              value: 'Manager',
+              label: 'Manager',
             },
           ]}
           width="md"
-          name="useMode1"
-          placeholder="Chọn trạng thái hoạt động"
-          label="Trạng thái"
+          name="Position"
+          label={translateStaff('position')}
+          placeholder={translateStaff('position_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="12"
-          placeholder="Nhập sức chứa"
-          label="Sức chứa"
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập sức chứa',
-            },
-          ]}
+          name="Department"
+          label={translateStaff('department')}
+          placeholder={translateStaff('department_placeholder')}
         />
+
+        <ProFormText
+          width="md"
+          name="Manager"
+          label={translateStaff('manager')}
+          placeholder={translateStaff('manager_placeholder')}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormSelect
           request={async () => [
             {
-              value: '1',
+              value: 'Active',
               label: 'Active',
             },
             {
-              value: '2',
-              label: 'Ngừng hoạt động',
+              value: 'Deactive',
+              label: 'Deactive',
             },
           ]}
           width="md"
-          name="useMode"
-          placeholder="Chọn trạng thái sức chứa"
-          label="Trạng thái sức chứa"
+          name="Status"
+          label={translateStaff('status')}
+          placeholder={translateStaff('status_placeholder')}
+        />
+
+        <ProFormTextArea
+          width="md"
+          name="Note"
+          label={translateStaff('note')}
+          placeholder={translateStaff('note_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

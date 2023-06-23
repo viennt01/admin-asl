@@ -66,6 +66,7 @@ export default function EditLStaff() {
   const onFinish = (formValues: FormValues) => {
     console.log(formValues);
   };
+
   const residences: CascaderProps<DataNodeType>['options'] = [
     {
       value: 'Thành phố Hồ Chí Minh',
@@ -128,17 +129,8 @@ export default function EditLStaff() {
               <Col lg={19} span={24}>
                 <Row gutter={16}>
                   <Col lg={5} span={24}>
-                    <Form.Item
-                      label={translateStaff('account')}
-                      name="account"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input Account',
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Nhập Account" />
+                    <Form.Item label={translateStaff('account')} name="account">
+                      <Input placeholder="ngocanh" disabled />
                     </Form.Item>
                   </Col>
 
@@ -174,12 +166,12 @@ export default function EditLStaff() {
 
                   <Col lg={3} span={24}>
                     <Form.Item
-                      label={translateStaff('sex')}
-                      name="sex"
+                      label={translateStaff('gender')}
+                      name="gender"
                       rules={[
                         {
                           required: true,
-                          message: 'Please input sex',
+                          message: 'Please input gender',
                         },
                       ]}
                     >
@@ -259,7 +251,7 @@ export default function EditLStaff() {
                   </Col>
 
                   <Col lg={9} span={24}>
-                    <Form.Item label="Hot line" style={{ marginBottom: 0 }}>
+                    <Form.Item label="Phone Number" style={{ marginBottom: 0 }}>
                       <Form.Item
                         name="phone_code"
                         style={{ display: 'inline-block', width: 104 }}
@@ -464,7 +456,12 @@ export default function EditLStaff() {
                   />
                 </Space>
 
-                <Space style={{ position: 'absolute', top: '3%', right: 0 }}>
+                <Space
+                  style={{
+                    position: 'absolute',
+                    transform: 'translate(95px, 25px)',
+                  }}
+                >
                   <Tag
                     color={STATUS_COLORS.Active}
                     style={{
