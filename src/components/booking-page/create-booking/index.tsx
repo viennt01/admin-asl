@@ -28,7 +28,7 @@ export default function CreateBooking() {
       name: string;
       company: string;
     }>
-      title={translateBooking('information_add_bank')}
+      title={translateBooking('information_add_booking')}
       trigger={
         <Button
           type="primary"
