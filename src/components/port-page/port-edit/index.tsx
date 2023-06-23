@@ -353,7 +353,7 @@ export default function EditPort() {
 
               <Col lg={4} span={24}>
                 <Form.Item
-                  label="Status"
+                  label={translatePort('status')}
                   name="status"
                   rules={[
                     {

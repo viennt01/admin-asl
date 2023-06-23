@@ -13,6 +13,7 @@
     "creator": "Người tạo",
     
     "information_port": "THÔNG TIN CHI TIẾT CỦA CẢNG",
+    "title_information_port": "Thông tin của Cảng",
     "quantity_container": "Số lượng container",
     "capacity_label": "Sức chứa",
     "information_add_port": "Thêm mới cảng",

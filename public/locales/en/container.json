@@ -11,7 +11,10 @@
     "status":"Status",
     "date_created": "Date Created",
     "creator": "Creator",
+
+    "title_information_container": "Container Information",
     "information_add_container": "Add new Container",
+    "information_edit_container": "Edit Container",
     "code_placeholder": "Enter the Container no",
     "type_of_container_placeholder": "Enter Container type",
     "location_placeholder": "Enter location",

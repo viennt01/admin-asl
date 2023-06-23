@@ -12,7 +12,9 @@
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
     
+    "title_information_container": "Thông tin Container",
     "information_add_container": "Thêm mới Container",
+    "information_edit_container": "Chỉnh sửa Container",
     "code_placeholder": "Nhập mã số Container",
     "type_of_container_placeholder": "Nhập loại Container",
     "location_placeholder": "Nhập vị trí",

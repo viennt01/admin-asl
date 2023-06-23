@@ -13,6 +13,7 @@
     "creator": "Creator",
     
     "information_port": "PORT DETAILS INFORMATION",
+    "title_information_port": "Port information",
     "quantity_container": "Number of containers",
     "capacity_label": "Capacity",
     "information_add_port": "Add new port",
