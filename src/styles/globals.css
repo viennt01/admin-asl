@@ -43,6 +43,6 @@ a {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 100px;
-  background-image: linear-gradient(45deg,  #43b758 20%, #00A651 80% );
+  background-image: linear-gradient(45deg,  #1D4486 20%, #1D4486 80% );
   box-shadow: inset 2px 2px 5px 0 rgba(255, 255, 255, 0.5);
 }

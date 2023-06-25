@@ -92,7 +92,10 @@ const SelectLanguage = ({
           {items.map(({ value, label, key }, index) => (
             <li
               key={index}
-              onClick={() => onClickChangeLanguage(key, label)}
+              onClick={() => {
+                onClickChangeLanguage(key, label);
+                onClickShowPopupLanguage();
+              }}
               className={AuthenLayout.option}
             >
               <img src={value} alt={label} />
