@@ -6,7 +6,7 @@ function Quotation() {
   return (
     <>
       <Head>
-        <title>GLS | QUOTATION</title>
+        <title>ASL | QUOTATION</title>
       </Head>
       <QuotationPage />
     </>

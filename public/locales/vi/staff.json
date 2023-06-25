@@ -19,7 +19,9 @@
     "note": "Ghi chú",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+
     "information_add_staff": "Thêm mới nhân viên",
+    "information_edit_staff": "Chỉnh sửa nhân viên",
     "full_name_placeholder": "Nhập họ và tên",
     "gender_placeholder": "Chọn giới tính",
     "dob_placeholder": "Chọn ngày sinh",

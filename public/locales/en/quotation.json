@@ -10,6 +10,7 @@
     "effective_date": "Effective Date",
     "creator": "Creator",
     "information_add_quotation": "Add new quotation",
+    "information_edit_quotation": "Edit quotation",
     "customer_name_placeholder": "Enter customer name",
     "receipt_of_goods_placeholder": "Choose receipt of goods",
     "delivery_placeholder": "Choose delivery",

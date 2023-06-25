@@ -22,6 +22,7 @@
     "creator": "Creator",
     "status":"Status",
     
+    "transaction_history": "Transaction history",
     "information_add_booking": "Add new booking",
     "information_edit_booking": "Edit Booking",
     "port_of_loading_placeholder": "Enter port of loading",

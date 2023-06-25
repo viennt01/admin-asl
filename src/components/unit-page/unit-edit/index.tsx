@@ -62,7 +62,9 @@ export default function EditUnit() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit Unit</Title>
+                <Title level={3}>
+                  {translateUnit('information_edit_unit')}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>

@@ -6,7 +6,7 @@ function CustomerEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | CUSTOMER EDIT</title>
+        <title>ASL | CUSTOMER EDIT</title>
       </Head>
       <EditCustomer />
     </>
@@ -15,7 +15,13 @@ function CustomerEditPage() {
 
 export default withAuthentication(CustomerEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'customer']);
+export const getStaticProps = getStatic([
+  'common',
+  'customer',
+  'contactInfo',
+  'booking',
+  'invoice',
+]);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>

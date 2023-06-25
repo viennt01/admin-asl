@@ -6,7 +6,7 @@ function SupplierEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | SUPPLIER EDIT</title>
+        <title>ASL | SUPPLIER EDIT</title>
       </Head>
       <EditSupplier />
     </>
@@ -15,7 +15,13 @@ function SupplierEditPage() {
 
 export default withAuthentication(SupplierEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'supplier']);
+export const getStaticProps = getStatic([
+  'common',
+  'supplier',
+  'contactInfo',
+  'booking',
+  'invoice',
+]);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>

@@ -11,7 +11,9 @@
     "status":"Status",
     "date_created": "Date Created",
     "creator": "Creator",
+
     "information_add_location": "Add new location",
+    "information_edit_location": "Edit Location",
     "name_placeholder": "Enter the address name",
     "address_placeholder": "Enter address",
     "type_of_location_placeholder": "Enter address type",

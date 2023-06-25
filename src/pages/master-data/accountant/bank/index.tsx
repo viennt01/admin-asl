@@ -6,7 +6,7 @@ function Bank() {
   return (
     <>
       <Head>
-        <title>GLS | BANK</title>
+        <title>ASL | BANK</title>
       </Head>
       <BankPage />
     </>

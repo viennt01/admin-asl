@@ -6,7 +6,7 @@ function LocationType() {
   return (
     <>
       <Head>
-        <title>GLS | TYPES OF LOCATION</title>
+        <title>ASL | TYPES OF LOCATION</title>
       </Head>
       <LocationTypePage />
     </>

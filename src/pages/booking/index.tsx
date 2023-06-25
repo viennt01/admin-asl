@@ -6,7 +6,7 @@ function Booking() {
   return (
     <>
       <Head>
-        <title>GLS | BOOKING</title>
+        <title>ASL | BOOKING</title>
       </Head>
       <BookingPage />
     </>

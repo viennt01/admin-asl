@@ -6,7 +6,7 @@ function Currency() {
   return (
     <>
       <Head>
-        <title>GLS | CURRENCY</title>
+        <title>ASL | CURRENCY</title>
       </Head>
       <CurrencyPage />
     </>

@@ -19,6 +19,7 @@ import { ColumnsType } from 'antd/es/table';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useI18n from '@/i18n/useI18N';
+import CollapseCard from '@/components/commons/collapse-card';
 
 // interface DataNodeType {
 //   value: string;
@@ -37,7 +38,7 @@ interface DataType {
   status: string;
 
   full_name: string;
-  sex: string;
+  gender: string;
   dob: string;
   phone: string;
   address: string;
@@ -78,6 +79,9 @@ export default function EditLCustomer() {
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const { translate: translateCustomer } = useI18n('customer');
+  const { translate: translateContactInfo } = useI18n('contactInfo');
+  const { translate: translateBooking } = useI18n('booking');
+  const { translate: translateInvoice } = useI18n('invoice');
   const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
@@ -127,42 +131,42 @@ export default function EditLCustomer() {
 
   const columnsContactInfo: ColumnsType<DataType> = [
     {
-      title: 'Full name',
+      title: translateContactInfo('full_name'),
       dataIndex: 'full_name',
       align: 'center',
     },
     {
-      title: 'Sex',
-      dataIndex: 'sex',
+      title: translateContactInfo('gender'),
+      dataIndex: 'gender',
       align: 'center',
     },
     {
-      title: 'Date of birth',
+      title: translateContactInfo('dob'),
       dataIndex: 'dob',
       align: 'center',
     },
     {
-      title: 'Phone Number',
+      title: translateContactInfo('phone'),
       dataIndex: 'phone',
       align: 'center',
     },
     {
-      title: 'Address',
+      title: translateContactInfo('address'),
       dataIndex: 'address',
       align: 'center',
     },
     {
-      title: 'Email',
+      title: translateContactInfo('email'),
       dataIndex: 'email',
       align: 'center',
     },
     {
-      title: 'Nationality',
+      title: translateContactInfo('nationality'),
       dataIndex: 'nationality',
       align: 'center',
     },
     {
-      title: 'Position',
+      title: translateContactInfo('position'),
       dataIndex: 'position',
       align: 'center',
     },
@@ -170,97 +174,97 @@ export default function EditLCustomer() {
 
   const columnsTransHis: ColumnsType<DataType> = [
     {
-      title: 'Booking No',
+      title: translateBooking('code_booking'),
       dataIndex: 'bookingCode',
       align: 'center',
     },
     {
-      title: 'Port of Loading',
+      title: translateBooking('port_of_loading'),
       dataIndex: 'portOfLoading',
       align: 'center',
     },
     {
-      title: 'Port of Discharge',
+      title: translateBooking('port_of_discharge'),
       dataIndex: 'portOfDischarge',
       align: 'center',
     },
     {
-      title: 'Container No',
+      title: translateBooking('container_code'),
       dataIndex: 'containerCode',
       align: 'center',
     },
     {
-      title: 'Package',
+      title: translateBooking('package'),
       dataIndex: 'package',
       align: 'center',
     },
     {
-      title: 'Number of shipments',
+      title: translateBooking('number_of_shipments'),
       dataIndex: 'numberOfShipments',
       align: 'center',
     },
     {
-      title: 'Weight',
+      title: translateBooking('weight'),
       dataIndex: 'weight',
       align: 'center',
     },
     {
-      title: 'Volume',
+      title: translateBooking('volume'),
       dataIndex: 'volume',
       align: 'center',
     },
     {
-      title: 'Place of Delivery',
+      title: translateBooking('place_of_delivery'),
       dataIndex: 'placeOfDelivery',
       align: 'center',
     },
     {
-      title: 'ETD',
+      title: translateBooking('etd'),
       dataIndex: 'etd',
       align: 'center',
     },
     {
-      title: 'ETA',
+      title: translateBooking('eta'),
       dataIndex: 'eta',
       align: 'center',
     },
     {
-      title: 'Shipper',
+      title: translateBooking('name_customer'),
       dataIndex: 'nameCustomer',
       align: 'center',
     },
     {
-      title: 'Supplier',
+      title: translateBooking('name_supplier'),
       dataIndex: 'nameSupplier',
       align: 'center',
     },
     {
-      title: 'Consignee (Cnee)',
+      title: translateBooking('name_cnee'),
       dataIndex: 'nameCnee',
       align: 'center',
     },
     {
-      title: 'Note',
+      title: translateBooking('note'),
       dataIndex: 'note',
       align: 'center',
     },
     {
-      title: 'Saleman',
+      title: translateBooking('saleman'),
       dataIndex: 'saleman',
       align: 'center',
     },
     {
-      title: 'Status',
+      title: translateBooking('status'),
       dataIndex: 'status',
       align: 'center',
     },
     {
-      title: 'Date created',
+      title: translateBooking('date_create'),
       dataIndex: 'dateCreate',
       align: 'center',
     },
     {
-      title: 'Creator',
+      title: translateBooking('creator'),
       dataIndex: 'creator',
       align: 'center',
     },
@@ -268,89 +272,89 @@ export default function EditLCustomer() {
 
   const columnsReceivable: ColumnsType<DataType> = [
     {
-      title: 'Invoice date',
-      dataIndex: 'status',
+      title: translateInvoice('invoice_date'),
+      dataIndex: 'invoiceDate',
       align: 'center',
     },
     {
-      title: 'Invoice No',
-      dataIndex: 'containerNo',
+      title: translateInvoice('invoice_no'),
+      dataIndex: 'invoiceNo',
       align: 'center',
     },
     {
-      title: 'Invoice series',
-      dataIndex: 'typeContainer',
+      title: translateInvoice('invoice_series'),
+      dataIndex: 'invoiceSeries',
       align: 'center',
     },
     {
-      title: 'Amount exclude tax',
-      dataIndex: 'status',
+      title: translateInvoice('amount_exclude_tax'),
+      dataIndex: 'amountExcludeTax',
       align: 'center',
     },
     {
-      title: 'Tax (%)',
-      dataIndex: 'status',
+      title: translateInvoice('tax'),
+      dataIndex: 'tax',
       align: 'center',
     },
     {
-      title: 'Tax Amount',
-      dataIndex: 'status',
+      title: translateInvoice('tax_amount'),
+      dataIndex: 'taxAmount',
       align: 'center',
     },
     {
-      title: 'Total amount',
-      dataIndex: 'status',
+      title: translateInvoice('total_amount'),
+      dataIndex: 'totalAmount',
       align: 'center',
     },
     {
-      title: 'Issue by',
-      dataIndex: 'status',
+      title: translateInvoice('issue_by'),
+      dataIndex: 'issueBy',
       align: 'center',
     },
     {
-      title: 'Status',
+      title: translateInvoice('status'),
       dataIndex: 'status',
       align: 'center',
     },
   ];
   const columnsPayable: ColumnsType<DataType> = [
     {
-      title: 'Invoice date',
-      dataIndex: 'status',
+      title: translateInvoice('invoice_date'),
+      dataIndex: 'invoiceDate',
       align: 'center',
     },
     {
-      title: 'Invoice No',
-      dataIndex: 'containerNo',
+      title: translateInvoice('invoice_no'),
+      dataIndex: 'invoiceNo',
       align: 'center',
     },
     {
-      title: 'Invoice series',
-      dataIndex: 'typeContainer',
+      title: translateInvoice('invoice_series'),
+      dataIndex: 'invoiceSeries',
       align: 'center',
     },
     {
-      title: 'Amount exclude tax',
-      dataIndex: 'status',
+      title: translateInvoice('amount_exclude_tax'),
+      dataIndex: 'amountExcludeTax',
       align: 'center',
     },
     {
-      title: 'Tax (%)',
-      dataIndex: 'status',
+      title: translateInvoice('tax'),
+      dataIndex: 'tax',
       align: 'center',
     },
     {
-      title: 'Tax Amount',
-      dataIndex: 'status',
+      title: translateInvoice('tax_amount'),
+      dataIndex: 'taxAmount',
       align: 'center',
     },
     {
-      title: 'Total amount',
-      dataIndex: 'status',
+      title: translateInvoice('total_amount'),
+      dataIndex: 'totalAmount',
       align: 'center',
     },
     {
-      title: 'Status',
+      title: translateInvoice('status'),
       dataIndex: 'status',
       align: 'center',
     },
@@ -375,7 +379,9 @@ export default function EditLCustomer() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit Customer</Title>
+                <Title level={3}>
+                  {translateCustomer('information_edit_customer')}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>
@@ -610,64 +616,61 @@ export default function EditLCustomer() {
             </Row>
           </Card>
 
-          <Card
-            style={{ marginBottom: 24 }}
-            title={
-              <Title
-                level={3}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Contact Information
-              </Title>
-            }
+          <CollapseCard
+            title={translateContactInfo('title_information_contact')}
+            style={{ marginBottom: '24px' }}
           >
-            <Table columns={columnsContactInfo} dataSource={dataTransHis} />
-          </Card>
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table
+                    columns={columnsContactInfo}
+                    dataSource={dataTransHis}
+                  />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
 
-          <Card
-            style={{ marginBottom: 24 }}
-            title={
-              <Title
-                level={3}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Transaction history
-              </Title>
-            }
+          <CollapseCard
+            title={translateBooking('transaction_history')}
+            style={{ marginBottom: '24px' }}
           >
-            <Table columns={columnsTransHis} dataSource={dataTransHis} />
-          </Card>
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table columns={columnsTransHis} dataSource={dataTransHis} />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
 
-          <Card
-            style={{ marginBottom: 24 }}
-            title={
-              <Title
-                level={3}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Debt history
-              </Title>
-            }
+          <CollapseCard
+            title={translateInvoice('debt_history')}
+            style={{ marginBottom: '24px' }}
           >
-            <Card style={{ marginBottom: 24 }} title="Công nợ thu">
-              <Table columns={columnsReceivable} dataSource={dataTransHis} />
-            </Card>
-            <Card style={{ marginBottom: 24 }} title="Công nợ chi">
-              <Table columns={columnsPayable} dataSource={dataTransHis} />
-            </Card>
-          </Card>
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Card
+                    style={{ marginBottom: 24 }}
+                    title={translateInvoice('accounts_receivable')}
+                  >
+                    <Table
+                      columns={columnsReceivable}
+                      dataSource={dataTransHis}
+                    />
+                  </Card>
+                  <Card
+                    style={{ marginBottom: 24 }}
+                    title={translateInvoice('accounts_payable')}
+                  >
+                    <Table columns={columnsPayable} dataSource={dataTransHis} />
+                  </Card>
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
 
           <Card
             style={{

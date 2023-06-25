@@ -40,7 +40,7 @@ const initialValue = {
 const { Title } = Typography;
 
 export default function EditDepot() {
-  const { translate: translateAddDepot } = useI18n('depot');
+  const { translate: translateDepot } = useI18n('depot');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -112,14 +112,16 @@ export default function EditDepot() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit Depot</Title>
+                <Title level={3}>
+                  {translateDepot('information_edit_depot')}
+                </Title>
               </Col>
             </Row>
 
             <Row gutter={16}>
               <Col lg={5} span={24}>
                 <Form.Item
-                  label={translateAddDepot('depot_code')}
+                  label={translateDepot('depot_code')}
                   name="depot_code"
                   rules={[
                     {
@@ -128,15 +130,13 @@ export default function EditDepot() {
                     },
                   ]}
                 >
-                  <Input
-                    placeholder={translateAddDepot('depot_no_placeholder')}
-                  />
+                  <Input placeholder={translateDepot('depot_no_placeholder')} />
                 </Form.Item>
               </Col>
 
               <Col lg={14} span={24}>
                 <Form.Item
-                  label={translateAddDepot('depot_name')}
+                  label={translateDepot('depot_name')}
                   name="depot_name"
                   rules={[
                     {
@@ -146,14 +146,14 @@ export default function EditDepot() {
                   ]}
                 >
                   <Input
-                    placeholder={translateAddDepot('depot_name_placeholder')}
+                    placeholder={translateDepot('depot_name_placeholder')}
                   />
                 </Form.Item>
               </Col>
 
               <Col lg={5} span={24}>
                 <Form.Item
-                  label={translateAddDepot('country_name')}
+                  label={translateDepot('country_name')}
                   name="location"
                   rules={[
                     { required: true, message: 'Please select the country' },
@@ -165,7 +165,7 @@ export default function EditDepot() {
 
               <Col lg={11} span={24}>
                 <Form.Item
-                  label={translateAddDepot('address')}
+                  label={translateDepot('address')}
                   name="detail_location"
                   rules={[
                     { required: true, message: 'Please input last name' },
@@ -177,7 +177,7 @@ export default function EditDepot() {
 
               <Col lg={5} span={24}>
                 <Form.Item
-                  label={translateAddDepot('branch_depot')}
+                  label={translateDepot('branch_depot')}
                   name="branch_depot"
                   rules={[
                     {
@@ -187,14 +187,14 @@ export default function EditDepot() {
                   ]}
                 >
                   <Input
-                    placeholder={translateAddDepot('branch_depot_placeholder')}
+                    placeholder={translateDepot('branch_depot_placeholder')}
                   />
                 </Form.Item>
               </Col>
 
               <Col lg={8} span={24}>
                 <Form.Item
-                  label={translateAddDepot('companny_mamagement_depot')}
+                  label={translateDepot('companny_mamagement_depot')}
                   name="companny_mamagement_depot"
                   rules={[
                     {
@@ -204,7 +204,7 @@ export default function EditDepot() {
                   ]}
                 >
                   <Input
-                    placeholder={translateAddDepot(
+                    placeholder={translateDepot(
                       'companny_mamagement_depot_placeholder'
                     )}
                   />
@@ -213,7 +213,7 @@ export default function EditDepot() {
 
               <Col lg={3} span={24}>
                 <Form.Item
-                  label={translateAddDepot('date_created')}
+                  label={translateDepot('date_created')}
                   name="dateCreated"
                   rules={[
                     { required: true, message: 'Please input date created' },
@@ -229,7 +229,7 @@ export default function EditDepot() {
 
               <Col lg={6} span={24}>
                 <Form.Item
-                  label={translateAddDepot('creator')}
+                  label={translateDepot('creator')}
                   name="creator"
                   rules={[
                     {
@@ -244,7 +244,7 @@ export default function EditDepot() {
 
               <Col lg={3} span={24}>
                 <Form.Item
-                  label={translateAddDepot('status_depot')}
+                  label={translateDepot('status_depot')}
                   name="status_depot"
                   rules={[
                     {
@@ -273,7 +273,7 @@ export default function EditDepot() {
               </Col>
               <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateAddDepot('description')}
+                  label={translateDepot('description')}
                   name="status_depot"
                   rules={[
                     {
@@ -283,7 +283,7 @@ export default function EditDepot() {
                   ]}
                 >
                   <Input.TextArea
-                    placeholder={translateAddDepot('description_placeholder')}
+                    placeholder={translateDepot('description_placeholder')}
                   />
                 </Form.Item>
               </Col>

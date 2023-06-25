@@ -1,0 +1,14 @@
+{
+    "invoice_date": "Ngày hóa đơn",
+    "invoice_no": "Số hóa đơn",
+    "invoice_series": "Series hóa đơn",
+    "amount_exclude_tax": "Số tiền loại trừ thuế",
+    "tax": "Thuế (%)",
+    "tax_amount": "Số tiền thuế",
+    "total_amount": "Tổng số tiền",
+    "issue_by": "Phát hành bởi",
+    "status": "Trạng thái",
+    "debt_history": "Lịch sử công nợ",
+    "accounts_receivable": "Công nợ thu",
+    "accounts_payable": "Công nợ chi"
+}

@@ -6,7 +6,9 @@
     "status":"Status",
     "date_created": "Date Created",
     "creator": "Creator",
+
     "information_add_type_of_expenses": "Add new type of expense",
+    "information_edit_type_of_expenses": "Edit type of expense",
     "name_placeholder": "Enter the expense name",
     "status_placeholder":"Choose status"
 }

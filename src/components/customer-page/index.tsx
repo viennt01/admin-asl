@@ -53,7 +53,7 @@ export default function CustomerPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      customerCode: 'GLS120',
+      customerCode: 'ASL120',
       abbreviation: `MASAN CONSUMER`,
       customerName: `CÔNG TY CP HÀNG TIÊU DÙNG MASAN`,
       numberOfTransaction: 150,

@@ -14,6 +14,7 @@
     "creator": "Creator",
 
     "information_add_customer": "Add new customer",
+    "information_edit_customer": "Edit customer",
     "abbreviation_placeholder": "Enter abbreviation",
     "name_placeholder": "Enter customer name",
     "number_placeholder": "Enter number of transactions",

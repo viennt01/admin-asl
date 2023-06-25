@@ -53,7 +53,7 @@ export default function SupplierPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      supplierCode: 'GLSS152',
+      supplierCode: 'ASLS152',
       abbreviation: `Dong A`,
       supplierName: `Đông Á`,
       service: 'Đóng hàng',

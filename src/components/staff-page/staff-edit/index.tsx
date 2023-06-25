@@ -121,7 +121,9 @@ export default function EditLStaff() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit Staff</Title>
+                <Title level={3}>
+                  {translateStaff('information_edit_staff')}
+                </Title>
               </Col>
             </Row>
 

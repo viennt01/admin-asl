@@ -8,7 +8,9 @@
     "teus": "Teus",
     "date_created": "Date Created",
     "creator": "Creator",
+    
     "information_add_type_of_container": "Add new type of container",
+    "information_edit_type_of_container": "Edit type of container",
     "type_of_container_placeholder": "Enter the container type",
     "detail_placeholder": "Enter details",
     "teus_placeholder": "Enter Tues",
