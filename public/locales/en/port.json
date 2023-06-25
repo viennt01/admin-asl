@@ -17,6 +17,7 @@
     "quantity_container": "Number of containers",
     "capacity_label": "Capacity",
     "information_add_port": "Add new port",
+    "information_edit_port": "Edit Port",
     "new_port_title": "New port name",
     "new_port_placeholder": "Enter new port name",
     "new_port_tooltip": "The name is registered at the Ministry of Transport",

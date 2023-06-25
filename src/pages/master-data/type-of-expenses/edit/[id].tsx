@@ -6,7 +6,7 @@ function TypeOfExpensesEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | EXPENSES TYPE EDIT</title>
+        <title>ASL | EXPENSES TYPE EDIT</title>
       </Head>
       <EditExpensesType />
     </>

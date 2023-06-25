@@ -11,7 +11,9 @@
     "status_depot":"Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+
     "information_add_depot": "Thêm mới Depot",
+    "information_edit_depot": "Chỉnh sửa Depot",
     "depot_name_placeholder": "Nhập tên Depot",
     "address_placeholder": "Nhập địa chỉ",
     "branch_depot_placeholder": "Nhập chi nhánh",

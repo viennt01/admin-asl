@@ -43,7 +43,7 @@ export default function StaffPage() {
     code: string;
     account: string;
     full_name: string;
-    sex: string;
+    gender: string;
     dob: string;
     phone: string;
     address: string;
@@ -63,13 +63,13 @@ export default function StaffPage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      staffNo: 'GLS122',
+      staffNo: 'ASL122',
       number: 150,
       image: `https://cdn.pixabay.com.jpg`,
       code: `DA123456`,
       account: `ANV30`,
       full_name: 'Nguyễn Văn A',
-      sex: 'Nữ',
+      gender: 'Nữ',
       dob: `25/5/1986`,
       address: 'Hồ Chí Minh',
       phone: '0964582355',
@@ -235,10 +235,10 @@ export default function StaffPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateStaff('sex'),
+      title: translateStaff('gender'),
       width: 100,
-      dataIndex: 'sex',
-      key: 'sex',
+      dataIndex: 'gender',
+      key: 'gender',
       align: 'center',
       filters: [
         {

@@ -13,6 +13,7 @@
     "creator": "Creator",
 
     "information_add_depot": "Add new Depot",
+    "information_edit_depot": "Edit Depot",
     "depot_name_placeholder": "Enter the Depot name",
     "address_placeholder": "Enter address",
     "branch_depot_placeholder": "Enter branch",

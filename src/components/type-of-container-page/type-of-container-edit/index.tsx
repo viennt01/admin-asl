@@ -75,7 +75,11 @@ export default function EditTypeOfContainer() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit type of Container</Title>
+                <Title level={3}>
+                  {translateTypeOfContainer(
+                    'information_edit_type_of_container'
+                  )}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>

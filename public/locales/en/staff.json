@@ -19,7 +19,9 @@
     "note": "Note",
     "date_created": "Date Created",
     "creator": "Creator",
+
     "information_add_staff": "Add new staff",
+    "information_edit_staff": "Edit staff",
     "full_name_placeholder": "Enter full Name",
     "gender_placeholder": "Choose gender",
     "dob_placeholder": "Choose date of birth",

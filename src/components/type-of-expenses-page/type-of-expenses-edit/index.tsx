@@ -65,7 +65,9 @@ export default function EditExpensesType() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit type of Expense</Title>
+                <Title level={3}>
+                  {translateTypeOfExpenses('information_edit_type_of_expenses')}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>

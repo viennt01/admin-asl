@@ -1,0 +1,14 @@
+{
+    "invoice_date": "Invoice date",
+    "invoice_no": "Invoice No",
+    "invoice_series": "Invoice series",
+    "amount_exclude_tax": "Amount exclude tax",
+    "tax": "Tax (%)",
+    "tax_amount": "Tax Amount",
+    "total_amount": "Total amount",
+    "issue_by": "Issue by",
+    "status": "Status",
+    "debt_history": "Debt history",
+    "accounts_receivable": "Accounts receivable",
+    "accounts_payable": "Accounts payable"
+}

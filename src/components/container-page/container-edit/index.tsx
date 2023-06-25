@@ -68,7 +68,7 @@ export default function EditContainer() {
     status: string;
 
     full_name: string;
-    sex: string;
+    gender: string;
     dob: string;
     phone: string;
     address: string;
@@ -249,7 +249,9 @@ export default function EditContainer() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit Container</Title>
+                <Title level={3}>
+                  {translateContainer('information_edit_container')}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>

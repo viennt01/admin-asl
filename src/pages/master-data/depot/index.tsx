@@ -6,7 +6,7 @@ function Depot() {
   return (
     <>
       <Head>
-        <title>GLS | DEPOT</title>
+        <title>ASL | DEPOT</title>
       </Head>
       <DepotPage />
     </>

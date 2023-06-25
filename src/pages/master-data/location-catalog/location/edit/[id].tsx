@@ -6,7 +6,7 @@ function LocationEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | LOCATION EDIT</title>
+        <title>ASL | LOCATION EDIT</title>
       </Head>
       <EditLocation />
     </>

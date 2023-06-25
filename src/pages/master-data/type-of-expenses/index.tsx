@@ -6,7 +6,7 @@ function ExpensesType() {
   return (
     <>
       <Head>
-        <title>GLS | TYPES OF EXPENSES</title>
+        <title>ASL | TYPES OF EXPENSES</title>
       </Head>
       <ExpensesTypePage />
     </>

@@ -6,7 +6,7 @@ function TypeOfContainer() {
   return (
     <>
       <Head>
-        <title>GLS | TYPE OF CONTAINER</title>
+        <title>ASL | TYPE OF CONTAINER</title>
       </Head>
       <TypeOfContainerPage />
     </>

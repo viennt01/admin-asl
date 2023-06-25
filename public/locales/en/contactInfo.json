@@ -1,0 +1,11 @@
+{
+    "full_name": "Full name",
+    "gender": "Gender",
+    "dob": "Date of birth",
+    "phone": "Phone Number",
+    "address": "Address",
+    "email": "Email",
+    "nationality": "Nationality",
+    "position": "Position",
+    "title_information_contact": "Contact information"
+}

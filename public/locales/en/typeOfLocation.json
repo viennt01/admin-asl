@@ -5,8 +5,10 @@
     "status":"Status",
     "date_created": "Date Created",
     "creator": "Creator",
+
     "type_of_location_information":"DETAILS OF ADDRESS TYPE",
     "information_add_type_of_location": "Add new type of location",
+    "information_edit_type_of_location": "Edit type of location",
     "type_of_location_placeholder": "Enter the address type",
     "status_placeholder": "Choose status"
 }

@@ -194,7 +194,9 @@ export default function EditPort() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit Port</Title>
+                <Title level={3}>
+                  {translatePort('information_edit_port')}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>
@@ -378,7 +380,10 @@ export default function EditPort() {
               </Col>
             </Row>
           </Card>
-          <Card style={{ marginBottom: 24 }} title="Danh sách container">
+          <Card
+            style={{ marginBottom: 24 }}
+            title={translateContainer('title')}
+          >
             <Table columns={columns} dataSource={data} />
           </Card>
           <Card>

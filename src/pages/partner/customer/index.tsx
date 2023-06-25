@@ -6,7 +6,7 @@ function Customer() {
   return (
     <>
       <Head>
-        <title>GLS | CUSTOMER</title>
+        <title>ASL | CUSTOMER</title>
       </Head>
       <CustomerPage />
     </>

@@ -16,6 +16,7 @@
     "creator": "Người tạo",
     
     "information_add_bank": "Thêm mới ngân hàng",
+    "information_edit_bank": "Chỉnh sửa ngân hàng",
     "bank_name_placeholder": "Nhập tên ngân hàng",
     "bank_account_number_placeholder": "Nhập số tài khoản ngân hàng",
     "bank_email_placeholder": "Nhập email",

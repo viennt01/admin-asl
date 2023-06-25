@@ -6,7 +6,7 @@ function Supplier() {
   return (
     <>
       <Head>
-        <title>GLS | SUPPLIER</title>
+        <title>ASL | SUPPLIER</title>
       </Head>
       <SupplierPage />
     </>

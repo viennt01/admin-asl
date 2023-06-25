@@ -6,7 +6,7 @@ function BookingEditPage() {
   return (
     <>
       <Head>
-        <title>GLS | BOOKING EDIT</title>
+        <title>ASL | BOOKING EDIT</title>
       </Head>
       <EditBooking />
     </>
@@ -20,6 +20,7 @@ export const getStaticProps = getStatic([
   'booking',
   'port',
   'container',
+  'goods',
 ]);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];

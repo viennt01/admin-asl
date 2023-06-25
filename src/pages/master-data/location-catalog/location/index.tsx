@@ -6,7 +6,7 @@ function Location() {
   return (
     <>
       <Head>
-        <title>GLS | LOCATION</title>
+        <title>ASL | LOCATION</title>
       </Head>
       <LocationPage />
     </>

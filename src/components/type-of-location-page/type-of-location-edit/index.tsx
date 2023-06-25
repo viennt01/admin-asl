@@ -64,7 +64,9 @@ export default function EditTypeOfLocation() {
           >
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>Edit type of location</Title>
+                <Title level={3}>
+                  {translateTypeOfLocation('information_edit_type_of_location')}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>

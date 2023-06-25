@@ -55,6 +55,7 @@ export default function EditBooking() {
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateContainer } = useI18n('container');
   const { translate: translatePort } = useI18n('port');
+  const { translate: translateGoods } = useI18n('goods');
 
   useEffect(() => {
     if (!id) return;
@@ -97,31 +98,6 @@ export default function EditBooking() {
       ],
     },
   ];
-  // const data = [
-  //   {
-  //     key: '1',
-  //     containerNo: 'GMDU 307 307 9',
-  //     typeContainer: '40DC',
-  //     status: 'Đang cho thuê',
-  //   },
-  // ];
-  // const columns: ColumnsType<DataType> = [
-  //   {
-  //     title: translateBooking('no_booking'),
-  //     dataIndex: 'containerNo',
-  //     align: 'center',
-  //   },
-  //   {
-  //     title: 'Loại container',
-  //     dataIndex: 'typeContainer',
-  //     align: 'center',
-  //   },
-  //   {
-  //     title: 'Tình trạng container',
-  //     dataIndex: 'status',
-  //     align: 'center',
-  //   },
-  // ];
 
   const data: readonly any[] | undefined = [];
 
@@ -164,6 +140,34 @@ export default function EditBooking() {
     {
       title: translatePort('status'),
       dataIndex: 'status',
+      align: 'center',
+    },
+  ];
+
+  const columnsGoods: ColumnsType<DataType> = [
+    {
+      title: translateGoods('goods_no'),
+      dataIndex: 'goodsNo',
+      align: 'center',
+    },
+    {
+      title: translateGoods('goods_name'),
+      dataIndex: 'goodsName',
+      align: 'center',
+    },
+    {
+      title: translateGoods('type_of_goods'),
+      dataIndex: 'typeOfGoods',
+      align: 'center',
+    },
+    {
+      title: translateGoods('quantity'),
+      dataIndex: 'quantity',
+      align: 'center',
+    },
+    {
+      title: translateGoods('note'),
+      dataIndex: 'note',
       align: 'center',
     },
   ];
@@ -278,11 +282,11 @@ export default function EditBooking() {
                     options={[
                       {
                         value: '1',
-                        label: 'GLSU4824373',
+                        label: 'ASLU4824373',
                       },
                       {
                         value: '2',
-                        label: 'GLSU4824373',
+                        label: 'ASLU4824373',
                       },
                     ]}
                     placeholder={translateBooking('container_code_placeholder')}
@@ -541,25 +545,13 @@ export default function EditBooking() {
           </CollapseCard>
 
           <CollapseCard
-            title={translatePort('title_information_port')}
+            title={translateGoods('title_information_goods')}
             style={{ marginBottom: '24px' }}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
-                <Card
-                  style={{ marginBottom: 24 }}
-                  title={translateBooking('port_of_loading')}
-                >
-                  <Table columns={columnsPort} dataSource={data} />
-                </Card>
-              </Col>
-
-              <Col lg={24} span={24}>
-                <Card
-                  style={{ marginBottom: 24 }}
-                  title={translateBooking('port_of_discharge')}
-                >
-                  <Table columns={columnsPort} dataSource={data} />
+                <Card style={{ marginBottom: 24 }}>
+                  <Table columns={columnsGoods} dataSource={data} />
                 </Card>
               </Col>
             </Row>

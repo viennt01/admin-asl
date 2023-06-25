@@ -1,0 +1,8 @@
+{
+    "goods_no": "Mã hàng hóa",
+    "goods_name": "Tên hàng hóa",
+    "type_of_goods": "Loại hàng hóa",
+    "quantity": "Số lượng",
+    "note": "Ghi chú",
+    "title_information_goods": "Thông tin của hàng hóa"
+}

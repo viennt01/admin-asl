@@ -14,6 +14,7 @@
     "creator": "Người tạo",
     
     "information_add_supplier": "Thêm mới nhà cung cấp",
+    "information_edit_supplier": "Chỉnh sửa nhà cung cấp",
     "name_placeholder": "Nhập tên nhà cung cấp",
     "service_placeholder": "Chọn dịch vụ cung cấp",
     "number_placeholder": "Nhập số lượng giao dịch",

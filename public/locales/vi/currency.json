@@ -6,6 +6,7 @@
     "exchange_rate_to_USD": "Tỉ giá sang USD",
     
     "information_add_currency": "Thêm mới tiền tệ",
+    "information_edit_currency": "Chỉnh sửa tiền tệ",
     "currency_placeholder": "Chọn tiền tệ",
     "exchange_rate_to_VND_placeholder": "Nhập tỉ giá sang VND",
     "exchange_rate_to_USD_placeholder": "Nhập tỉ giá sang USD"

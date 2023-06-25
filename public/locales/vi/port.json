@@ -17,6 +17,7 @@
     "quantity_container": "Số lượng container",
     "capacity_label": "Sức chứa",
     "information_add_port": "Thêm mới cảng",
+    "information_edit_port": "Chỉnh sửa cảng",
     "new_port_title": "Tên cảng mới",
     "new_port_placeholder": "Nhập tên cảng mới",
     "new_port_tooltip": "Tên được đăng ký ở bộ giao thông vận tải",

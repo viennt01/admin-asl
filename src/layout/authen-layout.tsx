@@ -450,7 +450,7 @@ export function AppLayout(props: Props) {
             }}
           >
             <Text disabled>
-              ©2023 Existing GLS website. All Rights Reserved | Design by Softek
+              ©2023 Existing ASL website. All Rights Reserved | Design by Softek
               Solution
             </Text>
           </Footer>
