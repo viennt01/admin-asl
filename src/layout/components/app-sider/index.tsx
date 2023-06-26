@@ -286,6 +286,7 @@ const AppSider = ({ collapsed }: Props) => {
         theme={{
           token: {
             colorPrimary: COLORS.GREEN,
+            colorPrimaryBg: COLORS.BRIGHT,
           },
         }}
       >
