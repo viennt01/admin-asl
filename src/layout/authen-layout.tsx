@@ -16,6 +16,7 @@ import { LANGUAGE } from '@/constant';
 import Link from 'next/link';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
+import { getUserInfo } from './fetcher';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -117,6 +118,22 @@ export function AppLayout(props: Props) {
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
 
+  const fetchUserInfo = () => {
+    getUserInfo()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(() => {
+        // remove token and redirect to home
+        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+        router.replace(ROUTERS.LOGIN);
+      });
+  };
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
   useEffect(() => {
     setLanguage(
       appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
@@ -187,6 +204,15 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('master_data')}` },
       { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
       { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/liner-of-vendor': [
+      { title: `${translateCommon('master_data')}` },
+      { title: 'Liner of Vendor' },
+    ],
+    '/master-data/liner-of-vendor/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: <Link href={ROUTERS.PORT}>Liner of Vendor</Link> },
+      { title: 'Liner of Vendor' },
     ],
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },

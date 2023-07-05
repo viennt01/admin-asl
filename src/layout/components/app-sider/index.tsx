@@ -69,6 +69,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refCustomer = useRef(null);
   const refSupplier = useRef(null);
   const refPort = useRef(null);
+  const refLinerOfVendor = useRef(null);
   const refTypeOfContainer = useRef(null);
   const refTypeOfExpenses = useRef(null);
   const refAccountant = useRef(null);
@@ -156,6 +157,11 @@ const AppSider = ({ collapsed }: Props) => {
           `${translateCommon('port')}`,
           ROUTERS.PORT,
           <GoldOutlined ref={refPort} />
+        ),
+        getItem(
+          'Liner of vendor',
+          ROUTERS.LINER_OF_VENDOR,
+          <GoldOutlined ref={refLinerOfVendor} />
         ),
         getItem(
           `${translateCommon('type_of_container')}`,

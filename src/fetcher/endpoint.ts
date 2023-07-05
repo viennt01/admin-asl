@@ -5,3 +5,7 @@ export const UPLOAD = {
 export const API_AUTHENTICATE = {
   LOGIN: '/login',
 };
+
+export const API_USER = {
+  CHECK_USER: '/check-user',
+};

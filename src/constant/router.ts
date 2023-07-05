@@ -12,14 +12,12 @@ export const ROUTERS = {
   SUPPLIER_EDIT: (supplierId: string) => `/partner/supplier/edit/${supplierId}`,
   PORT: '/master-data/port',
   PORT_EDIT: (portId: string) => `/master-data/port/edit/${portId}`,
-  DEPOT: '/master-data/depot',
-  DEPOT_EDIT: (depotId: string) => `/master-data/depot/edit/${depotId}`,
+  LINER_OF_VENDOR: '/master-data/liner-of-vendor',
+  LINER_OF_VENDOR_EDIT: (id: string) =>
+    `/master-data/liner-of-vendor/edit/${id}`,
   LOCATION: '/master-data/location-catalog/location',
   LOCATION_EDIT: (locationId: string) =>
     `/master-data/location-catalog/location/edit/${locationId}`,
-  CONTAINER: '/master-data/container-catalog/container',
-  CONTAINER_EDIT: (containerId: string) =>
-    `/master-data/container-catalog/container/edit/${containerId}`,
   UNIT: '/master-data/unit',
   UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
   CURRENCY: '/master-data/accountant/currency',

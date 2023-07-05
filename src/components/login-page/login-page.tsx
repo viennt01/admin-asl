@@ -47,6 +47,9 @@ export default function LoginPage() {
       ipAddress: ip,
       deviceName: deviceName,
     };
+    appLocalStorage.set(LOCAL_STORAGE_KEYS.IP_ADDRESS, ip);
+    appLocalStorage.set(LOCAL_STORAGE_KEYS.DEVICE_NAME, deviceName);
+
     login(data)
       .then((res) => {
         if (res.status) {
