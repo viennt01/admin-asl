@@ -3,5 +3,5 @@ export const UPLOAD = {
 };
 
 export const API_AUTHENTICATE = {
-  LOGIN: '/Auth/Login',
+  LOGIN: '/login',
 };

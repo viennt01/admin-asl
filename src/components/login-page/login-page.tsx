@@ -53,7 +53,6 @@ export default function LoginPage() {
           headers.setToken(res.data.accessToken);
           appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.accessToken);
           router.push(ROUTERS.HOME);
-          setIsLoading(false);
           return;
         } else {
           notiApi.error({
@@ -62,30 +61,19 @@ export default function LoginPage() {
             placement: 'topRight',
             duration: 3,
           });
-          setIsLoading(false);
           return;
         }
       })
-      .catch((err) => {
-        const res = JSON.parse(err.message);
-        if (!res.error_code) {
-          notiApi.error({
-            message: '',
-            description: res.message,
-            placement: 'topRight',
-            duration: 3,
-          });
-          setIsLoading(false);
-          return;
-        } else {
-          notiApi.error({
-            message: '',
-            description: API_MESSAGE.ERROR,
-            placement: 'topRight',
-            duration: 3,
-          });
-          setIsLoading(false);
-        }
+      .catch(() => {
+        notiApi.error({
+          message: '',
+          description: API_MESSAGE.ERROR,
+          placement: 'topRight',
+          duration: 3,
+        });
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
   useEffect(() => {
