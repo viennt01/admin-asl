@@ -23,6 +23,17 @@ export interface FormValues {
   number_container: string;
 }
 
+// interface DataType {
+//   key: React.Key;
+//   typeContainerNo: string;
+//   typeContainer: string;
+//   detail: string;
+//   teus: string;
+//   status: string;
+//   dateCreate: string;
+//   creator: string;
+// }
+
 const initialValue = {
   type_of_container: '',
   detail_placeholder: '',
@@ -31,12 +42,12 @@ const initialValue = {
 
 const { Title } = Typography;
 
-export default function EditTypeOfLocation() {
+export default function EditTypeOfContainer() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
-  const { translate: translateTypeOfLocation } = useI18n('typeOfLocation');
   const dateFormat = 'YYYY/MM/DD';
+  const { translate: translateTypeOfContainer } = useI18n('typeOfContainer');
 
   useEffect(() => {
     if (!id) return;
@@ -65,72 +76,101 @@ export default function EditTypeOfLocation() {
             <Row justify={'center'}>
               <Col>
                 <Title level={3}>
-                  {translateTypeOfLocation('information_edit_type_of_location')}
+                  {translateTypeOfContainer(
+                    'information_edit_type_of_container'
+                  )}
                 </Title>
               </Col>
             </Row>
             <Row gutter={16}>
               <Col lg={6} span={24}>
                 <Form.Item
-                  label={translateTypeOfLocation('type_of_location_no')}
-                  name="type_of_location_no"
+                  label={translateTypeOfContainer('container_no')}
+                  name="typeContainerNo"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of location no',
+                      message: 'Please input type of container',
                     },
                   ]}
                 >
                   <Input
-                    placeholder={translateTypeOfLocation(
-                      'type_of_location_placeholder'
+                    placeholder={translateTypeOfContainer(
+                      'type_of_container_placeholder'
                     )}
                   />
                 </Form.Item>
               </Col>
-              <Col lg={18} span={24}>
+
+              <Col lg={14} span={24}>
                 <Form.Item
-                  label={translateTypeOfLocation('type_of_location')}
-                  name="code_location"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of container',
-                    },
-                  ]}
+                  label={translateTypeOfContainer('type_of_container')}
+                  name="typeContainer"
+                  rules={[{ required: true, message: 'Please input email' }]}
                 >
-                  <Input placeholder="Nhập mã địa chỉ" />
-                </Form.Item>
-              </Col>
-              <Col lg={6} span={24}>
-                <Form.Item
-                  label={translateTypeOfLocation('status')}
-                  name="status_depot"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input type of container',
-                    },
-                  ]}
-                >
-                  <Select
-                    options={[
-                      {
-                        value: 'Tạm ngừng',
-                        label: 'Tạm ngừng',
-                      },
-                      {
-                        value: 'Active',
-                        label: 'Active',
-                      },
-                    ]}
+                  <Input
+                    placeholder={translateTypeOfContainer(
+                      'number_container_placeholder'
+                    )}
                   />
                 </Form.Item>
               </Col>
 
               <Col lg={4} span={24}>
                 <Form.Item
-                  label={translateTypeOfLocation('date_created')}
+                  label={translateTypeOfContainer('status')}
+                  name="status"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input type of status',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Active',
+                        label: 'Active',
+                      },
+                      {
+                        value: 'Deactivate',
+                        label: 'Deactivate',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={24} md={24}>
+                <Form.Item
+                  label={translateTypeOfContainer('detail')}
+                  name="detail"
+                  rules={[
+                    { required: true, message: 'Please input last name' },
+                  ]}
+                >
+                  <Input.TextArea
+                    placeholder={translateTypeOfContainer('detail_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} md={24}>
+                <Form.Item
+                  label={translateTypeOfContainer('teus')}
+                  name="teus"
+                  rules={[{ required: true, message: 'Please input teus' }]}
+                >
+                  <Input
+                    placeholder={translateTypeOfContainer('teus_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} md={24}>
+                <Form.Item
+                  label={translateTypeOfContainer('date_created')}
                   name="dateCreated"
                   rules={[
                     { required: true, message: 'Please input date created' },
@@ -144,24 +184,23 @@ export default function EditTypeOfLocation() {
                 </Form.Item>
               </Col>
 
-              <Col lg={14} span={24}>
+              <Col lg={12} md={24}>
                 <Form.Item
-                  label={translateTypeOfLocation('creator')}
-                  name="creator"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input creator',
-                    },
-                  ]}
+                  label={translateTypeOfContainer('creator')}
+                  name="detail_placeholder"
+                  rules={[{ required: true, message: 'Please input creator' }]}
                 >
-                  <Input placeholder="Nhập Creator" />
+                  <Input
+                    placeholder={translateTypeOfContainer(
+                      'creator_placeholder'
+                    )}
+                  />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.TYPE_OF_LOCATION)}>
+                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CONTAINER)}>
                   Cancel
                 </Button>
               </Col>

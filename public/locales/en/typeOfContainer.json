@@ -1,0 +1,21 @@
+{
+    "title": "List type of Container",
+    "code": "No",
+    "container_no": "Container type code",
+    "type_of_container": "Type of Container",
+    "detail": "Details",
+    "status":"Status",
+    "teus": "Teus",
+    "date_created": "Date Created",
+    "creator": "Creator",
+    
+    "information_add_type_of_container": "Add new type of container",
+    "information_edit_type_of_container": "Edit type of container",
+    "type_of_container_placeholder": "Enter the container type",
+    "detail_placeholder": "Enter details",
+    "teus_placeholder": "Enter Tues",
+    "creator_placeholder": "Enter creator",
+    "date_created_placeholder": "Choose date_created",
+    "number_container_placeholder": "Enter the number of containers",
+    "status_placeholder":"Choose status"
+}

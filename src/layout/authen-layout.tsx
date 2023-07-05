@@ -188,38 +188,6 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/location-catalog/location': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('location_catalog')}` },
-      { title: `${translateCommon('location')}` },
-    ],
-    '/master-data/location-catalog/location/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('location_catalog')}` },
-      {
-        title: (
-          <Link href={ROUTERS.LOCATION}>{translateCommon('location')}</Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-    '/master-data/location-catalog/type-of-location': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('location_catalog')}` },
-      { title: `${translateCommon('type_of_location')}` },
-    ],
-    '/master-data/location-catalog/type-of-location/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('location_catalog')}` },
-      {
-        title: (
-          <Link href={ROUTERS.TYPE_OF_LOCATION}>
-            {translateCommon('type_of_location')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('unit')}` },
@@ -267,6 +235,23 @@ export function AppLayout(props: Props) {
         title: (
           <Link href={ROUTERS.TYPES_OF_EXPENSES}>
             {translateCommon('type_of_expenses')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/container-catalog/type-of-container': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('container_catalog')}` },
+      { title: `${translateCommon('type_of_container')}` },
+    ],
+    '/master-data/container-catalog/type-of-container/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('container_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPES_OF_CONTAINER}>
+            {translateCommon('type_of_container')}
           </Link>
         ),
       },

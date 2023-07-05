@@ -5,6 +5,7 @@ import {
   ProForm,
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import useI18n from '@/i18n/useI18N';
@@ -16,17 +17,17 @@ import useI18n from '@/i18n/useI18N';
 //     }, time);
 //   });
 // };
-export default function CreateTypeOfLocation() {
+export default function CreateTypeOfContainer() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
-  const { translate: translateAddTypeOfLocation } = useI18n('typeOfLocation');
+  const { translate: translateAddTypeOfContainer } = useI18n('typeOfContainer');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title={translateAddTypeOfLocation('information_add_type_of_location')}
+      title={translateAddTypeOfContainer('information_add_type_of_container')}
       trigger={
         <Button
           type="primary"
@@ -63,11 +64,33 @@ export default function CreateTypeOfLocation() {
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="TypeOfLocation"
-          label={translateAddTypeOfLocation('type_of_location')}
-          placeholder={translateAddTypeOfLocation(
-            'type_of_location_placeholder'
+          name="TypeOfContainer"
+          label={translateAddTypeOfContainer('type_of_container')}
+          placeholder={translateAddTypeOfContainer(
+            'type_of_container_placeholder'
           )}
+        />
+
+        <ProFormText
+          width="md"
+          name="Teus"
+          label={translateAddTypeOfContainer('teus')}
+          placeholder={translateAddTypeOfContainer('teus_placeholder')}
+          rules={[
+            {
+              type: 'number',
+              min: 0,
+              message: 'Vui lòng nhập teus',
+            },
+          ]}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormTextArea
+          width="md"
+          name="Detail"
+          label={translateAddTypeOfContainer('detail')}
+          placeholder={translateAddTypeOfContainer('detail_placeholder')}
         />
 
         <ProFormSelect
@@ -83,8 +106,8 @@ export default function CreateTypeOfLocation() {
           ]}
           width="md"
           name="Status"
-          label={translateAddTypeOfLocation('status')}
-          placeholder={translateAddTypeOfLocation('status_placeholder')}
+          label={translateAddTypeOfContainer('status')}
+          placeholder={translateAddTypeOfContainer('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

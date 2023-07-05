@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditLocationType from '@/components/type-of-location-page/type-of-location-edit';
+import EditTypeOfContainer from '@/components/type-of-container-page/type-of-container-edit';
 
-function TypeOfLocationEditPage() {
+function TypeOfContainerEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | LOCATION TYPE EDIT</title>
+        <title>ASL | TYPE OF CONTAINER EDIT</title>
       </Head>
-      <EditLocationType />
+      <EditTypeOfContainer />
     </>
   );
 }
 
-export default withAuthentication(TypeOfLocationEditPage);
+export default withAuthentication(TypeOfContainerEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'typeOfLocation']);
+export const getStaticProps = getStatic(['common', 'typeOfContainer']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>

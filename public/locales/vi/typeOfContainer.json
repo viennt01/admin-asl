@@ -1,0 +1,21 @@
+{
+    "title": "Danh sách loại Container",
+    "code": "Số thứ tự",
+    "container_no": "Mã loại container",
+    "type_of_container": "Loại Container",
+    "detail": "Chi tiết",
+    "status":"Trạng thái",
+    "teus": "Teus",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
+
+    "information_add_type_of_container": "Thêm mới loại container",
+    "information_edit_type_of_container": "Chỉnh sửa loại container",
+    "type_of_container_placeholder": "Nhập loại container",
+    "detail_placeholder": "Nhập chi tiết",
+    "teus_placeholder": "Nhập Tues",
+    "creator_placeholder": "Nhập người tạo",
+    "date_created_placeholder": "Chọn ngày tạo",
+    "number_container_placeholder": "Nhập số lượng container",
+    "status_placeholder":"Chọn trạng thái"
+}

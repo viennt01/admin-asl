@@ -10,8 +10,8 @@ import {
   UserOutlined,
   BankOutlined,
   DollarOutlined,
-  EnvironmentOutlined,
   ProfileOutlined,
+  InboxOutlined,
   CalculatorOutlined,
   ClusterOutlined,
   ApartmentOutlined,
@@ -69,10 +69,8 @@ const AppSider = ({ collapsed }: Props) => {
   const refCustomer = useRef(null);
   const refSupplier = useRef(null);
   const refPort = useRef(null);
+  const refTypeOfContainer = useRef(null);
   const refTypeOfExpenses = useRef(null);
-  const refLocationCatalog = useRef(null);
-  const refLocation = useRef(null);
-  const refTypeOfLocation = useRef(null);
   const refAccountant = useRef(null);
   const refCurrency = useRef(null);
   const refBank = useRef(null);
@@ -160,26 +158,14 @@ const AppSider = ({ collapsed }: Props) => {
           <GoldOutlined ref={refPort} />
         ),
         getItem(
+          `${translateCommon('type_of_container')}`,
+          ROUTERS.TYPES_OF_CONTAINER,
+          <InboxOutlined ref={refTypeOfContainer} />
+        ),
+        getItem(
           `${translateCommon('type_of_expenses')}`,
           ROUTERS.TYPES_OF_EXPENSES,
           <ProfileOutlined ref={refTypeOfExpenses} />
-        ),
-        getItem(
-          `${translateCommon('location_catalog')}`,
-          '5',
-          <EnvironmentOutlined ref={refLocationCatalog} />,
-          [
-            getItem(
-              `${translateCommon('location')}`,
-              ROUTERS.LOCATION,
-              <EnvironmentOutlined ref={refLocation} />
-            ),
-            getItem(
-              `${translateCommon('type_of_location')}`,
-              ROUTERS.TYPE_OF_LOCATION,
-              <EnvironmentOutlined ref={refTypeOfLocation} />
-            ),
-          ]
         ),
         getItem(
           `${translateCommon('accountant')}`,

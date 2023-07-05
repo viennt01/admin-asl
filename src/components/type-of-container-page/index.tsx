@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useEffect, useRef, useState } from 'react';
-import CreateLocationType from './create-type-of-location';
+import CreateTypeOfContainer from './create-type-of-container';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -38,16 +38,19 @@ const STATUS_LABELS = {
 //   NotFull: 'Nửa đầy',
 // };
 
-export default function LocationTypePage() {
+export default function TypeOfContainerPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateTypeOfLocation } = useI18n('typeOfLocation');
+  const { translate: translateTypeOfContainer } = useI18n('typeOfContainer');
   const { translate: translateCommon } = useI18n('common');
   const [locale, setLocale] = useState(enUS);
 
   interface DataType {
     key: number;
-    addressType: string;
+    typeContainerNo: string;
+    name: string;
+    details: string;
+    teus: number;
     status: string;
     dateCreated: string;
     creator: string;
@@ -58,8 +61,11 @@ export default function LocationTypePage() {
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      addressType: i % 2 === 0 ? 'Trả hàng' : 'Nhận hàng',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
+      typeContainerNo: i % 2 === 0 ? 'LC0014797' : 'LC0014792',
+      name: i % 2 === 0 ? '40N' : '40RF',
+      details: i % 2 === 0 ? 'Cont 40 nhẹ' : 'Cont 40 lạnh',
+      teus: i % 2 === 0 ? 2 : 1,
+      status: i % 2 === 0 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
       creator: 'Admin',
     });
@@ -179,7 +185,7 @@ export default function LocationTypePage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateTypeOfLocation('type_of_location_no'),
+      title: translateTypeOfContainer('code'),
       width: 100,
       dataIndex: 'key',
       key: 'key',
@@ -188,28 +194,59 @@ export default function LocationTypePage() {
       sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translateTypeOfLocation('type_of_location'),
-      width: 450,
-      dataIndex: 'addressType',
-      key: 'addressType',
-      ...getColumnSearchProps('addressType'),
+      title: translateTypeOfContainer('container_no'),
+      width: 180,
+      dataIndex: 'typeContainerNo',
+      key: 'typeContainerNo',
+      align: 'center',
+      fixed: 'left',
+      ...getColumnSearchProps('typeContainerNo'),
+    },
+    {
+      title: translateTypeOfContainer('type_of_container'),
+      width: 200,
+      dataIndex: 'name',
+      key: 'name',
       align: 'center',
       filters: [
         {
-          text: 'Nhận hàng',
-          value: 'Nhận hàng',
+          text: '40DC',
+          value: '40DC',
         },
         {
-          text: 'Trả Hàng',
-          value: 'Trả Hàng',
+          text: '40HC',
+          value: '40HC',
+        },
+        {
+          text: '40OT',
+          value: '40OT',
         },
       ],
+      filterMode: 'tree',
+      filterSearch: true,
+      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateTypeOfLocation('status'),
+      title: translateTypeOfContainer('detail'),
+      width: 300,
+      dataIndex: 'details',
+      key: 'details',
+      align: 'center',
+      ...getColumnSearchProps('details'),
+    },
+    {
+      title: translateTypeOfContainer('teus'),
+      width: 100,
+      dataIndex: 'teus',
+      key: 'teus',
+      align: 'center',
+      ...getColumnSearchProps('teus'),
+    },
+    {
+      title: translateTypeOfContainer('status'),
       dataIndex: 'status',
-      width: 120,
       key: 'status',
+      width: 120,
       align: 'center',
       filters: [
         {
@@ -235,14 +272,14 @@ export default function LocationTypePage() {
       ),
     },
     {
-      title: translateTypeOfLocation('date_created'),
+      title: translateTypeOfContainer('date_created'),
       width: 100,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateTypeOfLocation('creator'),
+      title: translateTypeOfContainer('creator'),
       width: 150,
       dataIndex: 'creator',
       key: 'creator',
@@ -264,7 +301,7 @@ export default function LocationTypePage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPE_OF_LOCATION_EDIT(id));
+    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -305,7 +342,7 @@ export default function LocationTypePage() {
         columns={columns}
         search={false}
         dateFormatter="string"
-        headerTitle={translateTypeOfLocation('title')}
+        headerTitle={translateTypeOfContainer('title')}
         scroll={{
           x: 'max-content',
         }}
@@ -315,7 +352,7 @@ export default function LocationTypePage() {
           search: true,
         }}
         toolBarRender={() => [
-          <CreateLocationType key={'create'} />,
+          <CreateTypeOfContainer key={'create'} />,
           <Button
             icon={<DeleteOutlined />}
             style={{
