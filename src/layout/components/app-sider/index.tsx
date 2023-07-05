@@ -12,7 +12,6 @@ import {
   DollarOutlined,
   EnvironmentOutlined,
   ProfileOutlined,
-  InboxOutlined,
   CalculatorOutlined,
   ClusterOutlined,
   ApartmentOutlined,
@@ -70,10 +69,6 @@ const AppSider = ({ collapsed }: Props) => {
   const refCustomer = useRef(null);
   const refSupplier = useRef(null);
   const refPort = useRef(null);
-  const refDepot = useRef(null);
-  const refContainerCatalog = useRef(null);
-  const refContainer = useRef(null);
-  const refTypeOfContainer = useRef(null);
   const refTypeOfExpenses = useRef(null);
   const refLocationCatalog = useRef(null);
   const refLocation = useRef(null);
@@ -163,28 +158,6 @@ const AppSider = ({ collapsed }: Props) => {
           `${translateCommon('port')}`,
           ROUTERS.PORT,
           <GoldOutlined ref={refPort} />
-        ),
-        getItem(
-          `${translateCommon('depot')}`,
-          ROUTERS.DEPOT,
-          <GoldOutlined ref={refDepot} />
-        ),
-        getItem(
-          `${translateCommon('container_catalog')}`,
-          '4',
-          <InboxOutlined ref={refContainerCatalog} />,
-          [
-            getItem(
-              `${translateCommon('container')}`,
-              ROUTERS.CONTAINER,
-              <InboxOutlined ref={refContainer} />
-            ),
-            getItem(
-              `${translateCommon('type_of_container')}`,
-              ROUTERS.TYPES_OF_CONTAINER,
-              <InboxOutlined ref={refTypeOfContainer} />
-            ),
-          ]
         ),
         getItem(
           `${translateCommon('type_of_expenses')}`,
