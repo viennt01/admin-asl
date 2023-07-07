@@ -121,7 +121,11 @@ export function AppLayout(props: Props) {
   const fetchUserInfo = () => {
     getUserInfo()
       .then((res) => {
-        console.log(res);
+        if (!res.status) {
+          // remove token and redirect to home
+          appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+          router.replace(ROUTERS.LOGIN);
+        }
       })
       .catch(() => {
         // remove token and redirect to home

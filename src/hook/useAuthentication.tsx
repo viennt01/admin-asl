@@ -11,16 +11,12 @@ export default function withAuthentication(ChildComponent: () => JSX.Element) {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
       const token = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
-      const ipAddress = appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS);
-      const deviceName = appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME);
       if (!token) {
         if (router.pathname !== ROUTERS.LOGIN) {
           router.push(ROUTERS.LOGIN);
         }
       } else {
         headers.setToken(token);
-        headers.setIdAddress(ipAddress);
-        headers.setDeviceName(deviceName);
         if (router.pathname === ROUTERS.LOGIN) {
           router.push(ROUTERS.HOME);
         }
