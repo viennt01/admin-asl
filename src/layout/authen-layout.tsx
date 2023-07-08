@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { getUserInfo } from './fetcher';
+import { useQuery } from '@tanstack/react-query';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -118,26 +119,22 @@ export function AppLayout(props: Props) {
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
 
-  const fetchUserInfo = () => {
-    getUserInfo()
-      .then((res) => {
-        if (!res.status) {
-          // remove token and redirect to home
-          appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-          router.replace(ROUTERS.LOGIN);
-        }
-      })
-      .catch(() => {
-        // remove token and redirect to home
-        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-        router.replace(ROUTERS.LOGIN);
-      });
-  };
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
+  const { data, status, fetchStatus } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserInfo(),
+  });
+  if (fetchStatus === 'idle') {
+    if (!data?.status) {
+      // remove token and redirect to home
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      router.replace(ROUTERS.LOGIN);
+    }
+    if (status === 'error') {
+      // remove token and redirect to home
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      router.replace(ROUTERS.LOGIN);
+    }
+  }
   useEffect(() => {
     setLanguage(
       appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
