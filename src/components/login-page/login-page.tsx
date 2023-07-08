@@ -55,6 +55,10 @@ export default function LoginPage() {
         if (res.status) {
           headers.setToken(res.data.accessToken);
           appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.accessToken);
+          appLocalStorage.set(
+            LOCAL_STORAGE_KEYS.REFRESH_TOKEN,
+            res.data.refreshToken
+          );
           router.push(ROUTERS.HOME);
           return;
         } else {

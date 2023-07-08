@@ -11,6 +11,13 @@ class Headers {
       accessToken: token || '',
     };
   }
+
+  removeToken() {
+    this.headers = {
+      ...this.headers,
+      accessToken: '',
+    };
+  }
 }
 
 export const headers = new Headers();
