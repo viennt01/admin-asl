@@ -17,6 +17,7 @@ import { LoginData, login } from './fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { headers } from '@/fetcher/utils';
 import { useEffect, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 const initialValues: LoginData = {
   username: '',
   password: '',
@@ -25,7 +26,6 @@ const initialValues: LoginData = {
 };
 
 export default function LoginPage() {
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
   const [ip, setIp] = useState();
@@ -36,9 +36,7 @@ export default function LoginPage() {
     setIp(data.ip);
   };
   const onFinish = (values: LoginData) => {
-    setIsLoading(true);
     if (!ip) {
-      setIsLoading(false);
       return;
     }
     const data = {
@@ -50,42 +48,44 @@ export default function LoginPage() {
     appLocalStorage.set(LOCAL_STORAGE_KEYS.IP_ADDRESS, ip);
     appLocalStorage.set(LOCAL_STORAGE_KEYS.DEVICE_NAME, deviceName);
 
-    login(data)
-      .then((res) => {
-        if (res.status) {
-          headers.setToken(res.data.accessToken);
-          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, res.data.accessToken);
+    loginUser.mutate(data, {
+      onSuccess(data) {
+        if (data.status) {
+          headers.setToken(data.data.accessToken);
+          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, data.data.accessToken);
           appLocalStorage.set(
             LOCAL_STORAGE_KEYS.REFRESH_TOKEN,
-            res.data.refreshToken
+            data.data.refreshToken
           );
           router.push(ROUTERS.HOME);
-          return;
         } else {
           notiApi.error({
             message: '',
-            description: res.message,
+            description: data.message,
             placement: 'topRight',
             duration: 3,
           });
-          return;
         }
-      })
-      .catch(() => {
+      },
+      onError() {
         notiApi.error({
           message: '',
           description: API_MESSAGE.ERROR,
           placement: 'topRight',
           duration: 3,
         });
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      },
+    });
   };
   useEffect(() => {
     getIp();
   }, []);
+
+  const loginUser = useMutation({
+    mutationFn: (body: LoginData) => {
+      return login(body);
+    },
+  });
 
   return (
     <div className={style.container}>
@@ -264,7 +264,7 @@ export default function LoginPage() {
                     }}
                   >
                     <Button
-                      loading={isLoading}
+                      loading={loginUser.isLoading}
                       type="primary"
                       style={{
                         height: '40px',

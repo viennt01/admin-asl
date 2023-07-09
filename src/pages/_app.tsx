@@ -14,7 +14,8 @@ import vi_VN from 'antd/lib/locale/vi_VN';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { useRouter } from 'next/router';
-// import AppContextProvider from '@/app-context';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const inter = Inter({ subsets: ['latin'] });
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<
@@ -32,7 +33,13 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   const L = Component.Layout ? Component.Layout : AppLayout;
   const [locale, setLocale] = useState(enUS);
   const router = useRouter();
-
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
   useEffect(() => {
     switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
       case 'en':
@@ -61,13 +68,14 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {/* <AppContextProvider> */}
-      <L>
-        <div className={inter.className}>
-          <Component {...pageProps} />
-        </div>
-      </L>
-      {/* </AppContextProvider> */}
+      <QueryClientProvider client={queryClient}>
+        <L>
+          <div className={inter.className}>
+            <Component {...pageProps} />
+          </div>
+        </L>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </ConfigProvider>
   );
 }
