@@ -119,22 +119,22 @@ export function AppLayout(props: Props) {
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
 
-  const { data, status, fetchStatus } = useQuery({
+  useQuery({
     queryKey: ['user'],
     queryFn: () => getUserInfo(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        // remove token and redirect to home
+        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+        router.replace(ROUTERS.LOGIN);
+      }
+    },
+    onError: () => {
+      // remove token and redirect to home
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      router.replace(ROUTERS.LOGIN);
+    },
   });
-  if (fetchStatus === 'idle') {
-    if (!data?.status) {
-      // remove token and redirect to home
-      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-      router.replace(ROUTERS.LOGIN);
-    }
-    if (status === 'error') {
-      // remove token and redirect to home
-      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-      router.replace(ROUTERS.LOGIN);
-    }
-  }
   useEffect(() => {
     setLanguage(
       appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
