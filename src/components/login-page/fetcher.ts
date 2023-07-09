@@ -1,5 +1,5 @@
-import { postLogin, ResponseWithPayload } from '@/fetcher';
 import { API_AUTHENTICATE } from '@/fetcher/endpoint';
+import { ResponseWithPayload, post } from '@/fetcherAxios';
 
 export interface LoginData {
   username: string;
@@ -13,7 +13,7 @@ export interface DataLogin {
 }
 
 export const login = (data: LoginData) => {
-  return postLogin<LoginData, ResponseWithPayload<DataLogin>>({ data })(
+  return post<LoginData, ResponseWithPayload<DataLogin>>({ data })(
     API_AUTHENTICATE.LOGIN
   );
 };

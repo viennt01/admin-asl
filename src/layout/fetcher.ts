@@ -1,5 +1,5 @@
-import { get, ResponseWithPayload } from '@/fetcher';
 import { API_USER } from '@/fetcher/endpoint';
+import { ResponseWithPayload, get } from '@/fetcherAxios';
 
 export interface UserInfo {
   idUser: string;
@@ -27,5 +27,5 @@ export interface UserInfo {
 }
 
 export const getUserInfo = () => {
-  return get<undefined, ResponseWithPayload<UserInfo>>({})(API_USER.CHECK_USER);
+  return get<ResponseWithPayload<UserInfo>>({})(API_USER.CHECK_USER);
 };
