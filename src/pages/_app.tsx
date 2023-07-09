@@ -33,7 +33,13 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
   const L = Component.Layout ? Component.Layout : AppLayout;
   const [locale, setLocale] = useState(enUS);
   const router = useRouter();
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
   useEffect(() => {
     switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
       case 'en':
