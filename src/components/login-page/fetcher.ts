@@ -1,4 +1,4 @@
-import { API_AUTHENTICATE } from '@/fetcher/endpoint';
+import { API_AUTHENTICATE } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload, post } from '@/fetcherAxios';
 
 export interface LoginData {

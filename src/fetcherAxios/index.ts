@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosHeaders } from 'axios';
 import { STATUS_CODE } from '@/constant/error-code';
-import { headers as configHeaders } from './utils';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import router from 'next/router';
 import { ROUTERS } from '@/constant/router';
+import { API_AUTHENTICATE } from './endpoint';
 
 export interface ResponseWithPayload<R> {
   status: STATUS_CODE;
@@ -79,8 +79,17 @@ const apiClient = axios.create();
 
 apiClient.interceptors.request.use((config) => {
   const accessToken = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
+  const refreshToken = appLocalStorage.get(LOCAL_STORAGE_KEYS.REFRESH_TOKEN);
+  const ipAddress = appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS);
+  const deviceName = appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME);
+  config.headers.Accept = 'text/plain';
+  config.headers['Content-Type'] = 'text/plain';
+
   if (accessToken) {
-    config.headers.Accesstoken = `${accessToken}`;
+    config.headers.accessToken = accessToken;
+    config.headers.refreshToken = refreshToken;
+    config.headers.ipAddress = ipAddress;
+    config.headers.deviceName = deviceName;
   }
   return config;
 });
@@ -96,14 +105,19 @@ apiClient.interceptors.response.use(
     ) {
       originalRequest._retry = true;
       try {
-        const response = await apiClient.post(`${getGateway()}/refresh-token`, {
-          refresh_token: appLocalStorage.get(LOCAL_STORAGE_KEYS.REFRESH_TOKEN),
-        });
-
+        const response = await apiClient.post(
+          `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`,
+          {
+            accessToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN),
+            refreshToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.REFRESH_TOKEN),
+            ipAddress: appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS),
+            deviceName: appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME),
+          }
+        );
         const newAccessToken = response.data.access_token;
-        configHeaders.setToken(newAccessToken);
-
-        originalRequest.headers.Accesstoken = `${newAccessToken}`;
+        const newRefreshToken = response.data.access_token;
+        originalRequest.headers.accessToken = newAccessToken;
+        originalRequest.headers.refreshToken = newRefreshToken;
 
         return apiClient(originalRequest);
       } catch (refreshError) {
@@ -121,7 +135,7 @@ export const get =
   (url: string): Promise<R> => {
     const axiosPromise = requestWithTimeout(
       apiClient.get(`${getGateway(gw)}${url}`, {
-        headers: Object.assign({}, configHeaders.headers, headers),
+        headers,
         ...options,
       }),
       timeout
@@ -135,7 +149,7 @@ export const post =
   (url: string): Promise<R> => {
     const axiosPromise = requestWithTimeout(
       apiClient.post(`${getGateway(gw)}${url}`, data, {
-        headers: Object.assign({}, configHeaders.headers, headers),
+        headers,
         ...options,
       }),
       timeout
@@ -149,7 +163,7 @@ export const put =
   (url: string): Promise<R> => {
     const axiosPromise = requestWithTimeout(
       apiClient.put(`${getGateway(gw)}${url}`, data, {
-        headers: Object.assign({}, configHeaders.headers, headers),
+        headers,
         ...options,
       }),
       timeout
@@ -163,7 +177,7 @@ export const deleteGW =
   (url: string): Promise<R> => {
     const axiosPromise = requestWithTimeout(
       apiClient.delete(`${getGateway(gw)}${url}`, {
-        headers: Object.assign({}, configHeaders.headers, headers),
+        headers,
         ...options,
       }),
       timeout

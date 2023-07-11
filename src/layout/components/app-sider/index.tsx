@@ -29,6 +29,8 @@ import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
+import { useMutation } from '@tanstack/react-query';
+import { LogoutData, logout } from './fetcher';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -221,7 +223,18 @@ const AppSider = ({ collapsed }: Props) => {
     router.push(path.key);
   };
 
+  const logoutUser = useMutation({
+    mutationFn: (body: LogoutData) => {
+      return logout(body);
+    },
+  });
+
   const handleClickLogout = () => {
+    const data = {
+      accessToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN),
+      ipAddress: appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS),
+      deviceName: appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME),
+    };
     modal.confirm({
       centered: true,
       icon: <LogoutOutlined />,
@@ -229,6 +242,7 @@ const AppSider = ({ collapsed }: Props) => {
       onOk() {
         appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
         router.push(ROUTERS.LOGIN);
+        logoutUser.mutate(data);
       },
       onCancel() {
         console.log('Cancel');

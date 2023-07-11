@@ -15,7 +15,6 @@ import {
 import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
 import { API_MESSAGE } from '@/constant/message';
-import { headers } from '@/fetcher/utils';
 import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 const initialValues: LoginData = {
@@ -51,7 +50,6 @@ export default function LoginPage() {
     loginUser.mutate(data, {
       onSuccess(data) {
         if (data.status) {
-          headers.setToken(data.data.accessToken);
           appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, data.data.accessToken);
           appLocalStorage.set(
             LOCAL_STORAGE_KEYS.REFRESH_TOKEN,
