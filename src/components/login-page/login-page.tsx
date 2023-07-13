@@ -310,11 +310,21 @@ export default function LoginPage() {
         classActiveForm === 'signinMode' ? style.signinMode : style.signupMode
       }`}
     >
+      <div className={style.colorBackdrop}></div>
       {/* {contextHolder} */}
       <div className={style.formsContainer}>
         <div className={style.signinSignup}>
           <Form className={style.signinForm}>
-            <h2 className={style.titleSignIn}>Sign in</h2>
+            <img
+              src="/images/asl-logo.png"
+              alt=""
+              style={{ marginBottom: '15px', width: '150px' }}
+            />
+            <div className={style.titleSignIn}>
+              <h2>Sign in</h2>
+              <h2>Sign in</h2>
+            </div>
+            {/* <h2 className={style.titleSignIn}>Sign in</h2> */}
             <div className={style.inputField}>
               <MailOutlined className={style.signinMailIcon} />
               <Input placeholder="Email" className={style.signinEmailInput} />
@@ -343,7 +353,7 @@ export default function LoginPage() {
             <div className={style.loginOptions}>
               <div>
                 <a href="" className={style.forgotFieldLink}>
-                  Forgot password
+                  Forgot password ?
                 </a>
               </div>
             </div>
@@ -357,7 +367,11 @@ export default function LoginPage() {
           </Form>
 
           <Form className={style.signupForm}>
-            <h2 className={style.titleSignup}>Sign up</h2>
+            <div className={style.titleSignup}>
+              <h2>Sign up</h2>
+              <h2>Sign up</h2>
+            </div>
+            {/* <h2 className={style.titleSignup}>Sign up</h2> */}
             <div className={style.inputField}>
               <UserOutlined className={style.signupUserIcon} />
               <Input
@@ -425,7 +439,7 @@ export default function LoginPage() {
         <div className={style.leftPanel}>
           <div className={style.content}>
             <h3>Do not have an account ?</h3>
-            <p>Create an account to explore more about Fresh Tooth!</p>
+            <p>Create an account to explore more about ASL!</p>
             <button
               onClick={onClickAnimationChangeForm}
               className={style.btnPanelSignUp}
@@ -442,6 +456,12 @@ export default function LoginPage() {
         </div>
 
         <div className={style.rightPanel}>
+          <Player
+            src="https://lottie.host/d495397f-b342-48f8-86cf-b0cbfe74c64a/ySNVoXDcwV.json"
+            className={style.image}
+            loop
+            autoplay
+          />
           <div className={style.content}>
             <h3>Already have an account ?</h3>
             <p>Sign in and visit Fresh Tooth Website! Let&apos;s Go!</p>
@@ -452,12 +472,6 @@ export default function LoginPage() {
               Sign in
             </button>
           </div>
-          <Player
-            src="https://lottie.host/d495397f-b342-48f8-86cf-b0cbfe74c64a/ySNVoXDcwV.json"
-            className={style.image}
-            loop
-            autoplay
-          />
         </div>
       </div>
     </div>
