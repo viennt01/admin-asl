@@ -12,10 +12,11 @@ import {
 } from '@ant-design/icons';
 import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
-// import { API_MESSAGE } from '@/constant/message';
-//import { useEffect } from 'react';
+//import { API_MESSAGE } from '@/constant/message';
 import { useMutation } from '@tanstack/react-query';
 import { Player } from '@lottiefiles/react-lottie-player';
+import { useState } from 'react';
+
 // const initialValues: LoginData = {
 //   username: '',
 //   password: '',
@@ -25,6 +26,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 
 export default function LoginPage() {
   // const router = useRouter();
+  const [classActiveForm, setClassActiveForm] = useState('signinMode');
   // const [notiApi, contextHolder] = notification.useNotification();
   // const [ip, setIp] = useState();
   // const deviceName = navigator.userAgent;
@@ -83,6 +85,14 @@ export default function LoginPage() {
       return login(body);
     },
   });
+
+  function onClickAnimationChangeForm() {
+    if (classActiveForm === 'signupMode') {
+      setClassActiveForm('signinMode');
+    } else {
+      setClassActiveForm('signupMode');
+    }
+  }
 
   return (
     // <div className={style.container}>
@@ -295,7 +305,12 @@ export default function LoginPage() {
     //   </div>
     // </div>
 
-    <div className={style.bodyContainer}>
+    <div
+      className={`${style.bodyContainer} ${
+        classActiveForm === 'signinMode' ? style.signinMode : style.signupMode
+      }`}
+    >
+      {/* {contextHolder} */}
       <div className={style.formsContainer}>
         <div className={style.signinSignup}>
           <Form className={style.signinForm}>
@@ -343,28 +358,32 @@ export default function LoginPage() {
 
           <Form className={style.signupForm}>
             <h2 className={style.titleSignup}>Sign up</h2>
-            <div className="inputField">
+            <div className={style.inputField}>
               <UserOutlined className={style.signupUserIcon} />
               <Input
                 placeholder="Full Name"
                 className={style.signupFullNameInput}
               />
-              <CheckCircleOutlined className="signupFullnameIconCheck" />
-              <ExclamationCircleOutlined className="signupFullnameIconError" />
+              <CheckCircleOutlined className={style.signupFullnameIconCheck} />
+              <ExclamationCircleOutlined
+                className={style.signupFullnameIconError}
+              />
             </div>
             <div className="message">
               <span></span>
             </div>
-            <div className="inputField">
+            <div className={style.inputField}>
               <MailOutlined className={style.signupMailIcon} />
               <Input placeholder="Email" className={style.signupMailInput} />
-              <CheckCircleOutlined className="signupEmailIconCheck" />
-              <ExclamationCircleOutlined className="signupEmailIconError" />
+              <CheckCircleOutlined className={style.signupEmailIconCheck} />
+              <ExclamationCircleOutlined
+                className={style.signupEmailIconError}
+              />
             </div>
             <div className="message">
               <span></span>
             </div>
-            <div className="inputField">
+            <div className={style.inputField}>
               <LockOutlined className={style.signupLockIcon} />
               <Input.Password
                 placeholder="Password"
@@ -378,7 +397,7 @@ export default function LoginPage() {
             <div className="message">
               <span></span>
             </div>
-            <div className="inputField">
+            <div className={style.inputField}>
               <LockOutlined className={style.signupLockIcon} />
               <Input.Password
                 placeholder="Confirm Password"
@@ -407,28 +426,37 @@ export default function LoginPage() {
           <div className={style.content}>
             <h3>Do not have an account ?</h3>
             <p>Create an account to explore more about Fresh Tooth!</p>
-            <button className={style.btnPanelSignUp}>Sign up</button>
+            <button
+              onClick={onClickAnimationChangeForm}
+              className={style.btnPanelSignUp}
+            >
+              Sign up
+            </button>
           </div>
           <Player
             src="https://lottie.host/2de98eed-b8d9-4fce-ba6b-8e7a3cc64e03/zDqQl136LV.json"
-            className="player"
+            className={style.image}
             loop
             autoplay
           />
         </div>
 
         <div className={style.rightPanel}>
-          <div className="content">
+          <div className={style.content}>
             <h3>Already have an account ?</h3>
             <p>Sign in and visit Fresh Tooth Website! Let&apos;s Go!</p>
-            <button className="btn transparent" id="sign_in_btn">
+            <button
+              onClick={onClickAnimationChangeForm}
+              className={style.btnPanelSignIn}
+            >
               Sign in
             </button>
           </div>
-          <img
-            src="./images/undraw_winter_designer_a2m7.svg"
-            className="image"
-            alt=""
+          <Player
+            src="https://lottie.host/d495397f-b342-48f8-86cf-b0cbfe74c64a/ySNVoXDcwV.json"
+            className={style.image}
+            loop
+            autoplay
           />
         </div>
       </div>
