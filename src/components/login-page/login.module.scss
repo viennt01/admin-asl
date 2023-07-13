@@ -84,7 +84,12 @@
     width: 2000px;
     height: 2000px;
     border-radius: 50%;
-    background: linear-gradient(-45deg, #4481eb, #04befe);
+    
+    background-image: url(https://kynguyenlamdep.com/wp-content/uploads/2021/12/bau-troi-va-bien-scaled.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // background: linear-gradient(-90deg, #1D4486, #c2e8ff);
     top: -10%;
     right: 48%;
     transform: translateY(-50%);
@@ -137,7 +142,7 @@
           max-width: 380px;
           width: 100%;
           height: 55px;
-          background-color: #f0f0f0;
+          background-color: #fff;
           margin: 10px 0;
           border-radius: 55px;
           display: grid;
@@ -149,7 +154,7 @@
           .signinEmailIconCheck,
           .signinEmailIconError {
             line-height: 55px;
-            color: #acacac;
+            color: #1D4486;
             font-size: 1.8rem;
             display: flex;
             align-items: center;
@@ -164,16 +169,20 @@
             line-height: 1;
             font-weight: 600;
             font-size: 1.3rem;
-            color: #333;
+            color: #1D4486;
             height: 55px;
 
             &::placeholder {
-              color: #aaa;
-              font-weight: 500;
+              color: #0300A6;
+              font-weight: 200;
             }
 
             input {
               background: none;
+              &::placeholder {
+                color: #0300A6;
+                font-weight: 200;
+              }
             }
           }
 
