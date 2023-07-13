@@ -200,10 +200,11 @@
             font-size: 1.3rem;
             color: #1D4486;
             height: 55px;
+            width: 300px;
 
             &::placeholder {
               color: #0300A6;
-              font-weight: 200;
+              font-weight: 600;
             }
 
             input {
@@ -211,7 +212,7 @@
 
               &::placeholder {
                 color: #0300A6;
-                font-weight: 200;
+                font-weight: 600;
               }
             }
           }
@@ -243,9 +244,11 @@
           display: flex;
           align-items: center;
           justify-content: start;
-          width: 52%;
+          width: 100%;
           color: red;
           font-size: 16px;
+          margin-left: 45px;
+          font-weight: 600;
         }
 
         .loginOptions {
@@ -259,6 +262,7 @@
             text-decoration: none;
             color: red;
             font-size: 16px;
+            font-weight: 700;
           }
         }
 
@@ -377,7 +381,7 @@
           .confirmPasswordIconCheck,
           .confirmPasswordIconError {
             line-height: 55px;
-            color: #acacac;
+            color: #1D4486;
             font-size: 1.8rem;
             display: flex;
             align-items: center;
@@ -394,16 +398,22 @@
             line-height: 1;
             font-weight: 600;
             font-size: 1.3rem;
-            color: #333;
+            color: #0300A6;
             height: 55px;
+            width: 300px;
 
             &::placeholder {
-              color: #aaa;
-              font-weight: 500;
+              color: #0300A6;
+              font-weight: 600;
             }
 
             input {
               background: none;
+
+              &::placeholder {
+                color: #0300A6;
+                font-weight: 600;
+              }
             }
           }
 
@@ -434,6 +444,17 @@
           }
         }
 
+        .message {
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          width: 100%;
+          color: red;
+          font-size: 16px;
+          margin-left: 45px;
+          font-weight: 600;
+        }
+
         .btnSignUp {
           width: 150px;
           height: 49px;
@@ -441,16 +462,42 @@
           outline: none;
           border-radius: 50px;
           cursor: pointer;
-          background-color: #5995fd;
+          background-color: #1D4486;
           color: #fff;
           text-transform: uppercase;
           font-weight: 600;
-          margin: 10px 0;
+          margin-top: 30px;
           transition: .5s;
-          margin-top: 20px;
+          z-index: 1;
+          overflow: hidden;
 
-          &:hover {
-            background-color: #4d84e2;
+          &::after,
+          &::before {
+            content: "";
+            z-index: -1;
+            background-color: hsla(0, 0%, 100%, 0.2);
+            position: absolute;
+            top: -50%;
+            bottom: -50%;
+            width: 1.25em;
+          }
+
+          &::after {
+            transform: translate3d(-1070%, 0, 0) rotate(35deg);
+          }
+
+          &:hover::after {
+            transition: transform 0.55s ease-in-out;
+            transform: translate3d(345%, 0, 0) rotate(35deg);
+          }
+
+          &::before {
+            transform: translate3d(975%, 0, 0) rotate(35deg);
+          }
+
+          &:not(:hover)::before {
+            transition: transform 0.55s ease-in-out;
+            transform: translate3d(-440%, 0, 0) rotate(35deg);
           }
         }
       }

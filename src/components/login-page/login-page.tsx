@@ -3,13 +3,7 @@
 // import { appLocalStorage } from '@/utils/localstorage';
 // import { useRouter } from 'next/router';
 import { Button, Form, Input } from 'antd';
-import {
-  UserOutlined,
-  CheckCircleOutlined,
-  ExclamationCircleOutlined,
-  LockOutlined,
-  MailOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
 //import { API_MESSAGE } from '@/constant/message';
@@ -316,7 +310,7 @@ export default function LoginPage() {
         <div className={style.signinSignup}>
           <Form className={style.signinForm}>
             <img
-              src="/images/asl-logo.png"
+              src="/images/logo_ASL.png"
               alt=""
               style={{ marginBottom: '15px', width: '150px' }}
             />
@@ -324,13 +318,12 @@ export default function LoginPage() {
               <h2>Sign in</h2>
               <h2>Sign in</h2>
             </div>
-            {/* <h2 className={style.titleSignIn}>Sign in</h2> */}
             <div className={style.inputField}>
               <MailOutlined className={style.signinMailIcon} />
-              <Input placeholder="Email" className={style.signinEmailInput} />
-              <CheckCircleOutlined className={style.signinEmailIconCheck} />
-              <ExclamationCircleOutlined
-                className={style.signinEmailIconError}
+              <Input
+                placeholder="Email"
+                className={style.signinEmailInput}
+                bordered={false}
               />
             </div>
             <div className={style.message}>
@@ -341,10 +334,7 @@ export default function LoginPage() {
               <Input.Password
                 placeholder="Password"
                 className={style.signinPasswordInput}
-              />
-              <CheckCircleOutlined className={style.signinPasswordIconCheck} />
-              <ExclamationCircleOutlined
-                className={style.signinPasswordIconError}
+                bordered={false}
               />
             </div>
             <div className={style.message}>
@@ -371,16 +361,12 @@ export default function LoginPage() {
               <h2>Sign up</h2>
               <h2>Sign up</h2>
             </div>
-            {/* <h2 className={style.titleSignup}>Sign up</h2> */}
             <div className={style.inputField}>
               <UserOutlined className={style.signupUserIcon} />
               <Input
                 placeholder="Full Name"
                 className={style.signupFullNameInput}
-              />
-              <CheckCircleOutlined className={style.signupFullnameIconCheck} />
-              <ExclamationCircleOutlined
-                className={style.signupFullnameIconError}
+                bordered={false}
               />
             </div>
             <div className="message">
@@ -388,10 +374,10 @@ export default function LoginPage() {
             </div>
             <div className={style.inputField}>
               <MailOutlined className={style.signupMailIcon} />
-              <Input placeholder="Email" className={style.signupMailInput} />
-              <CheckCircleOutlined className={style.signupEmailIconCheck} />
-              <ExclamationCircleOutlined
-                className={style.signupEmailIconError}
+              <Input
+                placeholder="Email"
+                className={style.signupMailInput}
+                bordered={false}
               />
             </div>
             <div className="message">
@@ -402,10 +388,7 @@ export default function LoginPage() {
               <Input.Password
                 placeholder="Password"
                 className={style.signupPasswordInput}
-              />
-              <CheckCircleOutlined className={style.signupPasswordIconCheck} />
-              <ExclamationCircleOutlined
-                className={style.signupPasswordIconError}
+                bordered={false}
               />
             </div>
             <div className="message">
@@ -416,10 +399,7 @@ export default function LoginPage() {
               <Input.Password
                 placeholder="Confirm Password"
                 className={style.signupConfirmPasswordInput}
-              />
-              <CheckCircleOutlined className={style.confirmPasswordIconCheck} />
-              <ExclamationCircleOutlined
-                className={style.confirmPasswordIconError}
+                bordered={false}
               />
             </div>
             <div className="message">
