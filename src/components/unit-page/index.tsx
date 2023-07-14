@@ -270,10 +270,10 @@ export default function CalculationUnitPage() {
 
   useEffect(() => {
     switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
-      case 'en':
+      case 'EN':
         setLocale(enUS);
         break;
-      case 'vi':
+      case 'VN':
         setLocale(vi_VN);
         break;
       default:
