@@ -361,6 +361,14 @@ export default function LoginPage() {
               <h2>Sign up</h2>
               <h2>Sign up</h2>
             </div>
+            <div className={style.progressbar}>
+              <div className={style.progress}></div>
+
+              <div className={style.progressStep} data-title="Info"></div>
+              <div className={style.progressStep} data-title="Contact"></div>
+              <div className={style.progressStep} data-title="Password"></div>
+              <div className={style.progressStep} data-title="Company"></div>
+            </div>
             <div className={style.inputField}>
               <UserOutlined className={style.signupUserIcon} />
               <Input
@@ -444,7 +452,7 @@ export default function LoginPage() {
           />
           <div className={style.content}>
             <h3>Already have an account ?</h3>
-            <p>Sign in and visit Fresh Tooth Website! Let&apos;s Go!</p>
+            <p>Sign in and visit ASL Website! Let&apos;s Go!</p>
             <button
               onClick={onClickAnimationChangeForm}
               className={style.btnPanelSignIn}
