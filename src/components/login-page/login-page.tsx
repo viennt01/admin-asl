@@ -27,10 +27,10 @@ export default function LoginPage() {
   const [classActiveForm, setClassActiveForm] = useState('signinMode');
   const [notiApi, contextHolder] = notification.useNotification();
   const [ip, setIp] = useState();
-  const stepOneRef = useRef(null);
-  const stepTwoRef = useRef(null);
-  const stepLineOneRef = useRef(null);
-  const stepLineTwoRef = useRef(null);
+  const stepOneRef = useRef<HTMLDivElement>(null);
+  const stepTwoRef = useRef<HTMLDivElement>(null);
+  const stepLineOneRef = useRef<HTMLDivElement>(null);
+  const stepLineTwoRef = useRef<HTMLDivElement>(null);
   const deviceName = navigator.userAgent;
   const getIp = async () => {
     const response = await fetch('https://api.ipify.org/?format=json');
@@ -113,8 +113,8 @@ export default function LoginPage() {
       );
     }
 
-    stepTwoRef.current.classList.add(className);
-    stepLineTwoRef.current.classList.add(classNameStep);
+    stepTwoRef.current?.classList.add(`${className}`);
+    stepLineTwoRef.current?.classList.add(`${classNameStep}`);
   };
 
   return (
