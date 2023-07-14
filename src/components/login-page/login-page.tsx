@@ -364,7 +364,10 @@ export default function LoginPage() {
             <div className={style.progressbar}>
               <div className={style.progress}></div>
 
-              <div className={style.progressStep} data-title="Info"></div>
+              <div
+                className={style.progressStep}
+                data-title="Information"
+              ></div>
               <div className={style.progressStep} data-title="Contact"></div>
               <div className={style.progressStep} data-title="Password"></div>
               <div className={style.progressStep} data-title="Company"></div>
