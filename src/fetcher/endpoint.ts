@@ -1,11 +1,5 @@
-export const UPLOAD = {
-  IMAGE: '/upload',
-};
-
 export const API_AUTHENTICATE = {
-  LOGIN: '/login',
-};
-
-export const API_USER = {
-  CHECK_USER: '/check-user',
+  SEND_OTP: '/send-otp',
+  CONFIRM_OTP: '/confirm-otp',
+  RESET_PASSWORD: '/reset-password',
 };

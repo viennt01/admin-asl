@@ -1,5 +1,5 @@
-import { API_USER } from '@/fetcher/endpoint';
 import { ResponseWithPayload, get } from '@/fetcherAxios';
+import { API_USER } from '@/fetcherAxios/endpoint';
 
 export interface UserInfo {
   idUser: string;

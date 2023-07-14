@@ -10,6 +10,7 @@ import { API_MESSAGE } from '@/constant/message';
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
+import Link from 'next/link';
 
 const initialValues: LoginData = {
   email: '',
@@ -165,9 +166,12 @@ export default function LoginPage() {
 
             <div className={style.loginOptions}>
               <div>
-                <a href="" className={style.forgotFieldLink}>
+                <Link
+                  href={ROUTERS.FORGOT_PASSWORD}
+                  className={style.forgotFieldLink}
+                >
                   Forgot password ?
-                </a>
+                </Link>
               </div>
             </div>
             <Button

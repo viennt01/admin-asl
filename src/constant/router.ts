@@ -2,6 +2,7 @@ export const ROUTERS = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   HOME: '/',
+  FORGOT_PASSWORD: '/forgot-password',
   BOOKING: '/booking',
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
   QUOTATION: '/quotation',
