@@ -1,5 +1,8 @@
 import { STATUS_CODE } from '@/constant/error-code';
 import { headers as configHeaders } from './utils';
+import { appLocalStorage } from '@/utils/localstorage';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import { LANGUAGE } from '@/constant';
 
 export interface ResponseWithPayload<R> {
   status: STATUS_CODE;
@@ -89,10 +92,35 @@ export const post =
   (url: string): Promise<R> => {
     const fetchPromise = requestWithTimeout(
       fetch(`${getGateway(gw)}${url}`, {
-        headers: { ...configHeaders.headers, ...headers },
+        headers: {
+          ...configHeaders.headers,
+          ...headers,
+          languageName:
+            appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN,
+        },
         ...options,
         method: 'POST',
         body: JSON.stringify(data),
+      }),
+      timeout
+    );
+    return fetchResolver(fetchPromise);
+  };
+
+export const postSendFormData =
+  <R>({ data, options, headers, gw, timeout }: CRUDProps<FormData>) =>
+  (url: string): Promise<R> => {
+    const fetchPromise = requestWithTimeout(
+      fetch(`${getGateway(gw)}${url}`, {
+        headers: {
+          ...configHeaders.headers,
+          ...headers,
+          languageName:
+            appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN,
+        },
+        ...options,
+        method: 'POST',
+        body: data,
       }),
       timeout
     );

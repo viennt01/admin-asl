@@ -1,0 +1,29 @@
+@import '@/styles/variable.scss';
+
+  .titleForgotPassword {
+    position: relative;
+    margin-bottom: 30px;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  
+    h2 {
+      position: absolute;
+      font-size: 3em;
+      margin-bottom: unset;
+      font-weight: bold;
+      text-transform: uppercase;
+  
+      &:nth-child(1) {
+        color: transparent;
+        -webkit-text-stroke: 2px #1d4486;
+      }
+  
+      &:nth-child(2) {
+        color: #1d4486;
+        animation: animateText 4s ease-in-out infinite;
+      }
+    }
+  }
+
