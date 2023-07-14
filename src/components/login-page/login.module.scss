@@ -500,6 +500,61 @@
             transform: translate3d(-440%, 0, 0) rotate(35deg);
           }
         }
+
+        .progressbar {
+          position: relative;
+          display: flex;
+          justify-content: space-between;
+          counter-reset: step;
+          width: 100%;
+          margin-bottom: 40px;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 4px;
+            width: 100%;
+            background-color: #dcdcdc;
+            z-index: -1;
+          }
+
+          .progress {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 4px;
+            width: 100%;
+            z-index: -1;
+            background-color: rgb(11, 78, 179);
+            width: 0%;
+            transition: 0.3s;
+          }
+
+          .progressStep {
+            width: 2.1875rem;
+            height: 2.1875rem;
+            background-color: #dcdcdc;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &::before {
+              counter-increment: step;
+              content: counter(step);
+            }
+
+            &::after {
+              content: attr(data-title);
+              position: absolute;
+              top: calc(100% + 0.5rem);
+              font-size: 0.85rem;
+              color: #666;
+            }
+          }
+        }
       }
     }
   }
