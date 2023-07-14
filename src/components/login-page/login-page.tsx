@@ -118,28 +118,51 @@ export default function LoginPage() {
               <h2>Sign in</h2>
               <h2>Sign in</h2>
             </div>
-            <div className={style.inputField}>
-              <MailOutlined className={style.signinMailIcon} />
-              <Input
-                placeholder="Email"
-                className={style.signinEmailInput}
-                bordered={false}
-              />
-            </div>
-            <div className={style.message}>
-              <span></span>
-            </div>
-            <div className={style.inputField}>
-              <LockOutlined className={style.signinLockIcon} />
-              <Input.Password
-                placeholder="Password"
-                className={style.signinPasswordInput}
-                bordered={false}
-              />
-            </div>
-            <div className={style.message}>
-              <span></span>
-            </div>
+            <Form.Item
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <div className={style.message}>
+                      Please input your Email!
+                    </div>
+                  ),
+                },
+              ]}
+            >
+              <div className={style.inputField}>
+                <MailOutlined className={style.signinMailIcon} />
+                <Input
+                  placeholder="Email"
+                  className={style.signinEmailInput}
+                  bordered={false}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: (
+                    <div className={style.message}>
+                      Please input your Email!
+                    </div>
+                  ),
+                },
+              ]}
+            >
+              <div className={style.inputField}>
+                <LockOutlined className={style.signinLockIcon} />
+                <Input.Password
+                  placeholder="Password"
+                  className={style.signinPasswordInput}
+                  bordered={false}
+                />
+              </div>
+            </Form.Item>
+
             <div className={style.loginOptions}>
               <div>
                 <a href="" className={style.forgotFieldLink}>
