@@ -18,10 +18,8 @@ import { API_MESSAGE } from '@/constant/message';
 import { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 const initialValues: LoginData = {
-  username: '',
+  email: '',
   password: '',
-  ipAddress: 'string',
-  deviceName: 'string',
 };
 
 export default function LoginPage() {
@@ -34,18 +32,22 @@ export default function LoginPage() {
     const data = await response.json();
     setIp(data.ip);
   };
+
+  const dataHeader = {
+    ipAddress: ip || '',
+    deviceName: deviceName,
+  };
+
   const onFinish = (values: LoginData) => {
     if (!ip) {
       return;
     }
     const data = {
-      username: values.username,
+      email: values.email,
       password: values.password,
-      ipAddress: ip,
-      deviceName: deviceName,
     };
-    appLocalStorage.set(LOCAL_STORAGE_KEYS.IP_ADDRESS, ip);
-    appLocalStorage.set(LOCAL_STORAGE_KEYS.DEVICE_NAME, deviceName);
+    // appLocalStorage.set(LOCAL_STORAGE_KEYS.IP_ADDRESS, ip);
+    // appLocalStorage.set(LOCAL_STORAGE_KEYS.DEVICE_NAME, deviceName);
 
     loginUser.mutate(data, {
       onSuccess(data) {
@@ -80,8 +82,8 @@ export default function LoginPage() {
   }, []);
 
   const loginUser = useMutation({
-    mutationFn: (body: LoginData) => {
-      return login(body);
+    mutationFn: (data: LoginData) => {
+      return login(data, dataHeader);
     },
   });
 
@@ -155,7 +157,7 @@ export default function LoginPage() {
                       Username
                     </label>
                   }
-                  name="username"
+                  name="email"
                   rules={[
                     { required: true, message: 'Please input your username!' },
                   ]}

@@ -1,11 +1,18 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosHeaders } from 'axios';
+import axios, {
+  AxiosRequestConfig,
+  AxiosResponse,
+  AxiosHeaders,
+  AxiosHeaderValue,
+} from 'axios';
 import { STATUS_CODE } from '@/constant/error-code';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import router from 'next/router';
 import { ROUTERS } from '@/constant/router';
 import { API_AUTHENTICATE } from './endpoint';
+import { LANGUAGE } from '@/constant';
 
+type RawAxiosHeaders = Record<string, AxiosHeaderValue | AxiosHeaders>;
 export interface ResponseWithPayload<R> {
   status: STATUS_CODE;
   message: string;
@@ -20,7 +27,7 @@ export interface ResponseWithoutPayload {
 interface CRUDProps<T> {
   data?: T;
   options?: AxiosRequestConfig;
-  headers?: AxiosHeaders;
+  headers?: RawAxiosHeaders;
   gw?: string;
   timeout?: number;
 }
@@ -75,21 +82,42 @@ const axiosResolver = async (promise: Promise<AxiosResponse>) => {
     });
 };
 
-const apiClient = axios.create();
+const apiClient = axios.create({
+  headers: {
+    Accept: 'text/plain',
+  },
+});
 
 apiClient.interceptors.request.use((config) => {
   const accessToken = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
-  const refreshToken = appLocalStorage.get(LOCAL_STORAGE_KEYS.REFRESH_TOKEN);
-  const ipAddress = appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS);
-  const deviceName = appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME);
-  config.headers.Accept = 'text/plain';
-  config.headers['Content-Type'] = 'text/plain';
+  config.headers.languageName =
+    appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN;
+  console.log('config', config);
 
+  if (config.url === `${getGateway()}${API_AUTHENTICATE.LOGIN}`) {
+    return config;
+  }
+  if (config.url === `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`) {
+    config.headers.accessToken = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
+    config.headers.Authorization = `Bearer ${appLocalStorage.get(
+      LOCAL_STORAGE_KEYS.TOKEN
+    )}`;
+    config.headers.refreshToken = appLocalStorage.get(
+      LOCAL_STORAGE_KEYS.REFRESH_TOKEN
+    );
+    config.headers.ipAddress = appLocalStorage.get(
+      LOCAL_STORAGE_KEYS.IP_ADDRESS
+    );
+    config.headers.deviceName = appLocalStorage.get(
+      LOCAL_STORAGE_KEYS.DEVICE_NAME
+    );
+    return config;
+  }
   if (accessToken) {
     config.headers.accessToken = accessToken;
-    config.headers.refreshToken = refreshToken;
-    config.headers.ipAddress = ipAddress;
-    config.headers.deviceName = deviceName;
+    config.headers.Authorization = `Bearer ${appLocalStorage.get(
+      LOCAL_STORAGE_KEYS.TOKEN
+    )}`;
   }
   return config;
 });

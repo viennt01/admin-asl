@@ -61,6 +61,8 @@ const AppSider = ({ collapsed }: Props) => {
   const router = useRouter();
   const [modal, contextHolder] = Modal.useModal();
   const [selectedKey, setSelectedKey] = useState(ROUTERS.HOME);
+  const [ipAddress, setIpAddress] = useState<string>('');
+  const [deviceName, setDeviceName] = useState<string>('');
   const { translate: translateCommon } = useI18n('common');
   const refHome = useRef(null);
   const refQuotation = useRef(null);
@@ -225,15 +227,13 @@ const AppSider = ({ collapsed }: Props) => {
 
   const logoutUser = useMutation({
     mutationFn: (body: LogoutData) => {
-      return logout(body);
+      return logout(body, { ipAddress, deviceName });
     },
   });
 
   const handleClickLogout = () => {
     const data = {
       accessToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN),
-      ipAddress: appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS),
-      deviceName: appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME),
     };
     modal.confirm({
       centered: true,
@@ -257,6 +257,11 @@ const AppSider = ({ collapsed }: Props) => {
       setSelectedKey(router.pathname ?? ROUTERS.HOME);
     }
   }, [router]);
+
+  useEffect(() => {
+    setIpAddress(appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS));
+    setDeviceName(appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME));
+  }, []);
 
   return (
     <>

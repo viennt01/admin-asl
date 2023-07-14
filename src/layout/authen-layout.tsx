@@ -31,7 +31,7 @@ interface Props {
 
 const items = [
   { value: '/images/en.png', label: 'English', key: LANGUAGE.EN },
-  { value: '/images/vi.png', label: 'Vietnamese', key: LANGUAGE.VI },
+  { value: '/images/vi.png', label: 'Vietnamese', key: LANGUAGE.VN },
 ];
 
 interface SelectLanguage {

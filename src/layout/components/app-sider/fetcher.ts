@@ -3,16 +3,21 @@ import { ResponseWithPayload, post } from '@/fetcherAxios';
 
 export interface LogoutData {
   accessToken: string;
-  ipAddress: string;
-  deviceName: string;
 }
 export interface DataLogout {
   accessToken: string;
   refreshToken: string;
 }
-
-export const logout = (data: LogoutData) => {
-  return post<LogoutData, ResponseWithPayload<DataLogout>>({ data })(
-    API_AUTHENTICATE.LOGOUT
-  );
+export interface headersLogout {
+  ipAddress: string;
+  deviceName: string;
+}
+export const logout = (data: LogoutData, headers: headersLogout) => {
+  return post<LogoutData, ResponseWithPayload<DataLogout>>({
+    data,
+    headers: {
+      deviceName: headers.deviceName,
+      ipAddress: headers.ipAddress,
+    },
+  })(API_AUTHENTICATE.LOGOUT);
 };
