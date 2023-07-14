@@ -2,7 +2,7 @@ import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { ROUTERS } from '@/constant/router';
 import { appLocalStorage } from '@/utils/localstorage';
 import { useRouter } from 'next/router';
-import { Button, Form, Input, notification } from 'antd';
+import { Button, Col, DatePicker, Form, Input, Row, notification } from 'antd';
 import {
   UserOutlined,
   LockOutlined,
@@ -14,7 +14,7 @@ import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { useMutation } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 
 const initialValues: LoginData = {
@@ -27,6 +27,10 @@ export default function LoginPage() {
   const [classActiveForm, setClassActiveForm] = useState('signinMode');
   const [notiApi, contextHolder] = notification.useNotification();
   const [ip, setIp] = useState();
+  const stepOneRef = useRef(null);
+  const stepTwoRef = useRef(null);
+  const stepLineOneRef = useRef(null);
+  const stepLineTwoRef = useRef(null);
   const deviceName = navigator.userAgent;
   const getIp = async () => {
     const response = await fetch('https://api.ipify.org/?format=json');
@@ -96,6 +100,23 @@ export default function LoginPage() {
     getIp();
   }, []);
 
+  const onClickNextInFormOne = () => {
+    let className;
+    let classNameStep;
+
+    if (stepOneRef.current && stepLineOneRef.current) {
+      className = stepOneRef.current.classList[1];
+      classNameStep = stepLineOneRef.current.classList[1];
+      stepOneRef.current.classList.remove(stepOneRef.current.classList[1]);
+      stepLineOneRef.current.classList.remove(
+        stepLineOneRef.current.classList[1]
+      );
+    }
+
+    stepTwoRef.current.classList.add(className);
+    stepLineTwoRef.current.classList.add(classNameStep);
+  };
+
   return (
     <div
       className={`${style.bodyContainer} ${
@@ -126,6 +147,7 @@ export default function LoginPage() {
             </div>
             <Form.Item
               name="email"
+              style={{ width: '100%' }}
               rules={[
                 {
                   required: true,
@@ -148,6 +170,7 @@ export default function LoginPage() {
             </Form.Item>
             <Form.Item
               name="password"
+              style={{ width: '100%' }}
               rules={[
                 {
                   required: true,
@@ -194,41 +217,79 @@ export default function LoginPage() {
             <div className={style.progressbar}>
               <div className={style.progress}></div>
               <div
-                className={style.progressStep}
+                ref={stepLineOneRef}
+                className={`${style.progressStep} ${style.progressStepActive}`}
                 data-title="Information"
               ></div>
-              <div className={style.progressStep} data-title="Contact"></div>
+              <div
+                ref={stepLineTwoRef}
+                className={style.progressStep}
+                data-title="Contact"
+              ></div>
               <div className={style.progressStep} data-title="Password"></div>
               <div className={style.progressStep} data-title="Company"></div>
             </div>
 
-            {/* <div className={style.inputField}>
-              <UserOutlined className={style.signupUserIcon} />
-              <Input
-                placeholder="Full Name"
-                className={style.signupFullNameInput}
-                bordered={false}
-              />
-            </div> */}
-
             {/* Steps */}
-            <div className={`${style.formStep} ${style.formStepActive}`}>
-              <div className={`${style.inputField} ${style.inputGroup}`}>
-                <UserOutlined className={style.signupUserIcon} />
-                {/* <input type="text" name="username" id="username" /> */}
-                <Input
-                  placeholder="First Name"
-                  className={style.signupFirstNameInput}
-                  bordered={false}
-                />
-              </div>
-              <div className="message">
-                <span></span>
-              </div>
+            <div
+              ref={stepOneRef}
+              className={`${style.formStep} ${style.formStepActive}`}
+            >
+              <Row gutter={16}>
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    name="firstName"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input your first name!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <UserOutlined className={style.signupUserIcon} />
+                      <Input
+                        placeholder="First Name"
+                        className={style.signupFirstNameInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    name="firstName"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input your first name!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <UserOutlined className={style.signupUserIcon} />
+                      <Input
+                        placeholder="First Name"
+                        className={style.signupFirstNameInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+              </Row>
 
-              <div className={`${style.inputField} ${style.inputGroup}`}>
+              <div className={`${style.inputField}`}>
                 <UserOutlined className={style.signupUserIcon} />
-                {/* <input type="text" name="username" id="username" /> */}
                 <Input
                   placeholder="Last Name"
                   className={style.signupLastNameInput}
@@ -241,10 +302,8 @@ export default function LoginPage() {
 
               <div className={`${style.inputField} ${style.inputGroup}`}>
                 <CalendarOutlined className={style.signupUserIcon} />
-                {/* <input type="text" name="username" id="username" /> */}
-                <Input
+                <DatePicker
                   placeholder="BirthDay"
-                  type="date"
                   className={style.signupBirthDayChoose}
                   bordered={false}
                 />
@@ -255,7 +314,6 @@ export default function LoginPage() {
 
               <div className={`${style.inputField} ${style.inputGroup}`}>
                 <ManOutlined className={style.signupUserIcon} />
-                {/* <input type="text" name="username" id="username" /> */}
                 <Input
                   placeholder="Gender"
                   className={style.signupGenderSelect}
@@ -266,15 +324,18 @@ export default function LoginPage() {
                 <span></span>
               </div>
 
-              {/* <div className="">
-                <a href="#" className="btn btn-next width-50 ml-auto">
-                  Next
-                </a>
-              </div> */}
+              <Button
+                loading={loginUser.isLoading}
+                className={style.btnSignUp}
+                htmlType="button"
+                onClick={onClickNextInFormOne}
+              >
+                Next
+              </Button>
             </div>
 
-            <div className={style.formStep}>
-              <div className={`${style.inputField} ${style.inputGroup}`}>
+            <div ref={stepTwoRef} className={`${style.formStep}`}>
+              <div className={`${style.inputField}`}>
                 {/* <UserOutlined className={style.signupUserIcon} />
                 <input type="text" name="username" id="username" />
                 <Input
@@ -305,11 +366,6 @@ export default function LoginPage() {
                     />
                   </div>
                 </Form.Item>
-              </div>
-
-              <div className="input-group">
-                <label htmlFor="email">Email</label>
-                <input type="text" name="email" id="email" />
               </div>
 
               {/* <div className="btns-group">
@@ -399,13 +455,13 @@ export default function LoginPage() {
             <div className="message">
               <span></span>
             </div> */}
-            <Button
+            {/* <Button
               loading={loginUser.isLoading}
               className={style.btnSignUp}
               htmlType="submit"
             >
               Sign Up
-            </Button>
+            </Button> */}
           </Form>
         </div>
       </div>

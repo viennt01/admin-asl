@@ -72,7 +72,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-image: url(https://thework.vn/wp-content/uploads/2020/10/Transportation-la-gi.jpg);
+  background-image: url(/images/login/TransportationBgLogin.jpg);
   background-color: #fff;
   background-position: center;
   background-repeat: no-repeat;
@@ -95,8 +95,7 @@
     width: 2000px;
     height: 2000px;
     border-radius: 50%;
-    background-image: url(https://kynguyenlamdep.com/wp-content/uploads/2021/12/bau-troi-va-bien-scaled.jpg);
-    // background: linear-gradient(-90deg, #1D4486, #c2e8ff);
+    background-image: url(/images/login/skyBgLogin.jpg);
     top: -10%;
     right: 48%;
     transform: translateY(-50%);
@@ -265,7 +264,6 @@
           align-items: center;
           justify-content: end;
           width: 100%;
-          margin-top: 15px;
 
           .forgotFieldLink {
             text-decoration: none;
@@ -323,7 +321,7 @@
       }
 
       .signupForm {
-        width: 455px;
+        width: 680px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -575,6 +573,11 @@
               color: #666;
             }
           }
+
+          .progressStepActive {
+            background-color: rgb(11, 78, 179);
+            color: #f3f3f3;
+          }
         }
 
         .formStep {
@@ -705,7 +708,7 @@
   &.signupMode {
     .formsContainer {
       .signinSignup {
-        left: 35%;
+        left: 27%;
 
         .signinForm {
           z-index: 1;
