@@ -3,7 +3,13 @@ import { ROUTERS } from '@/constant/router';
 import { appLocalStorage } from '@/utils/localstorage';
 import { useRouter } from 'next/router';
 import { Button, Form, Input, notification } from 'antd';
-import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
+import {
+  UserOutlined,
+  LockOutlined,
+  MailOutlined,
+  CalendarOutlined,
+  ManOutlined,
+} from '@ant-design/icons';
 import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
 import { API_MESSAGE } from '@/constant/message';
@@ -184,25 +190,179 @@ export default function LoginPage() {
               <h2>Sign up</h2>
               <h2>Sign up</h2>
             </div>
+
             <div className={style.progressbar}>
               <div className={style.progress}></div>
-
               <div className={style.progressStep} data-title="Info"></div>
               <div className={style.progressStep} data-title="Contact"></div>
               <div className={style.progressStep} data-title="Password"></div>
               <div className={style.progressStep} data-title="Company"></div>
             </div>
-            <div className={style.inputField}>
+
+            {/* <div className={style.inputField}>
               <UserOutlined className={style.signupUserIcon} />
               <Input
                 placeholder="Full Name"
                 className={style.signupFullNameInput}
                 bordered={false}
               />
+            </div> */}
+
+            {/* Steps */}
+            <div className={`${style.formStep} ${style.formStepActive}`}>
+              <div className={`${style.inputField} ${style.inputGroup}`}>
+                <UserOutlined className={style.signupUserIcon} />
+                {/* <input type="text" name="username" id="username" /> */}
+                <Input
+                  placeholder="First Name"
+                  className={style.signupFirstNameInput}
+                  bordered={false}
+                />
+              </div>
+              <div className="message">
+                <span></span>
+              </div>
+
+              <div className={`${style.inputField} ${style.inputGroup}`}>
+                <UserOutlined className={style.signupUserIcon} />
+                {/* <input type="text" name="username" id="username" /> */}
+                <Input
+                  placeholder="Last Name"
+                  className={style.signupLastNameInput}
+                  bordered={false}
+                />
+              </div>
+              <div className="message">
+                <span></span>
+              </div>
+
+              <div className={`${style.inputField} ${style.inputGroup}`}>
+                <CalendarOutlined className={style.signupUserIcon} />
+                {/* <input type="text" name="username" id="username" /> */}
+                <Input
+                  placeholder="BirthDay"
+                  type="date"
+                  className={style.signupBirthDayChoose}
+                  bordered={false}
+                />
+              </div>
+              <div className="message">
+                <span></span>
+              </div>
+
+              <div className={`${style.inputField} ${style.inputGroup}`}>
+                <ManOutlined className={style.signupUserIcon} />
+                {/* <input type="text" name="username" id="username" /> */}
+                <Input
+                  placeholder="Gender"
+                  className={style.signupGenderSelect}
+                  bordered={false}
+                />
+              </div>
+              <div className="message">
+                <span></span>
+              </div>
+
+              {/* <div className="">
+                <a href="#" className="btn btn-next width-50 ml-auto">
+                  Next
+                </a>
+              </div> */}
             </div>
-            <div className="message">
+
+            <div className={style.formStep}>
+              <div className={`${style.inputField} ${style.inputGroup}`}>
+                {/* <UserOutlined className={style.signupUserIcon} />
+                <input type="text" name="username" id="username" />
+                <Input
+                  placeholder="Phone"
+                  className={style.signupFirstNameInput}
+                  bordered={false}
+                /> */}
+
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: (
+                        <div className={style.message}>
+                          Please input your Email!
+                        </div>
+                      ),
+                    },
+                  ]}
+                >
+                  <div className={style.inputField}>
+                    <MailOutlined className={style.signinMailIcon} />
+                    <Input
+                      placeholder="Email"
+                      className={style.signinEmailInput}
+                      bordered={false}
+                    />
+                  </div>
+                </Form.Item>
+              </div>
+
+              <div className="input-group">
+                <label htmlFor="email">Email</label>
+                <input type="text" name="email" id="email" />
+              </div>
+
+              {/* <div className="btns-group">
+                <a href="#" className="btn btn-prev">
+                  Previous
+                </a>
+                <a href="#" className="btn btn-next">
+                  Next
+                </a>
+              </div> */}
+            </div>
+
+            {/* <div className="form-step">
+              <div className="input-group">
+                <label htmlFor="dob">Date of Birth</label>
+                <input type="date" name="dob" id="dob" />
+              </div>
+              <div className="input-group">
+                <label htmlFor="ID">National ID</label>
+                <input type="number" name="ID" id="ID" />
+              </div>
+              <div className="btns-group">
+                <a href="#" className="btn btn-prev">
+                  Previous
+                </a>
+                <a href="#" className="btn btn-next">
+                  Next
+                </a>
+              </div>
+            </div>
+
+            <div className="form-step">
+              <div className="input-group">
+                <label htmlFor="password">Password</label>
+                <input type="password" name="password" id="password" />
+              </div>
+              <div className="input-group">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  id="confirmPassword"
+                />
+              </div>
+              <div className="btns-group">
+                <a href="#" className="btn btn-prev">
+                  Previous
+                </a>
+                <input type="submit" value="Submit" className="btn" />
+              </div>
+            </div> */}
+
+            {/* <div className="message">
               <span></span>
             </div>
+
             <div className={style.inputField}>
               <MailOutlined className={style.signupMailIcon} />
               <Input
@@ -235,7 +395,7 @@ export default function LoginPage() {
             </div>
             <div className="message">
               <span></span>
-            </div>
+            </div> */}
             <Button
               loading={loginUser.isLoading}
               className={style.btnSignUp}

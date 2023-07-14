@@ -203,16 +203,16 @@
             width: 300px;
 
             &::placeholder {
-              color: #0300A6;
-              font-weight: 600;
+              color: #4240ae;
+              font-weight: 400;
             }
 
             input {
               background: none;
 
               &::placeholder {
-                color: #0300A6;
-                font-weight: 600;
+                color: #4240ae;
+                font-weight: 400;
               }
             }
           }
@@ -388,8 +388,11 @@
             justify-content: center;
           }
 
-          .signupFullNameInput,
+          .signupFirstNameInput,
+          .signupLastNameInput,
           .signupMailInput,
+          .signupBirthDayChoose,
+          .signupGenderSelect,
           .signupPasswordInput,
           .signupConfirmPasswordInput {
             background: none;
@@ -403,16 +406,16 @@
             width: 300px;
 
             &::placeholder {
-              color: #0300A6;
-              font-weight: 600;
+              color: #4240ae;
+              font-weight: 400;
             }
 
             input {
               background: none;
 
               &::placeholder {
-                color: #0300A6;
-                font-weight: 600;
+                color: #4240ae;
+                font-weight: 400;
               }
             }
           }
@@ -555,6 +558,18 @@
             }
           }
         }
+
+        .formStep {
+          display: none;
+          transform-origin: top;
+          animation: animate 0.5s;
+          width: 100%;
+        }
+        
+        .formStepActive {
+          display: block;
+        }
+
       }
     }
   }
@@ -777,5 +792,16 @@
 
   50% {
     clip-path: polygon(0% 60%, 16% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%);
+  }
+}
+
+@keyframes animate {
+  from {
+    transform: scale(1, 0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1, 1);
+    opacity: 1;
   }
 }
