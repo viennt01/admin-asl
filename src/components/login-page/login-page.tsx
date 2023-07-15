@@ -2,7 +2,16 @@ import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { ROUTERS } from '@/constant/router';
 import { appLocalStorage } from '@/utils/localstorage';
 import { useRouter } from 'next/router';
-import { Button, Col, DatePicker, Form, Input, Row, notification } from 'antd';
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  notification,
+  Select,
+} from 'antd';
 import {
   UserOutlined,
   LockOutlined,
@@ -140,7 +149,7 @@ export default function LoginPage() {
             <img
               src="/images/logo_ASL.png"
               alt=""
-              style={{ marginBottom: '15px', width: '150px' }}
+              style={{ marginBottom: '15px', width: '180px' }}
             />
             <div className={style.titleSignIn}>
               <h2>Sign in</h2>
@@ -154,7 +163,7 @@ export default function LoginPage() {
                   required: true,
                   message: (
                     <div className={style.message}>
-                      Please input your Email!
+                      Please input your email!
                     </div>
                   ),
                 },
@@ -177,7 +186,7 @@ export default function LoginPage() {
                   required: true,
                   message: (
                     <div className={style.message}>
-                      Please input your Email!
+                      Please input your password!
                     </div>
                   ),
                 },
@@ -265,16 +274,17 @@ export default function LoginPage() {
                     </div>
                   </Form.Item>
                 </Col>
+
                 <Col lg={12} span={24}>
                   <Form.Item
-                    name="firstName"
+                    name="lastName"
                     style={{ width: '100%' }}
                     rules={[
                       {
                         required: true,
                         message: (
                           <div className={style.message}>
-                            Please input your first name!
+                            Please input your last name!
                           </div>
                         ),
                       },
@@ -283,50 +293,80 @@ export default function LoginPage() {
                     <div className={style.inputField}>
                       <UserOutlined className={style.signupUserIcon} />
                       <Input
-                        placeholder="First Name"
-                        className={style.signupFirstNameInput}
+                        placeholder="Last Name"
+                        className={style.signupLastNameInput}
                         bordered={false}
                       />
                     </div>
                   </Form.Item>
                 </Col>
+
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    name="lastName"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input your last name!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <CalendarOutlined className={style.signupUserIcon} />
+                      <DatePicker
+                        placeholder="BirthDay"
+                        style={{ width: '235px' }}
+                        className={style.signupBirthDayChoose}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    name="gender"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please select gender!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <ManOutlined className={style.signupUserIcon} />
+                      <Select
+                        className={style.signupGenderSelect}
+                        options={[
+                          {
+                            value: '1',
+                            label: 'Male',
+                          },
+                          {
+                            value: '2',
+                            label: 'Female',
+                          },
+                          {
+                            value: '2',
+                            label: 'Orther',
+                          },
+                        ]}
+                        placeholder="Please select gender"
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
               </Row>
-
-              <div className={`${style.inputField}`}>
-                <UserOutlined className={style.signupUserIcon} />
-                <Input
-                  placeholder="Last Name"
-                  className={style.signupLastNameInput}
-                  bordered={false}
-                />
-              </div>
-              <div className="message">
-                <span></span>
-              </div>
-
-              <div className={`${style.inputField} ${style.inputGroup}`}>
-                <CalendarOutlined className={style.signupUserIcon} />
-                <DatePicker
-                  placeholder="BirthDay"
-                  className={style.signupBirthDayChoose}
-                  bordered={false}
-                />
-              </div>
-              <div className="message">
-                <span></span>
-              </div>
-
-              <div className={`${style.inputField} ${style.inputGroup}`}>
-                <ManOutlined className={style.signupUserIcon} />
-                <Input
-                  placeholder="Gender"
-                  className={style.signupGenderSelect}
-                  bordered={false}
-                />
-              </div>
-              <div className="message">
-                <span></span>
-              </div>
 
               <Button
                 loading={loginUser.isLoading}
