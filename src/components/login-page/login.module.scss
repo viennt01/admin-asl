@@ -127,7 +127,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        padding: 3rem;
+        padding: 2rem 3rem;
         overflow: hidden;
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -141,7 +141,7 @@
         .titleSignIn {
           position: relative;
           margin-bottom: 30px;
-          height: 50px;
+          height: 40px;
           width: 100%;
           display: flex;
           justify-content: center;
@@ -166,7 +166,6 @@
         }
 
         .inputField {
-          max-width: 380px;
           width: 100%;
           height: 55px;
           background-color: #f0f0f0;
@@ -326,7 +325,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        padding: 3rem;
+        padding: 2rem 3rem;
         overflow: hidden;
         grid-column: 1 / 2;
         grid-row: 1 / 2;
@@ -340,7 +339,7 @@
         .titleSignup {
           position: relative;
           margin-bottom: 30px;
-          height: 50px;
+          height: 40px;
           width: 100%;
           display: flex;
           justify-content: center;
@@ -409,7 +408,7 @@
             font-weight: 600;
             font-size: 1.3rem;
             color: #0300A6;
-            height: 55px;
+            height: 55px !important;
             width: 300px;
 
             &::placeholder {
