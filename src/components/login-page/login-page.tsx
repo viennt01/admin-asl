@@ -18,6 +18,7 @@ import {
   MailOutlined,
   CalendarOutlined,
   ManOutlined,
+  PhoneOutlined,
 } from '@ant-design/icons';
 import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
@@ -270,6 +271,7 @@ export default function LoginPage() {
                         placeholder="First Name"
                         className={style.signupFirstNameInput}
                         bordered={false}
+                        style={{ width: '235px' }}
                       />
                     </div>
                   </Form.Item>
@@ -296,6 +298,7 @@ export default function LoginPage() {
                         placeholder="Last Name"
                         className={style.signupLastNameInput}
                         bordered={false}
+                        style={{ width: '235px' }}
                       />
                     </div>
                   </Form.Item>
@@ -310,7 +313,7 @@ export default function LoginPage() {
                         required: true,
                         message: (
                           <div className={style.message}>
-                            Please input your last name!
+                            Please input choose birthday!
                           </div>
                         ),
                       },
@@ -331,7 +334,7 @@ export default function LoginPage() {
                 <Col lg={12} span={24}>
                   <Form.Item
                     name="gender"
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', height: '100%' }}
                     rules={[
                       {
                         required: true,
@@ -356,61 +359,156 @@ export default function LoginPage() {
                             value: '2',
                             label: 'Female',
                           },
-                          {
-                            value: '2',
-                            label: 'Orther',
-                          },
                         ]}
                         placeholder="Please select gender"
+                        style={{ width: '235px' }}
+                        bordered={false}
                       />
                     </div>
                   </Form.Item>
                 </Col>
-              </Row>
 
-              <Button
-                loading={loginUser.isLoading}
-                className={style.btnSignUp}
-                htmlType="button"
-                onClick={onClickNextInFormOne}
-              >
-                Next
-              </Button>
+                <Button
+                  loading={loginUser.isLoading}
+                  className={style.btnSignUp}
+                  htmlType="button"
+                  onClick={onClickNextInFormOne}
+                >
+                  Next
+                </Button>
+              </Row>
             </div>
 
             <div ref={stepTwoRef} className={`${style.formStep}`}>
-              <div className={`${style.inputField}`}>
-                {/* <UserOutlined className={style.signupUserIcon} />
-                <input type="text" name="username" id="username" />
-                <Input
-                  placeholder="Phone"
-                  className={style.signupFirstNameInput}
-                  bordered={false}
-                /> */}
-
-                <Form.Item
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input your Email!
-                        </div>
-                      ),
-                    },
-                  ]}
+              <Row gutter={16}>
+                <Col lg={14} span={24}>
+                  <Form.Item
+                    name="email"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input your email!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <MailOutlined className={style.signupMailIcon} />
+                      <Input
+                        placeholder="Email"
+                        className={style.signupEmailInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+                <Col lg={10} span={24}>
+                  <Form.Item
+                    name="phoneNumber"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input phone number!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <PhoneOutlined className={style.signupMailIcon} />
+                      <Input
+                        placeholder="Phone Number"
+                        className={style.signupEmailInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+                <Col lg={14} span={24}>
+                  <Form.Item
+                    name="address"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input address!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <PhoneOutlined className={style.signupMailIcon} />
+                      <Input
+                        placeholder="Address"
+                        className={style.signupEmailInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+                <Col lg={10} span={24}>
+                  <Form.Item
+                    name="gender"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please select city!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <ManOutlined className={style.signupUserIcon} />
+                      <Select
+                        className={style.signupGenderSelect}
+                        options={[
+                          {
+                            value: '1',
+                            label: 'TPHCM',
+                          },
+                          {
+                            value: '2',
+                            label: 'HN',
+                          },
+                        ]}
+                        placeholder="Please select city"
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+                <Button
+                  loading={loginUser.isLoading}
+                  className={style.btnSignUp}
+                  htmlType="button"
+                  onClick={onClickNextInFormOne}
+                  style={{ marginRight: 10 }}
                 >
-                  <div className={style.inputField}>
-                    <MailOutlined className={style.signinMailIcon} />
-                    <Input
-                      placeholder="Email"
-                      className={style.signinEmailInput}
-                      bordered={false}
-                    />
-                  </div>
-                </Form.Item>
-              </div>
+                  Previous
+                </Button>
+                <Button
+                  loading={loginUser.isLoading}
+                  className={style.btnSignUp}
+                  htmlType="button"
+                  onClick={onClickNextInFormOne}
+                >
+                  Next
+                </Button>
+              </Row>
 
               {/* <div className="btns-group">
                 <a href="#" className="btn btn-prev">

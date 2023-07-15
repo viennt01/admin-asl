@@ -364,7 +364,6 @@
         }
 
         .inputField {
-          max-width: 380px;
           width: 100%;
           height: 55px;
           background-color: #f0f0f0;
@@ -408,8 +407,10 @@
             font-weight: 600;
             font-size: 1.3rem;
             color: #0300A6;
-            height: 55px !important;
+            height: 55px;
             width: 300px;
+            display: flex;
+            align-items: center;
 
             &::placeholder {
               color: #4240ae;
@@ -506,7 +507,7 @@
 
           &:hover::after {
             transition: transform 0.55s ease-in-out;
-            transform: translate3d(345%, 0, 0) rotate(35deg);
+            transform: translate3d(365%, 0, 0) rotate(35deg);
           }
 
           &::before {
@@ -515,7 +516,7 @@
 
           &:not(:hover)::before {
             transition: transform 0.55s ease-in-out;
-            transform: translate3d(-440%, 0, 0) rotate(35deg);
+            transform: translate3d(-465%, 0, 0) rotate(35deg);
           }
         }
 
