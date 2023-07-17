@@ -19,6 +19,10 @@ import {
   CalendarOutlined,
   ManOutlined,
   PhoneOutlined,
+  EnvironmentOutlined,
+  InfoOutlined,
+  BarcodeOutlined,
+  TeamOutlined,
 } from '@ant-design/icons';
 import style from './login.module.scss';
 import { LoginData, login } from './fetcher';
@@ -40,8 +44,12 @@ export default function LoginPage() {
   const [ip, setIp] = useState();
   const stepOneRef = useRef<HTMLDivElement>(null);
   const stepTwoRef = useRef<HTMLDivElement>(null);
+  const stepThreeRef = useRef<HTMLDivElement>(null);
+  const stepFourRef = useRef<HTMLDivElement>(null);
   const stepLineOneRef = useRef<HTMLDivElement>(null);
   const stepLineTwoRef = useRef<HTMLDivElement>(null);
+  const stepLineThreeRef = useRef<HTMLDivElement>(null);
+  const stepLineFourRef = useRef<HTMLDivElement>(null);
   const deviceName = navigator.userAgent;
   const getIp = async () => {
     const response = await fetch('https://api.ipify.org/?format=json');
@@ -53,6 +61,7 @@ export default function LoginPage() {
     ipAddress: ip || '',
     deviceName: deviceName,
   };
+
   const onFinish = (values: LoginData) => {
     if (!ip) {
       return;
@@ -126,6 +135,96 @@ export default function LoginPage() {
 
     stepTwoRef.current?.classList.add(`${className}`);
     stepLineTwoRef.current?.classList.add(`${classNameStep}`);
+  };
+
+  const onClickNextInFormTwo = () => {
+    let className;
+    let classNameStep;
+
+    if (stepTwoRef.current && stepLineTwoRef.current) {
+      className = stepTwoRef.current.classList[1];
+      classNameStep = stepLineTwoRef.current.classList[1];
+
+      stepTwoRef.current.classList.remove(stepTwoRef.current.classList[1]);
+      stepLineTwoRef.current.classList.remove(
+        stepLineTwoRef.current.classList[1]
+      );
+    }
+
+    stepThreeRef.current?.classList.add(`${className}`);
+    stepLineThreeRef.current?.classList.add(`${classNameStep}`);
+  };
+
+  const onClickNextInFormThree = () => {
+    let className;
+    let classNameStep;
+
+    if (stepThreeRef.current && stepLineThreeRef.current) {
+      className = stepThreeRef.current.classList[1];
+      classNameStep = stepLineThreeRef.current.classList[1];
+
+      stepThreeRef.current.classList.remove(stepThreeRef.current.classList[1]);
+      stepLineThreeRef.current.classList.remove(
+        stepLineThreeRef.current.classList[1]
+      );
+    }
+
+    stepFourRef.current?.classList.add(`${className}`);
+    stepLineFourRef.current?.classList.add(`${classNameStep}`);
+  };
+
+  const onClickPreviousInFormFour = () => {
+    let className;
+    let classNameStep;
+
+    if (stepFourRef.current && stepLineFourRef.current) {
+      className = stepFourRef.current.classList[1];
+      classNameStep = stepLineFourRef.current.classList[1];
+
+      stepFourRef.current.classList.remove(stepFourRef.current.classList[1]);
+      stepLineFourRef.current.classList.remove(
+        stepLineFourRef.current.classList[1]
+      );
+    }
+
+    stepThreeRef.current?.classList.add(`${className}`);
+    stepLineThreeRef.current?.classList.add(`${classNameStep}`);
+  };
+
+  const onClickPreviousInFormThree = () => {
+    let className;
+    let classNameStep;
+
+    if (stepThreeRef.current && stepLineThreeRef.current) {
+      className = stepThreeRef.current.classList[1];
+      classNameStep = stepLineThreeRef.current.classList[1];
+
+      stepThreeRef.current.classList.remove(stepThreeRef.current.classList[1]);
+      stepLineThreeRef.current.classList.remove(
+        stepLineThreeRef.current.classList[1]
+      );
+    }
+
+    stepTwoRef.current?.classList.add(`${className}`);
+    stepLineTwoRef.current?.classList.add(`${classNameStep}`);
+  };
+
+  const onClickPreviousInFormTwo = () => {
+    let className;
+    let classNameStep;
+
+    if (stepTwoRef.current && stepLineTwoRef.current) {
+      className = stepTwoRef.current.classList[1];
+      classNameStep = stepLineTwoRef.current.classList[1];
+
+      stepTwoRef.current.classList.remove(stepTwoRef.current.classList[1]);
+      stepLineTwoRef.current.classList.remove(
+        stepLineTwoRef.current.classList[1]
+      );
+    }
+
+    stepOneRef.current?.classList.add(`${className}`);
+    stepLineOneRef.current?.classList.add(`${classNameStep}`);
   };
 
   return (
@@ -240,8 +339,16 @@ export default function LoginPage() {
                 className={style.progressStep}
                 data-title="Contact"
               ></div>
-              <div className={style.progressStep} data-title="Password"></div>
-              <div className={style.progressStep} data-title="Company"></div>
+              <div
+                ref={stepLineThreeRef}
+                className={style.progressStep}
+                data-title="Password"
+              ></div>
+              <div
+                ref={stepLineFourRef}
+                className={style.progressStep}
+                data-title="Company"
+              ></div>
             </div>
 
             {/* Steps */}
@@ -306,7 +413,7 @@ export default function LoginPage() {
 
                 <Col lg={12} span={24}>
                   <Form.Item
-                    name="lastName"
+                    name="birthDay"
                     style={{ width: '100%' }}
                     rules={[
                       {
@@ -320,7 +427,7 @@ export default function LoginPage() {
                     ]}
                   >
                     <div className={style.inputField}>
-                      <CalendarOutlined className={style.signupUserIcon} />
+                      <CalendarOutlined className={style.signupCalendarIcon} />
                       <DatePicker
                         placeholder="BirthDay"
                         style={{ width: '235px' }}
@@ -334,7 +441,7 @@ export default function LoginPage() {
                 <Col lg={12} span={24}>
                   <Form.Item
                     name="gender"
-                    style={{ width: '100%', height: '100%' }}
+                    style={{ width: '100%' }}
                     rules={[
                       {
                         required: true,
@@ -347,7 +454,7 @@ export default function LoginPage() {
                     ]}
                   >
                     <div className={style.inputField}>
-                      <ManOutlined className={style.signupUserIcon} />
+                      <ManOutlined className={style.signupManIcon} />
                       <Select
                         className={style.signupGenderSelect}
                         options={[
@@ -361,7 +468,6 @@ export default function LoginPage() {
                           },
                         ]}
                         placeholder="Please select gender"
-                        style={{ width: '235px' }}
                         bordered={false}
                       />
                     </div>
@@ -400,12 +506,13 @@ export default function LoginPage() {
                       <MailOutlined className={style.signupMailIcon} />
                       <Input
                         placeholder="Email"
-                        className={style.signupEmailInput}
+                        className={style.signupMailInput}
                         bordered={false}
                       />
                     </div>
                   </Form.Item>
                 </Col>
+
                 <Col lg={10} span={24}>
                   <Form.Item
                     name="phoneNumber"
@@ -422,15 +529,16 @@ export default function LoginPage() {
                     ]}
                   >
                     <div className={style.inputField}>
-                      <PhoneOutlined className={style.signupMailIcon} />
+                      <PhoneOutlined className={style.signupPhoneIcon} />
                       <Input
                         placeholder="Phone Number"
-                        className={style.signupEmailInput}
+                        className={style.signupPhoneInput}
                         bordered={false}
                       />
                     </div>
                   </Form.Item>
                 </Col>
+
                 <Col lg={14} span={24}>
                   <Form.Item
                     name="address"
@@ -447,18 +555,21 @@ export default function LoginPage() {
                     ]}
                   >
                     <div className={style.inputField}>
-                      <PhoneOutlined className={style.signupMailIcon} />
+                      <EnvironmentOutlined
+                        className={style.signupAddressIcon}
+                      />
                       <Input
                         placeholder="Address"
-                        className={style.signupEmailInput}
+                        className={style.signupAddressInput}
                         bordered={false}
                       />
                     </div>
                   </Form.Item>
                 </Col>
+
                 <Col lg={10} span={24}>
                   <Form.Item
-                    name="gender"
+                    name="city"
                     style={{ width: '100%' }}
                     rules={[
                       {
@@ -472,9 +583,11 @@ export default function LoginPage() {
                     ]}
                   >
                     <div className={style.inputField}>
-                      <ManOutlined className={style.signupUserIcon} />
+                      <EnvironmentOutlined
+                        className={style.signupAddressIcon}
+                      />
                       <Select
-                        className={style.signupGenderSelect}
+                        className={style.signupAddressSelect}
                         options={[
                           {
                             value: '1',
@@ -491,119 +604,330 @@ export default function LoginPage() {
                     </div>
                   </Form.Item>
                 </Col>
+
                 <Button
                   loading={loginUser.isLoading}
                   className={style.btnSignUp}
                   htmlType="button"
-                  onClick={onClickNextInFormOne}
+                  onClick={onClickPreviousInFormTwo}
                   style={{ marginRight: 10 }}
                 >
                   Previous
                 </Button>
+
                 <Button
                   loading={loginUser.isLoading}
                   className={style.btnSignUp}
                   htmlType="button"
-                  onClick={onClickNextInFormOne}
+                  onClick={onClickNextInFormTwo}
                 >
                   Next
                 </Button>
               </Row>
+            </div>
 
-              {/* <div className="btns-group">
-                <a href="#" className="btn btn-prev">
+            <div ref={stepThreeRef} className={`${style.formStep}`}>
+              <Row gutter={16}>
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    name="password"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input your password!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <LockOutlined className={style.signupLockIcon} />
+                      <Input.Password
+                        placeholder="Password"
+                        className={style.signupPasswordInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    name="passwordConfirm"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input password confirm!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <LockOutlined className={style.signupLockIcon} />
+                      <Input.Password
+                        placeholder="Confirm Password"
+                        className={style.signupConfirmPasswordInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Button
+                  loading={loginUser.isLoading}
+                  className={style.btnSignUp}
+                  htmlType="button"
+                  onClick={onClickPreviousInFormThree}
+                  style={{ marginRight: 10 }}
+                >
                   Previous
-                </a>
-                <a href="#" className="btn btn-next">
+                </Button>
+
+                <Button
+                  loading={loginUser.isLoading}
+                  className={style.btnSignUp}
+                  htmlType="button"
+                  onClick={onClickNextInFormThree}
+                >
                   Next
-                </a>
-              </div> */}
+                </Button>
+              </Row>
             </div>
 
-            {/* <div className="form-step">
-              <div className="input-group">
-                <label htmlFor="dob">Date of Birth</label>
-                <input type="date" name="dob" id="dob" />
-              </div>
-              <div className="input-group">
-                <label htmlFor="ID">National ID</label>
-                <input type="number" name="ID" id="ID" />
-              </div>
-              <div className="btns-group">
-                <a href="#" className="btn btn-prev">
+            <div ref={stepFourRef} className={`${style.formStep}`}>
+              <Row gutter={16}>
+                <Col lg={14} span={24}>
+                  <Form.Item
+                    name="nameCompany"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input name company!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <InfoOutlined className={style.signupInfoIcon} />
+                      <Input
+                        placeholder="Name Company"
+                        className={style.signupNameCompanyInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={10} span={24}>
+                  <Form.Item
+                    name="phoneNumberCompany"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input phone number!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <PhoneOutlined className={style.signupPhoneIcon} />
+                      <Input
+                        placeholder="Phone Number"
+                        className={style.signupPhoneInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={24} span={24}>
+                  <Form.Item
+                    name="emailCompany"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input email company!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <MailOutlined className={style.signupMailIcon} />
+                      <Input
+                        placeholder="Email Company"
+                        className={style.signupEmailCompanyInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={14} span={24}>
+                  <Form.Item
+                    name="addressCompany"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input address!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <EnvironmentOutlined
+                        className={style.signupAddressIcon}
+                      />
+                      <Input
+                        placeholder="Address"
+                        className={style.signupAddressInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={10} span={24}>
+                  <Form.Item
+                    name="city"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please select city!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <EnvironmentOutlined
+                        className={style.signupAddressIcon}
+                      />
+                      <Select
+                        className={style.signupAddressSelect}
+                        options={[
+                          {
+                            value: '1',
+                            label: 'TPHCM',
+                          },
+                          {
+                            value: '2',
+                            label: 'HN',
+                          },
+                        ]}
+                        placeholder="Please select city"
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={14} span={24}>
+                  <Form.Item
+                    name="taxCodeCompany"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please input tax code!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <BarcodeOutlined className={style.signupBarCodeIcon} />
+                      <Input
+                        placeholder="Tax Code Company"
+                        className={style.signupTaxCodeInput}
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Col lg={10} span={24}>
+                  <Form.Item
+                    name="role"
+                    style={{ width: '100%' }}
+                    rules={[
+                      {
+                        required: true,
+                        message: (
+                          <div className={style.message}>
+                            Please select role!
+                          </div>
+                        ),
+                      },
+                    ]}
+                  >
+                    <div className={style.inputField}>
+                      <TeamOutlined className={style.signupRoleIcon} />
+                      <Select
+                        className={style.signupRoleSelect}
+                        options={[
+                          {
+                            value: '1',
+                            label: 'Admin',
+                          },
+                          {
+                            value: '2',
+                            label: 'User',
+                          },
+                        ]}
+                        placeholder="Please select role"
+                        bordered={false}
+                      />
+                    </div>
+                  </Form.Item>
+                </Col>
+
+                <Button
+                  loading={loginUser.isLoading}
+                  className={style.btnSignUp}
+                  htmlType="button"
+                  onClick={onClickPreviousInFormFour}
+                  style={{ marginRight: 10 }}
+                >
                   Previous
-                </a>
-                <a href="#" className="btn btn-next">
-                  Next
-                </a>
-              </div>
-            </div>
+                </Button>
 
-            <div className="form-step">
-              <div className="input-group">
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password" />
-              </div>
-              <div className="input-group">
-                <label htmlFor="confirmPassword">Confirm Password</label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  id="confirmPassword"
-                />
-              </div>
-              <div className="btns-group">
-                <a href="#" className="btn btn-prev">
-                  Previous
-                </a>
-                <input type="submit" value="Submit" className="btn" />
-              </div>
-            </div> */}
-
-            {/* <div className="message">
-              <span></span>
+                <Button
+                  loading={loginUser.isLoading}
+                  className={style.btnSignUp}
+                  htmlType="submit"
+                >
+                  Sign Up
+                </Button>
+              </Row>
             </div>
-
-            <div className={style.inputField}>
-              <MailOutlined className={style.signupMailIcon} />
-              <Input
-                placeholder="Email"
-                className={style.signupMailInput}
-                bordered={false}
-              />
-            </div>
-            <div className="message">
-              <span></span>
-            </div>
-            <div className={style.inputField}>
-              <LockOutlined className={style.signupLockIcon} />
-              <Input.Password
-                placeholder="Password"
-                className={style.signupPasswordInput}
-                bordered={false}
-              />
-            </div>
-            <div className="message">
-              <span></span>
-            </div>
-            <div className={style.inputField}>
-              <LockOutlined className={style.signupLockIcon} />
-              <Input.Password
-                placeholder="Confirm Password"
-                className={style.signupConfirmPasswordInput}
-                bordered={false}
-              />
-            </div>
-            <div className="message">
-              <span></span>
-            </div> */}
-            {/* <Button
-              loading={loginUser.isLoading}
-              className={style.btnSignUp}
-              htmlType="submit"
-            >
-              Sign Up
-            </Button> */}
           </Form>
         </div>
       </div>

@@ -172,14 +172,12 @@
           margin: 10px 0;
           border-radius: 55px;
           display: grid;
-          grid-template-columns: 15% 70% 15%;
+          grid-template-columns: 15% 85%;
           padding: 0 0.4rem;
           box-shadow: 4px 4px 10px -1px #1D4486;
 
           .signinMailIcon,
-          .signinLockIcon,
-          .signinEmailIconCheck,
-          .signinEmailIconError {
+          .signinLockIcon {
             line-height: 55px;
             color: #1D4486;
             font-size: 1.8rem;
@@ -223,39 +221,6 @@
               }
             }
           }
-
-          .signinEmailIconCheck,
-          .signinPasswordIconCheck {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 55px;
-            color: green;
-            font-size: 1.8rem;
-            display: none;
-          }
-
-          .signinEmailIconError,
-          .signinPasswordIconError {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 55px;
-            color: red;
-            font-size: 1.8rem;
-            display: none;
-          }
-        }
-
-        .message {
-          display: flex;
-          align-items: center;
-          justify-content: start;
-          width: 100%;
-          color: red;
-          font-size: 16px;
-          margin-left: 45px;
-          font-weight: 600;
         }
 
         .loginOptions {
@@ -370,21 +335,20 @@
           margin: 10px 0;
           border-radius: 55px;
           display: grid;
-          grid-template-columns: 15% 70% 15%;
+          grid-template-columns: 15% 80%;
           padding: 0 0.4rem;
           box-shadow: 4px 4px 10px -1px #1D4486;
 
           .signupUserIcon,
-          .signupFullnameIconCheck,
-          .signupFullnameIconError,
           .signupMailIcon,
-          .signupEmailIconCheck,
-          .signupEmailIconError,
           .signupLockIcon,
-          .signupPasswordIconCheck,
-          .signupPasswordIconError,
-          .confirmPasswordIconCheck,
-          .confirmPasswordIconError {
+          .signupCalendarIcon,
+          .signupManIcon,
+          .signupPhoneIcon,
+          .signupAddressIcon,
+          .signupInfoIcon,
+          .signupBarCodeIcon,
+          .signupRoleIcon {
             line-height: 55px;
             color: #1D4486;
             font-size: 1.8rem;
@@ -399,7 +363,14 @@
           .signupBirthDayChoose,
           .signupGenderSelect,
           .signupPasswordInput,
-          .signupConfirmPasswordInput {
+          .signupConfirmPasswordInput,
+          .signupPhoneInput,
+          .signupAddressInput,
+          .signupAddressSelect,
+          .signupNameCompanyInput,
+          .signupTaxCodeInput,
+          .signupRoleSelect,
+          .signupEmailCompanyInput {
             background: none;
             outline: none;
             border: none;
@@ -407,8 +378,8 @@
             font-weight: 600;
             font-size: 1.3rem;
             color: #0300A6;
-            height: 55px;
-            width: 300px;
+            height: 100%;
+            width: 100%;
             display: flex;
             align-items: center;
 
@@ -435,43 +406,6 @@
               }
             }
           }
-
-          .signupFullnameIconCheck,
-          .signupEmailIconCheck,
-          .signupPasswordIconCheck,
-          .confirmPasswordIconCheck {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 55px;
-            color: green;
-            font-size: 1.8rem;
-            display: none;
-          }
-
-          .signupFullnameIconError,
-          .signupEmailIconError,
-          .signupPasswordIconError,
-          .confirmPasswordIconError {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 55px;
-            color: red;
-            font-size: 1.8rem;
-            display: none;
-          }
-        }
-
-        .message {
-          display: flex;
-          align-items: center;
-          justify-content: start;
-          width: 100%;
-          color: red;
-          font-size: 16px;
-          margin-left: 45px;
-          font-weight: 600;
         }
 
         .btnSignUp {
@@ -802,6 +736,17 @@
       right: 48%;
     }
   }
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  color: red;
+  font-size: 16px;
+  margin-left: 45px;
+  font-weight: 600;
 }
 
 @keyframes animateText {
