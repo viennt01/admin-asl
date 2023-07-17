@@ -2,7 +2,7 @@ import { Layout, Image, Form, Input, Button } from 'antd';
 import CustomCard from '../commons/CustomCard';
 import { UserOutlined } from '@ant-design/icons';
 import { errorToast, successToast } from '@/hook/toast';
-import style from './login.module.scss';
+import style from './forgot-password-page.module.scss';
 import { resetPassword, sendOtp, sendVerifyOtp } from './fetcher';
 import { useState } from 'react';
 import { API_MESSAGE } from '@/constant/message';
@@ -117,7 +117,8 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh', background: '#fff' }}>
+    <Layout className={style.layoutForgotPassword}>
+      <div className={style.colorBackdrop}></div>
       <Content
         style={{
           display: 'flex',
@@ -147,8 +148,8 @@ export default function ForgotPasswordPage() {
             <Image
               src="/images/logo_ASL.png"
               alt="logo"
-              width={140}
-              height={120}
+              width={180}
+              preview={false}
             />
           </div>
           <div className={style.titleForgotPassword}>
@@ -181,7 +182,7 @@ export default function ForgotPasswordPage() {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: '100%' }}
+                style={{ width: '100%', marginTop: '15px' }}
                 loading={isLoadingSendOtp}
               >
                 {translateResetPassword('button_send_otp')}
@@ -213,7 +214,7 @@ export default function ForgotPasswordPage() {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: '100%' }}
+                style={{ width: '100%', marginTop: '15px' }}
                 loading={isLoadingConfirmOtp}
               >
                 {translateResetPassword('button_confirm_otp')}
@@ -305,7 +306,7 @@ export default function ForgotPasswordPage() {
                 size="large"
                 type="primary"
                 htmlType="submit"
-                style={{ width: '100%' }}
+                style={{ width: '100%', marginTop: '15px' }}
                 loading={isLoadingResetPassword}
               >
                 {translateResetPassword('button_request_password')}
