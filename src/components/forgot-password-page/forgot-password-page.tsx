@@ -28,9 +28,9 @@ const initialValuesVerifyOtp: SendVerifyOtpData = {
 };
 
 const initialValuesResetPassword: SendResetPasswordData = {
-  Email: '',
-  Password: '',
-  ComfirmPassword: '',
+  email: '',
+  password: '',
+  comfirmPassword: '',
 };
 
 export default function ForgotPasswordPage() {
@@ -45,8 +45,7 @@ export default function ForgotPasswordPage() {
   const handleSubmitSendOtp = (values: SendOtpData) => {
     setIsLoadingSendOtp(true);
     setIsEmail(values.email);
-    const data = new FormData();
-    data.append('email', values.email);
+    const data = { email: values.email };
     sendOtp(data)
       .then((res) => {
         if (res.status) {
@@ -93,10 +92,11 @@ export default function ForgotPasswordPage() {
 
   const handleSubmitResetPassword = (values: SendResetPasswordData) => {
     setIsLoadingResetPassword(true);
-    const data = new FormData();
-    data.append('Email', isEmail);
-    data.append('Password', values.Password);
-    data.append('ComfirmPassword', values.ComfirmPassword);
+    const data = {
+      email: isEmail,
+      password: values.password,
+      comfirmPassword: values.comfirmPassword,
+    };
     resetPassword(data)
       .then((res) => {
         if (res.status) {
@@ -225,7 +225,7 @@ export default function ForgotPasswordPage() {
               initialValues={initialValuesResetPassword}
             >
               <Form.Item
-                name="Password"
+                name="password"
                 rules={[
                   {
                     required: true,
@@ -235,7 +235,8 @@ export default function ForgotPasswordPage() {
                   },
                   {
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*(),.~/?=|;:'"{}<>]{8,}/,
+                      // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
+                      /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
                     message: `${translateResetPassword(
                       'form-set-password.new-password-message-2'
                     )}`,
@@ -255,7 +256,7 @@ export default function ForgotPasswordPage() {
                 />
               </Form.Item>
               <Form.Item
-                name="ComfirmPassword"
+                name="comfirmPassword"
                 rules={[
                   {
                     required: true,
@@ -265,14 +266,15 @@ export default function ForgotPasswordPage() {
                   },
                   {
                     pattern:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*(),.~/?=|;:'"{}<>]{8,}/,
+                      // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
+                      /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
                     message: `${translateResetPassword(
                       'form-set-password.new-password-message-2'
                     )}`,
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue('Password') === value) {
+                      if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(

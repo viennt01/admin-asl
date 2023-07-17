@@ -14,7 +14,7 @@ export interface SendVerifyOtpData {
 }
 
 export interface SendResetPasswordData {
-  Email: string;
-  Password: string;
-  ComfirmPassword: string;
+  email: string;
+  password: string;
+  comfirmPassword: string;
 }
