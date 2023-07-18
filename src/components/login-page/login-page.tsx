@@ -25,7 +25,9 @@ export default function LoginPage() {
         <div className={style.signinSignup}>
           <FormLogin />
           <div className={style.signupForm}>
-            <FormRegister />
+            <FormRegister
+              onClickAnimationChangeForm={onClickAnimationChangeForm}
+            />
           </div>
         </div>
       </div>
