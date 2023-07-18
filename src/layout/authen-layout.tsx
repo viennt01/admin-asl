@@ -206,15 +206,6 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/liner-of-vendor': [
-      { title: `${translateCommon('master_data')}` },
-      { title: 'Liner of Vendor' },
-    ],
-    '/master-data/liner-of-vendor/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
-      { title: <Link href={ROUTERS.PORT}>Liner of Vendor</Link> },
-      { title: 'Liner of Vendor' },
-    ],
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('unit')}` },
@@ -282,6 +273,15 @@ export function AppLayout(props: Props) {
           </Link>
         ),
       },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/system/user': [
+      { title: `${translateCommon('system')}` },
+      { title: `${translateCommon('user')}` },
+    ],
+    '/system/user/edit/[id]': [
+      { title: `${translateCommon('system')}` },
+      { title: <Link href={ROUTERS.USER}>{translateCommon('user')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
     '/system/staff': [

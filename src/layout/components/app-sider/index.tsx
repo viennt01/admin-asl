@@ -73,13 +73,13 @@ const AppSider = ({ collapsed }: Props) => {
   const refCustomer = useRef(null);
   const refSupplier = useRef(null);
   const refPort = useRef(null);
-  const refLinerOfVendor = useRef(null);
   const refTypeOfContainer = useRef(null);
   const refTypeOfExpenses = useRef(null);
   const refAccountant = useRef(null);
   const refCurrency = useRef(null);
   const refBank = useRef(null);
   const refUnit = useRef(null);
+  const refUser = useRef(null);
   const refStaff = useRef(null);
   const refPermission = useRef(null);
   const [openTour, setOpenTour] = useState<boolean>(true);
@@ -163,16 +163,6 @@ const AppSider = ({ collapsed }: Props) => {
           <GoldOutlined ref={refPort} />
         ),
         getItem(
-          'Liner of vendor',
-          ROUTERS.LINER_OF_VENDOR,
-          <GoldOutlined ref={refLinerOfVendor} />
-        ),
-        getItem(
-          `${translateCommon('type_of_container')}`,
-          ROUTERS.TYPES_OF_CONTAINER,
-          <InboxOutlined ref={refTypeOfContainer} />
-        ),
-        getItem(
           `${translateCommon('type_of_expenses')}`,
           ROUTERS.TYPES_OF_EXPENSES,
           <ProfileOutlined ref={refTypeOfExpenses} />
@@ -195,6 +185,11 @@ const AppSider = ({ collapsed }: Props) => {
           ]
         ),
         getItem(
+          `${translateCommon('type_of_container')}`,
+          ROUTERS.TYPES_OF_CONTAINER,
+          <InboxOutlined ref={refTypeOfContainer} />
+        ),
+        getItem(
           `${translateCommon('unit')}`,
           ROUTERS.UNIT,
           <CalculatorOutlined ref={refUnit} />
@@ -206,6 +201,11 @@ const AppSider = ({ collapsed }: Props) => {
       '3',
       <ClusterOutlined ref={refSystem} />,
       [
+        getItem(
+          `${translateCommon('user')}`,
+          ROUTERS.USER,
+          <UserOutlined ref={refUser} />
+        ),
         getItem(
           `${translateCommon('staff')}`,
           ROUTERS.STAFF,

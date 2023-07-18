@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useEffect, useRef, useState } from 'react';
-import CreateSupplier from './create-supplier';
+import CreateSupplier from './create-liner-vendor-supplier';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';

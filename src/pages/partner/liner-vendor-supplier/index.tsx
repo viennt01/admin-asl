@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import SupplierPage from '@/components/supplier-page';
+import SupplierPage from '@/components/liner-vendor-supplier-page';
 
 function Supplier() {
   return (
