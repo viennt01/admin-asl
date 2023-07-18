@@ -288,7 +288,19 @@
             align-items: center;
             justify-content: center;
           }
+          .message {
+            margin-left: 28px -42px 0;
+          }
 
+          .formItem{
+            width: 100%;
+            display: grid;
+            align-items: center;
+            margin: 0;
+
+          }
+          
+          
           .signupFirstNameInput,
           .signupLastNameInput,
           .signupMailInput,
@@ -668,17 +680,6 @@
       right: 48%;
     }
   }
-}
-
-.message {
-  display: flex;
-  align-items: center;
-  justify-content: start;
-  width: 100%;
-  color: red;
-  font-size: 16px;
-  margin-left: 45px;
-  font-weight: 600;
 }
 
 @keyframes animateText {
