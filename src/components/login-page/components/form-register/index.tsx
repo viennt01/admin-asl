@@ -227,7 +227,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
               <div className={style.inputField}>
                 <ManOutlined className={style.signupManIcon} />
                 <Form.Item
-                  name="genderName1" //đố nhau
+                  name="genderNamew" //đố nhau
                   className={style.formItem}
                   rules={[
                     {
@@ -280,7 +280,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                           fontSize: '1.3rem',
                         }}
                       >
-                        Please select gender
+                        Gender
                       </div>
                     }
                     bordered={false}
@@ -289,15 +289,19 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
               </div>
             </Col>
           </Row>
-          <Form.Item>
-            <Button
-              className={style.btnSignUp}
-              htmlType="submit"
-              style={{ marginRight: 10 }}
-            >
-              Next
-            </Button>
-          </Form.Item>
+          <Row>
+            <Col span={24}>
+              <Form.Item>
+                <Button
+                  className={style.btnSignUp}
+                  htmlType="submit"
+                  style={{ marginRight: 10 }}
+                >
+                  Next
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       ),
     },
@@ -320,7 +324,11 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   rules={[
                     {
                       required: true,
-                      message: <div>Please input your email!</div>,
+                      message: (
+                        <div className={style.message}>
+                          Please input your email!
+                        </div>
+                      ),
                     },
                   ]}
                 >
@@ -342,7 +350,11 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   rules={[
                     {
                       required: true,
-                      message: <div>Please input phone number!</div>,
+                      message: (
+                        <div className={style.message}>
+                          Please input phone number!
+                        </div>
+                      ),
                     },
                   ]}
                 >
@@ -364,7 +376,11 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   rules={[
                     {
                       required: true,
-                      message: <div>Please input address!</div>,
+                      message: (
+                        <div className={style.message}>
+                          Please input address!
+                        </div>
+                      ),
                     },
                   ]}
                 >
@@ -397,14 +413,44 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                     options={[
                       {
                         value: '1',
-                        label: 'TPHCM',
+                        label: (
+                          <div
+                            style={{
+                              color: '#1D4486',
+                              fontWeight: 600,
+                              fontSize: '1.3rem',
+                            }}
+                          >
+                            TP.HCM
+                          </div>
+                        ),
                       },
                       {
                         value: '2',
-                        label: 'HN',
+                        label: (
+                          <div
+                            style={{
+                              color: '#1D4486',
+                              fontWeight: 600,
+                              fontSize: '1.3rem',
+                            }}
+                          >
+                            HN
+                          </div>
+                        ),
                       },
                     ]}
-                    placeholder="Please select city"
+                    placeholder={
+                      <div
+                        style={{
+                          color: '#4240ae',
+                          fontWeight: 400,
+                          fontSize: '1.3rem',
+                        }}
+                      >
+                        Please select city
+                      </div>
+                    }
                     bordered={false}
                   />
                 </Form.Item>
@@ -460,16 +506,20 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   rules={[
                     {
                       required: true,
-                      message: <div>Please input your password!</div>,
+                      message: (
+                        <div className={style.message}>
+                          Please input your password!
+                        </div>
+                      ),
                     },
                     {
                       pattern:
                         // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
                         /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
                       message: (
-                        <div>
-                          Must Contain 8 Characters, One Uppercase, One
-                          Lowercase, One Number and One Special Case Character
+                        <div className={style.message}>
+                          Must contain 8 characters, one uppercase, one
+                          lowercase, one number and one special case character
                         </div>
                       ),
                     },
@@ -495,16 +545,20 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   rules={[
                     {
                       required: true,
-                      message: <div>Please input your password!</div>,
+                      message: (
+                        <div className={style.message}>
+                          Please input your password!
+                        </div>
+                      ),
                     },
                     {
                       pattern:
                         // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
                         /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
                       message: (
-                        <div>
-                          Must Contain 8 Characters, One Uppercase, One
-                          Lowercase, One Number and One Special Case Character
+                        <div className={style.message}>
+                          Must contain 8 characters, one uppercase, one
+                          lowercase, one number and one special case character
                         </div>
                       ),
                     },
@@ -513,12 +567,14 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                         if (!value || getFieldValue('password') === value) {
                           return Promise.resolve();
                         }
-                        return Promise.reject(
-                          new Error(
-                            'The two passwords that you entered do not match!'
-                          )
-                        );
+                        // return Promise.reject(
+                        //   new Error(
+                        //     'The two passwords that you entered do not match!'
+                        //   )
+                        // );
                       },
+                      message:
+                        'The two passwords that you entered do not match!',
                     }),
                   ]}
                 >
@@ -568,7 +624,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
           name="formCompany"
         >
           <Row gutter={16}>
-            <Col lg={14} span={24}>
+            <Col lg={24} span={24}>
               <div className={style.inputField}>
                 <InfoOutlined className={style.signupInfoIcon} />
                 <Form.Item
@@ -577,13 +633,43 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   rules={[
                     {
                       required: true,
-                      message: <div>Please input name company!</div>,
+                      message: (
+                        <div className={style.message}>
+                          Please input name company!
+                        </div>
+                      ),
                     },
                   ]}
                 >
                   <Input
                     placeholder="Name Company"
                     className={style.signupNameCompanyInput}
+                    bordered={false}
+                  />
+                </Form.Item>
+              </div>
+            </Col>
+
+            <Col lg={14} span={24}>
+              <div className={style.inputField}>
+                <MailOutlined className={style.signupMailIcon} />
+                <Form.Item
+                  name="emailCompany"
+                  className={style.formItem}
+                  rules={[
+                    {
+                      required: true,
+                      message: (
+                        <div className={style.message}>
+                          Please input email company!
+                        </div>
+                      ),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder="Email Company"
+                    className={style.signupEmailCompanyInput}
                     bordered={false}
                   />
                 </Form.Item>
@@ -599,35 +685,17 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   rules={[
                     {
                       required: true,
-                      message: <div>Please input phone number!</div>,
+                      message: (
+                        <div className={style.message}>
+                          Please input phone number!
+                        </div>
+                      ),
                     },
                   ]}
                 >
                   <Input
                     placeholder="Phone Number"
                     className={style.signupPhoneInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
-            </Col>
-
-            <Col lg={24} span={24}>
-              <div className={style.inputField}>
-                <MailOutlined className={style.signupMailIcon} />
-                <Form.Item
-                  name="emailCompany"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: <div>Please input email company!</div>,
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Email Company"
-                    className={style.signupEmailCompanyInput}
                     bordered={false}
                   />
                 </Form.Item>
@@ -853,7 +921,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
   const contentStyle: React.CSSProperties = {
-    height: '500px',
+    // height: '500px',
     marginTop: 16,
   };
 
