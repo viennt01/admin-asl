@@ -9,13 +9,11 @@ export const ROUTERS = {
   QUOTATION_EDIT: (quotationId: string) => `/quotation/edit/${quotationId}`,
   CUSTOMER: '/partner/customer',
   CUSTOMER_EDIT: (customerId: string) => `/partner/customer/edit/${customerId}`,
-  SUPPLIER: '/partner/supplier',
-  SUPPLIER_EDIT: (supplierId: string) => `/partner/supplier/edit/${supplierId}`,
+  SUPPLIER: '/partner/liner-vendor-supplier',
+  SUPPLIER_EDIT: (supplierId: string) =>
+    `/partner/liner-vendor-supplier/edit/${supplierId}`,
   PORT: '/master-data/port',
   PORT_EDIT: (portId: string) => `/master-data/port/edit/${portId}`,
-  LINER_OF_VENDOR: '/master-data/liner-of-vendor',
-  LINER_OF_VENDOR_EDIT: (id: string) =>
-    `/master-data/liner-of-vendor/edit/${id}`,
   LOCATION: '/master-data/location-catalog/location',
   LOCATION_EDIT: (locationId: string) =>
     `/master-data/location-catalog/location/edit/${locationId}`,
@@ -24,7 +22,7 @@ export const ROUTERS = {
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_EDIT: (currencyId: string) =>
     `/master-data/accountant/currency/edit/${currencyId}`,
-  BANK: '/master-data/accountant/bank',
+  BANK: '/master-data/accountant/FUserbank',
   BANK_EDIT: (bankId: string) => `/master-data/accountant/bank/edit/${bankId}`,
   TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
   TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
@@ -35,6 +33,8 @@ export const ROUTERS = {
   TYPES_OF_EXPENSES: '/master-data/type-of-expenses',
   TYPES_OF_EXPENSES_EDIT: (typeOfExpenseId: string) =>
     `/master-data/type-of-expenses/edit/${typeOfExpenseId}`,
+  USER: '/system/user',
+  USER_EDIT: (userId: string) => `/system/user/edit/${userId}`,
   STAFF: '/system/staff',
   STAFF_EDIT: (staffId: string) => `/system/staff/edit/${staffId}`,
   PERMISSION: '/system/permission',

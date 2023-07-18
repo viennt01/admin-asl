@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useEffect, useRef, useState } from 'react';
-import CreateLinerOfVendor from './create-liner-of-vendor';
+import CreateUser from './create-user';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -29,56 +29,36 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-const STATUS_CAPACITY_COLORS = {
-  Full: '#31AFFE',
-  NotFull: '#616887',
-};
+// const STATUS_CAPACITY_COLORS = {
+//   Full: '#31AFFE',
+//   NotFull: '#616887',
+// };
+// const STATUS_CAPACITY_LABELS = {
+//   Full: 'Đầy',
+//   NotFull: 'Nửa đầy',
+// };
 
-const STATUS_CAPACITY_LABELS = {
-  Full: 'Đầy',
-  NotFull: 'Nửa đầy',
-};
-
-export default function LinerOfVendorPage() {
+export default function CalculationUserPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePort } = useI18n('port');
+  const { translate: translateUser } = useI18n('User');
   const { translate: translateCommon } = useI18n('common');
   const [locale, setLocale] = useState(enUS);
   interface DataType {
     key: number;
-    countryCode: string;
-    countryName: string;
-    portCode: string;
-    portName: string;
-    address: string;
-    totalContainer: number;
-    capacityState: string;
-    companyName: string;
+    internationalCode: string;
+    description: string;
     status: string;
     dateCreated: string;
     creator: string;
   }
 
   const data: DataType[] = [];
-
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      countryCode: 'VN',
-      countryName: 'Vietnam',
-      portCode: i % 2 === 0 ? 'TCCL' : 'TCPH',
-      portName: i % 2 === 0 ? 'Cảng Cát Lái' : 'Cảng tân cảng Phú Hữu',
-      address:
-        i % 2 === 0
-          ? '1295B Đường Nguyễn Thị Định, Phường Cát Lái, Quận 2, TP Hồ Chí Minh, Việt Nam'
-          : 'Khu phố 04, Phường Phú Hữu, Quận 9, TP Hồ Chí Minh',
-      totalContainer: i % 2 === 0 ? 1000000 : 5000,
-      capacityState: i % 2 === 0 ? 'Full' : 'NotFull',
-      companyName:
-        i % 2 === 0
-          ? 'Công ty Tân Cảng Sài Gòn'
-          : 'Công ty TNHH MTV Cảng Bến Nghé',
+      internationalCode: 'FOT',
+      description: 'Đơn vị đo trong hệ đo lường Anh',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
       creator: 'Admin',
@@ -199,110 +179,38 @@ export default function LinerOfVendorPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translatePort('port_no'),
+      title: translateUser('code'),
       width: 100,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
-      // onHeaderCell: (column) => {
-      //   const colw = this.state.columnWidth;
-      //   return {
-      //     onMouseDown: (e) => {
-      //       this.mouseDownX = e.clientX;
-      //       this.beginDrag = true;
-      //     },
-      //     onMouseUp: () => {
-      //       this.beginDrag = false;
-      //     },
-      //     onMouseMove: (e) => {
-      //       if (this.beginDrag === true) {
-      //         this.updateColumnWidth(
-      //           colw + Math.round((e.clientX - this.mouseDownX) * 0.05)
-      //         );
-      //       }
-      //     },
-      //   };
-      // },
     },
     {
-      title: translatePort('code'),
-      dataIndex: 'portCode',
-      width: 120,
-      key: 'portCode',
-      align: 'center',
-      ...getColumnSearchProps('portCode'),
-    },
-    {
-      title: translatePort('name'),
-      dataIndex: 'portName',
+      title: translateUser('international_code'),
+      dataIndex: 'internationalCode',
+      key: 'internationalCode',
       width: 250,
-      key: 'portName',
       align: 'center',
-      ...getColumnSearchProps('portName'),
+      ...getColumnSearchProps('internationalCode'),
     },
     {
-      title: translatePort('country_name'),
-      width: 150,
-      dataIndex: 'countryName',
-      key: 'countryName',
+      title: translateUser('description'),
+      dataIndex: 'description',
+      key: 'description',
       align: 'center',
-      ...getColumnSearchProps('countryName'),
-      // onFilter: (value: string, record) => record.name.startsWith(value),
+      ...getColumnSearchProps('description'),
     },
     {
-      title: translatePort('address'),
-      dataIndex: 'address',
-      width: 500,
-      key: 'address',
-      align: 'center',
-      ...getColumnSearchProps('address'),
-    },
-    {
-      title: translatePort('quantity'),
-      width: 200,
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
-      align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
-      ...getColumnSearchProps('totalContainer'),
-      ellipsis: true,
-    },
-    {
-      title: translatePort('status_capacity'),
-      width: 200,
-      dataIndex: 'capacityState',
-      key: 'capacityState',
-      align: 'center',
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_CAPACITY_COLORS[value as keyof typeof STATUS_CAPACITY_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_CAPACITY_LABELS[value as keyof typeof STATUS_CAPACITY_LABELS]}
-        </Tag>
-      ),
-    },
-    {
-      title: translatePort('company'),
-      dataIndex: 'companyName',
-      key: 'companyName',
-      align: 'center',
-    },
-    {
-      title: translatePort('status'),
+      title: translateUser('status'),
+      width: 120,
       dataIndex: 'status',
       key: 'status',
       align: 'center',
-      width: 120,
       filters: [
         {
-          text: 'Active',
+          text: 'Sử dụng',
           value: 'Active',
         },
         {
@@ -324,14 +232,14 @@ export default function LinerOfVendorPage() {
       ),
     },
     {
-      title: translatePort('date_created'),
+      title: translateUser('date_created'),
       width: 100,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translatePort('creator'),
+      title: translateUser('creator'),
       width: 150,
       dataIndex: 'creator',
       key: 'creator',
@@ -353,7 +261,7 @@ export default function LinerOfVendorPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.PORT_EDIT(id));
+    router.push(ROUTERS.USER_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -394,7 +302,7 @@ export default function LinerOfVendorPage() {
         columns={columns}
         search={false}
         dateFormatter="string"
-        headerTitle={translatePort('title')}
+        headerTitle={translateUser('title')}
         scroll={{
           x: 'max-content',
         }}
@@ -404,7 +312,7 @@ export default function LinerOfVendorPage() {
           search: true,
         }}
         toolBarRender={() => [
-          <CreateLinerOfVendor key={'create'} />,
+          <CreateUser key={'create'} />,
           <Button
             icon={<DeleteOutlined />}
             style={{

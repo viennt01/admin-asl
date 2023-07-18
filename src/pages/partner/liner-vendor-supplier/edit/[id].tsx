@@ -1,22 +1,27 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditPort from '@/components/port-page/port-edit';
+import EditSupplier from '@/components/liner-vendor-supplier-page/liner-vendor-supplier-edit';
 
-function PortEditPage() {
+function SupplierEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | PORT EDIT</title>
+        <title>ASL | LINER/VENDOR/SUPPLIER EDIT</title>
       </Head>
-      <EditPort />
+      <EditSupplier />
     </>
   );
 }
 
-export default withAuthentication(PortEditPage);
+export default withAuthentication(SupplierEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'port', 'container']);
-
+export const getStaticProps = getStatic([
+  'common',
+  'supplier',
+  'contactInfo',
+  'booking',
+  'invoice',
+]);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>

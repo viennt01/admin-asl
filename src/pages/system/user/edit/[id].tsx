@@ -1,27 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditSupplier from '@/components/supplier-page/supplier-edit';
+import EditUser from '@/components/user-page/user-edit';
 
-function SupplierEditPage() {
+function UserEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | SUPPLIER EDIT</title>
+        <title>ASL | USER EDIT</title>
       </Head>
-      <EditSupplier />
+      <EditUser />
     </>
   );
 }
 
-export default withAuthentication(SupplierEditPage);
+export default withAuthentication(UserEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic([
-  'common',
-  'supplier',
-  'contactInfo',
-  'booking',
-  'invoice',
-]);
+export const getStaticProps = getStatic(['common', 'user']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>
