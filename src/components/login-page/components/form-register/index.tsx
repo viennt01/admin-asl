@@ -573,8 +573,8 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                         //   )
                         // );
                       },
-                      message:
-                        'The two passwords that you entered do not match!',
+                      // message:
+                      //   'The two passwords that you entered do not match!',
                     }),
                   ]}
                 >
@@ -587,7 +587,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
               </div>
             </Col>
           </Row>
-          <Row>
+          <Row style={{ marginTop: 24 }}>
             <Col md={24} lg={7}>
               <Form.Item>
                 <Button
@@ -626,7 +626,10 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
           <Row gutter={16}>
             <Col lg={24} span={24}>
               <div className={style.inputField}>
-                <InfoOutlined className={style.signupInfoIcon} />
+                <InfoOutlined
+                  className={style.signupInfoIcon}
+                  style={{ width: '50.11px' }}
+                />
                 <Form.Item
                   name="companyName"
                   className={style.formItem}
@@ -645,6 +648,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                     placeholder="Name Company"
                     className={style.signupNameCompanyInput}
                     bordered={false}
+                    style={{ marginLeft: '-40px' }}
                   />
                 </Form.Item>
               </div>
