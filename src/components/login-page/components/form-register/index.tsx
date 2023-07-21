@@ -1,20 +1,27 @@
-import { Button, Col, DatePicker, Form, Input, Row, Select, Steps } from 'antd';
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Select,
+  Steps,
+  Cascader,
+  FormInstance,
+} from 'antd';
 import style from '../../login.module.scss';
 import { useState } from 'react';
 import {
   LockOutlined,
   MailOutlined,
   UserOutlined,
-  ManOutlined,
-  CalendarOutlined,
   PhoneOutlined,
   EnvironmentOutlined,
   InfoOutlined,
-  TeamOutlined,
   BarcodeOutlined,
 } from '@ant-design/icons';
 import {
-  InformationForm,
   ContactForm,
   PasswordForm,
   CompanyForm,
@@ -22,43 +29,52 @@ import {
 } from '../../fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { errorToast, successToast } from '@/hook/toast';
-
 interface RegisterProps {
   onClickAnimationChangeForm: () => void;
+  formInformation: FormInstance;
+  formContact: FormInstance;
+  formPassword: FormInstance;
+  formCompany: FormInstance;
 }
 
-const initialValuesInformationForm: InformationForm = {
+const initialValuesInformationForm = {
   firstName: '',
   lastName: '',
   birthDay: '',
-  genderName: '',
 };
-const initialValuesContactForm: ContactForm = {
+const initialValuesContactForm = {
   email: '',
   phoneNumber: '',
   address: '',
   cityName: '',
 };
-const initialValuesPasswordForm: PasswordForm = {
+const initialValuesPasswordForm = {
   password: '',
   passwordConfirm: '',
 };
-const initialValuesCompanyForm: CompanyForm = {
+const initialValuesCompanyForm = {
   companyName: '',
   taxCodeCompany: '',
   emailCompany: '',
   phoneNumberCompany: '',
   addressCompany: '',
   cityCompany: '',
-  roleName: '',
 };
 
-const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
-  const [formInformation] = Form.useForm<InformationForm>();
-  const [formContact] = Form.useForm<ContactForm>();
-  const [formPassword] = Form.useForm<PasswordForm>();
-  const [formCompany] = Form.useForm<CompanyForm>();
+interface Option {
+  value?: string | number | null;
+  label: React.ReactNode;
+  children?: Option[];
+  isLeaf?: boolean;
+}
 
+const FormRegister = ({
+  onClickAnimationChangeForm,
+  formInformation,
+  formContact,
+  formPassword,
+  formCompany,
+}: RegisterProps) => {
   const [current, setCurrent] = useState(0);
 
   const onFinish = () => {
@@ -70,6 +86,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
       )} ${formInformation.getFieldValue('lastName')}`,
       birthDay: formInformation.getFieldValue('birthDay').valueOf() as string,
       genderName: formInformation.getFieldValue('genderName'),
+      roleName: formInformation.getFieldValue('roleName'),
       address: formContact.getFieldValue('address'),
       email: formContact.getFieldValue('email'),
       cityName: formContact.getFieldValue('cityName'),
@@ -82,7 +99,6 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
       phoneNumberCompany: formCompany.getFieldValue('phoneNumberCompany'),
       addressCompany: formCompany.getFieldValue('addressCompany'),
       cityCompany: formCompany.getFieldValue('cityCompany'),
-      roleName: formCompany.getFieldValue('roleName'),
     };
     console.log(data);
 
@@ -108,27 +124,72 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
   };
 
   const submitInformation = () => {
-    console.log(formInformation.getFieldsValue());
-    console.log(
-      '1formInformation',
-      formInformation.getFieldValue('genderName')
-    );
+    console.log('formInformation', formInformation.getFieldsValue());
+
     next();
   };
   const submitContact = (value: ContactForm) => {
-    console.log('ContactForm', value);
-    console.log('ContactForm', formContact);
-    console.log('ss', formContact.getFieldsValue());
-    // console.log('1formInformation', formContact.getFieldValue('genderName'));
+    console.log('formContact', formContact.getFieldsValue());
+
+    formContact.setFieldValue('email', value.email);
+    formContact.setFieldValue('phoneNumber', value.phoneNumber);
+    formContact.setFieldValue('address', value.address);
+    formContact.setFieldValue('cityName', value.cityName);
     next();
   };
-
   const submitPassword = (value: PasswordForm) => {
-    console.log('ContactForm', value);
-    console.log('ContactForm', formPassword);
-    console.log('ss', formPassword.getFieldsValue());
-    // console.log('1formInformation', formContact.getFieldValue('genderName'));
+    console.log('formPassword', formPassword.getFieldsValue());
+
+    formPassword.setFieldValue('password', value.password);
+    formPassword.setFieldValue('passwordConfirm', value.passwordConfirm);
     next();
+  };
+  const submitCompany = (value: CompanyForm) => {
+    formCompany.setFieldValue('companyName', value.companyName);
+    formCompany.setFieldValue('taxCodeCompany', value.taxCodeCompany);
+    formCompany.setFieldValue('emailCompany', value.emailCompany);
+    formCompany.setFieldValue('phoneNumberCompany', value.phoneNumberCompany);
+    formCompany.setFieldValue('addressCompany', value.addressCompany);
+    formCompany.setFieldValue('cityCompany', value.cityCompany);
+    onFinish();
+  };
+
+  const optionLists: Option[] = [
+    {
+      value: 'zhejiang',
+      label: 'Zhejiang',
+      isLeaf: false,
+    },
+    {
+      value: 'jiangsu',
+      label: 'Jiangsu',
+      isLeaf: false,
+    },
+  ];
+  const [options, setOptions] = useState<Option[]>(optionLists);
+
+  const onChange = (value: (string | number)[], selectedOptions: Option[]) => {
+    console.log(value, selectedOptions);
+  };
+
+  const loadData = (selectedOptions: Option[]) => {
+    const targetOption = selectedOptions[selectedOptions.length - 1];
+    console.log('selectedOptions', selectedOptions);
+
+    // load options lazily
+    setTimeout(() => {
+      targetOption.children = [
+        {
+          label: `${targetOption.label} Dynamic 1`,
+          value: 'dynamic1',
+        },
+        {
+          label: `${targetOption.label} Dynamic 2`,
+          value: 'dynamic2',
+        },
+      ];
+      setOptions([...options]);
+    }, 1000);
   };
 
   const steps = [
@@ -141,163 +202,124 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
           initialValues={initialValuesInformationForm}
           name="formInformation"
         >
-          <Row gutter={16}>
+          <Row gutter={24}>
             <Col lg={12} span={24}>
-              <div className={style.inputField}>
-                <UserOutlined className={style.signupUserIcon} />
-                <Form.Item
-                  name="firstName"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input your first name!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="First Name"
-                    className={style.signupFirstNameInput}
-                    bordered={false}
-                    style={{ width: '235px' }}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="firstName"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your first name!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="First Name"
+                  prefix={<UserOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col lg={12} span={24}>
-              <div className={style.inputField}>
-                <UserOutlined className={style.signupUserIcon} />
-                <Form.Item
-                  name="lastName"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input your last name!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Last Name"
-                    className={style.signupLastNameInput}
-                    bordered={false}
-                    style={{ width: '235px' }}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="lastName"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your last name!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Last Name"
+                  prefix={<UserOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
-            <Col lg={12} span={24}>
-              <div className={style.inputField}>
-                <CalendarOutlined className={style.signupCalendarIcon} />
-                <Form.Item
-                  name="birthDay"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input choose birthday!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <DatePicker
-                    placeholder="BirthDay"
-                    style={{ width: '235px' }}
-                    className={style.signupBirthDayChoose}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+            <Col lg={8} span={24}>
+              <Form.Item
+                name="birthDay"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input choose birthday!',
+                  },
+                ]}
+              >
+                <DatePicker
+                  size="large"
+                  placeholder="BirthDay"
+                  style={{ width: '100%' }}
+                />
+              </Form.Item>
             </Col>
 
-            <Col lg={12} span={24}>
-              <div className={style.inputField}>
-                <ManOutlined className={style.signupManIcon} />
-                <Form.Item
-                  name="genderNamew" //đố nhau
-                  className={style.formItem}
-                  rules={[
+            <Col lg={8} span={24}>
+              <Form.Item
+                name="genderName"
+                rules={[
+                  {
+                    required: true,
+                    message: (
+                      <div className={style.message}>Please select gender!</div>
+                    ),
+                  },
+                ]}
+              >
+                <Select
+                  size="large"
+                  options={[
                     {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please select gender!
-                        </div>
-                      ),
+                      value: 'Male',
+                      label: 'Male',
+                    },
+                    {
+                      value: 'Female',
+                      label: 'Female',
                     },
                   ]}
-                >
-                  <Select
-                    className={style.signupGenderSelect}
-                    options={[
-                      {
-                        value: 'Male',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            Male
-                          </div>
-                        ),
-                      },
-                      {
-                        value: 'Female',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            Female
-                          </div>
-                        ),
-                      },
-                    ]}
-                    placeholder={
-                      <div
-                        style={{
-                          color: '#4240ae',
-                          fontWeight: 400,
-                          fontSize: '1.3rem',
-                        }}
-                      >
-                        Gender
-                      </div>
-                    }
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+                  placeholder="Gender"
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={8} span={24}>
+              <Form.Item
+                name="roleName"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select role!',
+                  },
+                ]}
+              >
+                <Select
+                  options={[
+                    {
+                      value: '1',
+                      label: 'Admin',
+                    },
+                    {
+                      value: '2',
+                      label: 'User',
+                    },
+                  ]}
+                  placeholder="Please select role"
+                  size="large"
+                />
+              </Form.Item>
             </Col>
           </Row>
+
           <Row>
             <Col span={24}>
               <Form.Item>
-                <Button
-                  className={style.btnSignUp}
-                  htmlType="submit"
-                  style={{ marginRight: 10 }}
-                >
+                <Button className={style.btnSignUp} htmlType="submit">
                   Next
+                  <LongRightArrow />
                 </Button>
               </Form.Item>
             </Col>
@@ -314,161 +336,85 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
           initialValues={initialValuesContactForm}
           name="formContact"
         >
-          <Row gutter={16}>
+          <Row gutter={24}>
             <Col lg={14} span={24}>
-              <div className={style.inputField}>
-                <MailOutlined className={style.signupMailIcon} />
-                <Form.Item
-                  name="email"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input your email!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Email"
-                    className={style.signupMailInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your email!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Email"
+                  prefix={<MailOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col lg={10} span={24}>
-              <div className={style.inputField}>
-                <PhoneOutlined className={style.signupPhoneIcon} />
-                <Form.Item
-                  name="phoneNumber"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input phone number!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Phone Number"
-                    className={style.signupPhoneInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="phoneNumber"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input phone number!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Phone Number"
+                  prefix={<PhoneOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col lg={14} span={24}>
-              <div className={style.inputField}>
-                <EnvironmentOutlined className={style.signupAddressIcon} />
-                <Form.Item
-                  name="address"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input address!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Address"
-                    className={style.signupAddressInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="address"
+                rules={[
+                  {
+                    required: true,
+                    message: (
+                      <div className={style.message}>Please input address!</div>
+                    ),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Address"
+                  prefix={<EnvironmentOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col lg={10} span={24}>
-              <div className={style.inputField}>
-                <EnvironmentOutlined className={style.signupAddressIcon} />
-                <Form.Item
-                  name="cityName"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>Please select city!</div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Select
-                    className={style.signupAddressSelect}
-                    options={[
-                      {
-                        value: '1',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            TP.HCM
-                          </div>
-                        ),
-                      },
-                      {
-                        value: '2',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            HN
-                          </div>
-                        ),
-                      },
-                    ]}
-                    placeholder={
-                      <div
-                        style={{
-                          color: '#4240ae',
-                          fontWeight: 400,
-                          fontSize: '1.3rem',
-                        }}
-                      >
-                        Please select city
-                      </div>
-                    }
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="cityName"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select city!',
+                  },
+                ]}
+              >
+                <Cascader
+                  options={options}
+                  loadData={loadData}
+                  onChange={onChange}
+                  changeOnSelect
+                  placeholder="Please select city"
+                  size="large"
+                />
+              </Form.Item>
             </Col>
           </Row>
           <Row>
-            <Col md={24} lg={7}>
-              <Form.Item>
-                <Button
-                  className={style.btnSignUp}
-                  htmlType="submit"
-                  style={{ marginRight: 10 }}
-                >
-                  Next
-                </Button>
-              </Form.Item>
-            </Col>
             <Col md={24} lg={7}>
               <Form.Item>
                 <Button
@@ -476,7 +422,16 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   className={style.btnSignUp}
                   htmlType="button"
                 >
+                  <LongLeftArrow />
                   Previous
+                </Button>
+              </Form.Item>
+            </Col>
+            <Col md={24} lg={7}>
+              <Form.Item>
+                <Button className={style.btnSignUp} htmlType="submit">
+                  Next
+                  <LongRightArrow />
                 </Button>
               </Form.Item>
             </Col>
@@ -495,110 +450,69 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
         >
           <Row gutter={16}>
             <Col span={24}>
-              <div
-                className={style.inputField}
-                style={{ marginBottom: '44px' }}
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your password!',
+                  },
+                  {
+                    pattern:
+                      // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
+                      /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
+                    message:
+                      'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character',
+                  },
+                ]}
+                hasFeedback
               >
-                <LockOutlined className={style.signupLockIcon} />
-                <Form.Item
-                  name="password"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input your password!
-                        </div>
-                      ),
-                    },
-                    {
-                      pattern:
-                        // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
-                        /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
-                      message: (
-                        <div className={style.message}>
-                          Must contain 8 characters, one uppercase, one
-                          lowercase, one number and one special case character
-                        </div>
-                      ),
-                    },
-                  ]}
-                  required={false}
-                  hasFeedback
-                >
-                  <Input.Password
-                    placeholder="Password"
-                    className={style.signupPasswordInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+                <Input.Password
+                  placeholder="Password"
+                  prefix={<LockOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col span={24}>
-              <div className={style.inputField}>
-                <LockOutlined className={style.signupLockIcon} />
-                <Form.Item
-                  name="passwordConfirm"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input your password!
-                        </div>
-                      ),
+              <Form.Item
+                name="passwordConfirm"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your password!',
+                  },
+                  {
+                    pattern:
+                      // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
+                      /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
+                    message:
+                      'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character',
+                  },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        new Error(
+                          'The two passwords that you entered do not match!'
+                        )
+                      );
                     },
-                    {
-                      pattern:
-                        // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
-                        /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
-                      message: (
-                        <div className={style.message}>
-                          Must contain 8 characters, one uppercase, one
-                          lowercase, one number and one special case character
-                        </div>
-                      ),
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue('password') === value) {
-                          return Promise.resolve();
-                        }
-                        // return Promise.reject(
-                        //   new Error(
-                        //     'The two passwords that you entered do not match!'
-                        //   )
-                        // );
-                      },
-                      // message:
-                      //   'The two passwords that you entered do not match!',
-                    }),
-                  ]}
-                >
-                  <Input.Password
-                    placeholder="Confirm Password"
-                    className={style.signupConfirmPasswordInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+                  }),
+                ]}
+              >
+                <Input.Password
+                  placeholder="Confirm Password"
+                  prefix={<LockOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
           </Row>
           <Row style={{ marginTop: 24 }}>
-            <Col md={24} lg={7}>
-              <Form.Item>
-                <Button
-                  className={style.btnSignUp}
-                  htmlType="submit"
-                  style={{ marginRight: 10 }}
-                >
-                  Next
-                </Button>
-              </Form.Item>
-            </Col>
             <Col md={24} lg={7}>
               <Form.Item>
                 <Button
@@ -606,7 +520,16 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   className={style.btnSignUp}
                   htmlType="button"
                 >
+                  <LongLeftArrow />
                   Previous
+                </Button>
+              </Form.Item>
+            </Col>
+            <Col md={24} lg={7}>
+              <Form.Item>
+                <Button className={style.btnSignUp} htmlType="submit">
+                  Next
+                  <LongRightArrow />
                 </Button>
               </Form.Item>
             </Col>
@@ -619,285 +542,149 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
       content: (
         <Form
           form={formCompany}
-          onFinish={onFinish}
+          onFinish={submitCompany}
           initialValues={initialValuesCompanyForm}
           name="formCompany"
         >
           <Row gutter={16}>
             <Col lg={24} span={24}>
-              <div className={style.inputField}>
-                <InfoOutlined
-                  className={style.signupInfoIcon}
-                  style={{ width: '50.11px' }}
+              <Form.Item
+                name="companyName"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input name company!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Name Company"
+                  prefix={<InfoOutlined />}
+                  size="large"
                 />
-                <Form.Item
-                  name="companyName"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input name company!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Name Company"
-                    className={style.signupNameCompanyInput}
-                    bordered={false}
-                    style={{ marginLeft: '-40px' }}
-                  />
-                </Form.Item>
-              </div>
+              </Form.Item>
             </Col>
 
             <Col lg={14} span={24}>
-              <div className={style.inputField}>
-                <MailOutlined className={style.signupMailIcon} />
-                <Form.Item
-                  name="emailCompany"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input email company!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Email Company"
-                    className={style.signupEmailCompanyInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
-            </Col>
-
-            <Col lg={10} span={24}>
-              <div className={style.inputField}>
-                <PhoneOutlined className={style.signupPhoneIcon} />
-                <Form.Item
-                  name="phoneNumberCompany"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input phone number!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Phone Number"
-                    className={style.signupPhoneInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="taxCodeCompany"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input tax code!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Tax Code Company"
+                  prefix={<BarcodeOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col lg={14} span={24}>
-              <div className={style.inputField}>
-                <EnvironmentOutlined className={style.signupAddressIcon} />
-                <Form.Item
-                  name="addressCompany"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input address!
-                        </div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Address"
-                    className={style.signupAddressInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="emailCompany"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input email company!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Email Company"
+                  prefix={<MailOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col lg={10} span={24}>
-              <div className={style.inputField}>
-                <EnvironmentOutlined className={style.signupAddressIcon} />
-                <Form.Item
-                  name="cityCompany"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>Please select city!</div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Select
-                    className={style.signupAddressSelect}
-                    options={[
-                      {
-                        value: '1',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            TP.HCM
-                          </div>
-                        ),
-                      },
-                      {
-                        value: '2',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            HN
-                          </div>
-                        ),
-                      },
-                    ]}
-                    placeholder={
-                      <div
-                        style={{
-                          color: '#4240ae',
-                          fontWeight: 400,
-                          fontSize: '1.3rem',
-                        }}
-                      >
-                        Please select city
-                      </div>
-                    }
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+              <Form.Item
+                name="phoneNumberCompany"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input phone number!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Phone Number"
+                  prefix={<PhoneOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
 
             <Col lg={14} span={24}>
-              <div className={style.inputField}>
-                <BarcodeOutlined className={style.signupBarCodeIcon} />
-                <Form.Item
-                  name="taxCodeCompany"
-                  className={style.formItem}
-                  rules={[
+              <Form.Item
+                name="cityCompany"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please select city!',
+                  },
+                ]}
+              >
+                <Select
+                  size="large"
+                  options={[
                     {
-                      required: true,
-                      message: (
-                        <div className={style.message}>
-                          Please input tax code!
+                      value: '1',
+                      label: (
+                        <div
+                          style={{
+                            color: '#1D4486',
+                            fontWeight: 600,
+                            fontSize: '1.3rem',
+                          }}
+                        >
+                          TP.HCM
+                        </div>
+                      ),
+                    },
+                    {
+                      value: '2',
+                      label: (
+                        <div
+                          style={{
+                            color: '#1D4486',
+                            fontWeight: 600,
+                            fontSize: '1.3rem',
+                          }}
+                        >
+                          HN
                         </div>
                       ),
                     },
                   ]}
-                >
-                  <Input
-                    placeholder="Tax Code Company"
-                    className={style.signupTaxCodeInput}
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+                  placeholder="Please select city"
+                />
+              </Form.Item>
             </Col>
 
-            <Col lg={10} span={24}>
-              <div className={style.inputField}>
-                <TeamOutlined className={style.signupRoleIcon} />
-                <Form.Item
-                  name="roleName"
-                  className={style.formItem}
-                  rules={[
-                    {
-                      required: true,
-                      message: (
-                        <div className={style.message}>Please select role!</div>
-                      ),
-                    },
-                  ]}
-                >
-                  <Select
-                    className={style.signupRoleSelect}
-                    options={[
-                      {
-                        value: '1',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            Admin
-                          </div>
-                        ),
-                      },
-                      {
-                        value: '2',
-                        label: (
-                          <div
-                            style={{
-                              color: '#1D4486',
-                              fontWeight: 600,
-                              fontSize: '1.3rem',
-                            }}
-                          >
-                            User
-                          </div>
-                        ),
-                      },
-                    ]}
-                    placeholder={
-                      <div
-                        style={{
-                          color: '#4240ae',
-                          fontWeight: 400,
-                          fontSize: '1.3rem',
-                        }}
-                      >
-                        Please select role
-                      </div>
-                    }
-                    bordered={false}
-                  />
-                </Form.Item>
-              </div>
+            <Col span={24}>
+              <Form.Item
+                name="addressCompany"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input address!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Address"
+                  prefix={<EnvironmentOutlined />}
+                  size="large"
+                />
+              </Form.Item>
             </Col>
           </Row>
           <Row>
-            <Col md={24} lg={7}>
-              <Form.Item>
-                <Button
-                  className={style.btnSignUp}
-                  htmlType="submit"
-                  style={{ marginRight: 10 }}
-                >
-                  Sign Up
-                </Button>
-              </Form.Item>
-            </Col>
             <Col md={24} lg={7}>
               <Form.Item>
                 <Button
@@ -905,7 +692,19 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
                   className={style.btnSignUp}
                   htmlType="button"
                 >
+                  <LongLeftArrow />
                   Previous
+                </Button>
+              </Form.Item>
+            </Col>
+            <Col md={24} lg={7}>
+              <Form.Item>
+                <Button
+                  className={style.btnSignUp}
+                  htmlType="submit"
+                  loading={false}
+                >
+                  SING UP
                 </Button>
               </Form.Item>
             </Col>
@@ -925,7 +724,6 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
   const contentStyle: React.CSSProperties = {
-    // height: '500px',
     marginTop: 16,
   };
 
@@ -945,3 +743,47 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
 };
 
 export default FormRegister;
+
+const LongRightArrow = () => (
+  <svg
+    width="25"
+    height="24"
+    viewBox="0 0 25 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M17.5 12H3.5"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M22.2152 11.7966L16.765 7.90356C16.2355 7.52535 15.5 7.90385 15.5 8.55455V15.4454C15.5 16.0961 16.2355 16.4746 16.765 16.0964L22.2152 12.2034C22.3548 12.1037 22.3548 11.8963 22.2152 11.7966Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
+const LongLeftArrow = () => (
+  <svg
+    width="25"
+    height="24"
+    viewBox="0 0 25 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M7.5 12H70.5"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M2.78481 11.7966L8.23501 7.90356C8.7645 7.52535 9.5 7.90385 9.5 8.55455V15.4454C9.5 16.0961 8.7645 16.4746 8.23501 16.0964L2.78481 12.2034C2.64522 12.1037 2.64522 11.8963 2.78481 11.7966Z"
+      fill="currentColor"
+    />
+  </svg>
+);

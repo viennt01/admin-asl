@@ -47,7 +47,7 @@ export type InformationForm = Pick<
 
 export type ContactForm = Pick<
   RegisterForm,
-  'email' | 'phoneNumber' | 'address' | 'cityName'
+  'email' | 'phoneNumber' | 'address' | 'cityName' | 'roleName'
 >;
 
 export type PasswordForm = Pick<RegisterForm, 'password' | 'passwordConfirm'>;
@@ -60,7 +60,6 @@ export type CompanyForm = Pick<
   | 'addressCompany'
   | 'cityCompany'
   | 'taxCodeCompany'
-  | 'roleName'
 >;
 
 export const login = (data: LoginData, headers: HeadersLogin) => {

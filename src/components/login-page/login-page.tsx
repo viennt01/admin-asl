@@ -3,10 +3,27 @@ import { useState } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 import FormLogin from './components/form-login';
 import FormRegister from './components/form-register';
+import { Form } from 'antd';
+import {
+  CompanyForm,
+  ContactForm,
+  InformationForm,
+  PasswordForm,
+} from './fetcher';
 
 export default function LoginPage() {
   const [classActiveForm, setClassActiveForm] = useState('signinMode');
+  const [formInformation] = Form.useForm<InformationForm>();
+  const [formContact] = Form.useForm<ContactForm>();
+  const [formPassword] = Form.useForm<PasswordForm>();
+  const [formCompany] = Form.useForm<CompanyForm>();
+  const [formLogin] = Form.useForm();
   function onClickAnimationChangeForm() {
+    formInformation.resetFields();
+    formContact.resetFields();
+    formPassword.resetFields();
+    formCompany.resetFields();
+    formLogin.resetFields();
     if (classActiveForm === 'signupMode') {
       setClassActiveForm('signinMode');
     } else {
@@ -23,9 +40,13 @@ export default function LoginPage() {
       <div className={style.colorBackdrop}></div>
       <div className={style.formsContainer}>
         <div className={style.signinSignup}>
-          <FormLogin />
+          <FormLogin formLogin={formLogin} />
           <div className={style.signupForm}>
             <FormRegister
+              formInformation={formInformation}
+              formContact={formContact}
+              formPassword={formPassword}
+              formCompany={formCompany}
               onClickAnimationChangeForm={onClickAnimationChangeForm}
             />
           </div>
