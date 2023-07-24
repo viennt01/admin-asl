@@ -3,12 +3,22 @@ import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import AppSider from './components/app-sider';
 import AuthenLayout from './authen-layout.module.scss';
-import { Avatar, Breadcrumb, Layout, Space, Typography, Button } from 'antd';
+import {
+  Avatar,
+  Breadcrumb,
+  Layout,
+  Space,
+  Typography,
+  Button,
+  FloatButton,
+} from 'antd';
 import {
   UserOutlined,
   MenuOutlined,
   CaretDownOutlined,
   LockOutlined,
+  CommentOutlined,
+  CustomerServiceOutlined,
 } from '@ant-design/icons';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
@@ -416,6 +426,15 @@ export function AppLayout(props: Props) {
           }}
         >
           <main>{props.children}</main>
+          <FloatButton.Group
+            trigger="hover"
+            type="primary"
+            style={{ right: 24 }}
+            icon={<CustomerServiceOutlined />}
+          >
+            <FloatButton /> /TODO: handle logic/
+            <FloatButton icon={<CommentOutlined />} />
+          </FloatButton.Group>
           <Footer
             style={{
               textAlign: 'center',
