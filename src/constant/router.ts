@@ -7,8 +7,27 @@ export const ROUTERS = {
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
   QUOTATION: '/quotation',
   QUOTATION_EDIT: (quotationId: string) => `/quotation/edit/${quotationId}`,
-  CUSTOMER: '/partner/customer',
-  CUSTOMER_EDIT: (customerId: string) => `/partner/customer/edit/${customerId}`,
+  SEA_PRICING: '/pricing/sea-pricing',
+  SEA_PRICING_EDIT: (seaPricingId: string) =>
+    `/pricing/sea-pricing/edit/${seaPricingId}`,
+  AIR_PRICING: '/pricing/air-pricing',
+  AIR_PRICING_EDIT: (airPricingId: string) =>
+    `/pricing/air-pricing/edit/${airPricingId}`,
+  CUSTOMS_PRICING: '/pricing/customs-pricing',
+  CUSTOMS_PRICING_EDIT: (customsPricingId: string) =>
+    `/pricing/customs-pricing/edit/${customsPricingId}`,
+  TRUCKING_PRICING: '/pricing/customs-pricing',
+  TRUCKING_PRICING_EDIT: (customsPricingId: string) =>
+    `/pricing/customs-pricing/edit/${customsPricingId}`,
+  POTENTIAL_CUSTOMER: '/partner/customer/potential-customer',
+  POTENTIAL_CUSTOMER_EDIT: (potentialCustomerId: string) =>
+    `/partner/customer/potential-customer/edit/${potentialCustomerId}`,
+  OFFICIAL_CUSTOMER: '/partner/customer/official-customer',
+  OFFICIAL_CUSTOMER_EDIT: (officialCustomerId: string) =>
+    `/partner/customer/official-customer/edit/${officialCustomerId}`,
+  CUSTOMER_ON_SALES: '/partner/customer/customers-on-sales',
+  CUSTOMER_ON_SALES_EDIT: (customerOnSalesId: string) =>
+    `/partner/customer/customers-on-sales/edit/${customerOnSalesId}`,
   SUPPLIER: '/partner/liner-vendor-supplier',
   SUPPLIER_EDIT: (supplierId: string) =>
     `/partner/liner-vendor-supplier/edit/${supplierId}`,
@@ -30,9 +49,9 @@ export const ROUTERS = {
   TYPES_OF_CONTAINER: '/master-data/container-catalog/type-of-container',
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string) =>
     `/master-data/container-catalog/type-of-container/edit/${typeOfContainerId}`,
-  TYPES_OF_EXPENSES: '/master-data/type-of-expenses',
-  TYPES_OF_EXPENSES_EDIT: (typeOfExpenseId: string) =>
-    `/master-data/type-of-expenses/edit/${typeOfExpenseId}`,
+  FEE: '/master-data/fee',
+  FEE_EDIT: (typeOfExpenseId: string) =>
+    `/master-data/fee/edit/${typeOfExpenseId}`,
   USER: '/system/user',
   USER_EDIT: (userId: string) => `/system/user/edit/${userId}`,
   STAFF: '/system/staff',
@@ -56,8 +75,8 @@ export const ROUTERS = {
 //   '/master-data/port/edit/[id]': 'PORT_EDIT',
 //   '/master-data/location': 'LOCATION',
 //   '/master-data/location/edit/[id]': 'LOCATION_EDIT',
-//   '/master-data/type-of-expenses': 'TYPES_OF_EXPENSES',
-//   '/master-data/type-of-expenses/edit/[id]': 'TYPES_OF_EXPENSES_EDIT',
+//   '/master-data/fee': 'FEE',
+//   '/master-data/fee/edit/[id]': 'FEE_EDIT',
 //   '/master-data/type-of-container': 'TYPES_OF_CONTAINER',
 //   '/master-data/type-of-container/edit/[id]': 'TYPE_OF_LOCATION_EDIT',
 //   '/master-data/type-of-location': 'TYPE_OF_LOCATION',

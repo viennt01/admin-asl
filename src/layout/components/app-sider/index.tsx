@@ -17,6 +17,9 @@ import {
   ApartmentOutlined,
   UsergroupAddOutlined,
   GoldOutlined,
+  UserAddOutlined,
+  UserSwitchOutlined,
+  AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image, ConfigProvider } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
@@ -67,14 +70,22 @@ const AppSider = ({ collapsed }: Props) => {
   const refHome = useRef(null);
   const refQuotation = useRef(null);
   const refBooking = useRef(null);
+  const refPricing = useRef(null);
+  const refSeaPricing = useRef(null);
+  const refAirPricing = useRef(null);
+  const refCustomsPricing = useRef(null);
+  const refTruckingPricing = useRef(null);
   const refPartner = useRef(null);
   const refMasterData = useRef(null);
   const refSystem = useRef(null);
   const refCustomer = useRef(null);
+  const refPotentialCustomer = useRef(null);
+  const refOfficialCustomer = useRef(null);
+  const refCustomersAreOnSales = useRef(null);
   const refSupplier = useRef(null);
   const refPort = useRef(null);
   const refTypeOfContainer = useRef(null);
-  const refTypeOfExpenses = useRef(null);
+  const refFee = useRef(null);
   const refAccountant = useRef(null);
   const refCurrency = useRef(null);
   const refBank = useRef(null);
@@ -125,26 +136,81 @@ const AppSider = ({ collapsed }: Props) => {
       ROUTERS.HOME,
       <HomeOutlined ref={refHome} />
     ),
+
     getItem(
       `${translateCommon('quotation')}`,
       ROUTERS.QUOTATION,
       <ContainerOutlined ref={refQuotation} />
     ),
+
     getItem(
       `${translateCommon('booking')}`,
       ROUTERS.BOOKING,
       <SolutionOutlined ref={refBooking} />
     ),
+
     getItem(
-      `${translateCommon('partner')}`,
+      `${translateCommon('pricing')}`,
       '1',
-      <TeamOutlined ref={refPartner} />,
+      <AuditOutlined ref={refPricing} />,
       [
         getItem(
-          `${translateCommon('customer')}`,
-          ROUTERS.CUSTOMER,
-          <UserOutlined ref={refCustomer} />
+          `${translateCommon('sea_pricing')}`,
+          ROUTERS.SEA_PRICING,
+          <AuditOutlined ref={refSeaPricing} />
         ),
+        getItem(
+          `${translateCommon('air_pricing')}`,
+          ROUTERS.AIR_PRICING,
+          <AuditOutlined ref={refAirPricing} />
+        ),
+        getItem(
+          `${translateCommon('customs_pricing')}`,
+          ROUTERS.CUSTOMS_PRICING,
+          <AuditOutlined ref={refCustomsPricing} />
+        ),
+        getItem(
+          `${translateCommon('trucking_pricing')}`,
+          ROUTERS.TRUCKING_PRICING,
+          <AuditOutlined ref={refTruckingPricing} />
+        ),
+      ]
+    ),
+
+    getItem(
+      `${translateCommon('partner')}`,
+      '2',
+      <TeamOutlined ref={refPartner} />,
+      [
+        // getItem(
+        //   `${translateCommon('customer')}`,
+        //   ROUTERS.CUSTOMER,
+        //   <UserOutlined ref={refCustomer} />
+        // ),
+
+        getItem(
+          `${translateCommon('customer')}`,
+          '3',
+          <UserOutlined ref={refCustomer} />,
+          [
+            getItem(
+              `${translateCommon('potential_customer')}`,
+              ROUTERS.POTENTIAL_CUSTOMER,
+              <UserAddOutlined ref={refPotentialCustomer} />
+            ),
+            getItem(
+              `${translateCommon('official_customer')}`,
+              ROUTERS.OFFICIAL_CUSTOMER,
+              <UserOutlined ref={refOfficialCustomer} />
+            ),
+            getItem(
+              `${translateCommon('customers_on_sales')}`,
+              ROUTERS.CUSTOMER_ON_SALES,
+              <UserSwitchOutlined ref={refCustomersAreOnSales} />
+            ),
+          ]
+        ),
+
         getItem(
           `${translateCommon('supplier')}`,
           ROUTERS.SUPPLIER,
@@ -152,9 +218,10 @@ const AppSider = ({ collapsed }: Props) => {
         ),
       ]
     ),
+
     getItem(
       `${translateCommon('master_data')}`,
-      '2',
+      '4',
       <AppstoreOutlined ref={refMasterData} />,
       [
         getItem(
@@ -163,13 +230,13 @@ const AppSider = ({ collapsed }: Props) => {
           <GoldOutlined ref={refPort} />
         ),
         getItem(
-          `${translateCommon('type_of_expenses')}`,
-          ROUTERS.TYPES_OF_EXPENSES,
-          <ProfileOutlined ref={refTypeOfExpenses} />
+          `${translateCommon('fee')}`,
+          ROUTERS.FEE,
+          <ProfileOutlined ref={refFee} />
         ),
         getItem(
           `${translateCommon('accountant')}`,
-          '6',
+          '5',
           <DollarOutlined ref={refAccountant} />,
           [
             getItem(
@@ -198,7 +265,7 @@ const AppSider = ({ collapsed }: Props) => {
     ),
     getItem(
       `${translateCommon('system')}`,
-      '3',
+      '6',
       <ClusterOutlined ref={refSystem} />,
       [
         getItem(

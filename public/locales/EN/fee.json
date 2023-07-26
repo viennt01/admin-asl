@@ -1,0 +1,14 @@
+{
+    "title": "List types of Expenses",
+    "add_fee_no": "No",
+    "code": "Expense No",
+    "name": "Expense Name",
+    "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator",
+
+    "information_add_fee": "Add new fee",
+    "information_edit_fee": "Edit fee",
+    "name_placeholder": "Enter the expense name",
+    "status_placeholder":"Choose status"
+}

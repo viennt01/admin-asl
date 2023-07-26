@@ -1,0 +1,27 @@
+{
+    "title": "Danh sách khách hàng chính thức",
+    "code": "Mã khách hàng",
+    "abbreviation": "Tên viết tắt",
+    "name": "Tên khách hàng",
+    "number": "Số lượng giao dịch",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ",
+    "country": "Quốc gia",
+    "email": "Email",
+    "saleman": "Saleman",
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
+
+    "information_add_customer": "Thêm mới khách hàng",
+    "information_edit_customer": "Chỉnh sửa khách hàng",
+    "abbreviation_placeholder": "Nhập tên viết tắt",
+    "name_placeholder": "Nhập tên khách hàng",
+    "number_placeholder": "Nhập số lượng giao dịch",
+    "phone_placeholder": "Nhập số điện thoại",
+    "address_placeholder": "Nhập địa chỉ",
+    "email_placeholder": "Nhập email",
+    "country_placeholder": "Chọn quốc gia",
+    "saleman_placeholder": "Chọn saleman",
+    "status_placeholder": "Chọn trạng thái"
+}

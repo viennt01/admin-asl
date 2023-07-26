@@ -208,7 +208,7 @@ export default function EditPort() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Port No',
+                      message: 'Please input Port Code',
                     },
                   ]}
                 >

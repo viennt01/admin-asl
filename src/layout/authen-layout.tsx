@@ -174,6 +174,7 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/booking': [{ title: `${translateCommon('booking')}` }],
     '/booking/edit/[id]': [
       {
@@ -181,19 +182,125 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/partner/customer': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('customer')}` },
+
+    '/pricing/sea-pricing': [
+      { title: `${translateCommon('pricing')}` },
+      { title: `${translateCommon('sea_pricing')}` },
     ],
-    '/partner/customer/edit/[id]': [
-      { title: `${translateCommon('partner')}` },
+    '/pricing/sea-pricing/edit/[id]': [
+      { title: `${translateCommon('pricing')}` },
       {
         title: (
-          <Link href={ROUTERS.CUSTOMER}>{translateCommon('customer')}</Link>
+          <Link href={ROUTERS.SEA_PRICING}>
+            {translateCommon('sea_pricing')}
+          </Link>
         ),
       },
       { title: `${translateCommon('detail')}` },
     ],
+
+    '/pricing/air-pricing': [
+      { title: `${translateCommon('pricing')}` },
+      { title: `${translateCommon('air_pricing')}` },
+    ],
+    '/pricing/air-pricing/edit/[id]': [
+      { title: `${translateCommon('pricing')}` },
+      {
+        title: (
+          <Link href={ROUTERS.AIR_PRICING}>
+            {translateCommon('air_pricing')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/pricing/customs-pricing': [
+      { title: `${translateCommon('pricing')}` },
+      { title: `${translateCommon('customs_pricing')}` },
+    ],
+    '/pricing/customs-pricing/edit/[id]': [
+      { title: `${translateCommon('pricing')}` },
+      {
+        title: (
+          <Link href={ROUTERS.CUSTOMS_PRICING}>
+            {translateCommon('customs_pricing')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/pricing/trucking-pricing': [
+      { title: `${translateCommon('pricing')}` },
+      { title: `${translateCommon('trucking_pricing')}` },
+    ],
+    '/pricing/trucking-pricing/edit/[id]': [
+      { title: `${translateCommon('pricing')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TRUCKING_PRICING}>
+            {translateCommon('trucking_pricing')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/partner/customer/potential-customer': [
+      { title: `${translateCommon('partner')}` },
+      { title: `${translateCommon('customer')}` },
+      { title: `${translateCommon('potential_customer')}` },
+    ],
+    '/partner/customer/potential-customer/edit/[id]': [
+      { title: `${translateCommon('partner')}` },
+      { title: `${translateCommon('customer')}` },
+      {
+        title: (
+          <Link href={ROUTERS.POTENTIAL_CUSTOMER}>
+            {translateCommon('potential_customer')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/partner/customer/official-customer': [
+      { title: `${translateCommon('partner')}` },
+      { title: `${translateCommon('customer')}` },
+      { title: `${translateCommon('official_customer')}` },
+    ],
+    '/partner/customer/official-customer/edit/[id]': [
+      { title: `${translateCommon('partner')}` },
+      { title: `${translateCommon('customer')}` },
+      {
+        title: (
+          <Link href={ROUTERS.OFFICIAL_CUSTOMER}>
+            {translateCommon('official_customer')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/partner/customer/customers-on-sales': [
+      { title: `${translateCommon('partner')}` },
+      { title: `${translateCommon('customer')}` },
+      { title: `${translateCommon('customers_on_sales')}` },
+    ],
+    '/partner/customer/customers-on-sales/edit/[id]': [
+      { title: `${translateCommon('partner')}` },
+      { title: `${translateCommon('customer')}` },
+      {
+        title: (
+          <Link href={ROUTERS.CUSTOMER_ON_SALES}>
+            {translateCommon('customers_on_sales')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
     '/partner/supplier': [
       { title: `${translateCommon('partner')}` },
       { title: `${translateCommon('supplier')}` },
@@ -207,6 +314,7 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/master-data/port': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('port')}` },
@@ -216,6 +324,7 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('unit')}` },
@@ -225,6 +334,7 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/master-data/accountant/currency': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('accountant')}` },
@@ -240,6 +350,7 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/master-data/accountant/bank': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('accountant')}` },
@@ -253,21 +364,19 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/type-of-expenses': [
+
+    '/master-data/fee': [
       { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('type_of_expenses')}` },
+      { title: `${translateCommon('fee')}` },
     ],
-    '/master-data/type-of-expenses/edit/[id]': [
+    '/master-data/fee/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
       {
-        title: (
-          <Link href={ROUTERS.TYPES_OF_EXPENSES}>
-            {translateCommon('type_of_expenses')}
-          </Link>
-        ),
+        title: <Link href={ROUTERS.FEE}>{translateCommon('fee')}</Link>,
       },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/master-data/container-catalog/type-of-container': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('container_catalog')}` },
@@ -285,6 +394,7 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/system/user': [
       { title: `${translateCommon('system')}` },
       { title: `${translateCommon('user')}` },
@@ -294,6 +404,7 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.USER}>{translateCommon('user')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/system/staff': [
       { title: `${translateCommon('system')}` },
       { title: `${translateCommon('staff')}` },
@@ -303,6 +414,7 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.STAFF}>{translateCommon('staff')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/system/permission': [
       { title: `${translateCommon('system')}` },
       { title: `${translateCommon('permission')}` },
@@ -316,6 +428,7 @@ export function AppLayout(props: Props) {
       },
       { title: `${translateCommon('detail')}` },
     ],
+
     '/404': [{ title: `${translateCommon('error')}` }],
   };
   return (
