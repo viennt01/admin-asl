@@ -41,7 +41,7 @@ export const ROUTERS = {
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_EDIT: (currencyId: string) =>
     `/master-data/accountant/currency/edit/${currencyId}`,
-  BANK: '/master-data/accountant/FUserbank',
+  BANK: '/master-data/accountant/bank',
   BANK_EDIT: (bankId: string) => `/master-data/accountant/bank/edit/${bankId}`,
   TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
   TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
