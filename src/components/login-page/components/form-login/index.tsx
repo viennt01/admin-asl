@@ -2,7 +2,7 @@ import { ROUTERS } from '@/constant/router';
 import { Button, Form, FormInstance, Input, notification } from 'antd';
 import Link from 'next/link';
 import style from '../../login.module.scss';
-import { LoginData, login } from '../../fetcher';
+import { login } from '../../fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { LoginData } from '../../interface';
 
 interface LoginProps {
   formLogin: FormInstance;

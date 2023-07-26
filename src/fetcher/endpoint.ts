@@ -4,3 +4,7 @@ export const API_AUTHENTICATE = {
   RESET_PASSWORD: '/reset-password',
   REGISTER: '/signup',
 };
+
+export const API_COMMON = {
+  GET_ROLE: '/get-all-role',
+};

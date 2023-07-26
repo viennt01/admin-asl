@@ -21,14 +21,12 @@ import {
   InfoOutlined,
   BarcodeOutlined,
 } from '@ant-design/icons';
-import {
-  ContactForm,
-  PasswordForm,
-  CompanyForm,
-  register,
-} from '../../fetcher';
+import { register } from '../../fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { errorToast, successToast } from '@/hook/toast';
+import { CompanyForm, ContactForm, PasswordForm } from '../../interface';
+import useLocale from '@/constant';
+import { GENDER } from '@/constant/form';
 interface RegisterProps {
   onClickAnimationChangeForm: () => void;
   formInformation: FormInstance;
@@ -76,6 +74,7 @@ const FormRegister = ({
   formCompany,
 }: RegisterProps) => {
   const [current, setCurrent] = useState(0);
+  const locale = useLocale();
 
   const onFinish = () => {
     const data = {
@@ -271,16 +270,10 @@ const FormRegister = ({
               >
                 <Select
                   size="large"
-                  options={[
-                    {
-                      value: 'Male',
-                      label: 'Male',
-                    },
-                    {
-                      value: 'Female',
-                      label: 'Female',
-                    },
-                  ]}
+                  options={GENDER[locale].map((gender) => ({
+                    label: gender.name,
+                    value: gender.value,
+                  }))}
                   placeholder="Gender"
                 />
               </Form.Item>
