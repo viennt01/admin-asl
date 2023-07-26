@@ -1,0 +1,27 @@
+{
+    "title": "List of Potential Customer",
+    "code": "Customer No",
+    "abbreviation": "Abbreviation",
+    "name": "Customer Name",
+    "number": "Number of transactions",
+    "phone": "Phone number",
+    "address": "Address",
+    "country": "Country",
+    "email": "Email",
+    "saleman": "Saleman",
+    "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator",
+
+    "information_add_customer": "Add new customer",
+    "information_edit_customer": "Edit customer",
+    "abbreviation_placeholder": "Enter abbreviation",
+    "name_placeholder": "Enter customer name",
+    "number_placeholder": "Enter number of transactions",
+    "phone_placeholder": "Enter phone number",
+    "address_placeholder": "Enter address",
+    "email_placeholder": "Enter email",
+    "country_placeholder": "Choose country",
+    "saleman_placeholder": "Choose saleman",
+    "status_placeholder": "Choose status"
+}
