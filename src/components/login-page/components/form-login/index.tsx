@@ -94,7 +94,7 @@ const FormLogin = () => {
         <img
           src="/images/logo_ASL.png"
           alt=""
-          style={{ marginBottom: '15px', width: '180px' }}
+          className={style.signinFormLogo}
         />
         <div className={style.titleSignIn}>
           <h2>Sign in</h2>
@@ -155,7 +155,7 @@ const FormLogin = () => {
         </div>
         <Button
           loading={loginUser.isLoading}
-          className={style.btnLogin}
+          className={style.btnCustome}
           htmlType="submit"
         >
           Login

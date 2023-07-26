@@ -58,7 +58,6 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
   const [formContact] = Form.useForm<ContactForm>();
   const [formPassword] = Form.useForm<PasswordForm>();
   const [formCompany] = Form.useForm<CompanyForm>();
-
   const [current, setCurrent] = useState(0);
 
   const onFinish = () => {
@@ -115,6 +114,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
     );
     next();
   };
+
   const submitContact = (value: ContactForm) => {
     console.log('ContactForm', value);
     console.log('ContactForm', formContact);
@@ -293,7 +293,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
             <Col span={24}>
               <Form.Item>
                 <Button
-                  className={style.btnSignUp}
+                  className={style.btnCustome}
                   htmlType="submit"
                   style={{ marginRight: 10 }}
                 >
@@ -461,7 +461,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
             <Col md={24} lg={7}>
               <Form.Item>
                 <Button
-                  className={style.btnSignUp}
+                  className={style.btnCustome}
                   htmlType="submit"
                   style={{ marginRight: 10 }}
                 >
@@ -473,7 +473,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
               <Form.Item>
                 <Button
                   onClick={() => prev()}
-                  className={style.btnSignUp}
+                  className={style.btnCustome}
                   htmlType="button"
                 >
                   Previous
@@ -591,7 +591,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
             <Col md={24} lg={7}>
               <Form.Item>
                 <Button
-                  className={style.btnSignUp}
+                  className={style.btnCustome}
                   htmlType="submit"
                   style={{ marginRight: 10 }}
                 >
@@ -603,7 +603,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
               <Form.Item>
                 <Button
                   onClick={() => prev()}
-                  className={style.btnSignUp}
+                  className={style.btnCustome}
                   htmlType="button"
                 >
                   Previous
@@ -890,7 +890,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
             <Col md={24} lg={7}>
               <Form.Item>
                 <Button
-                  className={style.btnSignUp}
+                  className={style.btnCustome}
                   htmlType="submit"
                   style={{ marginRight: 10 }}
                 >
@@ -902,7 +902,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
               <Form.Item>
                 <Button
                   onClick={() => prev()}
-                  className={style.btnSignUp}
+                  className={style.btnCustome}
                   htmlType="button"
                 >
                   Previous
@@ -914,6 +914,7 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
       ),
     },
   ];
+
   const next = () => {
     setCurrent(current + 1);
   };
@@ -924,11 +925,6 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
 
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
-  const contentStyle: React.CSSProperties = {
-    // height: '500px',
-    marginTop: 16,
-  };
-
   return (
     <>
       <div>
@@ -937,8 +933,13 @@ const FormRegister = ({ onClickAnimationChangeForm }: RegisterProps) => {
           <h2>Sign up</h2>
         </div>
 
-        <Steps current={current} items={items} progressDot />
-        <div style={contentStyle}>{steps[current].content}</div>
+        <Steps
+          current={current}
+          items={items}
+          progressDot
+          className={style.stepSignup}
+        />
+        <div className={style.contentStyle}>{steps[current].content}</div>
       </div>
     </>
   );
