@@ -7,11 +7,10 @@ import {
   Row,
   Select,
   Steps,
-  Cascader,
   FormInstance,
 } from 'antd';
 import style from '../../login.module.scss';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   LockOutlined,
   MailOutlined,
@@ -24,15 +23,21 @@ import {
 import { register } from '../../fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { errorToast, successToast } from '@/hook/toast';
-import { CompanyForm, ContactForm, PasswordForm } from '../../interface';
-import useLocale from '@/constant';
-import { GENDER } from '@/constant/form';
+import {
+  CompanyForm,
+  ContactForm,
+  DataGender,
+  DataRole,
+  PasswordForm,
+} from '../../interface';
 interface RegisterProps {
   onClickAnimationChangeForm: () => void;
   formInformation: FormInstance;
   formContact: FormInstance;
   formPassword: FormInstance;
   formCompany: FormInstance;
+  genderOptions: DataGender[];
+  roleOptions: DataRole[];
 }
 
 const initialValuesInformationForm = {
@@ -44,7 +49,6 @@ const initialValuesContactForm = {
   email: '',
   phoneNumber: '',
   address: '',
-  cityName: '',
 };
 const initialValuesPasswordForm = {
   password: '',
@@ -56,15 +60,7 @@ const initialValuesCompanyForm = {
   emailCompany: '',
   phoneNumberCompany: '',
   addressCompany: '',
-  cityCompany: '',
 };
-
-interface Option {
-  value?: string | number | null;
-  label: React.ReactNode;
-  children?: Option[];
-  isLeaf?: boolean;
-}
 
 const FormRegister = ({
   onClickAnimationChangeForm,
@@ -72,9 +68,10 @@ const FormRegister = ({
   formContact,
   formPassword,
   formCompany,
+  genderOptions,
+  roleOptions,
 }: RegisterProps) => {
   const [current, setCurrent] = useState(0);
-  const locale = useLocale();
 
   const onFinish = () => {
     const data = {
@@ -85,10 +82,9 @@ const FormRegister = ({
       )} ${formInformation.getFieldValue('lastName')}`,
       birthDay: formInformation.getFieldValue('birthDay').valueOf() as string,
       genderName: formInformation.getFieldValue('genderName'),
-      roleName: formInformation.getFieldValue('roleName'),
+      roleID: formInformation.getFieldValue('roleID'),
       address: formContact.getFieldValue('address'),
       email: formContact.getFieldValue('email'),
-      cityName: formContact.getFieldValue('cityName'),
       phoneNumber: formContact.getFieldValue('phoneNumber'),
       password: formPassword.getFieldValue('password'),
       passwordConfirm: formPassword.getFieldValue('passwordConfirm'),
@@ -97,7 +93,6 @@ const FormRegister = ({
       emailCompany: formCompany.getFieldValue('emailCompany'),
       phoneNumberCompany: formCompany.getFieldValue('phoneNumberCompany'),
       addressCompany: formCompany.getFieldValue('addressCompany'),
-      cityCompany: formCompany.getFieldValue('cityCompany'),
     };
     console.log(data);
 
@@ -123,22 +118,15 @@ const FormRegister = ({
   };
 
   const submitInformation = () => {
-    console.log('formInformation', formInformation.getFieldsValue());
-
     next();
   };
   const submitContact = (value: ContactForm) => {
-    console.log('formContact', formContact.getFieldsValue());
-
     formContact.setFieldValue('email', value.email);
     formContact.setFieldValue('phoneNumber', value.phoneNumber);
     formContact.setFieldValue('address', value.address);
-    formContact.setFieldValue('cityName', value.cityName);
     next();
   };
   const submitPassword = (value: PasswordForm) => {
-    console.log('formPassword', formPassword.getFieldsValue());
-
     formPassword.setFieldValue('password', value.password);
     formPassword.setFieldValue('passwordConfirm', value.passwordConfirm);
     next();
@@ -149,48 +137,26 @@ const FormRegister = ({
     formCompany.setFieldValue('emailCompany', value.emailCompany);
     formCompany.setFieldValue('phoneNumberCompany', value.phoneNumberCompany);
     formCompany.setFieldValue('addressCompany', value.addressCompany);
-    formCompany.setFieldValue('cityCompany', value.cityCompany);
     onFinish();
   };
 
-  const optionLists: Option[] = [
-    {
-      value: 'zhejiang',
-      label: 'Zhejiang',
-      isLeaf: false,
-    },
-    {
-      value: 'jiangsu',
-      label: 'Jiangsu',
-      isLeaf: false,
-    },
-  ];
-  const [options, setOptions] = useState<Option[]>(optionLists);
+  const genderOptionSelect = useMemo(
+    () =>
+      genderOptions.map((item) => ({
+        label: item.name,
+        value: item.genderID,
+      })),
+    [genderOptions]
+  );
 
-  const onChange = (value: (string | number)[], selectedOptions: Option[]) => {
-    console.log(value, selectedOptions);
-  };
-
-  const loadData = (selectedOptions: Option[]) => {
-    const targetOption = selectedOptions[selectedOptions.length - 1];
-    console.log('selectedOptions', selectedOptions);
-
-    // load options lazily
-    setTimeout(() => {
-      targetOption.children = [
-        {
-          label: `${targetOption.label} Dynamic 1`,
-          value: 'dynamic1',
-        },
-        {
-          label: `${targetOption.label} Dynamic 2`,
-          value: 'dynamic2',
-        },
-      ];
-      setOptions([...options]);
-    }, 1000);
-  };
-
+  const roleOptionSelect = useMemo(
+    () =>
+      roleOptions.map((item) => ({
+        label: item.name,
+        value: item.roleID,
+      })),
+    [roleOptions]
+  );
   const steps = [
     {
       title: 'Information',
@@ -270,10 +236,7 @@ const FormRegister = ({
               >
                 <Select
                   size="large"
-                  options={GENDER[locale].map((gender) => ({
-                    label: gender.name,
-                    value: gender.value,
-                  }))}
+                  options={genderOptionSelect}
                   placeholder="Gender"
                 />
               </Form.Item>
@@ -281,7 +244,7 @@ const FormRegister = ({
 
             <Col lg={8} span={24}>
               <Form.Item
-                name="roleName"
+                name="roleID"
                 rules={[
                   {
                     required: true,
@@ -290,16 +253,7 @@ const FormRegister = ({
                 ]}
               >
                 <Select
-                  options={[
-                    {
-                      value: '1',
-                      label: 'Admin',
-                    },
-                    {
-                      value: '2',
-                      label: 'User',
-                    },
-                  ]}
+                  options={roleOptionSelect}
                   placeholder="Please select role"
                   size="large"
                 />
@@ -338,6 +292,10 @@ const FormRegister = ({
                     required: true,
                     message: 'Please input your email!',
                   },
+                  {
+                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    message: 'Please enter a valid email format!',
+                  },
                 ]}
               >
                 <Input
@@ -356,6 +314,10 @@ const FormRegister = ({
                     required: true,
                     message: 'Please input phone number!',
                   },
+                  {
+                    pattern: /^[0-9]{7,15}$/,
+                    message: 'Please enter a valid number phone format!',
+                  },
                 ]}
               >
                 <Input
@@ -366,7 +328,7 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={14} span={24}>
+            <Col span={24}>
               <Form.Item
                 name="address"
                 rules={[
@@ -381,27 +343,6 @@ const FormRegister = ({
                 <Input
                   placeholder="Address"
                   prefix={<EnvironmentOutlined />}
-                  size="large"
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={10} span={24}>
-              <Form.Item
-                name="cityName"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select city!',
-                  },
-                ]}
-              >
-                <Cascader
-                  options={options}
-                  loadData={loadData}
-                  onChange={onChange}
-                  changeOnSelect
-                  placeholder="Please select city"
                   size="large"
                 />
               </Form.Item>
@@ -584,6 +525,10 @@ const FormRegister = ({
                     required: true,
                     message: 'Please input email company!',
                   },
+                  {
+                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    message: 'Please enter a valid email format!',
+                  },
                 ]}
               >
                 <Input
@@ -602,59 +547,16 @@ const FormRegister = ({
                     required: true,
                     message: 'Please input phone number!',
                   },
+                  {
+                    pattern: /^[0-9]{7,15}$/,
+                    message: 'Please enter a valid number phone format!',
+                  },
                 ]}
               >
                 <Input
                   placeholder="Phone Number"
                   prefix={<PhoneOutlined />}
                   size="large"
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={14} span={24}>
-              <Form.Item
-                name="cityCompany"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select city!',
-                  },
-                ]}
-              >
-                <Select
-                  size="large"
-                  options={[
-                    {
-                      value: '1',
-                      label: (
-                        <div
-                          style={{
-                            color: '#1D4486',
-                            fontWeight: 600,
-                            fontSize: '1.3rem',
-                          }}
-                        >
-                          TP.HCM
-                        </div>
-                      ),
-                    },
-                    {
-                      value: '2',
-                      label: (
-                        <div
-                          style={{
-                            color: '#1D4486',
-                            fontWeight: 600,
-                            fontSize: '1.3rem',
-                          }}
-                        >
-                          HN
-                        </div>
-                      ),
-                    },
-                  ]}
-                  placeholder="Please select city"
                 />
               </Form.Item>
             </Col>

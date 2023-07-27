@@ -9,7 +9,14 @@ import {
   post,
   ResponseWithPayload as ResponseWithPayloadRegister,
 } from '@/fetcher';
-import { DataLogin, HeadersLogin, LoginData, RegisterForm } from './interface';
+import {
+  DataGender,
+  DataLogin,
+  DataRole,
+  HeadersLogin,
+  LoginData,
+  RegisterForm,
+} from './interface';
 
 export const login = (data: LoginData, headers: HeadersLogin) => {
   return post<LoginData, ResponseWithPayload<DataLogin>>({
@@ -22,13 +29,19 @@ export const login = (data: LoginData, headers: HeadersLogin) => {
 };
 
 export const register = (data: RegisterForm) => {
-  return post<RegisterForm, ResponseWithPayloadRegister<DataLogin>>({
+  return post<RegisterForm, ResponseWithPayloadRegister<RegisterForm>>({
     data,
   })(API_AUTHENTICATE_REGISTER.REGISTER);
 };
 
 export const listRole = () => {
-  return get<undefined, ResponseWithPayloadRegister<DataLogin>>({})(
+  return get<undefined, ResponseWithPayloadRegister<DataRole[]>>({})(
     API_COMMON.GET_ROLE
+  );
+};
+
+export const listGender = () => {
+  return get<undefined, ResponseWithPayloadRegister<DataGender[]>>({})(
+    API_COMMON.GET_GENDER
   );
 };
