@@ -79,7 +79,12 @@ export const get =
   (url: string): Promise<R> => {
     const fetchPromise = requestWithTimeout(
       fetch(`${getGateway(gw)}${url}`, {
-        headers: { ...configHeaders.headers, ...headers },
+        headers: {
+          ...configHeaders.headers,
+          ...headers,
+          languageName:
+            appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN,
+        },
         ...options,
       }),
       timeout

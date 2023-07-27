@@ -4,11 +4,16 @@ export const YEAR_OF_BIRTH = (() => {
   return [...Array(101)].map((_, index) => year - index);
 })();
 
-export const GENDER = [
-  { name: 'male', value: 'male' },
-  { name: 'female', value: 'female' },
-  { name: 'others', value: 'other' },
-];
+export const GENDER = {
+  EN: [
+    { name: 'Male', value: 'Male' },
+    { name: 'Female', value: 'Female' },
+  ],
+  VN: [
+    { name: 'Nam', value: 'Male' },
+    { name: 'Nữ', value: 'Female' },
+  ],
+};
 
 export const COUNTRIES = [
   'Afghanistan',

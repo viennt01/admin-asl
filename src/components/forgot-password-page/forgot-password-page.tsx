@@ -15,6 +15,7 @@ import {
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
+import Link from 'next/link';
 
 const { Content } = Layout;
 
@@ -145,12 +146,14 @@ export default function ForgotPasswordPage() {
               cursor: 'pointer',
             }}
           >
-            <Image
-              src="/images/logo_ASL.png"
-              alt="logo"
-              width={180}
-              preview={false}
-            />
+            <Link href={ROUTERS.LOGIN}>
+              <Image
+                src="/images/logo_ASL.png"
+                alt="logo"
+                width={180}
+                preview={false}
+              />
+            </Link>
           </div>
           <div className={style.titleForgotPassword}>
             <h2>{translateResetPassword('title')}</h2>
@@ -296,7 +299,7 @@ export default function ForgotPasswordPage() {
                   size="large"
                   type="password"
                   placeholder={`${translateResetPassword(
-                    'form-set-password.placeholder-password'
+                    'form-set-password.placeholder-new-password'
                   )}`}
                   autoComplete="off"
                 />

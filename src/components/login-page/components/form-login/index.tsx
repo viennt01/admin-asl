@@ -1,8 +1,8 @@
 import { ROUTERS } from '@/constant/router';
-import { Button, Form, Input, notification } from 'antd';
+import { Button, Form, FormInstance, Input, notification } from 'antd';
 import Link from 'next/link';
 import style from '../../login.module.scss';
-import { LoginData, login } from '../../fetcher';
+import { login } from '../../fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { useEffect, useState } from 'react';
@@ -10,12 +10,18 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import { LoginData } from '../../interface';
+
+interface LoginProps {
+  formLogin: FormInstance;
+}
+
 const initialValues: LoginData = {
   email: '',
   password: '',
 };
 
-const FormLogin = () => {
+const FormLogin = ({ formLogin }: LoginProps) => {
   const router = useRouter();
   const [notiApi, contextHolder] = notification.useNotification();
   const [ip, setIp] = useState();
@@ -31,8 +37,6 @@ const FormLogin = () => {
     deviceName: deviceName,
   };
   const onFinish = (values: LoginData) => {
-    console.log(ip);
-
     if (!ip) {
       return;
     }
@@ -82,85 +86,80 @@ const FormLogin = () => {
   return (
     <>
       {contextHolder}
-      <Form
+      <div
         className={style.signinForm}
-        name="basic"
-        initialValues={initialValues}
-        onFinish={onFinish}
-        layout="vertical"
-        requiredMark={false}
-        autoComplete="off"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
-        <img
-          src="/images/logo_ASL.png"
-          alt=""
-          className={style.signinFormLogo}
-        />
-        <div className={style.titleSignIn}>
-          <h2>Sign in</h2>
-          <h2>Sign in</h2>
-        </div>
-        <Form.Item
-          name="email"
-          style={{ width: '100%' }}
-          rules={[
-            {
-              required: true,
-              message: (
-                <div className={style.message}>Please input your email!</div>
-              ),
-            },
-          ]}
-        >
-          <div className={style.inputField}>
-            <MailOutlined className={style.signinMailIcon} />
-            <Input
-              placeholder="Email"
-              className={style.signinEmailInput}
-              bordered={false}
-            />
-          </div>
-        </Form.Item>
-        <Form.Item
-          name="password"
-          style={{ width: '100%' }}
-          rules={[
-            {
-              required: true,
-              message: (
-                <div className={style.message}>Please input your password!</div>
-              ),
-            },
-          ]}
-        >
-          <div className={style.inputField}>
-            <LockOutlined className={style.signinLockIcon} />
-            <Input.Password
-              placeholder="Password"
-              className={style.signinPasswordInput}
-              bordered={false}
-            />
-          </div>
-        </Form.Item>
+        <Link href={ROUTERS.LOGIN}>
+          <img
+            src="/images/logo_ASL.png"
+            alt=""
+            style={{ marginBottom: '15px', width: '180px' }}
+          />
+        </Link>
 
-        <div className={style.loginOptions}>
-          <div>
-            <Link
-              href={ROUTERS.FORGOT_PASSWORD}
-              className={style.forgotFieldLink}
-            >
-              Forgot password ?
-            </Link>
-          </div>
-        </div>
-        <Button
-          loading={loginUser.isLoading}
-          className={style.btnCustome}
-          htmlType="submit"
+        <Form
+          form={formLogin}
+          name="formLogin"
+          initialValues={initialValues}
+          onFinish={onFinish}
+          style={{ width: '100%' }}
         >
-          Login
-        </Button>
-      </Form>
+          <div className={style.titleSignIn}>
+            <h2>Sign in</h2>
+            <h2>Sign in</h2>
+          </div>
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your email!',
+              },
+            ]}
+          >
+            <Input size="large" prefix={<MailOutlined />} placeholder="Email" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password!',
+              },
+            ]}
+          >
+            <Input.Password
+              size="large"
+              prefix={<LockOutlined />}
+              placeholder="Password"
+            />
+          </Form.Item>
+
+          <div className={style.loginOptions}>
+            <div>
+              <Link
+                href={ROUTERS.FORGOT_PASSWORD}
+                className={style.forgotFieldLink}
+              >
+                Forgot password ?
+              </Link>
+            </div>
+          </div>
+          <Button
+            loading={loginUser.isLoading}
+            className={style.btnLogin}
+            htmlType="submit"
+            style={{ width: '100%', marginTop: '15px' }}
+          >
+            Login
+          </Button>
+        </Form>
+      </div>
     </>
   );
 };

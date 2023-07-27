@@ -92,7 +92,7 @@ apiClient.interceptors.request.use((config) => {
   const accessToken = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
   config.headers.languageName =
     appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN;
-  console.log('config', config);
+  // console.log('config', config);
 
   if (config.url === `${getGateway()}${API_AUTHENTICATE.LOGIN}`) {
     return config;
@@ -126,13 +126,21 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    console.log('error', error);
+
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
       appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN)
     ) {
+      // console.log('error0', error);
+
       originalRequest._retry = true;
+      // console.log('error1', error);
+
       try {
+        // console.log('error2', error);
+
         const response = await apiClient.post(
           `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`,
           {
@@ -142,6 +150,8 @@ apiClient.interceptors.response.use(
             deviceName: appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME),
           }
         );
+        // console.log(response);
+
         const newAccessToken = response.data.access_token;
         const newRefreshToken = response.data.access_token;
         originalRequest.headers.accessToken = newAccessToken;
