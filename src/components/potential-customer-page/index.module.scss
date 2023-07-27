@@ -3,5 +3,9 @@
     .ant-table-sticky-scroll {
       display: none;
     }
+
+    .ant-table-column-title, .ant-table-cell {
+      text-transform: uppercase;
+    }
   }
 }

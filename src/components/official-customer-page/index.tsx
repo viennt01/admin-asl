@@ -212,7 +212,7 @@ export default function OfficialCustomerPage() {
     },
     {
       title: translateOfficialCustomer('number'),
-      width: 200,
+      width: 250,
       dataIndex: 'numberOfTransaction',
       key: 'numberOfTransaction',
       align: 'center',
@@ -289,14 +289,14 @@ export default function OfficialCustomerPage() {
     },
     {
       title: translateOfficialCustomer('date_created'),
-      width: 100,
+      width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
       title: translateOfficialCustomer('creator'),
-      width: 150,
+      width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',

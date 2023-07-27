@@ -7,18 +7,18 @@ export const ROUTERS = {
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
   QUOTATION: '/quotation',
   QUOTATION_EDIT: (quotationId: string) => `/quotation/edit/${quotationId}`,
-  SEA_PRICING: '/pricing/sea-pricing',
+  SEA_PRICING: '/pricing/pricing-sea',
   SEA_PRICING_EDIT: (seaPricingId: string) =>
-    `/pricing/sea-pricing/edit/${seaPricingId}`,
-  AIR_PRICING: '/pricing/air-pricing',
+    `/pricing/pricing-sea/edit/${seaPricingId}`,
+  AIR_PRICING: '/pricing/pricing-air',
   AIR_PRICING_EDIT: (airPricingId: string) =>
-    `/pricing/air-pricing/edit/${airPricingId}`,
-  CUSTOMS_PRICING: '/pricing/customs-pricing',
+    `/pricing/pricing-air/edit/${airPricingId}`,
+  CUSTOMS_PRICING: '/pricing/pricing-customs',
   CUSTOMS_PRICING_EDIT: (customsPricingId: string) =>
-    `/pricing/customs-pricing/edit/${customsPricingId}`,
-  TRUCKING_PRICING: '/pricing/customs-pricing',
-  TRUCKING_PRICING_EDIT: (customsPricingId: string) =>
-    `/pricing/customs-pricing/edit/${customsPricingId}`,
+    `/pricing/pricing-customs/edit/${customsPricingId}`,
+  TRUCKING_PRICING: '/pricing/pricing-trucking',
+  TRUCKING_PRICING_EDIT: (truckingPricingId: string) =>
+    `/pricing/pricing-trucking/edit/${truckingPricingId}`,
   POTENTIAL_CUSTOMER: '/partner/customer/potential-customer',
   POTENTIAL_CUSTOMER_EDIT: (potentialCustomerId: string) =>
     `/partner/customer/potential-customer/edit/${potentialCustomerId}`,

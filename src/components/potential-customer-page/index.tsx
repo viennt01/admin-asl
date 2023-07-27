@@ -213,7 +213,7 @@ export default function PotentialCustomerPage() {
     },
     {
       title: translatePotentialCustomer('number'),
-      width: 200,
+      width: 250,
       dataIndex: 'numberOfTransaction',
       key: 'numberOfTransaction',
       align: 'center',
@@ -290,14 +290,14 @@ export default function PotentialCustomerPage() {
     },
     {
       title: translatePotentialCustomer('date_created'),
-      width: 100,
+      width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
       title: translatePotentialCustomer('creator'),
-      width: 150,
+      width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',

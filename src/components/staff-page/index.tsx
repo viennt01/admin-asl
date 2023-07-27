@@ -256,7 +256,7 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('dob'),
-      width: 120,
+      width: 150,
       dataIndex: 'dob',
       key: 'dob',
       align: 'center',
@@ -287,7 +287,7 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('CCCD_Visa'),
-      width: 200,
+      width: 250,
       dataIndex: 'CCCD_Visa',
       key: 'CCCD_Visa',
       align: 'center',
@@ -364,14 +364,14 @@ export default function StaffPage() {
     },
     {
       title: translateStaff('date_created'),
-      width: 100,
+      width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
       title: translateStaff('creator'),
-      width: 150,
+      width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',

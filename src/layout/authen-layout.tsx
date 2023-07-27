@@ -183,11 +183,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
-    '/pricing/sea-pricing': [
+    '/pricing/pricing-sea': [
       { title: `${translateCommon('pricing')}` },
       { title: `${translateCommon('sea_pricing')}` },
     ],
-    '/pricing/sea-pricing/edit/[id]': [
+    '/pricing/pricing-sea/edit/[id]': [
       { title: `${translateCommon('pricing')}` },
       {
         title: (
@@ -199,11 +199,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
-    '/pricing/air-pricing': [
+    '/pricing/pricing-air': [
       { title: `${translateCommon('pricing')}` },
       { title: `${translateCommon('air_pricing')}` },
     ],
-    '/pricing/air-pricing/edit/[id]': [
+    '/pricing/pricing-air/edit/[id]': [
       { title: `${translateCommon('pricing')}` },
       {
         title: (
@@ -215,11 +215,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
-    '/pricing/customs-pricing': [
+    '/pricing/pricing-customs': [
       { title: `${translateCommon('pricing')}` },
       { title: `${translateCommon('customs_pricing')}` },
     ],
-    '/pricing/customs-pricing/edit/[id]': [
+    '/pricing/pricing-customs/edit/[id]': [
       { title: `${translateCommon('pricing')}` },
       {
         title: (
@@ -231,11 +231,11 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
-    '/pricing/trucking-pricing': [
+    '/pricing/pricing-trucking': [
       { title: `${translateCommon('pricing')}` },
       { title: `${translateCommon('trucking_pricing')}` },
     ],
-    '/pricing/trucking-pricing/edit/[id]': [
+    '/pricing/pricing-trucking/edit/[id]': [
       { title: `${translateCommon('pricing')}` },
       {
         title: (

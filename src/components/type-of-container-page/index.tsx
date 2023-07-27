@@ -186,7 +186,7 @@ export default function TypeOfContainerPage() {
   const columns: ProColumns<DataType>[] = [
     {
       title: translateTypeOfContainer('code'),
-      width: 100,
+      width: 80,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
@@ -195,7 +195,7 @@ export default function TypeOfContainerPage() {
     },
     {
       title: translateTypeOfContainer('container_no'),
-      width: 180,
+      width: 250,
       dataIndex: 'typeContainerNo',
       key: 'typeContainerNo',
       align: 'center',
@@ -273,14 +273,14 @@ export default function TypeOfContainerPage() {
     },
     {
       title: translateTypeOfContainer('date_created'),
-      width: 100,
+      width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
       title: translateTypeOfContainer('creator'),
-      width: 150,
+      width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',
