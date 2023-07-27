@@ -43,7 +43,7 @@ interface RegisterProps {
 const initialValuesInformationForm = {
   firstName: '',
   lastName: '',
-  birthDay: '',
+  DateOfBirth: '',
 };
 const initialValuesContactForm = {
   email: '',
@@ -80,8 +80,8 @@ const FormRegister = ({
       fullName: `${formInformation.getFieldValue(
         'firstName'
       )} ${formInformation.getFieldValue('lastName')}`,
-      birthDay: formInformation.getFieldValue('birthDay').valueOf() as string,
-      genderName: formInformation.getFieldValue('genderName'),
+      DateOfBirth: `${formInformation.getFieldValue('DateOfBirth').valueOf()}`,
+      genderID: formInformation.getFieldValue('genderID'),
       roleID: formInformation.getFieldValue('roleID'),
       address: formContact.getFieldValue('address'),
       email: formContact.getFieldValue('email'),
@@ -94,7 +94,6 @@ const FormRegister = ({
       phoneNumberCompany: formCompany.getFieldValue('phoneNumberCompany'),
       addressCompany: formCompany.getFieldValue('addressCompany'),
     };
-    console.log(data);
 
     register(data)
       .then((res) => {
@@ -206,7 +205,7 @@ const FormRegister = ({
 
             <Col lg={8} span={24}>
               <Form.Item
-                name="birthDay"
+                name="DateOfBirth"
                 rules={[
                   {
                     required: true,
@@ -224,7 +223,7 @@ const FormRegister = ({
 
             <Col lg={8} span={24}>
               <Form.Item
-                name="genderName"
+                name="genderID"
                 rules={[
                   {
                     required: true,

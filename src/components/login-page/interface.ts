@@ -19,9 +19,9 @@ export interface RegisterForm {
   lastName: string;
   fullName: string;
   address: string;
-  birthDay: string;
+  DateOfBirth: string;
   phoneNumber: string;
-  genderName: string;
+  genderID: string;
   roleID: string;
   companyName: string;
   taxCodeCompany: string;
@@ -32,7 +32,7 @@ export interface RegisterForm {
 
 export type InformationForm = Pick<
   RegisterForm,
-  'firstName' | 'lastName' | 'birthDay' | 'genderName'
+  'firstName' | 'lastName' | 'DateOfBirth' | 'genderID'
 >;
 
 export type ContactForm = Pick<
