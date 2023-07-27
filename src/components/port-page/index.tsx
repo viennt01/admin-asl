@@ -51,6 +51,7 @@ export default function PortPage() {
     countryName: string;
     portCode: string;
     portName: string;
+    typeOfPort: string;
     address: string;
     totalContainer: number;
     capacityState: string;
@@ -69,6 +70,7 @@ export default function PortPage() {
       countryName: 'Vietnam',
       portCode: i % 2 === 0 ? 'TCCL' : 'TCPH',
       portName: i % 2 === 0 ? 'Cảng Cát Lái' : 'Cảng tân cảng Phú Hữu',
+      typeOfPort: i % 2 === 0 ? 'Sea Port' : 'Air Port',
       address:
         i % 2 === 0
           ? '1295B Đường Nguyễn Thị Định, Phường Cát Lái, Quận 2, TP Hồ Chí Minh, Việt Nam'
@@ -242,6 +244,7 @@ export default function PortPage() {
       align: 'center',
       ...getColumnSearchProps('portName'),
     },
+
     {
       title: translatePort('country_name'),
       width: 150,
@@ -251,6 +254,17 @@ export default function PortPage() {
       ...getColumnSearchProps('countryName'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
+
+    {
+      title: translatePort('type_of_port'),
+      width: 150,
+      dataIndex: 'typeOfPort',
+      key: 'typeOfPort',
+      align: 'center',
+      ...getColumnSearchProps('typeOfPort'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+
     {
       title: translatePort('address'),
       dataIndex: 'address',

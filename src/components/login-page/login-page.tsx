@@ -9,7 +9,7 @@ import {
   ContactForm,
   InformationForm,
   PasswordForm,
-} from './fetcher';
+} from './interface';
 
 export default function LoginPage() {
   const [classActiveForm, setClassActiveForm] = useState('signinMode');

@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useEffect, useRef, useState } from 'react';
-import CreateUser from './create-user';
+import CreateCustomer from './create-customer-on-sales';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -23,71 +23,49 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
-
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
-// const STATUS_CAPACITY_COLORS = {
-//   Full: '#31AFFE',
-//   NotFull: '#616887',
-// };
-// const STATUS_CAPACITY_LABELS = {
-//   Full: 'Đầy',
-//   NotFull: 'Nửa đầy',
-// };
-
-export default function CalculationUserPage() {
+export default function CustomerOnSalesPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateUser } = useI18n('user');
+  const { translate: translateCustomerOnSales } = useI18n('customerOnSales');
   const { translate: translateCommon } = useI18n('common');
   const [locale, setLocale] = useState(enUS);
+
   interface DataType {
-    key: number;
-    account: string;
-    first_name: string;
-    last_name: string;
-    full_name: string;
-    gender: string;
-    dob: string;
+    customerCode: string;
+    abbreviation: string;
+    customerName: string;
+    numberOfTransaction: number;
     phone: string;
     address: string;
+    country: string;
     email: string;
-    CCCD_Visa: string;
-    nationality: string;
-    company: string;
-    working_branch: string;
-    role: string;
+    saleman: string;
     status: string;
-    last_login: string;
-    update_created: string;
     dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i + 1,
-      account: 'ThuNCN',
-      first_name: 'Thu',
-      last_name: 'Nguyễn',
-      full_name: 'Nguyễn Cao Ngọc Thu',
-      gender: 'Female',
-      dob: '05/12/2001',
-      phone: '0975169203',
-      address: 'Quận 9, TP. Hồ Chí Minh',
-      email: 'nganncnse150413@fpt.edu.com',
-      CCCD_Visa: '4563436465',
-      nationality: 'Việt Nam',
-      company: 'ABC',
-      working_branch: 'Chi nhánh Lý Thường Kiệt, Quận 10, TP. Hồ Chí Minh',
-      role: 'Importer',
+      customerCode: 'ASL120',
+      abbreviation: `MASAN CONSUMER`,
+      customerName: `CÔNG TY CP HÀNG TIÊU DÙNG MASAN`,
+      numberOfTransaction: 150,
+      phone: '0964582355',
+      address:
+        'MPlaza Saigon 39 Le Duan, Ben Nghe, District 1, Ho Chi Minh City, Vietnam',
+      country: 'Việt Nam',
+      email: 'abcd@gmail.com',
+      saleman: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
-      last_login: '26/07/2023',
-      update_created: '05/02/2023',
-      dateCreated: '05/02/2023',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -205,150 +183,90 @@ export default function CalculationUserPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateUser('code'),
-      width: 100,
-      dataIndex: 'key',
-      key: 'key',
+      title: translateCustomerOnSales('code'),
+      width: 150,
+      dataIndex: 'customerCode',
+      key: 'customerCode',
       fixed: 'left',
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('customerCode'),
     },
-
     {
-      title: translateUser('account'),
-      dataIndex: 'account',
-      key: 'account',
-      width: 150,
-      align: 'center',
-      ...getColumnSearchProps('account'),
-    },
-
-    {
-      title: translateUser('first_name'),
-      width: 150,
-      dataIndex: 'first_name',
-      key: 'first_name',
-      align: 'center',
-      ...getColumnSearchProps('first_name'),
-    },
-
-    {
-      title: translateUser('last_name'),
-      width: 150,
-      dataIndex: 'last_name',
-      key: 'last_name',
-      align: 'center',
-      ...getColumnSearchProps('last_name'),
-    },
-
-    {
-      title: translateUser('full_name'),
+      title: translateCustomerOnSales('abbreviation'),
       width: 250,
-      dataIndex: 'full_name',
-      key: 'full_name',
+      dataIndex: 'abbreviation',
+      key: 'abbreviation',
+      fixed: 'left',
       align: 'center',
-      ...getColumnSearchProps('full_name'),
+      ...getColumnSearchProps('abbreviation'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
-
     {
-      title: translateUser('gender'),
-      width: 150,
-      dataIndex: 'gender',
-      key: 'gender',
+      title: translateCustomerOnSales('name'),
+      width: 350,
+      dataIndex: 'customerName',
+      key: 'customerName',
       align: 'center',
-      ...getColumnSearchProps('gender'),
+      ...getColumnSearchProps('customerName'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
-
     {
-      title: translateUser('dob'),
-      width: 150,
-      dataIndex: 'dob',
-      key: 'dob',
+      title: translateCustomerOnSales('number'),
+      width: 200,
+      dataIndex: 'numberOfTransaction',
+      key: 'numberOfTransaction',
       align: 'center',
-      ...getColumnSearchProps('dob'),
+      ...getColumnSearchProps('numberOfTransaction'),
     },
-
     {
-      title: translateUser('phone'),
+      title: translateCustomerOnSales('phone'),
       width: 150,
       dataIndex: 'phone',
       key: 'phone',
       align: 'center',
       ...getColumnSearchProps('phone'),
     },
-
     {
-      title: translateUser('address'),
-      width: 350,
+      title: translateCustomerOnSales('address'),
+      width: 500,
       dataIndex: 'address',
       key: 'address',
       align: 'center',
       ...getColumnSearchProps('address'),
     },
-
     {
-      title: translateUser('email'),
-      width: 250,
+      title: translateCustomerOnSales('country'),
+      width: 150,
+      dataIndex: 'country',
+      key: 'country',
+      align: 'center',
+      ...getColumnSearchProps('country'),
+    },
+    {
+      title: translateCustomerOnSales('email'),
+      width: 180,
       dataIndex: 'email',
       key: 'email',
       align: 'center',
       ...getColumnSearchProps('email'),
     },
-
     {
-      title: translateUser('CCCD_Visa'),
-      width: 250,
-      dataIndex: 'CCCD_Visa',
-      key: 'CCCD_Visa',
-      align: 'center',
-      ...getColumnSearchProps('CCCD_Visa'),
-    },
-
-    {
-      title: translateUser('nationality'),
+      title: translateCustomerOnSales('saleman'),
       width: 200,
-      dataIndex: 'nationality',
-      key: 'nationality',
+      dataIndex: 'saleman',
+      key: 'saleman',
       align: 'center',
-      ...getColumnSearchProps('nationality'),
+      ...getColumnSearchProps('saleman'),
     },
-
     {
-      title: translateUser('company'),
-      width: 200,
-      dataIndex: 'company',
-      key: 'company',
-      align: 'center',
-      ...getColumnSearchProps('company'),
-    },
-
-    {
-      title: translateUser('working_branch'),
-      width: 400,
-      dataIndex: 'working_branch',
-      key: 'working_branch',
-      align: 'center',
-      ...getColumnSearchProps('working_branch'),
-    },
-
-    {
-      title: translateUser('role'),
-      width: 200,
-      dataIndex: 'role',
-      key: 'role',
-      align: 'center',
-      ...getColumnSearchProps('role'),
-    },
-
-    {
-      title: translateUser('status'),
-      width: 120,
+      title: translateCustomerOnSales('status'),
+      width: 150,
       dataIndex: 'status',
       key: 'status',
       align: 'center',
       filters: [
         {
-          text: 'Sử dụng',
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -369,34 +287,20 @@ export default function CalculationUserPage() {
         </Tag>
       ),
     },
-
     {
-      title: translateUser('last_login'),
-      width: 150,
-      dataIndex: 'last_login',
-      key: 'last_login',
-      align: 'center',
-      ...getColumnSearchProps('last_login'),
-    },
-
-    {
-      title: translateUser('update_created'),
-      width: 150,
-      dataIndex: 'update_created',
-      key: 'update_created',
-      align: 'center',
-      ...getColumnSearchProps('update_created'),
-    },
-
-    {
-      title: translateUser('date_created'),
-      width: 150,
+      title: translateCustomerOnSales('date_created'),
+      width: 100,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
-      ...getColumnSearchProps('dateCreated'),
     },
-
+    {
+      title: translateCustomerOnSales('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
+    },
     {
       key: 'operation',
       fixed: 'right',
@@ -413,7 +317,7 @@ export default function CalculationUserPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.USER_EDIT(id));
+    router.push(ROUTERS.CUSTOMER_ON_SALES_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -454,7 +358,7 @@ export default function CalculationUserPage() {
         columns={columns}
         search={false}
         dateFormatter="string"
-        headerTitle={translateUser('title')}
+        headerTitle={translateCustomerOnSales('title')}
         scroll={{
           x: 'max-content',
         }}
@@ -464,7 +368,7 @@ export default function CalculationUserPage() {
           search: true,
         }}
         toolBarRender={() => [
-          <CreateUser key={'create'} />,
+          <CreateCustomer key={'create'} />,
           <Button
             icon={<DeleteOutlined />}
             style={{

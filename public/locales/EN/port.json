@@ -1,9 +1,10 @@
 {
     "title": "List of Port",
     "port_no": "No",
-    "code": "Port No",
+    "code": "Port Code",
     "name": "Port Name",
     "country_name": "Country",
+    "type_of_port": "Type of Port",
     "address": "Address",
     "quantity": "Number of Containers",
     "status_capacity": "Status of capacity",

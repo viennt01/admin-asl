@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useEffect, useRef, useState } from 'react';
-import CreateUser from './create-user';
+import CreateExpensesType from './create-fee';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -38,56 +38,34 @@ const STATUS_LABELS = {
 //   NotFull: 'Nửa đầy',
 // };
 
-export default function CalculationUserPage() {
+export default function ExpensesTypePage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateUser } = useI18n('user');
+  const { translate: translateFee } = useI18n('fee');
   const { translate: translateCommon } = useI18n('common');
   const [locale, setLocale] = useState(enUS);
+
   interface DataType {
     key: number;
-    account: string;
-    first_name: string;
-    last_name: string;
-    full_name: string;
-    gender: string;
-    dob: string;
-    phone: string;
-    address: string;
-    email: string;
-    CCCD_Visa: string;
-    nationality: string;
-    company: string;
-    working_branch: string;
-    role: string;
+    feeCode: string;
+    name: string;
     status: string;
-    last_login: string;
-    update_created: string;
     dateCreated: string;
+    creator: string;
   }
 
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      account: 'ThuNCN',
-      first_name: 'Thu',
-      last_name: 'Nguyễn',
-      full_name: 'Nguyễn Cao Ngọc Thu',
-      gender: 'Female',
-      dob: '05/12/2001',
-      phone: '0975169203',
-      address: 'Quận 9, TP. Hồ Chí Minh',
-      email: 'nganncnse150413@fpt.edu.com',
-      CCCD_Visa: '4563436465',
-      nationality: 'Việt Nam',
-      company: 'ABC',
-      working_branch: 'Chi nhánh Lý Thường Kiệt, Quận 10, TP. Hồ Chí Minh',
-      role: 'Importer',
+      feeCode: `CP${i + 1}`,
+      name:
+        i % 2 === 0
+          ? 'Chi phí nguyên vật liệu'
+          : 'Chi phí dịch vụ mua ngoài, thuê ngoài',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
-      last_login: '26/07/2023',
-      update_created: '05/02/2023',
-      dateCreated: '05/02/2023',
+      dateCreated: '14/06/2023',
+      creator: 'Admin',
     });
   }
 
@@ -205,7 +183,7 @@ export default function CalculationUserPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateUser('code'),
+      title: translateFee('add_fee_no'),
       width: 100,
       dataIndex: 'key',
       key: 'key',
@@ -213,142 +191,45 @@ export default function CalculationUserPage() {
       align: 'center',
       sorter: (a, b) => a.key - b.key,
     },
-
     {
-      title: translateUser('account'),
-      dataIndex: 'account',
-      key: 'account',
-      width: 150,
+      title: translateFee('code'),
+      width: 180,
+      dataIndex: 'feeCode',
+      key: 'feeCode',
       align: 'center',
-      ...getColumnSearchProps('account'),
+      fixed: 'left',
+      ...getColumnSearchProps('feeCode'),
     },
-
     {
-      title: translateUser('first_name'),
-      width: 150,
-      dataIndex: 'first_name',
-      key: 'first_name',
-      align: 'center',
-      ...getColumnSearchProps('first_name'),
-    },
-
-    {
-      title: translateUser('last_name'),
-      width: 150,
-      dataIndex: 'last_name',
-      key: 'last_name',
-      align: 'center',
-      ...getColumnSearchProps('last_name'),
-    },
-
-    {
-      title: translateUser('full_name'),
-      width: 250,
-      dataIndex: 'full_name',
-      key: 'full_name',
-      align: 'center',
-      ...getColumnSearchProps('full_name'),
-    },
-
-    {
-      title: translateUser('gender'),
-      width: 150,
-      dataIndex: 'gender',
-      key: 'gender',
-      align: 'center',
-      ...getColumnSearchProps('gender'),
-    },
-
-    {
-      title: translateUser('dob'),
-      width: 150,
-      dataIndex: 'dob',
-      key: 'dob',
-      align: 'center',
-      ...getColumnSearchProps('dob'),
-    },
-
-    {
-      title: translateUser('phone'),
-      width: 150,
-      dataIndex: 'phone',
-      key: 'phone',
-      align: 'center',
-      ...getColumnSearchProps('phone'),
-    },
-
-    {
-      title: translateUser('address'),
-      width: 350,
-      dataIndex: 'address',
-      key: 'address',
-      align: 'center',
-      ...getColumnSearchProps('address'),
-    },
-
-    {
-      title: translateUser('email'),
-      width: 250,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-      ...getColumnSearchProps('email'),
-    },
-
-    {
-      title: translateUser('CCCD_Visa'),
-      width: 250,
-      dataIndex: 'CCCD_Visa',
-      key: 'CCCD_Visa',
-      align: 'center',
-      ...getColumnSearchProps('CCCD_Visa'),
-    },
-
-    {
-      title: translateUser('nationality'),
-      width: 200,
-      dataIndex: 'nationality',
-      key: 'nationality',
-      align: 'center',
-      ...getColumnSearchProps('nationality'),
-    },
-
-    {
-      title: translateUser('company'),
-      width: 200,
-      dataIndex: 'company',
-      key: 'company',
-      align: 'center',
-      ...getColumnSearchProps('company'),
-    },
-
-    {
-      title: translateUser('working_branch'),
-      width: 400,
-      dataIndex: 'working_branch',
-      key: 'working_branch',
-      align: 'center',
-      ...getColumnSearchProps('working_branch'),
-    },
-
-    {
-      title: translateUser('role'),
-      width: 200,
-      dataIndex: 'role',
-      key: 'role',
-      align: 'center',
-      ...getColumnSearchProps('role'),
-    },
-
-    {
-      title: translateUser('status'),
-      width: 120,
-      dataIndex: 'status',
-      key: 'status',
+      title: translateFee('name'),
+      width: 450,
+      dataIndex: 'name',
+      key: 'name',
+      ...getColumnSearchProps('name'),
       align: 'center',
       filters: [
         {
-          text: 'Sử dụng',
+          text: 'Vệ sinh container thường',
+          value: 'Vệ sinh container thường',
+        },
+        {
+          text: 'Vệ sinh container hở mái',
+          value: 'Vệ sinh container hở mái',
+        },
+      ],
+      filterMode: 'tree',
+      filterSearch: true,
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translateFee('status'),
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+      width: 120,
+      filters: [
+        {
+          text: 'Active',
           value: 'Active',
         },
         {
@@ -369,34 +250,20 @@ export default function CalculationUserPage() {
         </Tag>
       ),
     },
-
     {
-      title: translateUser('last_login'),
-      width: 150,
-      dataIndex: 'last_login',
-      key: 'last_login',
-      align: 'center',
-      ...getColumnSearchProps('last_login'),
-    },
-
-    {
-      title: translateUser('update_created'),
-      width: 150,
-      dataIndex: 'update_created',
-      key: 'update_created',
-      align: 'center',
-      ...getColumnSearchProps('update_created'),
-    },
-
-    {
-      title: translateUser('date_created'),
-      width: 150,
+      title: translateFee('date_created'),
+      width: 100,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
-      ...getColumnSearchProps('dateCreated'),
     },
-
+    {
+      title: translateFee('creator'),
+      width: 150,
+      dataIndex: 'creator',
+      key: 'creator',
+      align: 'center',
+    },
     {
       key: 'operation',
       fixed: 'right',
@@ -413,7 +280,7 @@ export default function CalculationUserPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.USER_EDIT(id));
+    router.push(ROUTERS.FEE_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -454,7 +321,7 @@ export default function CalculationUserPage() {
         columns={columns}
         search={false}
         dateFormatter="string"
-        headerTitle={translateUser('title')}
+        headerTitle={translateFee('title')}
         scroll={{
           x: 'max-content',
         }}
@@ -464,7 +331,7 @@ export default function CalculationUserPage() {
           search: true,
         }}
         toolBarRender={() => [
-          <CreateUser key={'create'} />,
+          <CreateExpensesType key={'create'} />,
           <Button
             icon={<DeleteOutlined />}
             style={{
