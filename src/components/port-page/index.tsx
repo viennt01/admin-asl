@@ -208,25 +208,6 @@ export default function PortPage() {
       fixed: 'left',
       align: 'center',
       sorter: (a, b) => a.key - b.key,
-      // onHeaderCell: (column) => {
-      //   const colw = this.state.columnWidth;
-      //   return {
-      //     onMouseDown: (e) => {
-      //       this.mouseDownX = e.clientX;
-      //       this.beginDrag = true;
-      //     },
-      //     onMouseUp: () => {
-      //       this.beginDrag = false;
-      //     },
-      //     onMouseMove: (e) => {
-      //       if (this.beginDrag === true) {
-      //         this.updateColumnWidth(
-      //           colw + Math.round((e.clientX - this.mouseDownX) * 0.05)
-      //         );
-      //       }
-      //     },
-      //   };
-      // },
     },
     {
       title: translatePort('code'),
@@ -275,7 +256,7 @@ export default function PortPage() {
     },
     {
       title: translatePort('quantity'),
-      width: 200,
+      width: 250,
       dataIndex: 'totalContainer',
       key: 'totalContainer',
       align: 'center',
@@ -339,14 +320,14 @@ export default function PortPage() {
     },
     {
       title: translatePort('date_created'),
-      width: 100,
+      width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
       title: translatePort('creator'),
-      width: 150,
+      width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',

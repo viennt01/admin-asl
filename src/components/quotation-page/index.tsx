@@ -177,7 +177,7 @@ export default function QuotationPage() {
     },
     {
       title: translateQuotation('customer_name'),
-      width: 150,
+      width: 250,
       dataIndex: 'customerName',
       key: 'customerName',
       fixed: 'left',

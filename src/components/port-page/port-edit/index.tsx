@@ -163,13 +163,13 @@ export default function EditPort() {
     },
     {
       title: translateContainer('date_created'),
-      width: 100,
+      width: 150,
       dataIndex: 'dateCreated',
       align: 'center',
     },
     {
       title: translateContainer('creator'),
-      width: 150,
+      width: 200,
       dataIndex: 'creator',
       align: 'center',
     },

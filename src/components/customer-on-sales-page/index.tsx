@@ -56,7 +56,7 @@ export default function CustomerOnSalesPage() {
       customerCode: 'ASL120',
       abbreviation: `MASAN CONSUMER`,
       customerName: `CÔNG TY CP HÀNG TIÊU DÙNG MASAN`,
-      numberOfTransaction: 150,
+      numberOfTransaction: 250,
       phone: '0964582355',
       address:
         'MPlaza Saigon 39 Le Duan, Ben Nghe, District 1, Ho Chi Minh City, Vietnam',
@@ -212,7 +212,7 @@ export default function CustomerOnSalesPage() {
     },
     {
       title: translateCustomerOnSales('number'),
-      width: 200,
+      width: 250,
       dataIndex: 'numberOfTransaction',
       key: 'numberOfTransaction',
       align: 'center',
@@ -289,14 +289,14 @@ export default function CustomerOnSalesPage() {
     },
     {
       title: translateCustomerOnSales('date_created'),
-      width: 100,
+      width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
       title: translateCustomerOnSales('creator'),
-      width: 150,
+      width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',

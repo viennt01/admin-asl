@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useEffect, useRef, useState } from 'react';
-import CreateExpensesType from './create-fee';
+import CreatePricingTrucking from './create-pricing-trucking';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -23,33 +23,47 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
-
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
-// const STATUS_CAPACITY_COLORS = {
-//   Full: '#31AFFE',
-//   NotFull: '#616887',
-// };
-// const STATUS_CAPACITY_LABELS = {
-//   Full: 'Đầy',
-//   NotFull: 'Nửa đầy',
-// };
-
-export default function ExpensesTypePage() {
+export default function PricingTruckingPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateFee } = useI18n('fee');
+  const { translate: translatePricingTrucking } = useI18n('pricingTrucking');
   const { translate: translateCommon } = useI18n('common');
   const [locale, setLocale] = useState(enUS);
 
   interface DataType {
-    key: number;
-    feeCode: string;
-    name: string;
+    no: number;
+    POL: string;
+    POD: string;
+    destination: string;
+    country: string;
+    vendor: string;
+    carrier: string;
+    service: string;
+    commodity: string;
+    LCLMin: string;
+    LCL: string;
+    type: string;
+    currency: string;
+    vat: string;
+    effectDate: string;
+    validity: string;
+    freq: string;
+    Cutoff: string;
+    TT: string;
+    inlAddon: string;
+    emptyReturn: string;
+    amend: string;
+    DEM: string;
+    DET: string;
+    STO: string;
+    modifyDate: string;
     status: string;
+    note: string;
     dateCreated: string;
     creator: string;
   }
@@ -57,15 +71,36 @@ export default function ExpensesTypePage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      key: i + 1,
-      feeCode: `CP${i + 1}`,
-      name:
-        i % 2 === 0
-          ? 'Chi phí nguyên vật liệu'
-          : 'Chi phí dịch vụ mua ngoài, thuê ngoài',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
-      dateCreated: '14/06/2023',
-      creator: 'Admin',
+      no: i + 1,
+      POL: 'HO CHI MINH CITY',
+      POD: 'NORTH A...',
+      destination: 'AUSTIN, TX USA',
+      country: 'UNITED STATES',
+      vendor: '',
+      carrier: i % 2 ? 'OOCL' : 'ONE VN',
+      service: '',
+      commodity: '',
+      LCLMin: '',
+      LCL: '60.000',
+      type: '',
+      currency: 'USA',
+      vat: '',
+      effectDate: '01/05/2023',
+      validity: '31/07/2023',
+      freq: 'FRI',
+      Cutoff: '',
+      TT: '30 - 40',
+      inlAddon: '',
+      emptyReturn: '',
+      amend: '',
+      DEM: '0',
+      DET: '0',
+      STO: '0',
+      modifyDate: '30/06/2023',
+      status: i % 2 === 1 ? 'Public' : 'Active',
+      note: '',
+      dateCreated: '26/04/2023',
+      creator: 'ASL',
     });
   }
 
@@ -183,50 +218,217 @@ export default function ExpensesTypePage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateFee('add_fee_no'),
-      width: 100,
-      dataIndex: 'key',
-      key: 'key',
+      title: translatePricingTrucking('no'),
+      width: 80,
+      dataIndex: 'no',
+      key: 'no',
       fixed: 'left',
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
+      ...getColumnSearchProps('no'),
     },
     {
-      title: translateFee('code'),
-      width: 180,
-      dataIndex: 'feeCode',
-      key: 'feeCode',
-      align: 'center',
+      title: translatePricingTrucking('POL'),
+      width: 200,
+      dataIndex: 'POL',
+      key: 'POL',
       fixed: 'left',
-      ...getColumnSearchProps('feeCode'),
-    },
-    {
-      title: translateFee('name'),
-      width: 450,
-      dataIndex: 'name',
-      key: 'name',
-      ...getColumnSearchProps('name'),
       align: 'center',
-      filters: [
-        {
-          text: 'Vệ sinh container thường',
-          value: 'Vệ sinh container thường',
-        },
-        {
-          text: 'Vệ sinh container hở mái',
-          value: 'Vệ sinh container hở mái',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
+      ...getColumnSearchProps('POL'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateFee('status'),
+      title: translatePricingTrucking('POD'),
+      width: 200,
+      dataIndex: 'POD',
+      key: 'POD',
+      fixed: 'left',
+      align: 'center',
+      ...getColumnSearchProps('POD'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translatePricingTrucking('destination'),
+      width: 300,
+      dataIndex: 'destination',
+      key: 'destination',
+      align: 'center',
+      ...getColumnSearchProps('destination'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
+    },
+    {
+      title: translatePricingTrucking('country'),
+      width: 200,
+      dataIndex: 'country',
+      key: 'country',
+      align: 'center',
+      ...getColumnSearchProps('country'),
+    },
+    {
+      title: translatePricingTrucking('vendor'),
+      width: 200,
+      dataIndex: 'vendor',
+      key: 'vendor',
+      align: 'center',
+      ...getColumnSearchProps('vendor'),
+    },
+    {
+      title: translatePricingTrucking('carrier'),
+      width: 150,
+      dataIndex: 'carrier',
+      key: 'carrier',
+      align: 'center',
+      ...getColumnSearchProps('carrier'),
+    },
+    {
+      title: translatePricingTrucking('service'),
+      width: 300,
+      dataIndex: 'service',
+      key: 'service',
+      align: 'center',
+      ...getColumnSearchProps('service'),
+    },
+    {
+      title: translatePricingTrucking('commodity'),
+      width: 300,
+      dataIndex: 'commodity',
+      key: 'commodity',
+      align: 'center',
+      ...getColumnSearchProps('commodity'),
+    },
+    {
+      title: translatePricingTrucking('LCLMin'),
+      width: 250,
+      dataIndex: 'LCLMin',
+      key: 'LCLMin',
+      align: 'center',
+      ...getColumnSearchProps('LCLMin'),
+    },
+    {
+      title: translatePricingTrucking('LCL'),
+      width: 250,
+      dataIndex: 'LCL',
+      key: 'LCL',
+      align: 'center',
+      ...getColumnSearchProps('LCL'),
+    },
+    {
+      title: translatePricingTrucking('type'),
+      width: 300,
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
+      ...getColumnSearchProps('type'),
+    },
+    {
+      title: translatePricingTrucking('currency'),
+      width: 200,
+      dataIndex: 'currency',
+      key: 'currency',
+      align: 'center',
+      ...getColumnSearchProps('currency'),
+    },
+    {
+      title: translatePricingTrucking('vat'),
+      width: 200,
+      dataIndex: 'vat',
+      key: 'vat',
+      align: 'center',
+      ...getColumnSearchProps('vat'),
+    },
+    {
+      title: translatePricingTrucking('effect_date'),
+      width: 200,
+      dataIndex: 'effectDate',
+      key: 'effectDate',
+      align: 'center',
+      ...getColumnSearchProps('effectDate'),
+    },
+    {
+      title: translatePricingTrucking('validity'),
+      width: 200,
+      dataIndex: 'validity',
+      key: 'validity',
+      align: 'center',
+      ...getColumnSearchProps('validity'),
+    },
+    {
+      title: translatePricingTrucking('freq'),
+      width: 150,
+      dataIndex: 'freq',
+      key: 'freq',
+      align: 'center',
+      ...getColumnSearchProps('freq'),
+    },
+    {
+      title: translatePricingTrucking('Cutoff'),
+      width: 180,
+      dataIndex: 'Cutoff',
+      key: 'Cutoff',
+      align: 'center',
+      ...getColumnSearchProps('Cutoff'),
+    },
+    {
+      title: translatePricingTrucking('TT'),
+      width: 200,
+      dataIndex: 'TT',
+      key: 'TT',
+      align: 'center',
+      ...getColumnSearchProps('TT'),
+    },
+    {
+      title: translatePricingTrucking('inl_addon'),
+      width: 200,
+      dataIndex: 'inlAddon',
+      key: 'inlAddon',
+      align: 'center',
+      ...getColumnSearchProps('inlAddon'),
+    },
+    {
+      title: translatePricingTrucking('empty_return'),
+      width: 200,
+      dataIndex: 'emptyReturn',
+      key: 'emptyReturn',
+      align: 'center',
+      ...getColumnSearchProps('emptyReturn'),
+    },
+    {
+      title: translatePricingTrucking('amend'),
+      width: 200,
+      dataIndex: 'amend',
+      key: 'amend',
+      align: 'center',
+      ...getColumnSearchProps('amend'),
+    },
+    {
+      title: translatePricingTrucking('DEM'),
+      width: 200,
+      dataIndex: 'DEM',
+      key: 'DEM',
+      align: 'center',
+      ...getColumnSearchProps('DEM'),
+    },
+    {
+      title: translatePricingTrucking('STO'),
+      width: 200,
+      dataIndex: 'STO',
+      key: 'STO',
+      align: 'center',
+      ...getColumnSearchProps('STO'),
+    },
+    {
+      title: translatePricingTrucking('modify_date'),
+      width: 200,
+      dataIndex: 'modifyDate',
+      key: 'modifyDate',
+      align: 'center',
+      ...getColumnSearchProps('modifyDate'),
+    },
+    {
+      title: translatePricingTrucking('status'),
+      width: 150,
       dataIndex: 'status',
       key: 'status',
       align: 'center',
-      width: 120,
       filters: [
         {
           text: 'Active',
@@ -251,14 +453,22 @@ export default function ExpensesTypePage() {
       ),
     },
     {
-      title: translateFee('date_created'),
+      title: translatePricingTrucking('note'),
+      width: 200,
+      dataIndex: 'note',
+      key: 'note',
+      align: 'center',
+      ...getColumnSearchProps('note'),
+    },
+    {
+      title: translatePricingTrucking('date_created'),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateFee('creator'),
+      title: translatePricingTrucking('creator'),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',
@@ -280,7 +490,7 @@ export default function ExpensesTypePage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.FEE_EDIT(id));
+    router.push(ROUTERS.TRUCKING_PRICING_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -321,7 +531,7 @@ export default function ExpensesTypePage() {
         columns={columns}
         search={false}
         dateFormatter="string"
-        headerTitle={translateFee('title')}
+        headerTitle={translatePricingTrucking('title')}
         scroll={{
           x: 'max-content',
         }}
@@ -331,7 +541,7 @@ export default function ExpensesTypePage() {
           search: true,
         }}
         toolBarRender={() => [
-          <CreateExpensesType key={'create'} />,
+          <CreatePricingTrucking key={'create'} />,
           <Button
             icon={<DeleteOutlined />}
             style={{
