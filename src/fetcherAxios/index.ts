@@ -133,14 +133,8 @@ apiClient.interceptors.response.use(
       !originalRequest._retry &&
       appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN)
     ) {
-      // console.log('error0', error);
-
       originalRequest._retry = true;
-      // console.log('error1', error);
-
       try {
-        // console.log('error2', error);
-
         const response = await apiClient.post(
           `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`,
           {
@@ -150,10 +144,10 @@ apiClient.interceptors.response.use(
             deviceName: appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME),
           }
         );
-        // console.log(response);
-
-        const newAccessToken = response.data.access_token;
-        const newRefreshToken = response.data.access_token;
+        const newAccessToken = response.data.data.accessToken;
+        const newRefreshToken = response.data.data.refreshToken;
+        appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, newAccessToken);
+        appLocalStorage.set(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
         originalRequest.headers.accessToken = newAccessToken;
         originalRequest.headers.refreshToken = newRefreshToken;
 
