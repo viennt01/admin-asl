@@ -121,7 +121,16 @@ const FormLogin = ({ formLogin }: LoginProps) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your email!',
+                message: (
+                  <div
+                    style={{
+                      fontSize: '15px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Please input your email!
+                  </div>
+                ),
               },
             ]}
           >
@@ -132,7 +141,16 @@ const FormLogin = ({ formLogin }: LoginProps) => {
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
+                message: (
+                  <div
+                    style={{
+                      fontSize: '15px',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Please input your password!
+                  </div>
+                ),
               },
             ]}
           >
