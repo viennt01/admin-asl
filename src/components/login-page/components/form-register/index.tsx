@@ -45,15 +45,18 @@ const initialValuesInformationForm = {
   lastName: '',
   DateOfBirth: '',
 };
+
 const initialValuesContactForm = {
   email: '',
   phoneNumber: '',
   address: '',
 };
+
 const initialValuesPasswordForm = {
   password: '',
   passwordConfirm: '',
 };
+
 const initialValuesCompanyForm = {
   companyName: '',
   taxCodeCompany: '',
@@ -119,17 +122,20 @@ const FormRegister = ({
   const submitInformation = () => {
     next();
   };
+
   const submitContact = (value: ContactForm) => {
     formContact.setFieldValue('email', value.email);
     formContact.setFieldValue('phoneNumber', value.phoneNumber);
     formContact.setFieldValue('address', value.address);
     next();
   };
+
   const submitPassword = (value: PasswordForm) => {
     formPassword.setFieldValue('password', value.password);
     formPassword.setFieldValue('passwordConfirm', value.passwordConfirm);
     next();
   };
+
   const submitCompany = (value: CompanyForm) => {
     formCompany.setFieldValue('companyName', value.companyName);
     formCompany.setFieldValue('taxCodeCompany', value.taxCodeCompany);
@@ -156,6 +162,7 @@ const FormRegister = ({
       })),
     [roleOptions]
   );
+
   const steps = [
     {
       title: 'Information',
@@ -607,6 +614,7 @@ const FormRegister = ({
       ),
     },
   ];
+
   const next = () => {
     setCurrent(current + 1);
   };
@@ -629,7 +637,12 @@ const FormRegister = ({
           <h2>Sign up</h2>
         </div>
 
-        <Steps current={current} items={items} progressDot />
+        <Steps
+          className={style.stepSignup}
+          current={current}
+          items={items}
+          progressDot
+        />
         <div style={contentStyle}>{steps[current].content}</div>
       </div>
     </>
