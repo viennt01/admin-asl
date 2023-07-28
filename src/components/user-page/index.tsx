@@ -389,7 +389,11 @@ export default function CalculationUserPage() {
     },
 
     {
-      title: translateUser('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateUser('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',

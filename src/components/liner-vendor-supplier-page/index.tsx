@@ -287,14 +287,22 @@ export default function SupplierPage() {
       ),
     },
     {
-      title: translateSupplier('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateSupplier('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateSupplier('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateSupplier('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

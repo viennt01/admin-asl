@@ -251,14 +251,22 @@ export default function ExpensesTypePage() {
       ),
     },
     {
-      title: translateFee('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateFee('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateFee('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateFee('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

@@ -209,7 +209,11 @@ export default function StaffPage() {
       ...getColumnSearchProps('staffNo'),
     },
     {
-      title: translateStaff('image'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateStaff('image')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'image',
       key: 'image',
@@ -263,7 +267,11 @@ export default function StaffPage() {
       ...getColumnSearchProps('dob'),
     },
     {
-      title: translateStaff('phone'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateStaff('phone')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'phone',
       key: 'phone',
@@ -363,14 +371,22 @@ export default function StaffPage() {
       ),
     },
     {
-      title: translateStaff('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateStaff('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateStaff('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateStaff('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

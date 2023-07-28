@@ -316,14 +316,22 @@ export default function BankPage() {
       ),
     },
     {
-      title: translateBank('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateBank('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateBank('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateBank('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

@@ -288,14 +288,22 @@ export default function OfficialCustomerPage() {
       ),
     },
     {
-      title: translateOfficialCustomer('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateOfficialCustomer('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateOfficialCustomer('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateOfficialCustomer('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

@@ -232,14 +232,22 @@ export default function CalculationUnitPage() {
       ),
     },
     {
-      title: translateUnit('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateUnit('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateUnit('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateUnit('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

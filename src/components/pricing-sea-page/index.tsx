@@ -461,14 +461,22 @@ export default function PricingSeaPage() {
       ...getColumnSearchProps('note'),
     },
     {
-      title: translatePricingSea('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePricingSea('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translatePricingSea('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePricingSea('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

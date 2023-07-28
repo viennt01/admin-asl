@@ -461,14 +461,22 @@ export default function PricingTruckingPage() {
       ...getColumnSearchProps('note'),
     },
     {
-      title: translatePricingTrucking('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePricingTrucking('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translatePricingTrucking('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePricingTrucking('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',
