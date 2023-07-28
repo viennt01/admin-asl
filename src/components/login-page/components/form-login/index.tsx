@@ -36,6 +36,7 @@ const FormLogin = ({ formLogin }: LoginProps) => {
     ipAddress: ip || '',
     deviceName: deviceName,
   };
+
   const onFinish = (values: LoginData) => {
     if (!ip) {
       return;
@@ -79,14 +80,17 @@ const FormLogin = ({ formLogin }: LoginProps) => {
       },
     });
   };
+
   const loginUser = useMutation({
     mutationFn: (data: LoginData) => {
       return login(data, dataHeader);
     },
   });
+
   useEffect(() => {
     getIp();
   }, []);
+
   return (
     <>
       <div
@@ -98,11 +102,7 @@ const FormLogin = ({ formLogin }: LoginProps) => {
         }}
       >
         <Link href={ROUTERS.LOGIN}>
-          <img
-            src="/images/logo_ASL.png"
-            alt=""
-            style={{ marginBottom: '15px', width: '180px' }}
-          />
+          <img src="/images/logo_ASL.png" alt="" className={style.signinLogo} />
         </Link>
 
         <Form
