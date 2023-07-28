@@ -3,6 +3,7 @@ export const API_AUTHENTICATE = {
   CONFIRM_OTP: '/confirm-otp',
   RESET_PASSWORD: '/reset-password',
   REGISTER: '/signup',
+  ACTIVE_ACCOUNT: '/active-account',
 };
 
 export const API_COMMON = {

@@ -10,6 +10,7 @@ import {
   ResponseWithPayload as ResponseWithPayloadRegister,
 } from '@/fetcher';
 import {
+  DataActiveAccount,
   DataGender,
   DataLogin,
   DataRole,
@@ -44,4 +45,13 @@ export const listGender = () => {
   return get<undefined, ResponseWithPayloadRegister<DataGender[]>>({})(
     API_COMMON.GET_GENDER
   );
+};
+
+export const activeAccount = (data: DataActiveAccount) => {
+  return post<
+    DataActiveAccount,
+    ResponseWithPayloadRegister<DataActiveAccount>
+  >({
+    data,
+  })(API_AUTHENTICATE_REGISTER.ACTIVE_ACCOUNT);
 };

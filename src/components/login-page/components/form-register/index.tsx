@@ -72,8 +72,10 @@ const FormRegister = ({
   roleOptions,
 }: RegisterProps) => {
   const [current, setCurrent] = useState(0);
+  const [loadingButtonRegister, setLoadingButtonRegister] = useState(false);
 
   const onFinish = () => {
+    setLoadingButtonRegister(true);
     const data = {
       firstName: formInformation.getFieldValue('firstName'),
       lastName: formInformation.getFieldValue('lastName'),
@@ -113,6 +115,9 @@ const FormRegister = ({
       })
       .catch(() => {
         errorToast(API_MESSAGE.ERROR);
+      })
+      .finally(() => {
+        setLoadingButtonRegister(false);
       });
   };
 
@@ -596,7 +601,7 @@ const FormRegister = ({
                 <Button
                   className={style.btnSignUp}
                   htmlType="submit"
-                  loading={false}
+                  loading={loadingButtonRegister}
                 >
                   SING UP
                 </Button>

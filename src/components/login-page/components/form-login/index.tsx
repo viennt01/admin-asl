@@ -1,8 +1,8 @@
 import { ROUTERS } from '@/constant/router';
-import { Button, Form, FormInstance, Input, notification } from 'antd';
+import { Button, Form, FormInstance, Input } from 'antd';
 import Link from 'next/link';
 import style from '../../login.module.scss';
-import { login } from '../../fetcher';
+import { activeAccount, login } from '../../fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { LoginData } from '../../interface';
+import { errorToast } from '@/hook/toast';
 
 interface LoginProps {
   formLogin: FormInstance;
@@ -23,7 +24,7 @@ const initialValues: LoginData = {
 
 const FormLogin = ({ formLogin }: LoginProps) => {
   const router = useRouter();
-  const [notiApi, contextHolder] = notification.useNotification();
+  const { email } = router.query;
   const [ip, setIp] = useState();
   const deviceName = navigator.userAgent;
   const getIp = async () => {
@@ -31,7 +32,6 @@ const FormLogin = ({ formLogin }: LoginProps) => {
     const data = await response.json();
     setIp(data.ip);
   };
-
   const dataHeader = {
     ipAddress: ip || '',
     deviceName: deviceName,
@@ -47,6 +47,20 @@ const FormLogin = ({ formLogin }: LoginProps) => {
     appLocalStorage.set(LOCAL_STORAGE_KEYS.IP_ADDRESS, ip);
     appLocalStorage.set(LOCAL_STORAGE_KEYS.DEVICE_NAME, deviceName);
 
+    if (email) {
+      const dataActiveAccount = {
+        email: email as string,
+      };
+      activeAccount(dataActiveAccount)
+        .then((payload) => {
+          if (!payload.status) {
+            errorToast(API_MESSAGE.ERROR);
+            return;
+          }
+        })
+        .catch(() => errorToast(API_MESSAGE.ERROR));
+    }
+
     loginUser.mutate(data, {
       onSuccess(data) {
         if (data.status) {
@@ -57,21 +71,11 @@ const FormLogin = ({ formLogin }: LoginProps) => {
           );
           router.push(ROUTERS.HOME);
         } else {
-          notiApi.error({
-            message: '',
-            description: data.message,
-            placement: 'topRight',
-            duration: 3,
-          });
+          errorToast(data.message);
         }
       },
       onError() {
-        notiApi.error({
-          message: '',
-          description: API_MESSAGE.ERROR,
-          placement: 'topRight',
-          duration: 3,
-        });
+        errorToast(API_MESSAGE.ERROR);
       },
     });
   };
@@ -85,7 +89,6 @@ const FormLogin = ({ formLogin }: LoginProps) => {
   }, []);
   return (
     <>
-      {contextHolder}
       <div
         className={style.signinForm}
         style={{
