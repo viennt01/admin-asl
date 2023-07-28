@@ -265,7 +265,11 @@ export default function PortPage() {
       ellipsis: true,
     },
     {
-      title: translatePort('status_capacity'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePort('status_capacity')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'capacityState',
       key: 'capacityState',
@@ -284,7 +288,11 @@ export default function PortPage() {
       ),
     },
     {
-      title: translatePort('company'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePort('company')}
+        </div>
+      ),
       dataIndex: 'companyName',
       key: 'companyName',
       align: 'center',
@@ -319,14 +327,22 @@ export default function PortPage() {
       ),
     },
     {
-      title: translatePort('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePort('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translatePort('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translatePort('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

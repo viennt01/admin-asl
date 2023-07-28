@@ -272,14 +272,22 @@ export default function TypeOfContainerPage() {
       ),
     },
     {
-      title: translateTypeOfContainer('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateTypeOfContainer('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       key: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateTypeOfContainer('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateTypeOfContainer('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',

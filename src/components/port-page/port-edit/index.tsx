@@ -162,13 +162,21 @@ export default function EditPort() {
       align: 'center',
     },
     {
-      title: translateContainer('date_created'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateContainer('date_created')}
+        </div>
+      ),
       width: 150,
       dataIndex: 'dateCreated',
       align: 'center',
     },
     {
-      title: translateContainer('creator'),
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateContainer('creator')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'creator',
       align: 'center',
