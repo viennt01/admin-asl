@@ -177,15 +177,25 @@ const FormRegister = ({
           onFinish={submitInformation}
           initialValues={initialValuesInformationForm}
           name="formInformation"
+          style={{ marginTop: '30px' }}
         >
           <Row gutter={24}>
-            <Col lg={12} span={24}>
+            <Col lg={24} span={24}>
               <Form.Item
                 name="firstName"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your first name!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please input your first name!
+                      </div>
+                    ),
                   },
                 ]}
               >
@@ -197,13 +207,22 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={12} span={24}>
+            <Col lg={24} span={24}>
               <Form.Item
                 name="lastName"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your last name!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please input your last name!
+                      </div>
+                    ),
                   },
                 ]}
               >
@@ -215,13 +234,22 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={8} span={24}>
+            <Col lg={9} span={24}>
               <Form.Item
                 name="DateOfBirth"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input choose birthday!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please input choose birthday!
+                      </div>
+                    ),
                   },
                 ]}
               >
@@ -233,14 +261,22 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={8} span={24}>
+            <Col lg={7} span={24}>
               <Form.Item
                 name="genderID"
                 rules={[
                   {
                     required: true,
                     message: (
-                      <div className={style.message}>Please select gender!</div>
+                      <div
+                        className={style.message}
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please select gender!
+                      </div>
                     ),
                   },
                 ]}
@@ -259,7 +295,16 @@ const FormRegister = ({
                 rules={[
                   {
                     required: true,
-                    message: 'Please select role!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please select role!
+                      </div>
+                    ),
                   },
                 ]}
               >
@@ -295,17 +340,35 @@ const FormRegister = ({
           name="formContact"
         >
           <Row gutter={24}>
-            <Col lg={14} span={24}>
+            <Col lg={13} span={24}>
               <Form.Item
                 name="email"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your email!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please input your email!
+                      </div>
+                    ),
                   },
                   {
                     pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                    message: 'Please enter a valid email format!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please enter a valid email format!
+                      </div>
+                    ),
                   },
                 ]}
               >
@@ -317,17 +380,35 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={10} span={24}>
+            <Col lg={11} span={24}>
               <Form.Item
                 name="phoneNumber"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input phone number!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please input phone number!
+                      </div>
+                    ),
                   },
                   {
                     pattern: /^[0-9]{7,15}$/,
-                    message: 'Please enter a valid number phone format!',
+                    message: (
+                      <div
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please enter a vailid phone number!
+                      </div>
+                    ),
                   },
                 ]}
               >
@@ -346,7 +427,15 @@ const FormRegister = ({
                   {
                     required: true,
                     message: (
-                      <div className={style.message}>Please input address!</div>
+                      <div
+                        className={style.message}
+                        style={{
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                        }}
+                      >
+                        Please input address!
+                      </div>
                     ),
                   },
                 ]}
