@@ -22,7 +22,7 @@ import {
 } from '@ant-design/icons';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
-import { LANGUAGE } from '@/constant';
+import useLocale, { LANGUAGE } from '@/constant';
 import Link from 'next/link';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
@@ -40,8 +40,8 @@ interface Props {
 }
 
 const items = [
-  { value: '/images/en.png', label: 'English', key: LANGUAGE.EN },
-  { value: '/images/vi.png', label: 'Vietnamese', key: LANGUAGE.VN },
+  { value: '/images/EN.png', label: 'English', key: LANGUAGE.EN },
+  { value: '/images/VN.png', label: 'Vietnamese', key: LANGUAGE.VN },
 ];
 
 interface SelectLanguage {
@@ -72,11 +72,9 @@ const SelectLanguage = ({
   }
 
   function onClickShowPopupLanguage() {
-    if (classActiveDropdown === 'active') {
-      setClassActiveDropdown('');
-    } else {
-      setClassActiveDropdown('active');
-    }
+    classActiveDropdown === 'active'
+      ? setClassActiveDropdown('')
+      : setClassActiveDropdown('active');
   }
 
   return (
@@ -128,7 +126,7 @@ export function AppLayout(props: Props) {
   const [classActiveDropdown, setClassActiveDropdown] = useState('');
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
-
+  const locale = useLocale();
   useQuery({
     queryKey: ['user'],
     queryFn: () => getUserInfo(),
@@ -146,21 +144,16 @@ export function AppLayout(props: Props) {
     },
   });
   useEffect(() => {
-    setLanguage(
-      appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN
-    );
-
-    languageSelected === 'en'
+    setLanguage(locale);
+    languageSelected === LANGUAGE.EN
       ? setLanguageSelectedName('English')
       : setLanguageSelectedName('Vietnamese');
-  }, [languageSelected, languageSelectedName]);
+  }, [languageSelected, locale]);
 
   function onClickShowPopupAvatar() {
-    if (classActiveAvatarPopup === 'active') {
-      setClassActiveAvatarPopup('');
-    } else {
-      setClassActiveAvatarPopup('active');
-    }
+    classActiveAvatarPopup === 'active'
+      ? setClassActiveAvatarPopup('')
+      : setClassActiveAvatarPopup('active');
   }
 
   const ROUTER_HEADER = {
