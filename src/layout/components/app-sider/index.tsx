@@ -294,13 +294,15 @@ const AppSider = ({ collapsed }: Props) => {
 
   const logoutUser = useMutation({
     mutationFn: (body: LogoutData) => {
-      return logout(body, { ipAddress, deviceName });
+      return logout(body);
     },
   });
 
   const handleClickLogout = () => {
     const data = {
       accessToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN),
+      ipAddress: ipAddress,
+      deviceName: deviceName,
     };
     modal.confirm({
       centered: true,
