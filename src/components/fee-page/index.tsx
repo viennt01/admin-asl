@@ -3,18 +3,14 @@ import {
   EditOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
-import { Key, useEffect, useRef, useState } from 'react';
+import { Button, Input, InputRef, Space, Tag } from 'antd';
+import { Key, useRef, useState } from 'react';
 import CreateExpensesType from './create-fee';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
-import enUS from 'antd/lib/locale/en_US';
-import vi_VN from 'antd/lib/locale/vi_VN';
-import { appLocalStorage } from '@/utils/localstorage';
-import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import Highlighter from 'react-highlight-words';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import style from './index.module.scss';
@@ -29,21 +25,11 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-// const STATUS_CAPACITY_COLORS = {
-//   Full: '#31AFFE',
-//   NotFull: '#616887',
-// };
-// const STATUS_CAPACITY_LABELS = {
-//   Full: 'Đầy',
-//   NotFull: 'Nửa đầy',
-// };
-
 export default function ExpensesTypePage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateFee } = useI18n('fee');
   const { translate: translateCommon } = useI18n('common');
-  const [locale, setLocale] = useState(enUS);
 
   interface DataType {
     key: number;
@@ -295,65 +281,49 @@ export default function ExpensesTypePage() {
     setSelectedRowKeys(selectedRowKeys);
   };
 
-  useEffect(() => {
-    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
-      case 'EN':
-        setLocale(enUS);
-        break;
-      case 'VN':
-        setLocale(vi_VN);
-        break;
-      default:
-        setLocale(vi_VN);
-        break;
-    }
-  }, [router]);
-
   return (
-    <ConfigProvider locale={locale}>
-      <ProTable<DataType>
-        className={style.table}
-        style={{ marginTop: '8px' }}
-        rowKey="key"
-        dataSource={data}
-        rowSelection={{
-          type: 'checkbox',
-          selectedRowKeys: selectedRowKeys,
-          onChange: handleSelectionChange,
-        }}
-        pagination={{
-          position: ['bottomCenter'],
-          showTotal: () => '',
-          showSizeChanger: true,
-        }}
-        columns={columns}
-        search={false}
-        dateFormatter="string"
-        headerTitle={translateFee('title')}
-        scroll={{
-          x: 'max-content',
-        }}
-        sticky={{ offsetHeader: 0 }}
-        options={{
-          fullScreen: true,
-          search: true,
-        }}
-        toolBarRender={() => [
-          <CreateExpensesType key={'create'} />,
-          <Button
-            icon={<DeleteOutlined />}
-            style={{
-              backgroundColor: COLORS.RED,
-              color: COLORS.WHITE,
-              borderColor: COLORS.RED,
-              fontWeight: '500',
-            }}
-            key={'delete'}
-          >
-            {translateCommon('button_delete')}
-          </Button>,
-        ]}
-      />
-    </ConfigProvider>
+    <ProTable<DataType>
+      className={style.table}
+      style={{ marginTop: '8px' }}
+      rowKey="key"
+      dataSource={data}
+      rowSelection={{
+        type: 'checkbox',
+        selectedRowKeys: selectedRowKeys,
+        onChange: handleSelectionChange,
+      }}
+      pagination={{
+        position: ['bottomCenter'],
+        showTotal: () => '',
+        showSizeChanger: true,
+      }}
+      columns={columns}
+      search={false}
+      dateFormatter="string"
+      headerTitle={translateFee('title')}
+      scroll={{
+        x: 'max-content',
+      }}
+      sticky={{ offsetHeader: 0 }}
+      options={{
+        fullScreen: true,
+        search: true,
+      }}
+      toolBarRender={() => [
+        <CreateExpensesType key={'create'} />,
+        <Button
+          icon={<DeleteOutlined />}
+          style={{
+            backgroundColor: COLORS.RED,
+            color: COLORS.WHITE,
+            borderColor: COLORS.RED,
+            fontWeight: '500',
+          }}
+          key={'delete'}
+        >
+          {translateCommon('button_delete')}
+        </Button>,
+      ]}
+    />
   );
 }

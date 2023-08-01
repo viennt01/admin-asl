@@ -1,16 +1,12 @@
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, Tag } from 'antd';
-import React, { Key, useEffect, useRef, useState } from 'react';
+import React, { Key, useRef, useState } from 'react';
 import CreateBooking from './create-booking';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
-import enUS from 'antd/lib/locale/en_US';
-import vi_VN from 'antd/lib/locale/vi_VN';
-import { appLocalStorage } from '@/utils/localstorage';
-import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 
 import { SearchOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
@@ -63,7 +59,6 @@ interface DataType {
 export default function BookingPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const [locale, setLocale] = useState(enUS);
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateCommon } = useI18n('common');
 
@@ -434,22 +429,9 @@ export default function BookingPage() {
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
-  useEffect(() => {
-    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
-      case 'EN':
-        setLocale(enUS);
-        break;
-      case 'VN':
-        setLocale(vi_VN);
-        break;
-      default:
-        setLocale(vi_VN);
-        break;
-    }
-  }, [router]);
 
   return (
-    <ConfigProvider locale={locale}>
+    <ConfigProvider>
       <ProTable<DataType>
         className={style.table}
         style={{ marginTop: '8px' }}

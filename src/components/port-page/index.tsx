@@ -4,17 +4,13 @@ import {
   SearchOutlined,
 } from '@ant-design/icons';
 import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
-import { Key, useEffect, useRef, useState } from 'react';
+import { Key, useRef, useState } from 'react';
 import CreatePort from './create-port';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 import { ProColumns, ProTable } from '@ant-design/pro-components';
-import enUS from 'antd/lib/locale/en_US';
-import vi_VN from 'antd/lib/locale/vi_VN';
-import { appLocalStorage } from '@/utils/localstorage';
-import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import Highlighter from 'react-highlight-words';
 import { FilterConfirmProps } from 'antd/es/table/interface';
 import style from './index.module.scss';
@@ -44,7 +40,7 @@ export default function PortPage() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translatePort } = useI18n('port');
   const { translate: translateCommon } = useI18n('common');
-  const [locale, setLocale] = useState(enUS);
+
   interface DataType {
     key: number;
     countryCode: string;
@@ -371,22 +367,8 @@ export default function PortPage() {
     setSelectedRowKeys(selectedRowKeys);
   };
 
-  useEffect(() => {
-    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
-      case 'EN':
-        setLocale(enUS);
-        break;
-      case 'VN':
-        setLocale(vi_VN);
-        break;
-      default:
-        setLocale(vi_VN);
-        break;
-    }
-  }, [router]);
-
   return (
-    <ConfigProvider locale={locale}>
+    <ConfigProvider>
       <ProTable<DataType>
         className={style.table}
         style={{ marginTop: '8px' }}

@@ -22,7 +22,7 @@ import {
 } from '@ant-design/icons';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
-import useLocale, { LANGUAGE } from '@/constant';
+import { LANGUAGE, useLocale } from '@/constant';
 import Link from 'next/link';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';

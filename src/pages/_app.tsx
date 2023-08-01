@@ -8,14 +8,9 @@ import { Inter } from '@next/font/google';
 import Head from 'next/head';
 import { appWithTranslation } from 'next-i18next';
 import COLORS from '@/constant/color';
-import { useEffect, useState } from 'react';
-import enUS from 'antd/lib/locale/en_US';
-import vi_VN from 'antd/lib/locale/vi_VN';
-import { appLocalStorage } from '@/utils/localstorage';
-import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
-import { useRouter } from 'next/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useLocaleAnt } from '@/constant';
 
 const inter = Inter({ subsets: ['latin'] });
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<
@@ -31,8 +26,7 @@ type AppPropsWithLayout = AppProps & {
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
   const L = Component.Layout ? Component.Layout : AppLayout;
-  const [locale, setLocale] = useState(enUS);
-  const router = useRouter();
+  const localeApp = useLocaleAnt();
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -40,22 +34,10 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       },
     },
   });
-  useEffect(() => {
-    switch (appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE)) {
-      case 'EN':
-        setLocale(enUS);
-        break;
-      case 'VN':
-        setLocale(vi_VN);
-        break;
-      default:
-        setLocale(vi_VN);
-        break;
-    }
-  }, [router]);
+
   return (
     <ConfigProvider
-      locale={locale}
+      locale={localeApp}
       theme={{
         token: {
           colorPrimary: COLORS.PRIMARY,
