@@ -102,21 +102,13 @@ export default function CreatePort() {
           placeholder={translateAddPort('address_placeholder')}
         />
       </ProForm.Group>
+
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="TotalContainer"
-          label={translateAddPort('quantity_container')}
-          placeholder={translateAddPort('quantity_container_placeholder')}
-          rules={[
-            {
-              // required: true,
-              type: 'number',
-              min: 0,
-              max: 100,
-              message: 'Vui lòng nhập tổng số container',
-            },
-          ]}
+          name="Company"
+          label={translateAddPort('type_of_port')}
+          placeholder={translateAddPort('type_of_port_placeholder')}
         />
 
         <ProFormText
@@ -126,24 +118,8 @@ export default function CreatePort() {
           placeholder={translateAddPort('company_placeholder')}
         />
       </ProForm.Group>
-      <ProForm.Group>
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Đầy',
-            },
-            {
-              value: '2',
-              label: 'Nửa đầy',
-            },
-          ]}
-          width="md"
-          name="CapacityLabel"
-          label={translateAddPort('status_capacity')}
-          placeholder={translateAddPort('status_capacity_placeholder')}
-        />
 
+      <ProForm.Group>
         <ProFormSelect
           request={async () => [
             {

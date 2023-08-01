@@ -22,6 +22,7 @@
     "new_port_tooltip": "The name is registered at the Ministry of Transport",
     "address_placeholder": "Enter address",
     "quantity_container_placeholder": "Enter the number of containers",
+    "type_of_port_placeholder": "Enter the type of port",
     "company_placeholder": "Enter the management company",
     "status_capacity_placeholder": "Select capacity status",
     "code_placeholder": "Enter code port",

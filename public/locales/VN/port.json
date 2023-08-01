@@ -23,6 +23,7 @@
     "address_placeholder": "Nhập địa chỉ",
     "quantity_container_placeholder": "Nhập số lượng container",
     "company_placeholder": "Nhập công ty quản lý",
+    "company_placeholder": "Nhập loại của cảng",
     "status_capacity_placeholder": "Chọn trạng thái sức chứa",
     "code_placeholder": "Nhập mã Cảng",
     "code_tooltip": "Mã được đăng ký ở bộ giao thông vận tải",

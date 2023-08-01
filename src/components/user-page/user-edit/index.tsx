@@ -438,17 +438,12 @@ export default function EditUser() {
                     <Form.Item
                       label={translateUser('last_login')}
                       name="last_login"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input last login',
-                        },
-                      ]}
                     >
                       <DatePicker
                         defaultValue={dayjs('2015/01/01', dateFormat)}
                         format={dateFormat}
                         style={{ width: '100%' }}
+                        disabled
                       />
                     </Form.Item>
                   </Col>
@@ -457,17 +452,12 @@ export default function EditUser() {
                     <Form.Item
                       label={translateUser('update_created')}
                       name="update_created"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please input update created',
-                        },
-                      ]}
                     >
                       <DatePicker
                         defaultValue={dayjs('2015/01/01', dateFormat)}
                         format={dateFormat}
                         style={{ width: '100%' }}
+                        disabled
                       />
                     </Form.Item>
                   </Col>
@@ -481,6 +471,7 @@ export default function EditUser() {
                         defaultValue={dayjs('2015/01/01', dateFormat)}
                         format={dateFormat}
                         style={{ width: '100%' }}
+                        disabled
                       />
                     </Form.Item>
                   </Col>

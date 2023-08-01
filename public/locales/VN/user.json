@@ -21,8 +21,8 @@
     "update_created": "Ngày cập nhật",
     "date_created": "Ngày tạo",
 
-    "information_add_staff": "Thêm mới nhân viên",
-    "information_edit_staff": "Chỉnh sửa nhân viên",
+    "information_add_staff": "Thêm mới người dùng",
+    "information_edit_staff": "Chỉnh sửa người dùng",
     "full_name_placeholder": "Nhập họ và tên",
     "gender_placeholder": "Chọn giới tính",
     "dob_placeholder": "Chọn ngày sinh",
@@ -31,6 +31,7 @@
     "phone_placeholder": "Nhập số điện thoại",
     "email_placeholder": "Nhập email",
     "address_placeholder": "Nhập địa chỉ",
+    "company_placeholder":"Nhập công ty",
     "working_branch_placeholder":"Nhập chi nhánh làm việc",
     "position_placeholder":"Chọn chức vụ",
     "department_placeholder": "Nhập phòng ban",
