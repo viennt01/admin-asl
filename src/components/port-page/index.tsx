@@ -25,16 +25,6 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-const STATUS_CAPACITY_COLORS = {
-  Full: '#31AFFE',
-  NotFull: '#616887',
-};
-
-const STATUS_CAPACITY_LABELS = {
-  Full: 'Đầy',
-  NotFull: 'Nửa đầy',
-};
-
 export default function PortPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -249,39 +239,6 @@ export default function PortPage() {
       key: 'address',
       align: 'center',
       ...getColumnSearchProps('address'),
-    },
-    {
-      title: translatePort('quantity'),
-      width: 250,
-      dataIndex: 'totalContainer',
-      key: 'totalContainer',
-      align: 'center',
-      sorter: (a, b) => a.totalContainer - b.totalContainer,
-      ...getColumnSearchProps('totalContainer'),
-      ellipsis: true,
-    },
-    {
-      title: (
-        <div style={{ textTransform: 'uppercase' }}>
-          {translatePort('status_capacity')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'capacityState',
-      key: 'capacityState',
-      align: 'center',
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_CAPACITY_COLORS[value as keyof typeof STATUS_CAPACITY_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_CAPACITY_LABELS[value as keyof typeof STATUS_CAPACITY_LABELS]}
-        </Tag>
-      ),
     },
     {
       title: (
