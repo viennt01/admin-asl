@@ -183,7 +183,7 @@ export default function EditPort() {
                     { required: true, message: 'Please input type of port' },
                   ]}
                 >
-                  <Input placeholder="Please input Address" />
+                  <Input placeholder="Please input type of port" />
                 </Form.Item>
               </Col>
 

@@ -27,23 +27,19 @@ export default function DashboardPage() {
               <ProCard split="vertical">
                 <StatisticCard
                   statistic={{
-                    title: 'Tổng doanh thu tháng',
+                    title: 'Total monthly revenue',
                     value: '234,123,1223',
                     description: (
-                      <Statistic
-                        title="Tăng trưởng"
-                        value="8.04%"
-                        trend="down"
-                      />
+                      <Statistic title="Growth" value="8.04%" trend="down" />
                     ),
                   }}
                 />
                 <StatisticCard
                   statistic={{
-                    title: 'Tổng doanh thu năm',
+                    title: 'Total annual revenue',
                     value: '234,123,1223',
                     description: (
-                      <Statistic title="Tăng trưởng" value="8.04%" trend="up" />
+                      <Statistic title="Growth" value="8.04%" trend="up" />
                     ),
                   }}
                 />
@@ -51,14 +47,14 @@ export default function DashboardPage() {
               <ProCard split="vertical">
                 <StatisticCard
                   statistic={{
-                    title: 'Tổng số container hiện có',
-                    value: '1256',
+                    title: 'Total number of existing customers',
+                    value: '155620',
                   }}
                 />
                 <StatisticCard
                   statistic={{
-                    title: 'Tổng số container rỗng',
-                    value: '134',
+                    title: 'Total number of transactions available',
+                    value: '1500',
                   }}
                 />
               </ProCard>
