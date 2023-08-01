@@ -1,5 +1,4 @@
 import COLORS from '@/constant/color';
-import { COUNTRY_CODES } from '@/constant/form';
 import { ROUTERS } from '@/constant/router';
 import {
   Button,
@@ -11,66 +10,18 @@ import {
   Col,
   ConfigProvider,
   Select,
-  Table,
   DatePicker,
 } from 'antd';
 import dayjs from 'dayjs';
-import { ColumnsType } from 'antd/es/table';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useI18n from '@/i18n/useI18N';
-import CollapseCard from '@/components/commons/collapse-card';
 
-// interface DataNodeType {
-//   value: string;
-//   label: string;
-//   children?: DataNodeType[];
-// }
 export interface FormValues {
   type_of_container: string;
   detail_placeholder: string;
   number_container: string;
 }
-interface DataType {
-  key: React.Key;
-  containerNo: string;
-  typeContainer: string;
-  status: string;
-
-  full_name: string;
-  gender: string;
-  dob: string;
-  phone: string;
-  address: string;
-  email: string;
-  nationality: string;
-  position: string;
-
-  bookingCode: string;
-  portOfLoading: string;
-  portOfDischarge: string;
-  containerCode: string;
-  package: string;
-  numberOfShipments: string;
-  weight: string;
-  volume: string;
-  placeOfDelivery: string;
-  etd: string;
-  eta: string;
-  namePricingTrucking: string;
-  nameSupplier: string;
-  nameCnee: string;
-  note: string;
-  saleman: string;
-  dateCreate: string;
-  creator: string;
-}
-
-const initialValue = {
-  type_of_container: '',
-  detail_placeholder: '',
-  number_container: '',
-};
 
 const { Title } = Typography;
 
@@ -79,9 +30,6 @@ export default function EditPricingTrucking() {
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const { translate: translatePricingTrucking } = useI18n('pricingTrucking');
-  const { translate: translateContactInfo } = useI18n('contactInfo');
-  const { translate: translateBooking } = useI18n('booking');
-  const { translate: translateInvoice } = useI18n('invoice');
   const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
@@ -91,274 +39,6 @@ export default function EditPricingTrucking() {
   const onFinish = (formValues: FormValues) => {
     console.log(formValues);
   };
-
-  // const residences: CascaderProps<DataNodeType>['options'] = [
-  //   {
-  //     value: 'Thành phố Hồ Chí Minh',
-  //     label: 'Thành phố Hồ Chí Minh',
-  //     children: [
-  //       {
-  //         value: 'Gò Vấp',
-  //         label: 'Gò Vấp',
-  //         children: [
-  //           {
-  //             value: 'Phường 1',
-  //             label: 'Phường 1',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     value: 'Hà Nội',
-  //     label: 'Hà Nội',
-  //     children: [
-  //       {
-  //         value: 'Huyện Ba Vì',
-  //         label: 'Huyện Ba Vì',
-  //         children: [
-  //           {
-  //             value: 'Xã Ba Trại',
-  //             label: 'Xã Ba Trại',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ];
-
-  const dataTransHis: readonly any[] | undefined = [];
-
-  const columnsContactInfo: ColumnsType<DataType> = [
-    {
-      title: translateContactInfo('full_name'),
-      dataIndex: 'full_name',
-      align: 'center',
-    },
-    {
-      title: translateContactInfo('gender'),
-      dataIndex: 'gender',
-      align: 'center',
-    },
-    {
-      title: translateContactInfo('dob'),
-      dataIndex: 'dob',
-      align: 'center',
-    },
-    {
-      title: translateContactInfo('phone'),
-      dataIndex: 'phone',
-      align: 'center',
-    },
-    {
-      title: translateContactInfo('address'),
-      dataIndex: 'address',
-      align: 'center',
-    },
-    {
-      title: translateContactInfo('email'),
-      dataIndex: 'email',
-      align: 'center',
-    },
-    {
-      title: translateContactInfo('nationality'),
-      dataIndex: 'nationality',
-      align: 'center',
-    },
-    {
-      title: translateContactInfo('position'),
-      dataIndex: 'position',
-      align: 'center',
-    },
-  ];
-
-  const columnsTransHis: ColumnsType<DataType> = [
-    {
-      title: translateBooking('code_booking'),
-      dataIndex: 'bookingCode',
-      align: 'center',
-    },
-    {
-      title: translateBooking('port_of_loading'),
-      dataIndex: 'portOfLoading',
-      align: 'center',
-    },
-    {
-      title: translateBooking('port_of_discharge'),
-      dataIndex: 'portOfDischarge',
-      align: 'center',
-    },
-    {
-      title: translateBooking('container_code'),
-      dataIndex: 'containerCode',
-      align: 'center',
-    },
-    {
-      title: translateBooking('package'),
-      dataIndex: 'package',
-      align: 'center',
-    },
-    {
-      title: translateBooking('number_of_shipments'),
-      dataIndex: 'numberOfShipments',
-      align: 'center',
-    },
-    {
-      title: translateBooking('weight'),
-      dataIndex: 'weight',
-      align: 'center',
-    },
-    {
-      title: translateBooking('volume'),
-      dataIndex: 'volume',
-      align: 'center',
-    },
-    {
-      title: translateBooking('place_of_delivery'),
-      dataIndex: 'placeOfDelivery',
-      align: 'center',
-    },
-    {
-      title: translateBooking('etd'),
-      dataIndex: 'etd',
-      align: 'center',
-    },
-    {
-      title: translateBooking('eta'),
-      dataIndex: 'eta',
-      align: 'center',
-    },
-    {
-      title: translateBooking('name_PricingTrucking'),
-      dataIndex: 'namePricingTrucking',
-      align: 'center',
-    },
-    {
-      title: translateBooking('name_supplier'),
-      dataIndex: 'nameSupplier',
-      align: 'center',
-    },
-    {
-      title: translateBooking('name_cnee'),
-      dataIndex: 'nameCnee',
-      align: 'center',
-    },
-    {
-      title: translateBooking('note'),
-      dataIndex: 'note',
-      align: 'center',
-    },
-    {
-      title: translateBooking('saleman'),
-      dataIndex: 'saleman',
-      align: 'center',
-    },
-    {
-      title: translateBooking('status'),
-      dataIndex: 'status',
-      align: 'center',
-    },
-    {
-      title: translateBooking('date_create'),
-      dataIndex: 'dateCreate',
-      align: 'center',
-    },
-    {
-      title: translateBooking('creator'),
-      dataIndex: 'creator',
-      align: 'center',
-    },
-  ];
-
-  const columnsReceivable: ColumnsType<DataType> = [
-    {
-      title: translateInvoice('invoice_date'),
-      dataIndex: 'invoiceDate',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('invoice_no'),
-      dataIndex: 'invoiceNo',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('invoice_series'),
-      dataIndex: 'invoiceSeries',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('amount_exclude_tax'),
-      dataIndex: 'amountExcludeTax',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('tax'),
-      dataIndex: 'tax',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('tax_amount'),
-      dataIndex: 'taxAmount',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('total_amount'),
-      dataIndex: 'totalAmount',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('issue_by'),
-      dataIndex: 'issueBy',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('status'),
-      dataIndex: 'status',
-      align: 'center',
-    },
-  ];
-  const columnsPayable: ColumnsType<DataType> = [
-    {
-      title: translateInvoice('invoice_date'),
-      dataIndex: 'invoiceDate',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('invoice_no'),
-      dataIndex: 'invoiceNo',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('invoice_series'),
-      dataIndex: 'invoiceSeries',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('amount_exclude_tax'),
-      dataIndex: 'amountExcludeTax',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('tax'),
-      dataIndex: 'tax',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('tax_amount'),
-      dataIndex: 'taxAmount',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('total_amount'),
-      dataIndex: 'totalAmount',
-      align: 'center',
-    },
-    {
-      title: translateInvoice('status'),
-      dataIndex: 'status',
-      align: 'center',
-    },
-  ];
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -371,7 +51,6 @@ export default function EditPricingTrucking() {
       >
         <Form
           form={form}
-          initialValues={initialValue}
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical"
@@ -380,64 +59,78 @@ export default function EditPricingTrucking() {
             <Row justify={'center'}>
               <Col>
                 <Title level={3}>
-                  {translatePricingTrucking('information_edit_PricingTrucking')}
+                  {translatePricingTrucking(
+                    'information_edit_trucking_pricing'
+                  )}
                 </Title>
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={5} span={24}>
+              <Col lg={12} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('code')}
-                  name="code_PricingTrucking"
+                  label={translatePricingTrucking('POL')}
+                  tooltip={translatePricingTrucking('POL')}
+                  name="POL"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of code PricingTrucking',
+                      message: translatePricingTrucking('POL_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập mã PricingTrucking" />
+                  <Input
+                    placeholder={translatePricingTrucking('POL_placeholder')}
+                  />
                 </Form.Item>
               </Col>
 
               <Col lg={12} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('name')}
-                  name="name_PricingTrucking"
+                  label={translatePricingTrucking('POD')}
+                  tooltip={translatePricingTrucking('POD')}
+                  name="POD"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input PricingTrucking Name',
+                      message: translatePricingTrucking('POD_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập tên PricingTrucking" />
+                  <Input
+                    placeholder={translatePricingTrucking('POD_placeholder')}
+                  />
                 </Form.Item>
               </Col>
 
-              <Col lg={7} span={24}>
+              <Col lg={12} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('abbreviation')}
-                  name="abbreviation_PricingTrucking"
+                  label={translatePricingTrucking('destination')}
+                  name="destination"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Abbreviation of PricingTrucking',
+                      message: translatePricingTrucking(
+                        'destination_placeholder'
+                      ),
                     },
                   ]}
                 >
-                  <Input placeholder="Please input Abbreviation of PricingTrucking" />
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'destination_placeholder'
+                    )}
+                  />
                 </Form.Item>
               </Col>
 
               <Col lg={5} span={24}>
                 <Form.Item
                   label={translatePricingTrucking('country')}
-                  name="Country"
+                  name="country"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Country',
+                      message: translatePricingTrucking('country_placeholder'),
                     },
                   ]}
                 >
@@ -456,98 +149,323 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              <Col lg={7} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('address')}
-                  name="address"
+                  label={translatePricingTrucking('vendor')}
+                  name="vendor"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input address',
+                      message: translatePricingTrucking('vendor_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập Address" />
+                  <Input
+                    placeholder={translatePricingTrucking('vendor_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('carrier')}
+                  name="carrier"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('carrier_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'carrier_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={9} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('service')}
+                  name="service"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('service_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'service_placeholder'
+                    )}
+                  />
                 </Form.Item>
               </Col>
 
               <Col lg={7} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('phone')}
-                  style={{ marginBottom: 0 }}
+                  label={translatePricingTrucking('commodity')}
+                  name="commodity"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking(
+                        'commodity_placeholder'
+                      ),
+                    },
+                  ]}
                 >
-                  <Form.Item
-                    name="phone_code"
-                    style={{ display: 'inline-block', width: 104 }}
-                  >
-                    <Select
-                      options={COUNTRY_CODES.map(({ dial_code, code }) => ({
-                        value: `${code}_${dial_code}`,
-                        label: dial_code,
-                      }))}
-                      showSearch
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name="Phone Number"
-                    style={{
-                      display: 'inline-block',
-                      width: 'calc(100% - 104px - 16px)',
-                      marginLeft: 16,
-                    }}
-                    rules={[
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'commodity_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('LCLMin')}
+                  name="LCLMin"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('LCLMin_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('LCLMin_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('LCL')}
+                  name="LCL"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('LCL_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('LCL_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('DC20')}
+                  name="DC20"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('DC20_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('DC20_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('DC40')}
+                  name="DC40"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('DC40_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('DC40_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('DB20')}
+                  name="DB20"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('DB20_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('DB20_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('RF20')}
+                  name="RF20"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('RF20_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('RF20_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('RF40')}
+                  name="RF40"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('RF40_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('RF40_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('HC40')}
+                  name="HC40"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('HC40_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('HC40_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('HC45')}
+                  name="HC45"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('HC45_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('HC45_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={16} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('others')}
+                  name="others"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('others_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('others_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('type')}
+                  name="type"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('type_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('type_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('currency')}
+                  name="currency"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('currency_placeholder'),
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
                       {
-                        pattern: /^[0-9]{7,15}$/,
-                        message: 'Sai định dạng',
+                        value: 'USD',
+                        label: 'USD',
+                      },
+                      {
+                        value: 'VND',
+                        label: 'VND',
                       },
                     ]}
-                  >
-                    <Input
-                      placeholder="Nhập số điện thoại"
-                      style={{
-                        width: '100%',
-                      }}
-                    />
-                  </Form.Item>
+                  />
                 </Form.Item>
               </Col>
 
-              <Col lg={5} span={24}>
+              <Col lg={8} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('email')}
-                  name="email"
+                  label={translatePricingTrucking('vat')}
+                  name="vat"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input email',
+                      message: translatePricingTrucking('vat_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập Email" />
+                  <Input
+                    placeholder={translatePricingTrucking('vat_placeholder')}
+                  />
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
+              <Col lg={4} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('saleman')}
-                  name="saleman"
+                  label={translatePricingTrucking('effect_date')}
+                  name="effect_date"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input saleman',
+                      message: translatePricingTrucking(
+                        'effect_date_placeholder'
+                      ),
                     },
-                  ]}
-                >
-                  <Input placeholder="Nhập Saleman" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={3} span={24}>
-                <Form.Item
-                  label={translatePricingTrucking('date_created')}
-                  name="dateCreated"
-                  rules={[
-                    { required: true, message: 'Please input date created' },
                   ]}
                 >
                   <DatePicker
@@ -558,18 +476,183 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
+              <Col lg={8} span={24}>
                 <Form.Item
-                  label={translatePricingTrucking('creator')}
-                  name="creator"
+                  label={translatePricingTrucking('validity')}
+                  name="validity"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input creator',
+                      message: translatePricingTrucking('validity_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập Creator" />
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'validity_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('freq')}
+                  name="freq"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('freq_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('freq_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('Cutoff')}
+                  name="Cutoff"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('Cutoff_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('Cutoff_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('TT')}
+                  name="TT"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('TT_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('TT_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('inl_addon')}
+                  name="inl_addon"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking(
+                        'inl_addon_placeholder'
+                      ),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'inl_addon_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('empty_return')}
+                  name="empty_return"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking(
+                        'empty_return_placeholder'
+                      ),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'empty_return_placeholder'
+                    )}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('amend')}
+                  name="amend"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('amend_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('amend_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('DEM')}
+                  name="DEM"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('DEM_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('DEM_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('DET')}
+                  name="DET"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('DET_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('DET_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={8} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('STO')}
+                  name="STO"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePricingTrucking('STO_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePricingTrucking('STO_placeholder')}
+                  />
                 </Form.Item>
               </Col>
 
@@ -599,89 +682,54 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={24} span={24}>
+              <Col lg={4} span={24}>
                 <Form.Item
-                  label="Note"
-                  name="note"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input note',
-                    },
-                  ]}
+                  label={translatePricingTrucking('modify_date')}
+                  name="modify_date"
                 >
-                  <Input.TextArea placeholder="Nhập ghi chú" />
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'modify_date_placeholder'
+                    )}
+                    disabled
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('date_created')}
+                  name="date_created"
+                >
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'date_created_placeholder'
+                    )}
+                    disabled
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translatePricingTrucking('creator')}
+                  name="creator"
+                >
+                  <Input
+                    placeholder={translatePricingTrucking(
+                      'creator_placeholder'
+                    )}
+                    disabled
+                  />
                 </Form.Item>
               </Col>
             </Row>
           </Card>
 
-          <CollapseCard
-            title={translateContactInfo('title_information_contact')}
-            style={{ marginBottom: '24px' }}
-          >
-            <Row gutter={16}>
-              <Col lg={24} span={24}>
-                <Card style={{ marginBottom: 24 }}>
-                  <Table
-                    columns={columnsContactInfo}
-                    dataSource={dataTransHis}
-                  />
-                </Card>
-              </Col>
-            </Row>
-          </CollapseCard>
-
-          <CollapseCard
-            title={translateBooking('transaction_history')}
-            style={{ marginBottom: '24px' }}
-          >
-            <Row gutter={16}>
-              <Col lg={24} span={24}>
-                <Card style={{ marginBottom: 24 }}>
-                  <Table columns={columnsTransHis} dataSource={dataTransHis} />
-                </Card>
-              </Col>
-            </Row>
-          </CollapseCard>
-
-          <CollapseCard
-            title={translateInvoice('debt_history')}
-            style={{ marginBottom: '24px' }}
-          >
-            <Row gutter={16}>
-              <Col lg={24} span={24}>
-                <Card style={{ marginBottom: 24 }}>
-                  <Card
-                    style={{ marginBottom: 24 }}
-                    title={translateInvoice('accounts_receivable')}
-                  >
-                    <Table
-                      columns={columnsReceivable}
-                      dataSource={dataTransHis}
-                    />
-                  </Card>
-                  <Card
-                    style={{ marginBottom: 24 }}
-                    title={translateInvoice('accounts_payable')}
-                  >
-                    <Table columns={columnsPayable} dataSource={dataTransHis} />
-                  </Card>
-                </Card>
-              </Col>
-            </Row>
-          </CollapseCard>
-
-          <Card
-            style={{
-              position: 'sticky',
-              bottom: 0,
-              zIndex: 11,
-            }}
-          >
+          <Card>
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.TRUCKING_PRICING)}>
+                <Button onClick={() => router.push(ROUTERS.PORT)}>
                   Cancel
                 </Button>
               </Col>
