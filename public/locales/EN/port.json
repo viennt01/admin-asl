@@ -6,8 +6,6 @@
     "country_name": "Country",
     "type_of_port": "Type of Port",
     "address": "Address",
-    "quantity": "Number of Containers",
-    "status_capacity": "Status of capacity",
     "company":"Management Company",
     "status":"Status",
     "date_created": "Date Created",
