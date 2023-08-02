@@ -538,7 +538,7 @@ export function AppLayout(props: Props) {
             style={{ right: 24 }}
             icon={<CustomerServiceOutlined />}
           >
-            <FloatButton /> /TODO: handle logic/
+            <FloatButton />
             <FloatButton icon={<CommentOutlined />} />
           </FloatButton.Group>
           <Footer
