@@ -7,68 +7,13 @@ export const DEFAULT_PAGINATION = {
 };
 
 export const SkeletonTable = () => {
-  const data = [
-    {
-      id: '1',
-    },
-    {
-      id: '2',
-    },
-    {
-      id: '3',
-    },
-    {
-      id: '4',
-    },
-    {
-      id: '5',
-    },
-    {
-      id: '6',
-    },
-    {
-      id: '7',
-    },
-    {
-      id: '8',
-    },
-    {
-      id: '9',
-    },
-    {
-      id: '10',
-    },
-    {
-      id: '1',
-    },
-    {
-      id: '2',
-    },
-    {
-      id: '3',
-    },
-    {
-      id: '4',
-    },
-    {
-      id: '5',
-    },
-    {
-      id: '6',
-    },
-    {
-      id: '7',
-    },
-    {
-      id: '8',
-    },
-    {
-      id: '9',
-    },
-    {
-      id: '10',
-    },
-  ];
+  const data = [];
+  for (let i = 0; i < 19; i++) {
+    data.push({
+      id: `${i + 1}`,
+    });
+  }
+
   const columns: ProColumns<[]>[] = [
     {
       title: 'Skeleton',
@@ -98,6 +43,7 @@ export const SkeletonTable = () => {
   return (
     <ProTable
       style={{ marginTop: '8px' }}
+      search={false}
       dataSource={data}
       columns={columns.map((column) => {
         return {

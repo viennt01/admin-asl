@@ -6,6 +6,7 @@ export const API_AUTHENTICATE = {
 
 export const API_USER = {
   CHECK_USER: '/check-user',
+  UPDATE_NEW_USER: '/change-status-new-user',
 };
 
 export const API_PORT = {

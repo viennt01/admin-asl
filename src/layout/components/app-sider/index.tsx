@@ -32,8 +32,10 @@ import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { LogoutData, logout } from './fetcher';
+import { UserInfo, checkNewUser } from '@/layout/fetcher';
+import { ResponseWithPayload } from '@/fetcherAxios';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -93,7 +95,15 @@ const AppSider = ({ collapsed }: Props) => {
   const refUser = useRef(null);
   const refStaff = useRef(null);
   const refPermission = useRef(null);
-  const [openTour, setOpenTour] = useState<boolean>(true);
+  const [openTour, setOpenTour] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const dataUser = queryClient.getQueryData<ResponseWithPayload<UserInfo>>([
+    'user',
+  ]);
+  const checkNewUserFirst = useMutation({
+    mutationFn: () => checkNewUser(),
+  });
+
   const steps: TourProps['steps'] = [
     {
       title: 'Trang chủ',
@@ -330,8 +340,10 @@ const AppSider = ({ collapsed }: Props) => {
   useEffect(() => {
     setIpAddress(appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS));
     setDeviceName(appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME));
-  }, []);
-
+    if (dataUser?.data.newUser) {
+      setOpenTour(true);
+    }
+  }, [dataUser]);
   return (
     <>
       {contextHolder}
@@ -417,7 +429,14 @@ const AppSider = ({ collapsed }: Props) => {
           </Row>
         </Sider>
       </ConfigProvider>
-      <Tour open={openTour} onClose={() => setOpenTour(false)} steps={steps} />
+      <Tour
+        open={openTour}
+        onClose={() => {
+          checkNewUserFirst.mutate();
+          setOpenTour(false);
+        }}
+        steps={steps}
+      />
     </>
   );
 };

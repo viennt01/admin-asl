@@ -165,13 +165,15 @@ export default function PortPage() {
         pageSize: pagination.pageSize,
       }),
     onSuccess(data) {
-      const { currentPage, pageSize, totalPages } = data.data;
-      setPagination((state) => ({
-        ...state,
-        current: currentPage,
-        pageSize: pageSize,
-        total: totalPages,
-      }));
+      if (data.status) {
+        const { currentPage, pageSize, totalPages } = data.data;
+        setPagination((state) => ({
+          ...state,
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalPages,
+        }));
+      }
     },
   });
 
@@ -185,7 +187,7 @@ export default function PortPage() {
             headerTitle={translatePort('title')}
             className={style.table}
             style={{ marginTop: '8px' }}
-            dataSource={portsQuery.data?.data.data}
+            dataSource={portsQuery.data?.data?.data}
             columns={columns}
             rowSelection={{
               type: 'checkbox',

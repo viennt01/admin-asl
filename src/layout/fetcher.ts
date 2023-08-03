@@ -1,4 +1,4 @@
-import { ResponseWithPayload, get } from '@/fetcherAxios';
+import { ResponseWithPayload, get, post } from '@/fetcherAxios';
 import { API_USER } from '@/fetcherAxios/endpoint';
 
 export interface UserInfo {
@@ -23,9 +23,16 @@ export interface UserInfo {
   userName: string;
   createdDate: string;
   updatedDate: string;
+  newUser: boolean;
   listRole: number[];
 }
 
 export const getUserInfo = () => {
   return get<ResponseWithPayload<UserInfo>>({})(API_USER.CHECK_USER);
+};
+
+export const checkNewUser = () => {
+  return post<undefined, ResponseWithPayload<undefined>>({})(
+    API_USER.UPDATE_NEW_USER
+  );
 };
