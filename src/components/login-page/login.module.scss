@@ -690,7 +690,256 @@
   }
 }
 
-@media only screen and (max-width: 1280px) {
+// @media only screen and (min-width: 1517px) and (max-width: 1516px) {
+//   .bodyContainer {
+//     &.signinMode {
+//       &::before {
+//         right: 39%;
+//         transform: translateY(-47%);
+//       }
+
+//       .panelsContainer {
+//         .leftPanel {
+//           .content {
+//             transform: translateX(-70px);
+//           }
+
+//           .image {
+//             transform: translateX(-125px);
+//             width: 95%;
+//           }
+//         }
+//       }
+//     }
+
+//     &.signupMode {
+//       &::before {
+//         right: 58%;
+//         top: -5%;
+//       }
+//       .formsContainer {
+//         .signinSignup {
+//           .signupForm {
+//             width: 600px;
+//           }
+//         }
+//       }
+
+//       .panelsContainer {
+//         .rightPanel {
+//           .content {
+//             transform: translateX(50px);
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+@media only screen and (min-width: 1515px) and (max-width: 1517px) {
+  .bodyContainer {
+    &.signinMode {
+      &::before {
+        right: 39%;
+        transform: translateY(-47%);
+      }
+
+      .panelsContainer {
+        .leftPanel {
+          .content {
+            transform: translateX(-70px);
+          }
+
+          .image {
+            transform: translateX(-125px);
+            width: 95%;
+          }
+        }
+      }
+    }
+
+    &.signupMode {
+      &::before {
+        right: 58%;
+        top: -5%;
+      }
+      .formsContainer {
+        .signinSignup {
+          .signupForm {
+            width: 600px;
+          }
+        }
+      }
+
+      .panelsContainer {
+        .rightPanel {
+          .content {
+            transform: translateX(50px);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1512px) and (max-width: 1513px) {
+  .bodyContainer {
+    &.signinMode {
+      &::before {
+        right: 42%;
+        transform: translateY(-45%);
+      }
+    }
+
+    &.signupMode {
+      &::before {
+        right: 52%;
+        top: -2%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1510px) and (max-width: 1511px) {
+  .bodyContainer {
+    &.signinMode {
+      &::before {
+        right: 40%;
+        transform: translateY(-52%);
+      }
+
+      .panelsContainer {
+        .leftPanel {
+          .content {
+            transform: translateX(-70px);
+          }
+
+          .image {
+            transform: translateX(-125px);
+            width: 95%;
+          }
+        }
+      }
+    }
+
+    &.signupMode {
+      &::before {
+        right: 53%;
+        top: -16%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1508px) and (max-width: 1509px) {
+  .bodyContainer {
+    &.signinMode {
+      &::before {
+        right: 40%;
+        transform: translateY(-48%);
+      }
+
+      .panelsContainer {
+        .leftPanel {
+          .content {
+            transform: translateX(-70px);
+          }
+
+          .image {
+            transform: translateX(-125px);
+            width: 95%;
+          }
+        }
+      }
+    }
+
+    &.signupMode {
+      &::before {
+        right: 53%;
+        top: -16%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1506px) and (max-width: 1507px) {
+  .bodyContainer {
+    &.signinMode {
+      &::before {
+        right: 40%;
+        transform: translateY(-52%);
+      }
+
+      .panelsContainer {
+        .leftPanel {
+          .content {
+            transform: translateX(-70px);
+          }
+
+          .image {
+            transform: translateX(-125px);
+            width: 95%;
+          }
+        }
+      }
+    }
+
+    &.signupMode {
+      &::before {
+        right: 53%;
+        top: -16%;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1281px) and (max-width: 1505px) {
+  .bodyContainer {
+    &.signinMode {
+      &::before {
+        right: 39%;
+        transform: translateY(-47%);
+      }
+
+      .panelsContainer {
+        .leftPanel {
+          .content {
+            transform: translateX(-70px);
+          }
+
+          .image {
+            transform: translateX(-125px);
+            width: 95%;
+          }
+        }
+      }
+    }
+
+    &.signupMode {
+      &::before {
+        right: 58%;
+        top: -5%;
+      }
+      .formsContainer {
+        .signinSignup {
+          .signupForm {
+            width: 600px;
+          }
+        }
+      }
+
+      .panelsContainer {
+        .rightPanel {
+          .content {
+            transform: translateX(50px);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1280px) {
   .bodyContainer {
     &.signinMode {
       &::before {
