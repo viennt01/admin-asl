@@ -1,142 +1,20 @@
-import COLORS from '@/constant/color';
-import { PlusOutlined } from '@ant-design/icons';
-import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { Button, Form } from 'antd';
-import useI18n from '@/i18n/useI18N';
+import PortForm from '../components/port-form';
+import { FormValues, PortCreate } from '../interface';
 
-// const waitTime = (time = 100) => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(true);
-//     }, time);
-//   });
-// };
-export default function CreatePort() {
-  const [form] = Form.useForm<{ name: string; company: string }>();
-  const { translate: translateCommon } = useI18n('common');
-  const { translate: translateAddPort } = useI18n('port');
+const CreatePort = () => {
+  const handleSubmit = (formValues: FormValues) => {
+    const _requestData: PortCreate = {
+      portID: formValues.portID,
+      countryID: formValues.countryID,
+      portName: formValues.portName,
+      portCode: formValues.portCode,
+      address: formValues.address,
+      company: formValues.company,
+    };
+    console.log('_requestData', _requestData);
+  };
 
-  return (
-    <ModalForm<{
-      name: string;
-      company: string;
-    }>
-      title={translateAddPort('information_add_port')}
-      trigger={
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          style={{
-            marginRight: '4px',
-            backgroundColor: COLORS.BRIGHT,
-            color: COLORS.GREEN,
-            borderColor: COLORS.GREEN,
-            fontWeight: '500',
-          }}
-        >
-          {translateCommon('button_add')}
-        </Button>
-      }
-      submitter={{
-        searchConfig: {
-          resetText: 'Cancel',
-          submitText: 'Add',
-        },
-      }}
-      form={form}
-      autoFocusFirstInput
-      modalProps={{
-        destroyOnClose: true,
-      }}
-      // submitTimeout={2000}
-      // onFinish={async (values) => {
-      //   await waitTime(2000);
-      //   message.success('提交成功');
-      //   return true;
-      // }}
-    >
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="CodePort"
-          label={translateAddPort('code')}
-          tooltip={translateAddPort('code_tooltip')}
-          placeholder={translateAddPort('code_placeholder')}
-        />
+  return <PortForm create handleSubmit={handleSubmit} />;
+};
 
-        <ProFormText
-          width="md"
-          name="NamePort"
-          label={translateAddPort('new_port_title')}
-          tooltip={translateAddPort('new_port_tooltip')}
-          placeholder={translateAddPort('new_port_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormSelect
-          request={async () => [
-            {
-              value: 'VietNam',
-              label: 'Việt Nam',
-            },
-            {
-              value: 'American',
-              label: 'Mỹ',
-            },
-          ]}
-          width="md"
-          name="CountryName"
-          label={translateAddPort('country_name')}
-          placeholder={translateAddPort('country_name_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="Address"
-          label={translateAddPort('address')}
-          placeholder={translateAddPort('address_placeholder')}
-        />
-      </ProForm.Group>
-
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="Company"
-          label={translateAddPort('type_of_port')}
-          placeholder={translateAddPort('type_of_port_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="Company"
-          label={translateAddPort('company')}
-          placeholder={translateAddPort('company_placeholder')}
-        />
-      </ProForm.Group>
-
-      <ProForm.Group>
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Tạm ngừng',
-            },
-          ]}
-          width="md"
-          name="Status"
-          label={translateAddPort('status')}
-          placeholder={translateAddPort('status_placeholder')}
-        />
-      </ProForm.Group>
-    </ModalForm>
-  );
-}
+export default CreatePort;

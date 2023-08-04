@@ -317,6 +317,11 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
+    '/master-data/port/create': [
+      { title: `${translateCommon('master_data')}` },
+      { title: <Link href={ROUTERS.PORT}>{translateCommon('port')}</Link> },
+      { title: `${translateCommon('create')}` },
+    ],
 
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },

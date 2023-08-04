@@ -1,7 +1,6 @@
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, PaginationProps, Tag } from 'antd';
 import { Key, useState } from 'react';
-import CreatePort from './create-port';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -131,7 +130,7 @@ export default function PortPage() {
       fixed: 'right',
       width: 50,
       align: 'center',
-      dataIndex: 'key',
+      dataIndex: 'portID',
       render: (value) => (
         <Button
           onClick={() => handleEditCustomer(value as string)}
@@ -213,8 +212,24 @@ export default function PortPage() {
               search: true,
             }}
             toolBarRender={() => [
-              <CreatePort key={'create'} />,
               <Button
+                key={'create'}
+                icon={<PlusOutlined />}
+                style={{
+                  marginRight: '4px',
+                  backgroundColor: COLORS.BRIGHT,
+                  color: COLORS.GREEN,
+                  borderColor: COLORS.GREEN,
+                  fontWeight: '500',
+                }}
+                onClick={() => {
+                  router.push(ROUTERS.PORT_CREATE);
+                }}
+              >
+                {translateCommon('button_add')}
+              </Button>,
+              <Button
+                key={'delete'}
                 icon={<DeleteOutlined />}
                 style={{
                   backgroundColor: COLORS.RED,
@@ -222,7 +237,6 @@ export default function PortPage() {
                   borderColor: COLORS.RED,
                   fontWeight: '500',
                 }}
-                key={'delete'}
               >
                 {translateCommon('button_delete')}
               </Button>,

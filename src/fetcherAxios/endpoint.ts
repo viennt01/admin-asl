@@ -11,4 +11,10 @@ export const API_USER = {
 
 export const API_PORT = {
   GET_PORTS: '/get-all-port',
+  GET_PORT_DETAIL: '/get-detail-port',
+};
+
+export const API_MASTER_DATA = {
+  GET_COUNTRY: '/get-all-country',
+  GET_CITY: '/get-all-city-by-countryID',
 };

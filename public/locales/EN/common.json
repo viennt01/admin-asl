@@ -38,5 +38,6 @@
     "button_add": "Add",
     "button_delete": "Delete",
     "detail": "Detail",
-    "error": "Error"
+    "error": "Error",
+    "create": "Create"
 }
