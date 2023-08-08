@@ -11,22 +11,41 @@
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
     
-    "information_port": "THÔNG TIN CHI TIẾT CỦA CẢNG",
-    "title_information_port": "Thông tin của Cảng",
-    "quantity_container": "Số lượng container",
-    "capacity_label": "Sức chứa",
     "information_add_port": "Thêm mới cảng",
     "information_edit_port": "Chỉnh sửa cảng",
-    "new_port_title": "Tên cảng mới",
-    "new_port_placeholder": "Nhập tên cảng mới",
-    "new_port_tooltip": "Tên được đăng ký ở bộ giao thông vận tải",
-    "address_placeholder": "Nhập địa chỉ",
-    "quantity_container_placeholder": "Nhập số lượng container",
-    "company_placeholder": "Nhập công ty quản lý",
-    "company_placeholder": "Nhập loại của cảng",
-    "status_capacity_placeholder": "Chọn trạng thái sức chứa",
-    "code_placeholder": "Nhập mã Cảng",
-    "code_tooltip": "Mã được đăng ký ở bộ giao thông vận tải",
-    "country_name_placeholder": "Chọn quốc gia",
-    "status_placeholder":"Chọn trạng thái"
+
+    "port_code": {
+        "title": "Mã Cảng",
+        "placeholder": "Nhập mã cảng",
+        "error_required": "Vui lòng nhập mã cảng"
+    },
+    "port_name": {
+        "title": "Tên Cảng",
+        "placeholder": "Nhập tên cảng",
+        "error_required": "Vui lòng nhập tên cảng"
+    },
+    "type_port": {
+        "title": "Loại Cảng",
+        "placeholder": "Nhập loại cảng",
+        "error_required": "Vui lòng nhập loại cảng"
+    },
+    "country": {
+        "title": "Quốc Gia",
+        "placeholder": "Nhập quốc gia",
+        "error_required": "Vui lòng nhập quốc gia"
+    },
+    "status_port": {
+        "title": "Trạng Thái",
+        "placeholder": "Chọn trạng thái",
+        "error_required": "Vui lòng nhập trạng thái"
+    },
+    "address_port": {
+        "title": "Địa Chỉ",
+        "placeholder": "Nhập địa chỉ",
+        "error_required": "Vui lòng nhập địa chỉ"
+    },
+    "description": {
+        "title": "Chi Tiết",
+        "placeholder": "Nhập chi tiết"
+    }
 }

@@ -39,5 +39,11 @@
     "button_delete": "Xóa",
     "detail": "Chi tiết",
     "error": "Lỗi",
-    "create": "Tạo"
+    "create": "Tạo",
+    "edit": "Update",
+    "cancel": "Huỷ",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
+    "date_inserted": "Ngày cập nhật",
+    "inserter": "Người cập nhật"
 }

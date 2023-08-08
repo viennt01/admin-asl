@@ -39,5 +39,11 @@
     "button_delete": "Delete",
     "detail": "Detail",
     "error": "Error",
-    "create": "Create"
+    "create": "Create",
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "date_created": "Date created",
+    "creator": "Creator",
+    "date_inserted": "Date updated",
+    "inserter": "Update by user"
 }

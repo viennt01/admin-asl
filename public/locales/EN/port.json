@@ -8,25 +8,46 @@
     "address": "Address",
     "company":"Management Company",
     "status":"Status",
-    "date_created": "Date Created",
+    "date_created": "Date created",
     "creator": "Creator",
+    "date_inserted": "Date update",
+    "inserter": "Update by user",
     
-    "information_port": "PORT DETAILS INFORMATION",
-    "title_information_port": "Port information",
-    "quantity_container": "Number of containers",
-    "capacity_label": "Capacity",
     "information_add_port": "Add new port",
     "information_edit_port": "Edit Port",
-    "new_port_title": "New port name",
-    "new_port_placeholder": "Enter new port name",
-    "new_port_tooltip": "The name is registered at the Ministry of Transport",
-    "address_placeholder": "Enter address",
-    "quantity_container_placeholder": "Enter the number of containers",
-    "type_of_port_placeholder": "Enter the type of port",
-    "company_placeholder": "Enter the management company",
-    "status_capacity_placeholder": "Select capacity status",
-    "code_placeholder": "Enter code port",
-    "code_tooltip": "The code is registered at the Ministry of Transport",
-    "country_name_placeholder": "Choose country name",
-    "status_placeholder":"Choose status"
+
+    "port_code": {
+        "title": "Port Code",
+        "placeholder": "Enter port code",
+        "error_required": "Please input Port Code"
+    },
+    "port_name": {
+        "title": "Port Name",
+        "placeholder": "Enter port name",
+        "error_required": "Please input Port Name"
+    },
+    "type_port": {
+        "title": "Type Of Port",
+        "placeholder": "Enter type of port",
+        "error_required": "Please input type of port"
+    },
+    "country": {
+        "title": "Country",
+        "placeholder": "Enter country",
+        "error_required": "Please input country"
+    }, 
+    "status_port": {
+        "title": "Status",
+        "placeholder": "Enter status",
+        "error_required": "Please input status"
+    },
+    "address_port": {
+        "title": "Address",
+        "placeholder": "Enter address",
+        "error_required": "Please input address"
+    },
+    "description": {
+        "title": "Description",
+        "placeholder": "Enter description"
+    }
 }

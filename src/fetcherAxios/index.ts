@@ -84,7 +84,9 @@ const axiosResolver = async (promise: Promise<AxiosResponse>) => {
 
 const apiClient = axios.create({
   headers: {
-    Accept: 'text/plain',
+    Accept: 'application/json;odata.metadata=minimal;odata.streaming=true',
+    'Content-Type':
+      'application/json;odata.metadata=minimal;odata.streaming=true',
   },
 });
 

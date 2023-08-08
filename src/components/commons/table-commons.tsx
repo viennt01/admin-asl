@@ -6,6 +6,11 @@ export const DEFAULT_PAGINATION = {
   pageSize: 20,
 };
 
+export interface Pagination {
+  currentPage: number;
+  pageSize: number;
+}
+
 export const SkeletonTable = () => {
   const data = [];
   for (let i = 0; i < 19; i++) {

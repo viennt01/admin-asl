@@ -15,7 +15,7 @@ function PortEditPage() {
 
 export default withAuthentication(PortEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'port', 'container']);
+export const getStaticProps = getStatic(['common', 'port']);
 
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];

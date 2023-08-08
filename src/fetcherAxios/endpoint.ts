@@ -12,9 +12,12 @@ export const API_USER = {
 export const API_PORT = {
   GET_PORTS: '/get-all-port',
   GET_PORT_DETAIL: '/get-detail-port',
+  CREATE_PORT: '/add-new-port',
+  EDIT_PORT: '/update-port',
 };
 
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',
+  GET_TYPE_PORT: '/get-all-type-port',
 };

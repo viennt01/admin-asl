@@ -1,6 +1,6 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   Button,
   Form,
@@ -9,39 +9,39 @@ import {
   Card,
   Row,
   Col,
-  Cascader,
   Select,
+  Descriptions,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getListCity, getListCountry, getPortDetail } from '../fetcher';
-import type { DefaultOptionType } from 'antd/es/cascader';
+import { getListCountry, getListTypePort, getPortDetail } from '../fetcher';
 import { FormValues, STATUS_LABELS } from '../interface';
+import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
+import { formatDate } from '@/utils/format';
 
 const initialValue = {
-  portCode: '',
-  portName: '',
-  countryID: '',
   address: '',
-  company: '',
+  description: '',
 };
 
 interface Option {
-  value?: string | number | null;
-  label: React.ReactNode;
-  children?: Option[];
-  isLeaf?: boolean;
+  value: string;
+  label: string;
 }
 
 interface PortFormProps {
   create?: boolean;
   handleSubmit: (formValues: FormValues) => void;
+  loading: boolean;
 }
 
 const { Title } = Typography;
+const { TextArea } = Input;
 
-const PortForm = ({ create, handleSubmit }: PortFormProps) => {
+const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
   const { translate: translatePort } = useI18n('port');
+  const { translate: translateCommon } = useI18n('common');
+
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -55,7 +55,7 @@ const PortForm = ({ create, handleSubmit }: PortFormProps) => {
   };
 
   useQuery({
-    queryKey: ['countries'],
+    queryKey: [API_MASTER_DATA.GET_COUNTRY],
     queryFn: () =>
       getListCountry({
         currentPage: 1,
@@ -67,56 +67,30 @@ const PortForm = ({ create, handleSubmit }: PortFormProps) => {
           data.data.data.map((item) => ({
             value: item.countryID,
             label: item.countryName,
-            isLeaf: false,
           }))
         );
       }
     },
+    onError: () => {
+      router.push(ROUTERS.PORT);
+    },
   });
-
-  const cityMutation = useMutation({
-    mutationFn: (id: string) => getListCity({ id }),
-  });
-
-  const onChange = (value: (string | number)[]) => {
-    if (value.length === 2) {
-      console.log(1);
-    }
-  };
-  const loadData = (selectedOptions: Option[]) => {
-    const targetOption = selectedOptions[selectedOptions.length - 1];
-    cityMutation.mutate(selectedOptions[0].value as string, {
-      onSuccess: (data) => {
-        targetOption.children = data.data.map((item) => ({
-          value: item.cityID,
-          label: item.cityName,
-        }));
-      },
-    });
-    setTimeout(() => {
-      cityMutation.mutate(selectedOptions[0].value as string, {
-        onSuccess: (data) => {
-          targetOption.children = data.data.map((item) => ({
-            value: item.cityID,
-            label: item.cityName,
-          }));
-        },
-      });
-      setOptions([...options]);
-    }, 1000);
-  };
-  const filter = (inputValue: string, path: DefaultOptionType[]) =>
-    path.some(
-      (option) =>
-        (option.label as string)
-          .toLowerCase()
-          .indexOf(inputValue.toLowerCase()) > -1
-    );
 
   const portDetailQuery = useQuery({
-    queryKey: ['portDetail', id],
+    queryKey: [API_PORT.GET_PORT_DETAIL, id],
     queryFn: () => getPortDetail(id as string),
     enabled: id !== undefined,
+    onError: () => {
+      router.push(ROUTERS.PORT);
+    },
+  });
+
+  const typePortQuery = useQuery({
+    queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
+    queryFn: () => getListTypePort(),
+    onError: () => {
+      router.push(ROUTERS.PORT);
+    },
   });
 
   useEffect(() => {
@@ -124,8 +98,13 @@ const PortForm = ({ create, handleSubmit }: PortFormProps) => {
       form.setFieldsValue({
         portName: portDetailQuery.data.data.portName,
         portCode: portDetailQuery.data.data.portCode,
+        typePorts: portDetailQuery.data.data.typePorts.map(
+          (type) => type.typePortID
+        ),
         countryID: portDetailQuery.data.data.countryID,
-        // address: portDetailQuery.data.data.address,
+        status: portDetailQuery.data.data.status,
+        address: portDetailQuery.data.data.address,
+        description: portDetailQuery.data.data.description,
       });
     }
   }, [portDetailQuery.data, form]);
@@ -144,7 +123,7 @@ const PortForm = ({ create, handleSubmit }: PortFormProps) => {
             <Col>
               <Title level={3}>
                 {create
-                  ? 'Thêm cảng mới'
+                  ? translatePort('information_add_port')
                   : translatePort('information_edit_port')}
               </Title>
             </Col>
@@ -152,81 +131,101 @@ const PortForm = ({ create, handleSubmit }: PortFormProps) => {
           <Row gutter={16}>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translatePort('code')}
+                label={translatePort('port_code.title')}
                 tooltip={translatePort('code')}
                 name="portCode"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input Port Code',
+                    message: translatePort('port_code.error_required'),
                   },
                 ]}
               >
-                <Input placeholder={translatePort('new_port_placeholder')} />
+                <Input
+                  placeholder={translatePort('port_code.placeholder')}
+                  size="large"
+                />
               </Form.Item>
             </Col>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translatePort('name')}
+                label={translatePort('port_name.title')}
                 name="portName"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input Port Name',
+                    message: translatePort('port_name.error_required'),
                   },
                 ]}
               >
-                <Input placeholder={translatePort('new_port_title')} />
+                <Input
+                  placeholder={translatePort('port_name.placeholder')}
+                  size="large"
+                />
               </Form.Item>
             </Col>
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translatePort('type_of_port')}
-                name="portCode"
+                label={translatePort('type_port.title')}
+                name="typePorts"
                 rules={[
-                  { required: true, message: 'Please input type of port' },
+                  {
+                    required: true,
+                    message: translatePort('type_port.error_required'),
+                  },
                 ]}
               >
-                <Input placeholder="Please input type of port" />
+                <Select
+                  placeholder={translatePort('type_port.placeholder')}
+                  mode="multiple"
+                  size="large"
+                  options={typePortQuery.data?.data.map((type) => ({
+                    label: type.typePortName,
+                    value: type.typePortID,
+                  }))}
+                />
               </Form.Item>
             </Col>
             <Col lg={!create ? 6 : 12} span={24}>
               <Form.Item
-                label={translatePort('country_name')}
+                label={translatePort('country.title')}
                 name="countryID"
                 rules={[
                   {
                     required: true,
-                    message: 'Please select Country!',
+                    message: translatePort('country.error_required'),
                   },
                 ]}
               >
-                <Cascader
+                <Select
+                  placeholder={translatePort('country.placeholder')}
+                  showSearch
+                  size="large"
                   options={options}
-                  loadData={loadData}
-                  onChange={onChange}
-                  changeOnSelect
-                  placeholder="Please select city"
-                  //   size="large"
-                  showSearch={{ filter }}
+                  filterOption={(input, option) =>
+                    (option?.label ?? '')
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
                 />
               </Form.Item>
             </Col>
             {!create ? (
               <Col lg={6} span={24}>
                 <Form.Item
-                  label={translatePort('status')}
+                  label={translatePort('status_port.title')}
                   name="status"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translatePort('status_port.error_required'),
                     },
                   ]}
                 >
                   <Select
-                    placeholder="Please select status"
+                    size="large"
+                    placeholder={translatePort('status_port.placeholder')}
                     options={Object.values(STATUS_LABELS).map(
                       (type, index) => ({
                         label: type,
@@ -242,20 +241,32 @@ const PortForm = ({ create, handleSubmit }: PortFormProps) => {
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translatePort('address')}
+                label={translatePort('address_port.title')}
                 name="address"
-                rules={[{ required: true, message: 'Please input Address' }]}
+                rules={[
+                  {
+                    required: true,
+                    message: translatePort('address_port.error_required'),
+                  },
+                ]}
               >
-                <Input placeholder="Please input Address" />
+                <Input
+                  placeholder={translatePort('address_port.placeholder')}
+                  size="large"
+                />
               </Form.Item>
             </Col>
-            <Col lg={12} span={24}>
+
+            <Col span={24}>
               <Form.Item
-                label={translatePort('company')}
-                name="company"
-                rules={[{ required: true, message: 'Please input company' }]}
+                label={translatePort('description.title')}
+                name="description"
               >
-                <Input />
+                <TextArea
+                  size="large"
+                  placeholder={translatePort('description.placeholder')}
+                  allowClear
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -263,14 +274,44 @@ const PortForm = ({ create, handleSubmit }: PortFormProps) => {
 
         <Card>
           <Row gutter={12}>
-            <Col>
-              <Button onClick={() => router.push(ROUTERS.PORT)}>Cancel</Button>
-            </Col>
-            <Col>
-              <Button type="primary" htmlType="submit">
-                Save
+            <Col span={12}>
+              <Button onClick={() => router.push(ROUTERS.PORT)}>
+                {translateCommon('cancel')}
+              </Button>
+
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginLeft: '12px' }}
+                loading={loading}
+              >
+                {!create ? translateCommon('edit') : translateCommon('create')}
               </Button>
             </Col>
+            {!create ? (
+              <Col span={12}>
+                <Descriptions column={2}>
+                  <Descriptions.Item label={translateCommon('creator')}>
+                    {portDetailQuery.data?.data.insertedByUser}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={translateCommon('date_created')}>
+                    {formatDate(
+                      Number(portDetailQuery.data?.data.dateInserted)
+                    )}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={translateCommon('inserter')}>
+                    {portDetailQuery.data?.data.updatedByUser}
+                  </Descriptions.Item>
+                  <Descriptions.Item label={translateCommon('date_inserted')}>
+                    {formatDate(
+                      Number(portDetailQuery.data?.data.dateInserted)
+                    )}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Col>
+            ) : (
+              <></>
+            )}
           </Row>
         </Card>
       </Form>

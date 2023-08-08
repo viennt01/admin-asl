@@ -8,6 +8,9 @@ const COLORS = {
   BLUE: '#0300A6',
   BLACK: '#000000',
   PRIMARY: '#03375e',
+  ACTIVE: '#00A651',
+  DEACTIVATE: '#e89434',
+  BLOCK: '#ED1C27',
 };
 // update color => remmeber update color scss in styles
 

@@ -306,6 +306,10 @@ const AppSider = ({ collapsed }: Props) => {
     mutationFn: (body: LogoutData) => {
       return logout(body);
     },
+    onSuccess: async () => {
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      await router.push(ROUTERS.LOGIN);
+    },
   });
 
   const handleClickLogout = () => {
@@ -319,8 +323,6 @@ const AppSider = ({ collapsed }: Props) => {
       icon: <LogoutOutlined />,
       content: <Text>{translateCommon('notification_sign_out')}</Text>,
       onOk() {
-        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-        router.push(ROUTERS.LOGIN);
         logoutUser.mutate(data);
       },
       onCancel() {
