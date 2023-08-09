@@ -11,7 +11,7 @@ export function formatDate(
   if (value) {
     return dayjs(value).format(formatString);
   }
-  return dayjs().format(formatString);
+  return;
 }
 
 export const formatNumber = (value: number | string) => {

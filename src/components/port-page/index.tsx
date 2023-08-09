@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getListPort } from './fetcher';
 import { PortData, STATUS_COLORS, STATUS_LABELS } from './interface';
 import { DEFAULT_PAGINATION, SkeletonTable } from '../commons/table-commons';
+import { formatDate } from '@/utils/format';
 
 export default function PortPage() {
   const router = useRouter();
@@ -53,26 +54,25 @@ export default function PortPage() {
       key: 'countryName',
       align: 'center',
     },
-
     {
       title: translatePort('type_of_port'),
       width: 150,
-      dataIndex: 'typeOfPort',
-      key: 'typeOfPort',
+      dataIndex: 'typePorts',
+      key: 'typePorts',
       align: 'center',
+      render: (value: any) =>
+        value.map(function (type: {
+          typePortID: string;
+          typePortName: string;
+        }) {
+          return <Tag key={type.typePortID}>{type.typePortName}</Tag>;
+        }),
     },
     {
       title: translatePort('address'),
       dataIndex: 'address',
       width: 200,
       key: 'address',
-      align: 'center',
-    },
-    {
-      title: translatePort('company'),
-      dataIndex: 'companyName',
-      width: 200,
-      key: 'companyName',
       align: 'center',
     },
     {
@@ -104,25 +104,33 @@ export default function PortPage() {
       ),
     },
     {
-      title: (
-        <div style={{ textTransform: 'uppercase' }}>
-          {translatePort('date_created')}
-        </div>
-      ),
+      title: translatePort('date_created'),
       width: 150,
-      dataIndex: 'insertedDate',
-      key: 'insertedDate',
+      dataIndex: 'dateInserted',
+      key: 'dateInserted',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: translatePort('creator'),
+      width: 200,
+      dataIndex: 'insertedByUser',
+      key: 'insertedByUser',
       align: 'center',
     },
     {
-      title: (
-        <div style={{ textTransform: 'uppercase' }}>
-          {translatePort('creator')}
-        </div>
-      ),
+      title: translatePort('date_inserted'),
+      width: 150,
+      dataIndex: 'dateUpdated',
+      key: 'dateUpdated',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: translatePort('inserter'),
       width: 200,
-      dataIndex: 'insertedBy',
-      key: 'insertedBy',
+      dataIndex: 'updatedByUser',
+      key: 'updatedByUser',
       align: 'center',
     },
     {
@@ -160,8 +168,15 @@ export default function PortPage() {
     queryKey: ['ports', pagination],
     queryFn: () =>
       getListPort({
-        currentPage: pagination.current,
-        pageSize: pagination.pageSize,
+        countryID: '',
+        portName: '',
+        portCode: '',
+        address: '',
+        typePortID: '',
+        paginateRequest: {
+          currentPage: pagination.current,
+          pageSize: pagination.pageSize,
+        },
       }),
     onSuccess(data) {
       if (data.status) {

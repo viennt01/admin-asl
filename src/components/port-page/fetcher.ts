@@ -6,13 +6,14 @@ import {
   PortDetailDataBody,
   PortEdit,
   PortsData,
+  RequestPortsData,
   TypePortData,
 } from './interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { Pagination } from '../commons/table-commons';
 
-export const getListPort = (data: Pagination) => {
-  return post<Pagination, ResponseWithPayload<PortsData>>({
+export const getListPort = (data: RequestPortsData) => {
+  return post<RequestPortsData, ResponseWithPayload<PortsData>>({
     data,
   })(API_PORT.GET_PORTS);
 };

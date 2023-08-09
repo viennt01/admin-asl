@@ -1,4 +1,5 @@
 import COLORS from '@/constant/color';
+import { Pagination } from '../commons/table-commons';
 
 export interface PortsData {
   data: PortData[];
@@ -20,6 +21,15 @@ export interface PortData {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
+}
+
+export interface RequestPortsData {
+  countryID?: string;
+  portName?: string;
+  portCode?: string;
+  address?: string;
+  typePortID?: string;
+  paginateRequest: Pagination;
 }
 export interface TypePortID {
   typePortID: string;

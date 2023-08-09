@@ -10,7 +10,7 @@ export const API_USER = {
 };
 
 export const API_PORT = {
-  GET_PORTS: '/get-all-port',
+  GET_PORTS: '/search-port',
   GET_PORT_DETAIL: '/get-detail-port',
   CREATE_PORT: '/add-new-port',
   EDIT_PORT: '/update-port',
