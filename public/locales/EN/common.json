@@ -11,7 +11,7 @@
     "customer": "Customer",
     "potential_customer": "Potential Customer",
     "official_customer": "Official Customer",
-    "customers_on_sales": "Customer are on sales",
+    "customers_on_sales": "Customer (on sales)",
     "supplier": "Liner/Vendor/Supplier",
     "master_data": "Master data",
     "port": "Port",

@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useRef, useState } from 'react';
-import CreatePricingSea from './create-pricing-sea';
+import CreatePricingAir from './create-pricing-air';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -27,46 +27,34 @@ const STATUS_LABELS = {
 export default function PricingSeaPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePricingSea } = useI18n('pricingSea');
+  const { translate: translatePricingAir } = useI18n('pricingAir');
   const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
-    no: number;
-    POL: string;
-    POD: string;
+    code: string;
+    origin: string;
     destination: string;
-    country: string;
     vendor: string;
     carrier: string;
-    service: string;
-    commodity: string;
-    LCLMin: string;
-    LCL: string;
-    DC20: string;
-    DC40: string;
-    HC40: string;
-    HC45: string;
-    RF20: string;
-    RF40: string;
-    DB20: string;
-    others: string;
-    type: string;
-    currency: string;
-    vat: string;
-    effectDate: string;
+    minQty: string;
+    minLess10: string;
+    less45: string;
+    more45: string;
+    more100: string;
+    more300: string;
+    more500: string;
+    more1000: string;
+    FSC: string;
+    SSC: string;
+    GW: string;
+    curr: string;
+    dateUpdate: string;
     validity: string;
+    tt: string;
     freq: string;
-    Cutoff: string;
-    TT: string;
-    inlAddon: string;
-    emptyReturn: string;
-    amend: string;
-    DEM: string;
-    DET: string;
-    STO: string;
-    modifyDate: string;
+    cutOff: string;
+    modify: string;
     status: string;
-    note: string;
     dateCreated: string;
     creator: string;
   }
@@ -74,44 +62,32 @@ export default function PricingSeaPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      no: i + 1,
-      POL: 'HO CHI MINH CITY',
-      POD: 'NORTH A...',
-      destination: 'AUSTIN, TX USA',
-      country: 'UNITED STATES',
-      vendor: '',
-      carrier: i % 2 ? 'OOCL' : 'ONE VN',
-      service: '',
-      commodity: '',
-      LCLMin: '',
-      LCL: '60.000',
-      DC20: '',
-      DC40: '',
-      HC40: '',
-      HC45: '',
-      RF20: '',
-      RF40: '',
-      DB20: '',
-      others: '',
-      type: '',
-      currency: 'USA',
-      vat: '',
-      effectDate: '01/05/2023',
-      validity: '31/07/2023',
-      freq: 'FRI',
-      Cutoff: '',
-      TT: '30 - 40',
-      inlAddon: '',
-      emptyReturn: '',
-      amend: '',
-      DEM: '0',
-      DET: '0',
-      STO: '0',
-      modifyDate: '30/06/2023',
+      code: 'ASL19092014',
+      origin: 'HO CHI MINH CITY',
+      destination: 'INCHON, KOREA',
+      vendor: 'KORCHINA',
+      carrier: '',
+      minQty: '',
+      minLess10: '',
+      less45: '',
+      more45: '2.200',
+      more100: '1.600',
+      more300: '1.400',
+      more500: '0.950',
+      more1000: '0.850',
+      FSC: '0.540',
+      SSC: '0.100',
+      GW: '',
+      curr: '',
+      dateUpdate: '19/09/2014',
+      validity: '20/09/2014',
+      tt: '',
+      freq: '',
+      cutOff: '',
+      modify: '',
       status: i % 2 === 1 ? 'Draft' : 'Active',
-      note: '',
-      dateCreated: '26/04/2023',
-      creator: 'ASL',
+      dateCreated: '19/09/2014',
+      creator: 'Admin',
     });
   }
 
@@ -229,197 +205,134 @@ export default function PricingSeaPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translatePricingSea('no'),
+      title: translatePricingAir('code'),
       width: 80,
-      dataIndex: 'no',
-      key: 'no',
+      dataIndex: 'code',
+      key: 'code',
       fixed: 'left',
       align: 'center',
-      ...getColumnSearchProps('no'),
+      ...getColumnSearchProps('code'),
     },
     {
-      title: translatePricingSea('POL'),
-      width: 200,
-      dataIndex: 'POL',
-      key: 'POL',
+      title: translatePricingAir('origin'),
+      width: 250,
+      dataIndex: 'origin',
+      key: 'origin',
       fixed: 'left',
       align: 'center',
-      ...getColumnSearchProps('POL'),
+      ...getColumnSearchProps('origin'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translatePricingSea('POD'),
-      width: 200,
-      dataIndex: 'POD',
-      key: 'POD',
-      fixed: 'left',
-      align: 'center',
-      ...getColumnSearchProps('POD'),
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: translatePricingSea('destination'),
-      width: 300,
+      title: translatePricingAir('destination'),
+      width: 250,
       dataIndex: 'destination',
       key: 'destination',
+      fixed: 'left',
       align: 'center',
       ...getColumnSearchProps('destination'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translatePricingSea('country'),
-      width: 200,
-      dataIndex: 'country',
-      key: 'country',
-      align: 'center',
-      ...getColumnSearchProps('country'),
-    },
-    {
-      title: translatePricingSea('vendor'),
+      title: translatePricingAir('vendor'),
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'center',
       ...getColumnSearchProps('vendor'),
+      // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translatePricingSea('carrier'),
-      width: 150,
+      title: translatePricingAir('carrier'),
+      width: 200,
       dataIndex: 'carrier',
       key: 'carrier',
       align: 'center',
       ...getColumnSearchProps('carrier'),
     },
     {
-      title: translatePricingSea('service'),
-      width: 300,
-      dataIndex: 'service',
-      key: 'service',
+      title: translatePricingAir('min_qty'),
+      width: 150,
+      dataIndex: 'minQty',
+      key: 'minQty',
       align: 'center',
-      ...getColumnSearchProps('service'),
+      ...getColumnSearchProps('minQty'),
     },
     {
-      title: translatePricingSea('commodity'),
-      width: 300,
-      dataIndex: 'commodity',
-      key: 'commodity',
+      title: translatePricingAir('min_less10'),
+      width: 150,
+      dataIndex: 'minLess10',
+      key: 'minLess10',
       align: 'center',
-      ...getColumnSearchProps('commodity'),
+      ...getColumnSearchProps('minLess10'),
     },
     {
-      title: translatePricingSea('LCLMin'),
+      title: translatePricingAir('less45'),
+      width: 150,
+      dataIndex: 'less45',
+      key: 'less45',
+      align: 'center',
+      ...getColumnSearchProps('less45'),
+    },
+    {
+      title: translatePricingAir('more45'),
+      width: 150,
+      dataIndex: 'more45',
+      key: 'more45',
+      align: 'center',
+      ...getColumnSearchProps('more45'),
+    },
+    {
+      title: translatePricingAir('more100'),
+      width: 150,
+      dataIndex: 'more100',
+      key: 'more100',
+      align: 'center',
+      ...getColumnSearchProps('more100'),
+    },
+    {
+      title: translatePricingAir('FSC'),
+      width: 150,
+      dataIndex: 'FSC',
+      key: 'FSC',
+      align: 'center',
+      ...getColumnSearchProps('FSC'),
+    },
+    {
+      title: translatePricingAir('SSC'),
+      width: 150,
+      dataIndex: 'SSC',
+      key: 'SSC',
+      align: 'center',
+      ...getColumnSearchProps('SSC'),
+    },
+    {
+      title: translatePricingAir('GW'),
+      width: 150,
+      dataIndex: 'GW',
+      key: 'GW',
+      align: 'center',
+      valueType: 'checkbox',
+      ...getColumnSearchProps('GW'),
+    },
+    {
+      title: translatePricingAir('curr'),
       width: 200,
-      dataIndex: 'LCLMin',
-      key: 'LCLMin',
+      dataIndex: 'curr',
+      key: 'curr',
       align: 'center',
-      ...getColumnSearchProps('LCLMin'),
+      ...getColumnSearchProps('curr'),
     },
     {
-      title: translatePricingSea('LCL'),
+      title: translatePricingAir('date_update'),
       width: 200,
-      dataIndex: 'LCL',
-      key: 'LCL',
+      dataIndex: 'dateUpdate',
+      key: 'dateUpdate',
       align: 'center',
-      ...getColumnSearchProps('LCL'),
+      ...getColumnSearchProps('dateUpdate'),
     },
     {
-      title: translatePricingSea('DC20'),
-      width: 200,
-      dataIndex: 'DC20',
-      key: 'DC20',
-      align: 'center',
-      ...getColumnSearchProps('DC20'),
-    },
-    {
-      title: translatePricingSea('DC40'),
-      width: 200,
-      dataIndex: 'DC40',
-      key: 'DC40',
-      align: 'center',
-      ...getColumnSearchProps('DC40'),
-    },
-    {
-      title: translatePricingSea('HC40'),
-      width: 200,
-      dataIndex: 'HC40',
-      key: 'HC40',
-      align: 'center',
-      ...getColumnSearchProps('HC40'),
-    },
-    {
-      title: translatePricingSea('HC45'),
-      width: 200,
-      dataIndex: 'HC45',
-      key: 'HC45',
-      align: 'center',
-      ...getColumnSearchProps('HC45'),
-    },
-    {
-      title: translatePricingSea('RF20'),
-      width: 200,
-      dataIndex: 'RF20',
-      key: 'RF20',
-      align: 'center',
-      ...getColumnSearchProps('RF20'),
-    },
-    {
-      title: translatePricingSea('RF40'),
-      width: 200,
-      dataIndex: 'RF40',
-      key: 'RF40',
-      align: 'center',
-      ...getColumnSearchProps('RF40'),
-    },
-    {
-      title: translatePricingSea('DB20'),
-      width: 200,
-      dataIndex: 'DB20',
-      key: 'DB20',
-      align: 'center',
-      ...getColumnSearchProps('DB20'),
-    },
-    {
-      title: translatePricingSea('others'),
-      width: 200,
-      dataIndex: 'others',
-      key: 'others',
-      align: 'center',
-      ...getColumnSearchProps('others'),
-    },
-    {
-      title: translatePricingSea('type'),
-      width: 300,
-      dataIndex: 'type',
-      key: 'type',
-      align: 'center',
-      ...getColumnSearchProps('type'),
-    },
-    {
-      title: translatePricingSea('currency'),
-      width: 200,
-      dataIndex: 'currency',
-      key: 'currency',
-      align: 'center',
-      ...getColumnSearchProps('currency'),
-    },
-    {
-      title: translatePricingSea('vat'),
-      width: 200,
-      dataIndex: 'vat',
-      key: 'vat',
-      align: 'center',
-      ...getColumnSearchProps('vat'),
-    },
-    {
-      title: translatePricingSea('effect_date'),
-      width: 200,
-      dataIndex: 'effectDate',
-      key: 'effectDate',
-      align: 'center',
-      ...getColumnSearchProps('effectDate'),
-    },
-    {
-      title: translatePricingSea('validity'),
+      title: translatePricingAir('validity'),
       width: 200,
       dataIndex: 'validity',
       key: 'validity',
@@ -427,79 +340,39 @@ export default function PricingSeaPage() {
       ...getColumnSearchProps('validity'),
     },
     {
-      title: translatePricingSea('freq'),
-      width: 150,
+      title: translatePricingAir('tt'),
+      width: 200,
+      dataIndex: 'tt',
+      key: 'tt',
+      align: 'center',
+      ...getColumnSearchProps('tt'),
+    },
+    {
+      title: translatePricingAir('freq'),
+      width: 200,
       dataIndex: 'freq',
       key: 'freq',
       align: 'center',
       ...getColumnSearchProps('freq'),
     },
     {
-      title: translatePricingSea('Cutoff'),
-      width: 180,
-      dataIndex: 'Cutoff',
-      key: 'Cutoff',
-      align: 'center',
-      ...getColumnSearchProps('Cutoff'),
-    },
-    {
-      title: translatePricingSea('TT'),
+      title: translatePricingAir('cut_off'),
       width: 200,
-      dataIndex: 'TT',
-      key: 'TT',
+      dataIndex: 'cutOff',
+      key: 'cutOff',
       align: 'center',
-      ...getColumnSearchProps('TT'),
+      ...getColumnSearchProps('cutOff'),
     },
     {
-      title: translatePricingSea('inl_addon'),
+      title: translatePricingAir('modify'),
       width: 200,
-      dataIndex: 'inlAddon',
-      key: 'inlAddon',
+      dataIndex: 'modify',
+      key: 'modify',
       align: 'center',
-      ...getColumnSearchProps('inlAddon'),
+      ...getColumnSearchProps('modify'),
     },
     {
-      title: translatePricingSea('empty_return'),
-      width: 200,
-      dataIndex: 'emptyReturn',
-      key: 'emptyReturn',
-      align: 'center',
-      ...getColumnSearchProps('emptyReturn'),
-    },
-    {
-      title: translatePricingSea('amend'),
-      width: 200,
-      dataIndex: 'amend',
-      key: 'amend',
-      align: 'center',
-      ...getColumnSearchProps('amend'),
-    },
-    {
-      title: translatePricingSea('DEM'),
-      width: 200,
-      dataIndex: 'DEM',
-      key: 'DEM',
-      align: 'center',
-      ...getColumnSearchProps('DEM'),
-    },
-    {
-      title: translatePricingSea('STO'),
-      width: 200,
-      dataIndex: 'STO',
-      key: 'STO',
-      align: 'center',
-      ...getColumnSearchProps('STO'),
-    },
-    {
-      title: translatePricingSea('modify_date'),
-      width: 200,
-      dataIndex: 'modifyDate',
-      key: 'modifyDate',
-      align: 'center',
-      ...getColumnSearchProps('modifyDate'),
-    },
-    {
-      title: translatePricingSea('status'),
+      title: translatePricingAir('status'),
       width: 150,
       dataIndex: 'status',
       key: 'status',
@@ -528,17 +401,9 @@ export default function PricingSeaPage() {
       ),
     },
     {
-      title: translatePricingSea('note'),
-      width: 200,
-      dataIndex: 'note',
-      key: 'note',
-      align: 'center',
-      ...getColumnSearchProps('note'),
-    },
-    {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translatePricingSea('date_created')}
+          {translatePricingAir('date_created')}
         </div>
       ),
       width: 150,
@@ -549,7 +414,7 @@ export default function PricingSeaPage() {
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translatePricingSea('creator')}
+          {translatePricingAir('creator')}
         </div>
       ),
       width: 200,
@@ -573,7 +438,7 @@ export default function PricingSeaPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.SEA_PRICING_EDIT(id));
+    router.push(ROUTERS.AIR_PRICING_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -599,7 +464,7 @@ export default function PricingSeaPage() {
       columns={columns}
       search={false}
       dateFormatter="string"
-      headerTitle={translatePricingSea('title')}
+      headerTitle={translatePricingAir('title')}
       scroll={{
         x: 'max-content',
       }}
@@ -609,7 +474,7 @@ export default function PricingSeaPage() {
         search: true,
       }}
       toolBarRender={() => [
-        <CreatePricingSea key={'create'} />,
+        <CreatePricingAir key={'create'} />,
         <Button
           icon={<DeleteOutlined />}
           style={{

@@ -17,11 +17,11 @@ import style from './index.module.scss';
 
 const STATUS_COLORS = {
   Active: '#00A651',
-  DeActive: '#ED1C27',
+  Draft: 'rgb(124 117 117)',
 };
 const STATUS_LABELS = {
   Active: 'Active',
-  DeActive: 'Tạm ngừng',
+  Draft: 'Draft',
 };
 
 export default function PricingTruckingPage() {
@@ -42,6 +42,14 @@ export default function PricingTruckingPage() {
     commodity: string;
     LCLMin: string;
     LCL: string;
+    DC20: string;
+    DC40: string;
+    HC40: string;
+    HC45: string;
+    RF20: string;
+    RF40: string;
+    DB20: string;
+    others: string;
     type: string;
     currency: string;
     vat: string;
@@ -77,6 +85,14 @@ export default function PricingTruckingPage() {
       commodity: '',
       LCLMin: '',
       LCL: '60.000',
+      DC20: '',
+      DC40: '',
+      HC40: '',
+      HC45: '',
+      RF20: '',
+      RF40: '',
+      DB20: '',
+      others: '',
       type: '',
       currency: 'USA',
       vat: '',
@@ -92,7 +108,7 @@ export default function PricingTruckingPage() {
       DET: '0',
       STO: '0',
       modifyDate: '30/06/2023',
-      status: i % 2 === 1 ? 'Public' : 'Active',
+      status: i % 2 === 1 ? 'Draft' : 'Active',
       note: '',
       dateCreated: '26/04/2023',
       creator: 'ASL',
@@ -292,7 +308,7 @@ export default function PricingTruckingPage() {
     },
     {
       title: translatePricingTrucking('LCLMin'),
-      width: 250,
+      width: 200,
       dataIndex: 'LCLMin',
       key: 'LCLMin',
       align: 'center',
@@ -300,11 +316,75 @@ export default function PricingTruckingPage() {
     },
     {
       title: translatePricingTrucking('LCL'),
-      width: 250,
+      width: 200,
       dataIndex: 'LCL',
       key: 'LCL',
       align: 'center',
       ...getColumnSearchProps('LCL'),
+    },
+    {
+      title: translatePricingTrucking('DC20'),
+      width: 200,
+      dataIndex: 'DC20',
+      key: 'DC20',
+      align: 'center',
+      ...getColumnSearchProps('DC20'),
+    },
+    {
+      title: translatePricingTrucking('DC40'),
+      width: 200,
+      dataIndex: 'DC40',
+      key: 'DC40',
+      align: 'center',
+      ...getColumnSearchProps('DC40'),
+    },
+    {
+      title: translatePricingTrucking('HC40'),
+      width: 200,
+      dataIndex: 'HC40',
+      key: 'HC40',
+      align: 'center',
+      ...getColumnSearchProps('HC40'),
+    },
+    {
+      title: translatePricingTrucking('HC45'),
+      width: 200,
+      dataIndex: 'HC45',
+      key: 'HC45',
+      align: 'center',
+      ...getColumnSearchProps('HC45'),
+    },
+    {
+      title: translatePricingTrucking('RF20'),
+      width: 200,
+      dataIndex: 'RF20',
+      key: 'RF20',
+      align: 'center',
+      ...getColumnSearchProps('RF20'),
+    },
+    {
+      title: translatePricingTrucking('RF40'),
+      width: 200,
+      dataIndex: 'RF40',
+      key: 'RF40',
+      align: 'center',
+      ...getColumnSearchProps('RF40'),
+    },
+    {
+      title: translatePricingTrucking('DB20'),
+      width: 200,
+      dataIndex: 'DB20',
+      key: 'DB20',
+      align: 'center',
+      ...getColumnSearchProps('DB20'),
+    },
+    {
+      title: translatePricingTrucking('others'),
+      width: 200,
+      dataIndex: 'others',
+      key: 'others',
+      align: 'center',
+      ...getColumnSearchProps('others'),
     },
     {
       title: translatePricingTrucking('type'),
@@ -431,7 +511,7 @@ export default function PricingTruckingPage() {
         },
         {
           text: 'Tạm ngừng',
-          value: 'DeActive',
+          value: 'Draft',
         },
       ],
       // onFilter: (value: string, record) => record.address.startsWith(value),

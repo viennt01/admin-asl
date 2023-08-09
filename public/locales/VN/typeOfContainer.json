@@ -1,6 +1,6 @@
 {
     "title": "Danh sách loại Container",
-    "code": "Số thứ tự",
+    "code": "Stt",
     "container_no": "Mã loại container",
     "type_of_container": "Loại Container",
     "detail": "Chi tiết",
