@@ -580,7 +580,7 @@ export default function EditOfficialCustomer() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translateOfficialCustomer('status_placeholder'),
                     },
                   ]}
                 >

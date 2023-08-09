@@ -37,5 +37,5 @@
     "department_placeholder": "Enter department",
     "manager_placeholder": "Enter manager",
     "note_placeholder": "Enter note",
-    "status_placeholder":"Choose status"
+    "status_placeholder":"Please select status"
 }

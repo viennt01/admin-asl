@@ -399,7 +399,7 @@ export default function EditLStaff() {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input type of status',
+                          message: translateStaff('status_placeholder'),
                         },
                       ]}
                     >

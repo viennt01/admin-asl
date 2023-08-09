@@ -90,7 +90,7 @@ export default function EditUnit() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translateUnit('status_placeholder'),
                     },
                   ]}
                 >

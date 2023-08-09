@@ -106,7 +106,7 @@ export default function EditExpensesType() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translateFee('status_placeholder'),
                     },
                   ]}
                 >

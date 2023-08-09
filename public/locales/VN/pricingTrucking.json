@@ -39,6 +39,7 @@
     "date_created": "Date created",
     "creator": "Creator",
 
+    "title_information_type_of_container": "Định giá của theo từng loại container",
     "information_edit_trucking_pricing": "Chỉnh sửa định giá vận chuyển bằng xe tải",
     "POL_placeholder": "Vui lòng nhập POL",
     "POD_placeholder": "Vui lòng nhập POD",

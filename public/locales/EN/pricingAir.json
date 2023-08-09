@@ -15,7 +15,7 @@
     "more1000": "+1000(KG)",
     "FSC": "FSC",
     "SSC": "SSC",
-    "GW": "G.w",
+    "GW": "G.W",
     "curr": "Curr.",
     "date_update": "Date Update",
     "validity": "Validity",
@@ -25,5 +25,23 @@
     "modify": "Modified",
     "status": "Status",
     "date_created": "Date created",
-    "creator": "Creator"
+    "creator": "Creator",
+
+    "title_information_pricing_weight": "Pricing based on quality",
+    "information_edit_air_pricing": "Edit Air Pricing",
+    "code_placeholder": "Please input code",
+    "origin_placeholder": "Please input origin",
+    "destination_placeholder": "Please input destination",
+    "vendor_placeholder": "Please input vendor",
+    "carrier_placeholder": "Please input carrier",
+    "curr_placeholder": "Please input Curr.",
+    "date_update_placeholder": "Please input date update",
+    "validity_placeholder": "Please input validity",
+    "tt_placeholder": "Please input T/T",
+    "freq_placeholder": "Please input Freq.",
+    "cut_off_placeholder": "Please input Cut off",
+    "modify_placeholder": "Please input modified",
+    "status_placeholder": "Please select status",
+    "date_created_placeholder": "Please select date created",
+    "creator_placeholder": "Please select creator"
 }

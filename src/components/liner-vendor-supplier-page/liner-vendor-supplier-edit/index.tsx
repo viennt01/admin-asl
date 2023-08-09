@@ -580,7 +580,7 @@ export default function EditSupplier() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translateSupplier('status_placeholder'),
                     },
                   ]}
                 >

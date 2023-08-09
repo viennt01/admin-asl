@@ -581,7 +581,7 @@ export default function EditLCustomer() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translatePotentialCustomer('status_placeholder'),
                     },
                   ]}
                 >
