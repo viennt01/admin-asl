@@ -123,7 +123,7 @@ export default function EditTypeOfContainer() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translateTypeOfContainer('status_placeholder'),
                     },
                   ]}
                 >

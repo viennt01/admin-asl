@@ -10,5 +10,6 @@
     "information_add_unit": "Add new Unit",
     "information_edit_unit": "Edit Unit",
     "international_code_placeholder": "Enter international code",
-    "description_placeholder": "Enter description"
+    "description_placeholder": "Enter description",
+    "status_placeholder":"Please select status"
 }

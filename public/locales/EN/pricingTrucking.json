@@ -39,6 +39,7 @@
     "date_created": "Date created",
     "creator": "Creator",
 
+    "title_information_type_of_container": "Pricing for each type of container",
     "information_edit_trucking_pricing": "Edit Sea Pricing",
     "POL_placeholder": "Please input POL",
     "POD_placeholder": "Please input POD",

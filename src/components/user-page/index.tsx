@@ -204,6 +204,7 @@ export default function CalculationUserPage() {
       title: translateUser('account'),
       dataIndex: 'account',
       key: 'account',
+      fixed: 'left',
       width: 150,
       align: 'center',
       ...getColumnSearchProps('account'),

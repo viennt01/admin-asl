@@ -272,7 +272,7 @@ export default function EditBank() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translateBank('status_placeholder'),
                     },
                   ]}
                 >

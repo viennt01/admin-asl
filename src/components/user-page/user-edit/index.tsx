@@ -415,7 +415,7 @@ export default function EditUser() {
                       rules={[
                         {
                           required: true,
-                          message: 'Please input type of status',
+                          message: translateUser('status_placeholder'),
                         },
                       ]}
                     >

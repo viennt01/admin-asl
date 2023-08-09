@@ -11,16 +11,26 @@ import {
   ConfigProvider,
   Select,
   DatePicker,
+  Table,
 } from 'antd';
+import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useI18n from '@/i18n/useI18N';
+import CollapseCard from '@/components/commons/collapse-card';
 
 export interface FormValues {
   type_of_container: string;
   detail_placeholder: string;
   number_container: string;
+}
+
+interface DataType {
+  key: React.Key;
+  containerNo: string;
+  typeContainer: string;
+  status: string;
 }
 
 const { Title } = Typography;
@@ -39,6 +49,88 @@ export default function EditPricingTrucking() {
   const onFinish = (formValues: FormValues) => {
     console.log(formValues);
   };
+
+  const data: readonly any[] | undefined = [];
+
+  const columnsTypeOfContainerCost: ColumnsType<DataType> = [
+    {
+      title: translatePricingTrucking('LCLMin'),
+      width: 200,
+      dataIndex: 'LCLMin',
+      key: 'LCLMin',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('LCL'),
+      width: 200,
+      dataIndex: 'LCL',
+      key: 'LCL',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('DC20'),
+      width: 200,
+      dataIndex: 'DC20',
+      key: 'DC20',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('DC40'),
+      width: 200,
+      dataIndex: 'DC40',
+      key: 'DC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('HC40'),
+      width: 200,
+      dataIndex: 'HC40',
+      key: 'HC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('HC45'),
+      width: 200,
+      dataIndex: 'HC45',
+      key: 'HC45',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('RF20'),
+      width: 200,
+      dataIndex: 'RF20',
+      key: 'RF20',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('RF40'),
+      width: 200,
+      dataIndex: 'RF40',
+      key: 'RF40',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('DB20'),
+      width: 200,
+      dataIndex: 'DB20',
+      key: 'DB20',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('others'),
+      width: 200,
+      dataIndex: 'others',
+      key: 'others',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('type'),
+      width: 300,
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
+    },
+  ];
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -225,7 +317,7 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={12} span={24}>
+              {/* <Col lg={12} span={24}>
                 <Form.Item
                   label={translatePricingTrucking('LCLMin')}
                   name="LCLMin"
@@ -410,7 +502,7 @@ export default function EditPricingTrucking() {
                     placeholder={translatePricingTrucking('type_placeholder')}
                   />
                 </Form.Item>
-              </Col>
+              </Col> */}
 
               <Col lg={4} span={24}>
                 <Form.Item
@@ -656,14 +748,14 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={4} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
                   label={translatePricingTrucking('status')}
                   name="status"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of status',
+                      message: translatePricingTrucking('status_placeholder'),
                     },
                   ]}
                 >
@@ -682,7 +774,7 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={4} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translatePricingTrucking('modify_date')}
                   name="modify_date"
@@ -696,7 +788,7 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={4} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translatePricingTrucking('date_created')}
                   name="date_created"
@@ -710,7 +802,7 @@ export default function EditPricingTrucking() {
                 </Form.Item>
               </Col>
 
-              <Col lg={4} span={24}>
+              <Col lg={8} span={24}>
                 <Form.Item
                   label={translatePricingTrucking('creator')}
                   name="creator"
@@ -726,10 +818,28 @@ export default function EditPricingTrucking() {
             </Row>
           </Card>
 
+          <CollapseCard
+            title={translatePricingTrucking(
+              'title_information_type_of_container'
+            )}
+            style={{ marginBottom: '24px' }}
+          >
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table
+                    columns={columnsTypeOfContainerCost}
+                    dataSource={data}
+                  />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
+
           <Card>
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.PORT)}>
+                <Button onClick={() => router.push(ROUTERS.TRUCKING_PRICING)}>
                   Cancel
                 </Button>
               </Col>
