@@ -1,6 +1,6 @@
 {
     "title": "Danh sách cảng",
-    "port_no": "Số thứ tự",
+    "port_no": "Stt",
     "code": "Mã Cảng",
     "name": "Tên Cảng",
     "country_name": "Quốc gia",

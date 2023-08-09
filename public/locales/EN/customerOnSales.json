@@ -1,6 +1,6 @@
 {
-    "title": "List of Customer are on Sales",
-    "code": "Customer No",
+    "title": "List of Customer (on sales)",
+    "code": "Code",
     "abbreviation": "Abbreviation",
     "name": "Customer Name",
     "number": "Number of transactions",

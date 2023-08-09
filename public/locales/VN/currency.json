@@ -1,6 +1,6 @@
 {
     "title": "Danh sách tiền tệ",
-    "code": "Số thứ tự",
+    "code": "Stt",
     "currency": "Tiền tệ",
     "exchange_rate_to_VND": "Tỉ giá sang VND",
     "exchange_rate_to_USD": "Tỉ giá sang USD",

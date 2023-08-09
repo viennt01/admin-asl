@@ -1,6 +1,6 @@
 {
     "title": "Danh sách các loại chi phí",
-    "add_fee_no": "Số thứ tự",
+    "add_fee_no": "Stt",
     "code": "Mã chi phí",
     "name": "Tên chi phí",
     "status":"Trạng thái",
