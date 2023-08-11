@@ -41,6 +41,8 @@
     "error": "Error",
     "create": "Create",
     "edit": "Edit",
+    "save": "Save",
+    "close": "Close",
     "cancel": "Cancel",
     "date_created": "Date created",
     "creator": "Creator",

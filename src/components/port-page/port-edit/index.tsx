@@ -9,6 +9,7 @@ import { API_MESSAGE } from '@/constant/message';
 
 const EditPort = () => {
   const portId = router.query.id as string;
+  const checkRow = router.query.checkRow as string;
 
   const updatePortMutation = useMutation({
     mutationFn: (body: PortEdit) => {
@@ -50,6 +51,7 @@ const EditPort = () => {
     <PortForm
       handleSubmit={handleSubmit}
       loading={updatePortMutation.isLoading}
+      checkRow={checkRow === 'true' ? true : false}
     />
   );
 };

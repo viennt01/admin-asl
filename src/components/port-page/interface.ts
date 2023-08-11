@@ -23,6 +23,13 @@ export interface PortData {
   updatedByUser: string;
 }
 
+export interface ParamData {
+  countryID: string;
+  portName: string;
+  portCode: string;
+  address: string;
+}
+
 export interface RequestPortsData {
   countryID?: string;
   portName?: string;

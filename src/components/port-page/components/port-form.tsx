@@ -33,19 +33,26 @@ interface PortFormProps {
   create?: boolean;
   handleSubmit: (formValues: FormValues) => void;
   loading: boolean;
+  checkRow: boolean;
 }
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
+const PortForm = ({
+  create,
+  handleSubmit,
+  loading,
+  checkRow,
+}: PortFormProps) => {
   const { translate: translatePort } = useI18n('port');
   const { translate: translateCommon } = useI18n('common');
-
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [options, setOptions] = useState<Option[]>([]);
+  const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
+
   useEffect(() => {
     if (!id) return;
   }, [router, form]);
@@ -144,6 +151,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                 <Input
                   placeholder={translatePort('port_code.placeholder')}
                   size="large"
+                  disabled={checkRow && isCheckEdit}
                 />
               </Form.Item>
             </Col>
@@ -161,6 +169,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                 <Input
                   placeholder={translatePort('port_name.placeholder')}
                   size="large"
+                  disabled={checkRow && isCheckEdit}
                 />
               </Form.Item>
             </Col>
@@ -184,6 +193,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                     label: type.typePortName,
                     value: type.typePortID,
                   }))}
+                  disabled={checkRow && isCheckEdit}
                 />
               </Form.Item>
             </Col>
@@ -208,6 +218,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                       .toLowerCase()
                       .includes(input.toLowerCase())
                   }
+                  disabled={checkRow && isCheckEdit}
                 />
               </Form.Item>
             </Col>
@@ -232,6 +243,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                         value: index + 1,
                       })
                     )}
+                    disabled={checkRow && isCheckEdit}
                   />
                 </Form.Item>
               </Col>
@@ -253,6 +265,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                 <Input
                   placeholder={translatePort('address_port.placeholder')}
                   size="large"
+                  disabled={checkRow && isCheckEdit}
                 />
               </Form.Item>
             </Col>
@@ -266,6 +279,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                   size="large"
                   placeholder={translatePort('description.placeholder')}
                   allowClear
+                  disabled={checkRow && isCheckEdit}
                 />
               </Form.Item>
             </Col>
@@ -275,18 +289,36 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
         <Card>
           <Row gutter={12}>
             <Col span={12}>
-              <Button onClick={() => router.push(ROUTERS.PORT)}>
-                {translateCommon('cancel')}
-              </Button>
-
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ marginLeft: '12px' }}
-                loading={loading}
-              >
-                {!create ? translateCommon('edit') : translateCommon('create')}
-              </Button>
+              {checkRow && isCheckEdit ? (
+                <>
+                  <Button onClick={() => router.push(ROUTERS.PORT)}>
+                    {translateCommon('close')}
+                  </Button>
+                  <Button
+                    type="primary"
+                    onClick={() => setCheckEdit(false)}
+                    style={{ marginLeft: '12px' }}
+                  >
+                    {translateCommon('edit')}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button onClick={() => router.push(ROUTERS.PORT)}>
+                    {translateCommon('cancel')}
+                  </Button>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ marginLeft: '12px' }}
+                    loading={loading}
+                  >
+                    {!create
+                      ? translateCommon('save')
+                      : translateCommon('create')}
+                  </Button>
+                </>
+              )}
             </Col>
             {!create ? (
               <Col span={12}>
@@ -303,9 +335,7 @@ const PortForm = ({ create, handleSubmit, loading }: PortFormProps) => {
                     {portDetailQuery.data?.data.updatedByUser}
                   </Descriptions.Item>
                   <Descriptions.Item label={translateCommon('date_inserted')}>
-                    {formatDate(
-                      Number(portDetailQuery.data?.data.dateInserted)
-                    )}
+                    {formatDate(Number(portDetailQuery.data?.data.dateUpdated))}
                   </Descriptions.Item>
                 </Descriptions>
               </Col>

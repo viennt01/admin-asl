@@ -1,6 +1,20 @@
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, ConfigProvider, PaginationProps, Tag } from 'antd';
-import { Key, useState } from 'react';
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+  SearchOutlined,
+  ReloadOutlined,
+} from '@ant-design/icons';
+import {
+  Button,
+  ConfigProvider,
+  Input,
+  InputRef,
+  PaginationProps,
+  Space,
+  Tag,
+} from 'antd';
+import { Key, useRef, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -9,9 +23,17 @@ import { ProColumns, ProTable } from '@ant-design/pro-components';
 import style from './index.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { getListPort } from './fetcher';
-import { PortData, STATUS_COLORS, STATUS_LABELS } from './interface';
+import { ParamData, PortData, STATUS_COLORS, STATUS_LABELS } from './interface';
 import { DEFAULT_PAGINATION, SkeletonTable } from '../commons/table-commons';
 import { formatDate } from '@/utils/format';
+import Highlighter from 'react-highlight-words';
+import { FilterConfirmProps } from 'antd/lib/table/interface';
+const initalValueQueryParams = {
+  countryID: '',
+  portName: '',
+  portCode: '',
+  address: '',
+};
 
 export default function PortPage() {
   const router = useRouter();
@@ -19,6 +41,119 @@ export default function PortPage() {
   const { translate: translatePort } = useI18n('port');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] = useState(DEFAULT_PAGINATION);
+  const [queryParams, setQueryParams] = useState<ParamData>(
+    initalValueQueryParams
+  );
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef<InputRef>(null);
+  const [refreshingLoading, setRefreshingLoading] = useState(false);
+  type DataIndex = keyof ParamData;
+
+  const handleSearchInputKeyPress = (value: string) => {
+    console.log('Entered search text:', value);
+  };
+
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    const newQueryParams = { ...queryParams };
+    newQueryParams[dataIndex] = selectedKeys[0];
+    setQueryParams(newQueryParams);
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+    const newQueryParams = { ...queryParams };
+    newQueryParams[dataIndex] = '';
+    setQueryParams(newQueryParams);
+    clearFilters();
+    setSearchText('');
+  };
+
+  const getColumnSearchProps = (
+    dataIndex: DataIndex
+  ): ProColumns<PortData> => ({
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
+      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+        <Input
+          ref={searchInput}
+          placeholder="Search"
+          value={selectedKeys[0]}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
+          onPressEnter={() =>
+            handleSearch(selectedKeys as string[], confirm, dataIndex)
+          }
+          style={{ marginBottom: 8, display: 'block' }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() =>
+              handleSearch(selectedKeys as string[], confirm, dataIndex)
+            }
+            icon={<SearchOutlined />}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters, dataIndex)}
+            size="small"
+            style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered: boolean) => (
+      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes((value as string).toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
 
   const columns: ProColumns<PortData>[] = [
     {
@@ -38,6 +173,7 @@ export default function PortPage() {
       width: 120,
       key: 'portCode',
       align: 'center',
+      ...getColumnSearchProps('portCode'),
     },
     {
       title: translatePort('name'),
@@ -45,8 +181,8 @@ export default function PortPage() {
       width: 250,
       key: 'portName',
       align: 'center',
+      ...getColumnSearchProps('portName'),
     },
-
     {
       title: translatePort('country_name'),
       width: 150,
@@ -69,13 +205,6 @@ export default function PortPage() {
         }),
     },
     {
-      title: translatePort('address'),
-      dataIndex: 'address',
-      width: 200,
-      key: 'address',
-      align: 'center',
-    },
-    {
       title: translatePort('status'),
       dataIndex: 'status',
       key: 'status',
@@ -84,11 +213,11 @@ export default function PortPage() {
       filters: [
         {
           text: 'Active',
-          value: 'Active',
+          value: '1',
         },
         {
           text: 'Tạm ngừng',
-          value: 'DeActive',
+          value: '2',
         },
       ],
       filterSearch: true,
@@ -165,14 +294,10 @@ export default function PortPage() {
   };
 
   const portsQuery = useQuery({
-    queryKey: ['ports', pagination],
+    queryKey: ['ports', pagination, queryParams],
     queryFn: () =>
       getListPort({
-        countryID: '',
-        portName: '',
-        portCode: '',
-        address: '',
-        typePortID: '',
+        ...queryParams,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -190,6 +315,16 @@ export default function PortPage() {
       }
     },
   });
+
+  const refreshingQuery = () => {
+    setSearchText('');
+    setQueryParams(initalValueQueryParams);
+    setRefreshingLoading(true);
+    portsQuery.refetch();
+    setTimeout(() => {
+      setRefreshingLoading(false);
+    }, 500);
+  };
 
   return (
     <>
@@ -217,16 +352,30 @@ export default function PortPage() {
               onChange: handlePaginationChange,
             }}
             search={false}
-            // dateFormatter="string"
             scroll={{
               x: 'max-content',
             }}
             sticky={{ offsetHeader: 0 }}
             options={{
               fullScreen: true,
-              search: true,
+              reload: false,
+            }}
+            onRow={(record) => {
+              return {
+                onClick: (e) => {
+                  const target = e.target as HTMLElement;
+                  if (!target.closest('button')) {
+                    router.push(ROUTERS.PORT_EDIT(record.portID, true));
+                  }
+                },
+              };
             }}
             toolBarRender={() => [
+              <Input.Search
+                key={'Search'}
+                placeholder="Search"
+                onSearch={handleSearchInputKeyPress}
+              />,
               <Button
                 key={'create'}
                 icon={<PlusOutlined />}
@@ -255,6 +404,17 @@ export default function PortPage() {
               >
                 {translateCommon('button_delete')}
               </Button>,
+              <Button
+                key={'refresh'}
+                onClick={() => refreshingQuery()}
+                icon={<ReloadOutlined />}
+                loading={refreshingLoading}
+                style={{
+                  width: 32,
+                  height: 32,
+                  padding: 6,
+                }}
+              />,
             ]}
           />
         )}

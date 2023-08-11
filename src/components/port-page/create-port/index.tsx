@@ -43,6 +43,7 @@ const CreatePort = () => {
       create
       handleSubmit={handleSubmit}
       loading={createPortMutation.isLoading}
+      checkRow={false}
     />
   );
 };

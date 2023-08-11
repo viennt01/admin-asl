@@ -32,7 +32,8 @@ export const ROUTERS = {
   SUPPLIER_EDIT: (supplierId: string) =>
     `/partner/liner-vendor-supplier/edit/${supplierId}`,
   PORT: '/master-data/port',
-  PORT_EDIT: (portId: string) => `/master-data/port/edit/${portId}`,
+  PORT_EDIT: (portId: string, checkRow = false) =>
+    `/master-data/port/edit/${portId}?checkRow=${checkRow}`,
   PORT_CREATE: '/master-data/port/create',
   LOCATION: '/master-data/location-catalog/location',
   LOCATION_EDIT: (locationId: string) =>
