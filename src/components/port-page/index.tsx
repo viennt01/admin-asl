@@ -23,11 +23,17 @@ import { ProColumns, ProTable } from '@ant-design/pro-components';
 import style from './index.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { getListPort } from './fetcher';
-import { ParamData, PortData, STATUS_COLORS, STATUS_LABELS } from './interface';
+import {
+  ParamData,
+  PortDataTable,
+  STATUS_COLORS,
+  STATUS_LABELS,
+} from './interface';
 import { DEFAULT_PAGINATION, SkeletonTable } from '../commons/table-commons';
 import { formatDate } from '@/utils/format';
 import Highlighter from 'react-highlight-words';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
+import { API_PORT } from '@/fetcherAxios/endpoint';
 const initalValueQueryParams = {
   countryID: '',
   portName: '',
@@ -48,6 +54,7 @@ export default function PortPage() {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
+  const [dataTable, setDataTable] = useState<PortDataTable[]>([]);
   type DataIndex = keyof ParamData;
 
   const handleSearchInputKeyPress = (value: string) => {
@@ -77,7 +84,7 @@ export default function PortPage() {
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
-  ): ProColumns<PortData> => ({
+  ): ProColumns<PortDataTable> => ({
     filterDropdown: ({
       setSelectedKeys,
       selectedKeys,
@@ -155,7 +162,7 @@ export default function PortPage() {
       ),
   });
 
-  const columns: ProColumns<PortData>[] = [
+  const columns: ProColumns<PortDataTable>[] = [
     {
       title: translatePort('port_no'),
       dataIndex: 'index',
@@ -267,7 +274,7 @@ export default function PortPage() {
       fixed: 'right',
       width: 50,
       align: 'center',
-      dataIndex: 'portID',
+      dataIndex: 'key',
       render: (value) => (
         <Button
           onClick={() => handleEditCustomer(value as string)}
@@ -294,7 +301,7 @@ export default function PortPage() {
   };
 
   const portsQuery = useQuery({
-    queryKey: ['ports', pagination, queryParams],
+    queryKey: [API_PORT.GET_PORTS, pagination, queryParams],
     queryFn: () =>
       getListPort({
         ...queryParams,
@@ -306,6 +313,23 @@ export default function PortPage() {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
+        setDataTable(
+          data.data.data.map((data) => ({
+            key: data.portID,
+            countryID: data.countryID,
+            portName: data.portName,
+            portCode: data.portCode,
+            typePorts: data.typePorts,
+            status: data.status,
+            description: data.description,
+            address: data.address,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            countryName: data.countryName,
+          }))
+        );
         setPagination((state) => ({
           ...state,
           current: currentPage,
@@ -332,11 +356,11 @@ export default function PortPage() {
         {portsQuery.isLoading ? (
           <SkeletonTable />
         ) : (
-          <ProTable<PortData>
+          <ProTable<PortDataTable>
             headerTitle={translatePort('title')}
             className={style.table}
             style={{ marginTop: '8px' }}
-            dataSource={portsQuery.data?.data?.data}
+            dataSource={dataTable}
             columns={columns}
             rowSelection={{
               type: 'checkbox',
@@ -365,7 +389,7 @@ export default function PortPage() {
                 onClick: (e) => {
                   const target = e.target as HTMLElement;
                   if (!target.closest('button')) {
-                    router.push(ROUTERS.PORT_EDIT(record.portID, true));
+                    router.push(ROUTERS.PORT_EDIT(record.key, true));
                   }
                 },
               };

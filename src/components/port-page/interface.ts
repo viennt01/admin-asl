@@ -21,6 +21,23 @@ export interface PortData {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
+  countryName: string;
+}
+
+export interface PortDataTable {
+  key: string;
+  countryID: string;
+  portName: string;
+  portCode: string;
+  typePorts: TypePortID[];
+  status: number;
+  description: string;
+  address: string;
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
+  countryName: string;
 }
 
 export interface ParamData {
