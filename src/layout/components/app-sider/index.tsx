@@ -21,7 +21,7 @@ import {
   UserSwitchOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
-import { Button, MenuProps, Image, ConfigProvider } from 'antd';
+import { Button, MenuProps, Image } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -31,7 +31,6 @@ import type { TourProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import useI18n from '@/i18n/useI18N';
-import COLORS from '@/constant/color';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { LogoutData, logout } from './fetcher';
 import { UserInfo, checkNewUser } from '@/layout/fetcher';
@@ -349,88 +348,79 @@ const AppSider = ({ collapsed }: Props) => {
   return (
     <>
       {contextHolder}
-      <ConfigProvider
-        theme={{
-          token: {
-            colorPrimary: COLORS.GREEN,
-            colorPrimaryBg: COLORS.BRIGHT,
-          },
-        }}
+      <Sider
+        className={style.sidebarContainer}
+        width={280}
+        collapsedWidth={60}
+        collapsed={collapsed}
+        theme="light"
+        breakpoint="xl"
       >
-        <Sider
-          className={style.sidebarContainer}
-          width={280}
-          collapsedWidth={60}
-          collapsed={collapsed}
-          theme="light"
-          breakpoint="xl"
+        <Row
+          style={{
+            flexDirection: 'column',
+            height: '100%',
+            flexWrap: 'nowrap',
+          }}
         >
-          <Row
-            style={{
-              flexDirection: 'column',
-              height: '100%',
-              flexWrap: 'nowrap',
-            }}
-          >
-            <Col flex={1}>
-              <Title className={style.title}>
-                {!collapsed && (
-                  <Image
-                    preview={false}
-                    style={{
-                      paddingRight: '8px',
-                      cursor: 'pointer',
-                      width: '110px',
-                    }}
-                    src="/images/asl-logo.png"
-                    onClick={() => router.push(ROUTERS.HOME)}
-                    alt="logo"
-                  />
-                )}
-                {collapsed && (
-                  <Image
-                    preview={false}
-                    style={{
-                      paddingRight: '8px',
-                      cursor: 'pointer',
-                      width: '50px',
-                    }}
-                    src="/images/asl-logo.png"
-                    onClick={() => router.push(ROUTERS.HOME)}
-                    alt="logo"
-                  />
-                )}
-              </Title>
-              {!collapsed && <hr style={{ width: '60%' }} />}
-              <Menu
-                className={style.antMenu}
-                selectedKeys={[selectedKey]}
-                onClick={handleClickMenuItem}
-                mode="inline"
-                items={items}
-                style={{
-                  marginTop: '16px',
-                  fontWeight: '500',
-                  // height: '75vh',
-                  overflowY: 'auto',
-                }}
-              />
-            </Col>
-            <Col style={{ textAlign: 'center' }}>
-              <Button
-                style={{ margin: '12px 0 20px 0' }}
-                type="primary"
-                size="large"
-                danger
-                icon={<LogoutOutlined />}
-                onClick={handleClickLogout}
-              >
-                {collapsed ? '' : `${translateCommon('sign_out')}`}
-              </Button>
-            </Col>
-          </Row>
-        </Sider>
-      </ConfigProvider>
+          <Col flex={1}>
+            <Title className={style.title}>
+              {!collapsed && (
+                <Image
+                  preview={false}
+                  style={{
+                    paddingRight: '8px',
+                    cursor: 'pointer',
+                    width: '110px',
+                  }}
+                  src="/images/asl-logo.png"
+                  onClick={() => router.push(ROUTERS.HOME)}
+                  alt="logo"
+                />
+              )}
+              {collapsed && (
+                <Image
+                  preview={false}
+                  style={{
+                    paddingRight: '8px',
+                    cursor: 'pointer',
+                    width: '50px',
+                  }}
+                  src="/images/asl-logo.png"
+                  onClick={() => router.push(ROUTERS.HOME)}
+                  alt="logo"
+                />
+              )}
+            </Title>
+            {!collapsed && <hr style={{ width: '60%' }} />}
+            <Menu
+              className={style.antMenu}
+              selectedKeys={[selectedKey]}
+              onClick={handleClickMenuItem}
+              mode="inline"
+              items={items}
+              style={{
+                marginTop: '16px',
+                fontWeight: '500',
+                // height: '75vh',
+                overflowY: 'auto',
+              }}
+            />
+          </Col>
+          <Col style={{ textAlign: 'center' }}>
+            <Button
+              style={{ margin: '12px 0 20px 0' }}
+              type="primary"
+              size="large"
+              danger
+              icon={<LogoutOutlined />}
+              onClick={handleClickLogout}
+            >
+              {collapsed ? '' : `${translateCommon('sign_out')}`}
+            </Button>
+          </Col>
+        </Row>
+      </Sider>
       <Tour
         open={openTour}
         onClose={() => {
