@@ -132,6 +132,86 @@ export default function EditPricingTrucking() {
     },
   ];
 
+  const columnsLocalChart: ColumnsType<DataType> = [
+    {
+      title: translatePricingTrucking('LCLMin'),
+      width: 200,
+      dataIndex: 'LCLMin',
+      key: 'LCLMin',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('LCL'),
+      width: 200,
+      dataIndex: 'LCL',
+      key: 'LCL',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('DC20'),
+      width: 200,
+      dataIndex: 'DC20',
+      key: 'DC20',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('DC40'),
+      width: 200,
+      dataIndex: 'DC40',
+      key: 'DC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('HC40'),
+      width: 200,
+      dataIndex: 'HC40',
+      key: 'HC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('HC45'),
+      width: 200,
+      dataIndex: 'HC45',
+      key: 'HC45',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('RF20'),
+      width: 200,
+      dataIndex: 'RF20',
+      key: 'RF20',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('RF40'),
+      width: 200,
+      dataIndex: 'RF40',
+      key: 'RF40',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('DB20'),
+      width: 200,
+      dataIndex: 'DB20',
+      key: 'DB20',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('others'),
+      width: 200,
+      dataIndex: 'others',
+      key: 'others',
+      align: 'center',
+    },
+    {
+      title: translatePricingTrucking('type'),
+      width: 300,
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
+    },
+  ];
+
   return (
     <div style={{ padding: '24px 0' }}>
       <ConfigProvider
@@ -819,10 +899,9 @@ export default function EditPricingTrucking() {
           </Card>
 
           <CollapseCard
-            title={translatePricingTrucking(
-              'title_information_type_of_container'
-            )}
+            title={translatePricingTrucking('title_trucking_freight')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
@@ -831,6 +910,20 @@ export default function EditPricingTrucking() {
                     columns={columnsTypeOfContainerCost}
                     dataSource={data}
                   />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
+
+          <CollapseCard
+            title={translatePricingTrucking('title_local_chart')}
+            style={{ marginBottom: '24px' }}
+            defaultActive={true}
+          >
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table columns={columnsLocalChart} dataSource={data} />
                 </Card>
               </Col>
             </Row>

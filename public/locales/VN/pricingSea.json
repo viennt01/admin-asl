@@ -39,7 +39,8 @@
     "date_created": "Date created",
     "creator": "Creator",
 
-    "title_information_type_of_container": "Định giá của theo từng loại container",
+    "title_sea_freight": "Vận tải bằng đường biển",
+    "title_local_chart": "Phụ phí",
     "information_edit_sea_pricing": "Chỉnh sửa định giá đường biển",
     "POL_placeholder": "Vui lòng nhập POL",
     "POD_placeholder": "Vui lòng nhập POD",

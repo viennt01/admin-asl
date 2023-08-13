@@ -1,0 +1,14 @@
+{
+    "title": "Danh sách loại phụ phí",
+    "no_customs": "STT",
+    "name_customs": "Tên phí",
+    "customs": "Phụ phí",
+    "currency": "Tiền tệ",
+    "vat": "VAT",
+    "cost": "Giá",
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "update_date": "Ngày cập nhật",
+    "updater": "Người cập nhật",
+    "creator": "Người tạo"
+}

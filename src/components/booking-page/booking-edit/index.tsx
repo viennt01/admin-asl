@@ -522,6 +522,7 @@ export default function EditBooking() {
           <CollapseCard
             title={translatePort('title_information_port')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
@@ -547,6 +548,7 @@ export default function EditBooking() {
           <CollapseCard
             title={translateGoods('title_information_goods')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
@@ -560,6 +562,7 @@ export default function EditBooking() {
           <CollapseCard
             title={translateContainer('title_information_container')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>

@@ -35,25 +35,24 @@ export const ROUTERS = {
   PORT_EDIT: (portId: string, checkRow = false) =>
     `/master-data/port/edit/${portId}?checkRow=${checkRow}`,
   PORT_CREATE: '/master-data/port/create',
-  LOCATION: '/master-data/location-catalog/location',
-  LOCATION_EDIT: (locationId: string) =>
-    `/master-data/location-catalog/location/edit/${locationId}`,
-  UNIT: '/master-data/unit',
-  UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
+  COMPANY: '/master-data/company',
+  COMPANY_EDIT: (companyId: string) => `/master-data/company/edit/${companyId}`,
+  FEE: '/master-data/fee',
+  FEE_EDIT: (typeOfExpenseId: string) =>
+    `/master-data/fee/edit/${typeOfExpenseId}`,
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_EDIT: (currencyId: string) =>
     `/master-data/accountant/currency/edit/${currencyId}`,
   BANK: '/master-data/accountant/bank',
   BANK_EDIT: (bankId: string) => `/master-data/accountant/bank/edit/${bankId}`,
-  TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
-  TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
-    `/master-data/location-catalog/type-of-location/edit/${typeOfLocationId}`,
-  TYPES_OF_CONTAINER: '/master-data/container-catalog/type-of-container',
+  TYPES_OF_CONTAINER: '/master-data/type-of-container',
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string) =>
-    `/master-data/container-catalog/type-of-container/edit/${typeOfContainerId}`,
-  FEE: '/master-data/fee',
-  FEE_EDIT: (typeOfExpenseId: string) =>
-    `/master-data/fee/edit/${typeOfExpenseId}`,
+    `/master-data/type-of-container/edit/${typeOfContainerId}`,
+  TYPES_OF_CUSTOMS: '/master-data/type-of-customs',
+  TYPES_OF_CUSTOMS_EDIT: (typeOfcustomsId: string) =>
+    `/master-data/type-of-customs/edit/${typeOfcustomsId}`,
+  UNIT: '/master-data/unit',
+  UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
   USER: '/system/user',
   USER_EDIT: (userId: string) => `/system/user/edit/${userId}`,
   STAFF: '/system/staff',

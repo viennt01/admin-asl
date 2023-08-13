@@ -323,6 +323,20 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('create')}` },
     ],
 
+    '/master-data/compamny': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('compamny')}` },
+    ],
+    '/master-data/compamny/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      {
+        title: (
+          <Link href={ROUTERS.COMPANY}>{translateCommon('compamny')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('unit')}` },
@@ -375,18 +389,32 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
-    '/master-data/container-catalog/type-of-container': [
+    '/master-data/type-of-container': [
       { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('container_catalog')}` },
       { title: `${translateCommon('type_of_container')}` },
     ],
-    '/master-data/container-catalog/type-of-container/edit/[id]': [
+    '/master-data/type-of-container/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('container_catalog')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>
             {translateCommon('type_of_container')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/master-data/type-of-customs': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('type_of_customs')}` },
+    ],
+    '/master-data/type-of-customs/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPES_OF_CUSTOMS}>
+            {translateCommon('type_of_customs')}
           </Link>
         ),
       },

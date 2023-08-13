@@ -52,7 +52,87 @@ export default function EditPricingSea() {
 
   const data: readonly any[] | undefined = [];
 
-  const columnsTypeOfContainerCost: ColumnsType<DataType> = [
+  const columnsSeaFreight: ColumnsType<DataType> = [
+    {
+      title: translatePricingSea('LCLMin'),
+      width: 200,
+      dataIndex: 'LCLMin',
+      key: 'LCLMin',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('LCL'),
+      width: 200,
+      dataIndex: 'LCL',
+      key: 'LCL',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('DC20'),
+      width: 200,
+      dataIndex: 'DC20',
+      key: 'DC20',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('DC40'),
+      width: 200,
+      dataIndex: 'DC40',
+      key: 'DC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('HC40'),
+      width: 200,
+      dataIndex: 'HC40',
+      key: 'HC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('HC45'),
+      width: 200,
+      dataIndex: 'HC45',
+      key: 'HC45',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('RF20'),
+      width: 200,
+      dataIndex: 'RF20',
+      key: 'RF20',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('RF40'),
+      width: 200,
+      dataIndex: 'RF40',
+      key: 'RF40',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('DB20'),
+      width: 200,
+      dataIndex: 'DB20',
+      key: 'DB20',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('others'),
+      width: 200,
+      dataIndex: 'others',
+      key: 'others',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('type'),
+      width: 300,
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
+    },
+  ];
+
+  const columnsLocalChart: ColumnsType<DataType> = [
     {
       title: translatePricingSea('LCLMin'),
       width: 200,
@@ -298,191 +378,6 @@ export default function EditPricingSea() {
                   />
                 </Form.Item>
               </Col>
-
-              {/* <Col lg={12} span={24}>
-                <Form.Item
-                  label={translatePricingSea('LCLMin')}
-                  name="LCLMin"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('LCLMin_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('LCLMin_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translatePricingSea('LCL')}
-                  name="LCL"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('LCL_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input placeholder={translatePricingSea('LCL_placeholder')} />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('DC20')}
-                  name="DC20"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('DC20_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('DC20_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('DC40')}
-                  name="DC40"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('DC40_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('DC40_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('DB20')}
-                  name="DB20"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('DB20_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('DB20_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('RF20')}
-                  name="RF20"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('RF20_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('RF20_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('RF40')}
-                  name="RF40"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('RF40_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('RF40_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('HC40')}
-                  name="HC40"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('HC40_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('HC40_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('HC45')}
-                  name="HC45"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('HC45_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('HC45_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={16} span={24}>
-                <Form.Item
-                  label={translatePricingSea('others')}
-                  name="others"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('others_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('others_placeholder')}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={8} span={24}>
-                <Form.Item
-                  label={translatePricingSea('type')}
-                  name="type"
-                  rules={[
-                    {
-                      required: true,
-                      message: translatePricingSea('type_placeholder'),
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder={translatePricingSea('type_placeholder')}
-                  />
-                </Form.Item>
-              </Col> */}
 
               <Col lg={4} span={24}>
                 <Form.Item
@@ -775,16 +670,28 @@ export default function EditPricingSea() {
           </Card>
 
           <CollapseCard
-            title={translatePricingSea('title_information_type_of_container')}
+            title={translatePricingSea('title_sea_freight')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
                 <Card style={{ marginBottom: 24 }}>
-                  <Table
-                    columns={columnsTypeOfContainerCost}
-                    dataSource={data}
-                  />
+                  <Table columns={columnsSeaFreight} dataSource={data} />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
+
+          <CollapseCard
+            title={translatePricingSea('title_local_chart')}
+            style={{ marginBottom: '24px' }}
+            defaultActive={true}
+          >
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table columns={columnsLocalChart} dataSource={data} />
                 </Card>
               </Col>
             </Row>

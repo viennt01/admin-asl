@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import Fee from '@/components/fee-page/fee-edit';
+import Company from '@/components/company-page/company-edit';
 
-function FeeEditPage() {
+function CompanyPage() {
   return (
     <>
       <Head>
-        <title>ASL | FEE EDIT</title>
+        <title>ASL | COMPANY</title>
       </Head>
-      <Fee />
+      <Company />
     </>
   );
 }
 
-export default withAuthentication(FeeEditPage);
+export default withAuthentication(CompanyPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'fee']);
+export const getStaticProps = getStatic(['common', 'company']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>
