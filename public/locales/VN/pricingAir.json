@@ -27,7 +27,8 @@
     "date_created": "Date created",
     "creator": "Creator",
 
-    "title_information_pricing_weight": "Định giá của theo khối lượng",
+    "title_air_freight": "Vận tải bằng đường hàng không",
+    "title_local_chart": "Phụ phí",
     "information_edit_air_pricing": "Chỉnh sửa định giá đường hàng không",
     "code_placeholder": "Please input code",
     "origin_placeholder": "Please input origin",

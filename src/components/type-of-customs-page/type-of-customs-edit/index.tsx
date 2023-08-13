@@ -31,12 +31,12 @@ const initialValue = {
 
 const { Title } = Typography;
 
-export default function EditFee() {
+export default function EditTypeOfCustoms() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const dateFormat = 'YYYY/MM/DD';
-  const { translate: translateFee } = useI18n('fee');
+  const { translate: translateTypeOfCustoms } = useI18n('typeOfCustoms');
 
   useEffect(() => {
     if (!id) return;
@@ -65,13 +65,15 @@ export default function EditFee() {
           <Card style={{ marginBottom: 24 }}>
             <Row justify={'center'}>
               <Col>
-                <Title level={3}>{translateFee('information_edit_fee')}</Title>
+                <Title level={3}>
+                  {translateTypeOfCustoms('information_edit_TypeOfCustoms')}
+                </Title>
               </Col>
             </Row>
             <Row gutter={16}>
               <Col lg={6} span={24}>
                 <Form.Item
-                  label={translateFee('code')}
+                  label={translateTypeOfCustoms('code')}
                   name="code"
                   rules={[
                     {
@@ -86,7 +88,7 @@ export default function EditFee() {
 
               <Col lg={14} span={24}>
                 <Form.Item
-                  label={translateFee('name')}
+                  label={translateTypeOfCustoms('name')}
                   name="name_customer"
                   rules={[
                     {
@@ -101,12 +103,12 @@ export default function EditFee() {
 
               <Col lg={4} span={24}>
                 <Form.Item
-                  label={translateFee('status')}
+                  label={translateTypeOfCustoms('status')}
                   name="status"
                   rules={[
                     {
                       required: true,
-                      message: translateFee('status_placeholder'),
+                      message: translateTypeOfCustoms('status_placeholder'),
                     },
                   ]}
                 >
@@ -127,7 +129,7 @@ export default function EditFee() {
 
               <Col lg={6} span={24}>
                 <Form.Item
-                  label={translateFee('date_created')}
+                  label={translateTypeOfCustoms('date_created')}
                   name="date_created"
                   rules={[
                     { required: true, message: 'Please input date created' },
@@ -143,7 +145,7 @@ export default function EditFee() {
 
               <Col lg={18} span={24}>
                 <Form.Item
-                  label={translateFee('creator')}
+                  label={translateTypeOfCustoms('creator')}
                   name="creator"
                   rules={[
                     {
@@ -178,7 +180,9 @@ export default function EditFee() {
           >
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.FEE)}>Cancel</Button>
+                <Button onClick={() => router.push(ROUTERS.TYPES_OF_CUSTOMS)}>
+                  Cancel
+                </Button>
               </Col>
               <Col>
                 <Button type="primary" htmlType="submit">

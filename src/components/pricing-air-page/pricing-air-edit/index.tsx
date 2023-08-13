@@ -402,6 +402,7 @@ export default function EditPricingAir() {
           <CollapseCard
             title={translatePricingAir('title_information_pricing_weight')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>

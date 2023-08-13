@@ -16,17 +16,17 @@ import useI18n from '@/i18n/useI18N';
 //     }, time);
 //   });
 // };
-export default function CreateFee() {
+export default function CreateCompany() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
-  const { translate: translateAddFee } = useI18n('fee');
+  const { translate: translateAddCompany } = useI18n('company');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title={translateAddFee('information_add_fee')}
+      title={translateAddCompany('information_add_Company')}
       trigger={
         <Button
           type="primary"
@@ -61,28 +61,52 @@ export default function CreateFee() {
       // }}
     >
       <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="Namefee"
-          label={translateAddFee('name')}
-          placeholder={translateAddFee('name_placeholder')}
-        />
-
         <ProFormSelect
           request={async () => [
             {
               value: '1',
-              label: 'Active',
+              label: 'USD',
             },
             {
               value: '2',
-              label: 'Tạm ngừng',
+              label: 'VND',
+            },
+            {
+              value: '3',
+              label: 'Euro',
             },
           ]}
           width="md"
-          name="Status"
-          label={translateAddFee('status')}
-          placeholder={translateAddFee('status_placeholder')}
+          name="Company"
+          label={translateAddCompany('Company')}
+          placeholder={translateAddCompany('Company_placeholder')}
+        />
+
+        <ProFormText
+          width="md"
+          name="ExchangeRateToVND"
+          label={translateAddCompany('exchange_rate_to_VND')}
+          placeholder={translateAddCompany('exchange_rate_to_VND_placeholder')}
+          rules={[
+            {
+              type: 'number',
+              message: 'Vui lòng nhập tỉ giá sang VND',
+            },
+          ]}
+        />
+      </ProForm.Group>
+      <ProForm.Group>
+        <ProFormText
+          width="md"
+          name="ExchangeRateToUSD"
+          label={translateAddCompany('exchange_rate_to_USD')}
+          placeholder={translateAddCompany('exchange_rate_to_USD_placeholder')}
+          rules={[
+            {
+              type: 'number',
+              message: 'Vui lòng nhập tỉ giá sang USD',
+            },
+          ]}
         />
       </ProForm.Group>
     </ModalForm>

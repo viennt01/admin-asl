@@ -620,6 +620,7 @@ export default function EditLCustomer() {
           <CollapseCard
             title={translateContactInfo('title_information_contact')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
@@ -636,6 +637,7 @@ export default function EditLCustomer() {
           <CollapseCard
             title={translateBooking('transaction_history')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
@@ -649,6 +651,7 @@ export default function EditLCustomer() {
           <CollapseCard
             title={translateInvoice('debt_history')}
             style={{ marginBottom: '24px' }}
+            defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>

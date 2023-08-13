@@ -16,17 +16,17 @@ import useI18n from '@/i18n/useI18N';
 //     }, time);
 //   });
 // };
-export default function CreateFee() {
+export default function CreateTypeOfCustoms() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
-  const { translate: translateAddFee } = useI18n('fee');
+  const { translate: translateAddTypeOfCustoms } = useI18n('typeOfCustoms');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title={translateAddFee('information_add_fee')}
+      title={translateAddTypeOfCustoms('information_add_TypeOfCustoms')}
       trigger={
         <Button
           type="primary"
@@ -53,19 +53,13 @@ export default function CreateFee() {
       modalProps={{
         destroyOnClose: true,
       }}
-      // submitTimeout={2000}
-      // onFinish={async (values) => {
-      //   await waitTime(2000);
-      //   message.success('提交成功');
-      //   return true;
-      // }}
     >
       <ProForm.Group>
         <ProFormText
           width="md"
-          name="Namefee"
-          label={translateAddFee('name')}
-          placeholder={translateAddFee('name_placeholder')}
+          name="NameTypeOfCustoms"
+          label={translateAddTypeOfCustoms('name')}
+          placeholder={translateAddTypeOfCustoms('name_placeholder')}
         />
 
         <ProFormSelect
@@ -81,8 +75,8 @@ export default function CreateFee() {
           ]}
           width="md"
           name="Status"
-          label={translateAddFee('status')}
-          placeholder={translateAddFee('status_placeholder')}
+          label={translateAddTypeOfCustoms('status')}
+          placeholder={translateAddTypeOfCustoms('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

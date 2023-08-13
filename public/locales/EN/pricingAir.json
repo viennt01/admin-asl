@@ -27,7 +27,8 @@
     "date_created": "Date created",
     "creator": "Creator",
 
-    "title_information_pricing_weight": "Pricing based on quality",
+    "title_air_freight": "Air Freight",
+    "title_local_chart": "Local Chart",
     "information_edit_air_pricing": "Edit Air Pricing",
     "code_placeholder": "Please input code",
     "origin_placeholder": "Please input origin",

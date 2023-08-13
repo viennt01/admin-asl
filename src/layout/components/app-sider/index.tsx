@@ -19,6 +19,8 @@ import {
   GoldOutlined,
   UserAddOutlined,
   UserSwitchOutlined,
+  DeploymentUnitOutlined,
+  SafetyOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image } from 'antd';
@@ -85,7 +87,9 @@ const AppSider = ({ collapsed }: Props) => {
   const refCustomersAreOnSales = useRef(null);
   const refSupplier = useRef(null);
   const refPort = useRef(null);
+  const refCompany = useRef(null);
   const refTypeOfContainer = useRef(null);
+  const refTypeOfCustoms = useRef(null);
   const refFee = useRef(null);
   const refAccountant = useRef(null);
   const refCurrency = useRef(null);
@@ -191,12 +195,6 @@ const AppSider = ({ collapsed }: Props) => {
       '2',
       <TeamOutlined ref={refPartner} />,
       [
-        // getItem(
-        //   `${translateCommon('customer')}`,
-        //   ROUTERS.CUSTOMER,
-        //   <UserOutlined ref={refCustomer} />
-        // ),
-
         getItem(
           `${translateCommon('customer')}`,
           '3',
@@ -239,6 +237,11 @@ const AppSider = ({ collapsed }: Props) => {
           <GoldOutlined ref={refPort} />
         ),
         getItem(
+          `${translateCommon('company')}`,
+          ROUTERS.COMPANY,
+          <DeploymentUnitOutlined ref={refCompany} />
+        ),
+        getItem(
           `${translateCommon('fee')}`,
           ROUTERS.FEE,
           <ProfileOutlined ref={refFee} />
@@ -265,6 +268,13 @@ const AppSider = ({ collapsed }: Props) => {
           ROUTERS.TYPES_OF_CONTAINER,
           <InboxOutlined ref={refTypeOfContainer} />
         ),
+
+        getItem(
+          `${translateCommon('type_of_customs')}`,
+          ROUTERS.TYPES_OF_CUSTOMS,
+          <SafetyOutlined ref={refTypeOfCustoms} />
+        ),
+
         getItem(
           `${translateCommon('unit')}`,
           ROUTERS.UNIT,

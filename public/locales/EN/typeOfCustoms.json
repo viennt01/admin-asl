@@ -1,0 +1,14 @@
+{
+    "title": "List of Customs type",
+    "no_customs": "No",
+    "name_customs": "Name",
+    "customs": "Customs",
+    "currency": "Currency",
+    "vat": "VAT",
+    "cost": "Cost",
+    "status":"Status",
+    "date_created": "Date Created",
+    "update_date": "Date update",
+    "updater": "Updater",
+    "creator": "Creator"
+}
