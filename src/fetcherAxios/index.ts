@@ -123,7 +123,7 @@ apiClient.interceptors.request.use((config) => {
   }
   return config;
 });
-
+let refreshTokenCallCount = 0;
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -133,9 +133,11 @@ apiClient.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN)
+      appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN) &&
+      refreshTokenCallCount < 3
     ) {
       originalRequest._retry = true;
+      refreshTokenCallCount++;
       try {
         const response = await apiClient.post(
           `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`,
@@ -152,6 +154,7 @@ apiClient.interceptors.response.use(
         appLocalStorage.set(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
         originalRequest.headers.accessToken = newAccessToken;
         originalRequest.headers.refreshToken = newRefreshToken;
+        refreshTokenCallCount = 0;
 
         return apiClient(originalRequest);
       } catch (refreshError) {
