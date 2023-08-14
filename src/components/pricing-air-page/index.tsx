@@ -2,6 +2,8 @@ import {
   DeleteOutlined,
   EditOutlined,
   SearchOutlined,
+  CheckSquareOutlined,
+  CloseSquareOutlined,
 } from '@ant-design/icons';
 import { Button, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useRef, useState } from 'react';
@@ -46,7 +48,7 @@ export default function PricingSeaPage() {
     more1000: string;
     FSC: string;
     SSC: string;
-    GW: string;
+    GW: boolean;
     curr: string;
     dateUpdate: string;
     validity: string;
@@ -77,7 +79,7 @@ export default function PricingSeaPage() {
       more1000: '0.850',
       FSC: '0.540',
       SSC: '0.100',
-      GW: '',
+      GW: true,
       curr: '',
       dateUpdate: '19/09/2014',
       validity: '20/09/2014',
@@ -313,7 +315,9 @@ export default function PricingSeaPage() {
       key: 'GW',
       align: 'center',
       valueType: 'checkbox',
-      ...getColumnSearchProps('GW'),
+      // ...getColumnSearchProps('GW'),
+      render: (value) =>
+        value ? <CheckSquareOutlined /> : <CloseSquareOutlined />,
     },
     {
       title: translatePricingAir('curr'),

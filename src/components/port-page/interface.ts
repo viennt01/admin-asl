@@ -38,9 +38,11 @@ export interface PortDataTable {
   dateUpdated: string;
   updatedByUser: string;
   countryName: string;
+  searchAll: string;
 }
 
 export interface ParamData {
+  searchAll?: string;
   countryID: string;
   portName: string;
   portCode: string;
@@ -48,6 +50,7 @@ export interface ParamData {
 }
 
 export interface RequestPortsData {
+  searchAll?: string;
   countryID?: string;
   portName?: string;
   portCode?: string;

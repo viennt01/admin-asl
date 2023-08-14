@@ -35,6 +35,7 @@ import Highlighter from 'react-highlight-words';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { API_PORT } from '@/fetcherAxios/endpoint';
 const initalValueQueryParams = {
+  searchAll: '',
   countryID: '',
   portName: '',
   portCode: '',
@@ -51,6 +52,7 @@ export default function PortPage() {
     initalValueQueryParams
   );
   const [searchText, setSearchText] = useState('');
+  const [searchTextAll, setSearchTextAll] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
@@ -58,7 +60,14 @@ export default function PortPage() {
   type DataIndex = keyof ParamData;
 
   const handleSearchInputKeyPress = (value: string) => {
-    console.log('Entered search text:', value);
+    setSearchTextAll(value);
+    setQueryParams({
+      searchAll: value,
+      countryID: '',
+      portName: '',
+      portCode: '',
+      address: '',
+    });
   };
 
   const handleSearch = (
@@ -328,6 +337,7 @@ export default function PortPage() {
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
             countryName: data.countryName,
+            searchAll: '',
           }))
         );
         setPagination((state) => ({
@@ -342,6 +352,7 @@ export default function PortPage() {
 
   const refreshingQuery = () => {
     setSearchText('');
+    setSearchTextAll('');
     setQueryParams(initalValueQueryParams);
     setRefreshingLoading(true);
     portsQuery.refetch();
@@ -386,7 +397,7 @@ export default function PortPage() {
             }}
             onRow={(record) => {
               return {
-                onClick: (e) => {
+                onDoubleClick: (e) => {
                   const target = e.target as HTMLElement;
                   if (!target.closest('button')) {
                     router.push(ROUTERS.PORT_EDIT(record.key, true));
@@ -399,6 +410,10 @@ export default function PortPage() {
                 key={'Search'}
                 placeholder="Search"
                 onSearch={handleSearchInputKeyPress}
+                value={searchTextAll}
+                onChange={(e) =>
+                  setSearchTextAll(e.target.value ? e.target.value : '')
+                }
               />,
               <Button
                 key={'create'}

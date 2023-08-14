@@ -304,9 +304,15 @@ const PortForm = ({
                 </>
               ) : (
                 <>
-                  <Button onClick={() => router.push(ROUTERS.PORT)}>
-                    {translateCommon('cancel')}
-                  </Button>
+                  {checkRow ? (
+                    <Button onClick={() => setCheckEdit(true)}>
+                      {translateCommon('cancel')}
+                    </Button>
+                  ) : (
+                    <Button onClick={() => router.push(ROUTERS.PORT)}>
+                      {translateCommon('cancel')}
+                    </Button>
+                  )}
                   <Button
                     type="primary"
                     htmlType="submit"
