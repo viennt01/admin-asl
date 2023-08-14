@@ -19,7 +19,7 @@ import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
+import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
 import style from './index.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { getListPort } from './fetcher';
@@ -41,7 +41,43 @@ const initalValueQueryParams = {
   portCode: '',
   address: '',
 };
-
+const initalValueDisplayColumn = {
+  index: {
+    order: 0,
+    fixed: 'left' as const,
+  },
+  portCode: {
+    order: 1,
+  },
+  portName: {
+    order: 2,
+  },
+  countryName: {
+    order: 3,
+  },
+  typePorts: {
+    order: 4,
+  },
+  status: {
+    order: 5,
+  },
+  dateInserted: {
+    order: 6,
+  },
+  insertedByUser: {
+    order: 7,
+  },
+  dateUpdated: {
+    order: 8,
+  },
+  updatedByUser: {
+    order: 9,
+  },
+  operation: {
+    order: 10,
+    fixed: 'right' as const,
+  },
+};
 export default function PortPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -57,6 +93,10 @@ export default function PortPage() {
   const searchInput = useRef<InputRef>(null);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
   const [dataTable, setDataTable] = useState<PortDataTable[]>([]);
+  const [columnsStateMap, setColumnsStateMap] = useState<
+    Record<string, ColumnsState>
+  >(initalValueDisplayColumn);
+
   type DataIndex = keyof ParamData;
 
   const handleSearchInputKeyPress = (value: string) => {
@@ -176,7 +216,6 @@ export default function PortPage() {
       title: translatePort('port_no'),
       dataIndex: 'index',
       width: 100,
-      fixed: 'left',
       align: 'center',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -280,7 +319,6 @@ export default function PortPage() {
     },
     {
       key: 'operation',
-      fixed: 'right',
       width: 50,
       align: 'center',
       dataIndex: 'key',
@@ -360,6 +398,9 @@ export default function PortPage() {
       setRefreshingLoading(false);
     }, 500);
   };
+  const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
+    setColumnsStateMap(map);
+  };
 
   return (
     <>
@@ -394,7 +435,10 @@ export default function PortPage() {
             options={{
               fullScreen: true,
               reload: false,
+              setting: true,
             }}
+            onColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
             onRow={(record) => {
               return {
                 onDoubleClick: (e) => {

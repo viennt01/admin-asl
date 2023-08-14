@@ -58,6 +58,7 @@ export interface RequestPortsData {
   typePortID?: string;
   paginateRequest: Pagination;
 }
+
 export interface TypePortID {
   typePortID: string;
 }
