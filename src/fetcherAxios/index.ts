@@ -94,8 +94,6 @@ apiClient.interceptors.request.use((config) => {
   const accessToken = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
   config.headers.languageName =
     appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN;
-  // console.log('config', config);
-
   if (config.url === `${getGateway()}${API_AUTHENTICATE.LOGIN}`) {
     return config;
   }
@@ -123,7 +121,6 @@ apiClient.interceptors.request.use((config) => {
   }
   return config;
 });
-let refreshTokenCallCount = 0;
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -133,11 +130,9 @@ apiClient.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN) &&
-      refreshTokenCallCount < 3
+      appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN)
     ) {
-      originalRequest._retry = true;
-      refreshTokenCallCount++;
+      originalRequest._retry = 3;
       try {
         const response = await apiClient.post(
           `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`,
@@ -154,7 +149,6 @@ apiClient.interceptors.response.use(
         appLocalStorage.set(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
         originalRequest.headers.accessToken = newAccessToken;
         originalRequest.headers.refreshToken = newRefreshToken;
-        refreshTokenCallCount = 0;
 
         return apiClient(originalRequest);
       } catch (refreshError) {

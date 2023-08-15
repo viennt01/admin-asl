@@ -4,6 +4,7 @@ import {
   PlusOutlined,
   SearchOutlined,
   ReloadOutlined,
+  FilterOutlined,
 } from '@ant-design/icons';
 import {
   Button,
@@ -12,6 +13,7 @@ import {
   InputRef,
   PaginationProps,
   Space,
+  TablePaginationConfig,
   Tag,
 } from 'antd';
 import { Key, useRef, useState } from 'react';
@@ -22,7 +24,7 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
 import style from './index.module.scss';
 import { useQuery } from '@tanstack/react-query';
-import { getListPort } from './fetcher';
+import { getListPortSearch, getListTypePort } from './fetcher';
 import {
   ParamData,
   PortDataTable,
@@ -32,14 +34,18 @@ import {
 import { DEFAULT_PAGINATION, SkeletonTable } from '../commons/table-commons';
 import { formatDate } from '@/utils/format';
 import Highlighter from 'react-highlight-words';
-import { FilterConfirmProps } from 'antd/lib/table/interface';
-import { API_PORT } from '@/fetcherAxios/endpoint';
+import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
+import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
+
+type DataIndex = keyof ParamData;
+
 const initalValueQueryParams = {
   searchAll: '',
   countryID: '',
   portName: '',
   portCode: '',
   address: '',
+  typePortID: '',
 };
 const initalValueDisplayColumn = {
   index: {
@@ -78,6 +84,14 @@ const initalValueDisplayColumn = {
     fixed: 'right' as const,
   },
 };
+
+interface SelectSearch {
+  [key: string]: {
+    label: string;
+    value: string;
+  };
+}
+
 export default function PortPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -87,9 +101,8 @@ export default function PortPage() {
   const [queryParams, setQueryParams] = useState<ParamData>(
     initalValueQueryParams
   );
-  const [searchText, setSearchText] = useState('');
   const [searchTextAll, setSearchTextAll] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>({});
   const searchInput = useRef<InputRef>(null);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
   const [dataTable, setDataTable] = useState<PortDataTable[]>([]);
@@ -97,7 +110,10 @@ export default function PortPage() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumn);
 
-  type DataIndex = keyof ParamData;
+  const typePortQuery = useQuery({
+    queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
+    queryFn: () => getListTypePort(),
+  });
 
   const handleSearchInputKeyPress = (value: string) => {
     setSearchTextAll(value);
@@ -107,50 +123,50 @@ export default function PortPage() {
       portName: '',
       portCode: '',
       address: '',
+      typePortID: '',
     });
   };
 
   const handleSearch = (
-    selectedKeys: string[],
+    selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
     dataIndex: DataIndex
   ) => {
     const newQueryParams = { ...queryParams };
-    newQueryParams[dataIndex] = selectedKeys[0];
+    newQueryParams[dataIndex] = selectedKeys;
     setQueryParams(newQueryParams);
     confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
   };
 
   const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    const newQueryParams = { ...queryParams };
-    newQueryParams[dataIndex] = '';
-    setQueryParams(newQueryParams);
+    setQueryParams((prevData) => ({
+      ...prevData,
+      [dataIndex]: '',
+    }));
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: { label: dataIndex, value: '' },
+    }));
     clearFilters();
-    setSearchText('');
   };
 
   const getColumnSearchProps = (
     dataIndex: DataIndex
   ): ProColumns<PortDataTable> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
+    filterDropdown: ({ confirm, clearFilters, close }) => (
       <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
         <Input
           ref={searchInput}
           placeholder="Search"
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
+          value={selectedKeyShow[dataIndex]?.value}
+          onChange={(e) => {
+            setSelectedKeyShow((prevData) => ({
+              ...prevData,
+              [dataIndex]: { label: dataIndex, value: e.target.value },
+            }));
+          }}
           onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
+            handleSearch(selectedKeyShow[dataIndex].value, confirm, dataIndex)
           }
           style={{ marginBottom: 8, display: 'block' }}
         />
@@ -158,7 +174,11 @@ export default function PortPage() {
           <Button
             type="primary"
             onClick={() =>
-              handleSearch(selectedKeys as string[], confirm, dataIndex)
+              handleSearch(
+                selectedKeyShow[dataIndex]?.value || '',
+                confirm,
+                dataIndex
+              )
             }
             icon={<SearchOutlined />}
             size="small"
@@ -185,9 +205,20 @@ export default function PortPage() {
         </Space>
       </div>
     ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
-    ),
+    filterIcon: () => {
+      const checkValueSelectedKeyShow = selectedKeyShow[dataIndex]?.value || '';
+      return (
+        <SearchOutlined
+          style={{
+            color:
+              checkValueSelectedKeyShow.length !== 0 ||
+              queryParams[dataIndex]?.length !== 0
+                ? '#1677ff'
+                : undefined,
+          }}
+        />
+      );
+    },
     onFilter: (value, record) =>
       record[dataIndex]
         .toString()
@@ -198,17 +229,14 @@ export default function PortPage() {
         setTimeout(() => searchInput.current?.select(), 100);
       }
     },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
+    render: (text) => (
+      <Highlighter
+        highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+        searchWords={[selectedKeyShow[dataIndex]?.value]}
+        autoEscape
+        textToHighlight={text ? text.toString() : ''}
+      />
+    ),
   });
 
   const columns: ProColumns<PortDataTable>[] = [
@@ -251,6 +279,24 @@ export default function PortPage() {
       dataIndex: 'typePorts',
       key: 'typePorts',
       align: 'center',
+      filters:
+        typePortQuery.data?.data.map((data) => ({
+          text: data.typePortName,
+          value: data.typePortID,
+        })) || [],
+      filteredValue: [queryParams.typePortID] || null,
+      filterIcon: () => {
+        return (
+          <FilterOutlined
+            style={{
+              color:
+                queryParams.typePortID?.length !== 0 ? '#1890ff' : '#b1b1b1',
+            }}
+          />
+        );
+      },
+
+      filterMultiple: false,
       render: (value: any) =>
         value.map(function (type: {
           typePortID: string;
@@ -265,17 +311,6 @@ export default function PortPage() {
       key: 'status',
       align: 'center',
       width: 120,
-      filters: [
-        {
-          text: 'Active',
-          value: '1',
-        },
-        {
-          text: 'Tạm ngừng',
-          value: '2',
-        },
-      ],
-      filterSearch: true,
       render: (value) => (
         <Tag
           color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
@@ -347,10 +382,26 @@ export default function PortPage() {
     }));
   };
 
-  const portsQuery = useQuery({
-    queryKey: [API_PORT.GET_PORTS, pagination, queryParams],
+  const handleTableChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>
+  ) => {
+    if (filters.typePorts) {
+      const newQueryParams = { ...queryParams };
+      newQueryParams.typePortID = filters.typePorts[0].toString();
+      setQueryParams(newQueryParams);
+      return;
+    }
+    const newQueryParams = { ...queryParams };
+    newQueryParams.typePortID = '';
+    setQueryParams(newQueryParams);
+    return;
+  };
+
+  const portsQuerySearch = useQuery({
+    queryKey: [API_PORT.GET_PORTS_SEARCH, pagination, queryParams],
     queryFn: () =>
-      getListPort({
+      getListPortSearch({
         ...queryParams,
         paginateRequest: {
           currentPage: pagination.current,
@@ -376,6 +427,7 @@ export default function PortPage() {
             updatedByUser: data.updatedByUser,
             countryName: data.countryName,
             searchAll: '',
+            typePortID: '',
           }))
         );
         setPagination((state) => ({
@@ -384,20 +436,27 @@ export default function PortPage() {
           pageSize: pageSize,
           total: totalPages,
         }));
+      } else {
+        setDataTable([]);
       }
     },
+    retry: 0,
   });
 
   const refreshingQuery = () => {
-    setSearchText('');
     setSearchTextAll('');
     setQueryParams(initalValueQueryParams);
     setRefreshingLoading(true);
-    portsQuery.refetch();
+    setPagination((state) => ({
+      ...state,
+      current: 1,
+    }));
+    portsQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
   };
+
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
     setColumnsStateMap(map);
   };
@@ -405,7 +464,7 @@ export default function PortPage() {
   return (
     <>
       <ConfigProvider>
-        {portsQuery.isLoading ? (
+        {portsQuerySearch.isLoading ? (
           <SkeletonTable />
         ) : (
           <ProTable<PortDataTable>
@@ -449,6 +508,7 @@ export default function PortPage() {
                 },
               };
             }}
+            onChange={handleTableChange}
             toolBarRender={() => [
               <Input.Search
                 key={'Search'}

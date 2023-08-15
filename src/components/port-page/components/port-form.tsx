@@ -1,6 +1,6 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Button,
   Form,
@@ -14,13 +14,13 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getListCountry, getListTypePort, getPortDetail } from '../fetcher';
-import { FormValues, STATUS_LABELS } from '../interface';
+import { getListCountry, getPortDetail } from '../fetcher';
+import { FormValues, STATUS_LABELS, TypePortData } from '../interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
+import { ResponseWithPayload } from '@/fetcherAxios';
 
 const initialValue = {
-  address: '',
   description: '',
 };
 
@@ -52,6 +52,10 @@ const PortForm = ({
   const { id } = router.query;
   const [options, setOptions] = useState<Option[]>([]);
   const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
+  const queryClient = useQueryClient();
+  const typePort = queryClient.getQueryData<
+    ResponseWithPayload<TypePortData[]>
+  >([API_MASTER_DATA.GET_TYPE_PORT]);
 
   useEffect(() => {
     if (!id) return;
@@ -92,14 +96,6 @@ const PortForm = ({
     },
   });
 
-  const typePortQuery = useQuery({
-    queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
-    queryFn: () => getListTypePort(),
-    onError: () => {
-      router.push(ROUTERS.PORT);
-    },
-  });
-
   useEffect(() => {
     if (portDetailQuery.data) {
       form.setFieldsValue({
@@ -110,11 +106,10 @@ const PortForm = ({
         ),
         countryID: portDetailQuery.data.data.countryID,
         status: portDetailQuery.data.data.status,
-        address: portDetailQuery.data.data.address,
         description: portDetailQuery.data.data.description,
       });
     }
-  }, [portDetailQuery.data, form]);
+  }, [portDetailQuery.data, form, typePort]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -189,10 +184,12 @@ const PortForm = ({
                   placeholder={translatePort('type_port.placeholder')}
                   mode="multiple"
                   size="large"
-                  options={typePortQuery.data?.data.map((type) => ({
-                    label: type.typePortName,
-                    value: type.typePortID,
-                  }))}
+                  options={
+                    typePort?.data.map((type) => ({
+                      label: type.typePortName,
+                      value: type.typePortID,
+                    })) || []
+                  }
                   disabled={checkRow && isCheckEdit}
                 />
               </Form.Item>
@@ -250,25 +247,6 @@ const PortForm = ({
             ) : (
               <></>
             )}
-
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translatePort('address_port.title')}
-                name="address"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePort('address_port.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePort('address_port.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckEdit}
-                />
-              </Form.Item>
-            </Col>
 
             <Col span={24}>
               <Form.Item

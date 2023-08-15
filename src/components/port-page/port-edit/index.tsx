@@ -29,7 +29,6 @@ const EditPort = () => {
       portName: formValues.portName,
       portCode: formValues.portCode,
       typePorts: formValues.typePorts,
-      address: formValues.address,
       description: formValues.description,
       status: formValues.status,
     };

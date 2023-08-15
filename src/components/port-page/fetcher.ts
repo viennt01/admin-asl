@@ -12,8 +12,14 @@ import {
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { Pagination } from '../commons/table-commons';
 
-export const getListPort = (data: RequestPortsData) => {
+export const getListPortSearch = (data: RequestPortsData) => {
   return post<RequestPortsData, ResponseWithPayload<PortsData>>({
+    data,
+  })(API_PORT.GET_PORTS_SEARCH);
+};
+
+export const getListPort = (data: Pagination) => {
+  return post<Pagination, ResponseWithPayload<PortsData>>({
     data,
   })(API_PORT.GET_PORTS);
 };

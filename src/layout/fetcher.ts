@@ -1,5 +1,6 @@
 import { ResponseWithPayload, get, post } from '@/fetcherAxios';
-import { API_USER } from '@/fetcherAxios/endpoint';
+import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
+import { TypePortData } from './interface';
 
 export interface UserInfo {
   idUser: string;
@@ -34,5 +35,11 @@ export const getUserInfo = () => {
 export const checkNewUser = () => {
   return post<undefined, ResponseWithPayload<undefined>>({})(
     API_USER.UPDATE_NEW_USER
+  );
+};
+
+export const getListTypePort = () => {
+  return get<ResponseWithPayload<TypePortData[]>>({})(
+    API_MASTER_DATA.GET_TYPE_PORT
   );
 };

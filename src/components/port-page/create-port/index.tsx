@@ -20,7 +20,6 @@ const CreatePort = () => {
       portCode: formValues.portCode,
       typePorts: formValues.typePorts,
       countryID: formValues.countryID,
-      address: formValues.address,
       description: formValues.description,
     };
     createPortMutation.mutate(_requestData, {
