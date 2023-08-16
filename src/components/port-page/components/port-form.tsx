@@ -99,7 +99,7 @@ const PortForm = ({
         portName: portDetailQuery.data.data.portName,
         portCode: portDetailQuery.data.data.portCode,
         typePorts: portDetailQuery.data.data.typePorts.map(
-          (type) => type.typePortID
+          (type: any) => type.typePortID
         ),
         countryID: portDetailQuery.data.data.countryID,
         status: portDetailQuery.data.data.status,

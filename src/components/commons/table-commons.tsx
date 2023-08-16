@@ -9,9 +9,10 @@ export const DEFAULT_PAGINATION = {
 export interface Pagination {
   currentPage: number;
   pageSize: number;
+  totalPages?: number;
 }
 
-export interface PaginationDefaults {
+export interface PaginationOfAntd {
   current: number;
   pageSize: number;
   total?: number;

@@ -1,3 +1,15 @@
+import { Key, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { ROUTERS } from '@/constant/router';
+import useI18n from '@/i18n/useI18N';
+import COLORS from '@/constant/color';
+import { ColumnSearchTableProps } from '../commons/search-table';
+import style from './index.module.scss';
+import { formatDate } from '@/utils/format';
+import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
+import { getListCountry, getListPortSearch } from './fetcher';
+import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
 import {
   DeleteOutlined,
   EditOutlined,
@@ -13,33 +25,22 @@ import {
   TablePaginationConfig,
   Tag,
 } from 'antd';
-import { Key, useState } from 'react';
-import { ROUTERS } from '@/constant/router';
-import { useRouter } from 'next/router';
-import useI18n from '@/i18n/useI18N';
-import COLORS from '@/constant/color';
-import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
-import style from './index.module.scss';
-import { useQuery } from '@tanstack/react-query';
-import { getListCountry, getListPortSearch } from './fetcher';
 import {
-  ParamData,
+  QueryParamType,
   PortDataTable,
   STATUS_COLORS,
   STATUS_LABELS,
+  SelectSearch,
 } from './interface';
 import {
   DEFAULT_PAGINATION,
-  PaginationDefaults,
+  PaginationOfAntd,
   SkeletonTable,
 } from '../commons/table-commons';
-import { formatDate } from '@/utils/format';
-import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { getListTypePort } from '@/layout/fetcher';
-import { ColumnSearchTableProps } from '../commons/search-table';
 
-type DataIndex = keyof ParamData;
+type DataIndex = keyof QueryParamType;
 
 const initalValueQueryParams = {
   searchAll: '',
@@ -49,6 +50,7 @@ const initalValueQueryParams = {
   address: '',
   typePort: '',
 };
+
 const initalValueDisplayColumn = {
   index: {
     order: 0,
@@ -86,20 +88,33 @@ const initalValueDisplayColumn = {
     fixed: 'right' as const,
   },
 };
-export type SelectSearch = Record<
-  'countryID' | 'portName' | 'portCode' | 'address' | 'typePort',
-  {
-    label: string;
-    value: string;
-  }
->;
 
-// export interface SelectSearch {
-//   [key: string]: {
-//     label: string;
-//     value: string;
-//   };
-// }
+const initalSelectSearch = {
+  searchAll: {
+    label: '',
+    value: '',
+  },
+  countryID: {
+    label: '',
+    value: '',
+  },
+  portName: {
+    label: '',
+    value: '',
+  },
+  portCode: {
+    label: '',
+    value: '',
+  },
+  address: {
+    label: '',
+    value: '',
+  },
+  typePort: {
+    label: '',
+    value: '',
+  },
+};
 
 export default function PortPage() {
   const router = useRouter();
@@ -107,33 +122,12 @@ export default function PortPage() {
   const { translate: translatePort } = useI18n('port');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationDefaults>(DEFAULT_PAGINATION);
-  const [queryParams, setQueryParams] = useState<ParamData>(
+    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+  const [queryParams, setQueryParams] = useState<QueryParamType>(
     initalValueQueryParams
   );
-  const [searchTextAll, setSearchTextAll] = useState('');
-  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>({
-    countryID: {
-      label: '',
-      value: '',
-    },
-    portName: {
-      label: '',
-      value: '',
-    },
-    portCode: {
-      label: '',
-      value: '',
-    },
-    address: {
-      label: '',
-      value: '',
-    },
-    typePort: {
-      label: '',
-      value: '',
-    },
-  });
+  const [selectedKeyShow, setSelectedKeyShow] =
+    useState<SelectSearch>(initalSelectSearch);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
   const [dataTable, setDataTable] = useState<PortDataTable[]>([]);
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -191,11 +185,10 @@ export default function PortPage() {
         setDataTable([]);
       }
     },
-    retry: 0,
   });
 
   const refreshingQuery = () => {
-    setSearchTextAll('');
+    setSelectedKeyShow(initalSelectSearch);
     setQueryParams(initalValueQueryParams);
     setRefreshingLoading(true);
     setPagination((state) => ({
@@ -210,14 +203,16 @@ export default function PortPage() {
 
   // Handle search
   const handleSearchInputKeyPress = (value: string) => {
-    setSearchTextAll(value);
+    setSelectedKeyShow({
+      ...initalSelectSearch,
+      searchAll: {
+        label: 'searchAll',
+        value: value,
+      },
+    });
     setQueryParams({
+      ...initalValueQueryParams,
       searchAll: value,
-      countryID: '',
-      portName: '',
-      portCode: '',
-      address: '',
-      typePort: '',
     });
   };
 
@@ -226,6 +221,17 @@ export default function PortPage() {
     confirm: (param?: FilterConfirmProps) => void,
     dataIndex: DataIndex
   ) => {
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: {
+        label: dataIndex,
+        value: selectedKeys,
+      },
+      searchAll: {
+        label: 'searchAll',
+        value: '',
+      },
+    }));
     const newQueryParams = { ...queryParams };
     newQueryParams[dataIndex] = selectedKeys;
     setQueryParams(newQueryParams);
@@ -249,7 +255,7 @@ export default function PortPage() {
     {
       title: translatePort('port_no'),
       dataIndex: 'index',
-      width: 100,
+      width: 50,
       align: 'center',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -262,7 +268,7 @@ export default function PortPage() {
       width: 120,
       key: 'portCode',
       align: 'center',
-      ...ColumnSearchTableProps<ParamData>({
+      ...ColumnSearchTableProps<QueryParamType>({
         props: {
           handleSearch: handleSearch,
           handleReset: handleReset,
@@ -276,9 +282,18 @@ export default function PortPage() {
     {
       title: translatePort('name'),
       dataIndex: 'portName',
-      width: 250,
       key: 'portName',
       align: 'center',
+      ...ColumnSearchTableProps<QueryParamType>({
+        props: {
+          handleSearch: handleSearch,
+          handleReset: handleReset,
+          queryParams: queryParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'portName',
+        },
+      }),
     },
     {
       title: translatePort('country_name'),
@@ -408,7 +423,7 @@ export default function PortPage() {
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     setPagination((state) => ({
       ...state,
-      current: page,
+      currentPage: page,
       pageSize: size,
     }));
   };
@@ -487,12 +502,18 @@ export default function PortPage() {
             toolBarRender={() => [
               <Input.Search
                 key={'Search'}
-                placeholder="Search"
+                placeholder={translateCommon('search')}
                 onSearch={handleSearchInputKeyPress}
-                value={searchTextAll}
-                onChange={(e) =>
-                  setSearchTextAll(e.target.value ? e.target.value : '')
-                }
+                value={selectedKeyShow.searchAll.value}
+                onChange={(e) => {
+                  setSelectedKeyShow((prevData) => ({
+                    ...prevData,
+                    searchAll: {
+                      label: 'searchAll',
+                      value: e.target.value ? e.target.value : '',
+                    },
+                  }));
+                }}
               />,
               <Button
                 key={'create'}

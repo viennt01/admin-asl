@@ -43,5 +43,7 @@
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
     "date_inserted": "Ngày cập nhật",
-    "inserter": "Người cập nhật"
+    "inserter": "Người cập nhật",
+    "search": "Tìm",
+    "reset": "Bỏ lọc"
 }

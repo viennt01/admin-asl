@@ -43,5 +43,7 @@
     "date_created": "Date created",
     "creator": "Creator",
     "date_inserted": "Date updated",
-    "inserter": "Update by user"
+    "inserter": "Update by user",
+    "search": "Search",
+    "reset": "Reset"
 }

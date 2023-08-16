@@ -4,6 +4,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { useRef } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
+import useI18n from '@/i18n/useI18N';
 
 type SelectSearch<T> = {
   [key in keyof T]: {
@@ -12,7 +13,7 @@ type SelectSearch<T> = {
   };
 };
 
-interface ColumnSearchPropsProps<T = any> {
+interface ColumnSearchPropsProps<T> {
   handleSearch: (
     selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
@@ -25,7 +26,6 @@ interface ColumnSearchPropsProps<T = any> {
   dataIndex: keyof T;
 }
 
-// Generic type cho ColumnSearchProps
 type ColumnSearchProps<T> = ProColumns<T> & {
   props: ColumnSearchPropsProps<T>;
 };
@@ -43,7 +43,7 @@ export const ColumnSearchTableProps = <T,>({
   props: ColumnSearchPropsProps<T>;
 }) => {
   const searchInput = useRef<InputRef>(null);
-
+  const { translate: translateCommon } = useI18n('common');
   const getColumnSearchProps: ColumnSearchProps<T>['filterDropdown'] = ({
     confirm,
     clearFilters,
@@ -52,7 +52,7 @@ export const ColumnSearchTableProps = <T,>({
     <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
       <Input
         ref={searchInput}
-        placeholder="Search"
+        placeholder={translateCommon('search')}
         value={selectedKeyShow[dataIndex]?.value}
         onChange={(e) => {
           setSelectedKeyShow((prevData) => ({
@@ -79,14 +79,14 @@ export const ColumnSearchTableProps = <T,>({
           size="small"
           style={{ width: 90 }}
         >
-          Search
+          {translateCommon('search')}
         </Button>
         <Button
           onClick={() => clearFilters && handleReset(clearFilters, dataIndex)}
           size="small"
           style={{ width: 90 }}
         >
-          Reset
+          {translateCommon('reset')}
         </Button>
         <Button
           type="link"
@@ -95,7 +95,7 @@ export const ColumnSearchTableProps = <T,>({
             close();
           }}
         >
-          close
+          {translateCommon('close')}
         </Button>
       </Space>
     </div>
@@ -115,7 +115,7 @@ export const ColumnSearchTableProps = <T,>({
                 : undefined,
           }}
         />
-      ); // ... your filter icon logic ...
+      );
     },
     onFilter: (value: any, record: any) =>
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),

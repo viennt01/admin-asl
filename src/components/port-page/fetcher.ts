@@ -1,19 +1,18 @@
-import { ResponseWithPayload, get, post } from '@/fetcherAxios';
+import { ResponseWithPayload, post } from '@/fetcherAxios';
 import {
-  CountriesData,
+  CountriesType,
   PortCreate,
-  PortData,
+  PortType,
   PortDetailDataBody,
   PortEdit,
   PortsData,
-  RequestPortsData,
-  TypePortData,
+  RequestPortsType,
 } from './interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { Pagination } from '../commons/table-commons';
 
-export const getListPortSearch = (data: RequestPortsData) => {
-  return post<RequestPortsData, ResponseWithPayload<PortsData>>({
+export const getListPortSearch = (data: RequestPortsType) => {
+  return post<RequestPortsType, ResponseWithPayload<PortsData>>({
     data,
   })(API_PORT.GET_PORTS_SEARCH);
 };
@@ -25,7 +24,7 @@ export const getListPort = (data: Pagination) => {
 };
 
 export const getPortDetail = (id: string) => {
-  return post<PortDetailDataBody, ResponseWithPayload<PortData>>({
+  return post<PortDetailDataBody, ResponseWithPayload<PortType>>({
     data: {
       id,
     },
@@ -33,15 +32,9 @@ export const getPortDetail = (id: string) => {
 };
 
 export const getListCountry = (data: Pagination) => {
-  return post<Pagination, ResponseWithPayload<CountriesData>>({
+  return post<Pagination, ResponseWithPayload<CountriesType>>({
     data,
   })(API_MASTER_DATA.GET_COUNTRY);
-};
-
-export const getListTypePort = () => {
-  return get<ResponseWithPayload<TypePortData[]>>({})(
-    API_MASTER_DATA.GET_TYPE_PORT
-  );
 };
 
 export const createPort = (data: PortCreate) => {

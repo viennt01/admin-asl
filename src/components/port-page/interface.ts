@@ -1,19 +1,22 @@
 import COLORS from '@/constant/color';
 import { Pagination } from '../commons/table-commons';
 
-export interface PortsData {
-  data: PortData[];
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-}
+export const STATUS_COLORS = {
+  1: COLORS.ACTIVE,
+  2: COLORS.DEACTIVATE,
+};
 
-export interface PortData {
+export const STATUS_LABELS = {
+  1: 'Active',
+  2: 'Deactivate',
+};
+
+export interface PortType {
   portID: string;
   countryID: string;
   portName: string;
   portCode: string;
-  typePorts: TypePortID[];
+  typePorts: string[];
   status: number;
   description: string;
   address: string;
@@ -24,26 +27,18 @@ export interface PortData {
   countryName: string;
 }
 
-export interface PortDataTable {
+export interface PortDataTable extends Omit<PortType, 'portID'> {
   key: string;
-  countryID: string;
-  portName: string;
-  portCode: string;
-  typePorts: TypePortID[];
-  status: number;
-  description: string;
-  address: string;
-  dateInserted: string;
-  insertedByUser: string;
-  dateUpdated: string;
-  updatedByUser: string;
-  countryName: string;
   searchAll: string;
   typePort: string;
 }
 
-export interface ParamData {
-  searchAll?: string;
+export interface PortsData extends Pagination {
+  data: PortType[];
+}
+
+export interface QueryParamType {
+  searchAll: string;
   countryID: string;
   portName: string;
   portCode: string;
@@ -51,28 +46,15 @@ export interface ParamData {
   typePort: string;
 }
 
-export interface RequestPortsData {
-  searchAll?: string;
-  countryID?: string;
-  portName?: string;
-  portCode?: string;
-  address?: string;
-  typePort?: string;
+export interface RequestPortsType extends QueryParamType {
   paginateRequest: Pagination;
 }
 
-export interface TypePortID {
-  typePortID: string;
+export interface CountriesType extends Pagination {
+  data: CountryType[];
 }
 
-export interface CountriesData {
-  data: CountryData[];
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-}
-
-export interface CountryData {
+export interface CountryType {
   countryID: string;
   countryName: string;
   maCK: string;
@@ -80,33 +62,11 @@ export interface CountryData {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  listCity: {
-    cityID: string;
-    countryID: string;
-    cityName: string;
-    maCK: string;
-    dateInserted: string;
-    insertedByUser: string;
-    dateUpdated: string;
-    updatedByUser: string;
-  }[];
 }
 
 export interface PortDetailDataBody {
   id: string;
 }
-
-export const STATUS_COLORS = {
-  1: COLORS.ACTIVE,
-  2: COLORS.DEACTIVATE,
-  3: COLORS.BLOCK,
-};
-
-export const STATUS_LABELS = {
-  1: 'Active',
-  2: 'Deactivate',
-  3: 'Block',
-};
 
 export interface FormValues {
   portID: string;
@@ -122,13 +82,9 @@ export type PortCreate = Omit<FormValues, 'portID' | 'status'>;
 
 export type PortEdit = FormValues;
 
-export interface TypePortData {
-  typePortID: string;
-  typePortName: string;
-  description: string;
-  status: number;
-  insertedDate: string;
-  insertedBy: string;
-  updatedDate: string;
-  updatedBy: string;
-}
+export type SelectSearch = {
+  [key in keyof QueryParamType]: {
+    label: string;
+    value: string;
+  };
+};
