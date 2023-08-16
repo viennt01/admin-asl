@@ -1,6 +1,6 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   Button,
   Form,
@@ -15,10 +15,10 @@ import {
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getListCountry, getPortDetail } from '../fetcher';
-import { FormValues, STATUS_LABELS, TypePortData } from '../interface';
+import { FormValues, STATUS_LABELS } from '../interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
-import { ResponseWithPayload } from '@/fetcherAxios';
+import { getListTypePort } from '@/layout/fetcher';
 
 const initialValue = {
   description: '',
@@ -52,10 +52,7 @@ const PortForm = ({
   const { id } = router.query;
   const [options, setOptions] = useState<Option[]>([]);
   const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
-  const queryClient = useQueryClient();
-  const typePort = queryClient.getQueryData<
-    ResponseWithPayload<TypePortData[]>
-  >([API_MASTER_DATA.GET_TYPE_PORT]);
+  const typePorts = useQuery([API_MASTER_DATA.GET_TYPE_PORT], getListTypePort);
 
   useEffect(() => {
     if (!id) return;
@@ -109,7 +106,7 @@ const PortForm = ({
         description: portDetailQuery.data.data.description,
       });
     }
-  }, [portDetailQuery.data, form, typePort]);
+  }, [portDetailQuery.data, form]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -185,7 +182,7 @@ const PortForm = ({
                   mode="multiple"
                   size="large"
                   options={
-                    typePort?.data.map((type) => ({
+                    typePorts.data?.data.map((type) => ({
                       label: type.typePortName,
                       value: type.typePortID,
                     })) || []

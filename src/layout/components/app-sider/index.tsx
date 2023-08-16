@@ -37,6 +37,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { LogoutData, logout } from './fetcher';
 import { UserInfo, checkNewUser } from '@/layout/fetcher';
 import { ResponseWithPayload } from '@/fetcherAxios';
+import { API_USER } from '@/fetcherAxios/endpoint';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -101,8 +102,9 @@ const AppSider = ({ collapsed }: Props) => {
   const [openTour, setOpenTour] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const dataUser = queryClient.getQueryData<ResponseWithPayload<UserInfo>>([
-    'user',
+    API_USER.CHECK_USER,
   ]);
+
   const checkNewUserFirst = useMutation({
     mutationFn: () => checkNewUser(),
   });
@@ -351,7 +353,7 @@ const AppSider = ({ collapsed }: Props) => {
   useEffect(() => {
     setIpAddress(appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS));
     setDeviceName(appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME));
-    if (dataUser?.data.newUser) {
+    if (dataUser?.data?.newUser) {
       setOpenTour(true);
     }
   }, [dataUser]);

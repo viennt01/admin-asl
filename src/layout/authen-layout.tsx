@@ -28,7 +28,7 @@ import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { getListTypePort, getUserInfo } from './fetcher';
 import { useQuery } from '@tanstack/react-query';
-import { API_MASTER_DATA } from '@/fetcherAxios/endpoint';
+import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -129,7 +129,7 @@ export function AppLayout(props: Props) {
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
   const locale = useLocale();
   useQuery({
-    queryKey: ['user'],
+    queryKey: [API_USER.CHECK_USER],
     queryFn: () => getUserInfo(),
     onSuccess: (data) => {
       if (!data.status) {
@@ -146,8 +146,9 @@ export function AppLayout(props: Props) {
   });
   useQuery({
     queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
-    queryFn: () => getListTypePort(),
+    queryFn: getListTypePort,
   });
+
   useEffect(() => {
     setLanguage(locale);
     languageSelected === LANGUAGE.EN

@@ -4,7 +4,7 @@ import {
   PlusOutlined,
   SearchOutlined,
   ReloadOutlined,
-  FilterOutlined,
+  FilterFilled,
 } from '@ant-design/icons';
 import {
   Button,
@@ -24,18 +24,23 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
 import style from './index.module.scss';
 import { useQuery } from '@tanstack/react-query';
-import { getListPortSearch, getListTypePort } from './fetcher';
+import { getListCountry, getListPortSearch } from './fetcher';
 import {
   ParamData,
   PortDataTable,
   STATUS_COLORS,
   STATUS_LABELS,
 } from './interface';
-import { DEFAULT_PAGINATION, SkeletonTable } from '../commons/table-commons';
+import {
+  DEFAULT_PAGINATION,
+  PaginationDefaults,
+  SkeletonTable,
+} from '../commons/table-commons';
 import { formatDate } from '@/utils/format';
 import Highlighter from 'react-highlight-words';
 import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
+import { getListTypePort } from '@/layout/fetcher';
 
 type DataIndex = keyof ParamData;
 
@@ -97,7 +102,8 @@ export default function PortPage() {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translatePort } = useI18n('port');
   const { translate: translateCommon } = useI18n('common');
-  const [pagination, setPagination] = useState(DEFAULT_PAGINATION);
+  const [pagination, setPagination] =
+    useState<PaginationDefaults>(DEFAULT_PAGINATION);
   const [queryParams, setQueryParams] = useState<ParamData>(
     initalValueQueryParams
   );
@@ -109,10 +115,15 @@ export default function PortPage() {
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
   >(initalValueDisplayColumn);
+  const typePorts = useQuery([API_MASTER_DATA.GET_TYPE_PORT], getListTypePort);
 
-  const typePortQuery = useQuery({
-    queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
-    queryFn: () => getListTypePort(),
+  const getCountries = useQuery({
+    queryKey: [API_MASTER_DATA.GET_COUNTRY],
+    queryFn: () =>
+      getListCountry({
+        currentPage: 1,
+        pageSize: 500,
+      }),
   });
 
   const handleSearchInputKeyPress = (value: string) => {
@@ -272,6 +283,24 @@ export default function PortPage() {
       dataIndex: 'countryName',
       key: 'countryName',
       align: 'center',
+      filteredValue: [queryParams.countryID] || null,
+      filters:
+        getCountries.data?.data.data.map((item) => ({
+          text: item.countryName,
+          value: item.countryID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                queryParams.countryID?.length !== 0 ? '#1890ff' : '#b1b1b1',
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
     },
     {
       title: translatePort('type_of_port'),
@@ -279,15 +308,15 @@ export default function PortPage() {
       dataIndex: 'typePorts',
       key: 'typePorts',
       align: 'center',
+      filteredValue: [queryParams.typePortID] || null,
       filters:
-        typePortQuery.data?.data.map((data) => ({
+        typePorts.data?.data.map((data) => ({
           text: data.typePortName,
           value: data.typePortID,
         })) || [],
-      filteredValue: [queryParams.typePortID] || null,
       filterIcon: () => {
         return (
-          <FilterOutlined
+          <FilterFilled
             style={{
               color:
                 queryParams.typePortID?.length !== 0 ? '#1890ff' : '#b1b1b1',
@@ -295,7 +324,6 @@ export default function PortPage() {
           />
         );
       },
-
       filterMultiple: false,
       render: (value: any) =>
         value.map(function (type: {
@@ -386,16 +414,19 @@ export default function PortPage() {
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>
   ) => {
-    if (filters.typePorts) {
-      const newQueryParams = { ...queryParams };
-      newQueryParams.typePortID = filters.typePorts[0].toString();
-      setQueryParams(newQueryParams);
-      return;
-    }
-    const newQueryParams = { ...queryParams };
-    newQueryParams.typePortID = '';
+    const newQueryParams = {
+      ...queryParams,
+      searchAll: '',
+      countryID:
+        filters.countryName?.length !== 0 && filters.countryName
+          ? (filters.countryName[0] as string)
+          : '',
+      typePortID:
+        filters.typePorts?.length !== 0 && filters.typePorts
+          ? (filters.typePorts[0] as string)
+          : '',
+    };
     setQueryParams(newQueryParams);
-    return;
   };
 
   const portsQuerySearch = useQuery({
@@ -430,12 +461,9 @@ export default function PortPage() {
             typePortID: '',
           }))
         );
-        setPagination((state) => ({
-          ...state,
-          current: currentPage,
-          pageSize: pageSize,
-          total: totalPages,
-        }));
+        pagination.current = currentPage;
+        pagination.pageSize = pageSize;
+        pagination.total = totalPages;
       } else {
         setDataTable([]);
       }
