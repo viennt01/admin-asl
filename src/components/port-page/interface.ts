@@ -39,7 +39,7 @@ export interface PortDataTable {
   updatedByUser: string;
   countryName: string;
   searchAll: string;
-  typePortID: string;
+  typePort: string;
 }
 
 export interface ParamData {
@@ -48,7 +48,7 @@ export interface ParamData {
   portName: string;
   portCode: string;
   address: string;
-  typePortID: string;
+  typePort: string;
 }
 
 export interface RequestPortsData {
@@ -57,7 +57,7 @@ export interface RequestPortsData {
   portName?: string;
   portCode?: string;
   address?: string;
-  typePortID?: string;
+  typePort?: string;
   paginateRequest: Pagination;
 }
 
