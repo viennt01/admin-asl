@@ -8,7 +8,16 @@
     "cost": "Giá",
     "status":"Trạng thái",
     "date_created": "Ngày tạo",
-    "update_date": "Ngày cập nhật",
+    "date_update": "Ngày cập nhật",
     "updater": "Người cập nhật",
-    "creator": "Người tạo"
+    "creator": "Người tạo",
+
+    "information_add_type_of_customs": "Thêm mới loại phụ phí",
+    "information_edit_type_of_customs": "Chỉnh sửa loại phụ phí",
+    "name_customs_placeholder": "Please input name type of customs",
+    "customs_placeholder": "Please input customs",
+    "currency_placeholder": "Please select currency",
+    "vat_placeholder": "Please input VAT",
+    "cost_placeholder": "Please input cost",
+    "status_placeholder":"Please select status"
 }

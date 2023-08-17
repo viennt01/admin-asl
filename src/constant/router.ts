@@ -5,8 +5,21 @@ export const ROUTERS = {
   FORGOT_PASSWORD: '/forgot-password',
   BOOKING: '/booking',
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
-  QUOTATION: '/quotation',
-  QUOTATION_EDIT: (quotationId: string) => `/quotation/edit/${quotationId}`,
+  SEA_QUOTATION: '/quotation-sea',
+  SEA_QUOTATION_EDIT: (quotationSeaId: string) =>
+    `/quotation-sea/edit/${quotationSeaId}`,
+  AIR_QUOTATION: '/quotation-air',
+  AIR_QUOTATION_EDIT: (quotationAirId: string) =>
+    `/quotation-air/edit/${quotationAirId}`,
+  CUSTOMS_QUOTATION: '/quotation-customs',
+  CUSTOMS_QUOTATION_EDIT: (quotationCustomsId: string) =>
+    `/quotation-customs/edit/${quotationCustomsId}`,
+  TRUCKING_QUOTATION: '/quotation-trucking',
+  TRUCKING_QUOTATION_EDIT: (quotationTruckingId: string) =>
+    `/quotation-trucking/edit/${quotationTruckingId}`,
+  QUOTATION_ALL_IN: '/quotation-all-in',
+  QUOTATION_ALL_IN_EDIT: (quotationAllInId: string) =>
+    `/quotation-all-in/edit/${quotationAllInId}`,
   SEA_PRICING: '/pricing/pricing-sea',
   SEA_PRICING_EDIT: (seaPricingId: string) =>
     `/pricing/pricing-sea/edit/${seaPricingId}`,
@@ -49,8 +62,8 @@ export const ROUTERS = {
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string) =>
     `/master-data/type-of-container/edit/${typeOfContainerId}`,
   TYPES_OF_CUSTOMS: '/master-data/type-of-customs',
-  TYPES_OF_CUSTOMS_EDIT: (typeOfcustomsId: string) =>
-    `/master-data/type-of-customs/edit/${typeOfcustomsId}`,
+  TYPES_OF_CUSTOMS_EDIT: (typeOfCustomsId: string) =>
+    `/master-data/type-of-customs/edit/${typeOfCustomsId}`,
   UNIT: '/master-data/unit',
   UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
   USER: '/system/user',

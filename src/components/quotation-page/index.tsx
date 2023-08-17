@@ -252,7 +252,7 @@ export default function QuotationPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.QUOTATION_EDIT(id));
+    router.push(ROUTERS.QUOTATION_ALL_IN_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {

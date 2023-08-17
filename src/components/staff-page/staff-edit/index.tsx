@@ -428,7 +428,7 @@ export default function EditLStaff() {
                         },
                       ]}
                     >
-                      <Input.TextArea placeholder="Nhập ghi chú" />
+                      <Input.TextArea rows={1} placeholder="Nhập ghi chú" />
                     </Form.Item>
                   </Col>
                 </Row>

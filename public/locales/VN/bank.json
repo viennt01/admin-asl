@@ -1,7 +1,7 @@
 {
     "title": "Danh sách ngân hàng",
     "bank_no": "Stt",
-    "bank_code": "Mã ngân hàng",
+    "bank_code": "Mã",
     "bank_logo": "Logo",
     "bank_name": "Tên ngân hàng",
     "VND_account_number": "Số tài khoản VND",
