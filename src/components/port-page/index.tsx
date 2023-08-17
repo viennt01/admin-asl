@@ -1,5 +1,5 @@
 import { Key, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
@@ -8,7 +8,7 @@ import { ColumnSearchTableProps } from '../commons/search-table';
 import style from './index.module.scss';
 import { formatDate } from '@/utils/format';
 import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
-import { getListCountry, getListPortSearch } from './fetcher';
+import { deletePort, getListCountry, getListPortSearch } from './fetcher';
 import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
 import {
   DeleteOutlined,
@@ -16,11 +16,13 @@ import {
   PlusOutlined,
   ReloadOutlined,
   FilterFilled,
+  ExclamationCircleFilled,
 } from '@ant-design/icons';
 import {
   Button,
   ConfigProvider,
   Input,
+  Modal,
   PaginationProps,
   TablePaginationConfig,
   Tag,
@@ -39,6 +41,10 @@ import {
 } from '../commons/table-commons';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { getListTypePort } from '@/layout/fetcher';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
+
+const { confirm } = Modal;
 
 type DataIndex = keyof QueryParamType;
 
@@ -118,6 +124,7 @@ const initalSelectSearch = {
 
 export default function PortPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translatePort } = useI18n('port');
   const { translate: translateCommon } = useI18n('common');
@@ -134,7 +141,7 @@ export default function PortPage() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumn);
 
-  // Get data
+  // Handle data
   const typePorts = useQuery([API_MASTER_DATA.GET_TYPE_PORT], getListTypePort);
 
   const getCountries = useQuery({
@@ -184,6 +191,25 @@ export default function PortPage() {
       } else {
         setDataTable([]);
       }
+    },
+  });
+
+  const deletePortMutation = useMutation({
+    mutationFn: () => deletePort(selectedRowKeys),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [API_PORT.GET_PORTS_SEARCH, pagination, queryParams],
+          exact: true,
+        });
+        setSelectedRowKeys([]);
+      } else {
+        errorToast(data.message);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
     },
   });
 
@@ -313,7 +339,9 @@ export default function PortPage() {
           <FilterFilled
             style={{
               color:
-                queryParams.countryID?.length !== 0 ? '#1890ff' : '#b1b1b1',
+                queryParams.countryID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
             }}
           />
         );
@@ -336,17 +364,17 @@ export default function PortPage() {
         return (
           <FilterFilled
             style={{
-              color: queryParams.typePort?.length !== 0 ? '#1890ff' : '#b1b1b1',
+              color:
+                queryParams.typePort?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
             }}
           />
         );
       },
       filterMultiple: false,
-      render: (value: any) =>
-        value.map(function (type: {
-          typePortID: string;
-          typePortName: string;
-        }) {
+      render: (_, value) =>
+        value.typePorts.map((type) => {
           return <Tag key={type.typePortID}>{type.typePortName}</Tag>;
         }),
     },
@@ -368,7 +396,7 @@ export default function PortPage() {
       ),
     },
     {
-      title: translatePort('date_created'),
+      title: translateCommon('date_created'),
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
@@ -376,14 +404,14 @@ export default function PortPage() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePort('creator'),
+      title: translateCommon('creator'),
       width: 200,
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
       align: 'center',
     },
     {
-      title: translatePort('date_inserted'),
+      title: translateCommon('date_inserted'),
       width: 150,
       dataIndex: 'dateUpdated',
       key: 'dateUpdated',
@@ -391,7 +419,7 @@ export default function PortPage() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePort('inserter'),
+      title: translateCommon('inserter'),
       width: 200,
       dataIndex: 'updatedByUser',
       key: 'updatedByUser',
@@ -423,7 +451,7 @@ export default function PortPage() {
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     setPagination((state) => ({
       ...state,
-      currentPage: page,
+      current: page,
       pageSize: size,
     }));
   };
@@ -449,6 +477,19 @@ export default function PortPage() {
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
     setColumnsStateMap(map);
+  };
+
+  const showPropsConfirmDelete = () => {
+    confirm({
+      icon: <ExclamationCircleFilled />,
+      title: translateCommon('modal_delete.title'),
+      okText: translateCommon('modal_delete.button_ok'),
+      cancelText: translateCommon('modal_delete.button_cancel'),
+      okType: 'danger',
+      onOk() {
+        deletePortMutation.mutate();
+      },
+    });
   };
 
   return (
@@ -540,6 +581,7 @@ export default function PortPage() {
                   borderColor: COLORS.RED,
                   fontWeight: '500',
                 }}
+                onClick={showPropsConfirmDelete}
               >
                 {translateCommon('button_delete')}
               </Button>,
