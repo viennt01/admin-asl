@@ -11,6 +11,11 @@ const COLORS = {
   ACTIVE: '#00A651',
   DEACTIVATE: '#e89434',
   BLOCK: '#ED1C27',
+
+  SEARCH: {
+    FILTER_ACTIVE: '#1677ff',
+    FILTER_DEFAULT: '#b1b1b1',
+  },
 };
 // update color => remmeber update color scss in styles
 

@@ -8,10 +8,6 @@
     "address": "Address",
     "company":"Management Company",
     "status":"Status",
-    "date_created": "Date created",
-    "creator": "Creator",
-    "date_inserted": "Date update",
-    "inserter": "Update by user",
     
     "information_add_port": "Add new port",
     "information_edit_port": "Edit Port",

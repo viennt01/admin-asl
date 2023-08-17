@@ -8,8 +8,6 @@
     "address": "Địa chỉ",
     "company":"Công ty quản lý",
     "status":"Trạng thái",
-    "date_created": "Ngày tạo",
-    "creator": "Người tạo",
     
     "information_add_port": "Thêm mới cảng",
     "information_edit_port": "Chỉnh sửa cảng",

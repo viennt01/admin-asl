@@ -15,6 +15,7 @@ export const API_PORT = {
   GET_PORT_DETAIL: '/get-detail-port',
   CREATE_PORT: '/add-new-port',
   EDIT_PORT: '/update-port',
+  DELETE_PORT: '/delete-port',
 };
 
 export const API_MASTER_DATA = {

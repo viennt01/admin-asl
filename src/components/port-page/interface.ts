@@ -16,7 +16,7 @@ export interface PortType {
   countryID: string;
   portName: string;
   portCode: string;
-  typePorts: string[];
+  typePorts: TypePorts[];
   status: number;
   description: string;
   address: string;
@@ -25,6 +25,11 @@ export interface PortType {
   dateUpdated: string;
   updatedByUser: string;
   countryName: string;
+}
+
+export interface TypePorts {
+  typePortID: string;
+  typePortName: string;
 }
 
 export interface PortDataTable extends Omit<PortType, 'portID'> {
@@ -81,6 +86,10 @@ export interface FormValues {
 export type PortCreate = Omit<FormValues, 'portID' | 'status'>;
 
 export type PortEdit = FormValues;
+
+export type PortDelete = {
+  portIds: React.Key[];
+};
 
 export type SelectSearch = {
   [key in keyof QueryParamType]: {

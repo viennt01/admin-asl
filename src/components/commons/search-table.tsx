@@ -5,6 +5,7 @@ import Highlighter from 'react-highlight-words';
 import { useRef } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import useI18n from '@/i18n/useI18N';
+import COLORS from '@/constant/color';
 
 type SelectSearch<T> = {
   [key in keyof T]: {
@@ -111,7 +112,7 @@ export const ColumnSearchTableProps = <T,>({
             color:
               checkValueSelectedKeyShow.length !== 0 ||
               queryParams[dataIndex]?.toString().length !== 0
-                ? '#1677ff'
+                ? COLORS.SEARCH.FILTER_ACTIVE
                 : undefined,
           }}
         />

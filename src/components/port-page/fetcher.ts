@@ -7,6 +7,7 @@ import {
   PortEdit,
   PortsData,
   RequestPortsType,
+  PortDelete,
 } from './interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { Pagination } from '../commons/table-commons';
@@ -47,4 +48,12 @@ export const editPort = (data: PortEdit) => {
   return post<PortEdit, ResponseWithPayload<PortEdit>>({
     data,
   })(API_PORT.EDIT_PORT);
+};
+
+export const deletePort = (data: React.Key[]) => {
+  return post<PortDelete, ResponseWithPayload<PortEdit>>({
+    data: {
+      portIds: data,
+    },
+  })(API_PORT.DELETE_PORT);
 };

@@ -1,24 +1,14 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useQuery } from '@tanstack/react-query';
-import {
-  Button,
-  Form,
-  Input,
-  Typography,
-  Card,
-  Row,
-  Col,
-  Select,
-  Descriptions,
-} from 'antd';
+import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getListCountry, getPortDetail } from '../fetcher';
 import { FormValues, STATUS_LABELS } from '../interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
-import { formatDate } from '@/utils/format';
 import { getListTypePort } from '@/layout/fetcher';
+import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 
 const initialValue = {
   description: '',
@@ -46,7 +36,6 @@ const PortForm = ({
   checkRow,
 }: PortFormProps) => {
   const { translate: translatePort } = useI18n('port');
-  const { translate: translateCommon } = useI18n('common');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -91,22 +80,25 @@ const PortForm = ({
     onError: () => {
       router.push(ROUTERS.PORT);
     },
+    onSuccess: (data) => {
+      if (data.status) {
+        form.setFieldsValue({
+          portName: data.data.portName,
+          portCode: data.data.portCode,
+          typePorts: data.data.typePorts.map((type) => type.typePortID),
+          countryID: data.data.countryID,
+          status: data.data.status,
+          description: data.data.description,
+        });
+      } else {
+        router.push(ROUTERS.PORT);
+      }
+    },
   });
 
-  useEffect(() => {
-    if (portDetailQuery.data) {
-      form.setFieldsValue({
-        portName: portDetailQuery.data.data.portName,
-        portCode: portDetailQuery.data.data.portCode,
-        typePorts: portDetailQuery.data.data.typePorts.map(
-          (type: any) => type.typePortID
-        ),
-        countryID: portDetailQuery.data.data.countryID,
-        status: portDetailQuery.data.data.status,
-        description: portDetailQuery.data.data.description,
-      });
-    }
-  }, [portDetailQuery.data, form]);
+  const handleCheckEdit = (data: boolean) => {
+    setCheckEdit(data);
+  };
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -261,70 +253,17 @@ const PortForm = ({
           </Row>
         </Card>
 
-        <Card>
-          <Row gutter={12}>
-            <Col span={12}>
-              {checkRow && isCheckEdit ? (
-                <>
-                  <Button onClick={() => router.push(ROUTERS.PORT)}>
-                    {translateCommon('close')}
-                  </Button>
-                  <Button
-                    type="primary"
-                    onClick={() => setCheckEdit(false)}
-                    style={{ marginLeft: '12px' }}
-                  >
-                    {translateCommon('edit')}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  {checkRow ? (
-                    <Button onClick={() => setCheckEdit(true)}>
-                      {translateCommon('cancel')}
-                    </Button>
-                  ) : (
-                    <Button onClick={() => router.push(ROUTERS.PORT)}>
-                      {translateCommon('cancel')}
-                    </Button>
-                  )}
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{ marginLeft: '12px' }}
-                    loading={loading}
-                  >
-                    {!create
-                      ? translateCommon('save')
-                      : translateCommon('create')}
-                  </Button>
-                </>
-              )}
-            </Col>
-            {!create ? (
-              <Col span={12}>
-                <Descriptions column={2}>
-                  <Descriptions.Item label={translateCommon('creator')}>
-                    {portDetailQuery.data?.data.insertedByUser}
-                  </Descriptions.Item>
-                  <Descriptions.Item label={translateCommon('date_created')}>
-                    {formatDate(
-                      Number(portDetailQuery.data?.data.dateInserted)
-                    )}
-                  </Descriptions.Item>
-                  <Descriptions.Item label={translateCommon('inserter')}>
-                    {portDetailQuery.data?.data.updatedByUser}
-                  </Descriptions.Item>
-                  <Descriptions.Item label={translateCommon('date_inserted')}>
-                    {formatDate(Number(portDetailQuery.data?.data.dateUpdated))}
-                  </Descriptions.Item>
-                </Descriptions>
-              </Col>
-            ) : (
-              <></>
-            )}
-          </Row>
-        </Card>
+        <BottomCreateEdit
+          checkRow={checkRow}
+          isCheckEdit={isCheckEdit}
+          create={create}
+          loading={loading}
+          insertedByUser={portDetailQuery.data?.data?.insertedByUser || ''}
+          dateInserted={portDetailQuery.data?.data?.dateInserted || ''}
+          updatedByUser={portDetailQuery.data?.data?.updatedByUser || ''}
+          dateUpdated={portDetailQuery.data?.data?.dateUpdated || ''}
+          handleCheckEdit={handleCheckEdit}
+        />
       </Form>
     </div>
   );

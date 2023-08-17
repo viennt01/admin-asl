@@ -50,5 +50,11 @@
     "date_inserted": "Date updated",
     "inserter": "Update by user",
     "search": "Search",
-    "reset": "Reset"
+    "reset": "Reset",
+
+    "modal_delete": {
+        "title": "Are you sure you want to delete?",
+        "button_ok": "Yes",
+        "button_cancel": "No"
+    }
 }
