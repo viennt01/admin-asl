@@ -164,11 +164,82 @@ export function AppLayout(props: Props) {
 
   const ROUTER_HEADER = {
     '/': [{ title: `${translateCommon('home')}` }],
-    '/quotation': [{ title: `${translateCommon('quotation')}` }],
-    '/quotation/edit/[id]': [
+
+    '/quotation/sea-quotation': [
+      { title: `${translateCommon('quotation')}` },
+      { title: `${translateCommon('sea_pricing')}` },
+    ],
+    '/quotation/sea-quotation/edit/[id]': [
+      { title: `${translateCommon('quotation')}` },
       {
         title: (
-          <Link href={ROUTERS.QUOTATION}>{translateCommon('quotation')}</Link>
+          <Link href={ROUTERS.SEA_QUOTATION}>
+            {translateCommon('sea_pricing')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/quotation/air-quotation': [
+      { title: `${translateCommon('quotation')}` },
+      { title: `${translateCommon('air_pricing')}` },
+    ],
+    '/quotation/air-quotation/edit/[id]': [
+      { title: `${translateCommon('quotation')}` },
+      {
+        title: (
+          <Link href={ROUTERS.AIR_QUOTATION}>
+            {translateCommon('air_pricing')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/quotation/customs-quotation': [
+      { title: `${translateCommon('quotation')}` },
+      { title: `${translateCommon('customs_pricing')}` },
+    ],
+    '/quotation/customs-quotation/edit/[id]': [
+      { title: `${translateCommon('quotation')}` },
+      {
+        title: (
+          <Link href={ROUTERS.CUSTOMS_QUOTATION}>
+            {translateCommon('customs_pricing')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/quotation/trucking-quotation': [
+      { title: `${translateCommon('quotation')}` },
+      { title: `${translateCommon('trucking_pricing')}` },
+    ],
+    '/quotation/trucking-quotation/edit/[id]': [
+      { title: `${translateCommon('quotation')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TRUCKING_QUOTATION}>
+            {translateCommon('trucking_pricing')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
+    '/quotation/quotation-all-in': [
+      { title: `${translateCommon('quotation')}` },
+      { title: `${translateCommon('quotation_all_in')}` },
+    ],
+    '/quotation/quotation-all-in/edit/[id]': [
+      { title: `${translateCommon('quotation')}` },
+      {
+        title: (
+          <Link href={ROUTERS.QUOTATION_ALL_IN}>
+            {translateCommon('quotation_all_in')}
+          </Link>
         ),
       },
       { title: `${translateCommon('detail')}` },

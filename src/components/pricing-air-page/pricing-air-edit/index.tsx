@@ -52,7 +52,7 @@ export default function EditPricingAir() {
 
   const data: readonly any[] | undefined = [];
 
-  const columnsTypeOfContainerCost: ColumnsType<DataType> = [
+  const columnsAirFreight: ColumnsType<DataType> = [
     {
       title: translatePricingAir('min_qty'),
       width: 150,
@@ -107,6 +107,86 @@ export default function EditPricingAir() {
       width: 150,
       dataIndex: 'GW',
       key: 'GW',
+      align: 'center',
+    },
+  ];
+
+  const columnsLocalChart: ColumnsType<DataType> = [
+    {
+      title: translatePricingAir('LCLMin'),
+      width: 200,
+      dataIndex: 'LCLMin',
+      key: 'LCLMin',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('LCL'),
+      width: 200,
+      dataIndex: 'LCL',
+      key: 'LCL',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('DC20'),
+      width: 200,
+      dataIndex: 'DC20',
+      key: 'DC20',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('DC40'),
+      width: 200,
+      dataIndex: 'DC40',
+      key: 'DC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('HC40'),
+      width: 200,
+      dataIndex: 'HC40',
+      key: 'HC40',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('HC45'),
+      width: 200,
+      dataIndex: 'HC45',
+      key: 'HC45',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('RF20'),
+      width: 200,
+      dataIndex: 'RF20',
+      key: 'RF20',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('RF40'),
+      width: 200,
+      dataIndex: 'RF40',
+      key: 'RF40',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('DB20'),
+      width: 200,
+      dataIndex: 'DB20',
+      key: 'DB20',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('others'),
+      width: 200,
+      dataIndex: 'others',
+      key: 'others',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('type'),
+      width: 300,
+      dataIndex: 'type',
+      key: 'type',
       align: 'center',
     },
   ];
@@ -400,17 +480,28 @@ export default function EditPricingAir() {
           </Card>
 
           <CollapseCard
-            title={translatePricingAir('title_information_pricing_weight')}
+            title={translatePricingAir('title_air_freight')}
             style={{ marginBottom: '24px' }}
             defaultActive={true}
           >
             <Row gutter={16}>
               <Col lg={24} span={24}>
                 <Card style={{ marginBottom: 24 }}>
-                  <Table
-                    columns={columnsTypeOfContainerCost}
-                    dataSource={data}
-                  />
+                  <Table columns={columnsAirFreight} dataSource={data} />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
+
+          <CollapseCard
+            title={translatePricingAir('title_local_chart')}
+            style={{ marginBottom: '24px' }}
+            defaultActive={true}
+          >
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table columns={columnsLocalChart} dataSource={data} />
                 </Card>
               </Col>
             </Row>

@@ -73,6 +73,11 @@ const AppSider = ({ collapsed }: Props) => {
   const { translate: translateCommon } = useI18n('common');
   const refHome = useRef(null);
   const refQuotation = useRef(null);
+  const refSeaQuotation = useRef(null);
+  const refAirQuotation = useRef(null);
+  const refCustomsQuotation = useRef(null);
+  const refTruckingQuotation = useRef(null);
+  const refQuotationAllIn = useRef(null);
   const refBooking = useRef(null);
   const refPricing = useRef(null);
   const refSeaPricing = useRef(null);
@@ -140,7 +145,8 @@ const AppSider = ({ collapsed }: Props) => {
     },
     {
       title: 'Hệ thống',
-      description: 'Menu này bao gồm màn hình nhân viên và quyền hạn.',
+      description:
+        'Menu này bao gồm màn hình người dùng, nhân viên và quyền hạn.',
       target: () => refSystem.current,
     },
   ];
@@ -154,8 +160,35 @@ const AppSider = ({ collapsed }: Props) => {
 
     getItem(
       `${translateCommon('quotation')}`,
-      ROUTERS.QUOTATION,
-      <ContainerOutlined ref={refQuotation} />
+      '1',
+      <ContainerOutlined ref={refQuotation} />,
+      [
+        getItem(
+          `${translateCommon('sea_quotation')}`,
+          ROUTERS.SEA_QUOTATION,
+          <ContainerOutlined ref={refSeaQuotation} />
+        ),
+        getItem(
+          `${translateCommon('air_quotation')}`,
+          ROUTERS.AIR_QUOTATION,
+          <ContainerOutlined ref={refAirQuotation} />
+        ),
+        getItem(
+          `${translateCommon('customs_quotation')}`,
+          ROUTERS.CUSTOMS_QUOTATION,
+          <ContainerOutlined ref={refCustomsQuotation} />
+        ),
+        getItem(
+          `${translateCommon('trucking_quotation')}`,
+          ROUTERS.TRUCKING_QUOTATION,
+          <ContainerOutlined ref={refTruckingQuotation} />
+        ),
+        getItem(
+          `${translateCommon('quotation_all_in')}`,
+          ROUTERS.QUOTATION_ALL_IN,
+          <ContainerOutlined ref={refQuotationAllIn} />
+        ),
+      ]
     ),
 
     getItem(
@@ -166,7 +199,7 @@ const AppSider = ({ collapsed }: Props) => {
 
     getItem(
       `${translateCommon('pricing')}`,
-      '1',
+      '2',
       <AuditOutlined ref={refPricing} />,
       [
         getItem(
@@ -194,12 +227,12 @@ const AppSider = ({ collapsed }: Props) => {
 
     getItem(
       `${translateCommon('partner')}`,
-      '2',
+      '3',
       <TeamOutlined ref={refPartner} />,
       [
         getItem(
           `${translateCommon('customer')}`,
-          '3',
+          '4',
           <UserOutlined ref={refCustomer} />,
           [
             getItem(
@@ -230,7 +263,7 @@ const AppSider = ({ collapsed }: Props) => {
 
     getItem(
       `${translateCommon('master_data')}`,
-      '4',
+      '5',
       <AppstoreOutlined ref={refMasterData} />,
       [
         getItem(
@@ -250,7 +283,7 @@ const AppSider = ({ collapsed }: Props) => {
         ),
         getItem(
           `${translateCommon('accountant')}`,
-          '5',
+          '6',
           <DollarOutlined ref={refAccountant} />,
           [
             getItem(
@@ -286,7 +319,7 @@ const AppSider = ({ collapsed }: Props) => {
     ),
     getItem(
       `${translateCommon('system')}`,
-      '6',
+      '7',
       <ClusterOutlined ref={refSystem} />,
       [
         getItem(

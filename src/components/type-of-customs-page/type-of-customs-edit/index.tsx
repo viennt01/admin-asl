@@ -23,12 +23,6 @@ export interface FormValues {
   number_container: string;
 }
 
-const initialValue = {
-  type_of_container: '',
-  detail_placeholder: '',
-  number_container: '',
-};
-
 const { Title } = Typography;
 
 export default function EditTypeOfCustoms() {
@@ -57,7 +51,6 @@ export default function EditTypeOfCustoms() {
       >
         <Form
           form={form}
-          initialValues={initialValue}
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical"
@@ -66,38 +59,107 @@ export default function EditTypeOfCustoms() {
             <Row justify={'center'}>
               <Col>
                 <Title level={3}>
-                  {translateTypeOfCustoms('information_edit_TypeOfCustoms')}
+                  {translateTypeOfCustoms('information_add_type_of_customs')}
                 </Title>
               </Col>
             </Row>
+
             <Row gutter={16}>
-              <Col lg={6} span={24}>
+              <Col lg={14} span={24}>
                 <Form.Item
-                  label={translateTypeOfCustoms('code')}
-                  name="code"
+                  label={translateTypeOfCustoms('name_customs')}
+                  name="name_customs"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of code',
+                      message: translateTypeOfCustoms(
+                        'name_customs_placeholder'
+                      ),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập mã" />
+                  <Input
+                    placeholder={translateTypeOfCustoms(
+                      'name_customs_placeholder'
+                    )}
+                  />
                 </Form.Item>
               </Col>
 
-              <Col lg={14} span={24}>
+              <Col lg={10} span={24}>
                 <Form.Item
-                  label={translateTypeOfCustoms('name')}
-                  name="name_customer"
+                  label={translateTypeOfCustoms('customs')}
+                  name="customs"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Expense Name',
+                      message: translateTypeOfCustoms('customs_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập tên Expense Name" />
+                  <Input
+                    placeholder={translateTypeOfCustoms('customs_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translateTypeOfCustoms('currency')}
+                  name="currency"
+                  rules={[
+                    {
+                      required: true,
+                      message: translateTypeOfCustoms('currency_placeholder'),
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'USD',
+                        label: 'USD',
+                      },
+                      {
+                        value: 'VND',
+                        label: 'VND',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={10} span={24}>
+                <Form.Item
+                  label={translateTypeOfCustoms('vat')}
+                  name="vat"
+                  rules={[
+                    {
+                      required: true,
+                      message: translateTypeOfCustoms('vat_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateTypeOfCustoms('vat_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={10} span={24}>
+                <Form.Item
+                  label={translateTypeOfCustoms('cost')}
+                  name="cost"
+                  rules={[
+                    {
+                      required: true,
+                      message: translateTypeOfCustoms('cost_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translateTypeOfCustoms('cost_placeholder')}
+                  />
                 </Form.Item>
               </Col>
 
@@ -143,7 +205,7 @@ export default function EditTypeOfCustoms() {
                 </Form.Item>
               </Col>
 
-              <Col lg={18} span={24}>
+              <Col lg={14} span={24}>
                 <Form.Item
                   label={translateTypeOfCustoms('creator')}
                   name="creator"
