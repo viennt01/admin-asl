@@ -400,20 +400,6 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('create')}` },
     ],
 
-    '/master-data/compamny': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('compamny')}` },
-    ],
-    '/master-data/compamny/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
-      {
-        title: (
-          <Link href={ROUTERS.COMPANY}>{translateCommon('compamny')}</Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('unit')}` },
@@ -476,22 +462,6 @@ export function AppLayout(props: Props) {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>
             {translateCommon('type_of_container')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-
-    '/master-data/type-of-customs': [
-      { title: `${translateCommon('master_data')}` },
-      { title: `${translateCommon('type_of_customs')}` },
-    ],
-    '/master-data/type-of-customs/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
-      {
-        title: (
-          <Link href={ROUTERS.TYPES_OF_CUSTOMS}>
-            {translateCommon('type_of_customs')}
           </Link>
         ),
       },

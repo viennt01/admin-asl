@@ -48,8 +48,6 @@ export const ROUTERS = {
   PORT_EDIT: (portId: string, checkRow = false) =>
     `/master-data/port/edit/${portId}?checkRow=${checkRow}`,
   PORT_CREATE: '/master-data/port/create',
-  COMPANY: '/master-data/company',
-  COMPANY_EDIT: (companyId: string) => `/master-data/company/edit/${companyId}`,
   FEE: '/master-data/fee',
   FEE_EDIT: (typeOfExpenseId: string) =>
     `/master-data/fee/edit/${typeOfExpenseId}`,
@@ -61,9 +59,6 @@ export const ROUTERS = {
   TYPES_OF_CONTAINER: '/master-data/type-of-container',
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string) =>
     `/master-data/type-of-container/edit/${typeOfContainerId}`,
-  TYPES_OF_CUSTOMS: '/master-data/type-of-customs',
-  TYPES_OF_CUSTOMS_EDIT: (typeOfCustomsId: string) =>
-    `/master-data/type-of-customs/edit/${typeOfCustomsId}`,
   UNIT: '/master-data/unit',
   UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
   USER: '/system/user',

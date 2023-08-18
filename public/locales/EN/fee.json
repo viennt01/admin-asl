@@ -3,12 +3,22 @@
     "add_fee_no": "No",
     "code": "Code",
     "name": "Name",
+    "customs": "Customs",
+    "currency": "Currency",
+    "vat": "VAT",
+    "cost": "Cost",
     "status":"Status",
     "date_created": "Date Created",
+    "date_update": "Date update",
+    "updater": "Updater",
     "creator": "Creator",
 
     "information_add_fee": "Add new fee",
     "information_edit_fee": "Edit fee",
-    "name_placeholder": "Enter the fee name",
-    "status_placeholder":"Choose status"
+    "name_placeholder": "Please input the fee name",
+    "customs_placeholder": "Please input customs",
+    "currency_placeholder": "Please select currency",
+    "vat_placeholder": "Please input VAT",
+    "cost_placeholder": "Please input cost",
+    "status_placeholder":"Please select status"
 }

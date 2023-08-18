@@ -1,13 +1,24 @@
 {
     "title": "Danh sách các loại chi phí",
-    "add_fee_no": "Stt",
+    "add_fee_no": "STT",
     "code": "Mã chi phí",
     "name": "Tên chi phí",
+    "customs": "Phụ phí",
+    "currency": "Tiền tệ",
+    "vat": "VAT",
+    "cost": "Giá",
     "status":"Trạng thái",
     "date_created": "Ngày tạo",
+    "date_update": "Ngày cập nhật",
+    "updater": "Người cập nhật",
     "creator": "Người tạo",
+
     "information_add_fee": "Thêm mới loại chi phí",
     "information_edit_fee": "Chỉnh sửa loại chi phí",
     "name_placeholder": "Nhập tên chi phí",
-    "status_placeholder":"Chọn trạng thái"
+    "customs_placeholder": "Please input customs",
+    "currency_placeholder": "Please select currency",
+    "vat_placeholder": "Please input VAT",
+    "cost_placeholder": "Please input cost",
+    "status_placeholder":"Please select status"
 }

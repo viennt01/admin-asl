@@ -69,33 +69,104 @@ export default function EditFee() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={6} span={24}>
+              <Col lg={5} span={24}>
                 <Form.Item
                   label={translateFee('code')}
                   name="code"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of code',
+                      message: '',
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập mã" />
+                  <Input disabled placeholder="Nhập mã" />
                 </Form.Item>
               </Col>
 
-              <Col lg={14} span={24}>
+              <Col lg={12} span={24}>
                 <Form.Item
                   label={translateFee('name')}
                   name="name_customer"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Expense Name',
+                      message: translateFee('name_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập tên Expense Name" />
+                  <Input placeholder={translateFee('name_placeholder')} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={7} span={24}>
+                <Form.Item
+                  label={translateFee('customs')}
+                  name="customs"
+                  rules={[
+                    {
+                      required: true,
+                      message: translateFee('customs_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input placeholder={translateFee('customs_placeholder')} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translateFee('currency')}
+                  name="currency"
+                  rules={[
+                    {
+                      required: true,
+                      message: translateFee('currency_placeholder'),
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'USD',
+                        label: 'USD',
+                      },
+                      {
+                        value: 'VND',
+                        label: 'VND',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={10} span={24}>
+                <Form.Item
+                  label={translateFee('vat')}
+                  name="vat"
+                  rules={[
+                    {
+                      required: true,
+                      message: translateFee('vat_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input placeholder={translateFee('vat_placeholder')} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={10} span={24}>
+                <Form.Item
+                  label={translateFee('cost')}
+                  name="cost"
+                  rules={[
+                    {
+                      required: true,
+                      message: translateFee('cost_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input placeholder={translateFee('cost_placeholder')} />
                 </Form.Item>
               </Col>
 
@@ -141,7 +212,7 @@ export default function EditFee() {
                 </Form.Item>
               </Col>
 
-              <Col lg={18} span={24}>
+              <Col lg={14} span={24}>
                 <Form.Item
                   label={translateFee('creator')}
                   name="creator"
