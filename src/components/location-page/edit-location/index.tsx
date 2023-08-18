@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
-const EditPort = () => {
+const EditLocation = () => {
   const portId = router.query.id as string;
   const checkRow = router.query.checkRow as string;
 
@@ -18,7 +18,7 @@ const EditPort = () => {
   });
 
   if (!portId) {
-    router.push(ROUTERS.PORT);
+    router.push(ROUTERS.LOCATION);
     return;
   }
 
@@ -55,4 +55,4 @@ const EditPort = () => {
   );
 };
 
-export default EditPort;
+export default EditLocation;

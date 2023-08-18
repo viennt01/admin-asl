@@ -264,7 +264,7 @@ const AppSider = ({ collapsed }: Props) => {
       [
         getItem(
           `${translateCommon('port')}`,
-          ROUTERS.PORT,
+          ROUTERS.LOCATION,
           <GoldOutlined ref={refPort} />
         ),
         getItem(

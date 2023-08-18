@@ -7,7 +7,7 @@ import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 
-const CreatePort = () => {
+const CreateLocation = () => {
   const createPortMutation = useMutation({
     mutationFn: (body: PortCreate) => {
       return createPort(body);
@@ -25,7 +25,7 @@ const CreatePort = () => {
     createPortMutation.mutate(_requestData, {
       onSuccess: (data) => {
         if (data.status) {
-          router.push(ROUTERS.PORT);
+          router.push(ROUTERS.LOCATION);
           successToast(data.message);
         } else {
           errorToast(data.message);
@@ -47,4 +47,4 @@ const CreatePort = () => {
   );
 };
 
-export default CreatePort;
+export default CreateLocation;

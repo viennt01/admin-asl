@@ -44,10 +44,10 @@ export const ROUTERS = {
   SUPPLIER: '/partner/liner-vendor-supplier',
   SUPPLIER_EDIT: (supplierId: string) =>
     `/partner/liner-vendor-supplier/edit/${supplierId}`,
-  PORT: '/master-data/port',
-  PORT_EDIT: (portId: string, checkRow = false) =>
-    `/master-data/port/edit/${portId}?checkRow=${checkRow}`,
-  PORT_CREATE: '/master-data/port/create',
+  LOCATION: '/master-data/location',
+  LOCATION_EDIT: (portId: string, checkRow = false) =>
+    `/master-data/location/edit/${portId}?checkRow=${checkRow}`,
+  LOCATION_CREATE: '/master-data/location/create',
   FEE: '/master-data/fee',
   FEE_EDIT: (typeOfExpenseId: string) =>
     `/master-data/fee/edit/${typeOfExpenseId}`,

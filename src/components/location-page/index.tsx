@@ -122,7 +122,7 @@ const initalSelectSearch = {
   },
 };
 
-export default function PortPage() {
+export default function LocationPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -441,7 +441,7 @@ export default function PortPage() {
 
   // Handle table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.PORT_EDIT(id));
+    router.push(ROUTERS.LOCATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -534,7 +534,7 @@ export default function PortPage() {
                 onDoubleClick: (e) => {
                   const target = e.target as HTMLElement;
                   if (!target.closest('button')) {
-                    router.push(ROUTERS.PORT_EDIT(record.key, true));
+                    router.push(ROUTERS.LOCATION_EDIT(record.key, true));
                   }
                 },
               };
@@ -567,7 +567,7 @@ export default function PortPage() {
                   fontWeight: '500',
                 }}
                 onClick={() => {
-                  router.push(ROUTERS.PORT_CREATE);
+                  router.push(ROUTERS.LOCATION_CREATE);
                 }}
               >
                 {translateCommon('button_add')}

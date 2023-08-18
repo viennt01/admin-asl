@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import PortPage from '@/components/port-page';
+import CreateLocation from '@/components/location-page/create-location';
 
-function Port() {
+function CreateLocationPage() {
   return (
     <>
       <Head>
-        <title>ASL | PORT</title>
+        <title>ASL | CREATE LOCATION</title>
       </Head>
-      <PortPage />
+      <CreateLocation />
     </>
   );
 }
 
-export default withAuthentication(Port);
+export default withAuthentication(CreateLocationPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'port']);

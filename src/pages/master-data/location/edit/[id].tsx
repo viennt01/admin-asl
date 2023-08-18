@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditPort from '@/components/port-page/port-edit';
+import EditLocation from '@/components/location-page/edit-location';
 
-function PortEditPage() {
+function LocationEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | PORT EDIT</title>
+        <title>ASL | EDIT LOCATION</title>
       </Head>
-      <EditPort />
+      <EditLocation />
     </>
   );
 }
 
-export default withAuthentication(PortEditPage);
+export default withAuthentication(LocationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'port']);
 

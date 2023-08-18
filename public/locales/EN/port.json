@@ -1,31 +1,31 @@
 {
-    "title": "List of Port",
+    "title": "List of Location",
     "port_no": "No",
-    "code": "Port Code",
-    "name": "Port Name",
+    "code": "Code",
+    "name": "Name",
     "country_name": "Country",
-    "type_of_port": "Type of Port",
+    "type_of_port": "Type",
     "address": "Address",
     "company":"Management Company",
     "status":"Status",
     
-    "information_add_port": "Add new port",
-    "information_edit_port": "Edit Port",
+    "information_add_port": "Add new Location",
+    "information_edit_port": "Edit Location",
 
     "port_code": {
-        "title": "Port Code",
-        "placeholder": "Enter port code",
-        "error_required": "Please input Port Code"
+        "title": "Code",
+        "placeholder": "Enter Location code",
+        "error_required": "Please input Location Code"
     },
     "port_name": {
-        "title": "Port Name",
-        "placeholder": "Enter port name",
-        "error_required": "Please input Port Name"
+        "title": "Location Name",
+        "placeholder": "Enter Location name",
+        "error_required": "Please input Location Name"
     },
     "type_port": {
-        "title": "Type Of Port",
-        "placeholder": "Enter type of port",
-        "error_required": "Please input type of port"
+        "title": "Type Of Location",
+        "placeholder": "Enter type of Location",
+        "error_required": "Please input type of Location"
     },
     "country": {
         "title": "Country",

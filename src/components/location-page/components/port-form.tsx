@@ -69,7 +69,7 @@ const PortForm = ({
       }
     },
     onError: () => {
-      router.push(ROUTERS.PORT);
+      router.push(ROUTERS.LOCATION);
     },
   });
 
@@ -78,7 +78,7 @@ const PortForm = ({
     queryFn: () => getPortDetail(id as string),
     enabled: id !== undefined,
     onError: () => {
-      router.push(ROUTERS.PORT);
+      router.push(ROUTERS.LOCATION);
     },
     onSuccess: (data) => {
       if (data.status) {
@@ -91,7 +91,7 @@ const PortForm = ({
           description: data.data.description,
         });
       } else {
-        router.push(ROUTERS.PORT);
+        router.push(ROUTERS.LOCATION);
       }
     },
   });

@@ -1,31 +1,31 @@
 {
-    "title": "Danh sách cảng",
+    "title": "Danh sách địa điểm",
     "port_no": "Stt",
-    "code": "Mã Cảng",
-    "name": "Tên Cảng",
+    "code": "Mã",
+    "name": "Tên",
     "country_name": "Quốc gia",
-    "type_of_port": "Loại cảng",
+    "type_of_port": "Loại",
     "address": "Địa chỉ",
     "company":"Công ty quản lý",
     "status":"Trạng thái",
     
-    "information_add_port": "Thêm mới cảng",
-    "information_edit_port": "Chỉnh sửa cảng",
+    "information_add_port": "Thêm mới",
+    "information_edit_port": "Chỉnh sửa",
 
     "port_code": {
-        "title": "Mã Cảng",
-        "placeholder": "Nhập mã cảng",
-        "error_required": "Vui lòng nhập mã cảng"
+        "title": "Mã",
+        "placeholder": "Nhập mã",
+        "error_required": "Vui lòng nhập mã"
     },
     "port_name": {
-        "title": "Tên Cảng",
-        "placeholder": "Nhập tên cảng",
-        "error_required": "Vui lòng nhập tên cảng"
+        "title": "Tên",
+        "placeholder": "Nhập tên",
+        "error_required": "Vui lòng nhập tên"
     },
     "type_port": {
-        "title": "Loại Cảng",
-        "placeholder": "Nhập loại cảng",
-        "error_required": "Vui lòng nhập loại cảng"
+        "title": "Loại",
+        "placeholder": "Nhập loại",
+        "error_required": "Vui lòng nhập loại"
     },
     "country": {
         "title": "Quốc Gia",
