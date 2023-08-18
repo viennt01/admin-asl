@@ -317,70 +317,10 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
-    '/partner/customer/potential-customer': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('customer')}` },
-      { title: `${translateCommon('potential_customer')}` },
-    ],
-    '/partner/customer/potential-customer/edit/[id]': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('customer')}` },
+    '/partner': [{ title: `${translateCommon('partner')}` }],
+    '/partner/edit/[id]': [
       {
-        title: (
-          <Link href={ROUTERS.POTENTIAL_CUSTOMER}>
-            {translateCommon('potential_customer')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-
-    '/partner/customer/official-customer': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('customer')}` },
-      { title: `${translateCommon('official_customer')}` },
-    ],
-    '/partner/customer/official-customer/edit/[id]': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('customer')}` },
-      {
-        title: (
-          <Link href={ROUTERS.OFFICIAL_CUSTOMER}>
-            {translateCommon('official_customer')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-
-    '/partner/customer/customers-on-sales': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('customer')}` },
-      { title: `${translateCommon('customers_on_sales')}` },
-    ],
-    '/partner/customer/customers-on-sales/edit/[id]': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('customer')}` },
-      {
-        title: (
-          <Link href={ROUTERS.CUSTOMER_ON_SALES}>
-            {translateCommon('customers_on_sales')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-
-    '/partner/supplier': [
-      { title: `${translateCommon('partner')}` },
-      { title: `${translateCommon('supplier')}` },
-    ],
-    '/partner/supplier/edit/[id]': [
-      { title: `${translateCommon('partner')}` },
-      {
-        title: (
-          <Link href={ROUTERS.SUPPLIER}>{translateCommon('supplier')}</Link>
-        ),
+        title: <Link href={ROUTERS.PARTNER}>{translateCommon('partner')}</Link>,
       },
       { title: `${translateCommon('detail')}` },
     ],

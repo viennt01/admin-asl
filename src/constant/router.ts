@@ -32,18 +32,8 @@ export const ROUTERS = {
   TRUCKING_PRICING: '/pricing/pricing-trucking',
   TRUCKING_PRICING_EDIT: (truckingPricingId: string) =>
     `/pricing/pricing-trucking/edit/${truckingPricingId}`,
-  POTENTIAL_CUSTOMER: '/partner/customer/potential-customer',
-  POTENTIAL_CUSTOMER_EDIT: (potentialCustomerId: string) =>
-    `/partner/customer/potential-customer/edit/${potentialCustomerId}`,
-  OFFICIAL_CUSTOMER: '/partner/customer/official-customer',
-  OFFICIAL_CUSTOMER_EDIT: (officialCustomerId: string) =>
-    `/partner/customer/official-customer/edit/${officialCustomerId}`,
-  CUSTOMER_ON_SALES: '/partner/customer/customers-on-sales',
-  CUSTOMER_ON_SALES_EDIT: (customerOnSalesId: string) =>
-    `/partner/customer/customers-on-sales/edit/${customerOnSalesId}`,
-  SUPPLIER: '/partner/liner-vendor-supplier',
-  SUPPLIER_EDIT: (supplierId: string) =>
-    `/partner/liner-vendor-supplier/edit/${supplierId}`,
+  PARTNER: '/partner',
+  PARTNER_EDIT: (partnerId: string) => `/partner/edit/${partnerId}`,
   LOCATION: '/master-data/location',
   LOCATION_EDIT: (portId: string, checkRow = false) =>
     `/master-data/location/edit/${portId}?checkRow=${checkRow}`,
@@ -69,34 +59,3 @@ export const ROUTERS = {
   PERMISSION_EDIT: (permissionId: string) =>
     `/system/permission/edit/${permissionId}`,
 };
-
-// export const ROUTER_TITLE = {
-//   '/': 'HOME',
-//   '/quotation': 'QUOTATION',
-//   '/quotation/edit/[id]': 'QUOTATION_EDIT',
-//   '/booking': 'BOOKING',
-//   '/booking/edit/[id]': 'BOOKING_EDIT',
-//   '/partner/customer': 'CUSTOMER',
-//   '/partner/customer/edit/[id]': 'CUSTOMER_EDIT',
-//   '/partner/supplier': 'SUPPLIER',
-//   '/partner/supplier/edit/[id]': 'SUPPLIER_EDIT',
-//   '/master-data/port': 'PORT',
-//   '/master-data/port/edit/[id]': 'PORT_EDIT',
-//   '/master-data/location': 'LOCATION',
-//   '/master-data/location/edit/[id]': 'LOCATION_EDIT',
-//   '/master-data/fee': 'FEE',
-//   '/master-data/fee/edit/[id]': 'FEE_EDIT',
-//   '/master-data/type-of-container': 'TYPES_OF_CONTAINER',
-//   '/master-data/type-of-container/edit/[id]': 'TYPE_OF_LOCATION_EDIT',
-//   '/master-data/type-of-location': 'TYPE_OF_LOCATION',
-//   '/master-data/type-of-location/edit/[id]': 'TYPE_OF_LOCATION_EDIT',
-//   '/master-data/unit': 'UNIT',
-//   '/master-data/unit/edit/[id]': 'UNIT_EDIT',
-//   '/master-data/currency': 'CURRENCY',
-//   '/master-data/currency/edit/[id]': 'CURRENCY_EDIT',
-//   '/system/staff': 'STAFF',
-//   '/system/staff/edit/[id]': 'STAFF_EDIT',
-//   '/system/permission': 'PERMISSION',
-//   '/system/permission/edit/[id]': 'PERMISSION_EDIT',
-//   '/404': 'ERROR',
-// };

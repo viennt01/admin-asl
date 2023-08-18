@@ -1,23 +1,23 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditOfficialCustomer from '@/components/official-customer-page/official-customer-edit';
+import EditPartner from '@/components/partner-page/partner-edit';
 
-function OfficialCustomerEditPage() {
+function PartnerEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | OFFICIAL CUSTOMER EDIT</title>
+        <title>ASL | PARTNER EDIT</title>
       </Head>
-      <EditOfficialCustomer />
+      <EditPartner />
     </>
   );
 }
 
-export default withAuthentication(OfficialCustomerEditPage);
+export default withAuthentication(PartnerEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic([
   'common',
-  'officialCustomer',
+  'partner',
   'contactInfo',
   'booking',
   'invoice',
