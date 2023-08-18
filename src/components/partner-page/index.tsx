@@ -3,9 +3,9 @@ import {
   EditOutlined,
   SearchOutlined,
 } from '@ant-design/icons';
-import { Button, ConfigProvider, Input, InputRef, Space, Tag } from 'antd';
+import { Button, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useRef, useState } from 'react';
-import CreateCustomer from './create-customer-on-sales';
+import CreatePartner from './create-partner';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -24,22 +24,22 @@ const STATUS_LABELS = {
   DeActive: 'Tạm ngừng',
 };
 
-export default function CustomerOnSalesPage() {
+export default function PartnerPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateCustomerOnSales } = useI18n('customerOnSales');
+  const { translate: translatePartner } = useI18n('partner');
   const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
-    customerCode: string;
+    PartnerCode: string;
     abbreviation: string;
-    customerName: string;
+    PartnerName: string;
+    service: string;
     numberOfTransaction: number;
     phone: string;
     address: string;
     country: string;
     email: string;
-    saleman: string;
     status: string;
     dateCreated: string;
     creator: string;
@@ -48,16 +48,15 @@ export default function CustomerOnSalesPage() {
   const data: DataType[] = [];
   for (let i = 0; i < 46; i++) {
     data.push({
-      customerCode: 'ASL120',
-      abbreviation: `MASAN CONSUMER`,
-      customerName: `CÔNG TY CP HÀNG TIÊU DÙNG MASAN`,
-      numberOfTransaction: 250,
+      PartnerCode: 'ASLS152',
+      abbreviation: `Dong A`,
+      PartnerName: `Đông Á`,
+      service: 'Đóng hàng',
+      numberOfTransaction: 100,
       phone: '0964582355',
-      address:
-        'MPlaza Saigon 39 Le Duan, Ben Nghe, District 1, Ho Chi Minh City, Vietnam',
+      address: 'Hồ Chí Minh',
       country: 'Việt Nam',
       email: 'abcd@gmail.com',
-      saleman: i % 2 === 0 ? 'Linh Hương BG' : 'Lee & Man',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
       creator: 'Admin',
@@ -178,16 +177,16 @@ export default function CustomerOnSalesPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translateCustomerOnSales('code'),
+      title: translatePartner('code'),
       width: 150,
-      dataIndex: 'customerCode',
-      key: 'customerCode',
+      dataIndex: 'PartnerCode',
+      key: 'PartnerCode',
       fixed: 'left',
       align: 'center',
-      ...getColumnSearchProps('customerCode'),
+      ...getColumnSearchProps('PartnerCode'),
     },
     {
-      title: translateCustomerOnSales('abbreviation'),
+      title: translatePartner('abbreviation'),
       width: 250,
       dataIndex: 'abbreviation',
       key: 'abbreviation',
@@ -197,16 +196,24 @@ export default function CustomerOnSalesPage() {
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCustomerOnSales('name'),
-      width: 350,
-      dataIndex: 'customerName',
-      key: 'customerName',
+      title: translatePartner('name'),
+      width: 250,
+      dataIndex: 'PartnerName',
+      key: 'PartnerName',
       align: 'center',
-      ...getColumnSearchProps('customerName'),
+      ...getColumnSearchProps('PartnerName'),
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
     {
-      title: translateCustomerOnSales('number'),
+      title: translatePartner('service'),
+      width: 300,
+      dataIndex: 'service',
+      key: 'service',
+      align: 'center',
+      ...getColumnSearchProps('service'),
+    },
+    {
+      title: translatePartner('number'),
       width: 250,
       dataIndex: 'numberOfTransaction',
       key: 'numberOfTransaction',
@@ -214,7 +221,7 @@ export default function CustomerOnSalesPage() {
       ...getColumnSearchProps('numberOfTransaction'),
     },
     {
-      title: translateCustomerOnSales('phone'),
+      title: translatePartner('phone'),
       width: 150,
       dataIndex: 'phone',
       key: 'phone',
@@ -222,7 +229,7 @@ export default function CustomerOnSalesPage() {
       ...getColumnSearchProps('phone'),
     },
     {
-      title: translateCustomerOnSales('address'),
+      title: translatePartner('address'),
       width: 500,
       dataIndex: 'address',
       key: 'address',
@@ -230,7 +237,7 @@ export default function CustomerOnSalesPage() {
       ...getColumnSearchProps('address'),
     },
     {
-      title: translateCustomerOnSales('country'),
+      title: translatePartner('country'),
       width: 150,
       dataIndex: 'country',
       key: 'country',
@@ -238,7 +245,7 @@ export default function CustomerOnSalesPage() {
       ...getColumnSearchProps('country'),
     },
     {
-      title: translateCustomerOnSales('email'),
+      title: translatePartner('email'),
       width: 180,
       dataIndex: 'email',
       key: 'email',
@@ -246,15 +253,7 @@ export default function CustomerOnSalesPage() {
       ...getColumnSearchProps('email'),
     },
     {
-      title: translateCustomerOnSales('saleman'),
-      width: 200,
-      dataIndex: 'saleman',
-      key: 'saleman',
-      align: 'center',
-      ...getColumnSearchProps('saleman'),
-    },
-    {
-      title: translateCustomerOnSales('status'),
+      title: translatePartner('status'),
       width: 150,
       dataIndex: 'status',
       key: 'status',
@@ -285,7 +284,7 @@ export default function CustomerOnSalesPage() {
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translateCustomerOnSales('date_created')}
+          {translatePartner('date_created')}
         </div>
       ),
       width: 150,
@@ -296,7 +295,7 @@ export default function CustomerOnSalesPage() {
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translateCustomerOnSales('creator')}
+          {translatePartner('creator')}
         </div>
       ),
       width: 200,
@@ -320,7 +319,7 @@ export default function CustomerOnSalesPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.CUSTOMER_ON_SALES_EDIT(id));
+    router.push(ROUTERS.PARTNER_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -328,50 +327,48 @@ export default function CustomerOnSalesPage() {
   };
 
   return (
-    <ConfigProvider>
-      <ProTable<DataType>
-        className={style.table}
-        style={{ marginTop: '8px' }}
-        rowKey="key"
-        dataSource={data}
-        rowSelection={{
-          type: 'checkbox',
-          selectedRowKeys: selectedRowKeys,
-          onChange: handleSelectionChange,
-        }}
-        pagination={{
-          position: ['bottomCenter'],
-          showTotal: () => '',
-          showSizeChanger: true,
-        }}
-        columns={columns}
-        search={false}
-        dateFormatter="string"
-        headerTitle={translateCustomerOnSales('title')}
-        scroll={{
-          x: 'max-content',
-        }}
-        sticky={{ offsetHeader: 0 }}
-        options={{
-          fullScreen: true,
-          search: true,
-        }}
-        toolBarRender={() => [
-          <CreateCustomer key={'create'} />,
-          <Button
-            icon={<DeleteOutlined />}
-            style={{
-              backgroundColor: COLORS.RED,
-              color: COLORS.WHITE,
-              borderColor: COLORS.RED,
-              fontWeight: '500',
-            }}
-            key={'delete'}
-          >
-            {translateCommon('button_delete')}
-          </Button>,
-        ]}
-      />
-    </ConfigProvider>
+    <ProTable<DataType>
+      className={style.table}
+      style={{ marginTop: '8px' }}
+      rowKey="key"
+      dataSource={data}
+      rowSelection={{
+        type: 'checkbox',
+        selectedRowKeys: selectedRowKeys,
+        onChange: handleSelectionChange,
+      }}
+      pagination={{
+        position: ['bottomCenter'],
+        showTotal: () => '',
+        showSizeChanger: true,
+      }}
+      columns={columns}
+      search={false}
+      dateFormatter="string"
+      headerTitle={translatePartner('title')}
+      scroll={{
+        x: 'max-content',
+      }}
+      sticky={{ offsetHeader: 0 }}
+      options={{
+        fullScreen: true,
+        search: true,
+      }}
+      toolBarRender={() => [
+        <CreatePartner key={'create'} />,
+        <Button
+          icon={<DeleteOutlined />}
+          style={{
+            backgroundColor: COLORS.RED,
+            color: COLORS.WHITE,
+            borderColor: COLORS.RED,
+            fontWeight: '500',
+          }}
+          key={'delete'}
+        >
+          {translateCommon('button_delete')}
+        </Button>,
+      ]}
+    />
   );
 }

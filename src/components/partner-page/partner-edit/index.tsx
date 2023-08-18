@@ -58,7 +58,7 @@ interface DataType {
   etd: string;
   eta: string;
   nameCustomer: string;
-  nameSupplier: string;
+  namePartner: string;
   nameCnee: string;
   note: string;
   saleman: string;
@@ -74,11 +74,11 @@ const initialValue = {
 
 const { Title } = Typography;
 
-export default function EditOfficialCustomer() {
+export default function EditPartner() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
-  const { translate: translateOfficialCustomer } = useI18n('officialCustomer');
+  const { translate: translatePartner } = useI18n('partner');
   const { translate: translateContactInfo } = useI18n('contactInfo');
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateInvoice } = useI18n('invoice');
@@ -234,8 +234,8 @@ export default function EditOfficialCustomer() {
       align: 'center',
     },
     {
-      title: translateBooking('name_supplier'),
-      dataIndex: 'nameSupplier',
+      title: translateBooking('name_partner'),
+      dataIndex: 'namePartner',
       align: 'center',
     },
     {
@@ -380,100 +380,74 @@ export default function EditOfficialCustomer() {
             <Row justify={'center'}>
               <Col>
                 <Title level={3}>
-                  {translateOfficialCustomer('information_edit_customer')}
+                  {translatePartner('information_edit_partner')}
                 </Title>
               </Col>
             </Row>
             <Row gutter={16}>
               <Col lg={5} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('code')}
-                  name="code_customer"
+                  label={translatePartner('code')}
+                  name="code_partner"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of code customer',
+                      message: 'Please input type of code partner',
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập mã customer" />
+                  <Input placeholder="Nhập mã Partner" />
                 </Form.Item>
               </Col>
 
               <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('name')}
-                  name="name_customer"
+                  label={translatePartner('name')}
+                  name="name_Partner"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input customer Name',
+                      message: 'Please input Partner Name',
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập tên customer" />
+                  <Input placeholder="Nhập tên Partner" />
                 </Form.Item>
               </Col>
 
               <Col lg={7} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('abbreviation')}
-                  name="abbreviation_customer"
+                  label={translatePartner('abbreviation')}
+                  name="abbreviation_Partner"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Abbreviation of customer',
+                      message: 'Please input Abbreviation of Partner',
                     },
                   ]}
                 >
-                  <Input placeholder="Please input Abbreviation of customer" />
+                  <Input placeholder="Please input Abbreviation of Partner" />
                 </Form.Item>
               </Col>
 
-              <Col lg={5} span={24}>
+              <Col lg={17} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('country')}
-                  name="Country"
+                  label={translatePartner('service')}
+                  name="name_partner"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Country',
+                      message: 'Please input Service provided',
                     },
                   ]}
                 >
-                  <Select
-                    options={[
-                      {
-                        value: 'Hải Phòng',
-                        label: 'Hải Phòng',
-                      },
-                      {
-                        value: 'Hồ Chí Minh',
-                        label: 'Hồ Chí Minh',
-                      },
-                    ]}
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateOfficialCustomer('address')}
-                  name="address"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input address',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Address" />
+                  <Input placeholder="Nhập Service provided" />
                 </Form.Item>
               </Col>
 
               <Col lg={7} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('phone')}
+                  label={translatePartner('phone')}
                   style={{ marginBottom: 0 }}
                 >
                   <Form.Item
@@ -514,7 +488,48 @@ export default function EditOfficialCustomer() {
 
               <Col lg={5} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('email')}
+                  label={translatePartner('country')}
+                  name="Country"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input Country',
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Hải Phòng',
+                        label: 'Hải Phòng',
+                      },
+                      {
+                        value: 'Hồ Chí Minh',
+                        label: 'Hồ Chí Minh',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={19} span={24}>
+                <Form.Item
+                  label={translatePartner('address')}
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input address',
+                    },
+                  ]}
+                >
+                  <Input placeholder="Nhập Address" />
+                </Form.Item>
+              </Col>
+
+              <Col lg={7} span={24}>
+                <Form.Item
+                  label={translatePartner('email')}
                   name="email"
                   rules={[
                     {
@@ -527,24 +542,9 @@ export default function EditOfficialCustomer() {
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
+              <Col lg={4} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('saleman')}
-                  name="saleman"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input saleman',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Saleman" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={3} span={24}>
-                <Form.Item
-                  label={translateOfficialCustomer('date_created')}
+                  label={translatePartner('date_created')}
                   name="dateCreated"
                   rules={[
                     { required: true, message: 'Please input date created' },
@@ -558,9 +558,9 @@ export default function EditOfficialCustomer() {
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
+              <Col lg={9} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('creator')}
+                  label={translatePartner('creator')}
                   name="creator"
                   rules={[
                     {
@@ -575,12 +575,12 @@ export default function EditOfficialCustomer() {
 
               <Col lg={4} span={24}>
                 <Form.Item
-                  label={translateOfficialCustomer('status')}
+                  label={translatePartner('status')}
                   name="status"
                   rules={[
                     {
                       required: true,
-                      message: translateOfficialCustomer('status_placeholder'),
+                      message: translatePartner('status_placeholder'),
                     },
                   ]}
                 >
@@ -684,7 +684,7 @@ export default function EditOfficialCustomer() {
           >
             <Row gutter={12}>
               <Col>
-                <Button onClick={() => router.push(ROUTERS.OFFICIAL_CUSTOMER)}>
+                <Button onClick={() => router.push(ROUTERS.PARTNER)}>
                   Cancel
                 </Button>
               </Col>

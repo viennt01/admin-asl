@@ -16,18 +16,17 @@ import useI18n from '@/i18n/useI18N';
 //     }, time);
 //   });
 // };
-export default function CreatePotentialCustomer() {
+export default function CreatePartner() {
   const [form] = Form.useForm<{ name: string; company: string }>();
   const { translate: translateCommon } = useI18n('common');
-  const { translate: translatePotentialCustomer } =
-    useI18n('potentialCustomer');
+  const { translate: translatePartner } = useI18n('partner');
 
   return (
     <ModalForm<{
       name: string;
       company: string;
     }>
-      title={translatePotentialCustomer('information_add_customer')}
+      title={translatePartner('information_add_partner')}
       trigger={
         <Button
           type="primary"
@@ -65,23 +64,36 @@ export default function CreatePotentialCustomer() {
         <ProFormText
           width="md"
           name="Abbreviation"
-          label={translatePotentialCustomer('abbreviation')}
-          placeholder={translatePotentialCustomer('abbreviation_placeholder')}
+          label={translatePartner('abbreviation')}
+          placeholder={translatePartner('abbreviation_placeholder')}
         />
 
         <ProFormText
           width="md"
-          name="NameCustomer"
-          label={translatePotentialCustomer('name')}
-          placeholder={translatePotentialCustomer('name_placeholder')}
+          name="NamePartner"
+          label={translatePartner('name')}
+          placeholder={translatePartner('name_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
+        <ProFormSelect
+          request={async () => [
+            {
+              value: '1',
+              label: 'Đóng hàng',
+            },
+          ]}
+          width="md"
+          name="ServicePartner"
+          label={translatePartner('service')}
+          placeholder={translatePartner('service_placeholder')}
+        />
+
         <ProFormText
           width="md"
-          name="NumberCustomer"
-          label={translatePotentialCustomer('number')}
-          placeholder={translatePotentialCustomer('number_placeholder')}
+          name="NumberPartner"
+          label={translatePartner('number')}
+          placeholder={translatePartner('number_placeholder')}
           rules={[
             {
               type: 'number',
@@ -90,12 +102,19 @@ export default function CreatePotentialCustomer() {
             },
           ]}
         />
-
+      </ProForm.Group>
+      <ProForm.Group>
         <ProFormText
           width="md"
           name="Phone"
-          label={translatePotentialCustomer('phone')}
-          placeholder={translatePotentialCustomer('phone_placeholder')}
+          label={translatePartner('phone')}
+          placeholder={translatePartner('phone_placeholder')}
+        />
+        <ProFormText
+          width="md"
+          name="Email"
+          label={translatePartner('email')}
+          placeholder={translatePartner('email_placeholder')}
         />
       </ProForm.Group>
       <ProForm.Group>
@@ -110,42 +129,17 @@ export default function CreatePotentialCustomer() {
               label: 'Mỹ',
             },
           ]}
-          width="md"
+          width="sm"
           name="CountryName"
-          label={translatePotentialCustomer('country')}
-          placeholder={translatePotentialCustomer('country_placeholder')}
+          label={translatePartner('country')}
+          placeholder={translatePartner('country_placeholder')}
         />
 
         <ProFormText
-          width="md"
+          width="sm"
           name="Address"
-          label={translatePotentialCustomer('address')}
-          placeholder={translatePotentialCustomer('address_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="sm"
-          name="Email"
-          label={translatePotentialCustomer('email')}
-          placeholder={translatePotentialCustomer('email_placeholder')}
-        />
-
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Nguyễn Văn A',
-            },
-            {
-              value: '2',
-              label: 'Nguyễn Văn B',
-            },
-          ]}
-          width="sm"
-          name="Saleman"
-          label={translatePotentialCustomer('saleman')}
-          placeholder={translatePotentialCustomer('saleman_placeholder')}
+          label={translatePartner('address')}
+          placeholder={translatePartner('address_placeholder')}
         />
 
         <ProFormSelect
@@ -161,8 +155,8 @@ export default function CreatePotentialCustomer() {
           ]}
           width="sm"
           name="Status"
-          label={translatePotentialCustomer('status')}
-          placeholder={translatePotentialCustomer('status_placeholder')}
+          label={translatePartner('status')}
+          placeholder={translatePartner('status_placeholder')}
         />
       </ProForm.Group>
     </ModalForm>

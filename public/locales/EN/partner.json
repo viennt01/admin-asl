@@ -1,0 +1,37 @@
+{
+    "title": "List of Partner",
+    "code": "No",
+    "abbreviation": "Abbreviation",
+    "name": "Name",
+    "number": "Number of transactions",
+    "phone": "Phone Number",
+    "address": "Address",
+    "country": "Country",
+    "email": "Email",
+    "saleman": "Saleman",
+    "status":"Status",
+    "date_created": "Date Created",
+    "date_update": "Date Update",
+    "updater": "Updater",
+    "creator": "Creator",
+
+
+    
+    "customer": "Customer",
+    "potential_customer": "Potential Customer",
+    "official_customer": "Official Customer",
+    "customers_on_sales": "Customer (on sales)",
+    "supplier": "Liner/Vendor/partner",
+
+    "information_add_partner": "Add new partner",
+    "information_edit_partner": "Edit partner",
+    "name_placeholder": "Enter name partner",
+    "service_placeholder": "Choose service provided",
+    "number_placeholder": "Enter number of transactions",
+    "address_placeholder": "Enter address",
+    "phone_placeholder": "Enter phone number",
+    "email_placeholder": "Enter email",
+    "abbreviation_placeholder": "Enter abbreviation",
+    "country_placeholder": "Choose country",
+    "status_placeholder":"Choose status"
+}

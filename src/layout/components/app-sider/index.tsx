@@ -17,8 +17,6 @@ import {
   ApartmentOutlined,
   UsergroupAddOutlined,
   GoldOutlined,
-  UserAddOutlined,
-  UserSwitchOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image } from 'antd';
@@ -85,11 +83,6 @@ const AppSider = ({ collapsed }: Props) => {
   const refPartner = useRef(null);
   const refMasterData = useRef(null);
   const refSystem = useRef(null);
-  const refCustomer = useRef(null);
-  const refPotentialCustomer = useRef(null);
-  const refOfficialCustomer = useRef(null);
-  const refCustomersAreOnSales = useRef(null);
-  const refSupplier = useRef(null);
   const refPort = useRef(null);
   const refTypeOfContainer = useRef(null);
   const refFee = useRef(null);
@@ -223,38 +216,8 @@ const AppSider = ({ collapsed }: Props) => {
 
     getItem(
       `${translateCommon('partner')}`,
-      '3',
-      <TeamOutlined ref={refPartner} />,
-      [
-        getItem(
-          `${translateCommon('customer')}`,
-          '4',
-          <UserOutlined ref={refCustomer} />,
-          [
-            getItem(
-              `${translateCommon('potential_customer')}`,
-              ROUTERS.POTENTIAL_CUSTOMER,
-              <UserAddOutlined ref={refPotentialCustomer} />
-            ),
-            getItem(
-              `${translateCommon('official_customer')}`,
-              ROUTERS.OFFICIAL_CUSTOMER,
-              <UserOutlined ref={refOfficialCustomer} />
-            ),
-            getItem(
-              `${translateCommon('customers_on_sales')}`,
-              ROUTERS.CUSTOMER_ON_SALES,
-              <UserSwitchOutlined ref={refCustomersAreOnSales} />
-            ),
-          ]
-        ),
-
-        getItem(
-          `${translateCommon('supplier')}`,
-          ROUTERS.SUPPLIER,
-          <BankOutlined ref={refSupplier} />
-        ),
-      ]
+      ROUTERS.PARTNER,
+      <TeamOutlined ref={refPartner} />
     ),
 
     getItem(
