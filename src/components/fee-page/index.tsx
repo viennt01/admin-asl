@@ -34,9 +34,15 @@ export default function ExpensesTypePage() {
   interface DataType {
     key: number;
     feeCode: string;
-    name: string;
+    customs: string;
+    currency: string;
+    vat: string;
+    cost: string;
     status: string;
+    name: string;
     dateCreated: string;
+    dateUpdate: string;
+    updater: string;
     creator: string;
   }
 
@@ -45,12 +51,15 @@ export default function ExpensesTypePage() {
     data.push({
       key: i + 1,
       feeCode: `CP${i + 1}`,
-      name:
-        i % 2 === 0
-          ? 'Chi phí nguyên vật liệu'
-          : 'Chi phí dịch vụ mua ngoài, thuê ngoài',
+      name: 'Customs Officer',
+      customs: '2,000',
+      currency: 'USD',
+      vat: '10%',
+      cost: '100,000',
       status: i % 2 === 1 ? 'Active' : 'DeActive',
+      dateUpdate: '25/07/2023',
       dateCreated: '14/06/2023',
+      updater: 'Admin',
       creator: 'Admin',
     });
   }
@@ -193,20 +202,45 @@ export default function ExpensesTypePage() {
       key: 'name',
       ...getColumnSearchProps('name'),
       align: 'center',
-      filters: [
-        {
-          text: 'Vệ sinh container thường',
-          value: 'Vệ sinh container thường',
-        },
-        {
-          text: 'Vệ sinh container hở mái',
-          value: 'Vệ sinh container hở mái',
-        },
-      ],
-      filterMode: 'tree',
-      filterSearch: true,
       // onFilter: (value: string, record) => record.name.startsWith(value),
     },
+
+    {
+      title: translateFee('customs'),
+      width: 180,
+      dataIndex: 'customs',
+      key: 'customs',
+      align: 'center',
+      ...getColumnSearchProps('customs'),
+    },
+
+    {
+      title: translateFee('currency'),
+      width: 180,
+      dataIndex: 'currency',
+      key: 'currency',
+      align: 'center',
+      ...getColumnSearchProps('currency'),
+    },
+
+    {
+      title: translateFee('vat'),
+      width: 180,
+      dataIndex: 'vat',
+      key: 'vat',
+      align: 'center',
+      ...getColumnSearchProps('vat'),
+    },
+
+    {
+      title: translateFee('cost'),
+      width: 180,
+      dataIndex: 'cost',
+      key: 'cost',
+      align: 'center',
+      ...getColumnSearchProps('cost'),
+    },
+
     {
       title: translateFee('status'),
       dataIndex: 'status',
@@ -239,25 +273,42 @@ export default function ExpensesTypePage() {
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translateFee('date_created')}
+          {translateFee('date_update')}
         </div>
       ),
       width: 150,
-      dataIndex: 'dateCreated',
-      key: 'dateCreated',
+      dataIndex: 'dateUpdate',
+      key: 'dateUpdate',
       align: 'center',
+      ...getColumnSearchProps('dateUpdate'),
     },
+
+    {
+      title: (
+        <div style={{ textTransform: 'uppercase' }}>
+          {translateFee('updater')}
+        </div>
+      ),
+      width: 180,
+      dataIndex: 'updater',
+      key: 'updater',
+      align: 'center',
+      ...getColumnSearchProps('updater'),
+    },
+
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
           {translateFee('creator')}
         </div>
       ),
-      width: 200,
+      width: 180,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',
+      ...getColumnSearchProps('creator'),
     },
+
     {
       key: 'operation',
       fixed: 'right',
