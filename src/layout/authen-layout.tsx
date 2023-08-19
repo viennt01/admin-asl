@@ -143,6 +143,7 @@ export function AppLayout(props: Props) {
       appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
       router.replace(ROUTERS.LOGIN);
     },
+    retry: 0,
   });
   useQuery({
     queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
