@@ -16,7 +16,7 @@ import {
   ClusterOutlined,
   ApartmentOutlined,
   UsergroupAddOutlined,
-  GoldOutlined,
+  EnvironmentOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image } from 'antd';
@@ -228,7 +228,7 @@ const AppSider = ({ collapsed }: Props) => {
         getItem(
           `${translateCommon('port')}`,
           ROUTERS.LOCATION,
-          <GoldOutlined ref={refPort} />
+          <EnvironmentOutlined ref={refPort} />
         ),
         getItem(
           `${translateCommon('fee')}`,

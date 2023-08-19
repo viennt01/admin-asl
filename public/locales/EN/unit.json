@@ -7,9 +7,29 @@
     "date_created": "Date Created",
     "creator": "Creator",
     
-    "information_add_unit": "Add new Unit",
+    "information_add_unit": "Add New Unit",
     "information_edit_unit": "Edit Unit",
     "international_code_placeholder": "Enter international code",
     "description_placeholder": "Enter description",
-    "status_placeholder":"Please select status"
+    "status_placeholder":"Please select status",
+    "international_code_form": {
+        "title": "International Code",
+        "placeholder": "Enter international code",
+        "error_required": "Please enter input international code"
+    },
+    "status_form": {
+        "title": "Status",
+        "placeholder": "Select status",
+        "error_required": "Please select status"
+    },
+    "description_vn_form": {
+        "title": "Vietnamese description",
+        "placeholder": "Enter Vietnamese description",
+        "error_required": "Please enter input Vietnamese description"
+    },
+    "description_en_form": {
+        "title": "English description",
+        "placeholder": "Enter English description",
+        "error_required": "Please enter input English description"
+    }
 }

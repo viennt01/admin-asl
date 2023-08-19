@@ -9,41 +9,41 @@
     "company":"Management Company",
     "status":"Status",
     
-    "information_add_port": "Add new Location",
+    "information_add_port": "Add New Location",
     "information_edit_port": "Edit Location",
 
     "port_code": {
         "title": "Code",
-        "placeholder": "Enter Location code",
-        "error_required": "Please input Location Code"
+        "placeholder": "Enter location code",
+        "error_required": "Please enter input location Code"
     },
     "port_name": {
         "title": "Location Name",
         "placeholder": "Enter Location name",
-        "error_required": "Please input Location Name"
+        "error_required": "Please enter input location name"
     },
     "type_port": {
         "title": "Type Of Location",
-        "placeholder": "Enter type of Location",
-        "error_required": "Please input type of Location"
+        "placeholder": "Enter type of location",
+        "error_required": "Please enter input type of location"
     },
     "country": {
         "title": "Country",
         "placeholder": "Enter country",
-        "error_required": "Please input country"
+        "error_required": "Please enter input country"
     }, 
     "status_port": {
         "title": "Status",
-        "placeholder": "Enter status",
-        "error_required": "Please input status"
+        "placeholder": "Select status",
+        "error_required": "Please select status"
     },
     "address_port": {
         "title": "Address",
         "placeholder": "Enter address",
-        "error_required": "Please input address"
+        "error_required": "Please enter input address"
     },
     "description": {
         "title": "Description",
-        "placeholder": "Enter description"
+        "placeholder": "Please enter input description"
     }
 }

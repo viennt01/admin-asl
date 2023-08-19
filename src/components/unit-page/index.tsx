@@ -493,7 +493,7 @@ export default function CalculationUnitPage() {
                   fontWeight: '500',
                 }}
                 onClick={() => {
-                  router.push(ROUTERS.LOCATION_CREATE);
+                  router.push(ROUTERS.UNIT_CREATE);
                 }}
               >
                 {translateCommon('button_add')}

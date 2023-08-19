@@ -21,9 +21,9 @@ export const API_PORT = {
 export const API_UNIT = {
   // GET_PORTS: '/get-all-port',
   GET_UNIT_SEARCH: '/search-unit',
-  // GET_PORT_DETAIL: '/get-detail-port',
-  // CREATE_PORT: '/add-new-port',
-  // EDIT_PORT: '/update-port',
+  GET_UNIT_DETAIL: '/get-detail-unit',
+  CREATE_UNIT: '/add-unit',
+  EDIT_UNIT: '/update-port',
   // DELETE_PORT: '/delete-port',
 };
 

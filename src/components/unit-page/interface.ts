@@ -59,3 +59,26 @@ export type SelectSearch = {
     value: string;
   };
 };
+
+export interface UnitDetailDataBody {
+  id: string;
+}
+
+export interface FormValues {
+  unitID: string;
+  internationalCode: string;
+  descriptionVN: string;
+  descriptionEN: string;
+  status: number;
+}
+
+export interface UnitDetailType extends FormValues {
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
+}
+
+export type UnitCreate = Omit<FormValues, 'unitID' | 'status'>;
+
+export type UnitEdit = FormValues;

@@ -50,6 +50,7 @@ export const ROUTERS = {
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string) =>
     `/master-data/type-of-container/edit/${typeOfContainerId}`,
   UNIT: '/master-data/unit',
+  UNIT_CREATE: '/master-data/unit/create',
   UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
   USER: '/system/user',
   USER_EDIT: (userId: string) => `/system/user/edit/${userId}`,
