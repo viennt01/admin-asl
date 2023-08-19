@@ -8,7 +8,7 @@ import { ColumnSearchTableProps } from '../commons/search-table';
 import style from './index.module.scss';
 import { formatDate } from '@/utils/format';
 import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
-import { deletePort, getListCountry, getListPortSearch } from './fetcher';
+import { deletePort, getListPortSearch } from './fetcher';
 import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
 import {
   DeleteOutlined,
@@ -40,7 +40,7 @@ import {
   SkeletonTable,
 } from '../commons/table-commons';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
-import { getListTypePort } from '@/layout/fetcher';
+import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
@@ -143,15 +143,12 @@ export default function LocationPage() {
 
   // Handle data
   const typePorts = useQuery([API_MASTER_DATA.GET_TYPE_PORT], getListTypePort);
-
-  const getCountries = useQuery({
-    queryKey: [API_MASTER_DATA.GET_COUNTRY],
-    queryFn: () =>
-      getListCountry({
-        currentPage: 1,
-        pageSize: 500,
-      }),
-  });
+  const countries = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
+    getListCountry({
+      currentPage: 1,
+      pageSize: 500,
+    })
+  );
 
   const portsQuerySearch = useQuery({
     queryKey: [API_PORT.GET_PORTS_SEARCH, pagination, queryParams],
@@ -330,7 +327,7 @@ export default function LocationPage() {
       align: 'center',
       filteredValue: [queryParams.countryID] || null,
       filters:
-        getCountries.data?.data.data.map((item) => ({
+        countries.data?.data.data.map((item) => ({
           text: item.countryName,
           value: item.countryID,
         })) || [],

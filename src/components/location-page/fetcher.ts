@@ -1,6 +1,5 @@
 import { ResponseWithPayload, post } from '@/fetcherAxios';
 import {
-  CountriesType,
   PortCreate,
   PortType,
   PortDetailDataBody,
@@ -9,7 +8,7 @@ import {
   RequestPortsType,
   PortDelete,
 } from './interface';
-import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
+import { API_PORT } from '@/fetcherAxios/endpoint';
 import { Pagination } from '../commons/table-commons';
 
 export const getListPortSearch = (data: RequestPortsType) => {
@@ -30,12 +29,6 @@ export const getPortDetail = (id: string) => {
       id,
     },
   })(API_PORT.GET_PORT_DETAIL);
-};
-
-export const getListCountry = (data: Pagination) => {
-  return post<Pagination, ResponseWithPayload<CountriesType>>({
-    data,
-  })(API_MASTER_DATA.GET_COUNTRY);
 };
 
 export const createPort = (data: PortCreate) => {

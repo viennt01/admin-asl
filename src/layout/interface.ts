@@ -1,3 +1,5 @@
+import { Pagination } from '@/components/commons/table-commons';
+
 export interface TypePortData {
   typePortID: string;
   typePortName: string;
@@ -7,4 +9,18 @@ export interface TypePortData {
   insertedBy: string;
   updatedDate: string;
   updatedBy: string;
+}
+
+export interface CountriesType extends Pagination {
+  data: CountryType[];
+}
+
+export interface CountryType {
+  countryID: string;
+  countryName: string;
+  maCK: string;
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
 }

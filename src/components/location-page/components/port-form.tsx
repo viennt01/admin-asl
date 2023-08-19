@@ -4,20 +4,15 @@ import { useQuery } from '@tanstack/react-query';
 import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { getListCountry, getPortDetail } from '../fetcher';
+import { getPortDetail } from '../fetcher';
 import { FormValues, STATUS_LABELS } from '../interface';
 import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
-import { getListTypePort } from '@/layout/fetcher';
+import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 
 const initialValue = {
   description: '',
 };
-
-interface Option {
-  value: string;
-  label: string;
-}
 
 interface PortFormProps {
   create?: boolean;
@@ -39,9 +34,14 @@ const PortForm = ({
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
-  const [options, setOptions] = useState<Option[]>([]);
   const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
   const typePorts = useQuery([API_MASTER_DATA.GET_TYPE_PORT], getListTypePort);
+  const countries = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
+    getListCountry({
+      currentPage: 1,
+      pageSize: 500,
+    })
+  );
 
   useEffect(() => {
     if (!id) return;
@@ -50,28 +50,6 @@ const PortForm = ({
   const onFinish = (formValues: FormValues) => {
     handleSubmit(formValues);
   };
-
-  useQuery({
-    queryKey: [API_MASTER_DATA.GET_COUNTRY],
-    queryFn: () =>
-      getListCountry({
-        currentPage: 1,
-        pageSize: 500,
-      }),
-    onSuccess(data) {
-      if (data.status) {
-        setOptions(
-          data.data.data.map((item) => ({
-            value: item.countryID,
-            label: item.countryName,
-          }))
-        );
-      }
-    },
-    onError: () => {
-      router.push(ROUTERS.LOCATION);
-    },
-  });
 
   const portDetailQuery = useQuery({
     queryKey: [API_PORT.GET_PORT_DETAIL, id],
@@ -198,7 +176,12 @@ const PortForm = ({
                   placeholder={translatePort('country.placeholder')}
                   showSearch
                   size="large"
-                  options={options}
+                  options={
+                    countries.data?.data.data.map((item) => ({
+                      value: item.countryID,
+                      label: item.countryName,
+                    })) || []
+                  }
                   filterOption={(input, option) =>
                     (option?.label ?? '')
                       .toLowerCase()

@@ -26,7 +26,7 @@ import { LANGUAGE, useLocale } from '@/constant';
 import Link from 'next/link';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { getListTypePort, getUserInfo } from './fetcher';
+import { getListCountry, getListTypePort, getUserInfo } from './fetcher';
 import { useQuery } from '@tanstack/react-query';
 import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
 
@@ -128,6 +128,20 @@ export function AppLayout(props: Props) {
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
   const locale = useLocale();
+
+  useQuery({
+    queryKey: [API_MASTER_DATA.GET_COUNTRY],
+    queryFn: () =>
+      getListCountry({
+        currentPage: 1,
+        pageSize: 500,
+      }),
+  });
+  useQuery({
+    queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
+    queryFn: getListTypePort,
+  });
+
   useQuery({
     queryKey: [API_USER.CHECK_USER],
     queryFn: () => getUserInfo(),
@@ -144,10 +158,6 @@ export function AppLayout(props: Props) {
       router.replace(ROUTERS.LOGIN);
     },
     retry: 0,
-  });
-  useQuery({
-    queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
-    queryFn: getListTypePort,
   });
 
   useEffect(() => {

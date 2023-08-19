@@ -55,20 +55,6 @@ export interface RequestPortsType extends QueryParamType {
   paginateRequest: Pagination;
 }
 
-export interface CountriesType extends Pagination {
-  data: CountryType[];
-}
-
-export interface CountryType {
-  countryID: string;
-  countryName: string;
-  maCK: string;
-  dateInserted: string;
-  insertedByUser: string;
-  dateUpdated: string;
-  updatedByUser: string;
-}
-
 export interface PortDetailDataBody {
   id: string;
 }

@@ -1,6 +1,7 @@
 import { ResponseWithPayload, get, post } from '@/fetcherAxios';
 import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
-import { TypePortData } from './interface';
+import { CountriesType, TypePortData } from './interface';
+import { Pagination } from '@/components/commons/table-commons';
 
 export interface UserInfo {
   idUser: string;
@@ -42,4 +43,10 @@ export const getListTypePort = () => {
   return get<ResponseWithPayload<TypePortData[]>>({})(
     API_MASTER_DATA.GET_TYPE_PORT
   );
+};
+
+export const getListCountry = (data: Pagination) => {
+  return post<Pagination, ResponseWithPayload<CountriesType>>({
+    data,
+  })(API_MASTER_DATA.GET_COUNTRY);
 };
