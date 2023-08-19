@@ -8,9 +8,12 @@ const COLORS = {
   BLUE: '#0300A6',
   BLACK: '#000000',
   PRIMARY: '#03375e',
-  ACTIVE: '#00A651',
-  DEACTIVATE: '#e89434',
-  BLOCK: '#ED1C27',
+
+  STATUS_CODE: {
+    ACTIVE: '#00A651',
+    DEACTIVATE: '#e89434',
+    BLOCK: '#ED1C27',
+  },
 
   SEARCH: {
     FILTER_ACTIVE: '#1677ff',

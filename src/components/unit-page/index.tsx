@@ -1,177 +1,277 @@
 import {
   DeleteOutlined,
   EditOutlined,
-  SearchOutlined,
+  PlusOutlined,
+  ReloadOutlined,
+  ExclamationCircleFilled,
+  FilterFilled,
 } from '@ant-design/icons';
-import { Button, Input, InputRef, Space, Tag } from 'antd';
-import { Key, useRef, useState } from 'react';
-import CreateUnit from './create-unit';
+import {
+  Button,
+  ConfigProvider,
+  Input,
+  Modal,
+  PaginationProps,
+  Tag,
+} from 'antd';
+import { Key, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
-import Highlighter from 'react-highlight-words';
-import { FilterConfirmProps } from 'antd/es/table/interface';
+import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
+import {
+  FilterConfirmProps,
+  FilterValue,
+  TablePaginationConfig,
+} from 'antd/es/table/interface';
 import style from './index.module.scss';
+import { useQuery } from '@tanstack/react-query';
+import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { getLocationsSearch } from './fetcher';
+import {
+  DEFAULT_PAGINATION,
+  PaginationOfAntd,
+  SkeletonTable,
+} from '../commons/table-commons';
+import {
+  LocationTable,
+  QueryInputParamType,
+  QuerySelectParamType,
+  STATUS_COLORS,
+  STATUS_LABELS,
+  SelectSearch,
+  StatusItem,
+} from './interface';
+import { ColumnSearchTableProps } from '../commons/search-table';
+import { formatDate } from '@/utils/format';
 
-const STATUS_COLORS = {
-  Active: '#00A651',
-  DeActive: '#ED1C27',
+const { confirm } = Modal;
+
+const initalValueQueryInputParams = {
+  searchAll: '',
+  internationalCode: '',
+  description: '',
 };
 
-const STATUS_LABELS = {
-  Active: 'Active',
-  DeActive: 'Tạm ngừng',
+const initalValueQuerySelectParams = {
+  status: 0,
 };
+
+const initalValueDisplayColumn = {
+  index: {
+    order: 0,
+    fixed: 'left' as const,
+  },
+  internationalCode: {
+    order: 1,
+  },
+  description: {
+    order: 2,
+  },
+  status: {
+    order: 3,
+  },
+  dateInserted: {
+    order: 4,
+  },
+  insertedByUser: {
+    order: 5,
+  },
+  dateUpdated: {
+    order: 6,
+  },
+  updatedByUser: {
+    order: 7,
+  },
+  operation: {
+    order: 8,
+    fixed: 'right' as const,
+  },
+};
+
+const initalSelectSearch = {
+  searchAll: {
+    label: '',
+    value: '',
+  },
+  internationalCode: {
+    label: '',
+    value: '',
+  },
+  description: {
+    label: '',
+    value: '',
+  },
+  status: {
+    label: '',
+    value: 0,
+  },
+};
+
+type DataIndex = keyof QueryInputParamType;
+
+const STATUS: StatusItem[] = Object.keys(STATUS_COLORS).map((value) => ({
+  text: STATUS_LABELS[parseInt(value) as keyof typeof STATUS_LABELS],
+  value: parseInt(value),
+}));
 
 export default function CalculationUnitPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateUnit } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
-  interface DataType {
-    key: number;
-    internationalCode: string;
-    description: string;
-    status: string;
-    dateCreated: string;
-    creator: string;
-  }
+  const [pagination, setPagination] =
+    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
+    initalValueQueryInputParams
+  );
+  const [querySelectParams, setQuerySelectParams] =
+    useState<QuerySelectParamType>(initalValueQuerySelectParams);
+  const [dataTable, setDataTable] = useState<LocationTable[]>([]);
+  const [selectedKeyShow, setSelectedKeyShow] =
+    useState<SelectSearch>(initalSelectSearch);
+  const [columnsStateMap, setColumnsStateMap] = useState<
+    Record<string, ColumnsState>
+  >(initalValueDisplayColumn);
+  const [refreshingLoading, setRefreshingLoading] = useState(false);
 
-  const data: DataType[] = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i + 1,
-      internationalCode: 'FOT',
-      description: 'Đơn vị đo trong hệ đo lường Anh',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
-      dateCreated: '14/06/2023',
-      creator: 'Admin',
+  // Handle data
+  const locationsQuerySearch = useQuery({
+    queryKey: [
+      API_UNIT.GET_UNIT_SEARCH,
+      pagination,
+      queryInputParams,
+      querySelectParams,
+    ],
+    queryFn: () =>
+      getLocationsSearch({
+        ...queryInputParams,
+        ...querySelectParams,
+        paginateRequest: {
+          currentPage: pagination.current,
+          pageSize: pagination.pageSize,
+        },
+      }),
+    onSuccess(data) {
+      if (data.status) {
+        const { currentPage, pageSize, totalPages } = data.data;
+        setDataTable(
+          data.data.data.map((data) => ({
+            key: data.unitID,
+            internationalCode: data.internationalCode,
+            description: data.description,
+            status: data.status,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            searchAll: '',
+          }))
+        );
+        pagination.current = currentPage;
+        pagination.pageSize = pageSize;
+        pagination.total = totalPages;
+      } else {
+        setDataTable([]);
+      }
+    },
+  });
+
+  const refreshingQuery = () => {
+    setSelectedKeyShow(initalSelectSearch);
+    setQueryInputParams(initalValueQueryInputParams);
+    setRefreshingLoading(true);
+    setPagination((state) => ({
+      ...state,
+      current: 1,
+    }));
+    locationsQuerySearch.refetch();
+    setTimeout(() => {
+      setRefreshingLoading(false);
+    }, 500);
+  };
+
+  // Handle search
+  const handleSearchInputKeyAll = (value: string) => {
+    setSelectedKeyShow({
+      ...initalSelectSearch,
+      searchAll: {
+        label: 'searchAll',
+        value: value,
+      },
     });
-  }
+    setQueryInputParams({
+      ...initalValueQueryInputParams,
+      searchAll: value,
+    });
+    setQuerySelectParams({
+      ...initalValueQuerySelectParams,
+    });
+  };
 
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef<InputRef>(null);
-
-  const handleSearch = (
-    selectedKeys: string[],
+  const handleSearchInput = (
+    selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
     dataIndex: DataIndex
   ) => {
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: {
+        label: dataIndex,
+        value: selectedKeys,
+      },
+      searchAll: {
+        label: 'searchAll',
+        value: '',
+      },
+    }));
+    const newQueryParams = { ...queryInputParams };
+    newQueryParams[dataIndex] = selectedKeys;
+    newQueryParams.searchAll = '';
+    setQueryInputParams(newQueryParams);
     confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
   };
 
-  const handleReset = (clearFilters: () => void) => {
+  const handleSearchSelect = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>
+  ) => {
+    const newQueryParams = {
+      ...queryInputParams,
+      searchAll: '',
+      status:
+        filters.status?.length !== 0 && filters.status
+          ? (filters.status[0] as number)
+          : 0,
+    };
+    setQuerySelectParams(newQueryParams);
+  };
+
+  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+    setQueryInputParams((prevData) => ({
+      ...prevData,
+      [dataIndex]: '',
+    }));
+
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: { label: dataIndex, value: '' },
+    }));
     clearFilters();
-    setSearchText('');
   };
 
-  type DataIndex = keyof DataType;
-
-  const getColumnSearchProps = (
-    dataIndex: DataIndex
-  ): ProColumns<DataType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: 'block' }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() =>
-              handleSearch(selectedKeys as string[], confirm, dataIndex)
-            }
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
-  });
-
-  const columns: ProColumns<DataType>[] = [
+  // Handle data show table
+  const columns: ProColumns<LocationTable>[] = [
     {
       title: translateUnit('code'),
-      width: 100,
-      dataIndex: 'key',
-      key: 'key',
-      fixed: 'left',
+      dataIndex: 'index',
+      width: 50,
       align: 'center',
-      sorter: (a, b) => a.key - b.key,
+      render: (_, record, index) => {
+        const { pageSize = 0, current = 0 } = pagination ?? {};
+        return index + pageSize * (current - 1) + 1;
+      },
     },
     {
       title: translateUnit('international_code'),
@@ -179,14 +279,32 @@ export default function CalculationUnitPage() {
       key: 'internationalCode',
       width: 250,
       align: 'center',
-      ...getColumnSearchProps('internationalCode'),
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'internationalCode',
+        },
+      }),
     },
     {
       title: translateUnit('description'),
       dataIndex: 'description',
       key: 'description',
       align: 'center',
-      ...getColumnSearchProps('description'),
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'description',
+        },
+      }),
     },
     {
       title: translateUnit('status'),
@@ -194,18 +312,22 @@ export default function CalculationUnitPage() {
       dataIndex: 'status',
       key: 'status',
       align: 'center',
-      filters: [
-        {
-          text: 'Sử dụng',
-          value: 'Active',
-        },
-        {
-          text: 'Tạm ngừng',
-          value: 'DeActive',
-        },
-      ],
-      // onFilter: (value: string, record) => record.address.startsWith(value),
-      filterSearch: true,
+      filters: STATUS,
+      filterSearch: false,
+      filterMultiple: false,
+      filteredValue: [querySelectParams.status] || null,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.status !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
       render: (value) => (
         <Tag
           color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
@@ -218,30 +340,37 @@ export default function CalculationUnitPage() {
       ),
     },
     {
-      title: (
-        <div style={{ textTransform: 'uppercase' }}>
-          {translateUnit('date_created')}
-        </div>
-      ),
+      title: translateCommon('date_created'),
       width: 150,
-      dataIndex: 'dateCreated',
-      key: 'dateCreated',
+      dataIndex: 'dateInserted',
+      key: 'dateInserted',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: translateCommon('creator'),
+      width: 200,
+      dataIndex: 'insertedByUser',
+      key: 'insertedByUser',
       align: 'center',
     },
     {
-      title: (
-        <div style={{ textTransform: 'uppercase' }}>
-          {translateUnit('creator')}
-        </div>
-      ),
+      title: translateCommon('date_inserted'),
+      width: 150,
+      dataIndex: 'dateUpdated',
+      key: 'dateUpdated',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: translateCommon('inserter'),
       width: 200,
-      dataIndex: 'creator',
-      key: 'creator',
+      dataIndex: 'updatedByUser',
+      key: 'updatedByUser',
       align: 'center',
     },
     {
       key: 'operation',
-      fixed: 'right',
       width: 50,
       align: 'center',
       dataIndex: 'key',
@@ -249,11 +378,12 @@ export default function CalculationUnitPage() {
         <Button
           onClick={() => handleEditCustomer(value as string)}
           icon={<EditOutlined />}
-        ></Button>
+        />
       ),
     },
   ];
 
+  // Handle logic table
   const handleEditCustomer = (id: string) => {
     router.push(ROUTERS.UNIT_EDIT(id));
   };
@@ -262,49 +392,140 @@ export default function CalculationUnitPage() {
     setSelectedRowKeys(selectedRowKeys);
   };
 
+  const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
+    setPagination((state) => ({
+      ...state,
+      current: page,
+      pageSize: size,
+    }));
+  };
+
+  const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
+    setColumnsStateMap(map);
+  };
+
+  const showPropsConfirmDelete = () => {
+    confirm({
+      icon: <ExclamationCircleFilled />,
+      title: translateCommon('modal_delete.title'),
+      okText: translateCommon('modal_delete.button_ok'),
+      cancelText: translateCommon('modal_delete.button_cancel'),
+      okType: 'danger',
+      onOk() {
+        // deletePortMutation.mutate();
+      },
+    });
+  };
+
   return (
-    <ProTable<DataType>
-      className={style.table}
-      style={{ marginTop: '8px' }}
-      rowKey="key"
-      dataSource={data}
-      rowSelection={{
-        type: 'checkbox',
-        selectedRowKeys: selectedRowKeys,
-        onChange: handleSelectionChange,
-      }}
-      pagination={{
-        position: ['bottomCenter'],
-        showTotal: () => '',
-        showSizeChanger: true,
-      }}
-      columns={columns}
-      search={false}
-      dateFormatter="string"
-      headerTitle={translateUnit('title')}
-      scroll={{
-        x: 'max-content',
-      }}
-      sticky={{ offsetHeader: 0 }}
-      options={{
-        fullScreen: true,
-        search: true,
-      }}
-      toolBarRender={() => [
-        <CreateUnit key={'create'} />,
-        <Button
-          icon={<DeleteOutlined />}
-          style={{
-            backgroundColor: COLORS.RED,
-            color: COLORS.WHITE,
-            borderColor: COLORS.RED,
-            fontWeight: '500',
-          }}
-          key={'delete'}
-        >
-          {translateCommon('button_delete')}
-        </Button>,
-      ]}
-    />
+    <>
+      <ConfigProvider>
+        {locationsQuerySearch.isLoading ? (
+          <SkeletonTable />
+        ) : (
+          <ProTable<LocationTable>
+            headerTitle={translateUnit('title')}
+            className={style.table}
+            dataSource={dataTable}
+            columns={columns}
+            style={{ marginTop: '8px' }}
+            rowKey="key"
+            rowSelection={{
+              type: 'checkbox',
+              selectedRowKeys: selectedRowKeys,
+              onChange: handleSelectionChange,
+            }}
+            pagination={{
+              position: ['bottomCenter'],
+              showTotal: (total, range) =>
+                `${range[0]}-${range[1]} of ${total} items`,
+              showSizeChanger: true,
+              ...pagination,
+              onChange: handlePaginationChange,
+            }}
+            search={false}
+            scroll={{
+              x: 'max-content',
+            }}
+            sticky={{ offsetHeader: 0 }}
+            options={{
+              fullScreen: true,
+              reload: false,
+              setting: true,
+            }}
+            onColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            onRow={(record) => {
+              return {
+                onDoubleClick: (e) => {
+                  const target = e.target as HTMLElement;
+                  if (!target.closest('button')) {
+                    router.push(ROUTERS.LOCATION_EDIT(record.key, true));
+                  }
+                },
+              };
+            }}
+            onChange={handleSearchSelect}
+            toolBarRender={() => [
+              <Input.Search
+                key={'Search'}
+                placeholder={translateCommon('search')}
+                onSearch={handleSearchInputKeyAll}
+                value={selectedKeyShow.searchAll.value}
+                onChange={(e) => {
+                  setSelectedKeyShow((prevData) => ({
+                    ...prevData,
+                    searchAll: {
+                      label: 'searchAll',
+                      value: e.target.value ? e.target.value : '',
+                    },
+                  }));
+                }}
+              />,
+              <Button
+                key={'create'}
+                icon={<PlusOutlined />}
+                style={{
+                  marginRight: '4px',
+                  backgroundColor: COLORS.BRIGHT,
+                  color: COLORS.GREEN,
+                  borderColor: COLORS.GREEN,
+                  fontWeight: '500',
+                }}
+                onClick={() => {
+                  router.push(ROUTERS.LOCATION_CREATE);
+                }}
+              >
+                {translateCommon('button_add')}
+              </Button>,
+              <Button
+                key={'delete'}
+                icon={<DeleteOutlined />}
+                style={{
+                  backgroundColor: COLORS.RED,
+                  color: COLORS.WHITE,
+                  borderColor: COLORS.RED,
+                  fontWeight: '500',
+                }}
+                onClick={showPropsConfirmDelete}
+              >
+                {translateCommon('button_delete')}
+              </Button>,
+              <Button
+                key={'refresh'}
+                onClick={() => refreshingQuery()}
+                icon={<ReloadOutlined />}
+                loading={refreshingLoading}
+                style={{
+                  width: 32,
+                  height: 32,
+                  padding: 6,
+                }}
+              />,
+            ]}
+          />
+        )}
+      </ConfigProvider>
+    </>
   );
 }
