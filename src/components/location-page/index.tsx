@@ -228,7 +228,7 @@ export default function LocationPage() {
   };
 
   // Handle search
-  const handleSearchInputKeyPress = (value: string) => {
+  const handleSearchInputKeyAll = (value: string) => {
     setSelectedKeyShow({
       ...initalSelectSearch,
       searchAll: {
@@ -242,7 +242,7 @@ export default function LocationPage() {
     });
   };
 
-  const handleSearch = (
+  const handleSearchInput = (
     selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
     dataIndex: DataIndex
@@ -277,6 +277,7 @@ export default function LocationPage() {
     clearFilters();
   };
 
+  // Handle data show table
   const columns: ProColumns<PortDataTable>[] = [
     {
       title: translatePort('port_no'),
@@ -296,7 +297,7 @@ export default function LocationPage() {
       align: 'center',
       ...ColumnSearchTableProps<QueryParamType>({
         props: {
-          handleSearch: handleSearch,
+          handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryParams,
           selectedKeyShow: selectedKeyShow,
@@ -312,7 +313,7 @@ export default function LocationPage() {
       align: 'center',
       ...ColumnSearchTableProps<QueryParamType>({
         props: {
-          handleSearch: handleSearch,
+          handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryParams,
           selectedKeyShow: selectedKeyShow,
@@ -350,7 +351,6 @@ export default function LocationPage() {
     },
     {
       title: translatePort('type_of_port'),
-      width: 150,
       dataIndex: 'typePorts',
       key: 'typePorts',
       align: 'center',
@@ -439,7 +439,7 @@ export default function LocationPage() {
     },
   ];
 
-  // Handle table
+  // Handle logic table
   const handleEditCustomer = (id: string) => {
     router.push(ROUTERS.LOCATION_EDIT(id));
   };
@@ -544,7 +544,7 @@ export default function LocationPage() {
               <Input.Search
                 key={'Search'}
                 placeholder={translateCommon('search')}
-                onSearch={handleSearchInputKeyPress}
+                onSearch={handleSearchInputKeyAll}
                 value={selectedKeyShow.searchAll.value}
                 onChange={(e) => {
                   setSelectedKeyShow((prevData) => ({
