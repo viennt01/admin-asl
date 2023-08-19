@@ -121,6 +121,8 @@ apiClient.interceptors.request.use((config) => {
   }
   return config;
 });
+let isRefreshing = false;
+
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -133,27 +135,46 @@ apiClient.interceptors.response.use(
       appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN)
     ) {
       originalRequest._retry = 3;
-      try {
-        const response = await apiClient.post(
-          `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`,
-          {
-            accessToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN),
-            refreshToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.REFRESH_TOKEN),
-            ipAddress: appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS),
-            deviceName: appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME),
-          }
-        );
-        const newAccessToken = response.data.data.accessToken;
-        const newRefreshToken = response.data.data.refreshToken;
-        appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, newAccessToken);
-        appLocalStorage.set(LOCAL_STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
-        originalRequest.headers.accessToken = newAccessToken;
-        originalRequest.headers.refreshToken = newRefreshToken;
+      if (!isRefreshing) {
+        isRefreshing = true;
+        try {
+          const response = await apiClient.post(
+            `${getGateway()}${API_AUTHENTICATE.REFRESH_TOKEN}`,
+            {
+              accessToken: appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN),
+              refreshToken: appLocalStorage.get(
+                LOCAL_STORAGE_KEYS.REFRESH_TOKEN
+              ),
+              ipAddress: appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS),
+              deviceName: appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME),
+            }
+          );
+          isRefreshing = false;
+          const newAccessToken = response.data.data.accessToken;
+          const newRefreshToken = response.data.data.refreshToken;
+          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, newAccessToken);
+          appLocalStorage.set(
+            LOCAL_STORAGE_KEYS.REFRESH_TOKEN,
+            newRefreshToken
+          );
+          originalRequest.headers.accessToken = newAccessToken;
+          originalRequest.headers.refreshToken = newRefreshToken;
 
-        return apiClient(originalRequest);
-      } catch (refreshError) {
-        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-        router.replace(ROUTERS.LOGIN);
+          return apiClient(originalRequest);
+        } catch (refreshError) {
+          isRefreshing = false;
+          appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+          router.replace(ROUTERS.LOGIN);
+        }
+      } else {
+        await new Promise<void>((resolve) => {
+          const interval = setInterval(() => {
+            if (!isRefreshing) {
+              clearInterval(interval);
+              resolve();
+            }
+          }, 100);
+        });
       }
     }
 
