@@ -327,7 +327,7 @@ export default function LocationPage() {
       align: 'center',
       filteredValue: [queryParams.countryID] || null,
       filters:
-        countries.data?.data.data.map((item) => ({
+        countries.data?.data?.data.map((item) => ({
           text: item.countryName,
           value: item.countryID,
         })) || [],
