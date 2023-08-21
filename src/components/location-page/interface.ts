@@ -83,3 +83,7 @@ export type SelectSearch = {
     value: string;
   };
 };
+
+export interface ImportCSVFormValues {
+  file: FileList;
+}

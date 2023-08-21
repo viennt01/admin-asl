@@ -1,4 +1,4 @@
-import { ResponseWithPayload, post } from '@/fetcherAxios';
+import { ResponseWithPayload, post, uploadFile } from '@/fetcherAxios';
 import {
   PortCreate,
   PortType,
@@ -49,4 +49,8 @@ export const deletePort = (data: React.Key[]) => {
       portIds: data,
     },
   })(API_PORT.DELETE_PORT);
+};
+
+export const bulkCreatePort = (data: FormData) => {
+  return uploadFile({ data, timeout: 10000 })(API_PORT.IMPORT_CSV);
 };

@@ -16,6 +16,7 @@ export const API_PORT = {
   CREATE_PORT: '/add-new-port',
   EDIT_PORT: '/update-port',
   DELETE_PORT: '/delete-port',
+  IMPORT_CSV: '/import-csv',
 };
 
 export const API_UNIT = {

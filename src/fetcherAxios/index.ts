@@ -237,3 +237,17 @@ export const deleteGW =
 
     return axiosResolver(axiosPromise);
   };
+
+export const uploadFile =
+  ({ data, headers, gw, timeout }: CRUDProps<FormData>) =>
+  async (url: string) => {
+    const axiosPromise = requestWithTimeout(
+      apiClient.post(`${getGateway(gw)}${url}`, data, {
+        headers: {
+          ...headers,
+        },
+      }),
+      timeout
+    );
+    return axiosResolver(axiosPromise);
+  };

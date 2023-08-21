@@ -8,7 +8,7 @@ import { ColumnSearchTableProps } from '../commons/search-table';
 import style from './index.module.scss';
 import { formatDate } from '@/utils/format';
 import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
-import { deletePort, getListPortSearch } from './fetcher';
+import { bulkCreatePort, deletePort, getListPortSearch } from './fetcher';
 import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
 import {
   DeleteOutlined,
@@ -17,6 +17,7 @@ import {
   ReloadOutlined,
   FilterFilled,
   ExclamationCircleFilled,
+  CloudUploadOutlined,
 } from '@ant-design/icons';
 import {
   Button,
@@ -26,6 +27,7 @@ import {
   PaginationProps,
   TablePaginationConfig,
   Tag,
+  Tooltip,
 } from 'antd';
 import {
   QueryParamType,
@@ -33,6 +35,7 @@ import {
   STATUS_COLORS,
   STATUS_LABELS,
   SelectSearch,
+  ImportCSVFormValues,
 } from './interface';
 import {
   DEFAULT_PAGINATION,
@@ -43,6 +46,7 @@ import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
 import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import ImportCSVModal from './import-csv-modal';
 
 const { confirm } = Modal;
 
@@ -140,6 +144,8 @@ export default function LocationPage() {
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
   >(initalValueDisplayColumn);
+  const [openImportModal, setOpenImportModal] = useState(false);
+  const [loadingImport, setLoadingImport] = useState(false);
 
   // Handle data
   const typePorts = useQuery([API_MASTER_DATA.GET_TYPE_PORT], getListTypePort);
@@ -489,6 +495,47 @@ export default function LocationPage() {
     });
   };
 
+  // import table data from csv
+  const importTableData = () => {
+    setOpenImportModal(true);
+  };
+
+  const cancelImportTableData = () => {
+    setOpenImportModal(false);
+  };
+
+  // import table data from csv
+  const confirmImportTableData = async (formValues: ImportCSVFormValues) => {
+    setLoadingImport(true);
+    const _requestData = new FormData();
+    _requestData.append('file', formValues.file[0]);
+    console.log(formValues.file[0]);
+
+    bulkCreatePort(_requestData)
+      .then((res) => {
+        // if (res.error_code !== ERROR_CODE.SUCCESS) {
+        //   return errorToast('Failed to import CSV file');
+        // }
+        successToast('Import CSV file successfully');
+        refreshingQuery();
+        console.log('res', res);
+
+        // show error logs
+        if (res.payload.length > 0) {
+          // setErrorLogs(res.payload);
+          // setOpenErrorLogModal(true);
+        }
+      })
+      .catch((e: Error) => {
+        console.log(e);
+        errorToast('Failed to import CSV file');
+      })
+      .finally(() => {
+        setLoadingImport(false);
+        setOpenImportModal(false);
+      });
+  };
+
   return (
     <>
       <ConfigProvider>
@@ -582,21 +629,40 @@ export default function LocationPage() {
               >
                 {translateCommon('button_delete')}
               </Button>,
-              <Button
-                key={'refresh'}
-                onClick={() => refreshingQuery()}
-                icon={<ReloadOutlined />}
-                loading={refreshingLoading}
-                style={{
-                  width: 32,
-                  height: 32,
-                  padding: 6,
-                }}
-              />,
+              <Tooltip title="Refresh data" key={'refresh'}>
+                <Button
+                  onClick={() => refreshingQuery()}
+                  icon={<ReloadOutlined />}
+                  loading={refreshingLoading}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: 5,
+                  }}
+                />
+              </Tooltip>,
+              <Tooltip title="Import data" key={'Import data'}>
+                <Button
+                  icon={<CloudUploadOutlined />}
+                  size="large"
+                  onClick={importTableData}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: 4,
+                  }}
+                />
+              </Tooltip>,
             ]}
           />
         )}
       </ConfigProvider>
+      <ImportCSVModal
+        loading={loadingImport}
+        open={openImportModal}
+        handleOk={confirmImportTableData}
+        handleCancel={cancelImportTableData}
+      />
     </>
   );
 }
