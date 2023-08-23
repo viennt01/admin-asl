@@ -92,41 +92,6 @@ export default function EditPartner() {
     console.log(formValues);
   };
 
-  // const residences: CascaderProps<DataNodeType>['options'] = [
-  //   {
-  //     value: 'Thành phố Hồ Chí Minh',
-  //     label: 'Thành phố Hồ Chí Minh',
-  //     children: [
-  //       {
-  //         value: 'Gò Vấp',
-  //         label: 'Gò Vấp',
-  //         children: [
-  //           {
-  //             value: 'Phường 1',
-  //             label: 'Phường 1',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     value: 'Hà Nội',
-  //     label: 'Hà Nội',
-  //     children: [
-  //       {
-  //         value: 'Huyện Ba Vì',
-  //         label: 'Huyện Ba Vì',
-  //         children: [
-  //           {
-  //             value: 'Xã Ba Trại',
-  //             label: 'Xã Ba Trại',
-  //           },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  // ];
-
   const dataTransHis: readonly any[] | undefined = [];
 
   const columnsContactInfo: ColumnsType<DataType> = [
@@ -385,33 +350,18 @@ export default function EditPartner() {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={5} span={24}>
+              <Col lg={6} span={24}>
                 <Form.Item
                   label={translatePartner('code')}
                   name="code_partner"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input type of code partner',
+                      message: translatePartner('code_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập mã Partner" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translatePartner('name')}
-                  name="name_Partner"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input Partner Name',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập tên Partner" />
+                  <Input placeholder={translatePartner('code_placeholder')} />
                 </Form.Item>
               </Col>
 
@@ -422,26 +372,62 @@ export default function EditPartner() {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Abbreviation of Partner',
+                      message: translatePartner('abbreviation_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Please input Abbreviation of Partner" />
+                  <Input
+                    placeholder={translatePartner('abbreviation_placeholder')}
+                  />
                 </Form.Item>
               </Col>
 
-              <Col lg={17} span={24}>
+              <Col lg={11} span={24}>
                 <Form.Item
-                  label={translatePartner('service')}
-                  name="name_partner"
+                  label={translatePartner('name')}
+                  name="name_Partner"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Service provided',
+                      message: translatePartner('name_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập Service provided" />
+                  <Input placeholder={translatePartner('name_placeholder')} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} span={24}>
+                <Form.Item
+                  label={translatePartner('type_of_partner')}
+                  name="typeOfPartner"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePartner('type_of_partner_placeholder'),
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Customer',
+                        label: 'Customer',
+                      },
+                      {
+                        value: 'Liner',
+                        label: 'Liner',
+                      },
+                      {
+                        value: 'Vendor',
+                        label: 'Vendor',
+                      },
+                      {
+                        value: 'Supplier',
+                        label: 'Supplier',
+                      },
+                    ]}
+                  />
                 </Form.Item>
               </Col>
 
@@ -463,7 +449,7 @@ export default function EditPartner() {
                     />
                   </Form.Item>
                   <Form.Item
-                    name="Phone Number"
+                    name="PhoneNumber"
                     style={{
                       display: 'inline-block',
                       width: 'calc(100% - 104px - 16px)',
@@ -477,7 +463,7 @@ export default function EditPartner() {
                     ]}
                   >
                     <Input
-                      placeholder="Nhập số điện thoại"
+                      placeholder={translatePartner('phone_placeholder')}
                       style={{
                         width: '100%',
                       }}
@@ -486,14 +472,55 @@ export default function EditPartner() {
                 </Form.Item>
               </Col>
 
-              <Col lg={5} span={24}>
+              <Col lg={11} span={24}>
+                <Form.Item
+                  label={translatePartner('email')}
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePartner('email_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input placeholder={translatePartner('email_placeholder')} />
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} span={24}>
+                <Form.Item
+                  label={translatePartner('zone')}
+                  name="zone"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePartner('zone_placeholder'),
+                    },
+                  ]}
+                >
+                  <Select
+                    options={[
+                      {
+                        value: 'Châu Á',
+                        label: 'Châu Á',
+                      },
+                      {
+                        value: 'Châu Âu',
+                        label: 'Châu Âu',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={7} span={24}>
                 <Form.Item
                   label={translatePartner('country')}
                   name="Country"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input Country',
+                      message: translatePartner('country_placeholder'),
                     },
                   ]}
                 >
@@ -512,68 +539,81 @@ export default function EditPartner() {
                 </Form.Item>
               </Col>
 
-              <Col lg={19} span={24}>
+              <Col lg={11} span={24}>
                 <Form.Item
                   label={translatePartner('address')}
                   name="address"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input address',
+                      message: translatePartner('address_placeholder'),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập Address" />
+                  <Input
+                    placeholder={translatePartner('address_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={6} span={24}>
+                <Form.Item
+                  label={translatePartner('saleman')}
+                  name="saleman"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePartner('saleman_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePartner('saleman_placeholder')}
+                  />
                 </Form.Item>
               </Col>
 
               <Col lg={7} span={24}>
                 <Form.Item
-                  label={translatePartner('email')}
-                  name="email"
+                  label={translatePartner('potential_analysis')}
+                  name="potentialAnalysis"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input email',
+                      message: translatePartner(
+                        'potential_analysis_placeholder'
+                      ),
                     },
                   ]}
                 >
-                  <Input placeholder="Nhập Email" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={4} span={24}>
-                <Form.Item
-                  label={translatePartner('date_created')}
-                  name="dateCreated"
-                  rules={[
-                    { required: true, message: 'Please input date created' },
-                  ]}
-                >
-                  <DatePicker
-                    defaultValue={dayjs('2015/01/01', dateFormat)}
-                    format={dateFormat}
-                    style={{ width: '100%' }}
+                  <Select
+                    options={[
+                      {
+                        value: translatePartner('potential_customer'),
+                        label: translatePartner('potential_customer'),
+                      },
+                      {
+                        value: translatePartner('official_customer'),
+                        label: translatePartner('official_customer'),
+                      },
+                      {
+                        value: translatePartner('customers_on_sales'),
+                        label: translatePartner('customers_on_sales'),
+                      },
+                      {
+                        value: translatePartner(
+                          'customers_at_risk_of_losing_accounts'
+                        ),
+                        label: translatePartner(
+                          'customers_at_risk_of_losing_accounts'
+                        ),
+                      },
+                    ]}
                   />
                 </Form.Item>
               </Col>
 
-              <Col lg={9} span={24}>
-                <Form.Item
-                  label={translatePartner('creator')}
-                  name="creator"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input creator',
-                    },
-                  ]}
-                >
-                  <Input placeholder="Nhập Creator" />
-                </Form.Item>
-              </Col>
-
-              <Col lg={4} span={24}>
+              <Col lg={3} span={24}>
                 <Form.Item
                   label={translatePartner('status')}
                   name="status"
@@ -599,18 +639,75 @@ export default function EditPartner() {
                 </Form.Item>
               </Col>
 
-              <Col lg={24} span={24}>
+              <Col lg={4} span={24}>
                 <Form.Item
-                  label="Note"
-                  name="note"
+                  label={translatePartner('date_created')}
+                  name="dateCreated"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input note',
+                      message: translatePartner('date_created_placeholder'),
                     },
                   ]}
                 >
-                  <Input.TextArea placeholder="Nhập ghi chú" />
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={4} span={24}>
+                <Form.Item
+                  label={translatePartner('date_update')}
+                  name="dateUpdate"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePartner('date_update_placeholder'),
+                    },
+                  ]}
+                >
+                  <DatePicker
+                    defaultValue={dayjs('2015/01/01', dateFormat)}
+                    format={dateFormat}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translatePartner('updater')}
+                  name="updater"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePartner('updater_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePartner('updater_placeholder')}
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} span={24}>
+                <Form.Item
+                  label={translatePartner('creator')}
+                  name="creator"
+                  rules={[
+                    {
+                      required: true,
+                      message: translatePartner('creator_placeholder'),
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder={translatePartner('creator_placeholder')}
+                  />
                 </Form.Item>
               </Col>
             </Row>

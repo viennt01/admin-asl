@@ -16,7 +16,9 @@ import {
   ClusterOutlined,
   ApartmentOutlined,
   UsergroupAddOutlined,
+  GlobalOutlined,
   EnvironmentOutlined,
+  FolderOpenOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image } from 'antd';
@@ -83,7 +85,9 @@ const AppSider = ({ collapsed }: Props) => {
   const refPartner = useRef(null);
   const refMasterData = useRef(null);
   const refSystem = useRef(null);
-  const refPort = useRef(null);
+  const reflocationCatalog = useRef(null);
+  const refTypeOfLocation = useRef(null);
+  const refLocation = useRef(null);
   const refTypeOfContainer = useRef(null);
   const refFee = useRef(null);
   const refAccountant = useRef(null);
@@ -226,10 +230,30 @@ const AppSider = ({ collapsed }: Props) => {
       <AppstoreOutlined ref={refMasterData} />,
       [
         getItem(
+          `${translateCommon('location_catalog')}`,
+          '6',
+          <FolderOpenOutlined ref={reflocationCatalog} />,
+          [
+            // getItem(
+            //   `${translateCommon('port')}`,
+            //   ROUTERS.LOCATION,
+            //   <EnvironmentOutlined ref={refLocation} />
+            // ),
+
+            getItem(
+              `${translateCommon('type_of_location')}`,
+              ROUTERS.TYPE_OF_LOCATION,
+              <GlobalOutlined ref={refTypeOfLocation} />
+            ),
+          ]
+        ),
+
+        getItem(
           `${translateCommon('port')}`,
           ROUTERS.LOCATION,
-          <EnvironmentOutlined ref={refPort} />
+          <EnvironmentOutlined ref={refLocation} />
         ),
+
         getItem(
           `${translateCommon('fee')}`,
           ROUTERS.FEE,
@@ -237,7 +261,7 @@ const AppSider = ({ collapsed }: Props) => {
         ),
         getItem(
           `${translateCommon('accountant')}`,
-          '6',
+          '7',
           <DollarOutlined ref={refAccountant} />,
           [
             getItem(
@@ -267,7 +291,7 @@ const AppSider = ({ collapsed }: Props) => {
     ),
     getItem(
       `${translateCommon('system')}`,
-      '7',
+      '8',
       <ClusterOutlined ref={refSystem} />,
       [
         getItem(

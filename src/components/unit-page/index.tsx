@@ -264,7 +264,7 @@ export default function CalculationUnitPage() {
       title: translateUnit('international_code'),
       dataIndex: 'internationalCode',
       key: 'internationalCode',
-      width: 250,
+      width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
@@ -281,6 +281,7 @@ export default function CalculationUnitPage() {
       title: translateUnit('description'),
       dataIndex: 'description',
       key: 'description',
+      width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
