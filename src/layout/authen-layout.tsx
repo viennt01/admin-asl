@@ -176,6 +176,20 @@ export function AppLayout(props: Props) {
   const ROUTER_HEADER = {
     '/': [{ title: `${translateCommon('home')}` }],
 
+    '/request-for-approval': [
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+    '/request-for-approval/edit/[id]': [
+      {
+        title: (
+          <Link href={ROUTERS.REQUEST_FOR_APPROVAL}>
+            {translateCommon('request_for_approval')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
     '/quotation/sea-quotation': [
       { title: `${translateCommon('quotation')}` },
       { title: `${translateCommon('sea_pricing')}` },

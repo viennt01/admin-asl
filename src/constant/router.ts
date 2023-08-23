@@ -1,8 +1,11 @@
 export const ROUTERS = {
   LOGIN: '/login',
   LOGOUT: '/logout',
-  HOME: '/',
   FORGOT_PASSWORD: '/forgot-password',
+  HOME: '/',
+  REQUEST_FOR_APPROVAL: '/request-for-approval',
+  REQUEST_FOR_APPROVAL_EDIT: (requestForApprovalId: string) =>
+    `/request-for-approval/edit/${requestForApprovalId}`,
   BOOKING: '/booking',
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
   SEA_QUOTATION: '/quotation/quotation-sea',
