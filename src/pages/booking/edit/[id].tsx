@@ -18,7 +18,7 @@ import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic([
   'common',
   'booking',
-  'port',
+  'location',
   'container',
   'goods',
 ]);

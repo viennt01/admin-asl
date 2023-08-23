@@ -40,10 +40,10 @@ export const ROUTERS = {
   TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
   TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
     `/master-data/location-catalog/type-of-location/edit/${typeOfLocationId}`,
-  LOCATION: '/master-data/location',
+  LOCATION: '/master-data/location-catalog/location',
   LOCATION_EDIT: (portId: string, checkRow = false) =>
-    `/master-data/location/edit/${portId}?checkRow=${checkRow}`,
-  LOCATION_CREATE: '/master-data/location/create',
+    `/master-data/location-catalog/location/edit/${portId}?checkRow=${checkRow}`,
+  LOCATION_CREATE: '/master-data/location-catalog/location/create',
   FEE: '/master-data/fee',
   FEE_EDIT: (feeId: string) => `/master-data/fee/edit/${feeId}`,
   CURRENCY: '/master-data/accountant/currency',

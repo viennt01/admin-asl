@@ -87,7 +87,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refPartner = useRef(null);
   const refMasterData = useRef(null);
   const refSystem = useRef(null);
-  const reflocationCatalog = useRef(null);
+  const refLocationCatalog = useRef(null);
   const refTypeOfLocation = useRef(null);
   const refLocation = useRef(null);
   const refTypeOfContainer = useRef(null);
@@ -240,13 +240,13 @@ const AppSider = ({ collapsed }: Props) => {
         getItem(
           `${translateCommon('location_catalog')}`,
           '6',
-          <FolderOpenOutlined ref={reflocationCatalog} />,
+          <FolderOpenOutlined ref={refLocationCatalog} />,
           [
-            // getItem(
-            //   `${translateCommon('port')}`,
-            //   ROUTERS.LOCATION,
-            //   <EnvironmentOutlined ref={refLocation} />
-            // ),
+            getItem(
+              `${translateCommon('location')}`,
+              ROUTERS.LOCATION,
+              <EnvironmentOutlined ref={refLocation} />
+            ),
 
             getItem(
               `${translateCommon('type_of_location')}`,
@@ -254,12 +254,6 @@ const AppSider = ({ collapsed }: Props) => {
               <GlobalOutlined ref={refTypeOfLocation} />
             ),
           ]
-        ),
-
-        getItem(
-          `${translateCommon('port')}`,
-          ROUTERS.LOCATION,
-          <EnvironmentOutlined ref={refLocation} />
         ),
 
         getItem(

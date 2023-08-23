@@ -15,7 +15,7 @@ function LocationEditPage() {
 
 export default withAuthentication(LocationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'port']);
+export const getStaticProps = getStatic(['common', 'location']);
 
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
