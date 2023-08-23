@@ -1,41 +1,37 @@
 import COLORS from '@/constant/color';
 import { Pagination } from '../commons/table-commons';
 
-export const STATUS_COLORS = {
-  // 1: COLORS.STATUS_CODE.BLOCK,
-  2: COLORS.STATUS_CODE.ACTIVE,
-  3: COLORS.STATUS_CODE.DEACTIVATE,
+export const STATUS_MASTER_COLORS = {
+  ACTIVE: COLORS.STATUS_CODE.ACTIVE,
+  DEACTIVE: COLORS.STATUS_CODE.DEACTIVE,
 };
 
-export const STATUS_LABELS = {
-  // 1: 'Draft',
-  2: 'Active',
-  3: 'Deactivate',
+export const STATUS_MATER_LABELS = {
+  ACTIVE: 'ACTIVE',
+  DEACTIVE: 'DEACTIVE',
 };
-
-export interface StatusItem {
-  text: string;
-  value: number;
-}
 //
-export interface UnitType {
+export interface Unit {
   unitID: string;
   internationalCode: string;
   description: string;
-  status: number;
+  statusUnit: string;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
+  isDelete: boolean;
+  dateDeleted: string;
+  deleteByUser: string;
 }
 
-export interface LocationTable extends Omit<UnitType, 'unitID'> {
+export interface LocationTable extends Omit<Unit, 'unitID'> {
   key: string;
   searchAll: string;
 }
 
 export interface LocationsRequire extends Pagination {
-  data: UnitType[];
+  data: Unit[];
 }
 //
 export interface QueryInputParamType {
@@ -44,7 +40,7 @@ export interface QueryInputParamType {
   description: string;
 }
 export interface QuerySelectParamType {
-  status: number;
+  statusUnit: string;
 }
 
 export interface RequestLocationType
@@ -69,7 +65,7 @@ export interface FormValues {
   internationalCode: string;
   descriptionVN: string;
   descriptionEN: string;
-  status: number;
+  status: string;
 }
 
 export interface UnitDetailType extends FormValues {

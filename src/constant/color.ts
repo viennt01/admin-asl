@@ -10,9 +10,11 @@ const COLORS = {
   PRIMARY: '#03375e',
 
   STATUS_CODE: {
+    DRAFT: '#03375e',
+    REQUEST: '#03375e',
     ACTIVE: '#00A651',
-    DEACTIVATE: '#e89434',
-    BLOCK: '#ED1C27',
+    REJECT: '#ED1C27',
+    DEACTIVE: '#e89434',
   },
 
   SEARCH: {

@@ -9,9 +9,8 @@ export const API_USER = {
   UPDATE_NEW_USER: '/change-status-new-user',
 };
 
-export const API_PORT = {
-  GET_PORTS: '/get-all-port',
-  GET_PORTS_SEARCH: '/search-port',
+export const API_LOCATION = {
+  GET_LOCATION_SEARCH: '/search-location',
   GET_PORT_DETAIL: '/get-detail-port',
   CREATE_PORT: '/add-new-port',
   EDIT_PORT: '/update-port',

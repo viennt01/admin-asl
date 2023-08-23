@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getPortDetail } from '../fetcher';
 import { FormValues, STATUS_LABELS } from '../interface';
-import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
+import { API_MASTER_DATA, API_LOCATION } from '@/fetcherAxios/endpoint';
 import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 
@@ -52,7 +52,7 @@ const PortForm = ({
   };
 
   const portDetailQuery = useQuery({
-    queryKey: [API_PORT.GET_PORT_DETAIL, id],
+    queryKey: [API_LOCATION.GET_PORT_DETAIL, id],
     queryFn: () => getPortDetail(id as string),
     enabled: id !== undefined,
     onError: () => {

@@ -8,19 +8,12 @@ import {
   RequestPortsType,
   PortDelete,
 } from './interface';
-import { API_PORT } from '@/fetcherAxios/endpoint';
-import { Pagination } from '../commons/table-commons';
+import { API_LOCATION } from '@/fetcherAxios/endpoint';
 
 export const getListPortSearch = (data: RequestPortsType) => {
   return post<RequestPortsType, ResponseWithPayload<PortsData>>({
     data,
-  })(API_PORT.GET_PORTS_SEARCH);
-};
-
-export const getListPort = (data: Pagination) => {
-  return post<Pagination, ResponseWithPayload<PortsData>>({
-    data,
-  })(API_PORT.GET_PORTS);
+  })(API_LOCATION.GET_LOCATION_SEARCH);
 };
 
 export const getPortDetail = (id: string) => {
@@ -28,19 +21,19 @@ export const getPortDetail = (id: string) => {
     data: {
       id,
     },
-  })(API_PORT.GET_PORT_DETAIL);
+  })(API_LOCATION.GET_PORT_DETAIL);
 };
 
 export const createPort = (data: PortCreate) => {
   return post<PortCreate, ResponseWithPayload<PortCreate>>({
     data,
-  })(API_PORT.CREATE_PORT);
+  })(API_LOCATION.CREATE_PORT);
 };
 
 export const editPort = (data: PortEdit) => {
   return post<PortEdit, ResponseWithPayload<PortEdit>>({
     data,
-  })(API_PORT.EDIT_PORT);
+  })(API_LOCATION.EDIT_PORT);
 };
 
 export const deletePort = (data: React.Key[]) => {
@@ -48,5 +41,5 @@ export const deletePort = (data: React.Key[]) => {
     data: {
       portIds: data,
     },
-  })(API_PORT.DELETE_PORT);
+  })(API_LOCATION.DELETE_PORT);
 };

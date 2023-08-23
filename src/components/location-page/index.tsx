@@ -39,7 +39,7 @@ import {
   PaginationOfAntd,
   SkeletonTable,
 } from '../commons/table-commons';
-import { API_MASTER_DATA, API_PORT } from '@/fetcherAxios/endpoint';
+import { API_MASTER_DATA, API_LOCATION } from '@/fetcherAxios/endpoint';
 import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -151,7 +151,7 @@ export default function LocationPage() {
   );
 
   const portsQuerySearch = useQuery({
-    queryKey: [API_PORT.GET_PORTS_SEARCH, pagination, queryParams],
+    queryKey: [API_LOCATION.GET_LOCATION_SEARCH, pagination, queryParams],
     queryFn: () =>
       getListPortSearch({
         ...queryParams,
@@ -197,7 +197,7 @@ export default function LocationPage() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_PORT.GET_PORTS_SEARCH, pagination, queryParams],
+          queryKey: [API_LOCATION.GET_LOCATION_SEARCH, pagination, queryParams],
           exact: true,
         });
         setSelectedRowKeys([]);
