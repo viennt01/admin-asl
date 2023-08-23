@@ -3,7 +3,7 @@ import { Pagination } from '../commons/table-commons';
 
 export const STATUS_COLORS = {
   1: COLORS.STATUS_CODE.ACTIVE,
-  2: COLORS.STATUS_CODE.DEACTIVATE,
+  2: COLORS.STATUS_CODE.DEACTIVE,
 };
 
 export const STATUS_LABELS = {

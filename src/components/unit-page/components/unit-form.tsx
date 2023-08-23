@@ -4,8 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, STATUS_COLORS, STATUS_LABELS } from '../interface';
-import { API_PORT } from '@/fetcherAxios/endpoint';
+import { FormValues, STATUS_MATER_LABELS } from '../interface';
+import { API_LOCATION } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 import { getUnitDetail } from '../fetcher';
 
@@ -22,11 +22,6 @@ interface PortFormProps {
 
 const { Title } = Typography;
 const { TextArea } = Input;
-
-const options = Object.keys(STATUS_COLORS).map((value) => ({
-  label: STATUS_LABELS[parseInt(value) as keyof typeof STATUS_LABELS],
-  value: parseInt(value),
-}));
 
 const UnitForm = ({
   create,
@@ -49,7 +44,7 @@ const UnitForm = ({
   };
 
   const portDetailQuery = useQuery({
-    queryKey: [API_PORT.GET_PORT_DETAIL, id],
+    queryKey: [API_LOCATION.GET_PORT_DETAIL, id],
     queryFn: () => getUnitDetail(id as string),
     enabled: id !== undefined,
     onError: () => {
@@ -130,7 +125,10 @@ const UnitForm = ({
                   <Select
                     size="large"
                     placeholder={translateUnit('status_form.placeholder')}
-                    options={options}
+                    options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
+                      text: key,
+                      value: key,
+                    }))}
                     disabled={checkRow && isCheckEdit}
                   />
                 </Form.Item>

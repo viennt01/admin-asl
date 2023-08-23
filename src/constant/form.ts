@@ -1,3 +1,5 @@
+import COLORS from './color';
+
 export const YEAR_OF_BIRTH = (() => {
   const now = new Date();
   const year = now.getFullYear();
@@ -1469,3 +1471,13 @@ export const COUNTRY_CODES = [
     code: 'VI',
   },
 ];
+
+export const STATUS_COLORS = {
+  DRAFT: COLORS.STATUS_CODE.ACTIVE,
+  REJECT: COLORS.STATUS_CODE.ACTIVE,
+};
+
+export const STATUS_LABELS = {
+  DRAFT: 'DRAFT',
+  REJECT: 'REJECT',
+};
