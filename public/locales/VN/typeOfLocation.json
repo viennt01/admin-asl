@@ -1,0 +1,21 @@
+{
+    "title": "Danh sách loại địa điểm",
+    "no": "STT",
+    "name": "Tên",
+    "description": "Mô tả",
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "date_update": "Ngày cập nhật",
+    "updater": "Người cập nhật",
+    "creator": "Người tạo",
+
+    "information_add_type_of_location": "Thêm mới loại địa điểm",
+    "information_edit_type_of_location": "Chỉnh sửa loại địa điểm",
+    "name_placeholder": "Vui lòng nhập tên loại của địa điểm!",
+    "description_placeholder": "Vui lòng nhập mô tả!",
+    "status_placeholder":"Vui lòng chọn trạng thái!",
+    "date_created_placeholder": "Vui lòng chọn ngày tạo!",
+    "date_update_placeholder": "Vui lòng chọn ngày cập nhật!",
+    "updater_placeholder": "Vui lòng nhập người cập nhật!",
+    "creator_placeholder": "Vui lòng nhập người tạo!"
+}

@@ -5,21 +5,21 @@ export const ROUTERS = {
   FORGOT_PASSWORD: '/forgot-password',
   BOOKING: '/booking',
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
-  SEA_QUOTATION: '/quotation-sea',
+  SEA_QUOTATION: '/quotation/quotation-sea',
   SEA_QUOTATION_EDIT: (quotationSeaId: string) =>
-    `/quotation-sea/edit/${quotationSeaId}`,
-  AIR_QUOTATION: '/quotation-air',
+    `/quotation/quotation-sea/edit/${quotationSeaId}`,
+  AIR_QUOTATION: '/quotation/quotation-air',
   AIR_QUOTATION_EDIT: (quotationAirId: string) =>
-    `/quotation-air/edit/${quotationAirId}`,
-  CUSTOMS_QUOTATION: '/quotation-customs',
+    `/quotation/quotation-air/edit/${quotationAirId}`,
+  CUSTOMS_QUOTATION: '/quotation/quotation-customs',
   CUSTOMS_QUOTATION_EDIT: (quotationCustomsId: string) =>
-    `/quotation-customs/edit/${quotationCustomsId}`,
-  TRUCKING_QUOTATION: '/quotation-trucking',
+    `/quotation/quotation-customs/edit/${quotationCustomsId}`,
+  TRUCKING_QUOTATION: '/quotation/quotation-trucking',
   TRUCKING_QUOTATION_EDIT: (quotationTruckingId: string) =>
-    `/quotation-trucking/edit/${quotationTruckingId}`,
-  QUOTATION_ALL_IN: '/quotation-all-in',
+    `/quotation/quotation-trucking/edit/${quotationTruckingId}`,
+  QUOTATION_ALL_IN: '/quotation/quotation-all-in',
   QUOTATION_ALL_IN_EDIT: (quotationAllInId: string) =>
-    `/quotation-all-in/edit/${quotationAllInId}`,
+    `/quotation/quotation-all-in/edit/${quotationAllInId}`,
   SEA_PRICING: '/pricing/pricing-sea',
   SEA_PRICING_EDIT: (seaPricingId: string) =>
     `/pricing/pricing-sea/edit/${seaPricingId}`,
@@ -34,13 +34,15 @@ export const ROUTERS = {
     `/pricing/pricing-trucking/edit/${truckingPricingId}`,
   PARTNER: '/partner',
   PARTNER_EDIT: (partnerId: string) => `/partner/edit/${partnerId}`,
+  TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
+  TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
+    `/master-data/location-catalog/type-of-location/edit/${typeOfLocationId}`,
   LOCATION: '/master-data/location',
   LOCATION_EDIT: (portId: string, checkRow = false) =>
     `/master-data/location/edit/${portId}?checkRow=${checkRow}`,
   LOCATION_CREATE: '/master-data/location/create',
   FEE: '/master-data/fee',
-  FEE_EDIT: (typeOfExpenseId: string) =>
-    `/master-data/fee/edit/${typeOfExpenseId}`,
+  FEE_EDIT: (feeId: string) => `/master-data/fee/edit/${feeId}`,
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_EDIT: (currencyId: string) =>
     `/master-data/accountant/currency/edit/${currencyId}`,

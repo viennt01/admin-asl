@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Input, InputRef, Space, Tag } from 'antd';
 import { Key, useRef, useState } from 'react';
-import CreatePartner from './create-partner';
+import CreateTypeOfLocation from './create-type-of-location';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -19,31 +19,23 @@ const STATUS_COLORS = {
   Active: '#00A651',
   DeActive: '#ED1C27',
 };
+
 const STATUS_LABELS = {
   Active: 'Active',
   DeActive: 'Tạm ngừng',
 };
 
-export default function PartnerPage() {
+export default function TypeOfLocationPage() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePartner } = useI18n('partner');
+  const { translate: translateTypeOfLocation } = useI18n('typeOfLocation');
   const { translate: translateCommon } = useI18n('common');
 
   interface DataType {
     key: number;
-    partnerCode: string;
-    abbreviation: string;
-    partnerName: string;
-    typeOfPartner: string;
-    phone: string;
-    zone: string;
-    country: string;
-    address: string;
-    email: string;
-    saleman: string;
+    name: string;
+    description: string;
     status: string;
-    potentialAnalysis: string;
     dateCreated: string;
     dateUpdate: string;
     updater: string;
@@ -51,22 +43,13 @@ export default function PartnerPage() {
   }
 
   const data: DataType[] = [];
+
   for (let i = 0; i < 46; i++) {
     data.push({
       key: i + 1,
-      partnerCode: 'ASLS152',
-      abbreviation: `Dong A`,
-      partnerName: `Đông Á`,
-      typeOfPartner: i % 2 === 1 ? 'Customer' : 'Supplier',
-      phone: '0964582355',
-      zone: 'Châu Á',
-      country: 'Việt Nam',
-      address: 'Hồ Chí Minh',
-      email: 'abcd@gmail.com',
-      saleman: 'Nguyễn Văn A',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
-      potentialAnalysis:
-        i % 2 === 1 ? 'Customer (on sale)' : 'Potential Customer',
+      name: i % 2 === 0 ? 'Air Port' : 'Sea Port',
+      description: '',
+      status: i % 2 === 0 ? 'Active' : 'DeActive',
       dateCreated: '14/06/2023',
       dateUpdate: '14/06/2023',
       updater: 'Admin',
@@ -188,112 +171,38 @@ export default function PartnerPage() {
 
   const columns: ProColumns<DataType>[] = [
     {
-      title: translatePartner('no'),
+      title: translateTypeOfLocation('no'),
       width: 80,
       dataIndex: 'key',
       key: 'key',
       fixed: 'left',
       align: 'center',
-      ...getColumnSearchProps('key'),
+      sorter: (a, b) => a.key - b.key,
     },
     {
-      title: translatePartner('code'),
-      width: 150,
-      dataIndex: 'partnerCode',
-      key: 'partnerCode',
-      fixed: 'left',
-      align: 'center',
-      ...getColumnSearchProps('partnerCode'),
-    },
-    {
-      title: translatePartner('abbreviation'),
-      width: 250,
-      dataIndex: 'abbreviation',
-      key: 'abbreviation',
-      fixed: 'left',
-      align: 'center',
-      ...getColumnSearchProps('abbreviation'),
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-    {
-      title: translatePartner('name'),
-      width: 250,
-      dataIndex: 'partnerName',
-      key: 'partnerName',
-      align: 'center',
-      ...getColumnSearchProps('partnerName'),
-      // onFilter: (value: string, record) => record.name.startsWith(value),
-    },
-
-    {
-      title: translatePartner('type_of_partner'),
+      title: translateTypeOfLocation('name'),
       width: 200,
-      dataIndex: 'typeOfPartner',
-      key: 'typeOfPartner',
+      dataIndex: 'name',
+      key: 'name',
       align: 'center',
-      ...getColumnSearchProps('typeOfPartner'),
-      // onFilter: (value: string, record) => record.name.startsWith(value),
+      fixed: 'left',
+      ...getColumnSearchProps('name'),
     },
 
     {
-      title: translatePartner('phone'),
-      width: 150,
-      dataIndex: 'phone',
-      key: 'phone',
+      title: translateTypeOfLocation('description'),
+      width: 250,
+      dataIndex: 'description',
+      key: 'description',
       align: 'center',
-      ...getColumnSearchProps('phone'),
+      ...getColumnSearchProps('description'),
     },
 
     {
-      title: translatePartner('zone'),
-      width: 150,
-      dataIndex: 'zone',
-      key: 'zone',
-      align: 'center',
-      ...getColumnSearchProps('zone'),
-    },
-
-    {
-      title: translatePartner('country'),
-      width: 200,
-      dataIndex: 'country',
-      key: 'country',
-      align: 'center',
-      ...getColumnSearchProps('country'),
-    },
-
-    {
-      title: translatePartner('address'),
-      width: 500,
-      dataIndex: 'address',
-      key: 'address',
-      align: 'center',
-      ...getColumnSearchProps('address'),
-    },
-
-    {
-      title: translatePartner('email'),
-      width: 180,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-      ...getColumnSearchProps('email'),
-    },
-
-    {
-      title: translatePartner('saleman'),
-      width: 180,
-      dataIndex: 'saleman',
-      key: 'saleman',
-      align: 'center',
-      ...getColumnSearchProps('saleman'),
-    },
-
-    {
-      title: translatePartner('status'),
-      width: 150,
+      title: translateTypeOfLocation('status'),
       dataIndex: 'status',
       key: 'status',
+      width: 120,
       align: 'center',
       filters: [
         {
@@ -320,17 +229,9 @@ export default function PartnerPage() {
     },
 
     {
-      title: translatePartner('potential_analysis'),
-      width: 200,
-      dataIndex: 'potentialAnalysis',
-      key: 'potentialAnalysis',
-      align: 'center',
-    },
-
-    {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translatePartner('date_created')}
+          {translateTypeOfLocation('date_created')}
         </div>
       ),
       width: 150,
@@ -343,7 +244,7 @@ export default function PartnerPage() {
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translatePartner('date_created')}
+          {translateTypeOfLocation('date_update')}
         </div>
       ),
       width: 150,
@@ -356,7 +257,7 @@ export default function PartnerPage() {
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translatePartner('updater')}
+          {translateTypeOfLocation('updater')}
         </div>
       ),
       width: 200,
@@ -369,13 +270,14 @@ export default function PartnerPage() {
     {
       title: (
         <div style={{ textTransform: 'uppercase' }}>
-          {translatePartner('creator')}
+          {translateTypeOfLocation('creator')}
         </div>
       ),
       width: 200,
       dataIndex: 'creator',
       key: 'creator',
       align: 'center',
+      ...getColumnSearchProps('creator'),
     },
 
     {
@@ -394,7 +296,7 @@ export default function PartnerPage() {
   ];
 
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.PARTNER_EDIT(id));
+    router.push(ROUTERS.TYPE_OF_LOCATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -420,7 +322,7 @@ export default function PartnerPage() {
       columns={columns}
       search={false}
       dateFormatter="string"
-      headerTitle={translatePartner('title')}
+      headerTitle={translateTypeOfLocation('title')}
       scroll={{
         x: 'max-content',
       }}
@@ -430,7 +332,7 @@ export default function PartnerPage() {
         search: true,
       }}
       toolBarRender={() => [
-        <CreatePartner key={'create'} />,
+        <CreateTypeOfLocation key={'create'} />,
         <Button
           icon={<DeleteOutlined />}
           style={{
