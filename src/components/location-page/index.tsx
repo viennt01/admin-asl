@@ -126,7 +126,7 @@ export default function LocationPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePort } = useI18n('port');
+  const { translate: translateLocation } = useI18n('location');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
@@ -277,7 +277,7 @@ export default function LocationPage() {
   // Handle data show table
   const columns: ProColumns<PortDataTable>[] = [
     {
-      title: translatePort('port_no'),
+      title: translateLocation('port_no'),
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -287,7 +287,7 @@ export default function LocationPage() {
       },
     },
     {
-      title: translatePort('code'),
+      title: translateLocation('code'),
       dataIndex: 'portCode',
       width: 120,
       key: 'portCode',
@@ -304,7 +304,7 @@ export default function LocationPage() {
       }),
     },
     {
-      title: translatePort('name'),
+      title: translateLocation('name'),
       dataIndex: 'portName',
       key: 'portName',
       align: 'center',
@@ -320,7 +320,7 @@ export default function LocationPage() {
       }),
     },
     {
-      title: translatePort('country_name'),
+      title: translateLocation('country_name'),
       width: 150,
       dataIndex: 'countryName',
       key: 'countryName',
@@ -347,7 +347,7 @@ export default function LocationPage() {
       filterMultiple: false,
     },
     {
-      title: translatePort('type_of_port'),
+      title: translateLocation('type_of_port'),
       dataIndex: 'typePorts',
       key: 'typePorts',
       align: 'center',
@@ -376,7 +376,7 @@ export default function LocationPage() {
         }),
     },
     {
-      title: translatePort('status'),
+      title: translateLocation('status'),
       dataIndex: 'status',
       key: 'status',
       align: 'center',
@@ -496,7 +496,7 @@ export default function LocationPage() {
           <SkeletonTable />
         ) : (
           <ProTable<PortDataTable>
-            headerTitle={translatePort('title')}
+            headerTitle={translateLocation('title')}
             className={style.table}
             style={{ marginTop: '8px' }}
             dataSource={dataTable}

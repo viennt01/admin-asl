@@ -16,7 +16,7 @@
     "partner": "Partner",
     "master_data": "Master data",
     "location_catalog": "Location catalog",
-    "port": "Location",
+    "location": "Location",
     "type_of_location": "Type of Location",
     "fee": "Fee",
     "type_of_container": "Type of Container",

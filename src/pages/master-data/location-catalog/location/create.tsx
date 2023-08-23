@@ -15,4 +15,4 @@ function CreateLocationPage() {
 
 export default withAuthentication(CreateLocationPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'port']);
+export const getStaticProps = getStatic(['common', 'location']);

@@ -30,7 +30,7 @@ const PortForm = ({
   loading,
   checkRow,
 }: PortFormProps) => {
-  const { translate: translatePort } = useI18n('port');
+  const { translate: translateLocation } = useI18n('location');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -92,26 +92,26 @@ const PortForm = ({
             <Col>
               <Title level={3}>
                 {create
-                  ? translatePort('information_add_port')
-                  : translatePort('information_edit_port')}
+                  ? translateLocation('information_add_port')
+                  : translateLocation('information_edit_port')}
               </Title>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translatePort('port_code.title')}
-                tooltip={translatePort('code')}
+                label={translateLocation('port_code.title')}
+                tooltip={translateLocation('code')}
                 name="portCode"
                 rules={[
                   {
                     required: true,
-                    message: translatePort('port_code.error_required'),
+                    message: translateLocation('port_code.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translatePort('port_code.placeholder')}
+                  placeholder={translateLocation('port_code.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckEdit}
                 />
@@ -119,17 +119,17 @@ const PortForm = ({
             </Col>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translatePort('port_name.title')}
+                label={translateLocation('port_name.title')}
                 name="portName"
                 rules={[
                   {
                     required: true,
-                    message: translatePort('port_name.error_required'),
+                    message: translateLocation('port_name.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translatePort('port_name.placeholder')}
+                  placeholder={translateLocation('port_name.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckEdit}
                 />
@@ -138,17 +138,17 @@ const PortForm = ({
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translatePort('type_port.title')}
+                label={translateLocation('type_port.title')}
                 name="typePorts"
                 rules={[
                   {
                     required: true,
-                    message: translatePort('type_port.error_required'),
+                    message: translateLocation('type_port.error_required'),
                   },
                 ]}
               >
                 <Select
-                  placeholder={translatePort('type_port.placeholder')}
+                  placeholder={translateLocation('type_port.placeholder')}
                   mode="multiple"
                   size="large"
                   options={
@@ -163,17 +163,17 @@ const PortForm = ({
             </Col>
             <Col lg={!create ? 6 : 12} span={24}>
               <Form.Item
-                label={translatePort('country.title')}
+                label={translateLocation('country.title')}
                 name="countryID"
                 rules={[
                   {
                     required: true,
-                    message: translatePort('country.error_required'),
+                    message: translateLocation('country.error_required'),
                   },
                 ]}
               >
                 <Select
-                  placeholder={translatePort('country.placeholder')}
+                  placeholder={translateLocation('country.placeholder')}
                   showSearch
                   size="large"
                   options={
@@ -194,18 +194,18 @@ const PortForm = ({
             {!create ? (
               <Col lg={6} span={24}>
                 <Form.Item
-                  label={translatePort('status_port.title')}
+                  label={translateLocation('status_port.title')}
                   name="status"
                   rules={[
                     {
                       required: true,
-                      message: translatePort('status_port.error_required'),
+                      message: translateLocation('status_port.error_required'),
                     },
                   ]}
                 >
                   <Select
                     size="large"
-                    placeholder={translatePort('status_port.placeholder')}
+                    placeholder={translateLocation('status_port.placeholder')}
                     options={Object.values(STATUS_LABELS).map(
                       (type, index) => ({
                         label: type,
@@ -222,12 +222,12 @@ const PortForm = ({
 
             <Col span={24}>
               <Form.Item
-                label={translatePort('description.title')}
+                label={translateLocation('description.title')}
                 name="description"
               >
                 <TextArea
                   size="large"
-                  placeholder={translatePort('description.placeholder')}
+                  placeholder={translateLocation('description.placeholder')}
                   allowClear
                   disabled={checkRow && isCheckEdit}
                 />

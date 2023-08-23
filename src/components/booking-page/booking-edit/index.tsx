@@ -54,7 +54,7 @@ export default function EditBooking() {
   const dateFormat = 'YYYY/MM/DD';
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateContainer } = useI18n('container');
-  const { translate: translatePort } = useI18n('port');
+  const { translate: translateLocation } = useI18n('location');
   const { translate: translateGoods } = useI18n('goods');
 
   useEffect(() => {
@@ -103,42 +103,42 @@ export default function EditBooking() {
 
   const columnsPort: ColumnsType<DataType> = [
     {
-      title: translatePort('code'),
+      title: translateLocation('code'),
       dataIndex: 'containerCode',
       align: 'center',
     },
     {
-      title: translatePort('name'),
+      title: translateLocation('name'),
       dataIndex: 'typeOfContainer',
       align: 'center',
     },
     {
-      title: translatePort('quantity_container'),
+      title: translateLocation('quantity_container'),
       dataIndex: 'address',
       align: 'center',
     },
     {
-      title: translatePort('status_capacity'),
+      title: translateLocation('status_capacity'),
       dataIndex: 'containerStatus',
       align: 'center',
     },
     {
-      title: translatePort('country_name'),
+      title: translateLocation('country_name'),
       dataIndex: 'rentCost',
       align: 'center',
     },
     {
-      title: translatePort('address'),
+      title: translateLocation('address'),
       dataIndex: 'price',
       align: 'center',
     },
     {
-      title: translatePort('company'),
+      title: translateLocation('company'),
       dataIndex: 'supplier',
       align: 'center',
     },
     {
-      title: translatePort('status'),
+      title: translateLocation('status'),
       dataIndex: 'status',
       align: 'center',
     },
@@ -520,7 +520,7 @@ export default function EditBooking() {
           </Card>
 
           <CollapseCard
-            title={translatePort('title_information_port')}
+            title={translateLocation('title_information_port')}
             style={{ marginBottom: '24px' }}
             defaultActive={true}
           >
