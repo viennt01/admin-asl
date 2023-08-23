@@ -1,0 +1,21 @@
+{
+    "title": "List type of Location",
+    "no": "No",
+    "name": "Name",
+    "description": "Description",
+    "status":"Status",
+    "date_created": "Date Created",
+    "date_update": "Date Update",
+    "updater": "Updater",
+    "creator": "Creator",
+    
+    "information_add_type_of_location": "Add new type of container",
+    "information_edit_type_of_location": "Edit type of container",
+    "name_placeholder": "Please input name!",
+    "description_placeholder": "Please input description!",
+    "status_placeholder":"Please choose status!",
+    "date_created_placeholder": "Please input date created!",
+    "date_update_placeholder": "Please input date update!",
+    "updater_placeholder": "Please input updater!",
+    "creator_placeholder": "Please input creator!"
+}

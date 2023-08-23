@@ -336,6 +336,24 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
+    '/master-data/location-catalog/type-of-location': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('location_catalog')}` },
+      { title: `${translateCommon('type_of_location')}` },
+    ],
+    '/master-data/location-catalog/type-of-location/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('location_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_OF_LOCATION}>
+            {translateCommon('type_of_location')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
     '/master-data/location': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('port')}` },
