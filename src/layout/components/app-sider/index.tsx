@@ -19,6 +19,7 @@ import {
   GlobalOutlined,
   EnvironmentOutlined,
   FolderOpenOutlined,
+  FileDoneOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image } from 'antd';
@@ -70,6 +71,7 @@ const AppSider = ({ collapsed }: Props) => {
   const [deviceName, setDeviceName] = useState<string>('');
   const { translate: translateCommon } = useI18n('common');
   const refHome = useRef(null);
+  const refRequestForApproval = useRef(null);
   const refQuotation = useRef(null);
   const refSeaQuotation = useRef(null);
   const refAirQuotation = useRef(null);
@@ -149,6 +151,12 @@ const AppSider = ({ collapsed }: Props) => {
       `${translateCommon('home')}`,
       ROUTERS.HOME,
       <HomeOutlined ref={refHome} />
+    ),
+
+    getItem(
+      `${translateCommon('request_for_approval')}`,
+      ROUTERS.REQUEST_FOR_APPROVAL,
+      <FileDoneOutlined ref={refRequestForApproval} />
     ),
 
     getItem(
