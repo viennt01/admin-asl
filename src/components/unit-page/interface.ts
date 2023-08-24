@@ -40,7 +40,7 @@ export interface QueryInputParamType {
   description: string;
 }
 export interface QuerySelectParamType {
-  statusUnit: string;
+  statusUnit: string[];
 }
 
 export interface RequestLocationType

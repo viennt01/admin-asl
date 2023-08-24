@@ -56,7 +56,8 @@ export const ROUTERS = {
     `/master-data/type-of-container/edit/${typeOfContainerId}`,
   UNIT: '/master-data/unit',
   UNIT_CREATE: '/master-data/unit/create',
-  UNIT_EDIT: (unitId: string) => `/master-data/unit/edit/${unitId}`,
+  UNIT_EDIT: (unitId: string, checkRow = false) =>
+    `/master-data/unit/edit/${unitId}?checkRow=${checkRow}`,
   USER: '/system/user',
   USER_EDIT: (userId: string) => `/system/user/edit/${userId}`,
   STAFF: '/system/staff',

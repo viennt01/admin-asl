@@ -20,28 +20,29 @@ import { FilterValue } from 'antd/lib/table/interface';
 interface Props<T extends Record<string, any>> {
   dataTable: T[];
   columns: ProColumns<T>[];
-  selectedRowKeys: React.Key[];
-  headerTitle: string;
-  handleSelectionChange: (selectedRowKeys: Key[]) => void;
+  headerTitle?: string;
+  selectedRowKeys?: React.Key[];
+  handleSelectionChange?: (selectedRowKeys: Key[]) => void;
   handlePaginationChange: (page: number, size: number) => void;
-  handleChangeInputSearchAll: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleSearchInputKeyAll: (value: string) => void;
-  valueSearchAll: string;
+  handleChangeInputSearchAll?: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSearchInputKeyAll?: (value: string) => void;
+  valueSearchAll?: string;
   handleOnDoubleClick: (
     e: MouseEvent<any, globalThis.MouseEvent>,
     record: T
   ) => void;
-  handleCreate: () => void;
-  showPropsConfirmDelete: () => void;
-  refreshingQuery: () => void;
-  refreshingLoading: boolean;
+  handleCreate?: () => void;
+  showPropsConfirmDelete?: () => void;
+  refreshingQuery?: () => void;
+  refreshingLoading?: boolean;
   pagination: PaginationOfAntd;
-  handleColumnsStateChange: (map: Record<string, ColumnsState>) => void;
-  columnsStateMap: Record<string, ColumnsState>;
-  handleSearchSelect: (
+  handleColumnsStateChange?: (map: Record<string, ColumnsState>) => void;
+  columnsStateMap?: Record<string, ColumnsState>;
+  handleSearchSelect?: (
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>
   ) => void;
+  checkTableMaster: boolean;
 }
 const TableUnit = <T extends Record<string, any>>({
   dataTable,
@@ -62,22 +63,25 @@ const TableUnit = <T extends Record<string, any>>({
   handleColumnsStateChange,
   columnsStateMap,
   handleSearchSelect,
+  checkTableMaster,
 }: Props<T>) => {
   const { translate: translateCommon } = useI18n('common');
   const dataSourceUnknown = dataTable as unknown;
   return (
     <ProTable<T>
-      headerTitle={headerTitle}
+      headerTitle={checkTableMaster ? headerTitle : ''}
       className={style.table}
       dataSource={dataSourceUnknown as T[]}
       columns={columns}
       style={{ marginTop: '8px' }}
       rowKey="key"
-      rowSelection={{
-        type: 'checkbox',
-        selectedRowKeys: selectedRowKeys,
-        onChange: handleSelectionChange,
-      }}
+      rowSelection={
+        checkTableMaster && {
+          type: 'checkbox',
+          selectedRowKeys: selectedRowKeys,
+          onChange: handleSelectionChange,
+        }
+      }
       pagination={{
         position: ['bottomCenter'],
         showTotal: (total, range) =>
@@ -90,11 +94,12 @@ const TableUnit = <T extends Record<string, any>>({
       scroll={{
         x: 'max-content',
       }}
-      sticky={{ offsetHeader: 0 }}
+      sticky={checkTableMaster && { offsetHeader: 0 }}
       options={{
-        fullScreen: true,
+        fullScreen: checkTableMaster,
         reload: false,
-        setting: true,
+        setting: checkTableMaster,
+        density: checkTableMaster,
       }}
       onColumnsStateChange={handleColumnsStateChange}
       columnsStateMap={columnsStateMap}
@@ -106,55 +111,59 @@ const TableUnit = <T extends Record<string, any>>({
         };
       }}
       onChange={handleSearchSelect}
-      toolBarRender={() => [
-        <Input.Search
-          key={'Search'}
-          placeholder={translateCommon('search')}
-          onSearch={handleSearchInputKeyAll}
-          value={valueSearchAll}
-          onChange={(e) => {
-            handleChangeInputSearchAll(e);
-          }}
-        />,
-        <Button
-          key={'create'}
-          icon={<PlusOutlined />}
-          style={{
-            marginRight: '4px',
-            backgroundColor: COLORS.BRIGHT,
-            color: COLORS.GREEN,
-            borderColor: COLORS.GREEN,
-            fontWeight: '500',
-          }}
-          onClick={handleCreate}
-        >
-          {translateCommon('button_add')}
-        </Button>,
-        <Button
-          key={'delete'}
-          icon={<DeleteOutlined />}
-          style={{
-            backgroundColor: COLORS.RED,
-            color: COLORS.WHITE,
-            borderColor: COLORS.RED,
-            fontWeight: '500',
-          }}
-          onClick={showPropsConfirmDelete}
-        >
-          {translateCommon('button_delete')}
-        </Button>,
-        <Button
-          key={'refresh'}
-          onClick={refreshingQuery}
-          icon={<ReloadOutlined />}
-          loading={refreshingLoading}
-          style={{
-            width: 32,
-            height: 32,
-            padding: 6,
-          }}
-        />,
-      ]}
+      toolBarRender={() =>
+        checkTableMaster
+          ? [
+              <Input.Search
+                key={'Search'}
+                placeholder={translateCommon('search')}
+                onSearch={handleSearchInputKeyAll}
+                value={valueSearchAll}
+                onChange={(e) =>
+                  handleChangeInputSearchAll && handleChangeInputSearchAll(e)
+                }
+              />,
+              <Button
+                key={'create'}
+                icon={<PlusOutlined />}
+                style={{
+                  marginRight: '4px',
+                  backgroundColor: COLORS.BRIGHT,
+                  color: COLORS.GREEN,
+                  borderColor: COLORS.GREEN,
+                  fontWeight: '500',
+                }}
+                onClick={handleCreate}
+              >
+                {translateCommon('button_add')}
+              </Button>,
+              <Button
+                key={'delete'}
+                icon={<DeleteOutlined />}
+                style={{
+                  backgroundColor: COLORS.RED,
+                  color: COLORS.WHITE,
+                  borderColor: COLORS.RED,
+                  fontWeight: '500',
+                }}
+                onClick={showPropsConfirmDelete}
+              >
+                {translateCommon('button_delete')}
+              </Button>,
+              <Button
+                key={'refresh'}
+                onClick={refreshingQuery}
+                icon={<ReloadOutlined />}
+                loading={refreshingLoading}
+                style={{
+                  width: 32,
+                  height: 32,
+                  padding: 6,
+                }}
+              />,
+            ]
+          : []
+      }
     />
   );
 };

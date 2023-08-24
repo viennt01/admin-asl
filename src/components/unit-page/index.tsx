@@ -3,7 +3,7 @@ import {
   ExclamationCircleFilled,
   FilterFilled,
 } from '@ant-design/icons';
-import { Button, ConfigProvider, Modal, PaginationProps, Tag } from 'antd';
+import { Button, Modal, PaginationProps, Tag } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -44,7 +44,7 @@ const initalValueQueryInputParams = {
 };
 
 const initalValueQuerySelectParams = {
-  statusUnit: '',
+  statusUnit: [],
 };
 
 const initalValueDisplayColumn = {
@@ -94,7 +94,7 @@ const initalSelectSearch = {
   },
   statusUnit: {
     label: '',
-    value: '',
+    value: [],
   },
 };
 
@@ -113,7 +113,7 @@ export default function CalculationUnitPage() {
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
   const [dataTable, setDataTable] = useState<LocationTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
+  const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
@@ -121,6 +121,16 @@ export default function CalculationUnitPage() {
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
   // Handle data
+  const dataSelectSearch =
+    querySelectParams.statusUnit.length === 0
+      ? {
+          statusUnit: [
+            STATUS_MATER_LABELS.ACTIVE,
+            STATUS_MATER_LABELS.DEACTIVE,
+          ],
+        }
+      : querySelectParams;
+
   const locationsQuerySearch = useQuery({
     queryKey: [
       API_UNIT.GET_UNIT_SEARCH,
@@ -131,7 +141,7 @@ export default function CalculationUnitPage() {
     queryFn: () =>
       getLocationsSearch({
         ...queryInputParams,
-        ...querySelectParams,
+        ...dataSelectSearch,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -166,7 +176,7 @@ export default function CalculationUnitPage() {
   });
 
   const refreshingQuery = () => {
-    setSelectedKeyShow(initalSelectSearch);
+    setSelectedActiveKey(initalSelectSearch);
     setQueryInputParams(initalValueQueryInputParams);
     setRefreshingLoading(true);
     setPagination((state) => ({
@@ -181,7 +191,7 @@ export default function CalculationUnitPage() {
 
   // Handle search
   const handleSearchInputKeyAll = (value: string) => {
-    setSelectedKeyShow({
+    setSelectedActiveKey({
       ...initalSelectSearch,
       searchAll: {
         label: 'searchAll',
@@ -202,7 +212,7 @@ export default function CalculationUnitPage() {
     confirm: (param?: FilterConfirmProps) => void,
     dataIndex: DataIndex
   ) => {
-    setSelectedKeyShow((prevData) => ({
+    setSelectedActiveKey((prevData) => ({
       ...prevData,
       [dataIndex]: {
         label: dataIndex,
@@ -229,8 +239,8 @@ export default function CalculationUnitPage() {
       searchAll: '',
       statusUnit:
         filters.statusUnit?.length !== 0 && filters.statusUnit
-          ? (filters.statusUnit[0] as string)
-          : '',
+          ? (filters.statusUnit as string[])
+          : [],
     };
     setQuerySelectParams(newQueryParams);
   };
@@ -241,7 +251,7 @@ export default function CalculationUnitPage() {
       [dataIndex]: '',
     }));
 
-    setSelectedKeyShow((prevData) => ({
+    setSelectedActiveKey((prevData) => ({
       ...prevData,
       [dataIndex]: { label: dataIndex, value: '' },
     }));
@@ -271,8 +281,8 @@ export default function CalculationUnitPage() {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
           dataIndex: 'internationalCode',
         },
       }),
@@ -288,8 +298,8 @@ export default function CalculationUnitPage() {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
           dataIndex: 'description',
         },
       }),
@@ -305,8 +315,7 @@ export default function CalculationUnitPage() {
         value: key,
       })),
       filterSearch: false,
-      filterMultiple: false,
-      filteredValue: [querySelectParams.statusUnit] || null,
+      filteredValue: querySelectParams.statusUnit || null,
       filterIcon: () => {
         return (
           <FilterFilled
@@ -411,7 +420,7 @@ export default function CalculationUnitPage() {
   };
 
   const handleChangeInputSearchAll = (e: ChangeEvent<HTMLInputElement>) => {
-    setSelectedKeyShow((prevData) => ({
+    setSelectedActiveKey((prevData) => ({
       ...prevData,
       searchAll: {
         label: 'searchAll',
@@ -426,7 +435,7 @@ export default function CalculationUnitPage() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.LOCATION_EDIT(record.key, true));
+      router.push(ROUTERS.UNIT_EDIT(record.key, true));
     }
   };
 
@@ -436,32 +445,31 @@ export default function CalculationUnitPage() {
 
   return (
     <>
-      <ConfigProvider>
-        {locationsQuerySearch.isLoading ? (
-          <SkeletonTable />
-        ) : (
-          <TableUnit
-            dataTable={dataTable}
-            columns={columns}
-            headerTitle={translateUnit('title')}
-            selectedRowKeys={selectedRowKeys}
-            handleSelectionChange={handleSelectionChange}
-            handlePaginationChange={handlePaginationChange}
-            handleChangeInputSearchAll={handleChangeInputSearchAll}
-            handleSearchInputKeyAll={handleSearchInputKeyAll}
-            valueSearchAll={selectedKeyShow.searchAll.value}
-            handleOnDoubleClick={handleOnDoubleClick}
-            handleCreate={handleCreate}
-            showPropsConfirmDelete={showPropsConfirmDelete}
-            refreshingQuery={refreshingQuery}
-            refreshingLoading={refreshingLoading}
-            pagination={pagination}
-            handleColumnsStateChange={handleColumnsStateChange}
-            columnsStateMap={columnsStateMap}
-            handleSearchSelect={handleSearchSelect}
-          />
-        )}
-      </ConfigProvider>
+      {locationsQuerySearch.isLoading ? (
+        <SkeletonTable />
+      ) : (
+        <TableUnit
+          dataTable={dataTable}
+          columns={columns}
+          headerTitle={translateUnit('title')}
+          selectedRowKeys={selectedRowKeys}
+          handleSelectionChange={handleSelectionChange}
+          handlePaginationChange={handlePaginationChange}
+          handleChangeInputSearchAll={handleChangeInputSearchAll}
+          handleSearchInputKeyAll={handleSearchInputKeyAll}
+          valueSearchAll={selectedActiveKey.searchAll.value}
+          handleOnDoubleClick={handleOnDoubleClick}
+          handleCreate={handleCreate}
+          showPropsConfirmDelete={showPropsConfirmDelete}
+          refreshingQuery={refreshingQuery}
+          refreshingLoading={refreshingLoading}
+          pagination={pagination}
+          handleColumnsStateChange={handleColumnsStateChange}
+          columnsStateMap={columnsStateMap}
+          handleSearchSelect={handleSearchSelect}
+          checkTableMaster={true}
+        />
+      )}
     </>
   );
 }
