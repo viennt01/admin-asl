@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateLocation from '@/components/location-page/create-location';
+// import CreateLocation from '@/components/location-page/create-location';
 
 function CreateLocationPage() {
   return (
@@ -8,7 +8,7 @@ function CreateLocationPage() {
       <Head>
         <title>ASL | CREATE LOCATION</title>
       </Head>
-      <CreateLocation />
+      {/* <CreateLocation /> */}
     </>
   );
 }

@@ -28,15 +28,11 @@ const EditUnit = () => {
       internationalCode: formValues.internationalCode,
       descriptionVN: formValues.descriptionVN,
       descriptionEN: formValues.descriptionEN,
-      status: formValues.status,
+      statusUnit: formValues.statusUnit,
     };
     updateUnitMutation.mutate(_requestData, {
       onSuccess: (data) => {
-        if (data.status) {
-          successToast(data.message);
-        } else {
-          errorToast(data.message);
-        }
+        data.status ? successToast(data.message) : errorToast(data.message);
       },
       onError() {
         errorToast(API_MESSAGE.ERROR);
@@ -47,7 +43,7 @@ const EditUnit = () => {
   return (
     <UnitForm
       handleSubmit={handleSubmit}
-      loading={updateUnitMutation.isLoading}
+      loadingSubmit={updateUnitMutation.isLoading}
       checkRow={checkRow === 'true' ? true : false}
     />
   );

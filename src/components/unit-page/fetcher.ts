@@ -3,6 +3,7 @@ import {
   LocationsRequire,
   RequestLocationType,
   UnitCreate,
+  UnitDelete,
   UnitDetailDataBody,
   UnitDetailType,
   UnitEdit,
@@ -33,4 +34,12 @@ export const editUnit = (data: UnitEdit) => {
   return post<UnitEdit, ResponseWithPayload<UnitEdit>>({
     data,
   })(API_UNIT.EDIT_UNIT);
+};
+
+export const deleteUnit = (data: React.Key[]) => {
+  return post<UnitDelete, ResponseWithPayload<UnitDelete>>({
+    data: {
+      ids: data,
+    },
+  })(API_UNIT.DELETE_UNIT);
 };

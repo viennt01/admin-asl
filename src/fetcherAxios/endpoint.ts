@@ -18,12 +18,12 @@ export const API_LOCATION = {
 };
 
 export const API_UNIT = {
-  // GET_PORTS: '/get-all-port',
   GET_UNIT_SEARCH: '/search-unit',
-  GET_UNIT_DETAIL: '/get-detail-unit',
+  GET_UNIT_DETAIL: '/get-unit',
   CREATE_UNIT: '/add-unit',
-  EDIT_UNIT: '/update-port',
-  // DELETE_PORT: '/delete-port',
+  EDIT_UNIT: '/update-unit',
+  DELETE_UNIT: '/delete-unit',
+  UPDATE_STATUS_UNIT: '/update-status-unit',
 };
 
 export const API_MASTER_DATA = {

@@ -65,7 +65,7 @@ export interface FormValues {
   internationalCode: string;
   descriptionVN: string;
   descriptionEN: string;
-  status: string;
+  statusUnit: string;
 }
 
 export interface UnitDetailType extends FormValues {
@@ -75,6 +75,10 @@ export interface UnitDetailType extends FormValues {
   updatedByUser: string;
 }
 
-export type UnitCreate = Omit<FormValues, 'unitID' | 'status'>;
+export type UnitCreate = Omit<FormValues, 'unitID'>;
 
 export type UnitEdit = FormValues;
+
+export type UnitDelete = {
+  ids: React.Key[];
+};

@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditRequestForApproval from '@/components/request-for-approval-page/request-for-approval-edit';
 
-function RequestForApprovalEditPage() {
+function UnitManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | REQUEST FOR APPROVAL EDIT</title>
+        <title>ASL | UNIT MANAGER</title>
       </Head>
-      <EditRequestForApproval />
+      <ManagerUnit />
     </>
   );
 }
 
-export default withAuthentication(RequestForApprovalEditPage);
+export default withAuthentication(UnitManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'requestForApproval']);
+import ManagerUnit from '@/components/request-for-approval-page/components/unit-type/unit-manager';
+export const getStaticProps = getStatic(['common', 'unit']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>

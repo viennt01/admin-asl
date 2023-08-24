@@ -9,6 +9,10 @@ const COLORS = {
   BLACK: '#000000',
   PRIMARY: '#03375e',
 
+  WARNING: '#faad14',
+  SUCCESS: '#52c41a',
+  ERROR: '#ff4d4f',
+
   STATUS_CODE: {
     DRAFT: '#03375e',
     REQUEST: '#03375e',

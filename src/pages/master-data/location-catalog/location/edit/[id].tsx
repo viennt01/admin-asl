@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditLocation from '@/components/location-page/edit-location';
+// import EditLocation from '@/components/location-page/edit-location';
 
 function LocationEditPage() {
   return (
@@ -8,7 +8,7 @@ function LocationEditPage() {
       <Head>
         <title>ASL | EDIT LOCATION</title>
       </Head>
-      <EditLocation />
+      {/* <EditLocation /> */}
     </>
   );
 }

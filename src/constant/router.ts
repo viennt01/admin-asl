@@ -58,6 +58,7 @@ export const ROUTERS = {
   UNIT_CREATE: '/master-data/unit/create',
   UNIT_EDIT: (unitId: string, checkRow = false) =>
     `/master-data/unit/edit/${unitId}?checkRow=${checkRow}`,
+  UNIT_MANAGER: (unitId: string) => `/master-data/unit/manager-admin/${unitId}`,
   USER: '/system/user',
   USER_EDIT: (userId: string) => `/system/user/edit/${userId}`,
   STAFF: '/system/staff',

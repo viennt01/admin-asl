@@ -1,7 +1,10 @@
+import COLORS from '@/constant/color';
 import useI18n from '@/i18n/useI18N';
 import { formatDate } from '@/utils/format';
 import { Button, Card, Col, Descriptions, Row } from 'antd';
 import router from 'next/router';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 interface Props {
   checkRow: boolean;
@@ -13,6 +16,9 @@ interface Props {
   updatedByUser: string;
   dateUpdated: string;
   handleCheckEdit: (data: boolean) => void;
+  handleSaveDraft?: () => void;
+  manager?: boolean;
+  handleAJ: (status: string) => void;
 }
 
 export const BottomCreateEdit = ({
@@ -25,6 +31,9 @@ export const BottomCreateEdit = ({
   updatedByUser,
   dateUpdated,
   handleCheckEdit,
+  handleSaveDraft,
+  manager,
+  handleAJ,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
 
@@ -56,14 +65,62 @@ export const BottomCreateEdit = ({
                   {translateCommon('cancel')}
                 </Button>
               )}
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ marginLeft: '12px' }}
-                loading={loading}
-              >
-                {!create ? translateCommon('save') : translateCommon('create')}
-              </Button>
+              {manager ? (
+                <>
+                  <Button
+                    icon={<CloseOutlined />}
+                    style={{
+                      marginLeft: '12px',
+                      color: COLORS.ERROR,
+                      borderColor: COLORS.ERROR,
+                    }}
+                    onClick={() => {
+                      return handleAJ(STATUS_ALL_LABELS.REJECT);
+                    }}
+                  >
+                    Reject
+                  </Button>
+                  <Button
+                    icon={<CheckOutlined />}
+                    style={{
+                      marginLeft: '12px',
+                      color: COLORS.SUCCESS,
+                      borderColor: COLORS.SUCCESS,
+                    }}
+                    onClick={() => {
+                      return handleAJ(STATUS_ALL_LABELS.APPROVE);
+                    }}
+                  >
+                    Approve
+                  </Button>
+                </>
+              ) : (
+                <>
+                  {create && (
+                    <Button
+                      style={{
+                        marginLeft: '12px',
+                        color: COLORS.WARNING,
+                        borderColor: COLORS.WARNING,
+                      }}
+                      onClick={handleSaveDraft}
+                      loading={loading}
+                    >
+                      Save as draft
+                    </Button>
+                  )}
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ marginLeft: '12px' }}
+                    loading={loading}
+                  >
+                    {create
+                      ? translateCommon('create')
+                      : translateCommon('save')}
+                  </Button>
+                </>
+              )}
             </>
           )}
         </Col>

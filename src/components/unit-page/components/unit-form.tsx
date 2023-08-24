@@ -5,7 +5,7 @@ import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormValues, STATUS_MATER_LABELS } from '../interface';
-import { API_LOCATION } from '@/fetcherAxios/endpoint';
+import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 import { getUnitDetail } from '../fetcher';
 
@@ -15,9 +15,12 @@ const initialValue = {
 
 interface PortFormProps {
   create?: boolean;
-  handleSubmit: (formValues: FormValues) => void;
-  loading: boolean;
+  handleSubmit?: (formValues: FormValues) => void;
+  handleSaveDraft?: (formValues: FormValues) => void;
+  handleApproveAndReject?: (id: string, status: string) => void;
+  loadingSubmit: boolean;
   checkRow: boolean;
+  manager?: boolean;
 }
 
 const { Title } = Typography;
@@ -26,37 +29,42 @@ const { TextArea } = Input;
 const UnitForm = ({
   create,
   handleSubmit,
-  loading,
+  handleSaveDraft,
+  loadingSubmit: loading,
   checkRow,
+  manager,
+  handleApproveAndReject,
 }: PortFormProps) => {
   const { translate: translateUnit } = useI18n('unit');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
+  console.log(manager);
 
   useEffect(() => {
     if (!id) return;
   }, [router, form]);
 
   const onFinish = (formValues: FormValues) => {
-    handleSubmit(formValues);
+    handleSubmit && handleSubmit(formValues);
   };
 
-  const portDetailQuery = useQuery({
-    queryKey: [API_LOCATION.GET_PORT_DETAIL, id],
+  const onSaveDraft = () => {
+    handleSaveDraft && handleSaveDraft(form.getFieldsValue());
+  };
+
+  const unitDetailQuery = useQuery({
+    queryKey: [API_UNIT.GET_UNIT_DETAIL, id],
     queryFn: () => getUnitDetail(id as string),
     enabled: id !== undefined,
-    onError: () => {
-      router.push(ROUTERS.LOCATION);
-    },
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
           internationalCode: data.data.internationalCode,
           descriptionVN: data.data.descriptionVN,
           descriptionEN: data.data.descriptionEN,
-          status: data.data.status,
+          statusUnit: data.data.statusUnit,
         });
       } else {
         router.push(ROUTERS.LOCATION);
@@ -66,6 +74,10 @@ const UnitForm = ({
 
   const handleCheckEdit = (data: boolean) => {
     setCheckEdit(data);
+  };
+
+  const handleAJ = (status: string) => {
+    handleApproveAndReject && handleApproveAndReject(id as string, status);
   };
 
   return (
@@ -88,7 +100,7 @@ const UnitForm = ({
             </Col>
           </Row>
           <Row gutter={16}>
-            <Col lg={!create ? 12 : 24} span={12}>
+            <Col lg={!create && !manager ? 12 : 24} span={12}>
               <Form.Item
                 label={translateUnit('international_code_form.title')}
                 name="internationalCode"
@@ -110,11 +122,11 @@ const UnitForm = ({
                 />
               </Form.Item>
             </Col>
-            {!create ? (
+            {!create && !manager ? (
               <Col lg={12} span={24}>
                 <Form.Item
                   label={translateUnit('status_form.title')}
-                  name="status"
+                  name="statusUnit"
                   rules={[
                     {
                       required: true,
@@ -188,11 +200,14 @@ const UnitForm = ({
           isCheckEdit={isCheckEdit}
           create={create}
           loading={loading}
-          insertedByUser={portDetailQuery.data?.data?.insertedByUser || ''}
-          dateInserted={portDetailQuery.data?.data?.dateInserted || ''}
-          updatedByUser={portDetailQuery.data?.data?.updatedByUser || ''}
-          dateUpdated={portDetailQuery.data?.data?.dateUpdated || ''}
+          insertedByUser={unitDetailQuery.data?.data?.insertedByUser || ''}
+          dateInserted={unitDetailQuery.data?.data?.dateInserted || ''}
+          updatedByUser={unitDetailQuery.data?.data?.updatedByUser || ''}
+          dateUpdated={unitDetailQuery.data?.data?.dateUpdated || ''}
           handleCheckEdit={handleCheckEdit}
+          handleSaveDraft={onSaveDraft}
+          manager={manager}
+          handleAJ={handleAJ}
         />
       </Form>
     </div>

@@ -2,8 +2,9 @@ import {
   EditOutlined,
   ExclamationCircleFilled,
   FilterFilled,
+  DeleteOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, PaginationProps, Tag } from 'antd';
+import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -15,9 +16,9 @@ import {
   FilterValue,
   TablePaginationConfig,
 } from 'antd/es/table/interface';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
-import { getLocationsSearch } from './fetcher';
+import { deleteUnit, getLocationsSearch } from './fetcher';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
@@ -34,6 +35,8 @@ import {
 import { ColumnSearchTableProps } from '../commons/search-table';
 import { formatDate } from '@/utils/format';
 import TableUnit from './components/table-unit';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
 
 const { confirm } = Modal;
 
@@ -102,6 +105,7 @@ type DataIndex = keyof QueryInputParamType;
 
 export default function CalculationUnitPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateUnit } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
@@ -172,6 +176,30 @@ export default function CalculationUnitPage() {
       } else {
         setDataTable([]);
       }
+    },
+  });
+
+  const deleteUnitMutation = useMutation({
+    mutationFn: () => deleteUnit(selectedRowKeys),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [
+            API_UNIT.GET_UNIT_SEARCH,
+            pagination,
+            queryInputParams,
+            querySelectParams,
+          ],
+          exact: true,
+        });
+        setSelectedRowKeys([]);
+      } else {
+        errorToast(data.message);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
     },
   });
 
@@ -377,10 +405,30 @@ export default function CalculationUnitPage() {
       align: 'center',
       dataIndex: 'key',
       render: (value) => (
-        <Button
-          onClick={() => handleEditCustomer(value as string)}
-          icon={<EditOutlined />}
-        />
+        <div style={{ display: 'flex' }}>
+          <Popconfirm
+            title={translateCommon('modal_delete.title')}
+            okText={translateCommon('modal_delete.button_ok')}
+            cancelText={translateCommon('modal_delete.button_cancel')}
+            onConfirm={() => {
+              setSelectedRowKeys([value as string]);
+              deleteUnitMutation.mutate();
+            }}
+          >
+            <Button
+              icon={<DeleteOutlined />}
+              style={{
+                marginRight: '10px',
+                color: COLORS.ERROR,
+                borderColor: COLORS.ERROR,
+              }}
+            />
+          </Popconfirm>
+          <Button
+            onClick={() => handleEditCustomer(value as string)}
+            icon={<EditOutlined />}
+          />
+        </div>
       ),
     },
   ];
@@ -414,7 +462,7 @@ export default function CalculationUnitPage() {
       cancelText: translateCommon('modal_delete.button_cancel'),
       okType: 'danger',
       onOk() {
-        // deletePortMutation.mutate();
+        deleteUnitMutation.mutate();
       },
     });
   };

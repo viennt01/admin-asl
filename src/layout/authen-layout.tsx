@@ -408,6 +408,11 @@ export function AppLayout(props: Props) {
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
+    '/master-data/unit/manager-admin/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
 
     '/master-data/accountant/currency': [
       { title: `${translateCommon('master_data')}` },

@@ -1,4 +1,4 @@
-import { EditOutlined } from '@ant-design/icons';
+import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import CollapseCard from '@/components/commons/collapse-card';
 import {
   DEFAULT_PAGINATION,
@@ -16,7 +16,7 @@ import { ROUTERS } from '@/constant/router';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Col, PaginationProps, Row, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
@@ -24,6 +24,10 @@ import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
+import COLORS from '@/constant/color';
+import { UpdateStatusUnit, updateStatus } from './fetcher';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
 
 const initalValueQueryInputParams = {
   searchAll: '',
@@ -108,8 +112,13 @@ const UnitType = () => {
     },
   });
 
-  // Handle search
+  const updateStatusUnitMutation = useMutation({
+    mutationFn: (body: UpdateStatusUnit) => {
+      return updateStatus(body);
+    },
+  });
 
+  // Handle search
   const handleSearchInput = (
     selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
@@ -228,17 +237,55 @@ const UnitType = () => {
       dataIndex: 'key',
       fixed: 'right',
       render: (value) => (
-        <Button
-          onClick={() => handleEditCustomer(value as string)}
-          icon={<EditOutlined />}
-        />
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => handleEditCustomer(value as string)}
+            icon={<EyeOutlined />}
+            style={{ marginRight: '10px' }}
+          />
+          <Button
+            onClick={() =>
+              handleApproveAndReject(value as string, STATUS_ALL_LABELS.APPROVE)
+            }
+            icon={<CheckOutlined />}
+            style={{
+              marginRight: '10px',
+              color: COLORS.SUCCESS,
+              borderColor: COLORS.SUCCESS,
+            }}
+          />
+          <Button
+            onClick={() =>
+              handleApproveAndReject(value as string, STATUS_ALL_LABELS.REJECT)
+            }
+            icon={<CloseOutlined />}
+            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
+          />
+        </div>
       ),
     },
   ];
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_EDIT(id));
+    router.push(ROUTERS.UNIT_MANAGER(id));
+  };
+
+  const handleApproveAndReject = (id: string, status: string) => {
+    const _requestData: UpdateStatusUnit = {
+      id,
+      status,
+    };
+    updateStatusUnitMutation.mutate(_requestData, {
+      onSuccess: (data) => {
+        data.status
+          ? (successToast(data.message), unitsQuerySearch.refetch())
+          : errorToast(data.message);
+      },
+      onError() {
+        errorToast(API_MESSAGE.ERROR);
+      },
+    });
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
@@ -255,7 +302,7 @@ const UnitType = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_EDIT(record.key, true));
+      router.push(ROUTERS.UNIT_MANAGER(record.key));
     }
   };
 
