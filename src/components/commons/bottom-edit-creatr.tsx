@@ -38,7 +38,13 @@ export const BottomCreateEdit = ({
   const { translate: translateCommon } = useI18n('common');
 
   return (
-    <Card>
+    <Card
+      style={{
+        position: 'sticky',
+        bottom: 0,
+        zIndex: 11,
+      }}
+    >
       <Row gutter={12}>
         <Col span={12}>
           {checkRow && isCheckEdit ? (
