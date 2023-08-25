@@ -406,6 +406,13 @@ export default function CalculationUnitPage() {
       dataIndex: 'key',
       render: (value) => (
         <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => handleEditCustomer(value as string)}
+            icon={<EditOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
           <Popconfirm
             title={translateCommon('modal_delete.title')}
             okText={translateCommon('modal_delete.button_ok')}
@@ -418,16 +425,11 @@ export default function CalculationUnitPage() {
             <Button
               icon={<DeleteOutlined />}
               style={{
-                marginRight: '10px',
                 color: COLORS.ERROR,
                 borderColor: COLORS.ERROR,
               }}
             />
           </Popconfirm>
-          <Button
-            onClick={() => handleEditCustomer(value as string)}
-            icon={<EditOutlined />}
-          />
         </div>
       ),
     },
