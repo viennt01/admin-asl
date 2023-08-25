@@ -25,7 +25,7 @@ import {
   SkeletonTable,
 } from '../commons/table-commons';
 import {
-  LocationTable,
+  UnitTable,
   QueryInputParamType,
   QuerySelectParamType,
   STATUS_MASTER_COLORS,
@@ -116,7 +116,7 @@ export default function CalculationUnitPage() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
-  const [dataTable, setDataTable] = useState<LocationTable[]>([]);
+  const [dataTable, setDataTable] = useState<UnitTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -287,7 +287,7 @@ export default function CalculationUnitPage() {
   };
 
   // Handle data show table
-  const columns: ProColumns<LocationTable>[] = [
+  const columns: ProColumns<UnitTable>[] = [
     {
       title: translateUnit('code'),
       dataIndex: 'index',
@@ -481,7 +481,7 @@ export default function CalculationUnitPage() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTable
+    record: UnitTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

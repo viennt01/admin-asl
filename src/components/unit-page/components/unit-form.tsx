@@ -8,6 +8,7 @@ import { FormValues, STATUS_MATER_LABELS } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 import { getUnitDetail } from '../fetcher';
+import DraftTable from './draft-table';
 
 const initialValue = {
   description: '',
@@ -39,12 +40,18 @@ const UnitForm = ({
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
+  const [idQuery, setIdQuery] = useState<string>();
   const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
   console.log(manager);
 
   useEffect(() => {
     if (!id) return;
+    setIdQuery(id as string);
   }, [router, form]);
+
+  const handleIdQuery = (id: string) => {
+    setIdQuery(id as string);
+  };
 
   const onFinish = (formValues: FormValues) => {
     handleSubmit && handleSubmit(formValues);
@@ -55,9 +62,9 @@ const UnitForm = ({
   };
 
   const unitDetailQuery = useQuery({
-    queryKey: [API_UNIT.GET_UNIT_DETAIL, id],
-    queryFn: () => getUnitDetail(id as string),
-    enabled: id !== undefined,
+    queryKey: [API_UNIT.GET_UNIT_DETAIL, idQuery],
+    queryFn: () => getUnitDetail(idQuery as string),
+    enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
@@ -89,16 +96,21 @@ const UnitForm = ({
         autoComplete="off"
         layout="vertical"
       >
-        <Card style={{ marginBottom: 24 }}>
-          <Row justify={'center'}>
-            <Col>
-              <Title level={3}>
-                {create
-                  ? translateUnit('information_add_unit')
-                  : translateUnit('information_edit_unit')}
-              </Title>
-            </Col>
-          </Row>
+        <Card
+          style={{ marginBottom: 24 }}
+          title={
+            <Row justify={'center'}>
+              <Col>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  {create
+                    ? translateUnit('information_add_unit')
+                    : translateUnit('information_edit_unit')}
+                </Title>
+              </Col>
+            </Row>
+          }
+          extra={<DraftTable handleIdQuery={handleIdQuery} />}
+        >
           <Row gutter={16}>
             <Col lg={!create && !manager ? 12 : 24} span={12}>
               <Form.Item

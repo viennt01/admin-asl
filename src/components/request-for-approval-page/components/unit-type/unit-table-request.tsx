@@ -6,9 +6,8 @@ import {
   SkeletonTable,
 } from '@/components/commons/table-commons';
 import TableUnit from '@/components/unit-page/components/table-unit';
-import { getLocationsSearch } from '@/components/unit-page/fetcher';
 import {
-  LocationTable,
+  UnitTable,
   QueryInputParamType,
   SelectSearch,
 } from '@/components/unit-page/interface';
@@ -25,7 +24,7 @@ import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
-import { UpdateStatusUnit, updateStatus } from './fetcher';
+import { UpdateStatusUnit, getTable, updateStatus } from './fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
@@ -33,10 +32,6 @@ const initalValueQueryInputParams = {
   searchAll: '',
   internationalCode: '',
   description: '',
-};
-
-const initalValueQuerySelectParams = {
-  statusUnit: [STATUS_ALL_LABELS.REQUEST],
 };
 
 const initalSelectSearch = {
@@ -69,16 +64,15 @@ const UnitType = () => {
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<LocationTable[]>([]);
+  const [dataTable, setDataTable] = useState<UnitTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectSearch>(initalSelectSearch);
   // Handle data
   const unitsQuerySearch = useQuery({
     queryKey: [API_UNIT.GET_UNIT_SEARCH, pagination, queryInputParams],
     queryFn: () =>
-      getLocationsSearch({
+      getTable({
         ...queryInputParams,
-        ...initalValueQuerySelectParams,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -151,7 +145,7 @@ const UnitType = () => {
   };
 
   // Handle data show table
-  const columns: ProColumns<LocationTable>[] = [
+  const columns: ProColumns<UnitTable>[] = [
     {
       title: translateUnit('code'),
       dataIndex: 'index',
@@ -298,7 +292,7 @@ const UnitType = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTable
+    record: UnitTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

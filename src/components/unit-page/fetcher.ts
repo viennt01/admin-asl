@@ -1,7 +1,8 @@
 import { ResponseWithPayload, post } from '@/fetcherAxios';
 import {
-  LocationsRequire,
+  UnitsRequire,
   RequestLocationType,
+  RequestUnitTableDraft,
   UnitCreate,
   UnitDelete,
   UnitDetailDataBody,
@@ -11,7 +12,7 @@ import {
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 
 export const getLocationsSearch = (data: RequestLocationType) => {
-  return post<RequestLocationType, ResponseWithPayload<LocationsRequire>>({
+  return post<RequestLocationType, ResponseWithPayload<UnitsRequire>>({
     data,
   })(API_UNIT.GET_UNIT_SEARCH);
 };
@@ -42,4 +43,10 @@ export const deleteUnit = (data: React.Key[]) => {
       ids: data,
     },
   })(API_UNIT.DELETE_UNIT);
+};
+
+export const getDartTable = (data: RequestUnitTableDraft) => {
+  return post<RequestUnitTableDraft, ResponseWithPayload<UnitsRequire>>({
+    data,
+  })(API_UNIT.GET_UNIT_DRAFT);
 };

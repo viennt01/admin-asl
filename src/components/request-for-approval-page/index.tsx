@@ -1,6 +1,6 @@
 import useI18n from '@/i18n/useI18N';
 import { Card, Typography } from 'antd';
-import UnitType from './components/unit-type/unit-table';
+import UnitType from './components/unit-type/unit-table-request';
 const { Title } = Typography;
 
 export default function RequestForApprovalPage() {

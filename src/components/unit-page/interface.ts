@@ -25,12 +25,12 @@ export interface Unit {
   deleteByUser: string;
 }
 
-export interface LocationTable extends Omit<Unit, 'unitID'> {
+export interface UnitTable extends Omit<Unit, 'unitID'> {
   key: string;
   searchAll: string;
 }
 
-export interface LocationsRequire extends Pagination {
+export interface UnitsRequire extends Pagination {
   data: Unit[];
 }
 //
@@ -81,4 +81,25 @@ export type UnitEdit = FormValues;
 
 export type UnitDelete = {
   ids: React.Key[];
+};
+
+//----------------------------------------------------------------
+export interface QueryInputDraft {
+  internationalCode: string;
+  description: string;
+}
+export interface QuerySelectDraft {
+  status: string[];
+}
+export interface RequestUnitTableDraft
+  extends QueryInputDraft,
+    QuerySelectDraft {
+  paginateRequest: Pagination;
+}
+
+export type SelectDratSearch = {
+  [key in keyof QueryInputDraft]: {
+    label: string;
+    value: string;
+  };
 };

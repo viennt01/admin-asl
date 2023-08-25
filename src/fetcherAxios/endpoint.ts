@@ -24,6 +24,8 @@ export const API_UNIT = {
   EDIT_UNIT: '/update-unit',
   DELETE_UNIT: '/delete-unit',
   UPDATE_STATUS_UNIT: '/update-status-unit',
+  GET_UNIT_DRAFT: '/get-unit-with-status-and-id-User',
+  GET_UNIT_REQUEST: '/get-unit-with-status-request',
 };
 
 export const API_MASTER_DATA = {
