@@ -6,6 +6,11 @@ export const DEFAULT_PAGINATION = {
   pageSize: 20,
 };
 
+export const DEFAULT_PAGINATION_5 = {
+  current: 1,
+  pageSize: 5,
+};
+
 export interface Pagination {
   currentPage: number;
   pageSize: number;

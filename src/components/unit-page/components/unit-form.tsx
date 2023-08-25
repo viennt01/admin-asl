@@ -8,6 +8,7 @@ import { FormValues, STATUS_MATER_LABELS } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 import { getUnitDetail } from '../fetcher';
+import DraftTable from './draft-table';
 
 const initialValue = {
   description: '',
@@ -89,16 +90,21 @@ const UnitForm = ({
         autoComplete="off"
         layout="vertical"
       >
-        <Card style={{ marginBottom: 24 }}>
-          <Row justify={'center'}>
-            <Col>
-              <Title level={3}>
-                {create
-                  ? translateUnit('information_add_unit')
-                  : translateUnit('information_edit_unit')}
-              </Title>
-            </Col>
-          </Row>
+        <Card
+          style={{ marginBottom: 24 }}
+          title={
+            <Row justify={'center'}>
+              <Col>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  {create
+                    ? translateUnit('information_add_unit')
+                    : translateUnit('information_edit_unit')}
+                </Title>
+              </Col>
+            </Row>
+          }
+          extra={<DraftTable />}
+        >
           <Row gutter={16}>
             <Col lg={!create && !manager ? 12 : 24} span={12}>
               <Form.Item
