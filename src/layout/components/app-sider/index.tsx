@@ -22,7 +22,7 @@ import {
   FileDoneOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
-import { Button, MenuProps, Image } from 'antd';
+import { Button, MenuProps, Image, Badge } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -37,6 +37,7 @@ import { LogoutData, logout } from './fetcher';
 import { UserInfo, checkNewUser } from '@/layout/fetcher';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { API_USER } from '@/fetcherAxios/endpoint';
+import COLORS from '@/constant/color';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -154,9 +155,28 @@ const AppSider = ({ collapsed }: Props) => {
     ),
 
     getItem(
-      `${translateCommon('request_for_approval')}`,
+      <Badge
+        count={2}
+        style={{
+          marginRight: '-12px',
+          color: COLORS.WHITE,
+        }}
+      >
+        <div
+          style={{
+            color: collapsed ? '#ffff' : '#000',
+          }}
+        >{`${translateCommon('request_for_approval')}`}</div>
+      </Badge>,
       ROUTERS.REQUEST_FOR_APPROVAL,
-      <FileDoneOutlined ref={refRequestForApproval} />
+      <Badge
+        dot={collapsed}
+        style={{
+          marginTop: '8px',
+        }}
+      >
+        <FileDoneOutlined ref={refRequestForApproval} />
+      </Badge>
     ),
 
     getItem(

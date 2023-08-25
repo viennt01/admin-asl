@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapse, CollapseProps, Typography } from 'antd';
+import { Badge, Collapse, CollapseProps, Typography } from 'antd';
 
 const { Panel } = Collapse;
 const { Title } = Typography;
@@ -7,6 +7,7 @@ const { Title } = Typography;
 interface CollapseCardProps extends CollapseProps {
   title: string;
   defaultActive?: boolean;
+  count?: number;
 }
 
 const CollapseCard = React.forwardRef<HTMLDivElement, CollapseCardProps>(
@@ -34,9 +35,11 @@ const CollapseCard = React.forwardRef<HTMLDivElement, CollapseCardProps>(
           style={panelStyle}
           forceRender
           header={
-            <Title level={3} style={{ margin: '-4px 0' }}>
-              {props.title}
-            </Title>
+            <Badge count={props.count} style={{ marginRight: '-10px' }}>
+              <Title level={3} style={{ margin: '-4px 0' }}>
+                {props.title}
+              </Title>
+            </Badge>
           }
           key="1"
         >

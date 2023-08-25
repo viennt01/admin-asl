@@ -22,6 +22,8 @@ export interface UserInfo {
   phoneNumber: string;
   hasVerifiedPhone: boolean;
   avatar: string;
+  colorAvatar: string;
+  defaultAvatar: string;
   userName: string;
   createdDate: string;
   updatedDate: string;

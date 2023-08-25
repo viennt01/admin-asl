@@ -26,7 +26,12 @@ import { LANGUAGE, useLocale } from '@/constant';
 import Link from 'next/link';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { getListCountry, getListTypePort, getUserInfo } from './fetcher';
+import {
+  UserInfo,
+  getListCountry,
+  getListTypePort,
+  getUserInfo,
+} from './fetcher';
 import { useQuery } from '@tanstack/react-query';
 import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
 
@@ -127,6 +132,7 @@ export function AppLayout(props: Props) {
   const [classActiveDropdown, setClassActiveDropdown] = useState('');
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
+  const [informationUser, setInformationUser] = useState<UserInfo>();
   const locale = useLocale();
 
   useQuery({
@@ -151,6 +157,7 @@ export function AppLayout(props: Props) {
         appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
         router.replace(ROUTERS.LOGIN);
       }
+      setInformationUser(data.data);
     },
     onError: () => {
       // remove token and redirect to home
@@ -159,6 +166,7 @@ export function AppLayout(props: Props) {
     },
     retry: 0,
   });
+  console.log(informationUser);
 
   useEffect(() => {
     setLanguage(locale);
@@ -575,10 +583,16 @@ export function AppLayout(props: Props) {
                   className={AuthenLayout.userAvatar}
                 >
                   <Avatar
-                    style={{ display: 'block', marginRight: '10px' }}
-                    icon={<UserOutlined />}
-                  />
-                  Thanh Viên
+                    style={{
+                      verticalAlign: 'middle',
+                      marginRight: '10px',
+                      backgroundColor: informationUser?.colorAvatar,
+                    }}
+                    src={informationUser?.avatar}
+                  >
+                    {informationUser?.defaultAvatar || ''}
+                  </Avatar>
+                  {informationUser?.fullName || ''}
                 </div>
                 <div
                   className={`${AuthenLayout.userMenu} ${

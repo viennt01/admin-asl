@@ -304,6 +304,7 @@ const UnitType = () => {
     <>
       <CollapseCard
         title={'Unit'}
+        count={2}
         style={{ marginBottom: '24px' }}
         defaultActive={true}
       >
