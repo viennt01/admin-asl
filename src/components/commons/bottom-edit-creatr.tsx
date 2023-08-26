@@ -7,9 +7,11 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 
 interface Props {
-  checkRow: boolean;
-  isCheckEdit: boolean;
   create?: boolean;
+  manager?: boolean;
+  edit?: boolean;
+  checkRow: boolean;
+  isCheckPermissionEdit: boolean;
   loading: boolean;
   insertedByUser: string;
   dateInserted: string;
@@ -17,14 +19,15 @@ interface Props {
   dateUpdated: string;
   handleCheckEdit: (data: boolean) => void;
   handleSaveDraft?: () => void;
-  manager?: boolean;
   handleAJ: (status: string) => void;
 }
 
 export const BottomCreateEdit = ({
-  checkRow,
-  isCheckEdit,
   create,
+  manager,
+  edit,
+  checkRow,
+  isCheckPermissionEdit,
   loading,
   insertedByUser,
   dateInserted,
@@ -32,7 +35,6 @@ export const BottomCreateEdit = ({
   dateUpdated,
   handleCheckEdit,
   handleSaveDraft,
-  manager,
   handleAJ,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
@@ -47,90 +49,99 @@ export const BottomCreateEdit = ({
     >
       <Row gutter={12}>
         <Col span={12}>
-          {checkRow && isCheckEdit ? (
+          {create && (
             <>
               <Button onClick={() => router.back()}>
-                {translateCommon('close')}
+                {translateCommon('cancel')}
+              </Button>
+              <Button
+                style={{
+                  marginLeft: '12px',
+                  color: COLORS.WARNING,
+                  borderColor: COLORS.WARNING,
+                }}
+                onClick={handleSaveDraft}
+                loading={loading}
+              >
+                Save as draft
               </Button>
               <Button
                 type="primary"
-                onClick={() => handleCheckEdit(false)}
+                htmlType="submit"
                 style={{ marginLeft: '12px' }}
+                loading={loading}
               >
-                {translateCommon('edit')}
+                Sent request
               </Button>
             </>
-          ) : (
+          )}
+
+          {manager && (
             <>
-              {checkRow ? (
+              <Button onClick={() => router.back()}>
+                {translateCommon('cancel')}
+              </Button>
+              <Button
+                icon={<CloseOutlined />}
+                style={{
+                  marginLeft: '12px',
+                  color: COLORS.ERROR,
+                  borderColor: COLORS.ERROR,
+                }}
+                onClick={() => {
+                  return handleAJ(STATUS_ALL_LABELS.REJECT);
+                }}
+              >
+                Reject
+              </Button>
+              <Button
+                icon={<CheckOutlined />}
+                style={{
+                  marginLeft: '12px',
+                  color: COLORS.SUCCESS,
+                  borderColor: COLORS.SUCCESS,
+                }}
+                onClick={() => {
+                  return handleAJ(STATUS_ALL_LABELS.APPROVE);
+                }}
+              >
+                Approve
+              </Button>
+            </>
+          )}
+
+          {edit &&
+            (checkRow && isCheckPermissionEdit ? (
+              <>
+                <Button onClick={() => router.back()}>
+                  {translateCommon('close')}
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={() => handleCheckEdit(false)}
+                  style={{ marginLeft: '12px' }}
+                >
+                  {translateCommon('edit')}
+                </Button>
+              </>
+            ) : (
+              <>
                 <Button onClick={() => handleCheckEdit(true)}>
                   {translateCommon('cancel')}
                 </Button>
-              ) : (
-                <Button onClick={() => router.back()}>
-                  {translateCommon('cancel')}
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ marginLeft: '12px' }}
+                  loading={loading}
+                >
+                  {translateCommon('save')}
                 </Button>
-              )}
-              {manager ? (
-                <>
-                  <Button
-                    icon={<CloseOutlined />}
-                    style={{
-                      marginLeft: '12px',
-                      color: COLORS.ERROR,
-                      borderColor: COLORS.ERROR,
-                    }}
-                    onClick={() => {
-                      return handleAJ(STATUS_ALL_LABELS.REJECT);
-                    }}
-                  >
-                    Reject
-                  </Button>
-                  <Button
-                    icon={<CheckOutlined />}
-                    style={{
-                      marginLeft: '12px',
-                      color: COLORS.SUCCESS,
-                      borderColor: COLORS.SUCCESS,
-                    }}
-                    onClick={() => {
-                      return handleAJ(STATUS_ALL_LABELS.APPROVE);
-                    }}
-                  >
-                    Approve
-                  </Button>
-                </>
-              ) : (
-                <>
-                  {create && (
-                    <Button
-                      style={{
-                        marginLeft: '12px',
-                        color: COLORS.WARNING,
-                        borderColor: COLORS.WARNING,
-                      }}
-                      onClick={handleSaveDraft}
-                      loading={loading}
-                    >
-                      Save as draft
-                    </Button>
-                  )}
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    style={{ marginLeft: '12px' }}
-                    loading={loading}
-                  >
-                    {create
-                      ? translateCommon('create')
-                      : translateCommon('save')}
-                  </Button>
-                </>
-              )}
-            </>
-          )}
+              </>
+            ))}
         </Col>
-        {!create ? (
+
+        {!create && (
           <Col span={12}>
             <Descriptions column={2}>
               <Descriptions.Item label={translateCommon('creator')}>
@@ -147,8 +158,6 @@ export const BottomCreateEdit = ({
               </Descriptions.Item>
             </Descriptions>
           </Col>
-        ) : (
-          <></>
         )}
       </Row>
     </Card>

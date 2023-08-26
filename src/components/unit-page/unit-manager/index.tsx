@@ -33,10 +33,10 @@ const ManagerUnit = () => {
 
   return (
     <UnitForm
+      manager
       handleApproveAndReject={handleApproveAndReject}
       loadingSubmit={updateStatusUnitMutation.isLoading}
-      checkRow={false}
-      manager
+      checkRow={true}
     />
   );
 };

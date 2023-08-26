@@ -1,8 +1,6 @@
-import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
-import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { UnitTable, QueryInputDraft, SelectDratSearch } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
@@ -61,7 +59,6 @@ interface PortFormProps {
 }
 
 const DraftTable = ({ handleIdQuery }: PortFormProps) => {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const { translate: translateUnit } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
@@ -258,7 +255,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => (
         <div style={{ display: 'flex' }}>
           <Button
-            onClick={() => handleEditCustomer(value as string)}
+            onClick={() => handleIdQuery(value as string)}
             icon={<DownloadOutlined />}
             style={{ marginRight: '10px' }}
           />
@@ -284,10 +281,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   ];
 
   // Handle logic table
-  const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_MANAGER(id));
-  };
-
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     setPagination((state) => ({
       ...state,

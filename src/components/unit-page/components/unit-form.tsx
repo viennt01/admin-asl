@@ -16,12 +16,13 @@ const initialValue = {
 
 interface PortFormProps {
   create?: boolean;
-  handleSubmit?: (formValues: FormValues) => void;
+  manager?: boolean;
+  edit?: boolean;
+  handleSubmit?: (formValues: FormValues, id?: string) => void;
   handleSaveDraft?: (formValues: FormValues) => void;
   handleApproveAndReject?: (id: string, status: string) => void;
   loadingSubmit: boolean;
   checkRow: boolean;
-  manager?: boolean;
 }
 
 const { Title } = Typography;
@@ -29,11 +30,12 @@ const { TextArea } = Input;
 
 const UnitForm = ({
   create,
+  manager,
+  edit,
   handleSubmit,
   handleSaveDraft,
   loadingSubmit: loading,
   checkRow,
-  manager,
   handleApproveAndReject,
 }: PortFormProps) => {
   const { translate: translateUnit } = useI18n('unit');
@@ -41,7 +43,8 @@ const UnitForm = ({
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
-  const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
+  const [isCheckPermissionEdit, setCheckPermissionEdit] =
+    useState<boolean>(true);
 
   useEffect(() => {
     if (!id) return;
@@ -53,7 +56,11 @@ const UnitForm = ({
   };
 
   const onFinish = (formValues: FormValues) => {
-    handleSubmit && handleSubmit(formValues);
+    if (idQuery) {
+      handleSubmit && handleSubmit(formValues, idQuery);
+    } else {
+      handleSubmit && handleSubmit(formValues);
+    }
   };
 
   const onSaveDraft = () => {
@@ -79,7 +86,7 @@ const UnitForm = ({
   });
 
   const handleCheckEdit = (data: boolean) => {
-    setCheckEdit(data);
+    setCheckPermissionEdit(data);
   };
 
   const handleAJ = (status: string) => {
@@ -101,14 +108,14 @@ const UnitForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create
-                    ? translateUnit('information_add_unit')
-                    : translateUnit('information_edit_unit')}
+                  {create && translateUnit('information_add_unit')}
+                  {manager && 'Approval needed requests'}
+                  {edit && translateUnit('information_edit_unit')}
                 </Title>
               </Col>
             </Row>
           }
-          extra={<DraftTable handleIdQuery={handleIdQuery} />}
+          extra={create && <DraftTable handleIdQuery={handleIdQuery} />}
         >
           <Row gutter={16}>
             <Col lg={!create && !manager ? 12 : 24} span={12}>
@@ -129,7 +136,7 @@ const UnitForm = ({
                     'international_code_form.placeholder'
                   )}
                   size="large"
-                  disabled={checkRow && isCheckEdit}
+                  disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
@@ -152,7 +159,7 @@ const UnitForm = ({
                       text: key,
                       value: key,
                     }))}
-                    disabled={checkRow && isCheckEdit}
+                    disabled={checkRow && isCheckPermissionEdit}
                   />
                 </Form.Item>
               </Col>
@@ -177,7 +184,7 @@ const UnitForm = ({
                   size="large"
                   placeholder={translateUnit('description_vn_form.placeholder')}
                   allowClear
-                  disabled={checkRow && isCheckEdit}
+                  disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
@@ -199,7 +206,7 @@ const UnitForm = ({
                   size="large"
                   placeholder={translateUnit('description_en_form.placeholder')}
                   allowClear
-                  disabled={checkRow && isCheckEdit}
+                  disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
@@ -207,10 +214,11 @@ const UnitForm = ({
         </Card>
 
         <BottomCreateEdit
-          checkRow={checkRow}
-          isCheckEdit={isCheckEdit}
           create={create}
+          checkRow={checkRow}
+          edit={edit}
           loading={loading}
+          isCheckPermissionEdit={isCheckPermissionEdit}
           insertedByUser={unitDetailQuery.data?.data?.insertedByUser || ''}
           dateInserted={unitDetailQuery.data?.data?.dateInserted || ''}
           updatedByUser={unitDetailQuery.data?.data?.updatedByUser || ''}
