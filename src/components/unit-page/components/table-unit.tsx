@@ -69,7 +69,7 @@ const TableUnit = <T extends Record<string, any>>({
   const dataSourceUnknown = dataTable as unknown;
   return (
     <ProTable<T>
-      headerTitle={checkTableMaster ? headerTitle : ''}
+      headerTitle={headerTitle}
       className={style.table}
       dataSource={dataSourceUnknown as T[]}
       columns={columns}

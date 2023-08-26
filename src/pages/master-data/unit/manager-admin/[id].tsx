@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
+import ManagerUnit from '@/components/unit-page/unit-manager';
 
 function UnitManagerPage() {
   return (
@@ -14,7 +15,6 @@ function UnitManagerPage() {
 
 export default withAuthentication(UnitManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-import ManagerUnit from '@/components/request-for-approval-page/components/unit-type/unit-manager';
 export const getStaticProps = getStatic(['common', 'unit']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];

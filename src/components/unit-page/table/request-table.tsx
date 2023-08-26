@@ -1,5 +1,4 @@
 import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import CollapseCard from '@/components/commons/collapse-card';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
@@ -16,7 +15,7 @@ import { API_UNIT } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Col, PaginationProps, Row, Tag } from 'antd';
+import { Button, PaginationProps, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
@@ -55,7 +54,7 @@ const initalSelectSearch = {
 
 type DataIndex = keyof QueryInputParamType;
 
-const UnitType = () => {
+const RequestTable = () => {
   const router = useRouter();
   const { translate: translateUnit } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
@@ -302,31 +301,23 @@ const UnitType = () => {
 
   return (
     <>
-      <CollapseCard
-        title={'Unit'}
-        count={2}
-        style={{ marginBottom: '24px' }}
-        defaultActive={true}
-      >
-        <Row>
-          <Col span={24}>
-            {unitsQuerySearch.isLoading ? (
-              <SkeletonTable />
-            ) : (
-              <TableUnit
-                dataTable={dataTable}
-                columns={columns}
-                handlePaginationChange={handlePaginationChange}
-                handleOnDoubleClick={handleOnDoubleClick}
-                pagination={pagination}
-                checkTableMaster={false}
-              />
-            )}
-          </Col>
-        </Row>
-      </CollapseCard>
+      <div style={{ marginTop: -18 }}>
+        {unitsQuerySearch.isLoading ? (
+          <SkeletonTable />
+        ) : (
+          <TableUnit
+            headerTitle="List of approval-needed requests"
+            dataTable={dataTable}
+            columns={columns}
+            handlePaginationChange={handlePaginationChange}
+            handleOnDoubleClick={handleOnDoubleClick}
+            pagination={pagination}
+            checkTableMaster={false}
+          />
+        )}
+      </div>
     </>
   );
 };
 
-export default UnitType;
+export default RequestTable;
