@@ -172,7 +172,7 @@ const RequestTable = () => {
           />
           <Button
             onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.APPROVE)
+              handleApproveAndReject(value as string, STATUS_ALL_LABELS.ACTIVE)
             }
             icon={<CheckOutlined />}
             style={{

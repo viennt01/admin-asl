@@ -102,7 +102,7 @@ export const BottomCreateEdit = ({
                   borderColor: COLORS.SUCCESS,
                 }}
                 onClick={() => {
-                  return handleAJ(STATUS_ALL_LABELS.APPROVE);
+                  return handleAJ(STATUS_ALL_LABELS.ACTIVE);
                 }}
               >
                 Approve
