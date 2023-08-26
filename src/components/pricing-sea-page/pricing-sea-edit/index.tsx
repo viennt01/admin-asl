@@ -47,7 +47,7 @@ export default function EditPricingSea() {
   }, [router, form]);
 
   const onFinish = (formValues: FormValues) => {
-    console.log(formValues);
+    return formValues;
   };
 
   const data: readonly any[] | undefined = [];

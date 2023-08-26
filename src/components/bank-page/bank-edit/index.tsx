@@ -51,7 +51,7 @@ export default function EditBank() {
   }, [router, form]);
 
   const onFinish = (formValues: FormValues) => {
-    console.log(formValues);
+    return formValues;
   };
   const residences: CascaderProps<DataNodeType>['options'] = [
     {

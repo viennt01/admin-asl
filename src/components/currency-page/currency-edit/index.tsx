@@ -39,7 +39,7 @@ export default function EditCurrency() {
   }, [router, form]);
 
   const onFinish = (formValues: FormValues) => {
-    console.log(formValues);
+    return formValues;
   };
 
   return (

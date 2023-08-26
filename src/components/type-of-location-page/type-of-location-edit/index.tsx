@@ -54,7 +54,7 @@ export default function EditTypeOfLocation() {
   }, [router, form]);
 
   const onFinish = (formValues: FormValues) => {
-    console.log(formValues);
+    return formValues;
   };
   return (
     <div style={{ padding: '24px 0' }}>

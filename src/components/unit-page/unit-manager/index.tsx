@@ -3,8 +3,9 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { UpdateStatusUnit, updateStatus } from '../table/fetcher';
 import UnitForm from '../components/unit-form';
+import { UpdateStatusUnit } from '../interface';
+import { updateStatus } from '../fetcher';
 
 const ManagerUnit = () => {
   const updateStatusUnitMutation = useMutation({

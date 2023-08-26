@@ -8,7 +8,7 @@ import { FormValues, STATUS_MATER_LABELS } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
 import { getUnitDetail } from '../fetcher';
-import DraftTable from './draft-table';
+import DraftTable from '../table/draft-table';
 
 const initialValue = {
   description: '',
@@ -42,7 +42,6 @@ const UnitForm = ({
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckEdit, setCheckEdit] = useState<boolean>(true);
-  console.log(manager);
 
   useEffect(() => {
     if (!id) return;

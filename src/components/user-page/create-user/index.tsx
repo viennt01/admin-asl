@@ -58,8 +58,7 @@ export default function CreateUser() {
       submitTimeout={2000}
       onFinish={async (values) => {
         await waitTime(2000);
-        message.success('提交成功');
-        console.log(values);
+        message.success(`${values}`);
         return true;
       }}
     >

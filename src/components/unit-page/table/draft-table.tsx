@@ -12,7 +12,7 @@ import {
   DownloadOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import TableUnit from './table-unit';
+import TableUnit from '../components/table-unit';
 import {
   DEFAULT_PAGINATION_5,
   PaginationOfAntd,

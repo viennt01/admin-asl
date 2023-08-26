@@ -5,7 +5,7 @@ import COLORS from '@/constant/color';
 
 export default function CalculationUnitPage() {
   const onChange = (key: string) => {
-    console.log(key);
+    return key;
   };
 
   return (

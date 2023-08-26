@@ -166,7 +166,6 @@ export function AppLayout(props: Props) {
     },
     retry: 0,
   });
-  console.log(informationUser);
 
   useEffect(() => {
     setLanguage(locale);

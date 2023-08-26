@@ -353,9 +353,6 @@ const AppSider = ({ collapsed }: Props) => {
       onOk() {
         logoutUser.mutate(data);
       },
-      onCancel() {
-        console.log('Cancel');
-      },
     });
   };
 
