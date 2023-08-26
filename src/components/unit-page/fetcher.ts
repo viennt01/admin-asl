@@ -8,6 +8,8 @@ import {
   UnitDetailDataBody,
   UnitDetailType,
   UnitEdit,
+  UpdateStatusUnit,
+  RequestUnitTableRequest,
 } from './interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 
@@ -49,4 +51,18 @@ export const getDartTable = (data: RequestUnitTableDraft) => {
   return post<RequestUnitTableDraft, ResponseWithPayload<UnitsRequire>>({
     data,
   })(API_UNIT.GET_UNIT_DRAFT);
+};
+
+//----------------------------------------------------------------
+
+export const updateStatus = (data: UpdateStatusUnit) => {
+  return post<UpdateStatusUnit, ResponseWithPayload<UpdateStatusUnit>>({
+    data,
+  })(API_UNIT.UPDATE_STATUS_UNIT);
+};
+
+export const getTable = (data: RequestUnitTableRequest) => {
+  return post<RequestUnitTableRequest, ResponseWithPayload<UnitsRequire>>({
+    data,
+  })(API_UNIT.GET_UNIT_REQUEST);
 };

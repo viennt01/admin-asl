@@ -9,6 +9,7 @@ import {
   UnitTable,
   QueryInputParamType,
   SelectSearch,
+  UpdateStatusUnit,
 } from '@/components/unit-page/interface';
 import { ROUTERS } from '@/constant/router';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
@@ -23,9 +24,9 @@ import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
-import { UpdateStatusUnit, getTable, updateStatus } from './fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import { getTable, updateStatus } from '../fetcher';
 
 const initalValueQueryInputParams = {
   searchAll: '',
@@ -157,6 +158,40 @@ const RequestTable = () => {
       },
     },
     {
+      key: 'operation',
+      width: 50,
+      align: 'center',
+      dataIndex: 'key',
+      fixed: 'left',
+      render: (value) => (
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => handleEditCustomer(value as string)}
+            icon={<EyeOutlined />}
+            style={{ marginRight: '10px' }}
+          />
+          <Button
+            onClick={() =>
+              handleApproveAndReject(value as string, STATUS_ALL_LABELS.APPROVE)
+            }
+            icon={<CheckOutlined />}
+            style={{
+              marginRight: '10px',
+              color: COLORS.SUCCESS,
+              borderColor: COLORS.SUCCESS,
+            }}
+          />
+          <Button
+            onClick={() =>
+              handleApproveAndReject(value as string, STATUS_ALL_LABELS.REJECT)
+            }
+            icon={<CloseOutlined />}
+            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
+          />
+        </div>
+      ),
+    },
+    {
       title: translateUnit('international_code'),
       dataIndex: 'internationalCode',
       key: 'internationalCode',
@@ -221,40 +256,6 @@ const RequestTable = () => {
         >
           {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
         </Tag>
-      ),
-    },
-    {
-      key: 'operation',
-      width: 50,
-      align: 'center',
-      dataIndex: 'key',
-      fixed: 'right',
-      render: (value) => (
-        <div style={{ display: 'flex' }}>
-          <Button
-            onClick={() => handleEditCustomer(value as string)}
-            icon={<EyeOutlined />}
-            style={{ marginRight: '10px' }}
-          />
-          <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.APPROVE)
-            }
-            icon={<CheckOutlined />}
-            style={{
-              marginRight: '10px',
-              color: COLORS.SUCCESS,
-              borderColor: COLORS.SUCCESS,
-            }}
-          />
-          <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.REJECT)
-            }
-            icon={<CloseOutlined />}
-            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
-          />
-        </div>
       ),
     },
   ];

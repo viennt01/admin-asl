@@ -19,7 +19,6 @@ import {
   GlobalOutlined,
   EnvironmentOutlined,
   FolderOpenOutlined,
-  FileDoneOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image, Badge } from 'antd';
@@ -52,7 +51,6 @@ function getItem(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
-  // disabled?: boolean,
   children?: MenuItem[]
 ): MenuItem {
   return {
@@ -60,7 +58,6 @@ function getItem(
     icon,
     children,
     label,
-    // disabled,
   } as MenuItem;
 }
 
@@ -72,7 +69,6 @@ const AppSider = ({ collapsed }: Props) => {
   const [deviceName, setDeviceName] = useState<string>('');
   const { translate: translateCommon } = useI18n('common');
   const refHome = useRef(null);
-  const refRequestForApproval = useRef(null);
   const refQuotation = useRef(null);
   const refSeaQuotation = useRef(null);
   const refAirQuotation = useRef(null);
@@ -155,31 +151,6 @@ const AppSider = ({ collapsed }: Props) => {
     ),
 
     getItem(
-      <Badge
-        count={2}
-        style={{
-          marginRight: '-12px',
-          color: COLORS.WHITE,
-        }}
-      >
-        <div
-          style={{
-            color: collapsed ? '#ffff' : '#000',
-          }}
-        >{`${translateCommon('request_for_approval')}`}</div>
-      </Badge>,
-      ROUTERS.REQUEST_FOR_APPROVAL,
-      <Badge
-        dot={collapsed}
-        style={{
-          marginTop: '8px',
-        }}
-      >
-        <FileDoneOutlined ref={refRequestForApproval} />
-      </Badge>
-    ),
-
-    getItem(
       `${translateCommon('quotation')}`,
       '1',
       <ContainerOutlined ref={refQuotation} />,
@@ -255,7 +226,14 @@ const AppSider = ({ collapsed }: Props) => {
     getItem(
       `${translateCommon('master_data')}`,
       '5',
-      <AppstoreOutlined ref={refMasterData} />,
+      <Badge
+        dot={collapsed}
+        style={{
+          marginTop: '10px',
+        }}
+      >
+        <AppstoreOutlined ref={refMasterData} />
+      </Badge>,
       [
         getItem(
           `${translateCommon('location_catalog')}`,
@@ -305,7 +283,19 @@ const AppSider = ({ collapsed }: Props) => {
         ),
 
         getItem(
-          `${translateCommon('unit')}`,
+          <Badge
+            count={2}
+            style={{
+              marginRight: '-12px',
+              color: COLORS.WHITE,
+            }}
+          >
+            <div
+              style={{
+                color: collapsed ? '#ffff' : '#000',
+              }}
+            >{`${translateCommon('unit')}`}</div>
+          </Badge>,
           ROUTERS.UNIT,
           <CalculatorOutlined ref={refUnit} />
         ),

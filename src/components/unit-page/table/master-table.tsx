@@ -52,34 +52,34 @@ const initalValueQuerySelectParams = {
 };
 
 const initalValueDisplayColumn = {
-  index: {
+  operation: {
     order: 0,
     fixed: 'left' as const,
   },
-  internationalCode: {
+  index: {
     order: 1,
+    fixed: 'left' as const,
   },
-  description: {
+  internationalCode: {
     order: 2,
   },
-  statusUnit: {
+  description: {
     order: 3,
   },
-  dateInserted: {
+  statusUnit: {
     order: 4,
   },
-  insertedByUser: {
+  dateInserted: {
     order: 5,
   },
-  dateUpdated: {
+  insertedByUser: {
     order: 6,
   },
-  updatedByUser: {
+  dateUpdated: {
     order: 7,
   },
-  operation: {
+  updatedByUser: {
     order: 8,
-    fixed: 'right' as const,
   },
 };
 

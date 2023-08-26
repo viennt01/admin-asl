@@ -9,5 +9,14 @@
     td.ant-table-cell:hover{
       cursor: pointer;
     }
+    .ant-pro-table-column-setting-overlay {
+      width: 240px;
+      .ant-popover-inner-content{
+        width: 100%;
+        .ant-pro-table-column-setting-list-item-title {
+          max-width: 200px
+        }
+      }
+    }
   }
 }

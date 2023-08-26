@@ -1,5 +1,5 @@
+import { Pagination } from './../commons/table-commons';
 import COLORS from '@/constant/color';
-import { Pagination } from '../commons/table-commons';
 
 export const STATUS_MASTER_COLORS = {
   ACTIVE: COLORS.STATUS_CODE.ACTIVE,
@@ -103,3 +103,18 @@ export type SelectDratSearch = {
     value: string;
   };
 };
+
+//----------------------------------------------------------------
+
+export interface UpdateStatusUnit {
+  id: string;
+  status: string;
+}
+
+export interface QueryInputRequest {
+  internationalCode: string;
+  description: string;
+}
+export interface RequestUnitTableRequest extends QueryInputRequest {
+  paginateRequest: Pagination;
+}
