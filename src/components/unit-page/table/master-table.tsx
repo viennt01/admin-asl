@@ -18,7 +18,7 @@ import {
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
-
+import style from '../components/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -290,7 +290,7 @@ export default function MasterDataTable() {
   // Handle data show table
   const columns: ProColumns<UnitTable>[] = [
     {
-      title: translateUnit('code'),
+      title: <div className={style.title}>{translateUnit('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -300,11 +300,13 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateUnit('international_code'),
+      title: (
+        <div className={style.title}>{translateUnit('international_code')}</div>
+      ),
       dataIndex: 'internationalCode',
       key: 'internationalCode',
       width: 150,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -317,11 +319,11 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: translateUnit('description'),
+      title: <div className={style.title}>{translateUnit('description')}</div>,
       dataIndex: 'description',
       key: 'description',
       width: 250,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -334,7 +336,7 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: translateUnit('status'),
+      title: <div className={style.title}>{translateUnit('status')}</div>,
       width: 120,
       dataIndex: 'statusUnit',
       key: 'statusUnit',
@@ -371,22 +373,26 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translateCommon('date_created'),
+      title: (
+        <div className={style.title}>{translateCommon('date_created')}</div>
+      ),
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
-      align: 'center',
+      align: 'right',
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateCommon('creator'),
+      title: <div className={style.title}>{translateCommon('creator')}</div>,
       width: 200,
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
       align: 'center',
     },
     {
-      title: translateCommon('date_inserted'),
+      title: (
+        <div className={style.title}>{translateCommon('date_inserted')}</div>
+      ),
       width: 150,
       dataIndex: 'dateUpdated',
       key: 'dateUpdated',
@@ -394,7 +400,7 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateCommon('inserter'),
+      title: <div className={style.title}>{translateCommon('inserter')}</div>,
       width: 200,
       dataIndex: 'updatedByUser',
       key: 'updatedByUser',

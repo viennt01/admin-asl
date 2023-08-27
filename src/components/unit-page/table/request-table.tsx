@@ -27,6 +27,7 @@ import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
+import style from '../components/index.module.scss';
 
 const initalValueQueryInputParams = {
   searchAll: '',
@@ -147,7 +148,7 @@ const RequestTable = () => {
   // Handle data show table
   const columns: ProColumns<UnitTable>[] = [
     {
-      title: translateUnit('code'),
+      title: <div className={style.title}>{translateUnit('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -192,7 +193,9 @@ const RequestTable = () => {
       ),
     },
     {
-      title: translateUnit('international_code'),
+      title: (
+        <div className={style.title}>{translateUnit('international_code')}</div>
+      ),
       dataIndex: 'internationalCode',
       key: 'internationalCode',
       width: 150,
@@ -209,7 +212,7 @@ const RequestTable = () => {
       }),
     },
     {
-      title: translateUnit('description'),
+      title: <div className={style.title}>{translateUnit('description')}</div>,
       dataIndex: 'description',
       key: 'description',
       width: 250,
@@ -226,7 +229,9 @@ const RequestTable = () => {
       }),
     },
     {
-      title: translateCommon('date_created'),
+      title: (
+        <div className={style.title}>{translateCommon('date_created')}</div>
+      ),
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
@@ -234,14 +239,14 @@ const RequestTable = () => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateCommon('creator'),
+      title: <div className={style.title}>{translateCommon('creator')}</div>,
       width: 200,
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
       align: 'center',
     },
     {
-      title: translateUnit('status'),
+      title: <div className={style.title}>{translateUnit('status')}</div>,
       width: 120,
       dataIndex: 'statusUnit',
       key: 'statusUnit',
