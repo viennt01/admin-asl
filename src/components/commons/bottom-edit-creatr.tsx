@@ -1,9 +1,13 @@
 import COLORS from '@/constant/color';
 import useI18n from '@/i18n/useI18N';
 import { formatDate } from '@/utils/format';
-import { Button, Card, Col, Descriptions, Row } from 'antd';
+import { Button, Card, Col, Descriptions, Modal, Row } from 'antd';
 import router from 'next/router';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  CloseOutlined,
+  ExclamationCircleFilled,
+} from '@ant-design/icons';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 
 interface Props {
@@ -20,8 +24,10 @@ interface Props {
   handleCheckEdit: (data: boolean) => void;
   handleSaveDraft?: () => void;
   handleAJ: (status: string) => void;
+  checkQuery?: boolean;
+  useDraft?: boolean;
 }
-
+const { confirm } = Modal;
 export const BottomCreateEdit = ({
   create,
   manager,
@@ -36,8 +42,30 @@ export const BottomCreateEdit = ({
   handleCheckEdit,
   handleSaveDraft,
   handleAJ,
+  checkQuery,
+  useDraft,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
+  const handleCancel = () => {
+    const showPropsConfirmDelete = () => {
+      confirm({
+        icon: <ExclamationCircleFilled />,
+        title: translateCommon('modal_close.title'),
+        okText: translateCommon('modal_close.button_ok'),
+        cancelText: translateCommon('modal_close.button_cancel'),
+        okType: 'danger',
+        onOk() {
+          router.back();
+        },
+      });
+    };
+
+    return (
+      <Button onClick={() => showPropsConfirmDelete()}>
+        {translateCommon('button_bottom_form.close')}
+      </Button>
+    );
+  };
 
   return (
     <Card
@@ -51,19 +79,18 @@ export const BottomCreateEdit = ({
         <Col span={12}>
           {create && (
             <>
-              <Button onClick={() => router.back()}>
-                {translateCommon('cancel')}
-              </Button>
+              {handleCancel()}
               <Button
                 style={{
                   marginLeft: '12px',
                   color: COLORS.WARNING,
                   borderColor: COLORS.WARNING,
+                  display: useDraft ? 'initial' : 'none',
                 }}
                 onClick={handleSaveDraft}
                 loading={loading}
               >
-                Save as draft
+                {translateCommon('button_bottom_form.save_as_draft')}
               </Button>
               <Button
                 type="primary"
@@ -71,16 +98,16 @@ export const BottomCreateEdit = ({
                 style={{ marginLeft: '12px' }}
                 loading={loading}
               >
-                Sent request
+                {checkQuery
+                  ? translateCommon('button_bottom_form.send_request')
+                  : translateCommon('button_bottom_form.create_request')}
               </Button>
             </>
           )}
 
           {manager && (
             <>
-              <Button onClick={() => router.back()}>
-                {translateCommon('cancel')}
-              </Button>
+              {handleCancel()}
               <Button
                 icon={<CloseOutlined />}
                 style={{
@@ -92,7 +119,7 @@ export const BottomCreateEdit = ({
                   return handleAJ(STATUS_ALL_LABELS.REJECT);
                 }}
               >
-                Reject
+                {translateCommon('button_bottom_form.reject')}
               </Button>
               <Button
                 icon={<CheckOutlined />}
@@ -105,7 +132,7 @@ export const BottomCreateEdit = ({
                   return handleAJ(STATUS_ALL_LABELS.ACTIVE);
                 }}
               >
-                Approve
+                {translateCommon('button_bottom_form.approval')}
               </Button>
             </>
           )}
@@ -113,21 +140,19 @@ export const BottomCreateEdit = ({
           {edit &&
             (checkRow && isCheckPermissionEdit ? (
               <>
-                <Button onClick={() => router.back()}>
-                  {translateCommon('close')}
-                </Button>
+                {handleCancel()}
                 <Button
                   type="primary"
                   onClick={() => handleCheckEdit(false)}
                   style={{ marginLeft: '12px' }}
                 >
-                  {translateCommon('edit')}
+                  {translateCommon('button_bottom_form.edit')}
                 </Button>
               </>
             ) : (
               <>
                 <Button onClick={() => handleCheckEdit(true)}>
-                  {translateCommon('cancel')}
+                  {translateCommon('button_bottom_form.cancel')}
                 </Button>
                 <Button
                   type="primary"
@@ -135,7 +160,7 @@ export const BottomCreateEdit = ({
                   style={{ marginLeft: '12px' }}
                   loading={loading}
                 >
-                  {translateCommon('save')}
+                  {translateCommon('button_bottom_form.save')}
                 </Button>
               </>
             ))}

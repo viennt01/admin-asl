@@ -36,11 +36,6 @@
     "button_delete": "Xóa",
     "detail": "Chi tiết",
     "error": "Lỗi",
-    "create": "Tạo",
-    "edit": "Sửa",
-    "save": "Lưu",
-    "close": "Đóng",
-    "cancel": "Huỷ",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
     "date_inserted": "Ngày cập nhật",
@@ -52,5 +47,23 @@
         "title": "Bạn có chắc chắn muốn xóa?",
         "button_ok": "Có",
         "button_cancel": "Không"
+    },
+
+    "modal_close": {
+        "title": "Bạn có chắc muốn thoat khỏi màn hình này không?",
+        "button_ok": "Có",
+        "button_cancel": "Không"
+    },
+
+    "button_bottom_form": {
+        "close": "Đóng",
+        "save": "Lưu",
+        "save_as_draft": "Lưu bản nháp",
+        "edit": "Sửa",
+        "create_request": "Tạo và gửi yêu cầu",
+        "send_request": "Gửi yêu cầu",
+        "cancel": "Huỷ",
+        "approval": "Chấp nhận",
+        "reject": "Từ chối"
     }
 }

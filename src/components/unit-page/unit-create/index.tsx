@@ -82,6 +82,7 @@ const CreateUnit = () => {
       handleSaveDraft={handleSaveDraft}
       loadingSubmit={createPortMutation.isLoading}
       checkRow={false}
+      useDraft
     />
   );
 };

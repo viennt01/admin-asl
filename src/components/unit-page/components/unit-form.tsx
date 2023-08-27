@@ -23,6 +23,7 @@ interface PortFormProps {
   handleApproveAndReject?: (id: string, status: string) => void;
   loadingSubmit: boolean;
   checkRow: boolean;
+  useDraft?: boolean;
 }
 
 const { Title } = Typography;
@@ -37,6 +38,7 @@ const UnitForm = ({
   loadingSubmit: loading,
   checkRow,
   handleApproveAndReject,
+  useDraft,
 }: PortFormProps) => {
   const { translate: translateUnit } = useI18n('unit');
   const router = useRouter();
@@ -115,7 +117,9 @@ const UnitForm = ({
               </Col>
             </Row>
           }
-          extra={create && <DraftTable handleIdQuery={handleIdQuery} />}
+          extra={
+            create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />
+          }
         >
           <Row gutter={16}>
             <Col lg={!create && !manager ? 12 : 24} span={12}>
@@ -227,6 +231,8 @@ const UnitForm = ({
           handleSaveDraft={onSaveDraft}
           manager={manager}
           handleAJ={handleAJ}
+          checkQuery={idQuery ? true : false}
+          useDraft={useDraft}
         />
       </Form>
     </div>

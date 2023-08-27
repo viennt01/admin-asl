@@ -36,11 +36,6 @@
     "button_delete": "Delete",
     "detail": "Detail",
     "error": "Error",
-    "create": "Create",
-    "edit": "Edit",
-    "save": "Save",
-    "close": "Close",
-    "cancel": "Cancel",
     "date_created": "Date created",
     "creator": "Creator",
     "date_inserted": "Date updated",
@@ -52,5 +47,23 @@
         "title": "Are you sure you want to delete?",
         "button_ok": "Yes",
         "button_cancel": "No"
+    },
+
+    "modal_close": {
+        "title": "Are you sure you want to exit this screen?",
+        "button_ok": "Yes",
+        "button_cancel": "No"
+    },
+
+    "button_bottom_form": {
+        "close": "Close",
+        "save": "Save",
+        "save_as_draft": "Save as draft",
+        "edit": "Edit",
+        "create_request": "Create and Request",
+        "send_request": "Send request",
+        "cancel": "Cancel",
+        "approval": "Chấp nhận",
+        "reject": "Từ chối"
     }
 }
