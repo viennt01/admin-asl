@@ -18,7 +18,7 @@ import {
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
-import style from '../components/index.module.scss';
+import style from './index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -34,10 +34,10 @@ import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
-} from '@/components/commons/table-commons';
+} from '@/components/commons/table/table-deafault';
 import { deleteUnit, getLocationsSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import TableUnit from '../components/table-unit';
+import TableUnit from '../../commons/table/table-unit';
 
 const { confirm } = Modal;
 

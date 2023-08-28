@@ -1,7 +1,7 @@
 import { ResponseWithPayload, get, post } from '@/fetcherAxios';
 import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
 import { CountriesType, TypePortData } from './interface';
-import { Pagination } from '@/components/commons/table-commons';
+import { Pagination } from '@/components/commons/table/table-deafault';
 
 export interface UserInfo {
   idUser: string;

@@ -1,5 +1,5 @@
 import COLORS from '@/constant/color';
-import { Pagination } from '../commons/table-commons';
+import { Pagination } from '../commons/table/table-deafault';
 
 export const STATUS_COLORS = {
   1: COLORS.STATUS_CODE.ACTIVE,

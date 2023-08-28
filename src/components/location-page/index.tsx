@@ -38,7 +38,7 @@ import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
-} from '../commons/table-commons';
+} from '../commons/table/table-deafault';
 import { API_MASTER_DATA, API_LOCATION } from '@/fetcherAxios/endpoint';
 import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { errorToast, successToast } from '@/hook/toast';

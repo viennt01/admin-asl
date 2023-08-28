@@ -14,7 +14,7 @@ import { Button, Input, TablePaginationConfig } from 'antd';
 import style from './index.module.scss';
 import useI18n from '@/i18n/useI18N';
 import { ChangeEvent, MouseEvent } from 'react';
-import { PaginationOfAntd } from '@/components/commons/table-commons';
+import { PaginationOfAntd } from '@/components/commons/table/table-deafault';
 import { FilterValue } from 'antd/lib/table/interface';
 
 interface Props<T extends Record<string, any>> {

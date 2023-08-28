@@ -10,11 +10,11 @@ import {
   DownloadOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import TableUnit from '../components/table-unit';
+import TableUnit from '../../commons/table/table-unit';
 import {
   DEFAULT_PAGINATION_5,
   PaginationOfAntd,
-} from '@/components/commons/table-commons';
+} from '@/components/commons/table/table-deafault';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ProColumns } from '@ant-design/pro-components';
@@ -23,7 +23,7 @@ import { formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import style from '../components/index.module.scss';
+import style from './index.module.scss';
 
 const initalValueQueryInputParams = {
   internationalCode: '',

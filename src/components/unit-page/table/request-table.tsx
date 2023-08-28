@@ -2,8 +2,8 @@ import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
-} from '@/components/commons/table-commons';
-import TableUnit from '@/components/unit-page/components/table-unit';
+} from '@/components/commons/table/table-deafault';
+import TableUnit from '@/components/commons/table/table-unit';
 import {
   UnitTable,
   QueryInputParamType,
@@ -26,7 +26,7 @@ import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
-import style from '../components/index.module.scss';
+import style from './index.module.scss';
 
 const initalValueQueryInputParams = {
   searchAll: '',
