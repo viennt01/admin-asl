@@ -71,16 +71,10 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const [dataTable, setDataTable] = useState<UnitTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectDratSearch>(initalSelectSearch);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
 
   // Handle data
   useQuery({
-    queryKey: [
-      API_UNIT.GET_UNIT_SEARCH,
-      pagination,
-      queryInputParams,
-      selectedRowKeys,
-    ],
+    queryKey: [API_UNIT.GET_UNIT_SEARCH, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -118,21 +112,14 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     },
   });
 
-  useMutation({
-    mutationFn: () => deleteUnit(selectedRowKeys),
+  const deleteItemDraftMutation = useMutation({
+    mutationFn: (id: string[]) => deleteUnit(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [
-            API_UNIT.GET_UNIT_SEARCH,
-            pagination,
-            queryInputParams,
-            selectedRowKeys,
-          ],
-          exact: true,
+          queryKey: [API_UNIT.GET_UNIT_SEARCH],
         });
-        setSelectedRowKeys([]);
       } else {
         errorToast(data.message);
       }
@@ -269,7 +256,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             okText={translateCommon('modal_delete.button_ok')}
             cancelText={translateCommon('modal_delete.button_cancel')}
             onConfirm={() => {
-              setSelectedRowKeys([value as string]);
+              deleteItemDraftMutation.mutate([value as string]);
             }}
           >
             <Button

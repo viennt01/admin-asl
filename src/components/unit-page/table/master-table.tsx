@@ -192,7 +192,6 @@ export default function MasterDataTable() {
             queryInputParams,
             querySelectParams,
           ],
-          exact: true,
         });
         setSelectedRowKeys([]);
       } else {

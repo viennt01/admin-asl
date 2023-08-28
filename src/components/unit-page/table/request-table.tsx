@@ -2,7 +2,6 @@ import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
-  SkeletonTable,
 } from '@/components/commons/table-commons';
 import TableUnit from '@/components/unit-page/components/table-unit';
 import {
@@ -15,7 +14,7 @@ import { ROUTERS } from '@/constant/router';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
@@ -58,6 +57,7 @@ type DataIndex = keyof QueryInputParamType;
 
 const RequestTable = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { translate: translateUnit } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
@@ -69,8 +69,8 @@ const RequestTable = () => {
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectSearch>(initalSelectSearch);
   // Handle data
-  const unitsQuerySearch = useQuery({
-    queryKey: [API_UNIT.GET_UNIT_SEARCH, pagination, queryInputParams],
+  useQuery({
+    queryKey: [API_UNIT.GET_UNIT_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
         ...queryInputParams,
@@ -278,7 +278,14 @@ const RequestTable = () => {
     updateStatusUnitMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
-          ? (successToast(data.message), unitsQuerySearch.refetch())
+          ? (successToast(data.message),
+            queryClient.invalidateQueries({
+              queryKey: [
+                API_UNIT.GET_UNIT_REQUEST,
+                // pagination,
+                // queryInputParams,
+              ],
+            }))
           : errorToast(data.message);
       },
       onError() {
@@ -308,19 +315,15 @@ const RequestTable = () => {
   return (
     <>
       <div style={{ marginTop: -18 }}>
-        {unitsQuerySearch.isLoading ? (
-          <SkeletonTable />
-        ) : (
-          <TableUnit
-            headerTitle="List of approval-needed requests"
-            dataTable={dataTable}
-            columns={columns}
-            handlePaginationChange={handlePaginationChange}
-            handleOnDoubleClick={handleOnDoubleClick}
-            pagination={pagination}
-            checkTableMaster={false}
-          />
-        )}
+        <TableUnit
+          headerTitle="List of approval-needed requests"
+          dataTable={dataTable}
+          columns={columns}
+          handlePaginationChange={handlePaginationChange}
+          handleOnDoubleClick={handleOnDoubleClick}
+          pagination={pagination}
+          checkTableMaster={false}
+        />
       </div>
     </>
   );

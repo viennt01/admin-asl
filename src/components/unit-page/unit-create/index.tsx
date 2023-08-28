@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTERS } from '@/constant/router';
 import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
@@ -7,8 +7,11 @@ import UnitForm from '../components/unit-form';
 import { FormValues, UnitCreate, UnitEdit } from '../interface';
 import { createUnit, editUnit } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
+import { API_UNIT } from '@/fetcherAxios/endpoint';
 
 const CreateUnit = () => {
+  const queryClient = useQueryClient();
+
   const createPortMutation = useMutation({
     mutationFn: (body: UnitCreate) => {
       return createUnit(body);
@@ -21,10 +24,10 @@ const CreateUnit = () => {
     },
   });
 
-  const handleSubmit = (formValues: FormValues, idQuery?: string) => {
-    if (idQuery) {
+  const handleSubmit = (formValues: FormValues, id?: string) => {
+    if (id) {
       const _requestData: UnitEdit = {
-        unitID: idQuery,
+        unitID: id,
         internationalCode: formValues.internationalCode,
         descriptionVN: formValues.descriptionVN,
         descriptionEN: formValues.descriptionEN,
@@ -32,7 +35,9 @@ const CreateUnit = () => {
       };
       updateUnitMutation.mutate(_requestData, {
         onSuccess: (data) => {
-          data.status ? successToast(data.message) : errorToast(data.message);
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            : errorToast(data.message);
         },
         onError() {
           errorToast(API_MESSAGE.ERROR);
@@ -58,21 +63,49 @@ const CreateUnit = () => {
     }
   };
 
-  const handleSaveDraft = (formValues: FormValues) => {
-    const _requestData: UnitCreate = {
-      internationalCode: formValues.internationalCode || '',
-      descriptionVN: formValues.descriptionVN || '',
-      descriptionEN: formValues.descriptionEN || '',
-      statusUnit: STATUS_ALL_LABELS.DRAFT,
-    };
-    createPortMutation.mutate(_requestData, {
-      onSuccess: (data) => {
-        data.status ? successToast(data.message) : errorToast(data.message);
-      },
-      onError() {
-        errorToast(API_MESSAGE.ERROR);
-      },
-    });
+  const handleSaveDraft = (formValues: FormValues, id?: string) => {
+    if (id) {
+      const _requestData: UnitEdit = {
+        unitID: id,
+        internationalCode: formValues.internationalCode,
+        descriptionVN: formValues.descriptionVN,
+        descriptionEN: formValues.descriptionEN,
+        statusUnit: STATUS_ALL_LABELS.DRAFT,
+      };
+      updateUnitMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_UNIT.GET_UNIT_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      const _requestData: UnitCreate = {
+        internationalCode: formValues.internationalCode || '',
+        descriptionVN: formValues.descriptionVN || '',
+        descriptionEN: formValues.descriptionEN || '',
+        statusUnit: STATUS_ALL_LABELS.DRAFT,
+      };
+      createPortMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_UNIT.GET_UNIT_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
   };
 
   return (

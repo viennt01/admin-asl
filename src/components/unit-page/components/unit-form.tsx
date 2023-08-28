@@ -19,7 +19,7 @@ interface PortFormProps {
   manager?: boolean;
   edit?: boolean;
   handleSubmit?: (formValues: FormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: FormValues) => void;
+  handleSaveDraft?: (formValues: FormValues, id?: string) => void;
   handleApproveAndReject?: (id: string, status: string) => void;
   loadingSubmit: boolean;
   checkRow: boolean;
@@ -66,7 +66,11 @@ const UnitForm = ({
   };
 
   const onSaveDraft = () => {
-    handleSaveDraft && handleSaveDraft(form.getFieldsValue());
+    if (idQuery) {
+      handleSaveDraft && handleSaveDraft(form.getFieldsValue(), idQuery);
+    } else {
+      handleSaveDraft && handleSaveDraft(form.getFieldsValue());
+    }
   };
 
   const unitDetailQuery = useQuery({
