@@ -74,7 +74,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_UNIT_SEARCH, pagination, queryInputParams],
+    queryKey: [API_UNIT.GET_SEARCH, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -118,7 +118,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_UNIT.GET_UNIT_SEARCH],
+          queryKey: [API_UNIT.GET_SEARCH],
         });
       } else {
         errorToast(data.message);

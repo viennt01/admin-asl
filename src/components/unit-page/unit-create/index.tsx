@@ -77,7 +77,7 @@ const CreateUnit = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_UNIT.GET_UNIT_SEARCH],
+                queryKey: [API_UNIT.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -97,7 +97,7 @@ const CreateUnit = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_UNIT.GET_UNIT_SEARCH],
+                queryKey: [API_UNIT.GET_SEARCH],
               }))
             : errorToast(data.message);
         },

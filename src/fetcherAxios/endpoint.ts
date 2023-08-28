@@ -18,14 +18,14 @@ export const API_LOCATION = {
 };
 
 export const API_UNIT = {
-  GET_UNIT_SEARCH: '/search-unit',
-  GET_UNIT_DETAIL: '/get-unit',
-  CREATE_UNIT: '/add-unit',
-  EDIT_UNIT: '/update-unit',
-  DELETE_UNIT: '/delete-unit',
-  UPDATE_STATUS_UNIT: '/update-status-unit',
-  GET_UNIT_DRAFT: '/get-unit-with-status-and-id-User',
-  GET_UNIT_REQUEST: '/get-unit-with-status-request',
+  GET_SEARCH: '/search-unit',
+  GET_DETAIL: '/get-unit',
+  CREATE: '/add-unit',
+  EDIT: '/update-unit',
+  DELETE: '/delete-unit',
+  UPDATE_STATUS: '/update-status-unit',
+  GET_DRAFT: '/get-unit-with-status-and-id-User',
+  GET_REQUEST: '/get-unit-with-status-request',
 };
 
 export const API_MASTER_DATA = {

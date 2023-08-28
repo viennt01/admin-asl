@@ -138,7 +138,7 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_UNIT.GET_UNIT_SEARCH,
+      API_UNIT.GET_SEARCH,
       pagination,
       queryInputParams,
       querySelectParams,
@@ -187,7 +187,7 @@ export default function MasterDataTable() {
         successToast(data.message);
         queryClient.invalidateQueries({
           queryKey: [
-            API_UNIT.GET_UNIT_SEARCH,
+            API_UNIT.GET_SEARCH,
             pagination,
             queryInputParams,
             querySelectParams,

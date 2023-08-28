@@ -70,7 +70,7 @@ const RequestTable = () => {
     useState<SelectSearch>(initalSelectSearch);
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_UNIT_REQUEST, pagination, queryInputParams],
+    queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
         ...queryInputParams,
@@ -280,11 +280,7 @@ const RequestTable = () => {
         data.status
           ? (successToast(data.message),
             queryClient.invalidateQueries({
-              queryKey: [
-                API_UNIT.GET_UNIT_REQUEST,
-                // pagination,
-                // queryInputParams,
-              ],
+              queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
             }))
           : errorToast(data.message);
       },

@@ -16,7 +16,7 @@ import { API_UNIT } from '@/fetcherAxios/endpoint';
 export const getLocationsSearch = (data: RequestLocationType) => {
   return post<RequestLocationType, ResponseWithPayload<UnitsRequire>>({
     data,
-  })(API_UNIT.GET_UNIT_SEARCH);
+  })(API_UNIT.GET_SEARCH);
 };
 
 export const getUnitDetail = (id: string) => {
@@ -24,19 +24,19 @@ export const getUnitDetail = (id: string) => {
     data: {
       id,
     },
-  })(API_UNIT.GET_UNIT_DETAIL);
+  })(API_UNIT.GET_DETAIL);
 };
 
 export const createUnit = (data: UnitCreate) => {
   return post<UnitCreate, ResponseWithPayload<UnitCreate>>({
     data,
-  })(API_UNIT.CREATE_UNIT);
+  })(API_UNIT.CREATE);
 };
 
 export const editUnit = (data: UnitEdit) => {
   return post<UnitEdit, ResponseWithPayload<UnitEdit>>({
     data,
-  })(API_UNIT.EDIT_UNIT);
+  })(API_UNIT.EDIT);
 };
 
 export const deleteUnit = (data: React.Key[]) => {
@@ -44,13 +44,13 @@ export const deleteUnit = (data: React.Key[]) => {
     data: {
       ids: data,
     },
-  })(API_UNIT.DELETE_UNIT);
+  })(API_UNIT.DELETE);
 };
 
 export const getDartTable = (data: RequestUnitTableDraft) => {
   return post<RequestUnitTableDraft, ResponseWithPayload<UnitsRequire>>({
     data,
-  })(API_UNIT.GET_UNIT_DRAFT);
+  })(API_UNIT.GET_DRAFT);
 };
 
 //----------------------------------------------------------------
@@ -58,11 +58,11 @@ export const getDartTable = (data: RequestUnitTableDraft) => {
 export const updateStatus = (data: UpdateStatusUnit) => {
   return post<UpdateStatusUnit, ResponseWithPayload<UpdateStatusUnit>>({
     data,
-  })(API_UNIT.UPDATE_STATUS_UNIT);
+  })(API_UNIT.UPDATE_STATUS);
 };
 
 export const getTable = (data: RequestUnitTableRequest) => {
   return post<RequestUnitTableRequest, ResponseWithPayload<UnitsRequire>>({
     data,
-  })(API_UNIT.GET_UNIT_REQUEST);
+  })(API_UNIT.GET_REQUEST);
 };

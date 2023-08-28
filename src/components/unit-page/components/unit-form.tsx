@@ -74,7 +74,7 @@ const UnitForm = ({
   };
 
   const unitDetailQuery = useQuery({
-    queryKey: [API_UNIT.GET_UNIT_DETAIL, idQuery],
+    queryKey: [API_UNIT.GET_DETAIL, idQuery],
     queryFn: () => getUnitDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
