@@ -1,169 +1,169 @@
-import COLORS from '@/constant/color';
-import { PlusOutlined } from '@ant-design/icons';
-import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { Button, Form } from 'antd';
-import useI18n from '@/i18n/useI18N';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { FormValues, SeaPricingCreate, SeaPricingEdit } from '../interface';
+import { createUnit, editUnit } from '../fetcher';
+import { STATUS_ALL_LABELS } from '@/constant/form';
+import { errorToast, successToast } from '@/hook/toast';
+import router from 'next/router';
+import { ROUTERS } from '@/constant/router';
+import { API_MESSAGE } from '@/constant/message';
+import { API_UNIT } from '@/fetcherAxios/endpoint';
+import UnitForm from '../components/form';
 
-// const waitTime = (time = 100) => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(true);
-//     }, time);
-//   });
-// };
 export default function CreatePricingSea() {
-  const [form] = Form.useForm<{ name: string; company: string }>();
-  const { translate: translateCommon } = useI18n('common');
-  const { translate: translatePricingSea } = useI18n('pricingSea');
+  const queryClient = useQueryClient();
+
+  const createPortMutation = useMutation({
+    mutationFn: (body: SeaPricingCreate) => {
+      return createUnit(body);
+    },
+  });
+
+  const updateUnitMutation = useMutation({
+    mutationFn: (body: SeaPricingEdit) => {
+      return editUnit(body);
+    },
+  });
+
+  const handleSubmit = (formValues: FormValues, id?: string) => {
+    if (id) {
+      const _requestData: SeaPricingEdit = {
+        seaPricingID: id,
+        podid: formValues.podid || '',
+        polid: formValues.polid || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        partnerID: formValues.partnerID || '',
+        note: formValues.note || '',
+        effectDate: formValues.effectDate || '',
+        validity: formValues.validity || '',
+        freg: formValues.freg || '',
+        dem: formValues.dem || '',
+        det: formValues.det || '',
+        sto: formValues.sto || '',
+        lclMin: formValues.lclMin || '',
+        lcl: formValues.lcl || '',
+        public: formValues.public || false,
+        statusSeaPricing: STATUS_ALL_LABELS.REQUEST,
+      };
+      updateUnitMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      const _requestData: SeaPricingCreate = {
+        podid: formValues.podid || '',
+        polid: formValues.polid || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        partnerID: formValues.partnerID || '',
+        note: formValues.note || '',
+        effectDate: formValues.effectDate || '',
+        validity: formValues.validity || '',
+        freg: formValues.freg || '',
+        dem: formValues.dem || '',
+        det: formValues.det || '',
+        sto: formValues.sto || '',
+        lclMin: formValues.lclMin || '',
+        lcl: formValues.lcl || '',
+        public: formValues.public || false,
+        statusSeaPricing: STATUS_ALL_LABELS.REQUEST,
+      };
+      createPortMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
+  };
+
+  const handleSaveDraft = (formValues: FormValues, id?: string) => {
+    if (id) {
+      const _requestData: SeaPricingEdit = {
+        seaPricingID: id,
+        podid: formValues.podid || '',
+        polid: formValues.polid || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        partnerID: formValues.partnerID || '',
+        note: formValues.note || '',
+        effectDate: formValues.effectDate || '',
+        validity: formValues.validity || '',
+        freg: formValues.freg || '',
+        dem: formValues.dem || '',
+        det: formValues.det || '',
+        sto: formValues.sto || '',
+        lclMin: formValues.lclMin || '',
+        lcl: formValues.lcl || '',
+        public: formValues.public || false,
+        statusSeaPricing: STATUS_ALL_LABELS.DRAFT,
+      };
+      updateUnitMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_UNIT.GET_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      const _requestData: SeaPricingCreate = {
+        podid: formValues.podid || '',
+        polid: formValues.polid || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        partnerID: formValues.partnerID || '',
+        note: formValues.note || '',
+        effectDate: formValues.effectDate || '',
+        validity: formValues.validity || '',
+        freg: formValues.freg || '',
+        dem: formValues.dem || '',
+        det: formValues.det || '',
+        sto: formValues.sto || '',
+        lclMin: formValues.lclMin || '',
+        lcl: formValues.lcl || '',
+        public: formValues.public || false,
+        statusSeaPricing: STATUS_ALL_LABELS.DRAFT,
+      };
+      createPortMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_UNIT.GET_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
+  };
 
   return (
-    <ModalForm<{
-      name: string;
-      company: string;
-    }>
-      title={translatePricingSea('information_add_customer')}
-      trigger={
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          style={{
-            marginRight: '4px',
-            backgroundColor: COLORS.BRIGHT,
-            color: COLORS.GREEN,
-            borderColor: COLORS.GREEN,
-            fontWeight: '500',
-          }}
-        >
-          {translateCommon('button_add')}
-        </Button>
-      }
-      submitter={{
-        searchConfig: {
-          submitText: 'Add',
-          resetText: 'Cancel',
-        },
-      }}
-      form={form}
-      autoFocusFirstInput
-      modalProps={{
-        destroyOnClose: true,
-      }}
-      // submitTimeout={2000}
-      // onFinish={async (values) => {
-      //   await waitTime(2000);
-      //   message.success('提交成功');
-      //   return true;
-      // }}
-    >
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="Abbreviation"
-          label={translatePricingSea('abbreviation')}
-          placeholder={translatePricingSea('abbreviation_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="NameCustomer"
-          label={translatePricingSea('name')}
-          placeholder={translatePricingSea('name_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="NumberCustomer"
-          label={translatePricingSea('number')}
-          placeholder={translatePricingSea('number_placeholder')}
-          rules={[
-            {
-              type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập số lượng giao dịch',
-            },
-          ]}
-        />
-
-        <ProFormText
-          width="md"
-          name="Phone"
-          label={translatePricingSea('phone')}
-          placeholder={translatePricingSea('phone_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormSelect
-          request={async () => [
-            {
-              value: 'VietNam',
-              label: 'Việt Nam',
-            },
-            {
-              value: 'American',
-              label: 'Mỹ',
-            },
-          ]}
-          width="md"
-          name="CountryName"
-          label={translatePricingSea('country')}
-          placeholder={translatePricingSea('country_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="Address"
-          label={translatePricingSea('address')}
-          placeholder={translatePricingSea('address_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="sm"
-          name="Email"
-          label={translatePricingSea('email')}
-          placeholder={translatePricingSea('email_placeholder')}
-        />
-
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Nguyễn Văn A',
-            },
-            {
-              value: '2',
-              label: 'Nguyễn Văn B',
-            },
-          ]}
-          width="sm"
-          name="Saleman"
-          label={translatePricingSea('saleman')}
-          placeholder={translatePricingSea('saleman_placeholder')}
-        />
-
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Tạm ngừng',
-            },
-          ]}
-          width="sm"
-          name="Status"
-          label={translatePricingSea('status')}
-          placeholder={translatePricingSea('status_placeholder')}
-        />
-      </ProForm.Group>
-    </ModalForm>
+    <UnitForm
+      create
+      handleSubmit={handleSubmit}
+      handleSaveDraft={handleSaveDraft}
+      loadingSubmit={createPortMutation.isLoading}
+      checkRow={false}
+      useDraft
+    />
   );
 }

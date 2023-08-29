@@ -28,6 +28,17 @@ export const API_UNIT = {
   GET_REQUEST: '/get-unit-with-status-request',
 };
 
+export const API_SEA_PRICING = {
+  GET_SEARCH: '/search-sea-pricing',
+  GET_DETAIL: '/get-sea-pricing-by-id',
+  CREATE: '/add-unit',
+  EDIT: '/update-unit',
+  DELETE: '/delete-unit',
+  UPDATE_STATUS: '/update-status-unit',
+  GET_DRAFT: '/get-unit-with-status-and-id-User',
+  GET_REQUEST: '/get-unit-with-status-request',
+};
+
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',
