@@ -46,7 +46,7 @@ const initalValueQueryInputParams = {
   containerTypeCode: '',
   name: '',
   details: '',
-  teus: 0,
+  teus: '',
 };
 
 const initalValueQuerySelectParams = {
@@ -270,7 +270,7 @@ export default function MasterDataTable() {
       },
     }));
     const newQueryParams = { ...queryInputParams };
-    //newQueryParams[dataIndex] = selectedKeys;
+    newQueryParams[dataIndex] = selectedKeys;
     newQueryParams.searchAll = '';
     setQueryInputParams(newQueryParams);
     confirm();
@@ -326,7 +326,6 @@ export default function MasterDataTable() {
       ),
       dataIndex: 'containerTypeCode',
       key: 'containerTypeCode',
-      width: 150,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
@@ -385,7 +384,7 @@ export default function MasterDataTable() {
       ),
       dataIndex: 'teus',
       key: 'teus',
-      width: 250,
+      width: 100,
       align: 'right',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
@@ -509,7 +508,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_EDIT(id));
+    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -557,12 +556,12 @@ export default function MasterDataTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_EDIT(record.key, true));
+      router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.UNIT_CREATE);
+    router.push(ROUTERS.TYPES_OF_CONTAINER_CREATE);
   };
 
   return (

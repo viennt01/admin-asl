@@ -1,31 +1,32 @@
-import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import {
-  DEFAULT_PAGINATION,
-  PaginationOfAntd,
-} from '@/components/commons/table/table-deafault';
-import TableUnit from '@/components/commons/table/table-unit';
+import useI18n from '@/i18n/useI18N';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
+import { useState, MouseEvent } from 'react';
 import {
   ContainerTypeTable,
-  QueryInputParamType,
-  SelectSearch,
-  UpdateStatusContainerType,
-} from '@/components/type-of-container-page/interface';
-import { ROUTERS } from '@/constant/router';
+  QueryInputDraft,
+  SelectDratSearch,
+} from '../interface';
 import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
-import useI18n from '@/i18n/useI18N';
-import { ProColumns } from '@ant-design/pro-components';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps, Tag } from 'antd';
-import { useRouter } from 'next/router';
-import { useState, MouseEvent } from 'react';
+import { deleteContainerType, getDartTable } from '../fetcher';
+import {
+  DiffOutlined,
+  DownloadOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
+import TableUnit from '../../commons/table/table-unit';
+import {
+  DEFAULT_PAGINATION_5,
+  PaginationOfAntd,
+} from '@/components/commons/table/table-deafault';
+import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
+import { ProColumns } from '@ant-design/pro-components';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
-import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getTable, updateStatus } from '../fetcher';
 import style from './index.module.scss';
 
 const initalValueQueryInputParams = {
@@ -34,6 +35,10 @@ const initalValueQueryInputParams = {
   name: '',
   details: '',
   teus: '',
+};
+
+const initalValueQuerySelectParams = {
+  status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
 };
 
 const initalSelectSearch = {
@@ -59,31 +64,36 @@ const initalSelectSearch = {
   },
   statusContainerType: {
     label: '',
-    value: '',
+    value: [],
   },
 };
 
-type DataIndex = keyof QueryInputParamType;
+type DataIndex = keyof QueryInputDraft;
 
-const RequestTable = () => {
-  const router = useRouter();
+interface PortFormProps {
+  handleIdQuery: (id: string) => void;
+}
+
+const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
   const { translate: translateContainerType } = useI18n('typeOfContainer');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
+    useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
+  const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
     initalValueQueryInputParams
   );
   const [dataTable, setDataTable] = useState<ContainerTypeTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectSearch>(initalSelectSearch);
+    useState<SelectDratSearch>(initalSelectSearch);
+
   // Handle data
   useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_CONTAINER_TYPE.GET_SEARCH, pagination, queryInputParams],
     queryFn: () =>
-      getTable({
+      getDartTable({
         ...queryInputParams,
+        ...initalValueQuerySelectParams,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -119,9 +129,20 @@ const RequestTable = () => {
     },
   });
 
-  const updateStatusContainerTypeMutation = useMutation({
-    mutationFn: (body: UpdateStatusContainerType) => {
-      return updateStatus(body);
+  const deleteItemDraftMutation = useMutation({
+    mutationFn: (id: string[]) => deleteContainerType(id),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [API_CONTAINER_TYPE.GET_SEARCH],
+        });
+      } else {
+        errorToast(data.message);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
     },
   });
 
@@ -173,40 +194,6 @@ const RequestTable = () => {
       },
     },
     {
-      key: 'operation',
-      width: 50,
-      align: 'center',
-      dataIndex: 'key',
-      fixed: 'left',
-      render: (value) => (
-        <div style={{ display: 'flex' }}>
-          <Button
-            onClick={() => handleEditCustomer(value as string)}
-            icon={<EyeOutlined />}
-            style={{ marginRight: '10px' }}
-          />
-          <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.ACTIVE)
-            }
-            icon={<CheckOutlined />}
-            style={{
-              marginRight: '10px',
-              color: COLORS.SUCCESS,
-              borderColor: COLORS.SUCCESS,
-            }}
-          />
-          <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.REJECT)
-            }
-            icon={<CloseOutlined />}
-            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
-          />
-        </div>
-      ),
-    },
-    {
       title: (
         <div className={style.title}>
           {translateContainerType('container_no')}
@@ -216,7 +203,7 @@ const RequestTable = () => {
       key: 'containerTypeCode',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
@@ -237,7 +224,7 @@ const RequestTable = () => {
       key: 'name',
       width: 250,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
@@ -255,8 +242,8 @@ const RequestTable = () => {
       dataIndex: 'details',
       key: 'details',
       width: 250,
-      align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
@@ -273,9 +260,9 @@ const RequestTable = () => {
       ),
       dataIndex: 'teus',
       key: 'teus',
-      width: 250,
+      width: 100,
       align: 'right',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
@@ -297,13 +284,6 @@ const RequestTable = () => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: <div className={style.title}>{translateCommon('creator')}</div>,
-      width: 200,
-      dataIndex: 'insertedByUser',
-      key: 'insertedByUser',
-      align: 'center',
-    },
-    {
       title: (
         <div className={style.title}>{translateContainerType('status')}</div>
       ),
@@ -323,37 +303,41 @@ const RequestTable = () => {
         </Tag>
       ),
     },
+    {
+      key: 'operation',
+      width: 50,
+      align: 'center',
+      dataIndex: 'key',
+      fixed: 'right',
+      render: (value) => (
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => handleIdQuery(value as string)}
+            icon={<DownloadOutlined />}
+            style={{ marginRight: '10px' }}
+          />
+          <Popconfirm
+            title={translateCommon('modal_delete.title')}
+            okText={translateCommon('modal_delete.button_ok')}
+            cancelText={translateCommon('modal_delete.button_cancel')}
+            onConfirm={() => {
+              deleteItemDraftMutation.mutate([value as string]);
+            }}
+          >
+            <Button
+              icon={<DeleteOutlined />}
+              style={{
+                color: COLORS.ERROR,
+                borderColor: COLORS.ERROR,
+              }}
+            />
+          </Popconfirm>
+        </div>
+      ),
+    },
   ];
 
   // Handle logic table
-  const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_MANAGER(id));
-  };
-
-  const handleApproveAndReject = (id: string, status: string) => {
-    const _requestData: UpdateStatusContainerType = {
-      id,
-      status,
-    };
-    updateStatusContainerTypeMutation.mutate(_requestData, {
-      onSuccess: (data) => {
-        data.status
-          ? (successToast(data.message),
-            queryClient.invalidateQueries({
-              queryKey: [
-                API_CONTAINER_TYPE.GET_REQUEST,
-                pagination,
-                queryInputParams,
-              ],
-            }))
-          : errorToast(data.message);
-      },
-      onError() {
-        errorToast(API_MESSAGE.ERROR);
-      },
-    });
-  };
-
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     setPagination((state) => ({
       ...state,
@@ -368,25 +352,30 @@ const RequestTable = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_MANAGER(record.key));
+      handleIdQuery(record.key);
     }
   };
 
   return (
-    <>
-      <div style={{ marginTop: -18 }}>
-        <TableUnit
-          headerTitle={translateContainerType('title_requests')}
-          dataTable={dataTable}
-          columns={columns}
-          handlePaginationChange={handlePaginationChange}
-          handleOnDoubleClick={handleOnDoubleClick}
-          pagination={pagination}
-          checkTableMaster={false}
-        />
-      </div>
-    </>
+    <Popover
+      content={
+        <div style={{ maxWidth: '700px' }}>
+          <TableUnit
+            dataTable={dataTable}
+            columns={columns}
+            handlePaginationChange={handlePaginationChange}
+            handleOnDoubleClick={handleOnDoubleClick}
+            pagination={pagination}
+            checkTableMaster={false}
+          />
+        </div>
+      }
+    >
+      <Button icon={<DiffOutlined />} type="dashed" danger>
+        Draft
+      </Button>
+    </Popover>
   );
 };
 
-export default RequestTable;
+export default DraftTable;

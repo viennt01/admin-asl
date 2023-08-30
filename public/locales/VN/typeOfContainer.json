@@ -12,11 +12,40 @@
 
     "information_add_type_of_container": "Thêm mới loại container",
     "information_edit_type_of_container": "Chỉnh sửa loại container",
-    "type_of_container_placeholder": "Nhập loại container",
-    "detail_placeholder": "Nhập chi tiết",
-    "teus_placeholder": "Nhập Tues",
-    "creator_placeholder": "Nhập người tạo",
-    "date_created_placeholder": "Chọn ngày tạo",
-    "number_container_placeholder": "Nhập số lượng container",
-    "status_placeholder":"Chọn trạng thái"
+
+    "container_type_code_form": {
+        "title": "Mã loại container",
+        "placeholder": "Nhập mã loại container",
+        "error_required": "Vui lòng nhập mã loại container!"
+    },
+
+    "status_form": {
+        "title": "Trạng thái",
+        "placeholder": "Chọn trạng thái",
+        "error_required": "Vui lòng chọn trạng thái!"
+    },
+
+    "name_form": {
+        "title": "Tên loại container",
+        "placeholder": "Nhập tên loại container",
+        "error_required": "Vui lòng nhập tên loại container!"
+    },
+
+    "teus_form": {
+        "title": "Teus",
+        "placeholder": "Nhập teus",
+        "error_required": "Vui lòng nhập teus!"
+    },
+
+    "details_en_form": {
+        "title": "Mô tả tiếng Anh",
+        "placeholder": "Nhập mô tả tiếng Anh",
+        "error_required": "Vui lòng nhập mô tả tiếng Anh!"
+    },
+
+    "details_vn_form": {
+        "title": "Mô tả tiếng Việt",
+        "placeholder": "Nhập mô tả tiếng Việt",
+        "error_required": "Vui lòng nhập mô tả tiếng Việt!"
+    }
 }

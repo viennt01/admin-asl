@@ -16,7 +16,7 @@ export interface ContainerType {
   containerTypeCode: string;
   name: string;
   details: string;
-  teus: number;
+  teus: string;
   statusContainerType: string;
   dateInserted: string;
   insertedByUser: string;
@@ -42,7 +42,7 @@ export interface QueryInputParamType {
   containerTypeCode: string;
   name: string;
   details: string;
-  teus: number;
+  teus: string;
 }
 
 export interface QuerySelectParamType {
@@ -72,7 +72,7 @@ export interface FormValues {
   name: string;
   detailsEN: string;
   detailsVN: string;
-  teus: number;
+  teus: string;
   statusContainerType: string;
 }
 
@@ -96,7 +96,7 @@ export interface QueryInputDraft {
   containerTypeCode: string;
   name: string;
   details: string;
-  teus: number;
+  teus: string;
 }
 
 export interface QuerySelectDraft {
@@ -127,7 +127,7 @@ export interface QueryInputRequest {
   containerTypeCode: string;
   name: string;
   details: string;
-  teus: number;
+  teus: string;
 }
 
 export interface RequestContainerTypeTableRequest extends QueryInputRequest {
