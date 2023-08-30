@@ -31,5 +31,5 @@ export const API_UNIT = {
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',
-  GET_TYPE_PORT: '/get-all-type-port',
+  GET_TYPE_LOCATION: '/get-all-type-location',
 };

@@ -11,47 +11,50 @@ export const STATUS_LABELS = {
   2: 'Deactivate',
 };
 
-export interface PortType {
-  portID: string;
-  countryID: string;
-  portName: string;
-  portCode: string;
-  typePorts: TypePorts[];
-  status: number;
-  description: string;
-  address: string;
+export interface Location {
+  locationID: string;
+  cityID: string;
+  cityName: string;
+  locationCode: string;
+  locationName: string;
+  typeLocations: TypeLocations[];
+  statusLocation: string;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  countryName: string;
+  dateDeleted: string;
+  deleteByUser: string;
+  isDelete: boolean;
 }
 
-export interface TypePorts {
-  typePortID: string;
-  typePortName: string;
+export interface TypeLocations {
+  typeLocationID: string;
+  typeLocationName: string;
+  description: string;
 }
 
-export interface PortDataTable extends Omit<PortType, 'portID'> {
+export interface LocationDataTable extends Omit<Location, 'locationID'> {
   key: string;
   searchAll: string;
-  typePort: string;
 }
 
-export interface PortsData extends Pagination {
-  data: PortType[];
+export interface LocationsData extends Pagination {
+  data: Location[];
 }
 
-export interface QueryParamType {
+export interface QueryInputParamType {
   searchAll: string;
-  countryID: string;
-  portName: string;
-  portCode: string;
-  address: string;
-  typePort: string;
+}
+export interface QuerySelectParamType {
+  statusLocation: string;
+  cityID: string;
+  typeLocations: string[];
 }
 
-export interface RequestPortsType extends QueryParamType {
+export interface RequestLocationType
+  extends QueryInputParamType,
+    QuerySelectParamType {
   paginateRequest: Pagination;
 }
 
@@ -78,7 +81,7 @@ export type PortDelete = {
 };
 
 export type SelectSearch = {
-  [key in keyof QueryParamType]: {
+  [key in keyof QueryInputParamType]: {
     label: string;
     value: string;
   };

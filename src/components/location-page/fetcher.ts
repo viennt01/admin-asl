@@ -1,23 +1,23 @@
 import { ResponseWithPayload, post } from '@/fetcherAxios';
 import {
   PortCreate,
-  PortType,
+  Location,
   PortDetailDataBody,
   PortEdit,
-  PortsData,
-  RequestPortsType,
+  LocationsData,
+  RequestLocationType,
   PortDelete,
 } from './interface';
 import { API_LOCATION } from '@/fetcherAxios/endpoint';
 
-export const getListPortSearch = (data: RequestPortsType) => {
-  return post<RequestPortsType, ResponseWithPayload<PortsData>>({
+export const getListPortSearch = (data: RequestLocationType) => {
+  return post<RequestLocationType, ResponseWithPayload<LocationsData>>({
     data,
   })(API_LOCATION.GET_LOCATION_SEARCH);
 };
 
 export const getPortDetail = (id: string) => {
-  return post<PortDetailDataBody, ResponseWithPayload<PortType>>({
+  return post<PortDetailDataBody, ResponseWithPayload<Location>>({
     data: {
       id,
     },

@@ -144,7 +144,7 @@ export function AppLayout(props: Props) {
       }),
   });
   useQuery({
-    queryKey: [API_MASTER_DATA.GET_TYPE_PORT],
+    queryKey: [API_MASTER_DATA.GET_TYPE_LOCATION],
     queryFn: getListTypePort,
   });
 

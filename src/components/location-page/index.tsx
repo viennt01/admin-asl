@@ -1,38 +1,32 @@
-import { Key, useState } from 'react';
+import { ChangeEvent, Key, useState, MouseEvent } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
-import { ColumnSearchTableProps } from '../commons/search-table';
-import style from './index.module.scss';
 import { formatDate } from '@/utils/format';
-import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
+import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { deletePort, getListPortSearch } from './fetcher';
-import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
+import { FilterValue } from 'antd/lib/table/interface';
 import {
-  DeleteOutlined,
   EditOutlined,
-  PlusOutlined,
-  ReloadOutlined,
   FilterFilled,
   ExclamationCircleFilled,
 } from '@ant-design/icons';
 import {
   Button,
-  ConfigProvider,
-  Input,
   Modal,
   PaginationProps,
   TablePaginationConfig,
   Tag,
 } from 'antd';
 import {
-  QueryParamType,
-  PortDataTable,
+  LocationDataTable,
   STATUS_COLORS,
   STATUS_LABELS,
   SelectSearch,
+  QueryInputParamType,
+  QuerySelectParamType,
 } from './interface';
 import {
   DEFAULT_PAGINATION,
@@ -43,18 +37,18 @@ import { API_MASTER_DATA, API_LOCATION } from '@/fetcherAxios/endpoint';
 import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import TableUnit from '../commons/table/table-unit';
 
 const { confirm } = Modal;
 
-type DataIndex = keyof QueryParamType;
-
-const initalValueQueryParams = {
+const initalValueQueryInputParams = {
   searchAll: '',
-  countryID: '',
-  portName: '',
-  portCode: '',
-  address: '',
-  typePort: '',
+};
+
+const initalValueQuerySelectParams = {
+  statusLocation: '',
+  cityID: '',
+  typeLocations: [],
 };
 
 const initalValueDisplayColumn = {
@@ -100,25 +94,17 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  countryID: {
+  statusLocation: {
     label: '',
     value: '',
   },
-  portName: {
+  cityID: {
     label: '',
     value: '',
   },
-  portCode: {
+  typeLocations: {
     label: '',
-    value: '',
-  },
-  address: {
-    label: '',
-    value: '',
-  },
-  typePort: {
-    label: '',
-    value: '',
+    value: [],
   },
 };
 
@@ -130,19 +116,24 @@ export default function LocationPage() {
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryParams, setQueryParams] = useState<QueryParamType>(
-    initalValueQueryParams
+  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
+    initalValueQueryInputParams
   );
-  const [selectedKeyShow, setSelectedKeyShow] =
+  const [querySelectParams, setQuerySelectParams] =
+    useState<QuerySelectParamType>(initalValueQuerySelectParams);
+  const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
-  const [dataTable, setDataTable] = useState<PortDataTable[]>([]);
+  const [dataTable, setDataTable] = useState<LocationDataTable[]>([]);
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
   >(initalValueDisplayColumn);
 
   // Handle data
-  const typePorts = useQuery([API_MASTER_DATA.GET_TYPE_PORT], getListTypePort);
+  const typePorts = useQuery(
+    [API_MASTER_DATA.GET_TYPE_LOCATION],
+    getListTypePort
+  );
   const countries = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
     getListCountry({
       currentPage: 1,
@@ -151,10 +142,16 @@ export default function LocationPage() {
   );
 
   const portsQuerySearch = useQuery({
-    queryKey: [API_LOCATION.GET_LOCATION_SEARCH, pagination, queryParams],
+    queryKey: [
+      API_LOCATION.GET_LOCATION_SEARCH,
+      pagination,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
       getListPortSearch({
-        ...queryParams,
+        ...queryInputParams,
+        ...querySelectParams,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -165,21 +162,21 @@ export default function LocationPage() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.portID,
-            countryID: data.countryID,
-            portName: data.portName,
-            portCode: data.portCode,
-            typePorts: data.typePorts,
-            status: data.status,
-            description: data.description,
-            address: data.address,
+            key: data.locationID,
+            cityID: data.cityID,
+            cityName: data.cityName,
+            locationCode: data.locationCode,
+            locationName: data.locationName,
+            typeLocations: data.typeLocations,
+            statusLocation: data.statusLocation,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            countryName: data.countryName,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            isDelete: data.isDelete,
             searchAll: '',
-            typePort: '',
           }))
         );
         pagination.current = currentPage;
@@ -191,14 +188,13 @@ export default function LocationPage() {
     },
   });
 
-  const deletePortMutation = useMutation({
+  const deleteLocationMutation = useMutation({
     mutationFn: () => deletePort(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_LOCATION.GET_LOCATION_SEARCH, pagination, queryParams],
-          exact: true,
+          queryKey: [API_LOCATION.GET_LOCATION_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -211,8 +207,9 @@ export default function LocationPage() {
   });
 
   const refreshingQuery = () => {
-    setSelectedKeyShow(initalSelectSearch);
-    setQueryParams(initalValueQueryParams);
+    setSelectedActiveKey(initalSelectSearch);
+    setQuerySelectParams(initalValueQuerySelectParams);
+    setQueryInputParams(initalValueQueryInputParams);
     setRefreshingLoading(true);
     setPagination((state) => ({
       ...state,
@@ -225,57 +222,35 @@ export default function LocationPage() {
   };
 
   // Handle search
+  const handleChangeInputSearchAll = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedActiveKey((prevData) => ({
+      ...prevData,
+      searchAll: {
+        label: 'searchAll',
+        value: e.target.value ? e.target.value : '',
+      },
+    }));
+  };
+
   const handleSearchInputKeyAll = (value: string) => {
-    setSelectedKeyShow({
+    setSelectedActiveKey({
       ...initalSelectSearch,
       searchAll: {
         label: 'searchAll',
         value: value,
       },
     });
-    setQueryParams({
-      ...initalValueQueryParams,
+    setQueryInputParams({
+      ...initalValueQueryInputParams,
       searchAll: value,
+    });
+    setQuerySelectParams({
+      ...initalValueQuerySelectParams,
     });
   };
 
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-      searchAll: {
-        label: 'searchAll',
-        value: '',
-      },
-    }));
-    const newQueryParams = { ...queryParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    setQueryParams(newQueryParams);
-    confirm();
-  };
-
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
-
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
-
   // Handle data show table
-  const columns: ProColumns<PortDataTable>[] = [
+  const columns: ProColumns<LocationDataTable>[] = [
     {
       title: translateLocation('port_no'),
       dataIndex: 'index',
@@ -288,44 +263,24 @@ export default function LocationPage() {
     },
     {
       title: translateLocation('code'),
-      dataIndex: 'portCode',
+      dataIndex: 'locationCode',
       width: 120,
-      key: 'portCode',
+      key: 'locationCode',
       align: 'center',
-      ...ColumnSearchTableProps<QueryParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'portCode',
-        },
-      }),
     },
     {
       title: translateLocation('name'),
-      dataIndex: 'portName',
-      key: 'portName',
+      dataIndex: 'locationName',
+      key: 'locationName',
       align: 'center',
-      ...ColumnSearchTableProps<QueryParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'portName',
-        },
-      }),
     },
     {
       title: translateLocation('country_name'),
       width: 150,
-      dataIndex: 'countryName',
-      key: 'countryName',
+      dataIndex: 'cityID',
+      key: 'cityID',
       align: 'center',
-      filteredValue: [queryParams.countryID] || null,
+      filteredValue: [querySelectParams.cityID] || null,
       filters:
         countries.data?.data?.data.map((item) => ({
           text: item.countryName,
@@ -337,7 +292,7 @@ export default function LocationPage() {
           <FilterFilled
             style={{
               color:
-                queryParams.countryID?.length !== 0
+                querySelectParams.cityID?.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -351,7 +306,7 @@ export default function LocationPage() {
       dataIndex: 'typePorts',
       key: 'typePorts',
       align: 'center',
-      filteredValue: [queryParams.typePort] || null,
+      filteredValue: querySelectParams.typeLocations || null,
       filters:
         typePorts.data?.data.map((data) => ({
           text: data.typePortName,
@@ -362,7 +317,7 @@ export default function LocationPage() {
           <FilterFilled
             style={{
               color:
-                queryParams.typePort?.length !== 0
+                querySelectParams.typeLocations?.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -371,14 +326,14 @@ export default function LocationPage() {
       },
       filterMultiple: false,
       render: (_, value) =>
-        value.typePorts.map((type) => {
-          return <Tag key={type.typePortID}>{type.typePortName}</Tag>;
+        value.typeLocations.map((type) => {
+          return <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>;
         }),
     },
     {
       title: translateLocation('status'),
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'statusLocation',
+      key: 'statusLocation',
       align: 'center',
       width: 120,
       render: (value) => (
@@ -453,12 +408,12 @@ export default function LocationPage() {
     }));
   };
 
-  const handleTableChange = (
+  const handleSearchSelect = (
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>
   ) => {
     const newQueryParams = {
-      ...queryParams,
+      ...querySelectParams,
       searchAll: '',
       countryID:
         filters.countryName?.length !== 0 && filters.countryName
@@ -469,7 +424,7 @@ export default function LocationPage() {
           ? (filters.typePorts[0] as string)
           : '',
     };
-    setQueryParams(newQueryParams);
+    setQuerySelectParams(newQueryParams);
   };
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
@@ -484,119 +439,50 @@ export default function LocationPage() {
       cancelText: translateCommon('modal_delete.button_cancel'),
       okType: 'danger',
       onOk() {
-        deletePortMutation.mutate();
+        deleteLocationMutation.mutate();
       },
     });
   };
 
+  const handleOnDoubleClick = (
+    e: MouseEvent<any, globalThis.MouseEvent>,
+    record: LocationDataTable
+  ) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('button')) {
+      router.push(ROUTERS.LOCATION_EDIT(record.key, true));
+    }
+  };
+  const handleCreate = () => {
+    router.push(ROUTERS.LOCATION_CREATE);
+  };
   return (
-    <>
-      <ConfigProvider>
-        {portsQuerySearch.isLoading ? (
-          <SkeletonTable />
-        ) : (
-          <ProTable<PortDataTable>
-            headerTitle={translateLocation('title')}
-            className={style.table}
-            style={{ marginTop: '8px' }}
-            dataSource={dataTable}
-            columns={columns}
-            rowSelection={{
-              type: 'checkbox',
-              selectedRowKeys: selectedRowKeys,
-              onChange: handleSelectionChange,
-            }}
-            pagination={{
-              position: ['bottomCenter'],
-              showTotal: (total, range) =>
-                `${range[0]}-${range[1]} of ${total} items`,
-              showSizeChanger: true,
-              ...pagination,
-              onChange: handlePaginationChange,
-            }}
-            search={false}
-            scroll={{
-              x: 'max-content',
-            }}
-            sticky={{ offsetHeader: 0 }}
-            options={{
-              fullScreen: true,
-              reload: false,
-              setting: true,
-            }}
-            onColumnsStateChange={handleColumnsStateChange}
-            columnsStateMap={columnsStateMap}
-            onRow={(record) => {
-              return {
-                onDoubleClick: (e) => {
-                  const target = e.target as HTMLElement;
-                  if (!target.closest('button')) {
-                    router.push(ROUTERS.LOCATION_EDIT(record.key, true));
-                  }
-                },
-              };
-            }}
-            onChange={handleTableChange}
-            toolBarRender={() => [
-              <Input.Search
-                key={'Search'}
-                placeholder={translateCommon('search')}
-                onSearch={handleSearchInputKeyAll}
-                value={selectedKeyShow.searchAll.value}
-                onChange={(e) => {
-                  setSelectedKeyShow((prevData) => ({
-                    ...prevData,
-                    searchAll: {
-                      label: 'searchAll',
-                      value: e.target.value ? e.target.value : '',
-                    },
-                  }));
-                }}
-              />,
-              <Button
-                key={'create'}
-                icon={<PlusOutlined />}
-                style={{
-                  marginRight: '4px',
-                  backgroundColor: COLORS.BRIGHT,
-                  color: COLORS.GREEN,
-                  borderColor: COLORS.GREEN,
-                  fontWeight: '500',
-                }}
-                onClick={() => {
-                  router.push(ROUTERS.LOCATION_CREATE);
-                }}
-              >
-                {translateCommon('button_add')}
-              </Button>,
-              <Button
-                key={'delete'}
-                icon={<DeleteOutlined />}
-                style={{
-                  backgroundColor: COLORS.RED,
-                  color: COLORS.WHITE,
-                  borderColor: COLORS.RED,
-                  fontWeight: '500',
-                }}
-                onClick={showPropsConfirmDelete}
-              >
-                {translateCommon('button_delete')}
-              </Button>,
-              <Button
-                key={'refresh'}
-                onClick={() => refreshingQuery()}
-                icon={<ReloadOutlined />}
-                loading={refreshingLoading}
-                style={{
-                  width: 32,
-                  height: 32,
-                  padding: 6,
-                }}
-              />,
-            ]}
-          />
-        )}
-      </ConfigProvider>
-    </>
+    <div style={{ marginTop: -18 }}>
+      {portsQuerySearch.isLoading ? (
+        <SkeletonTable />
+      ) : (
+        <TableUnit
+          dataTable={dataTable}
+          columns={columns}
+          headerTitle={translateLocation('title')}
+          selectedRowKeys={selectedRowKeys}
+          handleSelectionChange={handleSelectionChange}
+          handlePaginationChange={handlePaginationChange}
+          handleChangeInputSearchAll={handleChangeInputSearchAll}
+          handleSearchInputKeyAll={handleSearchInputKeyAll}
+          valueSearchAll={selectedActiveKey.searchAll.value}
+          handleOnDoubleClick={handleOnDoubleClick}
+          handleCreate={handleCreate}
+          showPropsConfirmDelete={showPropsConfirmDelete}
+          refreshingQuery={refreshingQuery}
+          refreshingLoading={refreshingLoading}
+          pagination={pagination}
+          handleColumnsStateChange={handleColumnsStateChange}
+          columnsStateMap={columnsStateMap}
+          handleSearchSelect={handleSearchSelect}
+          checkTableMaster={true}
+        />
+      )}
+    </div>
   );
 }
