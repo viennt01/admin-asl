@@ -22,7 +22,8 @@ const ManagerTypeOfContainer = () => {
     updateStatusContainerTypeMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
-          ? (successToast(data.message), router.push(ROUTERS.UNIT))
+          ? (successToast(data.message),
+            router.push(ROUTERS.TYPES_OF_CONTAINER))
           : errorToast(data.message);
       },
       onError() {

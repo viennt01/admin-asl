@@ -42,7 +42,8 @@ const CreateTypeOfContainer = () => {
       updateContainerTypeMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            ? (successToast(data.message),
+              router.push(ROUTERS.TYPES_OF_CONTAINER))
             : errorToast(data.message);
         },
         onError() {
@@ -61,7 +62,8 @@ const CreateTypeOfContainer = () => {
       createContainerTypeMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            ? (successToast(data.message),
+              router.push(ROUTERS.TYPES_OF_CONTAINER))
             : errorToast(data.message);
         },
         onError() {
