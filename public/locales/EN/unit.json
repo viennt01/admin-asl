@@ -25,11 +25,11 @@
     "description_vn_form": {
         "title": "Vietnamese description",
         "placeholder": "Enter Vietnamese description",
-        "error_required": "Please enter input Vietnamese description"
+        "error_required": "Please enter Vietnamese description"
     },
     "description_en_form": {
         "title": "English description",
         "placeholder": "Enter English description",
-        "error_required": "Please enter input English description"
+        "error_required": "Please enter English description"
     }
 }
