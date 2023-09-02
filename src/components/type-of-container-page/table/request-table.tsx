@@ -5,13 +5,13 @@ import {
 } from '@/components/commons/table/table-deafault';
 import TableUnit from '@/components/commons/table/table-unit';
 import {
-  UnitTable,
+  ContainerTypeTable,
   QueryInputParamType,
   SelectSearch,
-  UpdateStatusUnit,
-} from '@/components/unit-page/interface';
+  UpdateStatusContainerType,
+} from '@/components/type-of-container-page/interface';
 import { ROUTERS } from '@/constant/router';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -30,8 +30,10 @@ import style from './index.module.scss';
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  internationalCode: '',
-  description: '',
+  containerTypeCode: '',
+  name: '',
+  details: '',
+  teus: '',
 };
 
 const initalSelectSearch = {
@@ -39,15 +41,23 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  internationalCode: {
+  containerTypeCode: {
     label: '',
     value: '',
   },
-  description: {
+  name: {
     label: '',
     value: '',
   },
-  statusUnit: {
+  details: {
+    label: '',
+    value: '',
+  },
+  teus: {
+    label: '',
+    value: '',
+  },
+  statusContainerType: {
     label: '',
     value: '',
   },
@@ -58,19 +68,19 @@ type DataIndex = keyof QueryInputParamType;
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateUnit } = useI18n('unit');
+  const { translate: translateContainerType } = useI18n('typeOfContainer');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<UnitTable[]>([]);
+  const [dataTable, setDataTable] = useState<ContainerTypeTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectSearch>(initalSelectSearch);
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_CONTAINER_TYPE.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
         ...queryInputParams,
@@ -82,22 +92,24 @@ const RequestTable = () => {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
-        // setDataTable(
-        //   data.data.data.map((data) => ({
-        //     key: data.unitID,
-        //     internationalCode: data.internationalCode,
-        //     description: data.description,
-        //     statusUnit: data.statusUnit,
-        //     dateInserted: data.dateInserted,
-        //     insertedByUser: data.insertedByUser,
-        //     dateUpdated: data.dateUpdated,
-        //     updatedByUser: data.updatedByUser,
-        //     isDelete: data.isDelete,
-        //     dateDeleted: data.dateDeleted,
-        //     deleteByUser: data.deleteByUser,
-        //     searchAll: '',
-        //   }))
-        // );
+        setDataTable(
+          data.data.data.map((data) => ({
+            key: data.containerTypeID,
+            containerTypeCode: data.containerTypeCode,
+            name: data.name,
+            details: data.details,
+            teus: data.teus,
+            statusContainerType: data.statusContainerType,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            isDelete: data.isDelete,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            searchAll: '',
+          }))
+        );
         pagination.current = currentPage;
         pagination.pageSize = pageSize;
         pagination.total = totalPages;
@@ -107,8 +119,8 @@ const RequestTable = () => {
     },
   });
 
-  const updateStatusUnitMutation = useMutation({
-    mutationFn: (body: UpdateStatusUnit) => {
+  const updateStatusContainerTypeMutation = useMutation({
+    mutationFn: (body: UpdateStatusContainerType) => {
       return updateStatus(body);
     },
   });
@@ -146,9 +158,11 @@ const RequestTable = () => {
   };
 
   // Handle data show table
-  const columns: ProColumns<UnitTable>[] = [
+  const columns: ProColumns<ContainerTypeTable>[] = [
     {
-      title: <div className={style.title}>{translateUnit('code')}</div>,
+      title: (
+        <div className={style.title}>{translateContainerType('code')}</div>
+      ),
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -194,10 +208,12 @@ const RequestTable = () => {
     },
     {
       title: (
-        <div className={style.title}>{translateUnit('international_code')}</div>
+        <div className={style.title}>
+          {translateContainerType('container_no')}
+        </div>
       ),
-      dataIndex: 'internationalCode',
-      key: 'internationalCode',
+      dataIndex: 'containerTypeCode',
+      key: 'containerTypeCode',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -207,14 +223,18 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'internationalCode',
+          dataIndex: 'containerTypeCode',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateUnit('description')}</div>,
-      dataIndex: 'description',
-      key: 'description',
+      title: (
+        <div className={style.title}>
+          {translateContainerType('type_of_container')}
+        </div>
+      ),
+      dataIndex: 'name',
+      key: 'name',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -224,7 +244,45 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'description',
+          dataIndex: 'name',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateContainerType('detail')}</div>
+      ),
+      dataIndex: 'details',
+      key: 'details',
+      width: 250,
+      align: 'center',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'details',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateContainerType('teus')}</div>
+      ),
+      dataIndex: 'teus',
+      key: 'teus',
+      width: 250,
+      align: 'right',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'teus',
         },
       }),
     },
@@ -246,10 +304,12 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
+      title: (
+        <div className={style.title}>{translateContainerType('status')}</div>
+      ),
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusContainerType',
+      key: 'statusContainerType',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -271,16 +331,20 @@ const RequestTable = () => {
   };
 
   const handleApproveAndReject = (id: string, status: string) => {
-    const _requestData: UpdateStatusUnit = {
+    const _requestData: UpdateStatusContainerType = {
       id,
       status,
     };
-    updateStatusUnitMutation.mutate(_requestData, {
+    updateStatusContainerTypeMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
           ? (successToast(data.message),
             queryClient.invalidateQueries({
-              queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
+              queryKey: [
+                API_CONTAINER_TYPE.GET_REQUEST,
+                pagination,
+                queryInputParams,
+              ],
             }))
           : errorToast(data.message);
       },
@@ -300,7 +364,7 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: UnitTable
+    record: ContainerTypeTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
@@ -312,7 +376,7 @@ const RequestTable = () => {
     <>
       <div style={{ marginTop: -18 }}>
         <TableUnit
-          headerTitle="List of approval-needed requests"
+          headerTitle={translateContainerType('title_requests')}
           dataTable={dataTable}
           columns={columns}
           handlePaginationChange={handlePaginationChange}

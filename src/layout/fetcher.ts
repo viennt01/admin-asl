@@ -43,7 +43,7 @@ export const checkNewUser = () => {
 
 export const getListTypePort = () => {
   return get<ResponseWithPayload<TypePortData[]>>({})(
-    API_MASTER_DATA.GET_TYPE_PORT
+    API_MASTER_DATA.GET_TYPE_LOCATION
   );
 };
 

@@ -53,8 +53,11 @@ export const ROUTERS = {
   BANK: '/master-data/accountant/bank',
   BANK_EDIT: (bankId: string) => `/master-data/accountant/bank/edit/${bankId}`,
   TYPES_OF_CONTAINER: '/master-data/type-of-container',
-  TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string) =>
-    `/master-data/type-of-container/edit/${typeOfContainerId}`,
+  TYPES_OF_CONTAINER_CREATE: '/master-data/type-of-container/create',
+  TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string, checkRow = false) =>
+    `/master-data/type-of-container/edit/${typeOfContainerId}?checkRow=${checkRow}`,
+  TYPES_OF_CONTAINER_MANAGER: (typeOfContainerId: string) =>
+    `/master-data/type-of-container/manager-admin/${typeOfContainerId}`,
   UNIT: '/master-data/unit',
   UNIT_CREATE: '/master-data/unit/create',
   UNIT_EDIT: (unitId: string, checkRow = false) =>

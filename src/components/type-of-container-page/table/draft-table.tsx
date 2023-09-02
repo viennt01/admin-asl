@@ -3,12 +3,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
 import {
-  SeaPricingTable,
+  ContainerTypeTable,
   QueryInputDraft,
   SelectDratSearch,
 } from '../interface';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
-import { deleteUnit, getDartTable } from '../fetcher';
+import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
+import { deleteContainerType, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -30,8 +30,11 @@ import { API_MESSAGE } from '@/constant/message';
 import style from './index.module.scss';
 
 const initalValueQueryInputParams = {
-  internationalCode: '',
-  description: '',
+  searchAll: '',
+  containerTypeCode: '',
+  name: '',
+  details: '',
+  teus: '',
 };
 
 const initalValueQuerySelectParams = {
@@ -43,17 +46,25 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  internationalCode: {
+  containerTypeCode: {
     label: '',
     value: '',
   },
-  description: {
+  name: {
     label: '',
     value: '',
   },
-  statusUnit: {
+  details: {
     label: '',
     value: '',
+  },
+  teus: {
+    label: '',
+    value: '',
+  },
+  statusContainerType: {
+    label: '',
+    value: [],
   },
 };
 
@@ -65,20 +76,20 @@ interface PortFormProps {
 
 const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
-  const { translate: translateUnit } = useI18n('unit');
+  const { translate: translateContainerType } = useI18n('typeOfContainer');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
+  const [dataTable, setDataTable] = useState<ContainerTypeTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectDratSearch>(initalSelectSearch);
 
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_SEARCH, pagination, queryInputParams],
+    queryKey: [API_CONTAINER_TYPE.GET_SEARCH, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -91,22 +102,24 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
-        // setDataTable(
-        //   data.data.data.map((data) => ({
-        //     key: data.unitID,
-        //     internationalCode: data.internationalCode,
-        //     description: data.description,
-        //     statusUnit: data.statusUnit,
-        //     dateInserted: data.dateInserted,
-        //     insertedByUser: data.insertedByUser,
-        //     dateUpdated: data.dateUpdated,
-        //     updatedByUser: data.updatedByUser,
-        //     isDelete: data.isDelete,
-        //     dateDeleted: data.dateDeleted,
-        //     deleteByUser: data.deleteByUser,
-        //     searchAll: '',
-        //   }))
-        // );
+        setDataTable(
+          data.data.data.map((data) => ({
+            key: data.containerTypeID,
+            containerTypeCode: data.containerTypeCode,
+            name: data.name,
+            details: data.details,
+            teus: data.teus,
+            statusContainerType: data.statusContainerType,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            isDelete: data.isDelete,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            searchAll: '',
+          }))
+        );
         pagination.current = currentPage;
         pagination.pageSize = pageSize;
         pagination.total = totalPages;
@@ -117,12 +130,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   const deleteItemDraftMutation = useMutation({
-    mutationFn: (id: string[]) => deleteUnit(id),
+    mutationFn: (id: string[]) => deleteContainerType(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_UNIT.GET_SEARCH],
+          queryKey: [API_CONTAINER_TYPE.GET_SEARCH],
         });
       } else {
         errorToast(data.message);
@@ -166,9 +179,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   };
 
   // Handle data show table
-  const columns: ProColumns<SeaPricingTable>[] = [
+  const columns: ProColumns<ContainerTypeTable>[] = [
     {
-      title: <div className={style.title}>{translateUnit('code')}</div>,
+      title: (
+        <div className={style.title}>{translateContainerType('code')}</div>
+      ),
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -180,10 +195,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     },
     {
       title: (
-        <div className={style.title}>{translateUnit('international_code')}</div>
+        <div className={style.title}>
+          {translateContainerType('container_no')}
+        </div>
       ),
-      dataIndex: 'internationalCode',
-      key: 'internationalCode',
+      dataIndex: 'containerTypeCode',
+      key: 'containerTypeCode',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputDraft>({
@@ -193,14 +210,18 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'internationalCode',
+          dataIndex: 'containerTypeCode',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateUnit('description')}</div>,
-      dataIndex: 'description',
-      key: 'description',
+      title: (
+        <div className={style.title}>
+          {translateContainerType('type_of_container')}
+        </div>
+      ),
+      dataIndex: 'name',
+      key: 'name',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputDraft>({
@@ -210,7 +231,45 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'description',
+          dataIndex: 'name',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateContainerType('detail')}</div>
+      ),
+      dataIndex: 'details',
+      key: 'details',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'details',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateContainerType('teus')}</div>
+      ),
+      dataIndex: 'teus',
+      key: 'teus',
+      width: 100,
+      align: 'right',
+      ...ColumnSearchTableProps<QueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'teus',
         },
       }),
     },
@@ -225,10 +284,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
+      title: (
+        <div className={style.title}>{translateContainerType('status')}</div>
+      ),
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusContainerType',
+      key: 'statusContainerType',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -287,7 +348,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: SeaPricingTable
+    record: ContainerTypeTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

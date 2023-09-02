@@ -39,8 +39,19 @@ export const API_SEA_PRICING = {
   GET_REQUEST: '/get-unit-with-status-request',
 };
 
+export const API_CONTAINER_TYPE = {
+  GET_SEARCH: '/search-container-type',
+  GET_DETAIL: '/get-container-type',
+  CREATE: '/add-container-type',
+  EDIT: '/update-container-type',
+  DELETE: '/delete-container-type',
+  UPDATE_STATUS: '/update-status-container-type',
+  GET_DRAFT: '/get-container-type-with-status-and-id-User',
+  GET_REQUEST: '/get-container-type-with-status-request',
+};
+
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',
-  GET_TYPE_PORT: '/get-all-type-port',
+  GET_TYPE_LOCATION: '/get-all-type-location',
 };
