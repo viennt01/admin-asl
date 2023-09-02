@@ -24,6 +24,7 @@ export const ROUTERS = {
   QUOTATION_ALL_IN_EDIT: (quotationAllInId: string) =>
     `/quotation/quotation-all-in/edit/${quotationAllInId}`,
   SEA_PRICING: '/pricing/pricing-sea',
+  SEA_PRICING_CREATE: '/pricing/pricing-sea/create',
   SEA_PRICING_EDIT: (seaPricingId: string) =>
     `/pricing/pricing-sea/edit/${seaPricingId}`,
   AIR_PRICING: '/pricing/pricing-air',
