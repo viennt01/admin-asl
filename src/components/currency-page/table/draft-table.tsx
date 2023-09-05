@@ -2,9 +2,9 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { UnitTable, QueryInputDraft, SelectDratSearch } from '../interface';
+import { CurrencyTable, QueryInputDraft, SelectDratSearch } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
-import { deleteUnit, getDartTable } from '../fetcher';
+import { deleteCurrency, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -26,8 +26,9 @@ import { API_MESSAGE } from '@/constant/message';
 import style from '@/components/commons/table/index.module.scss';
 
 const initalValueQueryInputParams = {
-  internationalCode: '',
-  description: '',
+  currencyName: '',
+  exchangeRateToVND: '',
+  exchangeRateToUSD: '',
 };
 
 const initalValueQuerySelectParams = {
@@ -39,17 +40,21 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  internationalCode: {
+  currencyName: {
     label: '',
     value: '',
   },
-  description: {
+  exchangeRateToVND: {
     label: '',
     value: '',
   },
-  statusUnit: {
+  exchangeRateToUSD: {
     label: '',
     value: '',
+  },
+  statusCurrency: {
+    label: '',
+    value: [],
   },
 };
 
@@ -61,14 +66,14 @@ interface PortFormProps {
 
 const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
-  const { translate: translateUnit } = useI18n('unit');
+  const { translate: translateCurrency } = useI18n('currency');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<UnitTable[]>([]);
+  const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectDratSearch>(initalSelectSearch);
 
@@ -89,10 +94,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.unitID,
-            internationalCode: data.internationalCode,
-            description: data.description,
-            statusUnit: data.statusUnit,
+            key: data.currencyID,
+            currencyName: data.currencyName,
+            exchangeRateToVND: data.exchangeRateToVND,
+            exchangeRateToUSD: data.exchangeRateToUSD,
+            statusCurrency: data.statusCurrency,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -113,7 +119,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   const deleteItemDraftMutation = useMutation({
-    mutationFn: (id: string[]) => deleteUnit(id),
+    mutationFn: (id: string[]) => deleteCurrency(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
@@ -162,9 +168,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   };
 
   // Handle data show table
-  const columns: ProColumns<UnitTable>[] = [
+  const columns: ProColumns<CurrencyTable>[] = [
     {
-      title: <div className={style.title}>{translateUnit('code')}</div>,
+      title: <div className={style.title}>{translateCurrency('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -175,11 +181,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: (
-        <div className={style.title}>{translateUnit('international_code')}</div>
-      ),
-      dataIndex: 'internationalCode',
-      key: 'internationalCode',
+      title: <div className={style.title}>{translateCurrency('currency')}</div>,
+      dataIndex: 'currencyName',
+      key: 'currencyName',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputDraft>({
@@ -189,14 +193,18 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'internationalCode',
+          dataIndex: 'currencyName',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateUnit('description')}</div>,
-      dataIndex: 'description',
-      key: 'description',
+      title: (
+        <div className={style.title}>
+          {translateCurrency('exchange_rate_to_VND')}
+        </div>
+      ),
+      dataIndex: 'exchangeRateToVND',
+      key: 'exchangeRateToVND',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputDraft>({
@@ -206,7 +214,28 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'description',
+          dataIndex: 'exchangeRateToVND',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translateCurrency('exchange_rate_to_USD')}
+        </div>
+      ),
+      dataIndex: 'exchangeRateToUSD',
+      key: 'exchangeRateToUSD',
+      width: 250,
+      align: 'center',
+      ...ColumnSearchTableProps<QueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'exchangeRateToUSD',
         },
       }),
     },
@@ -221,7 +250,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
+      title: <div className={style.title}>{translateCurrency('status')}</div>,
       width: 120,
       dataIndex: 'statusUnit',
       key: 'statusUnit',
@@ -283,7 +312,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: UnitTable
+    record: CurrencyTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

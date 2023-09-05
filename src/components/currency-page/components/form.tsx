@@ -5,16 +5,16 @@ import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormValues, STATUS_MATER_LABELS } from '../interface';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_CURRENCY } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
-import { getUnitDetail } from '../fetcher';
+import { getCurrencyDetail } from '../fetcher';
 import DraftTable from '../table/draft-table';
 
 const initialValue = {
-  description: '',
+  currencyName: '',
 };
 
-interface PortFormProps {
+interface FormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
@@ -27,9 +27,8 @@ interface PortFormProps {
 }
 
 const { Title } = Typography;
-const { TextArea } = Input;
 
-const UnitForm = ({
+const CurrencyForm = ({
   create,
   manager,
   edit,
@@ -39,8 +38,8 @@ const UnitForm = ({
   checkRow,
   handleApproveAndReject,
   useDraft,
-}: PortFormProps) => {
-  const { translate: translateUnit } = useI18n('unit');
+}: FormProps) => {
+  const { translate: translateCurrency } = useI18n('currency');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -74,19 +73,20 @@ const UnitForm = ({
   };
 
   const unitDetailQuery = useQuery({
-    queryKey: [API_UNIT.GET_DETAIL, idQuery],
-    queryFn: () => getUnitDetail(idQuery as string),
+    queryKey: [API_CURRENCY.GET_DETAIL, idQuery],
+    queryFn: () => getCurrencyDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          internationalCode: data.data.internationalCode,
-          descriptionVN: data.data.descriptionVN,
-          descriptionEN: data.data.descriptionEN,
-          statusUnit: data.data.statusUnit,
+          currencyID: data.data.currencyID,
+          currencyName: data.data.currencyName,
+          exchangeRateToVND: data.data.exchangeRateToVND,
+          exchangeRateToUSD: data.data.exchangeRateToUSD,
+          statusCurrency: data.data.statusCurrency,
         });
       } else {
-        router.push(ROUTERS.UNIT);
+        router.push(ROUTERS.CURRENCY);
       }
     },
   });
@@ -114,9 +114,9 @@ const UnitForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create && translateUnit('information_add_unit')}
+                  {create && translateCurrency('information_add_currency')}
                   {manager && 'Approval needed requests'}
-                  {edit && translateUnit('information_edit_unit')}
+                  {edit && translateCurrency('information_edit_currency')}
                 </Title>
               </Col>
             </Row>
@@ -128,21 +128,17 @@ const UnitForm = ({
           <Row gutter={16}>
             <Col lg={!create && !manager ? 12 : 24} span={12}>
               <Form.Item
-                label={translateUnit('international_code_form.title')}
-                name="internationalCode"
+                label={translateCurrency('currency_form.title')}
+                name="currencyName"
                 rules={[
                   {
                     required: true,
-                    message: translateUnit(
-                      'international_code_form.error_required'
-                    ),
+                    message: translateCurrency('currency_form.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateUnit(
-                    'international_code_form.placeholder'
-                  )}
+                  placeholder={translateCurrency('currency_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -151,18 +147,18 @@ const UnitForm = ({
             {!create && !manager ? (
               <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateUnit('status_form.title')}
-                  name="statusUnit"
+                  label={translateCurrency('status_form.title')}
+                  name="statusCurrency"
                   rules={[
                     {
                       required: true,
-                      message: translateUnit('status_form.error_required'),
+                      message: translateCurrency('status_form.error_required'),
                     },
                   ]}
                 >
                   <Select
                     size="large"
-                    placeholder={translateUnit('status_form.placeholder')}
+                    placeholder={translateCurrency('status_form.placeholder')}
                     options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
                       text: key,
                       value: key,
@@ -175,44 +171,56 @@ const UnitForm = ({
               <></>
             )}
 
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
-                label={translateUnit('description_vn_form.title')}
-                name="descriptionVN"
+                label={translateCurrency('exchange_rate_to_VND_form.title')}
+                name="exchangeRateToVND"
                 rules={[
                   {
                     required: true,
-                    message: translateUnit(
-                      'description_vn_form.error_required'
+                    message: translateCurrency(
+                      'exchange_rate_to_VND_form.error_required'
                     ),
                   },
                 ]}
               >
-                <TextArea
+                <Input
+                  type="number"
+                  min={0}
+                  prefix="₫"
+                  suffix="VND"
                   size="large"
-                  placeholder={translateUnit('description_vn_form.placeholder')}
+                  placeholder={translateCurrency(
+                    'exchange_rate_to_VND_form.placeholder'
+                  )}
                   allowClear
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
 
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
-                label={translateUnit('description_en_form.title')}
-                name="descriptionEN"
+                label={translateCurrency('exchange_rate_to_USD_form.title')}
+                name="exchangeRateToUSD"
                 rules={[
                   {
                     required: true,
-                    message: translateUnit(
-                      'description_en_form.error_required'
+                    message: translateCurrency(
+                      'exchange_rate_to_USD_form.error_required'
                     ),
                   },
                 ]}
               >
-                <TextArea
+                <Input
+                  type="number"
+                  min={0}
+                  prefix="$"
+                  suffix="USD"
                   size="large"
-                  placeholder={translateUnit('description_en_form.placeholder')}
+                  placeholder={translateCurrency(
+                    'exchange_rate_to_USD_form.placeholder'
+                  )}
                   allowClear
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -243,4 +251,4 @@ const UnitForm = ({
   );
 };
 
-export default UnitForm;
+export default CurrencyForm;

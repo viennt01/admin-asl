@@ -151,9 +151,13 @@ export const BottomCreateEdit = ({
               </>
             ) : (
               <>
-                <Button onClick={() => handleCheckEdit(true)}>
-                  {translateCommon('button_bottom_form.cancel')}
-                </Button>
+                {checkRow ? (
+                  <Button onClick={() => handleCheckEdit(true)}>
+                    {translateCommon('button_bottom_form.cancel')}
+                  </Button>
+                ) : (
+                  handleCancel()
+                )}
                 <Button
                   type="primary"
                   htmlType="submit"

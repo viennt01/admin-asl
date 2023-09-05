@@ -7,7 +7,25 @@
     
     "information_add_currency": "Add new currency",
     "information_edit_currency": "Edit Currency",
-    "currency_placeholder": "Choose currency",
-    "exchange_rate_to_VND_placeholder": "Enter exchange rate to VND",
-    "exchange_rate_to_USD_placeholder": "Enter exchange rate to USD"
+
+    "currency_form": {
+        "title": "Currency",
+        "placeholder": "Enter currency",
+        "error_required": "Please enter input currency"
+    },
+    "status_form": {
+        "title": "Status",
+        "placeholder": "Select status",
+        "error_required": "Please select status"
+    },
+    "exchange_rate_to_VND_form": {
+        "title": "Exchange rate to VND",
+        "placeholder": "Enter exchange rate to VND",
+        "error_required": "Please enter exchange rate to VND"
+    },
+    "exchange_rate_to_USD_form": {
+        "title": "Exchange rate to USD",
+        "placeholder": "Enter exchange rate to USD",
+        "error_required": "Please enter exchange rate to USD"
+    }
 }

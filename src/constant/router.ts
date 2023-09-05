@@ -48,8 +48,11 @@ export const ROUTERS = {
   FEE: '/master-data/fee',
   FEE_EDIT: (feeId: string) => `/master-data/fee/edit/${feeId}`,
   CURRENCY: '/master-data/accountant/currency',
-  CURRENCY_EDIT: (currencyId: string) =>
-    `/master-data/accountant/currency/edit/${currencyId}`,
+  CURRENCY_CREATE: '/master-data/accountant/currency/create',
+  CURRENCY_EDIT: (currencyId: string, checkRow = false) =>
+    `/master-data/accountant/currency/edit/${currencyId}?checkRow=${checkRow}`,
+  CURRENCY_MANAGER: (currencyId: string) =>
+    `/master-data/accountant/currency/manager-admin/${currencyId}`,
   BANK: '/master-data/accountant/bank',
   BANK_EDIT: (bankId: string) => `/master-data/accountant/bank/edit/${bankId}`,
   TYPES_OF_CONTAINER: '/master-data/type-of-container',

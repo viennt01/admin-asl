@@ -18,7 +18,6 @@ import {
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
-import style from './index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -38,6 +37,7 @@ import {
 import { deleteContainerType, getTypeContainersSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
+import style from '@/components/commons/table/index.module.scss';
 
 const { confirm } = Modal;
 

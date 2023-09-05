@@ -4,14 +4,9 @@ import {
   PaginationOfAntd,
 } from '@/components/commons/table/table-deafault';
 import Table from '@/components/commons/table/table';
-import {
-  ContainerTypeTable,
-  QueryInputParamType,
-  SelectSearch,
-  UpdateStatusContainerType,
-} from '@/components/type-of-container-page/interface';
+
 import { ROUTERS } from '@/constant/router';
-import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
+import { API_CURRENCY } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -25,15 +20,21 @@ import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getTable, updateStatus } from '../fetcher';
+import { getTableRequire, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
+
+import {
+  CurrencyTable,
+  QueryInputParamType,
+  SelectSearch,
+  UpdateStatusCurrency,
+} from '../interface';
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  containerTypeCode: '',
-  name: '',
-  details: '',
-  teus: '',
+  currencyName: '',
+  exchangeRateToVND: '',
+  exchangeRateToUSD: '',
 };
 
 const initalSelectSearch = {
@@ -41,25 +42,21 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  containerTypeCode: {
+  currencyName: {
     label: '',
     value: '',
   },
-  name: {
+  exchangeRateToVND: {
     label: '',
     value: '',
   },
-  details: {
+  exchangeRateToUSD: {
     label: '',
     value: '',
   },
-  teus: {
+  statusCurrency: {
     label: '',
-    value: '',
-  },
-  statusContainerType: {
-    label: '',
-    value: '',
+    value: [],
   },
 };
 
@@ -68,21 +65,21 @@ type DataIndex = keyof QueryInputParamType;
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateContainerType } = useI18n('typeOfContainer');
+  const { translate: translateCurrency } = useI18n('currency');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<ContainerTypeTable[]>([]);
+  const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectSearch>(initalSelectSearch);
   // Handle data
   useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_CURRENCY.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
-      getTable({
+      getTableRequire({
         ...queryInputParams,
         paginateRequest: {
           currentPage: pagination.current,
@@ -94,12 +91,11 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.containerTypeID,
-            containerTypeCode: data.containerTypeCode,
-            name: data.name,
-            details: data.details,
-            teus: data.teus,
-            statusContainerType: data.statusContainerType,
+            key: data.currencyID,
+            currencyName: data.currencyName,
+            exchangeRateToVND: data.exchangeRateToVND,
+            exchangeRateToUSD: data.exchangeRateToUSD,
+            statusCurrency: data.statusCurrency,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -119,8 +115,8 @@ const RequestTable = () => {
     },
   });
 
-  const updateStatusContainerTypeMutation = useMutation({
-    mutationFn: (body: UpdateStatusContainerType) => {
+  const updateStatusCurrencyMutation = useMutation({
+    mutationFn: (body: UpdateStatusCurrency) => {
       return updateStatus(body);
     },
   });
@@ -158,11 +154,9 @@ const RequestTable = () => {
   };
 
   // Handle data show table
-  const columns: ProColumns<ContainerTypeTable>[] = [
+  const columns: ProColumns<CurrencyTable>[] = [
     {
-      title: (
-        <div className={style.title}>{translateContainerType('code')}</div>
-      ),
+      title: <div className={style.title}>{translateCurrency('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -207,13 +201,9 @@ const RequestTable = () => {
       ),
     },
     {
-      title: (
-        <div className={style.title}>
-          {translateContainerType('container_no')}
-        </div>
-      ),
-      dataIndex: 'containerTypeCode',
-      key: 'containerTypeCode',
+      title: <div className={style.title}>{translateCurrency('currency')}</div>,
+      dataIndex: 'currencyName',
+      key: 'currencyName',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -223,18 +213,18 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'containerTypeCode',
+          dataIndex: 'currencyName',
         },
       }),
     },
     {
       title: (
         <div className={style.title}>
-          {translateContainerType('type_of_container')}
+          {translateCurrency('exchange_rate_to_VND')}
         </div>
       ),
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'exchangeRateToVND',
+      key: 'exchangeRateToVND',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -244,16 +234,18 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'name',
+          dataIndex: 'exchangeRateToVND',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>{translateContainerType('detail')}</div>
+        <div className={style.title}>
+          {translateCurrency('exchange_rate_to_USD')}
+        </div>
       ),
-      dataIndex: 'details',
-      key: 'details',
+      dataIndex: 'exchangeRateToUSD',
+      key: 'exchangeRateToUSD',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -263,26 +255,7 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'details',
-        },
-      }),
-    },
-    {
-      title: (
-        <div className={style.title}>{translateContainerType('teus')}</div>
-      ),
-      dataIndex: 'teus',
-      key: 'teus',
-      width: 250,
-      align: 'right',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'teus',
+          dataIndex: 'exchangeRateToUSD',
         },
       }),
     },
@@ -304,12 +277,10 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: (
-        <div className={style.title}>{translateContainerType('status')}</div>
-      ),
+      title: <div className={style.title}>{translateCurrency('status')}</div>,
       width: 120,
-      dataIndex: 'statusContainerType',
-      key: 'statusContainerType',
+      dataIndex: 'statusUnit',
+      key: 'statusUnit',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -327,21 +298,22 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_MANAGER(id));
+    router.push(ROUTERS.CURRENCY_MANAGER(id));
   };
 
   const handleApproveAndReject = (id: string, status: string) => {
-    const _requestData: UpdateStatusContainerType = {
+    const _requestData: UpdateStatusCurrency = {
       id,
       status,
     };
-    updateStatusContainerTypeMutation.mutate(_requestData, {
+    updateStatusCurrencyMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
           ? (successToast(data.message),
             queryClient.invalidateQueries({
               queryKey: [
-                API_CONTAINER_TYPE.GET_REQUEST,
+                API_CURRENCY.GET_REQUEST,
+                // API_CURRENCY.GET_SEARCH,
                 pagination,
                 queryInputParams,
               ],
@@ -364,11 +336,11 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: ContainerTypeTable
+    record: CurrencyTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_MANAGER(record.key));
+      router.push(ROUTERS.CURRENCY_MANAGER(record.key));
     }
   };
 
@@ -376,7 +348,7 @@ const RequestTable = () => {
     <>
       <div style={{ marginTop: -18 }}>
         <Table
-          headerTitle={translateContainerType('title_requests')}
+          headerTitle="List of approval-needed requests"
           dataTable={dataTable}
           columns={columns}
           handlePaginationChange={handlePaginationChange}

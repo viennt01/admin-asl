@@ -7,7 +7,25 @@
     
     "information_add_currency": "Thêm mới tiền tệ",
     "information_edit_currency": "Chỉnh sửa tiền tệ",
-    "currency_placeholder": "Chọn tiền tệ",
-    "exchange_rate_to_VND_placeholder": "Nhập tỉ giá sang VND",
-    "exchange_rate_to_USD_placeholder": "Nhập tỉ giá sang USD"
+
+    "currency_form": {
+        "title": "Tiền tệ",
+        "placeholder": "Nhập tiền tệ",
+        "error_required": "Vui lòng nhập tiền tệ"
+    },
+    "status_form": {
+        "title": "Trạng thái",
+        "placeholder": "Chọn trạng thái",
+        "error_required": "Vui lòng chọn trạng thái"
+    },
+    "exchange_rate_to_VND_form": {
+        "title": "Tỉ giá sang VND",
+        "placeholder": "Nhập tỉ giá sang VND",
+        "error_required": "Vui lòng nhập tỉ giá sang VND"
+    },
+    "exchange_rate_to_USD_form": {
+        "title": "Tỉ giá sang USD",
+        "placeholder": "Nhập tỉ giá sang USD",
+        "error_required": "Vui lòng nhập tỉ giá sang USD"
+    }
 }

@@ -17,7 +17,8 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_CURRENCY } from '@/fetcherAxios/endpoint';
+import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -27,28 +28,28 @@ import {
   STATUS_MASTER_COLORS,
   STATUS_MATER_LABELS,
   SelectSearch,
-  UnitTable,
+  CurrencyTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteUnit, getLocationsSearch } from '../fetcher';
+import { deleteCurrency, getCurrencySearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
-import style from '@/components/commons/table/index.module.scss';
 
 const { confirm } = Modal;
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  internationalCode: '',
-  description: '',
+  currencyName: '',
+  exchangeRateToVND: '',
+  exchangeRateToUSD: '',
 };
 
 const initalValueQuerySelectParams = {
-  statusUnit: [],
+  statusCurrency: [],
 };
 
 const initalValueDisplayColumn = {
@@ -60,13 +61,13 @@ const initalValueDisplayColumn = {
     order: 1,
     fixed: 'left' as const,
   },
-  internationalCode: {
+  currencyName: {
     order: 2,
   },
-  description: {
+  exchangeRateToVND: {
     order: 3,
   },
-  statusUnit: {
+  exchangeRateToUSD: {
     order: 4,
   },
   dateInserted: {
@@ -88,15 +89,19 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  internationalCode: {
+  currencyName: {
     label: '',
     value: '',
   },
-  description: {
+  exchangeRateToVND: {
     label: '',
     value: '',
   },
-  statusUnit: {
+  exchangeRateToUSD: {
+    label: '',
+    value: '',
+  },
+  statusCurrency: {
     label: '',
     value: [],
   },
@@ -108,7 +113,7 @@ export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateUnit } = useI18n('unit');
+  const { translate: translateCurrency } = useI18n('currency');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
@@ -117,7 +122,7 @@ export default function MasterDataTable() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
-  const [dataTable, setDataTable] = useState<UnitTable[]>([]);
+  const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -127,9 +132,9 @@ export default function MasterDataTable() {
 
   // Handle data
   const dataSelectSearch =
-    querySelectParams.statusUnit.length === 0
+    querySelectParams.statusCurrency.length === 0
       ? {
-          statusUnit: [
+          statusCurrency: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -138,13 +143,13 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_UNIT.GET_SEARCH,
+      API_CURRENCY.GET_SEARCH,
       pagination,
       queryInputParams,
       querySelectParams,
     ],
     queryFn: () =>
-      getLocationsSearch({
+      getCurrencySearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -157,10 +162,11 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.unitID,
-            internationalCode: data.internationalCode,
-            description: data.description,
-            statusUnit: data.statusUnit,
+            key: data.currencyID,
+            currencyName: data.currencyName,
+            exchangeRateToVND: data.exchangeRateToVND,
+            exchangeRateToUSD: data.exchangeRateToUSD,
+            statusCurrency: data.statusCurrency,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -181,13 +187,13 @@ export default function MasterDataTable() {
   });
 
   const deleteUnitMutation = useMutation({
-    mutationFn: () => deleteUnit(selectedRowKeys),
+    mutationFn: () => deleteCurrency(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
           queryKey: [
-            API_UNIT.GET_SEARCH,
+            API_CURRENCY.GET_SEARCH,
             pagination,
             queryInputParams,
             querySelectParams,
@@ -287,9 +293,9 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<UnitTable>[] = [
+  const columns: ProColumns<CurrencyTable>[] = [
     {
-      title: <div className={style.title}>{translateUnit('code')}</div>,
+      title: <div className={style.title}>{translateCurrency('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -299,11 +305,9 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: (
-        <div className={style.title}>{translateUnit('international_code')}</div>
-      ),
-      dataIndex: 'internationalCode',
-      key: 'internationalCode',
+      title: <div className={style.title}>{translateCurrency('currency')}</div>,
+      dataIndex: 'currencyName',
+      key: 'currencyName',
       width: 150,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -313,14 +317,18 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'internationalCode',
+          dataIndex: 'currencyName',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateUnit('description')}</div>,
-      dataIndex: 'description',
-      key: 'description',
+      title: (
+        <div className={style.title}>
+          {translateCurrency('exchange_rate_to_VND')}
+        </div>
+      ),
+      dataIndex: 'exchangeRateToVND',
+      key: 'exchangeRateToVND',
       width: 250,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -330,28 +338,49 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'description',
+          dataIndex: 'exchangeRateToVND',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
+      title: (
+        <div className={style.title}>
+          {translateCurrency('exchange_rate_to_USD')}
+        </div>
+      ),
+      dataIndex: 'exchangeRateToUSD',
+      key: 'exchangeRateToUSD',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'exchangeRateToUSD',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateCurrency('status')}</div>,
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusCurrency',
+      key: 'statusCurrency',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusUnit || null,
+      filteredValue: querySelectParams.statusCurrency || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusUnit.length !== 0
+                querySelectParams.statusCurrency.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -443,7 +472,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_EDIT(id));
+    router.push(ROUTERS.CURRENCY_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -487,16 +516,16 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: UnitTable
+    record: CurrencyTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_EDIT(record.key, true));
+      router.push(ROUTERS.CURRENCY_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.UNIT_CREATE);
+    router.push(ROUTERS.CURRENCY_CREATE);
   };
 
   return (
@@ -507,7 +536,7 @@ export default function MasterDataTable() {
         <Table
           dataTable={dataTable}
           columns={columns}
-          headerTitle={translateUnit('title')}
+          headerTitle={translateCurrency('title')}
           selectedRowKeys={selectedRowKeys}
           handleSelectionChange={handleSelectionChange}
           handlePaginationChange={handlePaginationChange}

@@ -26,7 +26,7 @@ import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
-import style from './index.module.scss';
+import style from '@/components/commons/table/index.module.scss';
 
 const initalValueQueryInputParams = {
   searchAll: '',

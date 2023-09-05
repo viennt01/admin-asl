@@ -50,6 +50,17 @@ export const API_CONTAINER_TYPE = {
   GET_REQUEST: '/get-container-type-with-status-request',
 };
 
+export const API_CURRENCY = {
+  GET_SEARCH: '/search-currency',
+  GET_DETAIL: '/get-currency',
+  CREATE: '/add-currency',
+  EDIT: '/update-currency',
+  DELETE: '/delete-currency',
+  UPDATE_STATUS: '/update-status-currency',
+  GET_DRAFT: '/get-currency-with-status-and-id-User',
+  GET_REQUEST: '/get-currency-with-status-request',
+};
+
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',
