@@ -151,6 +151,7 @@ const TypeOfContainerTypeForm = ({
                   )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -179,6 +180,7 @@ const TypeOfContainerTypeForm = ({
                       value: key,
                     }))}
                     disabled={checkRow && isCheckPermissionEdit}
+                    allowClear
                   />
                 </Form.Item>
               </Col>
@@ -214,12 +216,18 @@ const TypeOfContainerTypeForm = ({
                     required: true,
                     message: translateContainerType('teus_form.error_required'),
                   },
+                  {
+                    max: 3,
+                    message: 'Vui lòng nhập không nhiều hơn 3 số',
+                  },
                 ]}
               >
                 <Input
+                  type="number"
                   placeholder={translateContainerType('teus_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -242,8 +250,8 @@ const TypeOfContainerTypeForm = ({
                   placeholder={translateContainerType(
                     'details_en_form.placeholder'
                   )}
-                  allowClear
                   disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -266,8 +274,8 @@ const TypeOfContainerTypeForm = ({
                   placeholder={translateContainerType(
                     'details_vn_form.placeholder'
                   )}
-                  allowClear
                   disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
                 />
               </Form.Item>
             </Col>

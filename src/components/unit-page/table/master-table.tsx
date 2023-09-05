@@ -37,7 +37,7 @@ import {
 } from '@/components/commons/table/table-deafault';
 import { deleteUnit, getLocationsSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import TableUnit from '../../commons/table/table-unit';
+import Table from '../../commons/table/table';
 
 const { confirm } = Modal;
 
@@ -504,7 +504,7 @@ export default function MasterDataTable() {
       {locationsQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
-        <TableUnit
+        <Table
           dataTable={dataTable}
           columns={columns}
           headerTitle={translateUnit('title')}

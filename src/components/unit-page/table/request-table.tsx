@@ -3,7 +3,7 @@ import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
 } from '@/components/commons/table/table-deafault';
-import TableUnit from '@/components/commons/table/table-unit';
+import Table from '@/components/commons/table/table';
 import {
   UnitTable,
   QueryInputParamType,
@@ -311,7 +311,7 @@ const RequestTable = () => {
   return (
     <>
       <div style={{ marginTop: -18 }}>
-        <TableUnit
+        <Table
           headerTitle="List of approval-needed requests"
           dataTable={dataTable}
           columns={columns}

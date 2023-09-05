@@ -37,7 +37,7 @@ import { API_MASTER_DATA, API_LOCATION } from '@/fetcherAxios/endpoint';
 import { getListCountry, getListTypePort } from '@/layout/fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import TableUnit from '../commons/table/table-unit';
+import Table from '../commons/table/table';
 
 const { confirm } = Modal;
 
@@ -461,7 +461,7 @@ export default function LocationPage() {
       {portsQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
-        <TableUnit
+        <Table
           dataTable={dataTable}
           columns={columns}
           headerTitle={translateLocation('title')}

@@ -1,5 +1,5 @@
 import { Layout, Image, Form, Input, Button } from 'antd';
-import CustomCard from '../commons/CustomCard';
+import CustomCard from '../commons/custom-card';
 import { UserOutlined } from '@ant-design/icons';
 import { errorToast, successToast } from '@/hook/toast';
 import style from './forgot-password-page.module.scss';

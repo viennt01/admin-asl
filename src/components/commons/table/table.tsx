@@ -44,7 +44,7 @@ interface Props<T extends Record<string, any>> {
   ) => void;
   checkTableMaster: boolean;
 }
-const TableUnit = <T extends Record<string, any>>({
+const Table = <T extends Record<string, any>>({
   dataTable,
   columns,
   headerTitle,
@@ -167,4 +167,4 @@ const TableUnit = <T extends Record<string, any>>({
     />
   );
 };
-export default TableUnit;
+export default Table;

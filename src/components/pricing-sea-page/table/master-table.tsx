@@ -32,7 +32,7 @@ import {
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
 import { deleteUnit, getSeaPricingSearch } from '../fetcher';
-import TableUnit from '../../commons/table/table-unit';
+import Table from '../../commons/table/table';
 
 const { confirm } = Modal;
 
@@ -518,7 +518,7 @@ export default function MasterDataTable() {
       {locationsQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
-        <TableUnit
+        <Table
           dataTable={dataTable}
           columns={columns}
           headerTitle={translatePricingSea('title')}

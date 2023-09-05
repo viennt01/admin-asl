@@ -14,7 +14,7 @@ import {
   DownloadOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import TableUnit from '../../commons/table/table-unit';
+import Table from '../../commons/table/table';
 import {
   DEFAULT_PAGINATION_5,
   PaginationOfAntd,
@@ -299,7 +299,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     <Popover
       content={
         <div style={{ maxWidth: '700px' }}>
-          <TableUnit
+          <Table
             dataTable={dataTable}
             columns={columns}
             handlePaginationChange={handlePaginationChange}
