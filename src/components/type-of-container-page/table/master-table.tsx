@@ -35,7 +35,7 @@ import {
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteContainerType, getLocationsSearch } from '../fetcher';
+import { deleteContainerType, getTypeContainersSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import TableUnit from '../../commons/table/table-unit';
 
@@ -160,7 +160,7 @@ export default function MasterDataTable() {
       querySelectParams,
     ],
     queryFn: () =>
-      getLocationsSearch({
+      getTypeContainersSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -283,9 +283,9 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusUnit:
-        filters.statusUnit?.length !== 0 && filters.statusUnit
-          ? (filters.statusUnit as string[])
+      statusContainerType:
+        filters.statusContainerType?.length !== 0 && filters.statusContainerType
+          ? (filters.statusContainerType as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);

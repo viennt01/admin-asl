@@ -1,7 +1,7 @@
 import { ResponseWithPayload, post } from '@/fetcherAxios';
 import {
   ContainerTypesRequire,
-  RequestLocationType,
+  RequestTypeContainerType,
   RequestContainerTypeTableDraft,
   ContainerTypeCreate,
   ContainerTypeDelete,
@@ -13,8 +13,11 @@ import {
 } from './interface';
 import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
 
-export const getLocationsSearch = (data: RequestLocationType) => {
-  return post<RequestLocationType, ResponseWithPayload<ContainerTypesRequire>>({
+export const getTypeContainersSearch = (data: RequestTypeContainerType) => {
+  return post<
+    RequestTypeContainerType,
+    ResponseWithPayload<ContainerTypesRequire>
+  >({
     data,
   })(API_CONTAINER_TYPE.GET_SEARCH);
 };

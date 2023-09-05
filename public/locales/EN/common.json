@@ -68,7 +68,7 @@
         "create_request": "Create and Request",
         "send_request": "Send request",
         "cancel": "Cancel",
-        "approval": "Chấp nhận",
-        "reject": "Từ chối"
+        "approval": "Approval",
+        "reject": "Reject"
     }
 }

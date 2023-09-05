@@ -49,7 +49,7 @@ export interface QuerySelectParamType {
   statusContainerType: string[];
 }
 
-export interface RequestLocationType
+export interface RequestTypeContainerType
   extends QueryInputParamType,
     QuerySelectParamType {
   paginateRequest: Pagination;
