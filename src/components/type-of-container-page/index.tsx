@@ -2,10 +2,16 @@ import COLORS from '@/constant/color';
 import { Tabs, Badge } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
+import { useQueryClient } from '@tanstack/react-query';
+import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
 
 export default function TypeOfContainerPage() {
+  const queryClient = useQueryClient();
+
   const onChange = (key: string) => {
-    return key;
+    queryClient.invalidateQueries({
+      queryKey: [key],
+    });
   };
 
   return (
@@ -16,7 +22,7 @@ export default function TypeOfContainerPage() {
       items={[
         {
           label: 'Master Data',
-          key: 'masterData',
+          key: API_CONTAINER_TYPE.GET_SEARCH,
           children: <MasterDataTable />,
         },
         {
@@ -36,7 +42,7 @@ export default function TypeOfContainerPage() {
               </div>
             </Badge>
           ),
-          key: 'request',
+          key: API_CONTAINER_TYPE.GET_REQUEST,
           children: <RequestTable />,
         },
       ]}

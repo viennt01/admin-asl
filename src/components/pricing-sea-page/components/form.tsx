@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormValues, STATUS_MATER_LABELS } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
-import { BottomCreateEdit } from '@/components/commons/bottom-edit-creatr';
+import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import { getSeaPricingDetail } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import dayjs from 'dayjs';

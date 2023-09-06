@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerUnit from '@/components/unit-page/unit-manager';
+import ManagerUnit from '@/components/unit-page/manager';
 
 function UnitManagerPage() {
   return (

@@ -2,12 +2,17 @@ import { Badge, Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
+import { useQueryClient } from '@tanstack/react-query';
+import { API_UNIT } from '@/fetcherAxios/endpoint';
 
 export default function CalculationUnitPage() {
-  const onChange = (key: string) => {
-    return key;
-  };
+  const queryClient = useQueryClient();
 
+  const onChange = (key: string) => {
+    queryClient.invalidateQueries({
+      queryKey: [key],
+    });
+  };
   return (
     <Tabs
       onChange={onChange}
@@ -16,7 +21,7 @@ export default function CalculationUnitPage() {
       items={[
         {
           label: 'Master Data',
-          key: 'masterData',
+          key: API_UNIT.GET_SEARCH,
           children: <MasterDataTable />,
         },
         {
@@ -36,7 +41,7 @@ export default function CalculationUnitPage() {
               </div>
             </Badge>
           ),
-          key: 'request',
+          key: API_UNIT.GET_REQUEST,
           children: <RequestTable />,
         },
       ]}

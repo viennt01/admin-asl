@@ -313,7 +313,6 @@ const RequestTable = () => {
             queryClient.invalidateQueries({
               queryKey: [
                 API_CURRENCY.GET_REQUEST,
-                // API_CURRENCY.GET_SEARCH,
                 pagination,
                 queryInputParams,
               ],
