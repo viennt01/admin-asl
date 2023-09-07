@@ -2,9 +2,9 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { CurrencyTable, QueryInputDraft, SelectDratSearch } from '../interface';
-import { API_CURRENCY } from '@/fetcherAxios/endpoint';
-import { deleteCurrency, getDartTable } from '../fetcher';
+import { BankTable, QueryInputDraft, SelectDratSearch } from '../interface';
+import { API_BANK } from '@/fetcherAxios/endpoint';
+import { deleteBank, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -26,9 +26,15 @@ import { API_MESSAGE } from '@/constant/message';
 import style from '@/components/commons/table/index.module.scss';
 
 const initalValueQueryInputParams = {
-  currencyName: '',
-  exchangeRateToVND: '',
-  exchangeRateToUSD: '',
+  bankNo: '',
+  bankName: '',
+  accountNumberVND: '',
+  accountNumberUSD: '',
+  phoneNumber: '',
+  email: '',
+  address: '',
+  bankBranch: '',
+  note: '',
 };
 
 const initalValueQuerySelectParams = {
@@ -40,19 +46,43 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  currencyName: {
+  bankNo: {
     label: '',
     value: '',
   },
-  exchangeRateToVND: {
+  bankName: {
     label: '',
     value: '',
   },
-  exchangeRateToUSD: {
+  accountNumberVND: {
     label: '',
     value: '',
   },
-  statusCurrency: {
+  accountNumberUSD: {
+    label: '',
+    value: '',
+  },
+  phoneNumber: {
+    label: '',
+    value: '',
+  },
+  email: {
+    label: '',
+    value: '',
+  },
+  address: {
+    label: '',
+    value: '',
+  },
+  bankBranch: {
+    label: '',
+    value: '',
+  },
+  note: {
+    label: '',
+    value: '',
+  },
+  statusBank: {
     label: '',
     value: [],
   },
@@ -66,20 +96,20 @@ interface PortFormProps {
 
 const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
-  const { translate: translateCurrency } = useI18n('currency');
+  const { translate: translateBank } = useI18n('bank');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
+  const [dataTable, setDataTable] = useState<BankTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectDratSearch>(initalSelectSearch);
 
   // Handle data
   useQuery({
-    queryKey: [API_CURRENCY.GET_SEARCH, pagination, queryInputParams],
+    queryKey: [API_BANK.GET_DRAFT, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -94,11 +124,17 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.currencyID,
-            currencyName: data.currencyName,
-            exchangeRateToVND: data.exchangeRateToVND,
-            exchangeRateToUSD: data.exchangeRateToUSD,
-            statusCurrency: data.statusCurrency,
+            key: data.bankID,
+            bankNo: data.bankNo,
+            bankName: data.bankName,
+            accountNumberVND: data.accountNumberVND,
+            accountNumberUSD: data.accountNumberUSD,
+            phoneNumber: data.phoneNumber,
+            email: data.email,
+            address: data.address,
+            bankBranch: data.bankBranch,
+            note: data.note,
+            statusBank: data.statusBank,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -119,12 +155,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   const deleteItemDraftMutation = useMutation({
-    mutationFn: (id: string[]) => deleteCurrency(id),
+    mutationFn: (id: string[]) => deleteBank(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_CURRENCY.GET_SEARCH],
+          queryKey: [API_BANK.GET_DRAFT],
         });
       } else {
         errorToast(data.message);
@@ -168,9 +204,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   };
 
   // Handle data show table
-  const columns: ProColumns<CurrencyTable>[] = [
+  const columns: ProColumns<BankTable>[] = [
     {
-      title: <div className={style.title}>{translateCurrency('code')}</div>,
+      title: <div className={style.title}>{translateBank('bank_no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -181,9 +217,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: <div className={style.title}>{translateCurrency('currency')}</div>,
-      dataIndex: 'currencyName',
-      key: 'currencyName',
+      title: <div className={style.title}>{translateBank('bank_code')}</div>,
+      dataIndex: 'bankNo',
+      key: 'bankNo',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputDraft>({
@@ -193,18 +229,14 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'currencyName',
+          dataIndex: 'bankNo',
         },
       }),
     },
     {
-      title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_VND')}
-        </div>
-      ),
-      dataIndex: 'exchangeRateToVND',
-      key: 'exchangeRateToVND',
+      title: <div className={style.title}>{translateBank('bank_name')}</div>,
+      dataIndex: 'bankName',
+      key: 'bankName',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputDraft>({
@@ -214,18 +246,16 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'exchangeRateToVND',
+          dataIndex: 'bankName',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_USD')}
-        </div>
+        <div className={style.title}>{translateBank('VND_account_number')}</div>
       ),
-      dataIndex: 'exchangeRateToUSD',
-      key: 'exchangeRateToUSD',
+      dataIndex: 'accountNumberVND',
+      key: 'accountNumberVND',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputDraft>({
@@ -235,7 +265,26 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'exchangeRateToUSD',
+          dataIndex: 'accountNumberVND',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateBank('USD_account_number')}</div>
+      ),
+      dataIndex: 'accountNumberUSD',
+      key: 'accountNumberUSD',
+      width: 250,
+      align: 'center',
+      ...ColumnSearchTableProps<QueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'accountNumberUSD',
         },
       }),
     },
@@ -250,10 +299,10 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: <div className={style.title}>{translateCurrency('status')}</div>,
+      title: <div className={style.title}>{translateBank('status')}</div>,
       width: 120,
-      dataIndex: 'statusCurrency',
-      key: 'statusCurrency',
+      dataIndex: 'statusBank',
+      key: 'statusBank',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -312,7 +361,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: CurrencyTable
+    record: BankTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

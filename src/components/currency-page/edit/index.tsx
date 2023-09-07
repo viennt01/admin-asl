@@ -1,6 +1,6 @@
 import router from 'next/router';
 import { FormValues, CurrencyEdit } from '../interface';
-import { editUnit } from '../fetcher';
+import { editCurrency } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -8,9 +8,9 @@ import CurrencyForm from '../components/form';
 
 const EditCurrency = () => {
   const checkRow = router.query.checkRow as string;
-  const updateUnitMutation = useMutation({
+  const updateMutation = useMutation({
     mutationFn: (body: CurrencyEdit) => {
-      return editUnit(body);
+      return editCurrency(body);
     },
   });
 
@@ -23,7 +23,7 @@ const EditCurrency = () => {
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
         statusCurrency: formValues.statusCurrency,
       };
-      updateUnitMutation.mutate(_requestData, {
+      updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status ? successToast(data.message) : errorToast(data.message);
         },
@@ -40,7 +40,7 @@ const EditCurrency = () => {
     <CurrencyForm
       edit
       handleSubmit={handleSubmit}
-      loadingSubmit={updateUnitMutation.isLoading}
+      loadingSubmit={updateMutation.isLoading}
       checkRow={checkRow === 'true' ? true : false}
     />
   );

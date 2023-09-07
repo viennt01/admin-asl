@@ -6,7 +6,7 @@ import {
 import Table from '@/components/commons/table/table';
 
 import { ROUTERS } from '@/constant/router';
-import { API_CURRENCY } from '@/fetcherAxios/endpoint';
+import { API_BANK } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -24,17 +24,23 @@ import { getTableRequire, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 
 import {
-  CurrencyTable,
+  BankTable,
   QueryInputParamType,
   SelectSearch,
-  UpdateStatusCurrency,
+  UpdateStatusBank,
 } from '../interface';
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  currencyName: '',
-  exchangeRateToVND: '',
-  exchangeRateToUSD: '',
+  bankNo: '',
+  bankName: '',
+  accountNumberVND: '',
+  accountNumberUSD: '',
+  phoneNumber: '',
+  email: '',
+  address: '',
+  bankBranch: '',
+  note: '',
 };
 
 const initalSelectSearch = {
@@ -42,19 +48,43 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  currencyName: {
+  bankNo: {
     label: '',
     value: '',
   },
-  exchangeRateToVND: {
+  bankName: {
     label: '',
     value: '',
   },
-  exchangeRateToUSD: {
+  accountNumberVND: {
     label: '',
     value: '',
   },
-  statusCurrency: {
+  accountNumberUSD: {
+    label: '',
+    value: '',
+  },
+  phoneNumber: {
+    label: '',
+    value: '',
+  },
+  email: {
+    label: '',
+    value: '',
+  },
+  address: {
+    label: '',
+    value: '',
+  },
+  bankBranch: {
+    label: '',
+    value: '',
+  },
+  note: {
+    label: '',
+    value: '',
+  },
+  statusBank: {
     label: '',
     value: [],
   },
@@ -65,19 +95,19 @@ type DataIndex = keyof QueryInputParamType;
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateCurrency } = useI18n('currency');
+  const { translate: translateBank } = useI18n('bank');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
+  const [dataTable, setDataTable] = useState<BankTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectSearch>(initalSelectSearch);
   // Handle data
   useQuery({
-    queryKey: [API_CURRENCY.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_BANK.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTableRequire({
         ...queryInputParams,
@@ -91,11 +121,17 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.currencyID,
-            currencyName: data.currencyName,
-            exchangeRateToVND: data.exchangeRateToVND,
-            exchangeRateToUSD: data.exchangeRateToUSD,
-            statusCurrency: data.statusCurrency,
+            key: data.bankID,
+            bankNo: data.bankNo,
+            bankName: data.bankName,
+            accountNumberVND: data.accountNumberVND,
+            accountNumberUSD: data.accountNumberUSD,
+            phoneNumber: data.phoneNumber,
+            email: data.email,
+            address: data.address,
+            bankBranch: data.bankBranch,
+            note: data.note,
+            statusBank: data.statusBank,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -115,8 +151,8 @@ const RequestTable = () => {
     },
   });
 
-  const updateStatusCurrencyMutation = useMutation({
-    mutationFn: (body: UpdateStatusCurrency) => {
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusBank) => {
       return updateStatus(body);
     },
   });
@@ -154,9 +190,9 @@ const RequestTable = () => {
   };
 
   // Handle data show table
-  const columns: ProColumns<CurrencyTable>[] = [
+  const columns: ProColumns<BankTable>[] = [
     {
-      title: <div className={style.title}>{translateCurrency('code')}</div>,
+      title: <div className={style.title}>{translateBank('bank_no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -201,9 +237,9 @@ const RequestTable = () => {
       ),
     },
     {
-      title: <div className={style.title}>{translateCurrency('currency')}</div>,
-      dataIndex: 'currencyName',
-      key: 'currencyName',
+      title: <div className={style.title}>{translateBank('bank_code')}</div>,
+      dataIndex: 'bankNo',
+      key: 'bankNo',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -213,18 +249,14 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'currencyName',
+          dataIndex: 'bankNo',
         },
       }),
     },
     {
-      title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_VND')}
-        </div>
-      ),
-      dataIndex: 'exchangeRateToVND',
-      key: 'exchangeRateToVND',
+      title: <div className={style.title}>{translateBank('bank_name')}</div>,
+      dataIndex: 'bankName',
+      key: 'bankName',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -234,18 +266,16 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'exchangeRateToVND',
+          dataIndex: 'bankName',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_USD')}
-        </div>
+        <div className={style.title}>{translateBank('VND_account_number')}</div>
       ),
-      dataIndex: 'exchangeRateToUSD',
-      key: 'exchangeRateToUSD',
+      dataIndex: 'accountNumberVND',
+      key: 'accountNumberVND',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -255,7 +285,26 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'exchangeRateToUSD',
+          dataIndex: 'accountNumberVND',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateBank('USD_account_number')}</div>
+      ),
+      dataIndex: 'accountNumberUSD',
+      key: 'accountNumberUSD',
+      width: 250,
+      align: 'center',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'accountNumberUSD',
         },
       }),
     },
@@ -277,10 +326,10 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: <div className={style.title}>{translateCurrency('status')}</div>,
+      title: <div className={style.title}>{translateBank('status')}</div>,
       width: 120,
-      dataIndex: 'statusCurrency',
-      key: 'statusCurrency',
+      dataIndex: 'statusUnit',
+      key: 'statusUnit',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -298,24 +347,20 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.CURRENCY_MANAGER(id));
+    router.push(ROUTERS.BANK_MANAGER(id));
   };
 
   const handleApproveAndReject = (id: string, status: string) => {
-    const _requestData: UpdateStatusCurrency = {
+    const _requestData: UpdateStatusBank = {
       id,
       status,
     };
-    updateStatusCurrencyMutation.mutate(_requestData, {
+    updateStatusMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
           ? (successToast(data.message),
             queryClient.invalidateQueries({
-              queryKey: [
-                API_CURRENCY.GET_REQUEST,
-                pagination,
-                queryInputParams,
-              ],
+              queryKey: [API_BANK.GET_REQUEST, pagination, queryInputParams],
             }))
           : errorToast(data.message);
       },
@@ -335,11 +380,11 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: CurrencyTable
+    record: BankTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.CURRENCY_MANAGER(record.key));
+      router.push(ROUTERS.BANK_MANAGER(record.key));
     }
   };
 

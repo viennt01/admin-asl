@@ -61,6 +61,17 @@ export const API_CURRENCY = {
   GET_REQUEST: '/get-currency-with-status-request',
 };
 
+export const API_BANK = {
+  GET_SEARCH: '/search-bank',
+  GET_DETAIL: '/get-bank',
+  CREATE: '/add-bank',
+  EDIT: '/update-bank',
+  DELETE: '/delete-bank',
+  UPDATE_STATUS: '/update-status-bank',
+  GET_DRAFT: '/get-bank-with-status-and-id-User',
+  GET_REQUEST: '/get-bank-with-status-request',
+};
+
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',

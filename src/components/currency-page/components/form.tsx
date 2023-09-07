@@ -72,7 +72,7 @@ const CurrencyForm = ({
     }
   };
 
-  const unitDetailQuery = useQuery({
+  const detailQuery = useQuery({
     queryKey: [API_CURRENCY.GET_DETAIL, idQuery],
     queryFn: () => getCurrencyDetail(idQuery as string),
     enabled: idQuery !== undefined,
@@ -235,10 +235,10 @@ const CurrencyForm = ({
           edit={edit}
           loading={loading}
           isCheckPermissionEdit={isCheckPermissionEdit}
-          insertedByUser={unitDetailQuery.data?.data?.insertedByUser || ''}
-          dateInserted={unitDetailQuery.data?.data?.dateInserted || ''}
-          updatedByUser={unitDetailQuery.data?.data?.updatedByUser || ''}
-          dateUpdated={unitDetailQuery.data?.data?.dateUpdated || ''}
+          insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
+          dateInserted={detailQuery.data?.data?.dateInserted || ''}
+          updatedByUser={detailQuery.data?.data?.updatedByUser || ''}
+          dateUpdated={detailQuery.data?.data?.dateUpdated || ''}
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}

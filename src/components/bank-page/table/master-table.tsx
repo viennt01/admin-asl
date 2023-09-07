@@ -17,7 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_CURRENCY } from '@/fetcherAxios/endpoint';
+import { API_BANK } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
@@ -28,14 +28,14 @@ import {
   STATUS_MASTER_COLORS,
   STATUS_MATER_LABELS,
   SelectSearch,
-  CurrencyTable,
+  BankTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteCurrency, getCurrencySearch } from '../fetcher';
+import { deleteBank, getBankSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
 
@@ -43,13 +43,19 @@ const { confirm } = Modal;
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  currencyName: '',
-  exchangeRateToVND: '',
-  exchangeRateToUSD: '',
+  bankNo: '',
+  bankName: '',
+  accountNumberVND: '',
+  accountNumberUSD: '',
+  phoneNumber: '',
+  email: '',
+  address: '',
+  bankBranch: '',
+  note: '',
 };
 
 const initalValueQuerySelectParams = {
-  statusCurrency: [],
+  statusBank: [],
 };
 
 const initalValueDisplayColumn = {
@@ -61,27 +67,6 @@ const initalValueDisplayColumn = {
     order: 1,
     fixed: 'left' as const,
   },
-  currencyName: {
-    order: 2,
-  },
-  exchangeRateToVND: {
-    order: 3,
-  },
-  exchangeRateToUSD: {
-    order: 4,
-  },
-  dateInserted: {
-    order: 5,
-  },
-  insertedByUser: {
-    order: 6,
-  },
-  dateUpdated: {
-    order: 7,
-  },
-  updatedByUser: {
-    order: 8,
-  },
 };
 
 const initalSelectSearch = {
@@ -89,19 +74,43 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  currencyName: {
+  bankNo: {
     label: '',
     value: '',
   },
-  exchangeRateToVND: {
+  bankName: {
     label: '',
     value: '',
   },
-  exchangeRateToUSD: {
+  accountNumberVND: {
     label: '',
     value: '',
   },
-  statusCurrency: {
+  accountNumberUSD: {
+    label: '',
+    value: '',
+  },
+  phoneNumber: {
+    label: '',
+    value: '',
+  },
+  email: {
+    label: '',
+    value: '',
+  },
+  address: {
+    label: '',
+    value: '',
+  },
+  bankBranch: {
+    label: '',
+    value: '',
+  },
+  note: {
+    label: '',
+    value: '',
+  },
+  statusBank: {
     label: '',
     value: [],
   },
@@ -113,7 +122,7 @@ export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateCurrency } = useI18n('currency');
+  const { translate: translateBank } = useI18n('bank');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
@@ -122,7 +131,7 @@ export default function MasterDataTable() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
-  const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
+  const [dataTable, setDataTable] = useState<BankTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -132,9 +141,9 @@ export default function MasterDataTable() {
 
   // Handle data
   const dataSelectSearch =
-    querySelectParams.statusCurrency.length === 0
+    querySelectParams.statusBank.length === 0
       ? {
-          statusCurrency: [
+          statusBank: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -143,13 +152,13 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_CURRENCY.GET_SEARCH,
+      API_BANK.GET_SEARCH,
       pagination,
       queryInputParams,
       querySelectParams,
     ],
     queryFn: () =>
-      getCurrencySearch({
+      getBankSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -162,11 +171,17 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.currencyID,
-            currencyName: data.currencyName,
-            exchangeRateToVND: data.exchangeRateToVND,
-            exchangeRateToUSD: data.exchangeRateToUSD,
-            statusCurrency: data.statusCurrency,
+            key: data.bankID,
+            bankNo: data.bankNo,
+            bankName: data.bankName,
+            accountNumberVND: data.accountNumberVND,
+            accountNumberUSD: data.accountNumberUSD,
+            phoneNumber: data.phoneNumber,
+            email: data.email,
+            address: data.address,
+            bankBranch: data.bankBranch,
+            note: data.note,
+            statusBank: data.statusBank,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -186,14 +201,14 @@ export default function MasterDataTable() {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: () => deleteCurrency(selectedRowKeys),
+  const deleteUnitMutation = useMutation({
+    mutationFn: () => deleteBank(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
           queryKey: [
-            API_CURRENCY.GET_SEARCH,
+            API_BANK.GET_SEARCH,
             pagination,
             queryInputParams,
             querySelectParams,
@@ -271,9 +286,9 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusCurrency:
-        filters.statusCurrency?.length !== 0 && filters.statusCurrency
-          ? (filters.statusCurrency as string[])
+      statusUnit:
+        filters.statusUnit?.length !== 0 && filters.statusUnit
+          ? (filters.statusUnit as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);
@@ -293,9 +308,9 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<CurrencyTable>[] = [
+  const columns: ProColumns<BankTable>[] = [
     {
-      title: <div className={style.title}>{translateCurrency('code')}</div>,
+      title: <div className={style.title}>{translateBank('bank_no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -305,9 +320,9 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: <div className={style.title}>{translateCurrency('currency')}</div>,
-      dataIndex: 'currencyName',
-      key: 'currencyName',
+      title: <div className={style.title}>{translateBank('bank_code')}</div>,
+      dataIndex: 'bankNo',
+      key: 'bankNo',
       width: 150,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -317,18 +332,14 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'currencyName',
+          dataIndex: 'bankNo',
         },
       }),
     },
     {
-      title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_VND')}
-        </div>
-      ),
-      dataIndex: 'exchangeRateToVND',
-      key: 'exchangeRateToVND',
+      title: <div className={style.title}>{translateBank('bank_name')}</div>,
+      dataIndex: 'bankName',
+      key: 'bankName',
       width: 250,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -338,18 +349,16 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'exchangeRateToVND',
+          dataIndex: 'bankName',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_USD')}
-        </div>
+        <div className={style.title}>{translateBank('VND_account_number')}</div>
       ),
-      dataIndex: 'exchangeRateToUSD',
-      key: 'exchangeRateToUSD',
+      dataIndex: 'accountNumberVND',
+      key: 'accountNumberVND',
       width: 250,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -359,28 +368,132 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'exchangeRateToUSD',
+          dataIndex: 'accountNumberVND',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateCurrency('status')}</div>,
+      title: (
+        <div className={style.title}>{translateBank('USD_account_number')}</div>
+      ),
+      dataIndex: 'accountNumberUSD',
+      key: 'accountNumberUSD',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'accountNumberUSD',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateBank('phone')}</div>,
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'phoneNumber',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateBank('bank_email')}</div>,
+      dataIndex: 'email',
+      key: 'email',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'email',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateBank('bank_address')}</div>,
+      dataIndex: 'address',
+      key: 'address',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'address',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateBank('bank_address')}</div>,
+      dataIndex: 'bankBranch',
+      key: 'bankBranch',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'bankBranch',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateBank('bank_address')}</div>,
+      dataIndex: 'note',
+      key: 'note',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'note',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateBank('status')}</div>,
       width: 120,
-      dataIndex: 'statusCurrency',
-      key: 'statusCurrency',
+      dataIndex: 'statusBank',
+      key: 'statusBank',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusCurrency || null,
+      filteredValue: querySelectParams.statusBank || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusCurrency.length !== 0
+                querySelectParams.statusBank.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -454,7 +567,7 @@ export default function MasterDataTable() {
             cancelText={translateCommon('modal_delete.button_cancel')}
             onConfirm={() => {
               setSelectedRowKeys([value as string]);
-              deleteMutation.mutate();
+              deleteUnitMutation.mutate();
             }}
           >
             <Button
@@ -472,7 +585,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.CURRENCY_EDIT(id));
+    router.push(ROUTERS.BANK_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -499,7 +612,7 @@ export default function MasterDataTable() {
       cancelText: translateCommon('modal_delete.button_cancel'),
       okType: 'danger',
       onOk() {
-        deleteMutation.mutate();
+        deleteUnitMutation.mutate();
       },
     });
   };
@@ -516,16 +629,16 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: CurrencyTable
+    record: BankTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.CURRENCY_EDIT(record.key, true));
+      router.push(ROUTERS.BANK_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.CURRENCY_CREATE);
+    router.push(ROUTERS.BANK_CREATE);
   };
 
   return (
@@ -536,7 +649,7 @@ export default function MasterDataTable() {
         <Table
           dataTable={dataTable}
           columns={columns}
-          headerTitle={translateCurrency('title')}
+          headerTitle={translateBank('title')}
           selectedRowKeys={selectedRowKeys}
           handleSelectionChange={handleSelectionChange}
           handlePaginationChange={handlePaginationChange}

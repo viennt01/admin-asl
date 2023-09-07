@@ -2,7 +2,7 @@ import { ResponseWithPayload, post } from '@/fetcherAxios';
 import {
   CurrencyRequire,
   RequestCurrencyType,
-  RequestUnitTableDraft,
+  RequestTableDraft,
   CurrencyCreate,
   CurrencyDelete,
   CurrencyDetailDataBody,
@@ -33,7 +33,7 @@ export const createCurrency = (data: CurrencyCreate) => {
   })(API_CURRENCY.CREATE);
 };
 
-export const editUnit = (data: CurrencyEdit) => {
+export const editCurrency = (data: CurrencyEdit) => {
   return post<CurrencyEdit, ResponseWithPayload<CurrencyEdit>>({
     data,
   })(API_CURRENCY.EDIT);
@@ -47,8 +47,8 @@ export const deleteCurrency = (data: React.Key[]) => {
   })(API_CURRENCY.DELETE);
 };
 
-export const getDartTable = (data: RequestUnitTableDraft) => {
-  return post<RequestUnitTableDraft, ResponseWithPayload<CurrencyRequire>>({
+export const getDartTable = (data: RequestTableDraft) => {
+  return post<RequestTableDraft, ResponseWithPayload<CurrencyRequire>>({
     data,
   })(API_CURRENCY.GET_DRAFT);
 };

@@ -94,9 +94,7 @@ export interface QueryInputDraft {
 export interface QuerySelectDraft {
   status: string[];
 }
-export interface RequestUnitTableDraft
-  extends QueryInputDraft,
-    QuerySelectDraft {
+export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
   paginateRequest: Pagination;
 }
 

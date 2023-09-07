@@ -5,14 +5,14 @@ import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import CurrencyForm from '../components/form';
 import { FormValues, CurrencyCreate, CurrencyEdit } from '../interface';
-import { createCurrency, editUnit } from '../fetcher';
+import { createCurrency, editCurrency } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_CURRENCY } from '@/fetcherAxios/endpoint';
 
 const CreateCurrency = () => {
   const queryClient = useQueryClient();
 
-  const createCurrencyMutation = useMutation({
+  const createMutation = useMutation({
     mutationFn: (body: CurrencyCreate) => {
       return createCurrency(body);
     },
@@ -20,7 +20,7 @@ const CreateCurrency = () => {
 
   const updateCurrencyMutation = useMutation({
     mutationFn: (body: CurrencyEdit) => {
-      return editUnit(body);
+      return editCurrency(body);
     },
   });
 
@@ -50,7 +50,7 @@ const CreateCurrency = () => {
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
         statusCurrency: STATUS_ALL_LABELS.REQUEST,
       };
-      createCurrencyMutation.mutate(_requestData, {
+      createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message), router.push(ROUTERS.CURRENCY))
@@ -77,7 +77,7 @@ const CreateCurrency = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_UNIT.GET_SEARCH],
+                queryKey: [API_CURRENCY.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -92,12 +92,12 @@ const CreateCurrency = () => {
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
         statusCurrency: STATUS_ALL_LABELS.DRAFT,
       };
-      createCurrencyMutation.mutate(_requestData, {
+      createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_UNIT.GET_SEARCH],
+                queryKey: [API_CURRENCY.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -113,7 +113,7 @@ const CreateCurrency = () => {
       create
       handleSubmit={handleSubmit}
       handleSaveDraft={handleSaveDraft}
-      loadingSubmit={createCurrencyMutation.isLoading}
+      loadingSubmit={createMutation.isLoading}
       checkRow={false}
       useDraft
     />
