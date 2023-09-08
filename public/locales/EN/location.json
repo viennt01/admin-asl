@@ -15,22 +15,22 @@
     "port_code": {
         "title": "Code",
         "placeholder": "Enter location code",
-        "error_required": "Please enter input location Code"
+        "error_required": "Please enter location Code"
     },
     "port_name": {
         "title": "Location Name",
         "placeholder": "Enter Location name",
-        "error_required": "Please enter input location name"
+        "error_required": "Please enter location name"
     },
     "type_port": {
         "title": "Type Of Location",
         "placeholder": "Enter type of location",
-        "error_required": "Please enter input type of location"
+        "error_required": "Please enter type of location"
     },
     "country": {
         "title": "Country",
         "placeholder": "Enter country",
-        "error_required": "Please enter input country"
+        "error_required": "Please enter country"
     }, 
     "status_port": {
         "title": "Status",
@@ -40,10 +40,10 @@
     "address_port": {
         "title": "Address",
         "placeholder": "Enter address",
-        "error_required": "Please enter input address"
+        "error_required": "Please enter address"
     },
     "description": {
         "title": "Description",
-        "placeholder": "Please enter input description"
+        "placeholder": "Please enter description"
     }
 }

@@ -1,7 +1,7 @@
 {
     "title": "List of Bank",
     "bank_no": "No",
-    "bank_code": "Bank No",
+    "bank_code": "Bank Code",
     "bank_logo": "Logo",
     "bank_name": "Bank name",
     "VND_account_number": "VND account number",
@@ -17,15 +17,64 @@
 
     "information_add_bank": "Add new Bank",
     "information_edit_bank": "Edit Bank",
-    "bank_name_placeholder": "Enter the bank name",
-    "bank_account_number_placeholder": "Enter the bank account number",
-    "bank_email_placeholder": "Enter the email",
-    "bank_address_placeholder": "Enter the bank address",
-    "bank_branch_placeholder": "Choose the bank branch",
-    "bank_note_placeholder": "Enter the note",
-    "bank_code_placeholder": "Enter bank code",
-    "VND_account_number_placeholder": "Enter VND account number",
-    "USD_account_number_placeholder": "Enter USD account number",
-    "phone_placeholder": "Enter phone number",
-    "status_placeholder": "Choose status"
+
+    "bank_code_form": {
+        "title": "Bank No",
+        "placeholder": "Enter bank code",
+        "error_required": "Please enter the bank code"
+    },
+
+    "bank_name_form": {
+        "title": "Bank name",
+        "placeholder": "Enter bank name",
+        "error_required": "Please enter the bank name"
+    },
+
+    "VND_account_number_form": {
+        "title": "VND account number",
+        "placeholder": "Enter VND account number",
+        "error_required": "Please enter VND account number"
+    },
+
+    "USD_account_number_form": {
+        "title": "USD account number",
+        "placeholder": "Enter USD account number",
+        "error_required": "Please enter USD account number"
+    },
+
+    "bank_phone_form": {
+        "title": "Phone number",
+        "placeholder": "Enter phone number",
+        "error_required": "Please enter phone number"
+    },
+
+    "bank_email_form": {
+        "title": "Email",
+        "placeholder": "Enter the email",
+        "error_required": "Please enter the email"
+    },
+
+    "bank_address_form": {
+        "title": "Address",
+        "placeholder": "Enter the address",
+        "error_required": "Please enter the address"
+    },
+
+    "bank_branch_form": {
+        "title": "Bank branch",
+        "placeholder": "Enter the bank branch",
+        "error_required": "Please enter the bank branch"
+    },
+
+    "bank_note_form": {
+        "title": "Note",
+        "placeholder": "Enter the note",
+        "error_required": "Please enter the note"
+    },
+
+    "bank_status_form": {
+        "title": "Status",
+        "placeholder": "Select status",
+        "error_required": "Please Select status"
+    }
 }

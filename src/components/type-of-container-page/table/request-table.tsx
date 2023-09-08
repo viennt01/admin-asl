@@ -214,7 +214,7 @@ const RequestTable = () => {
       ),
       dataIndex: 'containerTypeCode',
       key: 'containerTypeCode',
-      width: 150,
+      width: 200,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {

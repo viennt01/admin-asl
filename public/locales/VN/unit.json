@@ -6,23 +6,28 @@
     "status": "Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+
     "information_add_unit": "Thêm mới đơn vị tính",
     "information_edit_unit": "Chỉnh sửa đơn vị tính",
+    
     "international_code_form": {
         "title": "Mã quốc tế",
         "placeholder": "Nhập mã quốc tế",
         "error_required": "Vui lòng nhập mã quốc tế"
     },
+    
     "status_form": {
         "title": "Trạng thái",
         "placeholder": "Chọn trạng thái",
         "error_required": "Vui lòng chọn trạng thái"
     },
+
     "description_vn_form": {
         "title": "Mô tả tiếng Việt",
         "placeholder": "Nhập mô tả tiếng Việt",
         "error_required": "Vui lòng nhập mô tả tiếng Việt"
     },
+    
     "description_en_form": {
         "title": "Mô tả tiếng Anh",
         "placeholder": "Nhập mô tả tiếng Anh",

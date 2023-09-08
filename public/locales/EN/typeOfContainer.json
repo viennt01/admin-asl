@@ -2,7 +2,7 @@
     "title": "List type of Container",
     "title_requests": "List of approval-needed requests",
     "code": "No",
-    "container_no": "Container type code",
+    "container_no": "Code",
     "type_of_container": "Type of Container",
     "detail": "Details",
     "status":"Status",
