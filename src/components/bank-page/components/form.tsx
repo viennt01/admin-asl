@@ -132,37 +132,38 @@ const BankForm = ({
           }
         >
           <Row gutter={16}>
-            <Col lg={12} span={24}>
+            <Col lg={6} span={24}>
               <Form.Item
-                label={translateBank('currency_form.title')}
+                label={translateBank('bank_code_form.title')}
                 name="bankNo"
                 rules={[
                   {
                     required: true,
-                    message: translateBank('currency_form.error_required'),
+                    message: translateBank('bank_code_form.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateBank('currency_form.placeholder')}
+                  placeholder={translateBank('bank_code_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} span={24}>
+
+            <Col lg={18} span={24}>
               <Form.Item
-                label={translateBank('currency_form.title')}
+                label={translateBank('bank_name_form.title')}
                 name="bankName"
                 rules={[
                   {
                     required: true,
-                    message: translateBank('currency_form.error_required'),
+                    message: translateBank('bank_name_form.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateBank('currency_form.placeholder')}
+                  placeholder={translateBank('bank_name_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -171,13 +172,13 @@ const BankForm = ({
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateBank('exchange_rate_to_VND_form.title')}
+                label={translateBank('VND_account_number_form.title')}
                 name="accountNumberVND"
                 rules={[
                   {
                     required: true,
                     message: translateBank(
-                      'exchange_rate_to_VND_form.error_required'
+                      'VND_account_number_form.error_required'
                     ),
                   },
                 ]}
@@ -189,22 +190,23 @@ const BankForm = ({
                   suffix="VND"
                   size="large"
                   placeholder={translateBank(
-                    'exchange_rate_to_VND_form.placeholder'
+                    'VND_account_number_form.placeholder'
                   )}
                   allowClear
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
+
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateBank('exchange_rate_to_USD_form.title')}
+                label={translateBank('USD_account_number_form.title')}
                 name="accountNumberUSD"
                 rules={[
                   {
                     required: true,
                     message: translateBank(
-                      'exchange_rate_to_USD_form.error_required'
+                      'USD_account_number_form.error_required'
                     ),
                   },
                 ]}
@@ -216,7 +218,7 @@ const BankForm = ({
                   suffix="USD"
                   size="large"
                   placeholder={translateBank(
-                    'exchange_rate_to_USD_form.placeholder'
+                    'USD_account_number_form.placeholder'
                   )}
                   allowClear
                   disabled={checkRow && isCheckPermissionEdit}
@@ -226,35 +228,17 @@ const BankForm = ({
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateBank('currency_form.title')}
+                label={translateBank('bank_address_form.title')}
                 name="address"
                 rules={[
                   {
                     required: true,
-                    message: translateBank('currency_form.error_required'),
+                    message: translateBank('bank_address_form.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateBank('currency_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateBank('currency_form.title')}
-                name="bankBranch"
-                rules={[
-                  {
-                    required: true,
-                    message: translateBank('currency_form.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateBank('currency_form.placeholder')}
+                  placeholder={translateBank('bank_address_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -263,55 +247,76 @@ const BankForm = ({
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateBank('currency_form.title')}
+                label={translateBank('bank_branch_form.title')}
+                name="bankBranch"
+                rules={[
+                  {
+                    required: true,
+                    message: translateBank('bank_branch_form.error_required'),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateBank('bank_branch_form.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateBank('bank_email_form.title')}
                 name="email"
                 rules={[
                   {
                     required: true,
-                    message: translateBank('currency_form.error_required'),
+                    message: translateBank('bank_email_form.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateBank('currency_form.placeholder')}
+                  placeholder={translateBank('bank_email_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
+
             <Col lg={!create && !manager ? 6 : 12} span={12}>
               <Form.Item
-                label={translateBank('phone')}
+                label={translateBank('bank_phone_form.title')}
                 name="phoneNumber"
                 rules={[
                   {
                     pattern: /^[0-9]{7,15}$/,
-                    message: 'Sai định dạng',
+                    message: translateBank('bank_phone_form.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder="Nhập số điện thoại"
+                  placeholder={translateBank('bank_phone_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
+
             {!create && !manager ? (
               <Col lg={6} span={12}>
                 <Form.Item
-                  label={translateBank('status_form.title')}
+                  label={translateBank('bank_status_form.title')}
                   name="statusBank"
                   rules={[
                     {
                       required: true,
-                      message: translateBank('status_form.error_required'),
+                      message: translateBank('bank_status_form.error_required'),
                     },
                   ]}
                 >
                   <Select
                     size="large"
-                    placeholder={translateBank('status_form.placeholder')}
+                    placeholder={translateBank('bank_status_form.placeholder')}
                     options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
                       text: key,
                       value: key,
@@ -325,9 +330,12 @@ const BankForm = ({
             )}
 
             <Col span={24}>
-              <Form.Item label={translateBank('bank_note')} name="note">
+              <Form.Item
+                label={translateBank('bank_note_form.title')}
+                name="note"
+              >
                 <Input.TextArea
-                  placeholder="Nhập ghi chú"
+                  placeholder={translateBank('bank_note_form.placeholder')}
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>

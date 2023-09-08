@@ -2,7 +2,7 @@
     "title": "Danh sách loại Container",
     "title_requests": "Danh sách các yêu cầu cần phê duyệt",
     "code": "Stt",
-    "container_no": "Mã loại container",
+    "container_no": "Mã",
     "type_of_container": "Loại Container",
     "detail": "Chi tiết",
     "status":"Trạng thái",

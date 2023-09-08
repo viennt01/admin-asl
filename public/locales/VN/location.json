@@ -28,22 +28,22 @@
         "error_required": "Vui lòng nhập loại"
     },
     "country": {
-        "title": "Quốc Gia",
+        "title": "Quốc gia",
         "placeholder": "Nhập quốc gia",
         "error_required": "Vui lòng nhập quốc gia"
     },
     "status_port": {
-        "title": "Trạng Thái",
+        "title": "Trạng thái",
         "placeholder": "Chọn trạng thái",
-        "error_required": "Vui lòng nhập trạng thái"
+        "error_required": "Vui lòng chọn trạng thái"
     },
     "address_port": {
-        "title": "Địa Chỉ",
+        "title": "Địa chỉ",
         "placeholder": "Nhập địa chỉ",
         "error_required": "Vui lòng nhập địa chỉ"
     },
     "description": {
-        "title": "Chi Tiết",
+        "title": "Chi tiết",
         "placeholder": "Nhập chi tiết"
     }
 }
