@@ -72,6 +72,17 @@ export const API_BANK = {
   GET_REQUEST: '/get-bank-with-status-request',
 };
 
+export const API_LOCATION_TYPE = {
+  GET_SEARCH: '/search-type-location',
+  GET_DETAIL: '/get-type-location',
+  CREATE: '/add-type-location',
+  EDIT: '/update-type-location',
+  DELETE: '/delete-type-location',
+  UPDATE_STATUS: '/update-status-type-location',
+  GET_DRAFT: '/get-type-location-with-status-and-id-User',
+  GET_REQUEST: '/get-type-location-with-status-request',
+};
+
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',

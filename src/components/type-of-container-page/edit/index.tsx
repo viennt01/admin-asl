@@ -4,7 +4,7 @@ import { editContainerType } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import TypeOfContainerTypeForm from '../components/type-of-container-type-form';
+import TypeOfContainerTypeForm from '../components/form';
 
 const EditTypeOfContainer = () => {
   const checkRow = router.query.checkRow as string;

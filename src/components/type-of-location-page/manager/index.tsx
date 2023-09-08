@@ -3,27 +3,26 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import TypeOfContainerTypeForm from '../components/form';
-import { UpdateStatusContainerType } from '../interface';
+import LocationTypeForm from '../components/form';
+import { UpdateStatusLocationType } from '../interface';
 import { updateStatus } from '../fetcher';
 
-const ManagerTypeOfContainer = () => {
-  const updateStatusContainerTypeMutation = useMutation({
-    mutationFn: (body: UpdateStatusContainerType) => {
+const ManagerLocationType = () => {
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusLocationType) => {
       return updateStatus(body);
     },
   });
 
   const handleApproveAndReject = (id: string, status: string) => {
-    const _requestData: UpdateStatusContainerType = {
+    const _requestData: UpdateStatusLocationType = {
       id,
       status,
     };
-    updateStatusContainerTypeMutation.mutate(_requestData, {
+    updateStatusMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
-          ? (successToast(data.message),
-            router.push(ROUTERS.TYPES_OF_CONTAINER))
+          ? (successToast(data.message), router.push(ROUTERS.BANK))
           : errorToast(data.message);
       },
       onError() {
@@ -33,13 +32,13 @@ const ManagerTypeOfContainer = () => {
   };
 
   return (
-    <TypeOfContainerTypeForm
+    <LocationTypeForm
       manager
       handleApproveAndReject={handleApproveAndReject}
-      loadingSubmit={updateStatusContainerTypeMutation.isLoading}
+      loadingSubmit={updateStatusMutation.isLoading}
       checkRow={true}
     />
   );
 };
 
-export default ManagerTypeOfContainer;
+export default ManagerLocationType;

@@ -4,17 +4,18 @@ import { useQuery } from '@tanstack/react-query';
 import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, STATUS_MATER_LABELS } from '../interface';
-import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
+import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getContainerTypeDetail } from '../fetcher';
+import { geLocationTypeDetail } from '../fetcher';
 import DraftTable from '../table/draft-table';
+import { FormValues, STATUS_MATER_LABELS } from '../interface';
 
 const initialValue = {
+  typeLocationName: '',
   description: '',
 };
 
-interface PortFormProps {
+interface FormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
@@ -27,9 +28,8 @@ interface PortFormProps {
 }
 
 const { Title } = Typography;
-const { TextArea } = Input;
 
-const TypeOfContainerTypeForm = ({
+const LocationTypeForm = ({
   create,
   manager,
   edit,
@@ -39,8 +39,8 @@ const TypeOfContainerTypeForm = ({
   checkRow,
   handleApproveAndReject,
   useDraft,
-}: PortFormProps) => {
-  const { translate: translateContainerType } = useI18n('typeOfContainer');
+}: FormProps) => {
+  const { translate: translateLocationType } = useI18n('typeOfLocation');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -73,22 +73,20 @@ const TypeOfContainerTypeForm = ({
     }
   };
 
-  const containerTypeDetailQuery = useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_DETAIL, idQuery],
-    queryFn: () => getContainerTypeDetail(idQuery as string),
+  const detailQuery = useQuery({
+    queryKey: [API_LOCATION_TYPE.GET_DETAIL, idQuery],
+    queryFn: () => geLocationTypeDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          containerTypeCode: data.data.containerTypeCode,
-          name: data.data.name,
-          detailsEN: data.data.detailsEN,
-          detailsVN: data.data.detailsVN,
-          teus: data.data.teus,
-          statusContainerType: data.data.statusContainerType,
+          typeLocationID: data.data.typeLocationID,
+          typeLocationName: data.data.typeLocationName,
+          description: data.data.description,
+          statusLocation: data.data.statusLocation,
         });
       } else {
-        router.push(ROUTERS.LOCATION);
+        router.push(ROUTERS.TYPE_OF_LOCATION);
       }
     },
   });
@@ -117,12 +115,20 @@ const TypeOfContainerTypeForm = ({
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
                   {create &&
-                    translateContainerType('information_add_type_of_container')}
+                    translateLocationType('information_add_type_of_location')}
                   {manager && 'Approval needed requests'}
                   {edit &&
-                    translateContainerType(
-                      'information_edit_type_of_container'
-                    )}
+                    (checkRow ? (
+                      <>
+                        {isCheckPermissionEdit && 'View'}
+                        {!isCheckPermissionEdit &&
+                          translateLocationType(
+                            'information_edit_type_of_location'
+                          )}
+                      </>
+                    ) : (
+                      translateLocationType('information_edit_type_of_location')
+                    ))}
                 </Title>
               </Col>
             </Row>
@@ -134,37 +140,35 @@ const TypeOfContainerTypeForm = ({
           <Row gutter={16}>
             <Col lg={!create && !manager ? 12 : 24} span={12}>
               <Form.Item
-                label={translateContainerType('container_type_code_form.title')}
-                name="containerTypeCode"
+                label={translateLocationType('international_code_form.title')}
+                name="typeLocationName"
                 rules={[
                   {
                     required: true,
-                    message: translateContainerType(
-                      'container_type_code_form.error_required'
+                    message: translateLocationType(
+                      'international_code_form.error_required'
                     ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateContainerType(
-                    'container_type_code_form.placeholder'
+                  placeholder={translateLocationType(
+                    'international_code_form.placeholder'
                   )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
-                  allowClear
                 />
               </Form.Item>
             </Col>
-
             {!create && !manager ? (
               <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateContainerType('status_form.title')}
-                  name="statusContainerType"
+                  label={translateLocationType('status_form.title')}
+                  name="statusLocation"
                   rules={[
                     {
                       required: true,
-                      message: translateContainerType(
+                      message: translateLocationType(
                         'status_form.error_required'
                       ),
                     },
@@ -172,7 +176,7 @@ const TypeOfContainerTypeForm = ({
                 >
                   <Select
                     size="large"
-                    placeholder={translateContainerType(
+                    placeholder={translateLocationType(
                       'status_form.placeholder'
                     )}
                     options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
@@ -180,7 +184,6 @@ const TypeOfContainerTypeForm = ({
                       value: key,
                     }))}
                     disabled={checkRow && isCheckPermissionEdit}
-                    allowClear
                   />
                 </Form.Item>
               </Col>
@@ -188,94 +191,26 @@ const TypeOfContainerTypeForm = ({
               <></>
             )}
 
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateContainerType('name_form.title')}
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: translateContainerType('name_form.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateContainerType('name_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateContainerType('teus_form.title')}
-                name="teus"
-                rules={[
-                  {
-                    required: true,
-                    message: translateContainerType('teus_form.error_required'),
-                  },
-                  {
-                    max: 3,
-                    message: 'Vui lòng nhập không nhiều hơn 3 số',
-                  },
-                ]}
-              >
-                <Input
-                  type="number"
-                  placeholder={translateContainerType('teus_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                  allowClear
-                />
-              </Form.Item>
-            </Col>
-
             <Col span={24}>
               <Form.Item
-                label={translateContainerType('details_en_form.title')}
-                name="detailsEN"
+                label={translateLocationType('description_vn_form.title')}
+                name="description"
                 rules={[
                   {
                     required: true,
-                    message: translateContainerType(
-                      'details_en_form.error_required'
+                    message: translateLocationType(
+                      'description_vn_form.error_required'
                     ),
                   },
                 ]}
               >
-                <TextArea
+                <Input.TextArea
                   size="large"
-                  placeholder={translateContainerType(
-                    'details_en_form.placeholder'
+                  placeholder={translateLocationType(
+                    'description_vn_form.placeholder'
                   )}
-                  disabled={checkRow && isCheckPermissionEdit}
                   allowClear
-                />
-              </Form.Item>
-            </Col>
-
-            <Col span={24}>
-              <Form.Item
-                label={translateContainerType('details_vn_form.title')}
-                name="detailsVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateContainerType(
-                      'details_vn_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <TextArea
-                  size="large"
-                  placeholder={translateContainerType(
-                    'details_vn_form.placeholder'
-                  )}
                   disabled={checkRow && isCheckPermissionEdit}
-                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -288,14 +223,10 @@ const TypeOfContainerTypeForm = ({
           edit={edit}
           loading={loading}
           isCheckPermissionEdit={isCheckPermissionEdit}
-          insertedByUser={
-            containerTypeDetailQuery.data?.data?.insertedByUser || ''
-          }
-          dateInserted={containerTypeDetailQuery.data?.data?.dateInserted || ''}
-          updatedByUser={
-            containerTypeDetailQuery.data?.data?.updatedByUser || ''
-          }
-          dateUpdated={containerTypeDetailQuery.data?.data?.dateUpdated || ''}
+          insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
+          dateInserted={detailQuery.data?.data?.dateInserted || ''}
+          updatedByUser={detailQuery.data?.data?.updatedByUser || ''}
+          dateUpdated={detailQuery.data?.data?.dateUpdated || ''}
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
@@ -308,4 +239,4 @@ const TypeOfContainerTypeForm = ({
   );
 };
 
-export default TypeOfContainerTypeForm;
+export default LocationTypeForm;

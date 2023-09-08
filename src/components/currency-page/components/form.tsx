@@ -116,7 +116,16 @@ const CurrencyForm = ({
                 <Title level={3} style={{ margin: '-4px 0' }}>
                   {create && translateCurrency('information_add_currency')}
                   {manager && 'Approval needed requests'}
-                  {edit && translateCurrency('information_edit_currency')}
+                  {edit &&
+                    (checkRow ? (
+                      <>
+                        {isCheckPermissionEdit && 'View'}
+                        {!isCheckPermissionEdit &&
+                          translateCurrency('information_edit_currency')}
+                      </>
+                    ) : (
+                      translateCurrency('information_edit_currency')
+                    ))}
                 </Title>
               </Col>
             </Row>

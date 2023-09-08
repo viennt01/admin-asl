@@ -5,16 +5,16 @@ import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormValues, STATUS_MATER_LABELS } from '../interface';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getUnitDetail } from '../fetcher';
+import { getContainerTypeDetail } from '../fetcher';
 import DraftTable from '../table/draft-table';
 
 const initialValue = {
-  description: '',
+  name: '',
 };
 
-interface PortFormProps {
+interface FormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
@@ -29,7 +29,7 @@ interface PortFormProps {
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const UnitForm = ({
+const TypeOfContainerTypeForm = ({
   create,
   manager,
   edit,
@@ -39,8 +39,8 @@ const UnitForm = ({
   checkRow,
   handleApproveAndReject,
   useDraft,
-}: PortFormProps) => {
-  const { translate: translateUnit } = useI18n('unit');
+}: FormProps) => {
+  const { translate: translateContainerType } = useI18n('typeOfContainer');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -73,20 +73,22 @@ const UnitForm = ({
     }
   };
 
-  const unitDetailQuery = useQuery({
-    queryKey: [API_UNIT.GET_DETAIL, idQuery],
-    queryFn: () => getUnitDetail(idQuery as string),
+  const detailQuery = useQuery({
+    queryKey: [API_CONTAINER_TYPE.GET_DETAIL, idQuery],
+    queryFn: () => getContainerTypeDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          internationalCode: data.data.internationalCode,
-          descriptionVN: data.data.descriptionVN,
-          descriptionEN: data.data.descriptionEN,
-          statusUnit: data.data.statusUnit,
+          containerTypeCode: data.data.containerTypeCode,
+          name: data.data.name,
+          detailsEN: data.data.detailsEN,
+          detailsVN: data.data.detailsVN,
+          teus: data.data.teus,
+          statusContainerType: data.data.statusContainerType,
         });
       } else {
-        router.push(ROUTERS.UNIT);
+        router.push(ROUTERS.LOCATION);
       }
     },
   });
@@ -114,17 +116,22 @@ const UnitForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create && translateUnit('information_add_unit')}
+                  {create &&
+                    translateContainerType('information_add_type_of_container')}
                   {manager && 'Approval needed requests'}
                   {edit &&
                     (checkRow ? (
                       <>
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
-                          translateUnit('information_edit_unit')}
+                          translateContainerType(
+                            'information_edit_type_of_container'
+                          )}
                       </>
                     ) : (
-                      translateUnit('information_edit_unit')
+                      translateContainerType(
+                        'information_edit_type_of_container'
+                      )
                     ))}
                 </Title>
               </Col>
@@ -137,46 +144,53 @@ const UnitForm = ({
           <Row gutter={16}>
             <Col lg={!create && !manager ? 12 : 24} span={12}>
               <Form.Item
-                label={translateUnit('international_code_form.title')}
-                name="internationalCode"
+                label={translateContainerType('container_type_code_form.title')}
+                name="containerTypeCode"
                 rules={[
                   {
                     required: true,
-                    message: translateUnit(
-                      'international_code_form.error_required'
+                    message: translateContainerType(
+                      'container_type_code_form.error_required'
                     ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateUnit(
-                    'international_code_form.placeholder'
+                  placeholder={translateContainerType(
+                    'container_type_code_form.placeholder'
                   )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
                 />
               </Form.Item>
             </Col>
+
             {!create && !manager ? (
               <Col lg={12} span={24}>
                 <Form.Item
-                  label={translateUnit('status_form.title')}
-                  name="statusUnit"
+                  label={translateContainerType('status_form.title')}
+                  name="statusContainerType"
                   rules={[
                     {
                       required: true,
-                      message: translateUnit('status_form.error_required'),
+                      message: translateContainerType(
+                        'status_form.error_required'
+                      ),
                     },
                   ]}
                 >
                   <Select
                     size="large"
-                    placeholder={translateUnit('status_form.placeholder')}
+                    placeholder={translateContainerType(
+                      'status_form.placeholder'
+                    )}
                     options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
                       text: key,
                       value: key,
                     }))}
                     disabled={checkRow && isCheckPermissionEdit}
+                    allowClear
                   />
                 </Form.Item>
               </Col>
@@ -184,46 +198,94 @@ const UnitForm = ({
               <></>
             )}
 
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
-                label={translateUnit('description_vn_form.title')}
-                name="descriptionVN"
+                label={translateContainerType('name_form.title')}
+                name="name"
                 rules={[
                   {
                     required: true,
-                    message: translateUnit(
-                      'description_vn_form.error_required'
-                    ),
+                    message: translateContainerType('name_form.error_required'),
                   },
                 ]}
               >
-                <TextArea
+                <Input
+                  placeholder={translateContainerType('name_form.placeholder')}
                   size="large"
-                  placeholder={translateUnit('description_vn_form.placeholder')}
-                  allowClear
                   disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateContainerType('teus_form.title')}
+                name="teus"
+                rules={[
+                  {
+                    required: true,
+                    message: translateContainerType('teus_form.error_required'),
+                  },
+                  {
+                    max: 3,
+                    message: 'Vui lòng nhập không nhiều hơn 3 số',
+                  },
+                ]}
+              >
+                <Input
+                  type="number"
+                  placeholder={translateContainerType('teus_form.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
                 />
               </Form.Item>
             </Col>
 
             <Col span={24}>
               <Form.Item
-                label={translateUnit('description_en_form.title')}
-                name="descriptionEN"
+                label={translateContainerType('details_en_form.title')}
+                name="detailsEN"
                 rules={[
                   {
                     required: true,
-                    message: translateUnit(
-                      'description_en_form.error_required'
+                    message: translateContainerType(
+                      'details_en_form.error_required'
                     ),
                   },
                 ]}
               >
                 <TextArea
                   size="large"
-                  placeholder={translateUnit('description_en_form.placeholder')}
-                  allowClear
+                  placeholder={translateContainerType(
+                    'details_en_form.placeholder'
+                  )}
                   disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
+                />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label={translateContainerType('details_vn_form.title')}
+                name="detailsVN"
+                rules={[
+                  {
+                    required: true,
+                    message: translateContainerType(
+                      'details_vn_form.error_required'
+                    ),
+                  },
+                ]}
+              >
+                <TextArea
+                  size="large"
+                  placeholder={translateContainerType(
+                    'details_vn_form.placeholder'
+                  )}
+                  disabled={checkRow && isCheckPermissionEdit}
+                  allowClear
                 />
               </Form.Item>
             </Col>
@@ -236,10 +298,10 @@ const UnitForm = ({
           edit={edit}
           loading={loading}
           isCheckPermissionEdit={isCheckPermissionEdit}
-          insertedByUser={unitDetailQuery.data?.data?.insertedByUser || ''}
-          dateInserted={unitDetailQuery.data?.data?.dateInserted || ''}
-          updatedByUser={unitDetailQuery.data?.data?.updatedByUser || ''}
-          dateUpdated={unitDetailQuery.data?.data?.dateUpdated || ''}
+          insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
+          dateInserted={detailQuery.data?.data?.dateInserted || ''}
+          updatedByUser={detailQuery.data?.data?.updatedByUser || ''}
+          dateUpdated={detailQuery.data?.data?.dateUpdated || ''}
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
@@ -252,4 +314,4 @@ const UnitForm = ({
   );
 };
 
-export default UnitForm;
+export default TypeOfContainerTypeForm;

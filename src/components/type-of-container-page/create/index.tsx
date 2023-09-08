@@ -3,7 +3,7 @@ import { ROUTERS } from '@/constant/router';
 import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
-import TypeOfContainerTypeForm from '../components/type-of-container-type-form';
+import TypeOfContainerTypeForm from '../components/form';
 import {
   FormValues,
   ContainerTypeCreate,

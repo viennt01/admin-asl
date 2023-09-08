@@ -17,7 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_BANK } from '@/fetcherAxios/endpoint';
+import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
@@ -28,14 +28,14 @@ import {
   STATUS_MASTER_COLORS,
   STATUS_MATER_LABELS,
   SelectSearch,
-  BankTable,
+  LocationTypeTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteBank, getBankSearch } from '../fetcher';
+import { deleteLocationType, getLocationTypeSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
 
@@ -43,19 +43,12 @@ const { confirm } = Modal;
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  bankNo: '',
-  bankName: '',
-  accountNumberVND: '',
-  accountNumberUSD: '',
-  phoneNumber: '',
-  email: '',
-  address: '',
-  bankBranch: '',
-  note: '',
+  typeLocationName: '',
+  description: '',
 };
 
 const initalValueQuerySelectParams = {
-  statusBank: [],
+  statusLocation: [],
 };
 
 const initalValueDisplayColumn = {
@@ -74,43 +67,15 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  bankNo: {
+  typeLocationName: {
     label: '',
     value: '',
   },
-  bankName: {
+  description: {
     label: '',
     value: '',
   },
-  accountNumberVND: {
-    label: '',
-    value: '',
-  },
-  accountNumberUSD: {
-    label: '',
-    value: '',
-  },
-  phoneNumber: {
-    label: '',
-    value: '',
-  },
-  email: {
-    label: '',
-    value: '',
-  },
-  address: {
-    label: '',
-    value: '',
-  },
-  bankBranch: {
-    label: '',
-    value: '',
-  },
-  note: {
-    label: '',
-    value: '',
-  },
-  statusBank: {
+  statusLocation: {
     label: '',
     value: [],
   },
@@ -122,7 +87,7 @@ export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateBank } = useI18n('bank');
+  const { translate: translateLocationType } = useI18n('typeOfLocation');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
@@ -131,7 +96,7 @@ export default function MasterDataTable() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
-  const [dataTable, setDataTable] = useState<BankTable[]>([]);
+  const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -141,9 +106,9 @@ export default function MasterDataTable() {
 
   // Handle data
   const dataSelectSearch =
-    querySelectParams.statusBank.length === 0
+    querySelectParams.statusLocation.length === 0
       ? {
-          statusBank: [
+          statusLocation: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -152,13 +117,13 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_BANK.GET_SEARCH,
+      API_LOCATION_TYPE.GET_SEARCH,
       pagination,
       queryInputParams,
       querySelectParams,
     ],
     queryFn: () =>
-      getBankSearch({
+      getLocationTypeSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -171,17 +136,10 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.bankID,
-            bankNo: data.bankNo,
-            bankName: data.bankName,
-            accountNumberVND: data.accountNumberVND,
-            accountNumberUSD: data.accountNumberUSD,
-            phoneNumber: data.phoneNumber,
-            email: data.email,
-            address: data.address,
-            bankBranch: data.bankBranch,
-            note: data.note,
-            statusBank: data.statusBank,
+            key: data.typeLocationID,
+            typeLocationName: data.typeLocationName,
+            description: data.description,
+            statusLocation: data.statusLocation,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -201,14 +159,14 @@ export default function MasterDataTable() {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: () => deleteBank(selectedRowKeys),
+  const deletesMutation = useMutation({
+    mutationFn: () => deleteLocationType(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
           queryKey: [
-            API_BANK.GET_SEARCH,
+            API_LOCATION_TYPE.GET_SEARCH,
             pagination,
             queryInputParams,
             querySelectParams,
@@ -286,9 +244,9 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusBank:
-        filters.statusBank?.length !== 0 && filters.statusBank
-          ? (filters.statusBank as string[])
+      statusLocation:
+        filters.statusLocation?.length !== 0 && filters.statusLocation
+          ? (filters.statusLocation as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);
@@ -308,9 +266,9 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<BankTable>[] = [
+  const columns: ProColumns<LocationTypeTable>[] = [
     {
-      title: <div className={style.title}>{translateBank('bank_no')}</div>,
+      title: <div className={style.title}>{translateLocationType('no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -320,9 +278,9 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: <div className={style.title}>{translateBank('bank_code')}</div>,
-      dataIndex: 'bankNo',
-      key: 'bankNo',
+      title: <div className={style.title}>{translateLocationType('name')}</div>,
+      dataIndex: 'typeLocationName',
+      key: 'typeLocationName',
       width: 150,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -332,33 +290,18 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'bankNo',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('bank_name')}</div>,
-      dataIndex: 'bankName',
-      key: 'bankName',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'bankName',
+          dataIndex: 'typeLocationName',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>{translateBank('VND_account_number')}</div>
+        <div className={style.title}>
+          {translateLocationType('description')}
+        </div>
       ),
-      dataIndex: 'accountNumberVND',
-      key: 'accountNumberVND',
+      dataIndex: 'description',
+      key: 'description',
       width: 250,
       align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -368,132 +311,30 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'accountNumberVND',
+          dataIndex: 'description',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>{translateBank('USD_account_number')}</div>
+        <div className={style.title}>{translateLocationType('status')}</div>
       ),
-      dataIndex: 'accountNumberUSD',
-      key: 'accountNumberUSD',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'accountNumberUSD',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('phone')}</div>,
-      dataIndex: 'phoneNumber',
-      key: 'phoneNumber',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'phoneNumber',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('bank_email')}</div>,
-      dataIndex: 'email',
-      key: 'email',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'email',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('bank_address')}</div>,
-      dataIndex: 'address',
-      key: 'address',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'address',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('bank_address')}</div>,
-      dataIndex: 'bankBranch',
-      key: 'bankBranch',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'bankBranch',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('bank_address')}</div>,
-      dataIndex: 'note',
-      key: 'note',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'note',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('status')}</div>,
       width: 120,
-      dataIndex: 'statusBank',
-      key: 'statusBank',
+      dataIndex: 'statusLocation',
+      key: 'statusLocation',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusBank || null,
+      filteredValue: querySelectParams.statusLocation || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusBank.length !== 0
+                querySelectParams.statusLocation.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -567,7 +408,7 @@ export default function MasterDataTable() {
             cancelText={translateCommon('modal_delete.button_cancel')}
             onConfirm={() => {
               setSelectedRowKeys([value as string]);
-              deleteMutation.mutate();
+              deletesMutation.mutate();
             }}
           >
             <Button
@@ -585,7 +426,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.BANK_EDIT(id));
+    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -612,7 +453,7 @@ export default function MasterDataTable() {
       cancelText: translateCommon('modal_delete.button_cancel'),
       okType: 'danger',
       onOk() {
-        deleteMutation.mutate();
+        deletesMutation.mutate();
       },
     });
   };
@@ -629,16 +470,16 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: BankTable
+    record: LocationTypeTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.BANK_EDIT(record.key, true));
+      router.push(ROUTERS.TYPE_OF_LOCATION_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.BANK_CREATE);
+    router.push(ROUTERS.TYPE_OF_LOCATION_CREATE);
   };
 
   return (
@@ -649,7 +490,7 @@ export default function MasterDataTable() {
         <Table
           dataTable={dataTable}
           columns={columns}
-          headerTitle={translateBank('title')}
+          headerTitle={translateLocationType('title')}
           selectedRowKeys={selectedRowKeys}
           handleSelectionChange={handleSelectionChange}
           handlePaginationChange={handlePaginationChange}

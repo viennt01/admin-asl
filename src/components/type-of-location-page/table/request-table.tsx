@@ -24,23 +24,16 @@ import { getTableRequire, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 
 import {
-  BankTable,
+  LocationTypeTable,
   QueryInputParamType,
   SelectSearch,
-  UpdateStatusBank,
+  UpdateStatusLocationType,
 } from '../interface';
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  bankNo: '',
-  bankName: '',
-  accountNumberVND: '',
-  accountNumberUSD: '',
-  phoneNumber: '',
-  email: '',
-  address: '',
-  bankBranch: '',
-  note: '',
+  typeLocationName: '',
+  description: '',
 };
 
 const initalSelectSearch = {
@@ -48,43 +41,15 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  bankNo: {
+  typeLocationName: {
     label: '',
     value: '',
   },
-  bankName: {
+  description: {
     label: '',
     value: '',
   },
-  accountNumberVND: {
-    label: '',
-    value: '',
-  },
-  accountNumberUSD: {
-    label: '',
-    value: '',
-  },
-  phoneNumber: {
-    label: '',
-    value: '',
-  },
-  email: {
-    label: '',
-    value: '',
-  },
-  address: {
-    label: '',
-    value: '',
-  },
-  bankBranch: {
-    label: '',
-    value: '',
-  },
-  note: {
-    label: '',
-    value: '',
-  },
-  statusBank: {
+  statusLocation: {
     label: '',
     value: [],
   },
@@ -95,14 +60,14 @@ type DataIndex = keyof QueryInputParamType;
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateBank } = useI18n('bank');
+  const { translate: translateLocationType } = useI18n('typeOfLocation');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParams
   );
-  const [dataTable, setDataTable] = useState<BankTable[]>([]);
+  const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] =
     useState<SelectSearch>(initalSelectSearch);
   // Handle data
@@ -121,17 +86,10 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.bankID,
-            bankNo: data.bankNo,
-            bankName: data.bankName,
-            accountNumberVND: data.accountNumberVND,
-            accountNumberUSD: data.accountNumberUSD,
-            phoneNumber: data.phoneNumber,
-            email: data.email,
-            address: data.address,
-            bankBranch: data.bankBranch,
-            note: data.note,
-            statusBank: data.statusBank,
+            key: data.typeLocationID,
+            typeLocationName: data.typeLocationName,
+            description: data.description,
+            statusLocation: data.statusLocation,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -152,7 +110,7 @@ const RequestTable = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusBank) => {
+    mutationFn: (body: UpdateStatusLocationType) => {
       return updateStatus(body);
     },
   });
@@ -190,9 +148,11 @@ const RequestTable = () => {
   };
 
   // Handle data show table
-  const columns: ProColumns<BankTable>[] = [
+  const columns: ProColumns<LocationTypeTable>[] = [
     {
-      title: <div className={style.title}>{translateBank('bank_no')}</div>,
+      title: (
+        <div className={style.title}>{translateLocationType('bank_no')}</div>
+      ),
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -237,9 +197,9 @@ const RequestTable = () => {
       ),
     },
     {
-      title: <div className={style.title}>{translateBank('bank_code')}</div>,
-      dataIndex: 'bankNo',
-      key: 'bankNo',
+      title: <div className={style.title}>{translateLocationType('name')}</div>,
+      dataIndex: 'typeLocationName',
+      key: 'typeLocationName',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -249,33 +209,18 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'bankNo',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateBank('bank_name')}</div>,
-      dataIndex: 'bankName',
-      key: 'bankName',
-      width: 250,
-      align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'bankName',
+          dataIndex: 'typeLocationName',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>{translateBank('VND_account_number')}</div>
+        <div className={style.title}>
+          {translateLocationType('description')}
+        </div>
       ),
-      dataIndex: 'accountNumberVND',
-      key: 'accountNumberVND',
+      dataIndex: 'description',
+      key: 'description',
       width: 250,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -285,26 +230,7 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'accountNumberVND',
-        },
-      }),
-    },
-    {
-      title: (
-        <div className={style.title}>{translateBank('USD_account_number')}</div>
-      ),
-      dataIndex: 'accountNumberUSD',
-      key: 'accountNumberUSD',
-      width: 250,
-      align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'accountNumberUSD',
+          dataIndex: 'description',
         },
       }),
     },
@@ -326,10 +252,12 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: <div className={style.title}>{translateBank('status')}</div>,
+      title: (
+        <div className={style.title}>{translateLocationType('status')}</div>
+      ),
       width: 120,
-      dataIndex: 'statusBank',
-      key: 'statusBank',
+      dataIndex: 'statusUnit',
+      key: 'statusUnit',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -347,11 +275,11 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.BANK_MANAGER(id));
+    router.push(ROUTERS.TYPE_OF_LOCATION_MANAGER(id));
   };
 
   const handleApproveAndReject = (id: string, status: string) => {
-    const _requestData: UpdateStatusBank = {
+    const _requestData: UpdateStatusLocationType = {
       id,
       status,
     };
@@ -380,11 +308,11 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: BankTable
+    record: LocationTypeTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.BANK_MANAGER(record.key));
+      router.push(ROUTERS.TYPE_OF_LOCATION_MANAGER(record.key));
     }
   };
 

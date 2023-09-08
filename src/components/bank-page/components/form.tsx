@@ -11,7 +11,7 @@ import { getBankDetail } from '../fetcher';
 import DraftTable from '../table/draft-table';
 
 const initialValue = {
-  currencyName: '',
+  bankName: '',
 };
 
 interface FormProps {
@@ -122,7 +122,16 @@ const BankForm = ({
                 <Title level={3} style={{ margin: '-4px 0' }}>
                   {create && translateBank('information_add_bank')}
                   {manager && 'Approval needed requests'}
-                  {edit && translateBank('information_edit_bank')}
+                  {edit &&
+                    (checkRow ? (
+                      <>
+                        {isCheckPermissionEdit && 'View'}
+                        {!isCheckPermissionEdit &&
+                          translateBank('information_edit_bank')}
+                      </>
+                    ) : (
+                      translateBank('information_edit_bank')
+                    ))}
                 </Title>
               </Col>
             </Row>

@@ -39,8 +39,12 @@ export const ROUTERS = {
   PARTNER: '/partner',
   PARTNER_EDIT: (partnerId: string) => `/partner/edit/${partnerId}`,
   TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
-  TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string) =>
-    `/master-data/location-catalog/type-of-location/edit/${typeOfLocationId}`,
+  TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string, checkRow = false) =>
+    `/master-data/location-catalog/type-of-location/edit/${typeOfLocationId}?checkRow=${checkRow}`,
+  TYPE_OF_LOCATION_CREATE:
+    '/master-data/location-catalog/type-of-location/create',
+  TYPE_OF_LOCATION_MANAGER: (typeOfLocationId: string) =>
+    `/master-data/catalog/type-of-location/manager-admin/${typeOfLocationId}`,
   LOCATION: '/master-data/location-catalog/location',
   LOCATION_EDIT: (portId: string, checkRow = false) =>
     `/master-data/location-catalog/location/edit/${portId}?checkRow=${checkRow}`,
