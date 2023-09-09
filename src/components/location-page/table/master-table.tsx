@@ -17,7 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { API_LOCATION_TYPE, API_MASTER_DATA } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
@@ -25,30 +25,33 @@ import { API_MESSAGE } from '@/constant/message';
 import {
   QueryInputParamType,
   QuerySelectParamType,
-  STATUS_MASTER_COLORS,
   STATUS_MATER_LABELS,
   SelectSearch,
-  LocationTypeTable,
+  LocationTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteLocationType, getLocationTypeSearch } from '../fetcher';
+import { deleteLocation, getLocationSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
+import { STATUS_COLORS, STATUS_LABELS } from '@/constant/form';
+import { getListCountry, getListTypePort } from '@/layout/fetcher';
 
 const { confirm } = Modal;
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  typeLocationName: '',
-  description: '',
+  locationCode: '',
+  locationName: '',
 };
 
 const initalValueQuerySelectParams = {
-  statusTypeLocation: [],
+  statusLocation: [],
+  typeLocations: [],
+  cityID: '',
 };
 
 const initalValueDisplayColumn = {
@@ -67,13 +70,17 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  typeLocationName: {
+  locationCode: {
     label: '',
     value: '',
   },
-  description: {
+  locationName: {
     label: '',
     value: '',
+  },
+  typeLocations: {
+    label: '',
+    value: [],
   },
   statusLocation: {
     label: '',
@@ -87,7 +94,7 @@ export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateLocationType } = useI18n('typeOfLocation');
+  const { translate: translateLocation } = useI18n('location');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
@@ -96,7 +103,7 @@ export default function MasterDataTable() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
-  const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
+  const [dataTable, setDataTable] = useState<LocationTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -105,10 +112,22 @@ export default function MasterDataTable() {
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
   // Handle data
+
+  const typePorts = useQuery(
+    [API_LOCATION_TYPE.GET_TYPE_LOCATION],
+    getListTypePort
+  );
+  const countries = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
+    getListCountry({
+      currentPage: 1,
+      pageSize: 500,
+    })
+  );
   const dataSelectSearch =
-    querySelectParams.statusTypeLocation.length === 0
+    querySelectParams.statusLocation.length === 0
       ? {
-          statusTypeLocation: [
+          ...querySelectParams,
+          statusLocation: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -123,7 +142,7 @@ export default function MasterDataTable() {
       querySelectParams,
     ],
     queryFn: () =>
-      getLocationTypeSearch({
+      getLocationSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -136,9 +155,12 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.typeLocationID,
-            typeLocationName: data.typeLocationName,
-            description: data.description,
+            key: data.locationID,
+            cityID: data.cityID,
+            cityName: data.cityName,
+            locationCode: data.locationCode,
+            locationName: data.locationName,
+            typeLocations: data.typeLocations,
             statusLocation: data.statusLocation,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
@@ -160,7 +182,7 @@ export default function MasterDataTable() {
   });
 
   const deletesMutation = useMutation({
-    mutationFn: () => deleteLocationType(selectedRowKeys),
+    mutationFn: () => deleteLocation(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
@@ -244,7 +266,7 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusTypeLocation:
+      statusLocation:
         filters.statusLocation?.length !== 0 && filters.statusLocation
           ? (filters.statusLocation as string[])
           : [],
@@ -266,9 +288,9 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<LocationTypeTable>[] = [
+  const columns: ProColumns<LocationTable>[] = [
     {
-      title: <div className={style.title}>{translateLocationType('no')}</div>,
+      title: <div className={style.title}>{translateLocation('no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -278,79 +300,108 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: <div className={style.title}>{translateLocationType('name')}</div>,
-      dataIndex: 'typeLocationName',
-      key: 'typeLocationName',
-      width: 150,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'typeLocationName',
-        },
-      }),
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateLocationType('description')}
-        </div>
-      ),
-      dataIndex: 'description',
-      key: 'description',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'description',
-        },
-      }),
-    },
-    {
-      title: (
-        <div className={style.title}>{translateLocationType('status')}</div>
-      ),
+      title: translateLocation('code'),
+      dataIndex: 'locationCode',
       width: 120,
-      dataIndex: 'statusLocation',
-      key: 'statusLocation',
+      key: '',
       align: 'center',
-      filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
-        text: key,
-        value: key,
-      })),
-      filterSearch: false,
-      filteredValue: querySelectParams.statusTypeLocation || null,
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'locationCode',
+        },
+      }),
+    },
+    {
+      title: translateLocation('name'),
+      dataIndex: 'locationName',
+      key: 'locationName',
+      align: 'center',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'locationName',
+        },
+      }),
+    },
+    {
+      title: translateLocation('country_name'),
+      width: 150,
+      dataIndex: 'cityID',
+      key: 'cityID',
+      align: 'center',
+      filteredValue: [querySelectParams.cityID] || null,
+      filters:
+        countries.data?.data?.data.map((item) => ({
+          text: item.countryName,
+          value: item.countryID,
+        })) || [],
+      filterSearch: true,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusTypeLocation.length !== 0
+                querySelectParams.cityID?.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
           />
         );
       },
+      filterMultiple: false,
+    },
+    {
+      title: translateLocation('type_of_port'),
+      dataIndex: 'typeLocations',
+      key: 'typeLocations',
+      align: 'center',
+      filteredValue: querySelectParams.typeLocations || null,
+      filters:
+        typePorts.data?.data.map((data) => ({
+          text: data.typePortName,
+          value: data.typePortID,
+        })) || [],
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.typeLocations?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) =>
+        value.typeLocations.map((type) => {
+          return <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>;
+        }),
+    },
+    {
+      title: translateLocation('status'),
+      dataIndex: 'statusLocation',
+      key: 'statusLocation',
+      align: 'center',
+      width: 120,
       render: (value) => (
         <Tag
-          color={
-            STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
-          }
+          color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
           style={{
             margin: 0,
           }}
         >
-          {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
+          {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
         </Tag>
       ),
     },
@@ -470,7 +521,7 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTypeTable
+    record: LocationTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
@@ -490,7 +541,7 @@ export default function MasterDataTable() {
         <Table
           dataTable={dataTable}
           columns={columns}
-          headerTitle={translateLocationType('title')}
+          headerTitle={translateLocation('title')}
           selectedRowKeys={selectedRowKeys}
           handleSelectionChange={handleSelectionChange}
           handlePaginationChange={handlePaginationChange}

@@ -1,5 +1,9 @@
 import { ResponseWithPayload, get, post } from '@/fetcherAxios';
-import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
+import {
+  API_LOCATION_TYPE,
+  API_MASTER_DATA,
+  API_USER,
+} from '@/fetcherAxios/endpoint';
 import { CountriesType, TypePortData } from './interface';
 import { Pagination } from '@/components/commons/table/table-deafault';
 
@@ -42,8 +46,8 @@ export const checkNewUser = () => {
 };
 
 export const getListTypePort = () => {
-  return get<ResponseWithPayload<TypePortData[]>>({})(
-    API_MASTER_DATA.GET_TYPE_LOCATION
+  return post<undefined, ResponseWithPayload<TypePortData[]>>({})(
+    API_LOCATION_TYPE.GET_TYPE_LOCATION
   );
 };
 

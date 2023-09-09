@@ -33,7 +33,11 @@ import {
   getUserInfo,
 } from './fetcher';
 import { useQuery } from '@tanstack/react-query';
-import { API_MASTER_DATA, API_USER } from '@/fetcherAxios/endpoint';
+import {
+  API_LOCATION_TYPE,
+  API_MASTER_DATA,
+  API_USER,
+} from '@/fetcherAxios/endpoint';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -144,7 +148,7 @@ export function AppLayout(props: Props) {
       }),
   });
   useQuery({
-    queryKey: [API_MASTER_DATA.GET_TYPE_LOCATION],
+    queryKey: [API_LOCATION_TYPE.GET_TYPE_LOCATION],
     queryFn: getListTypePort,
   });
 
