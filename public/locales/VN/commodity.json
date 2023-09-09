@@ -1,0 +1,16 @@
+{
+    "title": "Danh sách hàng hóa",
+    "add_fee_no": "STT",
+    "code": "Mã",
+    "name": "Tên",
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "date_update": "Ngày cập nhật",
+    "updater": "Người cập nhật",
+    "creator": "Người tạo",
+
+    "information_add_fee": "Thêm mới hàng hóa",
+    "information_edit_fee": "Chỉnh sửa hàng hóa",
+    "name_placeholder": "Nhập tên chi phí",
+    "status_placeholder":"Chọn trạng thái"
+}
