@@ -63,6 +63,9 @@ export const ROUTERS = {
     `/master-data/accountant/bank/edit/${bankId}?checkRow=${checkRow}`,
   BANK_MANAGER: (bankId: string) =>
     `/master-data/accountant/bank/manager-admin/${bankId}`,
+  COMMODITY: '/master-data/commodity',
+  COMMODITY_EDIT: (commodityId: string) =>
+    `/master-data/commodity/edit/${commodityId}`,
   TYPES_OF_CONTAINER: '/master-data/type-of-container',
   TYPES_OF_CONTAINER_CREATE: '/master-data/type-of-container/create',
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string, checkRow = false) =>
