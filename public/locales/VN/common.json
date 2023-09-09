@@ -19,6 +19,7 @@
     "location": "Địa điểm",
     "type_of_location": "Loại địa điểm",
     "fee": "Loại chi phí",
+    "commodity": "Hàng hóa",
     "type_of_container": "Loại Container",
     "unit": "Đơn vị",
     "accountant": "Kế toán",

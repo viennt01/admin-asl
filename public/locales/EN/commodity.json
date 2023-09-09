@@ -1,0 +1,17 @@
+{
+    "title": "List of commodity",
+    "no": "No",
+    "code": "Code",
+    "name": "Name",
+    "status":"Status",
+    "date_created": "Date Created",
+    "date_update": "Date update",
+    "updater": "Updater",
+    "creator": "Creator",
+
+    "information_add_commodity": "Add new commodity",
+    "information_edit_commodity": "Edit commodity",
+    "code_placeholder": "Please input the commodity code",
+    "name_placeholder": "Please input the commodity name",
+    "status_placeholder":"Please select status"
+}

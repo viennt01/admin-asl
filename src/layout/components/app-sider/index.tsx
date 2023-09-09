@@ -19,6 +19,7 @@ import {
   GlobalOutlined,
   EnvironmentOutlined,
   FolderOpenOutlined,
+  ShoppingOutlined,
   AuditOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image, Badge } from 'antd';
@@ -86,6 +87,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refLocationCatalog = useRef(null);
   const refTypeOfLocation = useRef(null);
   const refLocation = useRef(null);
+  const refCommodity = useRef(null);
   const refTypeOfContainer = useRef(null);
   const refFee = useRef(null);
   const refAccountant = useRef(null);
@@ -275,6 +277,13 @@ const AppSider = ({ collapsed }: Props) => {
             ),
           ]
         ),
+
+        getItem(
+          `${translateCommon('commodity')}`,
+          ROUTERS.COMMODITY,
+          <ShoppingOutlined ref={refCommodity} />
+        ),
+
         getItem(
           `${translateCommon('type_of_container')}`,
           ROUTERS.TYPES_OF_CONTAINER,

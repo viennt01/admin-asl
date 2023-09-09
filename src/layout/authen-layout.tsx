@@ -467,6 +467,20 @@ export function AppLayout(props: Props) {
       { title: `${translateCommon('detail')}` },
     ],
 
+    '/master-data/commodity': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('commodity')}` },
+    ],
+    '/master-data/commodity/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      {
+        title: (
+          <Link href={ROUTERS.COMMODITY}>{translateCommon('commodity')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+
     '/master-data/type-of-container': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('type_of_container')}` },
