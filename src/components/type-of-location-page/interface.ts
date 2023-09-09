@@ -41,7 +41,7 @@ export interface QueryInputParamType {
   description: string;
 }
 export interface QuerySelectParamType {
-  statusLocation: string[];
+  statusTypeLocation: string[];
 }
 
 export interface RequestLocationTypeType
@@ -63,9 +63,11 @@ export interface LocationTypeDetailDataBody {
 
 export interface FormValues {
   typeLocationID: string;
-  typeLocationName: string;
-  description: string;
-  statusLocation: string;
+  typeLocationNameEN: string;
+  typeLocationNameVN: string;
+  descriptionEN: string;
+  descriptionVN: string;
+  statusTypeLocation: string;
 }
 
 export interface LocationTypeDetailType extends FormValues {

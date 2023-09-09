@@ -9,14 +9,6 @@ export const API_USER = {
   UPDATE_NEW_USER: '/change-status-new-user',
 };
 
-export const API_LOCATION = {
-  GET_LOCATION_SEARCH: '/search-location',
-  GET_PORT_DETAIL: '/get-detail-port',
-  CREATE_PORT: '/add-new-port',
-  EDIT_PORT: '/update-port',
-  DELETE_PORT: '/delete-port',
-};
-
 export const API_UNIT = {
   GET_SEARCH: '/search-unit',
   GET_DETAIL: '/get-unit',
@@ -81,10 +73,21 @@ export const API_LOCATION_TYPE = {
   UPDATE_STATUS: '/update-status-type-location',
   GET_DRAFT: '/get-type-location-with-status-and-id-User',
   GET_REQUEST: '/get-type-location-with-status-request',
+  GET_TYPE_LOCATION: '/get-all-type-location',
+};
+
+export const API_LOCATION = {
+  GET_SEARCH: '/search-location',
+  GET_DETAIL: '/get-location',
+  CREATE: '/add-location',
+  EDIT: '/update-location',
+  DELETE: '/delete-location',
+  UPDATE_STATUS: '/update-status-location',
+  GET_DRAFT: '/get-location-with-status-and-id-User',
+  GET_REQUEST: '/get-location-with-status-request',
 };
 
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',
-  GET_TYPE_LOCATION: '/get-all-type-location',
 };

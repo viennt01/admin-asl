@@ -1,22 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditLocation from '@/components/location-page/edit';
+import ManagerLocation from '@/components/location-page/manager';
 
-function LocationEditPage() {
+function BankManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | EDIT LOCATION</title>
+        <title>ASL | LOCATION MANAGER</title>
       </Head>
-      <EditLocation />
+      <ManagerLocation />
     </>
   );
 }
 
-export default withAuthentication(LocationEditPage);
+export default withAuthentication(BankManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'location']);
-
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {
   const ids: string[] = [];
   const paths = ids.map(() =>

@@ -5,22 +5,22 @@ import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import LocationTypeForm from '../components/form';
 import { FormValues, LocationTypeCreate, LocationTypeEdit } from '../interface';
-import { createLocationType, editLocationType } from '../fetcher';
+import { createLocation, editLocation } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
 
-const CreateLocationType = () => {
+const CreateLocation = () => {
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
     mutationFn: (body: LocationTypeCreate) => {
-      return createLocationType(body);
+      return createLocation(body);
     },
   });
 
   const updateMutation = useMutation({
     mutationFn: (body: LocationTypeEdit) => {
-      return editLocationType(body);
+      return editLocation(body);
     },
   });
 
@@ -28,19 +28,14 @@ const CreateLocationType = () => {
     if (id) {
       const _requestData: LocationTypeEdit = {
         typeLocationID: id,
-        typeLocationNameEN: formValues.typeLocationNameEN || '',
-        typeLocationNameVN:
-          formValues.typeLocationNameVN || formValues.typeLocationNameEN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        descriptionVN:
-          formValues.descriptionVN || formValues.descriptionEN || '',
-        statusTypeLocation: STATUS_ALL_LABELS.REQUEST,
+        typeLocationName: formValues.typeLocationName || '',
+        description: formValues.description || '',
+        statusLocation: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message),
-              router.push(ROUTERS.TYPE_OF_LOCATION))
+            ? (successToast(data.message), router.push(ROUTERS.BANK))
             : errorToast(data.message);
         },
         onError() {
@@ -49,19 +44,14 @@ const CreateLocationType = () => {
       });
     } else {
       const _requestData: LocationTypeCreate = {
-        typeLocationNameEN: formValues.typeLocationNameEN || '',
-        typeLocationNameVN:
-          formValues.typeLocationNameVN || formValues.typeLocationNameEN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        descriptionVN:
-          formValues.descriptionVN || formValues.descriptionEN || '',
-        statusTypeLocation: STATUS_ALL_LABELS.REQUEST,
+        typeLocationName: formValues.typeLocationName || '',
+        description: formValues.description || '',
+        statusLocation: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message),
-              router.push(ROUTERS.TYPE_OF_LOCATION))
+            ? (successToast(data.message), router.push(ROUTERS.BANK))
             : errorToast(data.message);
         },
         onError() {
@@ -75,13 +65,9 @@ const CreateLocationType = () => {
     if (id) {
       const _requestData: LocationTypeEdit = {
         typeLocationID: id,
-        typeLocationNameEN: formValues.typeLocationNameEN || '',
-        typeLocationNameVN:
-          formValues.typeLocationNameVN || formValues.typeLocationNameEN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        descriptionVN:
-          formValues.descriptionVN || formValues.descriptionEN || '',
-        statusTypeLocation: STATUS_ALL_LABELS.DRAFT,
+        typeLocationName: formValues.typeLocationName || '',
+        description: formValues.description || '',
+        statusLocation: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
@@ -98,13 +84,9 @@ const CreateLocationType = () => {
       });
     } else {
       const _requestData: LocationTypeCreate = {
-        typeLocationNameEN: formValues.typeLocationNameEN || '',
-        typeLocationNameVN:
-          formValues.typeLocationNameVN || formValues.typeLocationNameEN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        descriptionVN:
-          formValues.descriptionVN || formValues.descriptionEN || '',
-        statusTypeLocation: STATUS_ALL_LABELS.DRAFT,
+        typeLocationName: formValues.typeLocationName || '',
+        description: formValues.description || '',
+        statusLocation: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
@@ -134,4 +116,4 @@ const CreateLocationType = () => {
   );
 };
 
-export default CreateLocationType;
+export default CreateLocation;

@@ -49,6 +49,8 @@ export const ROUTERS = {
   LOCATION_EDIT: (portId: string, checkRow = false) =>
     `/master-data/location-catalog/location/edit/${portId}?checkRow=${checkRow}`,
   LOCATION_CREATE: '/master-data/location-catalog/location/create',
+  LOCATION_MANAGER: (locationId: string) =>
+    `/master-data/location-catalog/location/manager-admin/${locationId}`,
   FEE: '/master-data/fee',
   FEE_EDIT: (feeId: string) => `/master-data/fee/edit/${feeId}`,
   CURRENCY: '/master-data/accountant/currency',

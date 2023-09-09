@@ -1,45 +1,80 @@
 import { ResponseWithPayload, post } from '@/fetcherAxios';
 import {
-  PortCreate,
-  Location,
-  PortDetailDataBody,
-  PortEdit,
-  LocationsData,
-  RequestLocationType,
-  PortDelete,
+  LocationTypeRequire,
+  RequestLocationTypeType,
+  RequestLocationTypeTableDraft,
+  LocationTypeCreate,
+  LocationTypeDelete,
+  LocationTypeDetailDataBody,
+  LocationTypeDetailType,
+  LocationTypeEdit,
+  UpdateStatusLocation,
+  RequestLocationTypeTableRequest,
 } from './interface';
 import { API_LOCATION } from '@/fetcherAxios/endpoint';
 
-export const getListPortSearch = (data: RequestLocationType) => {
-  return post<RequestLocationType, ResponseWithPayload<LocationsData>>({
+export const getLocationSearch = (data: RequestLocationTypeType) => {
+  return post<
+    RequestLocationTypeType,
+    ResponseWithPayload<LocationTypeRequire>
+  >({
     data,
-  })(API_LOCATION.GET_LOCATION_SEARCH);
+  })(API_LOCATION.GET_SEARCH);
 };
 
-export const getPortDetail = (id: string) => {
-  return post<PortDetailDataBody, ResponseWithPayload<Location>>({
+export const geLocationDetail = (id: string) => {
+  return post<
+    LocationTypeDetailDataBody,
+    ResponseWithPayload<LocationTypeDetailType>
+  >({
     data: {
       id,
     },
-  })(API_LOCATION.GET_PORT_DETAIL);
+  })(API_LOCATION.GET_DETAIL);
 };
 
-export const createPort = (data: PortCreate) => {
-  return post<PortCreate, ResponseWithPayload<PortCreate>>({
+export const createLocation = (data: LocationTypeCreate) => {
+  return post<LocationTypeCreate, ResponseWithPayload<LocationTypeCreate>>({
     data,
-  })(API_LOCATION.CREATE_PORT);
+  })(API_LOCATION.CREATE);
 };
 
-export const editPort = (data: PortEdit) => {
-  return post<PortEdit, ResponseWithPayload<PortEdit>>({
+export const editLocation = (data: LocationTypeEdit) => {
+  return post<LocationTypeEdit, ResponseWithPayload<LocationTypeEdit>>({
     data,
-  })(API_LOCATION.EDIT_PORT);
+  })(API_LOCATION.EDIT);
 };
 
-export const deletePort = (data: React.Key[]) => {
-  return post<PortDelete, ResponseWithPayload<PortEdit>>({
+export const deleteLocation = (data: React.Key[]) => {
+  return post<LocationTypeDelete, ResponseWithPayload<LocationTypeDelete>>({
     data: {
-      portIds: data,
+      ids: data,
     },
-  })(API_LOCATION.DELETE_PORT);
+  })(API_LOCATION.DELETE);
+};
+
+export const getDartTable = (data: RequestLocationTypeTableDraft) => {
+  return post<
+    RequestLocationTypeTableDraft,
+    ResponseWithPayload<LocationTypeRequire>
+  >({
+    data,
+  })(API_LOCATION.GET_DRAFT);
+};
+
+//----------------------------------------------------------------
+
+export const updateStatus = (data: UpdateStatusLocation) => {
+  return post<UpdateStatusLocation, ResponseWithPayload<UpdateStatusLocation>>({
+    data,
+  })(API_LOCATION.UPDATE_STATUS);
+};
+
+export const getTableRequire = (data: RequestLocationTypeTableRequest) => {
+  return post<
+    RequestLocationTypeTableRequest,
+    ResponseWithPayload<LocationTypeRequire>
+  >({
+    data,
+  })(API_LOCATION.GET_REQUEST);
 };

@@ -1,18 +1,21 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Form, Input, Typography, Card, Row, Col, Tabs, Switch } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { geLocationTypeDetail } from '../fetcher';
+import { geLocationTypeDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
-import { FormValues, STATUS_MATER_LABELS } from '../interface';
+import { FormValues, UpdateStatusLocationType } from '../interface';
+import { STATUS_ALL_LABELS } from '@/constant/form';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
 
 const initialValue = {
-  typeLocationName: '',
-  description: '',
+  typeLocationNameEN: '',
+  descriptionEN: '',
 };
 
 interface FormProps {
@@ -47,6 +50,7 @@ const LocationTypeForm = ({
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(true);
+  const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   useEffect(() => {
     if (!id) return;
@@ -81,13 +85,21 @@ const LocationTypeForm = ({
       if (data.status) {
         form.setFieldsValue({
           typeLocationID: data.data.typeLocationID,
-          typeLocationName: data.data.typeLocationName,
-          description: data.data.description,
-          statusLocation: data.data.statusLocation,
+          typeLocationNameEN: data.data.typeLocationNameEN,
+          descriptionEN: data.data.descriptionEN,
+          typeLocationNameVN: data.data.typeLocationNameVN,
+          descriptionVN: data.data.descriptionVN,
+          statusTypeLocation: data.data.statusTypeLocation,
         });
       } else {
         router.push(ROUTERS.TYPE_OF_LOCATION);
       }
+    },
+  });
+
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusLocationType) => {
+      return updateStatus(body);
     },
   });
 
@@ -99,6 +111,117 @@ const LocationTypeForm = ({
     handleApproveAndReject && handleApproveAndReject(id as string, status);
   };
 
+  const contentEN = () => {
+    return (
+      <Row gutter={16}>
+        <Col span={24}>
+          <Form.Item
+            label={translateLocationType('international_code_form.title')}
+            name="typeLocationNameEN"
+            rules={[
+              {
+                required: true,
+                message: translateLocationType(
+                  'international_code_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <Input
+              placeholder={translateLocationType(
+                'international_code_form.placeholder'
+              )}
+              size="large"
+              disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={24}>
+          <Form.Item
+            label={translateLocationType('descriptionEN_vn_form.title')}
+            name="descriptionEN"
+            rules={[
+              {
+                required: true,
+                message: translateLocationType(
+                  'descriptionEN_vn_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <Input.TextArea
+              size="large"
+              placeholder={translateLocationType(
+                'descriptionEN_vn_form.placeholder'
+              )}
+              allowClear
+              disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+    );
+  };
+
+  const contentVN = () => {
+    return (
+      <Row gutter={16}>
+        <Col span={24}>
+          <Form.Item
+            label={translateLocationType('international_code_form.title')}
+            name="typeLocationNameVN"
+          >
+            <Input
+              placeholder={translateLocationType(
+                'international_code_form.placeholder'
+              )}
+              size="large"
+              disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={24}>
+          <Form.Item
+            label={translateLocationType('descriptionEN_vn_form.title')}
+            name="descriptionVN"
+          >
+            <Input.TextArea
+              size="large"
+              placeholder={translateLocationType(
+                'descriptionEN_vn_form.placeholder'
+              )}
+              allowClear
+              disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+    );
+  };
+
+  const items = [
+    {
+      key: 'EN',
+      label: 'EN',
+      children: contentEN(),
+      forceRender: true,
+    },
+    {
+      key: 'VN',
+      label: 'VN',
+      children: contentVN(),
+      forceRender: true,
+    },
+  ];
+  useEffect(() => {
+    if (form.getFieldValue('statusTypeLocation')) {
+      form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
+        ? setCheckStatus(true)
+        : setCheckStatus(false);
+    }
+  }, [form, checkStatus]);
   return (
     <div style={{ padding: '24px 0' }}>
       <Form
@@ -134,87 +257,42 @@ const LocationTypeForm = ({
             </Row>
           }
           extra={
-            create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />
+            <>
+              {create && useDraft && (
+                <DraftTable handleIdQuery={handleIdQuery} />
+              )}
+              {edit && idQuery && (
+                <Switch
+                  checked={checkStatus}
+                  checkedChildren="Active"
+                  unCheckedChildren="Deactive"
+                  onChange={(value) => {
+                    const _requestData: UpdateStatusLocationType = {
+                      id: idQuery,
+                      status: value
+                        ? STATUS_ALL_LABELS.ACTIVE
+                        : STATUS_ALL_LABELS.DEACTIVE,
+                    };
+
+                    updateStatusMutation.mutate(_requestData, {
+                      onSuccess: (data) => {
+                        data.status
+                          ? (successToast(data.message),
+                            setCheckStatus(!checkStatus))
+                          : errorToast(data.message);
+                      },
+                      onError() {
+                        errorToast(API_MESSAGE.ERROR);
+                      },
+                    });
+                  }}
+                  loading={updateStatusMutation.isLoading}
+                />
+              )}
+            </>
           }
         >
-          <Row gutter={16}>
-            <Col lg={!create && !manager ? 12 : 24} span={12}>
-              <Form.Item
-                label={translateLocationType('international_code_form.title')}
-                name="typeLocationName"
-                rules={[
-                  {
-                    required: true,
-                    message: translateLocationType(
-                      'international_code_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateLocationType(
-                    'international_code_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            {!create && !manager ? (
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateLocationType('status_form.title')}
-                  name="statusLocation"
-                  rules={[
-                    {
-                      required: true,
-                      message: translateLocationType(
-                        'status_form.error_required'
-                      ),
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    placeholder={translateLocationType(
-                      'status_form.placeholder'
-                    )}
-                    options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
-                      text: key,
-                      value: key,
-                    }))}
-                    disabled={checkRow && isCheckPermissionEdit}
-                  />
-                </Form.Item>
-              </Col>
-            ) : (
-              <></>
-            )}
-
-            <Col span={24}>
-              <Form.Item
-                label={translateLocationType('description_vn_form.title')}
-                name="description"
-                rules={[
-                  {
-                    required: true,
-                    message: translateLocationType(
-                      'description_vn_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input.TextArea
-                  size="large"
-                  placeholder={translateLocationType(
-                    'description_vn_form.placeholder'
-                  )}
-                  allowClear
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Tabs items={items} />
         </Card>
 
         <BottomCreateEdit

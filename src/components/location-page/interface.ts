@@ -1,31 +1,31 @@
-import COLORS from '@/constant/color';
 import { Pagination } from '../commons/table/table-deafault';
+import COLORS from '@/constant/color';
 
-export const STATUS_COLORS = {
-  1: COLORS.STATUS_CODE.ACTIVE,
-  2: COLORS.STATUS_CODE.DEACTIVE,
+export const STATUS_MASTER_COLORS = {
+  ACTIVE: COLORS.STATUS_CODE.ACTIVE,
+  DEACTIVE: COLORS.STATUS_CODE.DEACTIVE,
 };
 
-export const STATUS_LABELS = {
-  1: 'Active',
-  2: 'Deactivate',
+export const STATUS_MATER_LABELS = {
+  ACTIVE: 'ACTIVE',
+  DEACTIVE: 'DEACTIVE',
 };
-
+//
 export interface Location {
   locationID: string;
   cityID: string;
   cityName: string;
   locationCode: string;
   locationName: string;
-  typeLocations: TypeLocations[];
   statusLocation: string;
+  typeLocations: TypeLocations[];
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
+  isDelete: boolean;
   dateDeleted: string;
   deleteByUser: string;
-  isDelete: boolean;
 }
 
 export interface TypeLocations {
@@ -34,51 +34,31 @@ export interface TypeLocations {
   description: string;
 }
 
-export interface LocationDataTable extends Omit<Location, 'locationID'> {
+export interface LocationTable extends Omit<Location, 'locationID'> {
   key: string;
   searchAll: string;
 }
 
-export interface LocationsData extends Pagination {
+export interface LocationTypeRequire extends Pagination {
   data: Location[];
 }
 
 export interface QueryInputParamType {
   searchAll: string;
+  locationCode: string;
+  locationName: string;
 }
 export interface QuerySelectParamType {
-  statusLocation: string;
-  cityID: string;
+  statusLocation: string[];
   typeLocations: string[];
+  cityID: string;
 }
 
-export interface RequestLocationType
+export interface RequestLocationTypeType
   extends QueryInputParamType,
     QuerySelectParamType {
   paginateRequest: Pagination;
 }
-
-export interface PortDetailDataBody {
-  id: string;
-}
-
-export interface FormValues {
-  portID: string;
-  portName: string;
-  portCode: string;
-  countryID: string;
-  typePorts: string[];
-  status: number;
-  description: string;
-}
-
-export type PortCreate = Omit<FormValues, 'portID' | 'status'>;
-
-export type PortEdit = FormValues;
-
-export type PortDelete = {
-  portIds: React.Key[];
-};
 
 export type SelectSearch = {
   [key in keyof QueryInputParamType]: {
@@ -86,3 +66,83 @@ export type SelectSearch = {
     value: string;
   };
 };
+
+export interface LocationTypeDetailDataBody {
+  id: string;
+}
+
+export interface FormValues {
+  typeLocationID: string;
+  typeLocationName: string;
+  description: string;
+  statusLocation: string;
+}
+
+export interface LocationTypeDetailType extends FormValues {
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
+}
+
+export type LocationTypeCreate = Omit<FormValues, 'typeLocationID'>;
+
+export type LocationTypeEdit = FormValues;
+
+export type LocationTypeDelete = {
+  ids: React.Key[];
+};
+
+//----------------------------------------------------------------
+export interface QueryInputDraft {
+  locationCode: string;
+  locationName: string;
+}
+export interface QuerySelectDraft {
+  status: string[];
+  typeLocations: string[];
+  cityID: string;
+}
+export interface RequestLocationTypeTableDraft
+  extends QueryInputDraft,
+    QuerySelectDraft {
+  paginateRequest: Pagination;
+}
+
+export type SelectDratSearch = {
+  [key in keyof QueryInputDraft]: {
+    label: string;
+    value: string;
+  };
+};
+
+//----------------------------------------------------------------
+
+export interface LocationTableRequest extends Omit<Location, 'locationID'> {
+  key: string;
+}
+export interface UpdateStatusLocation {
+  id: string;
+  status: string;
+}
+
+export interface QueryInputRequest {
+  locationCode: string;
+  locationName: string;
+}
+export interface QuerySelectRequest {
+  cityID: string;
+  typeLocations: string[];
+}
+
+export type SelectSearchRequest = {
+  [key in keyof QueryInputRequest]: {
+    label: string;
+    value: string;
+  };
+};
+export interface RequestLocationTypeTableRequest
+  extends QueryInputRequest,
+    QuerySelectRequest {
+  paginateRequest: Pagination;
+}
