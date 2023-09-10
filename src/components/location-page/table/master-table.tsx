@@ -339,7 +339,7 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: translateLocation('country_name'),
+      title: translateLocation('City'),
       width: 150,
       dataIndex: 'cityID',
       key: 'cityID',
