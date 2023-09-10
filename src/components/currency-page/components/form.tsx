@@ -1,14 +1,17 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, STATUS_MATER_LABELS } from '../interface';
+import { FormValues, UpdateStatusCurrency } from '../interface';
 import { API_CURRENCY } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getCurrencyDetail } from '../fetcher';
+import { getCurrencyDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
+import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 
 const initialValue = {
   currencyName: '',
@@ -20,8 +23,7 @@ interface FormProps {
   edit?: boolean;
   handleSubmit?: (formValues: FormValues, id?: string) => void;
   handleSaveDraft?: (formValues: FormValues, id?: string) => void;
-  handleApproveAndReject?: (id: string, status: string) => void;
-  loadingSubmit: boolean;
+  loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
 }
@@ -34,9 +36,8 @@ const CurrencyForm = ({
   edit,
   handleSubmit,
   handleSaveDraft,
-  loadingSubmit: loading,
+  loadingSubmit,
   checkRow,
-  handleApproveAndReject,
   useDraft,
 }: FormProps) => {
   const { translate: translateCurrency } = useI18n('currency');
@@ -45,7 +46,8 @@ const CurrencyForm = ({
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
-    useState<boolean>(true);
+    useState<boolean>(false);
+  const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   useEffect(() => {
     if (!id) return;
@@ -95,9 +97,43 @@ const CurrencyForm = ({
     setCheckPermissionEdit(data);
   };
 
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusCurrency) => {
+      return updateStatus(body);
+    },
+  });
+
   const handleAJ = (status: string) => {
-    handleApproveAndReject && handleApproveAndReject(id as string, status);
+    if (idQuery) {
+      const _requestData: UpdateStatusCurrency = {
+        id: idQuery,
+        status,
+      };
+      updateStatusMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.CURRENCY))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      errorToast(API_MESSAGE.ERROR);
+    }
   };
+
+  useEffect(() => {
+    if (form.getFieldValue('statusCurrency')) {
+      form.getFieldValue('statusCurrency') === STATUS_ALL_LABELS.ACTIVE
+        ? setCheckStatus(true)
+        : setCheckStatus(false);
+    }
+    if (edit && checkRow) {
+      setCheckPermissionEdit(true);
+    }
+  }, [form, edit, checkRow]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -131,11 +167,48 @@ const CurrencyForm = ({
             </Row>
           }
           extra={
-            create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />
+            <>
+              {create && useDraft && (
+                <DraftTable handleIdQuery={handleIdQuery} />
+              )}
+              {edit && idQuery && !isCheckPermissionEdit && (
+                <Switch
+                  checked={checkStatus}
+                  checkedChildren="Active"
+                  unCheckedChildren="Deactive"
+                  style={{
+                    backgroundColor: checkStatus
+                      ? STATUS_MASTER_COLORS.ACTIVE
+                      : STATUS_MASTER_COLORS.DEACTIVE,
+                  }}
+                  onChange={(value) => {
+                    const _requestData: UpdateStatusCurrency = {
+                      id: idQuery,
+                      status: value
+                        ? STATUS_ALL_LABELS.ACTIVE
+                        : STATUS_ALL_LABELS.DEACTIVE,
+                    };
+
+                    updateStatusMutation.mutate(_requestData, {
+                      onSuccess: (data) => {
+                        data.status
+                          ? (successToast(data.message),
+                            setCheckStatus(!checkStatus))
+                          : errorToast(data.message);
+                      },
+                      onError() {
+                        errorToast(API_MESSAGE.ERROR);
+                      },
+                    });
+                  }}
+                  loading={updateStatusMutation.isLoading}
+                />
+              )}
+            </>
           }
         >
           <Row gutter={16}>
-            <Col lg={!create && !manager ? 12 : 24} span={12}>
+            <Col span={24}>
               <Form.Item
                 label={translateCurrency('currency_form.title')}
                 name="currencyName"
@@ -153,32 +226,6 @@ const CurrencyForm = ({
                 />
               </Form.Item>
             </Col>
-            {!create && !manager ? (
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateCurrency('status_form.title')}
-                  name="statusCurrency"
-                  rules={[
-                    {
-                      required: true,
-                      message: translateCurrency('status_form.error_required'),
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    placeholder={translateCurrency('status_form.placeholder')}
-                    options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
-                      text: key,
-                      value: key,
-                    }))}
-                    disabled={checkRow && isCheckPermissionEdit}
-                  />
-                </Form.Item>
-              </Col>
-            ) : (
-              <></>
-            )}
 
             <Col lg={12} span={24}>
               <Form.Item
@@ -242,7 +289,7 @@ const CurrencyForm = ({
           create={create}
           checkRow={checkRow}
           edit={edit}
-          loading={loading}
+          loading={loadingSubmit || false}
           isCheckPermissionEdit={isCheckPermissionEdit}
           insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
           dateInserted={detailQuery.data?.data?.dateInserted || ''}
@@ -251,7 +298,7 @@ const CurrencyForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAJ={handleAJ}
+          handleAR={handleAJ}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
         />

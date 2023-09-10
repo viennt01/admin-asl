@@ -25,8 +25,6 @@ import { API_MESSAGE } from '@/constant/message';
 import {
   QueryInputParamType,
   QuerySelectParamType,
-  STATUS_MASTER_COLORS,
-  STATUS_MATER_LABELS,
   SelectSearch,
   CurrencyTable,
 } from '../interface';
@@ -38,6 +36,7 @@ import {
 import { deleteCurrency, getCurrencySearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
+import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 
 const { confirm } = Modal;
 

@@ -1,14 +1,21 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, STATUS_MATER_LABELS } from '../interface';
+import {
+  FormValues,
+  STATUS_MASTER_COLORS,
+  UpdateStatusBank,
+} from '../interface';
 import { API_BANK } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getBankDetail } from '../fetcher';
+import { getBankDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 const initialValue = {
   bankName: '',
@@ -20,8 +27,7 @@ interface FormProps {
   edit?: boolean;
   handleSubmit?: (formValues: FormValues, id?: string) => void;
   handleSaveDraft?: (formValues: FormValues, id?: string) => void;
-  handleApproveAndReject?: (id: string, status: string) => void;
-  loadingSubmit: boolean;
+  loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
 }
@@ -34,9 +40,8 @@ const BankForm = ({
   edit,
   handleSubmit,
   handleSaveDraft,
-  loadingSubmit: loading,
+  loadingSubmit,
   checkRow,
-  handleApproveAndReject,
   useDraft,
 }: FormProps) => {
   const { translate: translateBank } = useI18n('bank');
@@ -45,7 +50,8 @@ const BankForm = ({
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
-    useState<boolean>(true);
+    useState<boolean>(false);
+  const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   useEffect(() => {
     if (!id) return;
@@ -101,9 +107,43 @@ const BankForm = ({
     setCheckPermissionEdit(data);
   };
 
-  const handleAJ = (status: string) => {
-    handleApproveAndReject && handleApproveAndReject(id as string, status);
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusBank) => {
+      return updateStatus(body);
+    },
+  });
+
+  const handleAR = (status: string) => {
+    if (idQuery) {
+      const _requestData: UpdateStatusBank = {
+        id: idQuery,
+        status,
+      };
+      updateStatusMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.BANK))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      errorToast(API_MESSAGE.ERROR);
+    }
   };
+
+  useEffect(() => {
+    if (form.getFieldValue('statusBank')) {
+      form.getFieldValue('statusBank') === STATUS_ALL_LABELS.ACTIVE
+        ? setCheckStatus(true)
+        : setCheckStatus(false);
+    }
+    if (edit && checkRow) {
+      setCheckPermissionEdit(true);
+    }
+  }, [form, edit, checkRow]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -137,11 +177,48 @@ const BankForm = ({
             </Row>
           }
           extra={
-            create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />
+            <>
+              {create && useDraft && (
+                <DraftTable handleIdQuery={handleIdQuery} />
+              )}
+              {edit && idQuery && !isCheckPermissionEdit && (
+                <Switch
+                  checked={checkStatus}
+                  checkedChildren="Active"
+                  unCheckedChildren="Deactive"
+                  style={{
+                    backgroundColor: checkStatus
+                      ? STATUS_MASTER_COLORS.ACTIVE
+                      : STATUS_MASTER_COLORS.DEACTIVE,
+                  }}
+                  onChange={(value) => {
+                    const _requestData: UpdateStatusBank = {
+                      id: idQuery,
+                      status: value
+                        ? STATUS_ALL_LABELS.ACTIVE
+                        : STATUS_ALL_LABELS.DEACTIVE,
+                    };
+
+                    updateStatusMutation.mutate(_requestData, {
+                      onSuccess: (data) => {
+                        data.status
+                          ? (successToast(data.message),
+                            setCheckStatus(!checkStatus))
+                          : errorToast(data.message);
+                      },
+                      onError() {
+                        errorToast(API_MESSAGE.ERROR);
+                      },
+                    });
+                  }}
+                  loading={updateStatusMutation.isLoading}
+                />
+              )}
+            </>
           }
         >
           <Row gutter={16}>
-            <Col lg={6} span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 label={translateBank('bank_code_form.title')}
                 name="bankNo"
@@ -160,7 +237,7 @@ const BankForm = ({
               </Form.Item>
             </Col>
 
-            <Col lg={18} span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 label={translateBank('bank_name_form.title')}
                 name="bankName"
@@ -291,8 +368,7 @@ const BankForm = ({
                 />
               </Form.Item>
             </Col>
-
-            <Col lg={!create && !manager ? 6 : 12} span={12}>
+            <Col lg={12} span={24}>
               <Form.Item
                 label={translateBank('bank_phone_form.title')}
                 name="phoneNumber"
@@ -310,33 +386,6 @@ const BankForm = ({
                 />
               </Form.Item>
             </Col>
-
-            {!create && !manager ? (
-              <Col lg={6} span={12}>
-                <Form.Item
-                  label={translateBank('bank_status_form.title')}
-                  name="statusBank"
-                  rules={[
-                    {
-                      required: true,
-                      message: translateBank('bank_status_form.error_required'),
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    placeholder={translateBank('bank_status_form.placeholder')}
-                    options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
-                      text: key,
-                      value: key,
-                    }))}
-                    disabled={checkRow && isCheckPermissionEdit}
-                  />
-                </Form.Item>
-              </Col>
-            ) : (
-              <></>
-            )}
 
             <Col span={24}>
               <Form.Item
@@ -356,7 +405,7 @@ const BankForm = ({
           create={create}
           checkRow={checkRow}
           edit={edit}
-          loading={loading}
+          loading={loadingSubmit || false}
           isCheckPermissionEdit={isCheckPermissionEdit}
           insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
           dateInserted={detailQuery.data?.data?.dateInserted || ''}
@@ -365,7 +414,7 @@ const BankForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAJ={handleAJ}
+          handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
         />

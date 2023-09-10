@@ -127,7 +127,7 @@ const CreateLocationType = () => {
       create
       handleSubmit={handleSubmit}
       handleSaveDraft={handleSaveDraft}
-      loadingSubmit={createMutation.isLoading}
+      loadingSubmit={createMutation.isLoading || updateMutation.isLoading}
       checkRow={false}
       useDraft
     />

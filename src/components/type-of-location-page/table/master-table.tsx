@@ -25,8 +25,6 @@ import { API_MESSAGE } from '@/constant/message';
 import {
   QueryInputParamType,
   QuerySelectParamType,
-  STATUS_MASTER_COLORS,
-  STATUS_MATER_LABELS,
   SelectSearch,
   LocationTypeTable,
 } from '../interface';
@@ -38,6 +36,7 @@ import {
 import { deleteLocationType, getLocationTypeSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
+import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 
 const { confirm } = Modal;
 
@@ -426,7 +425,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
+    router.push(ROUTERS.TYPE_OF_LOCATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {

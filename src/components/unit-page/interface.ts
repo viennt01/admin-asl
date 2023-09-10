@@ -1,16 +1,5 @@
 import { Pagination } from '../commons/table/table-deafault';
-import COLORS from '@/constant/color';
 
-export const STATUS_MASTER_COLORS = {
-  ACTIVE: COLORS.STATUS_CODE.ACTIVE,
-  DEACTIVE: COLORS.STATUS_CODE.DEACTIVE,
-};
-
-export const STATUS_MATER_LABELS = {
-  ACTIVE: 'ACTIVE',
-  DEACTIVE: 'DEACTIVE',
-};
-//
 export interface Unit {
   unitID: string;
   internationalCode: string;

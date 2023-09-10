@@ -1,14 +1,18 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, STATUS_MATER_LABELS } from '../interface';
+import { FormValues, UpdateStatusUnit } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getUnitDetail } from '../fetcher';
+import { getUnitDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
+import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
+import { UpdateStatusLocationType } from '@/components/type-of-location-page/interface';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
 
 const initialValue = {
   description: '',
@@ -20,8 +24,7 @@ interface PortFormProps {
   edit?: boolean;
   handleSubmit?: (formValues: FormValues, id?: string) => void;
   handleSaveDraft?: (formValues: FormValues, id?: string) => void;
-  handleApproveAndReject?: (id: string, status: string) => void;
-  loadingSubmit: boolean;
+  loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
 }
@@ -35,9 +38,8 @@ const UnitForm = ({
   edit,
   handleSubmit,
   handleSaveDraft,
-  loadingSubmit: loading,
+  loadingSubmit,
   checkRow,
-  handleApproveAndReject,
   useDraft,
 }: PortFormProps) => {
   const { translate: translateUnit } = useI18n('unit');
@@ -46,7 +48,8 @@ const UnitForm = ({
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
-    useState<boolean>(true);
+    useState<boolean>(false);
+  const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   useEffect(() => {
     if (!id) return;
@@ -95,9 +98,43 @@ const UnitForm = ({
     setCheckPermissionEdit(data);
   };
 
-  const handleAJ = (status: string) => {
-    handleApproveAndReject && handleApproveAndReject(id as string, status);
+  const handleAR = (status: string) => {
+    if (idQuery) {
+      const _requestData: UpdateStatusLocationType = {
+        id: idQuery,
+        status,
+      };
+      updateStatusMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      errorToast(API_MESSAGE.ERROR);
+    }
   };
+
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusUnit) => {
+      return updateStatus(body);
+    },
+  });
+
+  useEffect(() => {
+    if (form.getFieldValue('statusTypeLocation')) {
+      form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
+        ? setCheckStatus(true)
+        : setCheckStatus(false);
+    }
+    if (edit && checkRow) {
+      setCheckPermissionEdit(true);
+    }
+  }, [form, edit, checkRow]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -122,6 +159,39 @@ const UnitForm = ({
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
                           translateUnit('information_edit_unit')}
+                        {edit && idQuery && !isCheckPermissionEdit && (
+                          <Switch
+                            checked={checkStatus}
+                            checkedChildren="Active"
+                            unCheckedChildren="Deactive"
+                            style={{
+                              backgroundColor: checkStatus
+                                ? STATUS_MASTER_COLORS.ACTIVE
+                                : STATUS_MASTER_COLORS.DEACTIVE,
+                            }}
+                            onChange={(value) => {
+                              const _requestData: UpdateStatusLocationType = {
+                                id: idQuery,
+                                status: value
+                                  ? STATUS_ALL_LABELS.ACTIVE
+                                  : STATUS_ALL_LABELS.DEACTIVE,
+                              };
+
+                              updateStatusMutation.mutate(_requestData, {
+                                onSuccess: (data) => {
+                                  data.status
+                                    ? (successToast(data.message),
+                                      setCheckStatus(!checkStatus))
+                                    : errorToast(data.message);
+                                },
+                                onError() {
+                                  errorToast(API_MESSAGE.ERROR);
+                                },
+                              });
+                            }}
+                            loading={updateStatusMutation.isLoading}
+                          />
+                        )}
                       </>
                     ) : (
                       translateUnit('information_edit_unit')
@@ -131,11 +201,15 @@ const UnitForm = ({
             </Row>
           }
           extra={
-            create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />
+            <>
+              {create && useDraft && (
+                <DraftTable handleIdQuery={handleIdQuery} />
+              )}
+            </>
           }
         >
           <Row gutter={16}>
-            <Col lg={!create && !manager ? 12 : 24} span={12}>
+            <Col span={24}>
               <Form.Item
                 label={translateUnit('international_code_form.title')}
                 name="internationalCode"
@@ -157,32 +231,6 @@ const UnitForm = ({
                 />
               </Form.Item>
             </Col>
-            {!create && !manager ? (
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateUnit('status_form.title')}
-                  name="statusUnit"
-                  rules={[
-                    {
-                      required: true,
-                      message: translateUnit('status_form.error_required'),
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    placeholder={translateUnit('status_form.placeholder')}
-                    options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
-                      text: key,
-                      value: key,
-                    }))}
-                    disabled={checkRow && isCheckPermissionEdit}
-                  />
-                </Form.Item>
-              </Col>
-            ) : (
-              <></>
-            )}
 
             <Col span={24}>
               <Form.Item
@@ -234,7 +282,7 @@ const UnitForm = ({
           create={create}
           checkRow={checkRow}
           edit={edit}
-          loading={loading}
+          loading={loadingSubmit || false}
           isCheckPermissionEdit={isCheckPermissionEdit}
           insertedByUser={unitDetailQuery.data?.data?.insertedByUser || ''}
           dateInserted={unitDetailQuery.data?.data?.dateInserted || ''}
@@ -243,7 +291,7 @@ const UnitForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAJ={handleAJ}
+          handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
         />

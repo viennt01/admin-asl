@@ -391,7 +391,7 @@ const UnitForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAJ={handleAJ}
+          handleAR={handleAJ}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
         />

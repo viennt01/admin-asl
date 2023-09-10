@@ -3,7 +3,7 @@ import { ROUTERS } from '@/constant/router';
 import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
-import UnitForm from '../components/unit-form';
+import UnitForm from '../components/form';
 import { FormValues, UnitCreate, UnitEdit } from '../interface';
 import { createUnit, editUnit } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
@@ -113,7 +113,9 @@ const CreateUnit = () => {
       create
       handleSubmit={handleSubmit}
       handleSaveDraft={handleSaveDraft}
-      loadingSubmit={createPortMutation.isLoading}
+      loadingSubmit={
+        createPortMutation.isLoading || updateUnitMutation.isLoading
+      }
       checkRow={false}
       useDraft
     />

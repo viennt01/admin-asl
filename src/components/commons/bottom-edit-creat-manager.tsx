@@ -23,7 +23,7 @@ interface Props {
   dateUpdated: string;
   handleCheckEdit: (data: boolean) => void;
   handleSaveDraft?: () => void;
-  handleAJ: (status: string) => void;
+  handleAR: (status: string) => void;
   checkQuery?: boolean;
   useDraft?: boolean;
 }
@@ -41,7 +41,7 @@ export const BottomCreateEdit = ({
   dateUpdated,
   handleCheckEdit,
   handleSaveDraft,
-  handleAJ,
+  handleAR: handleAJ,
   checkQuery,
   useDraft,
 }: Props) => {
@@ -118,6 +118,7 @@ export const BottomCreateEdit = ({
                 onClick={() => {
                   return handleAJ(STATUS_ALL_LABELS.REJECT);
                 }}
+                loading={loading}
               >
                 {translateCommon('button_bottom_form.reject')}
               </Button>
@@ -131,6 +132,7 @@ export const BottomCreateEdit = ({
                 onClick={() => {
                   return handleAJ(STATUS_ALL_LABELS.ACTIVE);
                 }}
+                loading={loading}
               >
                 {translateCommon('button_bottom_form.approval')}
               </Button>
@@ -145,6 +147,7 @@ export const BottomCreateEdit = ({
                   type="primary"
                   onClick={() => handleCheckEdit(false)}
                   style={{ marginLeft: '12px' }}
+                  loading={loading}
                 >
                   {translateCommon('button_bottom_form.edit')}
                 </Button>
@@ -152,7 +155,10 @@ export const BottomCreateEdit = ({
             ) : (
               <>
                 {checkRow ? (
-                  <Button onClick={() => handleCheckEdit(true)}>
+                  <Button
+                    onClick={() => handleCheckEdit(true)}
+                    loading={loading}
+                  >
                     {translateCommon('button_bottom_form.cancel')}
                   </Button>
                 ) : (

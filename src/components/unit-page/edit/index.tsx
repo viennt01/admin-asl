@@ -4,7 +4,7 @@ import { editUnit } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import UnitForm from '../components/unit-form';
+import UnitForm from '../components/form';
 
 const EditUnit = () => {
   const checkRow = router.query.checkRow as string;

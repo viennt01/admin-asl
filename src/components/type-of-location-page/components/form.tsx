@@ -9,7 +9,7 @@ import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager
 import { geLocationTypeDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { FormValues, UpdateStatusLocationType } from '../interface';
-import { STATUS_ALL_LABELS } from '@/constant/form';
+import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
@@ -24,8 +24,7 @@ interface FormProps {
   edit?: boolean;
   handleSubmit?: (formValues: FormValues, id?: string) => void;
   handleSaveDraft?: (formValues: FormValues, id?: string) => void;
-  handleApproveAndReject?: (id: string, status: string) => void;
-  loadingSubmit: boolean;
+  loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
 }
@@ -38,9 +37,8 @@ const LocationTypeForm = ({
   edit,
   handleSubmit,
   handleSaveDraft,
-  loadingSubmit: loading,
+  loadingSubmit,
   checkRow,
-  handleApproveAndReject,
   useDraft,
 }: FormProps) => {
   const { translate: translateLocationType } = useI18n('typeOfLocation');
@@ -49,7 +47,7 @@ const LocationTypeForm = ({
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
-    useState<boolean>(true);
+    useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   useEffect(() => {
@@ -107,8 +105,26 @@ const LocationTypeForm = ({
     setCheckPermissionEdit(data);
   };
 
-  const handleAJ = (status: string) => {
-    handleApproveAndReject && handleApproveAndReject(id as string, status);
+  const handleAR = (status: string) => {
+    if (idQuery) {
+      const _requestData: UpdateStatusLocationType = {
+        id: idQuery,
+        status,
+      };
+      updateStatusMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              router.push(ROUTERS.TYPE_OF_LOCATION))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      errorToast(API_MESSAGE.ERROR);
+    }
   };
 
   const contentEN = () => {
@@ -221,7 +237,11 @@ const LocationTypeForm = ({
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
-  }, [form, checkStatus]);
+    if (edit && checkRow) {
+      setCheckPermissionEdit(true);
+    }
+  }, [form, edit, checkRow]);
+
   return (
     <div style={{ padding: '24px 0' }}>
       <Form
@@ -261,11 +281,16 @@ const LocationTypeForm = ({
               {create && useDraft && (
                 <DraftTable handleIdQuery={handleIdQuery} />
               )}
-              {edit && idQuery && (
+              {edit && idQuery && !isCheckPermissionEdit && (
                 <Switch
                   checked={checkStatus}
                   checkedChildren="Active"
                   unCheckedChildren="Deactive"
+                  style={{
+                    backgroundColor: checkStatus
+                      ? STATUS_MASTER_COLORS.ACTIVE
+                      : STATUS_MASTER_COLORS.DEACTIVE,
+                  }}
                   onChange={(value) => {
                     const _requestData: UpdateStatusLocationType = {
                       id: idQuery,
@@ -299,7 +324,7 @@ const LocationTypeForm = ({
           create={create}
           checkRow={checkRow}
           edit={edit}
-          loading={loading}
+          loading={loadingSubmit || false}
           isCheckPermissionEdit={isCheckPermissionEdit}
           insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
           dateInserted={detailQuery.data?.data?.dateInserted || ''}
@@ -308,7 +333,7 @@ const LocationTypeForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAJ={handleAJ}
+          handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
         />

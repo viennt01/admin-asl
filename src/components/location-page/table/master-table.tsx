@@ -37,7 +37,7 @@ import {
 import { deleteLocation, getLocationSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
-import { STATUS_COLORS, STATUS_LABELS } from '@/constant/form';
+import { STATUS_DR_COLORS, STATUS_DR_LABELS } from '@/constant/form';
 import { getListCountry, getListTypePort } from '@/layout/fetcher';
 
 const { confirm } = Modal;
@@ -396,12 +396,12 @@ export default function MasterDataTable() {
       width: 120,
       render: (value) => (
         <Tag
-          color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
+          color={STATUS_DR_COLORS[value as keyof typeof STATUS_DR_COLORS]}
           style={{
             margin: 0,
           }}
         >
-          {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
+          {STATUS_DR_LABELS[value as keyof typeof STATUS_DR_LABELS]}
         </Tag>
       ),
     },

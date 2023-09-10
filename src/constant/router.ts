@@ -44,7 +44,7 @@ export const ROUTERS = {
   TYPE_OF_LOCATION_CREATE:
     '/master-data/location-catalog/type-of-location/create',
   TYPE_OF_LOCATION_MANAGER: (typeOfLocationId: string) =>
-    `/master-data/catalog/type-of-location/manager-admin/${typeOfLocationId}`,
+    `/master-data/location-catalog/type-of-location/manager-admin/${typeOfLocationId}`,
   LOCATION: '/master-data/location-catalog/location',
   LOCATION_EDIT: (portId: string, checkRow = false) =>
     `/master-data/location-catalog/location/edit/${portId}?checkRow=${checkRow}`,

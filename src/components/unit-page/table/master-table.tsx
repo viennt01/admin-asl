@@ -24,8 +24,6 @@ import { API_MESSAGE } from '@/constant/message';
 import {
   QueryInputParamType,
   QuerySelectParamType,
-  STATUS_MASTER_COLORS,
-  STATUS_MATER_LABELS,
   SelectSearch,
   UnitTable,
 } from '../interface';
@@ -38,6 +36,7 @@ import { deleteUnit, getLocationsSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
+import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 
 const { confirm } = Modal;
 
