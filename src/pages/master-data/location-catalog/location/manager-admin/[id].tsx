@@ -2,7 +2,7 @@ import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 import ManagerLocation from '@/components/location-page/manager';
 
-function BankManagerPage() {
+function LocationManagerPage() {
   return (
     <>
       <Head>
@@ -13,7 +13,7 @@ function BankManagerPage() {
   );
 }
 
-export default withAuthentication(BankManagerPage);
+export default withAuthentication(LocationManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'location']);
 export const getStaticPaths = async ({ locales }: { locales: [] }) => {

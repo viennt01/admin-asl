@@ -90,4 +90,5 @@ export const API_LOCATION = {
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',
+  GET_ALL_CITY: '/get-all-city',
 };

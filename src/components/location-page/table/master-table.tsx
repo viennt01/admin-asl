@@ -25,7 +25,6 @@ import { API_MESSAGE } from '@/constant/message';
 import {
   QueryInputParamType,
   QuerySelectParamType,
-  STATUS_MATER_LABELS,
   SelectSearch,
   LocationTable,
 } from '../interface';
@@ -37,8 +36,12 @@ import {
 import { deleteLocation, getLocationSearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
-import { STATUS_DR_COLORS, STATUS_DR_LABELS } from '@/constant/form';
-import { getListCountry, getListTypePort } from '@/layout/fetcher';
+import {
+  STATUS_DR_COLORS,
+  STATUS_DR_LABELS,
+  STATUS_MATER_LABELS,
+} from '@/constant/form';
+import { getListCountry, getListTypeLocations } from '@/layout/fetcher';
 
 const { confirm } = Modal;
 
@@ -112,10 +115,9 @@ export default function MasterDataTable() {
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
   // Handle data
-
-  const typePorts = useQuery(
+  const typeLocation = useQuery(
     [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    getListTypePort
+    getListTypeLocations
   );
   const countries = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
     getListCountry({
@@ -270,6 +272,10 @@ export default function MasterDataTable() {
         filters.statusLocation?.length !== 0 && filters.statusLocation
           ? (filters.statusLocation as string[])
           : [],
+      typeLocations:
+        filters.typeLocations?.length !== 0 && filters.typeLocations
+          ? (filters.typeLocations as string[])
+          : [],
     };
     setQuerySelectParams(newQueryParams);
   };
@@ -366,9 +372,9 @@ export default function MasterDataTable() {
       align: 'center',
       filteredValue: querySelectParams.typeLocations || null,
       filters:
-        typePorts.data?.data.map((data) => ({
-          text: data.typePortName,
-          value: data.typePortID,
+        typeLocation.data?.data.map((data) => ({
+          text: data.typeLocationName,
+          value: data.typeLocationID,
         })) || [],
       filterIcon: () => {
         return (
@@ -382,7 +388,7 @@ export default function MasterDataTable() {
           />
         );
       },
-      filterMultiple: false,
+      filterMultiple: true,
       render: (_, value) =>
         value.typeLocations.map((type) => {
           return <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>;
@@ -477,7 +483,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPES_OF_CONTAINER_EDIT(id));
+    router.push(ROUTERS.LOCATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -525,12 +531,12 @@ export default function MasterDataTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.TYPE_OF_LOCATION_EDIT(record.key, true));
+      router.push(ROUTERS.LOCATION_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.TYPE_OF_LOCATION_CREATE);
+    router.push(ROUTERS.LOCATION_CREATE);
   };
 
   return (

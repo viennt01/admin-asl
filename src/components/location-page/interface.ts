@@ -1,16 +1,5 @@
 import { Pagination } from '../commons/table/table-deafault';
-import COLORS from '@/constant/color';
 
-export const STATUS_MASTER_COLORS = {
-  ACTIVE: COLORS.STATUS_CODE.ACTIVE,
-  DEACTIVE: COLORS.STATUS_CODE.DEACTIVE,
-};
-
-export const STATUS_MATER_LABELS = {
-  ACTIVE: 'ACTIVE',
-  DEACTIVE: 'DEACTIVE',
-};
-//
 export interface Location {
   locationID: string;
   cityID: string;
@@ -72,10 +61,14 @@ export interface LocationTypeDetailDataBody {
 }
 
 export interface FormValues {
-  typeLocationID: string;
-  typeLocationName: string;
-  description: string;
+  locationID: string;
+  cityID: string;
+  cityName: string;
+  locationCode: string;
+  locationNameEN: string;
+  locationNameVN: string;
   statusLocation: string;
+  typeLocations: TypeLocations[];
 }
 
 export interface LocationTypeDetailType extends FormValues {
@@ -85,7 +78,7 @@ export interface LocationTypeDetailType extends FormValues {
   updatedByUser: string;
 }
 
-export type LocationTypeCreate = Omit<FormValues, 'typeLocationID'>;
+export type LocationTypeCreate = Omit<FormValues, 'locationID'>;
 
 export type LocationTypeEdit = FormValues;
 

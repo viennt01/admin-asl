@@ -11,7 +11,7 @@ import {
 import Table from '@/components/commons/table/table';
 
 import { ROUTERS } from '@/constant/router';
-import { API_BANK, API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { API_LOCATION, API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -35,7 +35,7 @@ import {
   SelectSearchRequest,
   UpdateStatusLocation,
 } from '../interface';
-import { getListTypePort } from '@/layout/fetcher';
+import { getListTypeLocations } from '@/layout/fetcher';
 
 const initalValueQueryInputParams = {
   locationCode: '',
@@ -86,11 +86,11 @@ const RequestTable = () => {
   // Handle data
   const typePorts = useQuery(
     [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    getListTypePort
+    getListTypeLocations
   );
   useQuery({
     queryKey: [
-      API_BANK.GET_REQUEST,
+      API_LOCATION.GET_REQUEST,
       pagination,
       queryInputParams,
       querySelectParams,
@@ -257,8 +257,8 @@ const RequestTable = () => {
       filteredValue: querySelectParams.typeLocations || null,
       filters:
         typePorts.data?.data.map((data) => ({
-          text: data.typePortName,
-          value: data.typePortID,
+          text: data.typeLocationName,
+          value: data.typeLocationID,
         })) || [],
       filterIcon: () => {
         return (
@@ -334,7 +334,7 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPE_OF_LOCATION_MANAGER(id));
+    router.push(ROUTERS.LOCATION_MANAGER(id));
   };
 
   const handleApproveAndReject = (id: string, status: string) => {
@@ -347,7 +347,11 @@ const RequestTable = () => {
         data.status
           ? (successToast(data.message),
             queryClient.invalidateQueries({
-              queryKey: [API_BANK.GET_REQUEST, pagination, queryInputParams],
+              queryKey: [
+                API_LOCATION.GET_REQUEST,
+                pagination,
+                queryInputParams,
+              ],
             }))
           : errorToast(data.message);
       },
@@ -371,7 +375,7 @@ const RequestTable = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.TYPE_OF_LOCATION_MANAGER(record.key));
+      router.push(ROUTERS.LOCATION_MANAGER(record.key));
     }
   };
 

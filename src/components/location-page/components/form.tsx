@@ -1,14 +1,19 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
-import { useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Select } from 'antd';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Form, Input, Typography, Card, Row, Col, Select, Switch } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { API_LOCATION_TYPE, API_MASTER_DATA } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { geLocationDetail } from '../fetcher';
+import { geLocationDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
-import { FormValues, STATUS_MATER_LABELS } from '../interface';
+import { FormValues, UpdateStatusLocation } from '../interface';
+import { getListCity, getListTypeLocations } from '@/layout/fetcher';
+import { UpdateStatusLocationType } from '@/components/type-of-location-page/interface';
+import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
 
 const initialValue = {
   typeLocationName: '',
@@ -21,32 +26,42 @@ interface FormProps {
   edit?: boolean;
   handleSubmit?: (formValues: FormValues, id?: string) => void;
   handleSaveDraft?: (formValues: FormValues, id?: string) => void;
-  handleApproveAndReject?: (id: string, status: string) => void;
-  loadingSubmit: boolean;
+  loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
 }
 
 const { Title } = Typography;
 
-const LocationTypeForm = ({
+const LocationForm = ({
   create,
   manager,
   edit,
   handleSubmit,
   handleSaveDraft,
-  loadingSubmit: loading,
+  loadingSubmit,
   checkRow,
-  handleApproveAndReject,
   useDraft,
 }: FormProps) => {
-  const { translate: translateLocationType } = useI18n('typeOfLocation');
+  const { translate: translateLocation } = useI18n('location');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
-    useState<boolean>(true);
+    useState<boolean>(false);
+  const [checkStatus, setCheckStatus] = useState<boolean>(true);
+
+  const typeLocations = useQuery(
+    [API_LOCATION_TYPE.GET_TYPE_LOCATION],
+    getListTypeLocations
+  );
+  const city = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
+    getListCity({
+      currentPage: 1,
+      pageSize: 500,
+    })
+  );
 
   useEffect(() => {
     if (!id) return;
@@ -80,10 +95,13 @@ const LocationTypeForm = ({
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          typeLocationID: data.data.typeLocationID,
-          typeLocationName: data.data.typeLocationName,
-          description: data.data.description,
+          locationID: data.data.locationID,
+          cityID: data.data.cityID,
+          locationCode: data.data.locationCode,
+          locationNameEN: data.data.locationNameEN,
+          locationNameVN: data.data.locationNameVN,
           statusLocation: data.data.statusLocation,
+          typeLocations: data.data.typeLocations,
         });
       } else {
         router.push(ROUTERS.TYPE_OF_LOCATION);
@@ -95,9 +113,41 @@ const LocationTypeForm = ({
     setCheckPermissionEdit(data);
   };
 
-  const handleAJ = (status: string) => {
-    handleApproveAndReject && handleApproveAndReject(id as string, status);
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusLocation) => {
+      return updateStatus(body);
+    },
+  });
+
+  const handleAR = (status: string) => {
+    if (idQuery) {
+      const _requestData: UpdateStatusLocation = {
+        id: idQuery,
+        status,
+      };
+      updateStatusMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.LOCATION))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
   };
+
+  useEffect(() => {
+    if (form.getFieldValue('statusTypeLocation')) {
+      form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
+        ? setCheckStatus(true)
+        : setCheckStatus(false);
+    }
+    if (edit && checkRow) {
+      setCheckPermissionEdit(true);
+    }
+  }, [form, edit, checkRow]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -114,102 +164,166 @@ const LocationTypeForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create &&
-                    translateLocationType('information_add_type_of_location')}
+                  {create && translateLocation('information_add_port')}
                   {manager && 'Approval needed requests'}
                   {edit &&
                     (checkRow ? (
                       <>
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
-                          translateLocationType(
-                            'information_edit_type_of_location'
-                          )}
+                          translateLocation('information_edit_port')}
                       </>
                     ) : (
-                      translateLocationType('information_edit_type_of_location')
+                      translateLocation('information_edit_port')
                     ))}
                 </Title>
               </Col>
             </Row>
           }
           extra={
-            create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />
+            <>
+              {create && useDraft && (
+                <DraftTable handleIdQuery={handleIdQuery} />
+              )}
+              {edit && idQuery && !isCheckPermissionEdit && (
+                <Switch
+                  checked={checkStatus}
+                  checkedChildren="Active"
+                  unCheckedChildren="Deactive"
+                  style={{
+                    backgroundColor: checkStatus
+                      ? STATUS_MASTER_COLORS.ACTIVE
+                      : STATUS_MASTER_COLORS.DEACTIVE,
+                  }}
+                  onChange={(value) => {
+                    const _requestData: UpdateStatusLocationType = {
+                      id: idQuery,
+                      status: value
+                        ? STATUS_ALL_LABELS.ACTIVE
+                        : STATUS_ALL_LABELS.DEACTIVE,
+                    };
+
+                    updateStatusMutation.mutate(_requestData, {
+                      onSuccess: (data) => {
+                        data.status
+                          ? (successToast(data.message),
+                            setCheckStatus(!checkStatus))
+                          : errorToast(data.message);
+                      },
+                      onError() {
+                        errorToast(API_MESSAGE.ERROR);
+                      },
+                    });
+                  }}
+                  loading={updateStatusMutation.isLoading}
+                />
+              )}
+            </>
           }
         >
           <Row gutter={16}>
-            <Col lg={!create && !manager ? 12 : 24} span={12}>
+            <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocationType('international_code_form.title')}
-                name="typeLocationName"
+                label={translateLocation('port_code.title')}
+                tooltip={translateLocation('code')}
+                name="locationCode"
                 rules={[
                   {
                     required: true,
-                    message: translateLocationType(
-                      'international_code_form.error_required'
-                    ),
+                    message: translateLocation('port_code.error_required'),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateLocationType(
-                    'international_code_form.placeholder'
-                  )}
+                  placeholder={translateLocation('port_code.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
-            {!create && !manager ? (
-              <Col lg={12} span={24}>
-                <Form.Item
-                  label={translateLocationType('status_form.title')}
-                  name="statusLocation"
-                  rules={[
-                    {
-                      required: true,
-                      message: translateLocationType(
-                        'status_form.error_required'
-                      ),
-                    },
-                  ]}
-                >
-                  <Select
-                    size="large"
-                    placeholder={translateLocationType(
-                      'status_form.placeholder'
-                    )}
-                    options={Object.keys(STATUS_MATER_LABELS).map((key) => ({
-                      text: key,
-                      value: key,
-                    }))}
-                    disabled={checkRow && isCheckPermissionEdit}
-                  />
-                </Form.Item>
-              </Col>
-            ) : (
-              <></>
-            )}
-
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocationType('description_vn_form.title')}
-                name="description"
+                label={translateLocation('type_port.title')}
+                name="typeLocations"
                 rules={[
                   {
                     required: true,
-                    message: translateLocationType(
-                      'description_vn_form.error_required'
-                    ),
+                    message: translateLocation('type_port.error_required'),
                   },
                 ]}
               >
-                <Input.TextArea
+                <Select
+                  placeholder={translateLocation('type_port.placeholder')}
+                  mode="multiple"
                   size="large"
-                  placeholder={translateLocationType(
-                    'description_vn_form.placeholder'
-                  )}
-                  allowClear
+                  options={
+                    typeLocations.data?.data.map((type) => ({
+                      label: type.typeLocationName,
+                      value: type.typeLocationID,
+                    })) || []
+                  }
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateLocation('port_name.titleEn')}
+                name="locationNameEN"
+                rules={[
+                  {
+                    required: true,
+                    message: translateLocation('port_name.error_required'),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateLocation('port_name.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateLocation('port_name.titleVn')}
+                name="locationNameVN"
+              >
+                <Input
+                  placeholder={translateLocation('port_name.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateLocation('City')}
+                name="cityID"
+                rules={[
+                  {
+                    required: true,
+                    message: translateLocation('country.error_required'),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={translateLocation('country.placeholder')}
+                  showSearch
+                  size="large"
+                  options={
+                    city.data?.data.data.map((item) => ({
+                      value: item.cityID,
+                      label: item.cityName,
+                    })) || []
+                  }
+                  filterOption={(input, option) =>
+                    (option?.label ?? '')
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  }
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
@@ -221,7 +335,7 @@ const LocationTypeForm = ({
           create={create}
           checkRow={checkRow}
           edit={edit}
-          loading={loading}
+          loading={loadingSubmit || false}
           isCheckPermissionEdit={isCheckPermissionEdit}
           insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
           dateInserted={detailQuery.data?.data?.dateInserted || ''}
@@ -230,7 +344,7 @@ const LocationTypeForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={handleAJ}
+          handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
         />
@@ -239,4 +353,4 @@ const LocationTypeForm = ({
   );
 };
 
-export default LocationTypeForm;
+export default LocationForm;

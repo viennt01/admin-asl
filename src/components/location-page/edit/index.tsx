@@ -4,7 +4,7 @@ import { editLocation } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import LocationTypeForm from '../components/form';
+import LocationForm from '../components/form';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 
 const EditLocation = () => {
@@ -18,9 +18,14 @@ const EditLocation = () => {
   const handleSubmit = (formValues: FormValues, idQuery?: string) => {
     if (idQuery) {
       const _requestData: LocationTypeEdit = {
-        typeLocationID: idQuery,
-        typeLocationName: formValues.typeLocationName || '',
-        description: formValues.description || '',
+        locationID: idQuery,
+        cityID: formValues.cityID || '',
+        cityName: formValues.cityName || '',
+        locationCode: formValues.locationCode || '',
+        locationNameEN: formValues.locationNameEN || '',
+        locationNameVN:
+          formValues.locationNameVN || formValues.locationNameEN || '',
+        typeLocations: formValues.typeLocations || [],
         statusLocation: formValues.statusLocation || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {
@@ -37,7 +42,7 @@ const EditLocation = () => {
   };
 
   return (
-    <LocationTypeForm
+    <LocationForm
       edit
       handleSubmit={handleSubmit}
       loadingSubmit={updateMutation.isLoading}

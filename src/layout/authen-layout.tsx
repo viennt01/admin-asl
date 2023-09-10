@@ -28,8 +28,9 @@ import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import {
   UserInfo,
+  getListCity,
   getListCountry,
-  getListTypePort,
+  getListTypeLocations,
   getUserInfo,
 } from './fetcher';
 import { useQuery } from '@tanstack/react-query';
@@ -149,7 +150,15 @@ export function AppLayout(props: Props) {
   });
   useQuery({
     queryKey: [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    queryFn: getListTypePort,
+    queryFn: getListTypeLocations,
+  });
+  useQuery({
+    queryKey: [API_MASTER_DATA.GET_CITY],
+    queryFn: () =>
+      getListCity({
+        currentPage: 1,
+        pageSize: 500,
+      }),
   });
 
   useQuery({

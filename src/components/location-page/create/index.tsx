@@ -3,7 +3,7 @@ import { ROUTERS } from '@/constant/router';
 import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
-import LocationTypeForm from '../components/form';
+import LocationForm from '../components/form';
 import { FormValues, LocationTypeCreate, LocationTypeEdit } from '../interface';
 import { createLocation, editLocation } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
@@ -27,15 +27,20 @@ const CreateLocation = () => {
   const handleSubmit = (formValues: FormValues, id?: string) => {
     if (id) {
       const _requestData: LocationTypeEdit = {
-        typeLocationID: id,
-        typeLocationName: formValues.typeLocationName || '',
-        description: formValues.description || '',
+        locationID: id,
+        cityID: formValues.cityID || '',
+        cityName: formValues.cityName || '',
+        locationCode: formValues.locationCode || '',
+        locationNameEN: formValues.locationNameEN || '',
+        locationNameVN:
+          formValues.locationNameVN || formValues.locationNameEN || '',
+        typeLocations: formValues.typeLocations || [],
         statusLocation: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.BANK))
+            ? (successToast(data.message), router.push(ROUTERS.LOCATION))
             : errorToast(data.message);
         },
         onError() {
@@ -44,14 +49,19 @@ const CreateLocation = () => {
       });
     } else {
       const _requestData: LocationTypeCreate = {
-        typeLocationName: formValues.typeLocationName || '',
-        description: formValues.description || '',
+        cityID: formValues.cityID || '',
+        cityName: formValues.cityName || '',
+        locationCode: formValues.locationCode || '',
+        locationNameEN: formValues.locationNameEN || '',
+        locationNameVN:
+          formValues.locationNameVN || formValues.locationNameEN || '',
+        typeLocations: formValues.typeLocations || [],
         statusLocation: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.BANK))
+            ? (successToast(data.message), router.push(ROUTERS.LOCATION))
             : errorToast(data.message);
         },
         onError() {
@@ -64,9 +74,14 @@ const CreateLocation = () => {
   const handleSaveDraft = (formValues: FormValues, id?: string) => {
     if (id) {
       const _requestData: LocationTypeEdit = {
-        typeLocationID: id,
-        typeLocationName: formValues.typeLocationName || '',
-        description: formValues.description || '',
+        locationID: id,
+        cityID: formValues.cityID || '',
+        cityName: formValues.cityName || '',
+        locationCode: formValues.locationCode || '',
+        locationNameEN: formValues.locationNameEN || '',
+        locationNameVN:
+          formValues.locationNameVN || formValues.locationNameEN || '',
+        typeLocations: formValues.typeLocations || [],
         statusLocation: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -84,8 +99,13 @@ const CreateLocation = () => {
       });
     } else {
       const _requestData: LocationTypeCreate = {
-        typeLocationName: formValues.typeLocationName || '',
-        description: formValues.description || '',
+        cityID: formValues.cityID || '',
+        cityName: formValues.cityName || '',
+        locationCode: formValues.locationCode || '',
+        locationNameEN: formValues.locationNameEN || '',
+        locationNameVN:
+          formValues.locationNameVN || formValues.locationNameEN || '',
+        typeLocations: formValues.typeLocations || [],
         statusLocation: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {
@@ -105,7 +125,7 @@ const CreateLocation = () => {
   };
 
   return (
-    <LocationTypeForm
+    <LocationForm
       create
       handleSubmit={handleSubmit}
       handleSaveDraft={handleSaveDraft}
