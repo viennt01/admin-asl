@@ -41,7 +41,7 @@ import {
   STATUS_DR_LABELS,
   STATUS_MATER_LABELS,
 } from '@/constant/form';
-import { getListCountry, getListTypeLocations } from '@/layout/fetcher';
+import { getListCity, getListTypeLocations } from '@/layout/fetcher';
 
 const { confirm } = Modal;
 
@@ -119,12 +119,13 @@ export default function MasterDataTable() {
     [API_LOCATION_TYPE.GET_TYPE_LOCATION],
     getListTypeLocations
   );
-  const countries = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
-    getListCountry({
+  const city = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
+    getListCity({
       currentPage: 1,
       pageSize: 500,
     })
   );
+
   const dataSelectSearch =
     querySelectParams.statusLocation.length === 0
       ? {
@@ -346,9 +347,9 @@ export default function MasterDataTable() {
       align: 'center',
       filteredValue: [querySelectParams.cityID] || null,
       filters:
-        countries.data?.data?.data.map((item) => ({
-          text: item.countryName,
-          value: item.countryID,
+        city.data?.data?.data.map((item) => ({
+          text: item.cityName,
+          value: item.cityID,
         })) || [],
       filterSearch: true,
       filterIcon: () => {
@@ -363,7 +364,7 @@ export default function MasterDataTable() {
           />
         );
       },
-      filterMultiple: false,
+      filterMultiple: true,
     },
     {
       title: translateLocation('type_of_port'),
