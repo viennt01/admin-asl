@@ -17,8 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_LOCATION_TYPE, API_MASTER_DATA } from '@/fetcherAxios/endpoint';
-import style from '@/components/commons/table/index.module.scss';
+import { API_COMMODITY } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -26,31 +25,28 @@ import {
   QueryInputParamType,
   QuerySelectParamType,
   SelectSearch,
-  LocationTable,
+  CommodityTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteLocation, getLocationSearch } from '../fetcher';
+import { deleteCommodity, getCommoditySearch } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
+import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
-import { getListCity, getListTypeLocations } from '@/layout/fetcher';
 
 const { confirm } = Modal;
 
 const initalValueQueryInputParams = {
   searchAll: '',
-  locationCode: '',
-  locationName: '',
+  commodityName: '',
 };
 
 const initalValueQuerySelectParams = {
-  statusLocation: [],
-  typeLocations: [],
-  cityID: '',
+  statusCommodity: [],
 };
 
 const initalValueDisplayColumn = {
@@ -69,19 +65,11 @@ const initalSelectSearch = {
     label: '',
     value: '',
   },
-  locationCode: {
+  commodityName: {
     label: '',
     value: '',
   },
-  locationName: {
-    label: '',
-    value: '',
-  },
-  typeLocations: {
-    label: '',
-    value: [],
-  },
-  statusLocation: {
+  statusCommodity: {
     label: '',
     value: [],
   },
@@ -93,7 +81,7 @@ export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateLocation } = useI18n('location');
+  const { translate: translateCommodity } = useI18n('commodity');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
@@ -102,7 +90,7 @@ export default function MasterDataTable() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
-  const [dataTable, setDataTable] = useState<LocationTable[]>([]);
+  const [dataTable, setDataTable] = useState<CommodityTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -111,37 +99,25 @@ export default function MasterDataTable() {
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
   // Handle data
-  const typeLocation = useQuery(
-    [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    getListTypeLocations
-  );
-  const city = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
-    getListCity({
-      currentPage: 1,
-      pageSize: 500,
-    })
-  );
-
   const dataSelectSearch =
-    querySelectParams.statusLocation.length === 0
+    querySelectParams.statusCommodity.length === 0
       ? {
-          ...querySelectParams,
-          statusLocation: [
+          statusCommodity: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
         }
       : querySelectParams;
 
-  const locationsQuerySearch = useQuery({
+  const querySearch = useQuery({
     queryKey: [
-      API_LOCATION_TYPE.GET_SEARCH,
+      API_COMMODITY.GET_SEARCH,
       pagination,
       queryInputParams,
       querySelectParams,
     ],
     queryFn: () =>
-      getLocationSearch({
+      getCommoditySearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -154,13 +130,9 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.locationID,
-            cityID: data.cityID,
-            cityName: data.cityName,
-            locationCode: data.locationCode,
-            locationName: data.locationName,
-            typeLocations: data.typeLocations,
-            statusLocation: data.statusLocation,
+            key: data.commodityID,
+            commodityName: data.commodityName,
+            statusCommodity: data.statusCommodity,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -181,13 +153,13 @@ export default function MasterDataTable() {
   });
 
   const deletesMutation = useMutation({
-    mutationFn: () => deleteLocation(selectedRowKeys),
+    mutationFn: () => deleteCommodity(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
           queryKey: [
-            API_LOCATION_TYPE.GET_SEARCH,
+            API_COMMODITY.GET_SEARCH,
             pagination,
             queryInputParams,
             querySelectParams,
@@ -211,7 +183,7 @@ export default function MasterDataTable() {
       ...state,
       current: 1,
     }));
-    locationsQuerySearch.refetch();
+    querySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
@@ -265,18 +237,10 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusLocation:
-        filters.statusLocation?.length !== 0 && filters.statusLocation
-          ? (filters.statusLocation as string[])
+      statusCommodity:
+        filters.statusCommodity?.length !== 0 && filters.statusCommodity
+          ? (filters.statusCommodity as string[])
           : [],
-      typeLocations:
-        filters.typeLocations?.length !== 0 && filters.typeLocations
-          ? (filters.typeLocations as string[])
-          : [],
-      cityID:
-        filters.cityID?.length !== 0 && filters.cityID
-          ? (filters.cityID[0] as string)
-          : '',
     };
     setQuerySelectParams(newQueryParams);
   };
@@ -295,9 +259,9 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<LocationTable>[] = [
+  const columns: ProColumns<CommodityTable>[] = [
     {
-      title: <div className={style.title}>{translateLocation('no')}</div>,
+      title: <div className={style.title}>{translateCommodity('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -307,11 +271,11 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateLocation('code'),
-      dataIndex: 'locationCode',
-      width: 120,
-      key: '',
-      align: 'center',
+      title: <div className={style.title}>{translateCommodity('name')}</div>,
+      dataIndex: 'commodityName',
+      key: 'commodityName',
+      width: 250,
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -319,91 +283,34 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'locationCode',
+          dataIndex: 'commodityName',
         },
       }),
     },
     {
-      title: translateLocation('name'),
-      dataIndex: 'locationName',
-      key: 'locationName',
-      align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'locationName',
-        },
-      }),
-    },
-    {
-      title: translateLocation('City'),
-      width: 150,
-      dataIndex: 'cityID',
-      key: 'cityID',
-      align: 'center',
-      filteredValue: [querySelectParams.cityID] || null,
-      filters:
-        city.data?.data?.data.map((item) => ({
-          text: item.cityName,
-          value: item.cityID,
-        })) || [],
-      filterSearch: true,
-      filterIcon: () => {
-        return (
-          <FilterFilled
-            style={{
-              color:
-                querySelectParams.cityID?.length !== 0
-                  ? COLORS.SEARCH.FILTER_ACTIVE
-                  : COLORS.SEARCH.FILTER_DEFAULT,
-            }}
-          />
-        );
-      },
-      filterMultiple: false,
-      render: (_, value) => {
-        return <div>{value.cityName}</div>;
-      },
-    },
-    {
-      title: translateLocation('type_of_port'),
-      dataIndex: 'typeLocations',
-      key: 'typeLocations',
-      align: 'center',
-      filteredValue: querySelectParams.typeLocations || null,
-      filters:
-        typeLocation.data?.data.map((data) => ({
-          text: data.typeLocationName,
-          value: data.typeLocationID,
-        })) || [],
-      filterIcon: () => {
-        return (
-          <FilterFilled
-            style={{
-              color:
-                querySelectParams.typeLocations?.length !== 0
-                  ? COLORS.SEARCH.FILTER_ACTIVE
-                  : COLORS.SEARCH.FILTER_DEFAULT,
-            }}
-          />
-        );
-      },
-      filterMultiple: true,
-      render: (_, value) =>
-        value.typeLocations.map((type) => {
-          return <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>;
-        }),
-    },
-    {
-      title: translateLocation('status'),
-      dataIndex: 'statusLocation',
-      key: 'statusLocation',
-      align: 'center',
+      title: <div className={style.title}>{translateCommodity('status')}</div>,
       width: 120,
+      dataIndex: 'statusCommodity',
+      key: 'statusCommodity',
+      align: 'center',
+      filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
+        text: key,
+        value: key,
+      })),
+      filterSearch: false,
+      filteredValue: querySelectParams.statusCommodity || null,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.statusCommodity.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
       render: (value) => (
         <Tag
           color={
@@ -489,7 +396,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.LOCATION_EDIT(id));
+    router.push(ROUTERS.COMMODITY_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -533,27 +440,27 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTable
+    record: CommodityTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.LOCATION_EDIT(record.key, true));
+      router.push(ROUTERS.COMMODITY_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.LOCATION_CREATE);
+    router.push(ROUTERS.COMMODITY_CREATE);
   };
 
   return (
     <div style={{ marginTop: -18 }}>
-      {locationsQuerySearch.isLoading ? (
+      {querySearch.isLoading ? (
         <SkeletonTable />
       ) : (
         <Table
           dataTable={dataTable}
           columns={columns}
-          headerTitle={translateLocation('title')}
+          headerTitle={translateCommodity('title')}
           selectedRowKeys={selectedRowKeys}
           handleSelectionChange={handleSelectionChange}
           handlePaginationChange={handlePaginationChange}

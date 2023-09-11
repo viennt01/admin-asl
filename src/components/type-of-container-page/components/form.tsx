@@ -330,6 +330,9 @@ const TypeOfContainerTypeForm = ({
                 />
               </Form.Item>
             </Col>
+            <Col span={0}>
+              <Form.Item name="statusContainerType"></Form.Item>
+            </Col>
           </Row>
         </Card>
 

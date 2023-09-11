@@ -87,6 +87,17 @@ export const API_LOCATION = {
   GET_REQUEST: '/get-location-with-status-request',
 };
 
+export const API_COMMODITY = {
+  GET_SEARCH: '/search-commodity',
+  GET_DETAIL: '/get-commodity',
+  CREATE: '/add-commodity',
+  EDIT: '/update-commodity',
+  DELETE: '/delete-commodity',
+  UPDATE_STATUS: '/update-status-commodity',
+  GET_DRAFT: '/get-commodity-with-status-and-id-User',
+  GET_REQUEST: '/get-commodity-with-status-request',
+};
+
 export const API_MASTER_DATA = {
   GET_COUNTRY: '/get-all-country',
   GET_CITY: '/get-all-city-by-countryID',

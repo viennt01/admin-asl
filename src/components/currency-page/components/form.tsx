@@ -282,6 +282,9 @@ const CurrencyForm = ({
                 />
               </Form.Item>
             </Col>
+            <Col span={0}>
+              <Form.Item name="statusCurrency"></Form.Item>
+            </Col>
           </Row>
         </Card>
 

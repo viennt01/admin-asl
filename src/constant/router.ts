@@ -46,8 +46,8 @@ export const ROUTERS = {
   TYPE_OF_LOCATION_MANAGER: (typeOfLocationId: string) =>
     `/master-data/location-catalog/type-of-location/manager-admin/${typeOfLocationId}`,
   LOCATION: '/master-data/location-catalog/location',
-  LOCATION_EDIT: (portId: string, checkRow = false) =>
-    `/master-data/location-catalog/location/edit/${portId}?checkRow=${checkRow}`,
+  LOCATION_EDIT: (locationId: string, checkRow = false) =>
+    `/master-data/location-catalog/location/edit/${locationId}?checkRow=${checkRow}`,
   LOCATION_CREATE: '/master-data/location-catalog/location/create',
   LOCATION_MANAGER: (locationId: string) =>
     `/master-data/location-catalog/location/manager-admin/${locationId}`,
@@ -66,8 +66,11 @@ export const ROUTERS = {
   BANK_MANAGER: (bankId: string) =>
     `/master-data/accountant/bank/manager-admin/${bankId}`,
   COMMODITY: '/master-data/commodity',
-  COMMODITY_EDIT: (commodityId: string) =>
-    `/master-data/commodity/edit/${commodityId}`,
+  COMMODITY_CREATE: '/master-data/commodity/create',
+  COMMODITY_EDIT: (commodityId: string, checkRow = false) =>
+    `/master-data/commodity/edit/${commodityId}?checkRow=${checkRow}`,
+  COMMODITY_MANAGER: (commodityId: string) =>
+    `/master-data/commodity/manager-admin/${commodityId}`,
   TYPES_OF_CONTAINER: '/master-data/type-of-container',
   TYPES_OF_CONTAINER_CREATE: '/master-data/type-of-container/create',
   TYPES_OF_CONTAINER_EDIT: (typeOfContainerId: string, checkRow = false) =>

@@ -101,10 +101,12 @@ const LocationForm = ({
           locationNameEN: data.data.locationNameEN,
           locationNameVN: data.data.locationNameVN,
           statusLocation: data.data.statusLocation,
-          typeLocations: data.data.typeLocations,
+          typeLocations: data.data.typeLocations.map(
+            (type) => type.typeLocationID
+          ),
         });
       } else {
-        router.push(ROUTERS.TYPE_OF_LOCATION);
+        router.push(ROUTERS.LOCATION);
       }
     },
   });
@@ -327,6 +329,9 @@ const LocationForm = ({
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
+            </Col>
+            <Col span={0}>
+              <Form.Item name="typeLocations"></Form.Item>
             </Col>
           </Row>
         </Card>

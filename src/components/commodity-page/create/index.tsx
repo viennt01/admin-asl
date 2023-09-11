@@ -3,40 +3,42 @@ import { ROUTERS } from '@/constant/router';
 import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
-import UnitForm from '../components/form';
-import { FormValues, UnitCreate, UnitEdit } from '../interface';
-import { createUnit, editUnit } from '../fetcher';
+import CommodityForm from '../components/form';
+import { FormValues, CreateCommodity, EditCommodity } from '../interface';
+import { createCommodity, editCommodity } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_COMMODITY } from '@/fetcherAxios/endpoint';
 
-const CreateUnit = () => {
+const CommodityPage = () => {
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
-    mutationFn: (body: UnitCreate) => {
-      return createUnit(body);
+    mutationFn: (body: CreateCommodity) => {
+      return createCommodity(body);
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: (body: UnitEdit) => {
-      return editUnit(body);
+    mutationFn: (body: EditCommodity) => {
+      return editCommodity(body);
     },
   });
 
   const handleSubmit = (formValues: FormValues, id?: string) => {
+    console.log(formValues);
+
     if (id) {
-      const _requestData: UnitEdit = {
-        unitID: id,
-        internationalCode: formValues.internationalCode || '',
-        descriptionVN: formValues.descriptionVN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        statusUnit: STATUS_ALL_LABELS.REQUEST,
+      const _requestData: EditCommodity = {
+        commodityID: id,
+        commodityNameEN: formValues.commodityNameEN || '',
+        commodityNameVN:
+          formValues.commodityNameVN || formValues.commodityNameEN || '',
+        statusCommodity: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            ? (successToast(data.message), router.push(ROUTERS.COMMODITY))
             : errorToast(data.message);
         },
         onError() {
@@ -44,16 +46,16 @@ const CreateUnit = () => {
         },
       });
     } else {
-      const _requestData: UnitCreate = {
-        internationalCode: formValues.internationalCode || '',
-        descriptionVN: formValues.descriptionVN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        statusUnit: STATUS_ALL_LABELS.REQUEST,
+      const _requestData: CreateCommodity = {
+        commodityNameEN: formValues.commodityNameEN || '',
+        commodityNameVN:
+          formValues.commodityNameVN || formValues.commodityNameEN || '',
+        statusCommodity: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            ? (successToast(data.message), router.push(ROUTERS.COMMODITY))
             : errorToast(data.message);
         },
         onError() {
@@ -65,19 +67,19 @@ const CreateUnit = () => {
 
   const handleSaveDraft = (formValues: FormValues, id?: string) => {
     if (id) {
-      const _requestData: UnitEdit = {
-        unitID: id,
-        internationalCode: formValues.internationalCode || '',
-        descriptionVN: formValues.descriptionVN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        statusUnit: STATUS_ALL_LABELS.DRAFT,
+      const _requestData: EditCommodity = {
+        commodityID: id,
+        commodityNameEN: formValues.commodityNameEN || '',
+        commodityNameVN:
+          formValues.commodityNameVN || formValues.commodityNameEN || '',
+        statusCommodity: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_UNIT.GET_SEARCH],
+                queryKey: [API_COMMODITY.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -86,18 +88,18 @@ const CreateUnit = () => {
         },
       });
     } else {
-      const _requestData: UnitCreate = {
-        internationalCode: formValues.internationalCode || '',
-        descriptionVN: formValues.descriptionVN || '',
-        descriptionEN: formValues.descriptionEN || '',
-        statusUnit: STATUS_ALL_LABELS.DRAFT,
+      const _requestData: CreateCommodity = {
+        commodityNameEN: formValues.commodityNameEN || '',
+        commodityNameVN:
+          formValues.commodityNameVN || formValues.commodityNameEN || '',
+        statusCommodity: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_UNIT.GET_SEARCH],
+                queryKey: [API_COMMODITY.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -109,7 +111,7 @@ const CreateUnit = () => {
   };
 
   return (
-    <UnitForm
+    <CommodityForm
       create
       handleSubmit={handleSubmit}
       handleSaveDraft={handleSaveDraft}
@@ -120,4 +122,4 @@ const CreateUnit = () => {
   );
 };
 
-export default CreateUnit;
+export default CommodityPage;

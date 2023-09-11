@@ -398,6 +398,9 @@ const BankForm = ({
                 />
               </Form.Item>
             </Col>
+            <Col span={0}>
+              <Form.Item name="statusBank"></Form.Item>
+            </Col>
           </Row>
         </Card>
 

@@ -76,11 +76,13 @@ const UnitForm = ({
     }
   };
 
-  const unitDetailQuery = useQuery({
+  const detailQuery = useQuery({
     queryKey: [API_UNIT.GET_DETAIL, idQuery],
     queryFn: () => getUnitDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
+      console.log(data.data.statusUnit);
+
       if (data.status) {
         form.setFieldsValue({
           internationalCode: data.data.internationalCode,
@@ -126,8 +128,8 @@ const UnitForm = ({
   });
 
   useEffect(() => {
-    if (form.getFieldValue('statusTypeLocation')) {
-      form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusUnit')) {
+      form.getFieldValue('statusUnit') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -135,6 +137,7 @@ const UnitForm = ({
       setCheckPermissionEdit(true);
     }
   }, [form, edit, checkRow]);
+  console.log(form.getFieldsValue());
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -159,39 +162,6 @@ const UnitForm = ({
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
                           translateUnit('information_edit_unit')}
-                        {edit && idQuery && !isCheckPermissionEdit && (
-                          <Switch
-                            checked={checkStatus}
-                            checkedChildren="Active"
-                            unCheckedChildren="Deactive"
-                            style={{
-                              backgroundColor: checkStatus
-                                ? STATUS_MASTER_COLORS.ACTIVE
-                                : STATUS_MASTER_COLORS.DEACTIVE,
-                            }}
-                            onChange={(value) => {
-                              const _requestData: UpdateStatusLocationType = {
-                                id: idQuery,
-                                status: value
-                                  ? STATUS_ALL_LABELS.ACTIVE
-                                  : STATUS_ALL_LABELS.DEACTIVE,
-                              };
-
-                              updateStatusMutation.mutate(_requestData, {
-                                onSuccess: (data) => {
-                                  data.status
-                                    ? (successToast(data.message),
-                                      setCheckStatus(!checkStatus))
-                                    : errorToast(data.message);
-                                },
-                                onError() {
-                                  errorToast(API_MESSAGE.ERROR);
-                                },
-                              });
-                            }}
-                            loading={updateStatusMutation.isLoading}
-                          />
-                        )}
                       </>
                     ) : (
                       translateUnit('information_edit_unit')
@@ -204,6 +174,39 @@ const UnitForm = ({
             <>
               {create && useDraft && (
                 <DraftTable handleIdQuery={handleIdQuery} />
+              )}
+              {edit && idQuery && !isCheckPermissionEdit && (
+                <Switch
+                  checked={checkStatus}
+                  checkedChildren="Active"
+                  unCheckedChildren="Deactive"
+                  style={{
+                    backgroundColor: checkStatus
+                      ? STATUS_MASTER_COLORS.ACTIVE
+                      : STATUS_MASTER_COLORS.DEACTIVE,
+                  }}
+                  onChange={(value) => {
+                    const _requestData: UpdateStatusLocationType = {
+                      id: idQuery,
+                      status: value
+                        ? STATUS_ALL_LABELS.ACTIVE
+                        : STATUS_ALL_LABELS.DEACTIVE,
+                    };
+
+                    updateStatusMutation.mutate(_requestData, {
+                      onSuccess: (data) => {
+                        data.status
+                          ? (successToast(data.message),
+                            setCheckStatus(!checkStatus))
+                          : errorToast(data.message);
+                      },
+                      onError() {
+                        errorToast(API_MESSAGE.ERROR);
+                      },
+                    });
+                  }}
+                  loading={updateStatusMutation.isLoading}
+                />
               )}
             </>
           }
@@ -275,6 +278,9 @@ const UnitForm = ({
                 />
               </Form.Item>
             </Col>
+            <Col span={0}>
+              <Form.Item name="statusUnit"></Form.Item>
+            </Col>
           </Row>
         </Card>
 
@@ -284,10 +290,10 @@ const UnitForm = ({
           edit={edit}
           loading={loadingSubmit || false}
           isCheckPermissionEdit={isCheckPermissionEdit}
-          insertedByUser={unitDetailQuery.data?.data?.insertedByUser || ''}
-          dateInserted={unitDetailQuery.data?.data?.dateInserted || ''}
-          updatedByUser={unitDetailQuery.data?.data?.updatedByUser || ''}
-          dateUpdated={unitDetailQuery.data?.data?.dateUpdated || ''}
+          insertedByUser={detailQuery.data?.data?.insertedByUser || ''}
+          dateInserted={detailQuery.data?.data?.dateInserted || ''}
+          updatedByUser={detailQuery.data?.data?.updatedByUser || ''}
+          dateUpdated={detailQuery.data?.data?.dateUpdated || ''}
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}

@@ -68,10 +68,18 @@ export interface FormValues {
   locationNameEN: string;
   locationNameVN: string;
   statusLocation: string;
-  typeLocations: TypeLocations[];
+  typeLocations: string[];
 }
 
-export interface LocationTypeDetailType extends FormValues {
+export interface LocationTypeDetailType {
+  locationID: string;
+  cityID: string;
+  cityName: string;
+  locationCode: string;
+  locationNameEN: string;
+  locationNameVN: string;
+  statusLocation: string;
+  typeLocations: TypeLocations[];
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;

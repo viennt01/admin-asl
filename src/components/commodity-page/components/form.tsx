@@ -1,24 +1,23 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Tabs, Switch } from 'antd';
+import { Form, Input, Typography, Card, Row, Col, Switch, Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { FormValues, UpdateStatusCommodity } from '../interface';
+import { API_COMMODITY } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { geLocationTypeDetail, updateStatus } from '../fetcher';
+import { getCommodityDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
-import { FormValues, UpdateStatusLocationType } from '../interface';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
 const initialValue = {
-  typeLocationNameEN: '',
-  descriptionEN: '',
+  commodityName: '',
 };
 
-interface FormProps {
+interface PortFormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
@@ -31,7 +30,7 @@ interface FormProps {
 
 const { Title } = Typography;
 
-const LocationTypeForm = ({
+const CommodityForm = ({
   create,
   manager,
   edit,
@@ -40,8 +39,8 @@ const LocationTypeForm = ({
   loadingSubmit,
   checkRow,
   useDraft,
-}: FormProps) => {
-  const { translate: translateLocationType } = useI18n('typeOfLocation');
+}: PortFormProps) => {
+  const { translate: translateCommodity } = useI18n('commodity');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -76,28 +75,20 @@ const LocationTypeForm = ({
   };
 
   const detailQuery = useQuery({
-    queryKey: [API_LOCATION_TYPE.GET_DETAIL, idQuery],
-    queryFn: () => geLocationTypeDetail(idQuery as string),
+    queryKey: [API_COMMODITY.GET_DETAIL, idQuery],
+    queryFn: () => getCommodityDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          typeLocationID: data.data.typeLocationID,
-          typeLocationNameEN: data.data.typeLocationNameEN,
-          descriptionEN: data.data.descriptionEN,
-          typeLocationNameVN: data.data.typeLocationNameVN,
-          descriptionVN: data.data.descriptionVN,
-          statusTypeLocation: data.data.statusTypeLocation,
+          commodityID: data.data.commodityID,
+          commodityNameEN: data.data.commodityNameEN,
+          commodityNameVN: data.data.commodityNameVN,
+          statusCommodity: data.data.statusCommodity,
         });
       } else {
-        router.push(ROUTERS.TYPE_OF_LOCATION);
+        router.push(ROUTERS.COMMODITY);
       }
-    },
-  });
-
-  const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusLocationType) => {
-      return updateStatus(body);
     },
   });
 
@@ -107,15 +98,14 @@ const LocationTypeForm = ({
 
   const handleAR = (status: string) => {
     if (idQuery) {
-      const _requestData: UpdateStatusLocationType = {
+      const _requestData: UpdateStatusCommodity = {
         id: idQuery,
         status,
       };
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message),
-              router.push(ROUTERS.TYPE_OF_LOCATION))
+            ? (successToast(data.message), router.push(ROUTERS.COMMODITY))
             : errorToast(data.message);
         },
         onError() {
@@ -129,54 +119,28 @@ const LocationTypeForm = ({
 
   const contentEN = () => {
     return (
-      <Row gutter={16}>
-        <Col span={24}>
-          <Form.Item
-            label={translateLocationType('international_code_form.title')}
-            name="typeLocationNameEN"
-            rules={[
-              {
-                required: true,
-                message: translateLocationType(
-                  'international_code_form.error_required'
-                ),
-              },
-            ]}
-          >
-            <Input
-              placeholder={translateLocationType(
-                'international_code_form.placeholder'
-              )}
-              size="large"
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-
-        <Col span={24}>
-          <Form.Item
-            label={translateLocationType('descriptionEN_vn_form.title')}
-            name="descriptionEN"
-            rules={[
-              {
-                required: true,
-                message: translateLocationType(
-                  'descriptionEN_vn_form.error_required'
-                ),
-              },
-            ]}
-          >
-            <Input.TextArea
-              size="large"
-              placeholder={translateLocationType(
-                'descriptionEN_vn_form.placeholder'
-              )}
-              allowClear
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-      </Row>
+      <Col span={24}>
+        <Form.Item
+          label={translateCommodity('NameEN')}
+          name="commodityNameEN"
+          rules={[
+            {
+              required: true,
+              message: translateCommodity(
+                'international_code_form.error_required'
+              ),
+            },
+          ]}
+        >
+          <Input
+            placeholder={translateCommodity(
+              'international_code_form.placeholder'
+            )}
+            size="large"
+            disabled={checkRow && isCheckPermissionEdit}
+          />
+        </Form.Item>
+      </Col>
     );
   };
 
@@ -185,30 +149,14 @@ const LocationTypeForm = ({
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            label={translateLocationType('international_code_form.title')}
-            name="typeLocationNameVN"
+            label={translateCommodity('NameVN')}
+            name="commodityNameVN"
           >
             <Input
-              placeholder={translateLocationType(
+              placeholder={translateCommodity(
                 'international_code_form.placeholder'
               )}
               size="large"
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-
-        <Col span={24}>
-          <Form.Item
-            label={translateLocationType('descriptionEN_vn_form.title')}
-            name="descriptionVN"
-          >
-            <Input.TextArea
-              size="large"
-              placeholder={translateLocationType(
-                'descriptionEN_vn_form.placeholder'
-              )}
-              allowClear
               disabled={checkRow && isCheckPermissionEdit}
             />
           </Form.Item>
@@ -231,9 +179,16 @@ const LocationTypeForm = ({
       forceRender: true,
     },
   ];
+
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusCommodity) => {
+      return updateStatus(body);
+    },
+  });
+
   useEffect(() => {
-    if (form.getFieldValue('statusTypeLocation')) {
-      form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusCommodity')) {
+      form.getFieldValue('statusCommodity') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -257,20 +212,17 @@ const LocationTypeForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create &&
-                    translateLocationType('information_add_type_of_location')}
+                  {create && translateCommodity('information_add_commodity')}
                   {manager && 'Approval needed requests'}
                   {edit &&
                     (checkRow ? (
                       <>
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
-                          translateLocationType(
-                            'information_edit_type_of_location'
-                          )}
+                          translateCommodity('information_edit_commodity')}
                       </>
                     ) : (
-                      translateLocationType('information_edit_type_of_location')
+                      translateCommodity('information_edit_commodity')
                     ))}
                 </Title>
               </Col>
@@ -281,45 +233,55 @@ const LocationTypeForm = ({
               {create && useDraft && (
                 <DraftTable handleIdQuery={handleIdQuery} />
               )}
-              {edit && idQuery && !isCheckPermissionEdit && (
-                <Switch
-                  checked={checkStatus}
-                  checkedChildren="Active"
-                  unCheckedChildren="Deactive"
-                  style={{
-                    backgroundColor: checkStatus
-                      ? STATUS_MASTER_COLORS.ACTIVE
-                      : STATUS_MASTER_COLORS.DEACTIVE,
-                  }}
-                  onChange={(value) => {
-                    const _requestData: UpdateStatusLocationType = {
-                      id: idQuery,
-                      status: value
-                        ? STATUS_ALL_LABELS.ACTIVE
-                        : STATUS_ALL_LABELS.DEACTIVE,
-                    };
+              {edit &&
+                (checkRow ? (
+                  <>
+                    {isCheckPermissionEdit && 'View'}
+                    {!isCheckPermissionEdit &&
+                      translateCommodity('information_edit_unit')}
+                    {edit && idQuery && !isCheckPermissionEdit && (
+                      <Switch
+                        checked={checkStatus}
+                        checkedChildren="Active"
+                        unCheckedChildren="Deactive"
+                        style={{
+                          backgroundColor: checkStatus
+                            ? STATUS_MASTER_COLORS.ACTIVE
+                            : STATUS_MASTER_COLORS.DEACTIVE,
+                        }}
+                        onChange={(value) => {
+                          const _requestData: UpdateStatusCommodity = {
+                            id: idQuery,
+                            status: value
+                              ? STATUS_ALL_LABELS.ACTIVE
+                              : STATUS_ALL_LABELS.DEACTIVE,
+                          };
 
-                    updateStatusMutation.mutate(_requestData, {
-                      onSuccess: (data) => {
-                        data.status
-                          ? (successToast(data.message),
-                            setCheckStatus(!checkStatus))
-                          : errorToast(data.message);
-                      },
-                      onError() {
-                        errorToast(API_MESSAGE.ERROR);
-                      },
-                    });
-                  }}
-                  loading={updateStatusMutation.isLoading}
-                />
-              )}
+                          updateStatusMutation.mutate(_requestData, {
+                            onSuccess: (data) => {
+                              data.status
+                                ? (successToast(data.message),
+                                  setCheckStatus(!checkStatus))
+                                : errorToast(data.message);
+                            },
+                            onError() {
+                              errorToast(API_MESSAGE.ERROR);
+                            },
+                          });
+                        }}
+                        loading={updateStatusMutation.isLoading}
+                      />
+                    )}
+                  </>
+                ) : (
+                  translateCommodity('information_edit_unit')
+                ))}
             </>
           }
         >
           <Tabs items={items} />
           <Col span={0}>
-            <Form.Item name="statusTypeLocation"></Form.Item>
+            <Form.Item name="statusCommodity"></Form.Item>
           </Col>
         </Card>
 
@@ -345,4 +307,4 @@ const LocationTypeForm = ({
   );
 };
 
-export default LocationTypeForm;
+export default CommodityForm;
