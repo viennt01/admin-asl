@@ -42,7 +42,7 @@ import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table, { COUNT_DATA } from '@/components/commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
-import ImportCSVModal, { ImportFormValues } from '../import-data';
+import ImportCSVModal, { ImportFormValues } from '../../commons/import-data';
 import { exportExcel } from '@/utils/common';
 import {
   initalSelectSearchMaster,

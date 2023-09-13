@@ -1,4 +1,9 @@
-import { ResponseWithPayload, post } from '@/fetcherAxios';
+import {
+  ResponseWithPayload,
+  downloadFile,
+  post,
+  uploadFile,
+} from '@/fetcherAxios';
 import {
   BankRequire,
   RequestBankType,
@@ -65,4 +70,11 @@ export const getTableRequire = (data: RequestBankTableRequest) => {
   return post<RequestBankTableRequest, ResponseWithPayload<BankRequire>>({
     data,
   })(API_BANK.GET_REQUEST);
+};
+//----------------------------------------------------------------
+export const importDataTable = (data: FormData) => {
+  return uploadFile({ data, timeout: 10000 })(API_BANK.IMPORT);
+};
+export const downloadExampleFile = () => {
+  return downloadFile<BlobPart>({})(API_BANK.DOWNLOAD_EXAMPLE_FILE);
 };

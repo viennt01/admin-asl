@@ -28,45 +28,11 @@ import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import style from '@/components/commons/table/index.module.scss';
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  containerTypeCode: '',
-  name: '',
-  details: '',
-  teus: '',
-};
-
-const initalValueQuerySelectParams = {
-  status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  containerTypeCode: {
-    label: '',
-    value: '',
-  },
-  name: {
-    label: '',
-    value: '',
-  },
-  details: {
-    label: '',
-    value: '',
-  },
-  teus: {
-    label: '',
-    value: '',
-  },
-  statusContainerType: {
-    label: '',
-    value: [],
-  },
-};
+import {
+  initalSelectSearchDraft,
+  initalValueQueryInputParamsDraft,
+  initalValueQuerySelectParamsDraft,
+} from '../constant';
 
 type DataIndex = keyof QueryInputDraft;
 
@@ -81,11 +47,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsDraft
   );
   const [dataTable, setDataTable] = useState<ContainerTypeTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectDratSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
+    initalSelectSearchDraft
+  );
 
   // Handle data
   useQuery({
@@ -93,7 +60,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
-        ...initalValueQuerySelectParams,
+        ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,

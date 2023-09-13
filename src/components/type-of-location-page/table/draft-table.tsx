@@ -28,34 +28,11 @@ import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import style from '@/components/commons/table/index.module.scss';
-
-const initalValueQueryInputParams = {
-  typeLocationName: '',
-  description: '',
-};
-
-const initalValueQuerySelectParams = {
-  status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  typeLocationName: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusLocation: {
-    label: '',
-    value: [],
-  },
-};
+import {
+  initalSelectSearchDraft,
+  initalValueQueryInputParamsDraft,
+  initalValueQuerySelectParamsDraft,
+} from '../constant';
 
 type DataIndex = keyof QueryInputDraft;
 
@@ -70,11 +47,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsDraft
   );
   const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectDratSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
+    initalSelectSearchDraft
+  );
 
   // Handle data
   useQuery({
@@ -82,7 +60,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
-        ...initalValueQuerySelectParams,
+        ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -96,7 +74,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             key: data.typeLocationID,
             typeLocationName: data.typeLocationName,
             description: data.description,
-            statusLocation: data.statusLocation,
+            statusTypeLocation: data.statusTypeLocation,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,

@@ -29,66 +29,10 @@ import {
   SelectSearch,
   UpdateStatusBank,
 } from '../interface';
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  bankNo: '',
-  bankName: '',
-  accountNumberVND: '',
-  accountNumberUSD: '',
-  phoneNumber: '',
-  email: '',
-  address: '',
-  bankBranch: '',
-  note: '',
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  bankNo: {
-    label: '',
-    value: '',
-  },
-  bankName: {
-    label: '',
-    value: '',
-  },
-  accountNumberVND: {
-    label: '',
-    value: '',
-  },
-  accountNumberUSD: {
-    label: '',
-    value: '',
-  },
-  phoneNumber: {
-    label: '',
-    value: '',
-  },
-  email: {
-    label: '',
-    value: '',
-  },
-  address: {
-    label: '',
-    value: '',
-  },
-  bankBranch: {
-    label: '',
-    value: '',
-  },
-  note: {
-    label: '',
-    value: '',
-  },
-  statusBank: {
-    label: '',
-    value: [],
-  },
-};
+import {
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+} from '../constant';
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -100,11 +44,12 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<BankTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
+    initalSelectSearchRequest
+  );
   // Handle data
   useQuery({
     queryKey: [API_BANK.GET_REQUEST, pagination, queryInputParams],

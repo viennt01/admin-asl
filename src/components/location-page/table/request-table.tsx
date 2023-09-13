@@ -36,35 +36,11 @@ import {
   UpdateStatusLocation,
 } from '../interface';
 import { getListTypeLocations } from '@/layout/fetcher';
-
-const initalValueQueryInputParams = {
-  locationCode: '',
-  locationName: '',
-};
-
-const initalValueQuerySelectParams = {
-  typeLocations: [],
-  cityID: '',
-};
-
-const initalSelectSearch = {
-  locationCode: {
-    label: '',
-    value: '',
-  },
-  locationName: {
-    label: '',
-    value: '',
-  },
-  cityID: {
-    label: '',
-    value: '',
-  },
-  typeLocations: {
-    label: '',
-    value: [],
-  },
-};
+import {
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+  initalValueQuerySelectParamsRequest,
+} from '../constant';
 
 type DataIndex = keyof QueryInputRequest;
 
@@ -76,13 +52,13 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectRequest>(initalValueQuerySelectParams);
+    useState<QuerySelectRequest>(initalValueQuerySelectParamsRequest);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputRequest>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<LocationTableRequest[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
-    useState<SelectSearchRequest>(initalSelectSearch);
+    useState<SelectSearchRequest>(initalSelectSearchRequest);
   // Handle data
   const typePorts = useQuery(
     [API_LOCATION_TYPE.GET_TYPE_LOCATION],

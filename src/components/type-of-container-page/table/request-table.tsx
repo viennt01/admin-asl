@@ -27,41 +27,10 @@ import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  containerTypeCode: '',
-  name: '',
-  details: '',
-  teus: '',
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  containerTypeCode: {
-    label: '',
-    value: '',
-  },
-  name: {
-    label: '',
-    value: '',
-  },
-  details: {
-    label: '',
-    value: '',
-  },
-  teus: {
-    label: '',
-    value: '',
-  },
-  statusContainerType: {
-    label: '',
-    value: '',
-  },
-};
+import {
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+} from '../constant';
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -73,11 +42,12 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<ContainerTypeTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
+    initalSelectSearchRequest
+  );
   // Handle data
   useQuery({
     queryKey: [API_CONTAINER_TYPE.GET_REQUEST, pagination, queryInputParams],

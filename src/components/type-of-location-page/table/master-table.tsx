@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -33,52 +33,27 @@ import {
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteLocationType, getLocationTypeSearch } from '../fetcher';
+import {
+  deleteLocationType,
+  downloadExampleFile,
+  getLocationTypeSearch,
+  importDataTable,
+} from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table from '../../commons/table/table';
+import Table, { COUNT_DATA } from '../../commons/table/table';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
+import {
+  initalSelectSearchMaster,
+  initalValueDisplayColumnMaster,
+  initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
+} from '../constant';
+import ImportCSVModal, {
+  ImportFormValues,
+} from '@/components/commons/import-data';
+import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  typeLocationName: '',
-  description: '',
-};
-
-const initalValueQuerySelectParams = {
-  statusTypeLocation: [],
-};
-
-const initalValueDisplayColumn = {
-  operation: {
-    order: 0,
-    fixed: 'left' as const,
-  },
-  index: {
-    order: 1,
-    fixed: 'left' as const,
-  },
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  typeLocationName: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusLocation: {
-    label: '',
-    value: [],
-  },
-};
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -91,18 +66,59 @@ export default function MasterDataTable() {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsMaster
   );
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectParamType>(initalValueQuerySelectParams);
+    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
-  const [selectedActiveKey, setSelectedActiveKey] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [dataExport, setDatExport] = useState<LocationTypeTable[]>([]);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    initalSelectSearchMaster
+  );
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
-  >(initalValueDisplayColumn);
+  >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
+  const [loadingImport, setLoadingImport] = useState(false);
+  const [openImportModal, setOpenImportModal] = useState(false);
+  const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
+  const excelHeadersMaster = useMemo(
+    () => [
+      {
+        name: translateLocationType('name'),
+        value: 'typeLocationName',
+      },
+      {
+        name: translateLocationType('description'),
+        value: 'description',
+      },
+      {
+        name: translateLocationType('status'),
+        value: 'statusTypeLocation',
+      },
+      {
+        name: translateCommon('date_created'),
+        value: 'dateInserted',
+        converter: (value: string) => formatDate(Number(value)) || '',
+      },
+      {
+        name: translateCommon('creator'),
+        value: 'insertedByUser',
+      },
+      {
+        name: translateCommon('date_inserted'),
+        value: 'dateUpdated',
+        converter: (value: string) => formatDate(Number(value)) || '',
+      },
+      {
+        name: translateCommon('inserter'),
+        value: 'updatedByUser',
+      },
+    ],
+    []
+  );
   // Handle data
   const dataSelectSearch =
     querySelectParams.statusTypeLocation.length === 0
@@ -138,7 +154,7 @@ export default function MasterDataTable() {
             key: data.typeLocationID,
             typeLocationName: data.typeLocationName,
             description: data.description,
-            statusLocation: data.statusLocation,
+            statusTypeLocation: data.statusTypeLocation,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -182,8 +198,8 @@ export default function MasterDataTable() {
   });
 
   const refreshingQuery = () => {
-    setSelectedActiveKey(initalSelectSearch);
-    setQueryInputParams(initalValueQueryInputParams);
+    setSelectedActiveKey(initalSelectSearchMaster);
+    setQueryInputParams(initalValueQueryInputParamsMaster);
     setRefreshingLoading(true);
     setPagination((state) => ({
       ...state,
@@ -198,18 +214,18 @@ export default function MasterDataTable() {
   // Handle search
   const handleSearchInputKeyAll = (value: string) => {
     setSelectedActiveKey({
-      ...initalSelectSearch,
+      ...initalSelectSearchMaster,
       searchAll: {
         label: 'searchAll',
         value: value,
       },
     });
     setQueryInputParams({
-      ...initalValueQueryInputParams,
+      ...initalValueQueryInputParamsMaster,
       searchAll: value,
     });
     setQuerySelectParams({
-      ...initalValueQuerySelectParams,
+      ...initalValueQuerySelectParamsMaster,
     });
   };
 
@@ -319,8 +335,8 @@ export default function MasterDataTable() {
         <div className={style.title}>{translateLocationType('status')}</div>
       ),
       width: 120,
-      dataIndex: 'statusLocation',
-      key: 'statusLocation',
+      dataIndex: 'statusTypeLocation',
+      key: 'statusTypeLocation',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
@@ -340,18 +356,22 @@ export default function MasterDataTable() {
           />
         );
       },
-      render: (value) => (
-        <Tag
-          color={
-            STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
-          }
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
-        </Tag>
-      ),
+      render: (value) => {
+        console.log(value);
+
+        return (
+          <Tag
+            color={
+              STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
+            }
+            style={{
+              margin: 0,
+            }}
+          >
+            {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
+          </Tag>
+        );
+      },
     },
     {
       title: (
@@ -480,33 +500,145 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.TYPE_OF_LOCATION_CREATE);
   };
+  // export table data to csv
+  useQuery({
+    queryKey: [],
+    queryFn: () =>
+      getLocationTypeSearch({
+        ...queryInputParams,
+        ...querySelectParams,
+        statusTypeLocation: [
+          STATUS_MATER_LABELS.ACTIVE,
+          STATUS_MATER_LABELS.DEACTIVE,
+        ],
+        paginateRequest: {
+          currentPage: 1,
+          pageSize: COUNT_DATA,
+        },
+      }),
+    onSuccess(data) {
+      if (data.status) {
+        setDatExport(
+          data.data.data.map((data) => ({
+            key: data.typeLocationID,
+            typeLocationName: data.typeLocationName,
+            description: data.description,
+            statusTypeLocation: data.statusTypeLocation,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            isDelete: data.isDelete,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            searchAll: '',
+          }))
+        );
+      } else {
+        setDatExport([]);
+      }
+    },
+  });
+  const exportTableData = () => {
+    setExportLoading(true);
+    if (selectedRowKeys.length === 0) {
+      exportExcel(dataExport, excelHeadersMaster, 'Type_Location');
+    } else {
+      const data = dataTable.filter((item) =>
+        selectedRowKeys.includes(item.key)
+      );
+      exportExcel(data, excelHeadersMaster, 'Type_Location');
+    }
+    setExportLoading(false);
+  };
 
+  // import table data from excel file
+  const importData = useMutation({
+    mutationFn: (value: FormData) => importDataTable(value),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [API_LOCATION_TYPE.GET_REQUEST],
+        });
+        setLoadingImport(false);
+        setOpenImportModal(false);
+      } else {
+        errorToast(data.message);
+        setLoadingImport(false);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
+      setLoadingImport(false);
+    },
+  });
+  const confirmImportTableData = (formValues: ImportFormValues) => {
+    setLoadingImport(true);
+    const _requestData = new FormData();
+    _requestData.append('File', formValues.file[0]);
+    importData.mutate(_requestData);
+  };
+  const cancelImportTableData = () => {
+    setOpenImportModal(false);
+  };
+  const importTableData = () => {
+    setOpenImportModal(true);
+  };
+
+  // download example file
+  const downloadFile = useMutation({
+    mutationFn: () => downloadExampleFile(),
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_TYPE_LOCATION.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
+    },
+  });
   return (
     <div style={{ marginTop: -18 }}>
       {locationsQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
-        <Table
-          dataTable={dataTable}
-          columns={columns}
-          headerTitle={translateLocationType('title')}
-          selectedRowKeys={selectedRowKeys}
-          handleSelectionChange={handleSelectionChange}
-          handlePaginationChange={handlePaginationChange}
-          handleChangeInputSearchAll={handleChangeInputSearchAll}
-          handleSearchInputKeyAll={handleSearchInputKeyAll}
-          valueSearchAll={selectedActiveKey.searchAll.value}
-          handleOnDoubleClick={handleOnDoubleClick}
-          handleCreate={handleCreate}
-          showPropsConfirmDelete={showPropsConfirmDelete}
-          refreshingQuery={refreshingQuery}
-          refreshingLoading={refreshingLoading}
-          pagination={pagination}
-          handleColumnsStateChange={handleColumnsStateChange}
-          columnsStateMap={columnsStateMap}
-          handleSearchSelect={handleSearchSelect}
-          checkTableMaster={true}
-        />
+        <>
+          <ImportCSVModal
+            loadingImport={loadingImport}
+            open={openImportModal}
+            handleOk={confirmImportTableData}
+            handleCancel={cancelImportTableData}
+            isLoadingDownload={isLoadingDownload}
+            downloadFile={downloadFile}
+          />
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            headerTitle={translateLocationType('title')}
+            selectedRowKeys={selectedRowKeys}
+            handleSelectionChange={handleSelectionChange}
+            handlePaginationChange={handlePaginationChange}
+            handleChangeInputSearchAll={handleChangeInputSearchAll}
+            handleSearchInputKeyAll={handleSearchInputKeyAll}
+            valueSearchAll={selectedActiveKey.searchAll.value}
+            handleOnDoubleClick={handleOnDoubleClick}
+            handleCreate={handleCreate}
+            showPropsConfirmDelete={showPropsConfirmDelete}
+            refreshingQuery={refreshingQuery}
+            refreshingLoading={refreshingLoading}
+            pagination={pagination}
+            handleColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            handleSearchSelect={handleSearchSelect}
+            checkTableMaster={true}
+            importTableData={importTableData}
+            exportLoading={exportLoading}
+            exportTableData={exportTableData}
+          />
+        </>
       )}
     </div>
   );

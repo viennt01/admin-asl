@@ -27,31 +27,10 @@ import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  internationalCode: '',
-  description: '',
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  internationalCode: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusUnit: {
-    label: '',
-    value: '',
-  },
-};
+import {
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+} from '../constant';
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -63,11 +42,12 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<UnitTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
+    initalSelectSearchRequest
+  );
   // Handle data
   useQuery({
     queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],

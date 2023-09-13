@@ -4,7 +4,7 @@ export interface LocationType {
   typeLocationID: string;
   typeLocationName: string;
   description: string;
-  statusLocation: string;
+  statusTypeLocation: string;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;

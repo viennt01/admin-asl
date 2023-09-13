@@ -1,4 +1,9 @@
-import { ResponseWithPayload, post } from '@/fetcherAxios';
+import {
+  ResponseWithPayload,
+  downloadFile,
+  post,
+  uploadFile,
+} from '@/fetcherAxios';
 import {
   UnitsRequire,
   RequestLocationType,
@@ -65,4 +70,11 @@ export const getTable = (data: RequestUnitTableRequest) => {
   return post<RequestUnitTableRequest, ResponseWithPayload<UnitsRequire>>({
     data,
   })(API_UNIT.GET_REQUEST);
+};
+//----------------------------------------------------------------
+export const importDataTable = (data: FormData) => {
+  return uploadFile({ data, timeout: 10000 })(API_UNIT.IMPORT);
+};
+export const downloadExampleFile = () => {
+  return downloadFile<BlobPart>({})(API_UNIT.DOWNLOAD_EXAMPLE_FILE);
 };

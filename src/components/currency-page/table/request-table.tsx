@@ -29,36 +29,10 @@ import {
   SelectSearch,
   UpdateStatusCurrency,
 } from '../interface';
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  currencyName: '',
-  exchangeRateToVND: '',
-  exchangeRateToUSD: '',
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  currencyName: {
-    label: '',
-    value: '',
-  },
-  exchangeRateToVND: {
-    label: '',
-    value: '',
-  },
-  exchangeRateToUSD: {
-    label: '',
-    value: '',
-  },
-  statusCurrency: {
-    label: '',
-    value: [],
-  },
-};
+import {
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+} from '../constant';
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -70,11 +44,12 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
+    initalSelectSearchRequest
+  );
   // Handle data
   useQuery({
     queryKey: [API_CURRENCY.GET_REQUEST, pagination, queryInputParams],

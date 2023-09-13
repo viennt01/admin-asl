@@ -18,6 +18,8 @@ export const API_UNIT = {
   UPDATE_STATUS: '/update-status-unit',
   GET_DRAFT: '/get-unit-with-status-and-id-User',
   GET_REQUEST: '/get-unit-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-unit-excel',
+  IMPORT: '/import-unit-with-excel',
 };
 
 export const API_SEA_PRICING = {
@@ -40,6 +42,8 @@ export const API_CONTAINER_TYPE = {
   UPDATE_STATUS: '/update-status-container-type',
   GET_DRAFT: '/get-container-type-with-status-and-id-User',
   GET_REQUEST: '/get-container-type-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-container-type-excel',
+  IMPORT: '/import-container-type-with-excel',
 };
 
 export const API_CURRENCY = {
@@ -51,6 +55,8 @@ export const API_CURRENCY = {
   UPDATE_STATUS: '/update-status-currency',
   GET_DRAFT: '/get-currency-with-status-and-id-User',
   GET_REQUEST: '/get-currency-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-currency-excel',
+  IMPORT: '/import-currency-with-excel',
 };
 
 export const API_BANK = {
@@ -62,6 +68,8 @@ export const API_BANK = {
   UPDATE_STATUS: '/update-status-bank',
   GET_DRAFT: '/get-bank-with-status-and-id-User',
   GET_REQUEST: '/get-bank-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-bank-excel',
+  IMPORT: '/import-bank-with-excel',
 };
 
 export const API_LOCATION_TYPE = {
@@ -74,6 +82,8 @@ export const API_LOCATION_TYPE = {
   GET_DRAFT: '/get-type-location-with-status-and-id-User',
   GET_REQUEST: '/get-type-location-with-status-request',
   GET_TYPE_LOCATION: '/get-all-type-location',
+  DOWNLOAD_EXAMPLE_FILE: '/download-type-location-excel',
+  IMPORT: '/import-type-location-with-excel',
 };
 
 export const API_LOCATION = {
@@ -85,6 +95,8 @@ export const API_LOCATION = {
   UPDATE_STATUS: '/update-status-location',
   GET_DRAFT: '/get-location-with-status-and-id-User',
   GET_REQUEST: '/get-location-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-location-excel',
+  IMPORT: '/import-location-with-excel',
 };
 
 export const API_COMMODITY = {
@@ -96,8 +108,8 @@ export const API_COMMODITY = {
   UPDATE_STATUS: '/update-status-commodity',
   GET_DRAFT: '/get-commodity-with-status-and-id-User',
   GET_REQUEST: '/get-commodity-with-status-request',
-  IMPORT_COMMODITY: '/import-commodity-with-excel',
-  DOWNLOAD_EXAMPLE_FILE_COMMODITY: '/download-commodity-excel',
+  IMPORT: '/import-commodity-with-excel',
+  DOWNLOAD_EXAMPLE_FILE: '/download-commodity-excel',
 };
 
 export const API_MASTER_DATA = {

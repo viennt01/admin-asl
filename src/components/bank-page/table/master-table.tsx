@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -35,86 +35,26 @@ import {
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteBank, getBankSearch } from '../fetcher';
+import {
+  deleteBank,
+  downloadExampleFile,
+  getBankSearch,
+  importDataTable,
+} from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table from '../../commons/table/table';
+import Table, { COUNT_DATA } from '../../commons/table/table';
+import {
+  initalSelectSearchMaster,
+  initalValueDisplayColumnMaster,
+  initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
+} from '../constant';
+import ImportCSVModal, {
+  ImportFormValues,
+} from '@/components/commons/import-data';
+import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  bankNo: '',
-  bankName: '',
-  accountNumberVND: '',
-  accountNumberUSD: '',
-  phoneNumber: '',
-  email: '',
-  address: '',
-  bankBranch: '',
-  note: '',
-};
-
-const initalValueQuerySelectParams = {
-  statusBank: [],
-};
-
-const initalValueDisplayColumn = {
-  operation: {
-    order: 0,
-    fixed: 'left' as const,
-  },
-  index: {
-    order: 1,
-    fixed: 'left' as const,
-  },
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  bankNo: {
-    label: '',
-    value: '',
-  },
-  bankName: {
-    label: '',
-    value: '',
-  },
-  accountNumberVND: {
-    label: '',
-    value: '',
-  },
-  accountNumberUSD: {
-    label: '',
-    value: '',
-  },
-  phoneNumber: {
-    label: '',
-    value: '',
-  },
-  email: {
-    label: '',
-    value: '',
-  },
-  address: {
-    label: '',
-    value: '',
-  },
-  bankBranch: {
-    label: '',
-    value: '',
-  },
-  note: {
-    label: '',
-    value: '',
-  },
-  statusBank: {
-    label: '',
-    value: [],
-  },
-};
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -127,18 +67,87 @@ export default function MasterDataTable() {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsMaster
   );
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectParamType>(initalValueQuerySelectParams);
+    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<BankTable[]>([]);
-  const [selectedActiveKey, setSelectedActiveKey] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [dataExport, setDatExport] = useState<BankTable[]>([]);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    initalSelectSearchMaster
+  );
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
-  >(initalValueDisplayColumn);
+  >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
+  const [loadingImport, setLoadingImport] = useState(false);
+  const [openImportModal, setOpenImportModal] = useState(false);
+  const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
+  const excelHeadersMaster = useMemo(
+    () => [
+      {
+        name: translateBank('bank_code'),
+        value: 'bankNo',
+      },
+      {
+        name: translateBank('bank_name'),
+        value: 'bankName',
+      },
+      {
+        name: translateBank('VND_account_number'),
+        value: 'VND_account_number',
+      },
+      {
+        name: translateBank('USD_account_number'),
+        value: 'USD_account_number',
+      },
+      {
+        name: translateBank('phone'),
+        value: 'phoneNumber',
+      },
+      {
+        name: translateBank('bank_email'),
+        value: 'email',
+      },
+      {
+        name: translateBank('bank_address'),
+        value: 'address',
+      },
+      {
+        name: translateBank('bank_branch'),
+        value: 'bankBranch',
+      },
+      {
+        name: translateBank('bank_note'),
+        value: 'note',
+      },
+      {
+        name: translateBank('status'),
+        value: 'status',
+      },
+      {
+        name: translateCommon('date_created'),
+        value: 'dateInserted',
+        converter: (value: string) => formatDate(Number(value)) || '',
+      },
+      {
+        name: translateCommon('creator'),
+        value: 'insertedByUser',
+      },
+      {
+        name: translateCommon('date_inserted'),
+        value: 'dateUpdated',
+        converter: (value: string) => formatDate(Number(value)) || '',
+      },
+      {
+        name: translateCommon('inserter'),
+        value: 'updatedByUser',
+      },
+    ],
+    []
+  );
   // Handle data
   const dataSelectSearch =
     querySelectParams.statusBank.length === 0
@@ -225,8 +234,8 @@ export default function MasterDataTable() {
   });
 
   const refreshingQuery = () => {
-    setSelectedActiveKey(initalSelectSearch);
-    setQueryInputParams(initalValueQueryInputParams);
+    setSelectedActiveKey(initalSelectSearchMaster);
+    setQueryInputParams(initalValueQueryInputParamsMaster);
     setRefreshingLoading(true);
     setPagination((state) => ({
       ...state,
@@ -241,18 +250,18 @@ export default function MasterDataTable() {
   // Handle search
   const handleSearchInputKeyAll = (value: string) => {
     setSelectedActiveKey({
-      ...initalSelectSearch,
+      ...initalSelectSearchMaster,
       searchAll: {
         label: 'searchAll',
         value: value,
       },
     });
     setQueryInputParams({
-      ...initalValueQueryInputParams,
+      ...initalValueQueryInputParamsMaster,
       searchAll: value,
     });
     setQuerySelectParams({
-      ...initalValueQuerySelectParams,
+      ...initalValueQuerySelectParamsMaster,
     });
   };
 
@@ -443,7 +452,7 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: <div className={style.title}>{translateBank('bank_address')}</div>,
+      title: <div className={style.title}>{translateBank('bank_branch')}</div>,
       dataIndex: 'bankBranch',
       key: 'bankBranch',
       width: 250,
@@ -460,7 +469,7 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: <div className={style.title}>{translateBank('bank_address')}</div>,
+      title: <div className={style.title}>{translateBank('bank_note')}</div>,
       dataIndex: 'note',
       key: 'note',
       width: 250,
@@ -640,33 +649,149 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.BANK_CREATE);
   };
+  // export table data to csv
+  useQuery({
+    queryKey: [],
+    queryFn: () =>
+      getBankSearch({
+        ...queryInputParams,
+        statusBank: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
+        paginateRequest: {
+          currentPage: 1,
+          pageSize: COUNT_DATA,
+        },
+      }),
+    onSuccess(data) {
+      if (data.status) {
+        setDatExport(
+          data.data.data.map((data) => ({
+            key: data.bankID,
+            bankNo: data.bankNo,
+            bankName: data.bankName,
+            accountNumberVND: data.accountNumberVND,
+            accountNumberUSD: data.accountNumberUSD,
+            phoneNumber: data.phoneNumber,
+            email: data.email,
+            address: data.address,
+            bankBranch: data.bankBranch,
+            note: data.note,
+            statusBank: data.statusBank,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            isDelete: data.isDelete,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            searchAll: '',
+          }))
+        );
+      } else {
+        setDatExport([]);
+      }
+    },
+  });
+  const exportTableData = () => {
+    setExportLoading(true);
+    if (selectedRowKeys.length === 0) {
+      exportExcel(dataExport, excelHeadersMaster, 'Bank');
+    } else {
+      const data = dataTable.filter((item) =>
+        selectedRowKeys.includes(item.key)
+      );
+      exportExcel(data, excelHeadersMaster, 'Bank');
+    }
+    setExportLoading(false);
+  };
+
+  // import table data from excel file
+  const importData = useMutation({
+    mutationFn: (value: FormData) => importDataTable(value),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [API_BANK.GET_REQUEST],
+        });
+        setLoadingImport(false);
+        setOpenImportModal(false);
+      } else {
+        errorToast(data.message);
+        setLoadingImport(false);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
+      setLoadingImport(false);
+    },
+  });
+  const confirmImportTableData = (formValues: ImportFormValues) => {
+    setLoadingImport(true);
+    const _requestData = new FormData();
+    _requestData.append('File', formValues.file[0]);
+    importData.mutate(_requestData);
+  };
+  const cancelImportTableData = () => {
+    setOpenImportModal(false);
+  };
+  const importTableData = () => {
+    setOpenImportModal(true);
+  };
+
+  // download example file
+  const downloadFile = useMutation({
+    mutationFn: () => downloadExampleFile(),
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_BANK.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
+    },
+  });
 
   return (
     <div style={{ marginTop: -18 }}>
       {locationsQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
-        <Table
-          dataTable={dataTable}
-          columns={columns}
-          headerTitle={translateBank('title')}
-          selectedRowKeys={selectedRowKeys}
-          handleSelectionChange={handleSelectionChange}
-          handlePaginationChange={handlePaginationChange}
-          handleChangeInputSearchAll={handleChangeInputSearchAll}
-          handleSearchInputKeyAll={handleSearchInputKeyAll}
-          valueSearchAll={selectedActiveKey.searchAll.value}
-          handleOnDoubleClick={handleOnDoubleClick}
-          handleCreate={handleCreate}
-          showPropsConfirmDelete={showPropsConfirmDelete}
-          refreshingQuery={refreshingQuery}
-          refreshingLoading={refreshingLoading}
-          pagination={pagination}
-          handleColumnsStateChange={handleColumnsStateChange}
-          columnsStateMap={columnsStateMap}
-          handleSearchSelect={handleSearchSelect}
-          checkTableMaster={true}
-        />
+        <>
+          <ImportCSVModal
+            loadingImport={loadingImport}
+            open={openImportModal}
+            handleOk={confirmImportTableData}
+            handleCancel={cancelImportTableData}
+            isLoadingDownload={isLoadingDownload}
+            downloadFile={downloadFile}
+          />
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            headerTitle={translateBank('title')}
+            selectedRowKeys={selectedRowKeys}
+            handleSelectionChange={handleSelectionChange}
+            handlePaginationChange={handlePaginationChange}
+            handleChangeInputSearchAll={handleChangeInputSearchAll}
+            handleSearchInputKeyAll={handleSearchInputKeyAll}
+            valueSearchAll={selectedActiveKey.searchAll.value}
+            handleOnDoubleClick={handleOnDoubleClick}
+            handleCreate={handleCreate}
+            showPropsConfirmDelete={showPropsConfirmDelete}
+            refreshingQuery={refreshingQuery}
+            refreshingLoading={refreshingLoading}
+            pagination={pagination}
+            handleColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            handleSearchSelect={handleSearchSelect}
+            checkTableMaster={true}
+            importTableData={importTableData}
+            exportLoading={exportLoading}
+            exportTableData={exportTableData}
+          />
+        </>
       )}
     </div>
   );

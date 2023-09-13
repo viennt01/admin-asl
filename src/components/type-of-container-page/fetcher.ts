@@ -1,4 +1,9 @@
-import { ResponseWithPayload, post } from '@/fetcherAxios';
+import {
+  ResponseWithPayload,
+  downloadFile,
+  post,
+  uploadFile,
+} from '@/fetcherAxios';
 import {
   ContainerTypesRequire,
   RequestTypeContainerType,
@@ -80,4 +85,11 @@ export const getTable = (data: RequestContainerTypeTableRequest) => {
   >({
     data,
   })(API_CONTAINER_TYPE.GET_REQUEST);
+};
+//----------------------------------------------------------------
+export const importDataTable = (data: FormData) => {
+  return uploadFile({ data, timeout: 10000 })(API_CONTAINER_TYPE.IMPORT);
+};
+export const downloadExampleFile = () => {
+  return downloadFile<BlobPart>({})(API_CONTAINER_TYPE.DOWNLOAD_EXAMPLE_FILE);
 };

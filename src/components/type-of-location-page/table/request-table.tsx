@@ -29,31 +29,10 @@ import {
   SelectSearch,
   UpdateStatusLocationType,
 } from '../interface';
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  typeLocationName: '',
-  description: '',
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  typeLocationName: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusLocation: {
-    label: '',
-    value: [],
-  },
-};
+import {
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+} from '../constant';
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -65,11 +44,12 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
+    initalSelectSearchRequest
+  );
   // Handle data
   useQuery({
     queryKey: [API_BANK.GET_REQUEST, pagination, queryInputParams],
@@ -89,7 +69,7 @@ const RequestTable = () => {
             key: data.typeLocationID,
             typeLocationName: data.typeLocationName,
             description: data.description,
-            statusLocation: data.statusLocation,
+            statusTypeLocation: data.statusTypeLocation,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,

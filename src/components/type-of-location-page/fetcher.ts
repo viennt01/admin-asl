@@ -1,4 +1,9 @@
-import { ResponseWithPayload, post } from '@/fetcherAxios';
+import {
+  ResponseWithPayload,
+  downloadFile,
+  post,
+  uploadFile,
+} from '@/fetcherAxios';
 import {
   LocationTypeRequire,
   RequestLocationTypeType,
@@ -80,4 +85,11 @@ export const getTableRequire = (data: RequestLocationTypeTableRequest) => {
   >({
     data,
   })(API_LOCATION_TYPE.GET_REQUEST);
+};
+//----------------------------------------------------------------
+export const importDataTable = (data: FormData) => {
+  return uploadFile({ data, timeout: 10000 })(API_LOCATION_TYPE.IMPORT);
+};
+export const downloadExampleFile = () => {
+  return downloadFile<BlobPart>({})(API_LOCATION_TYPE.DOWNLOAD_EXAMPLE_FILE);
 };
