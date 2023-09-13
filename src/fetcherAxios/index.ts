@@ -76,6 +76,7 @@ const axiosResolver = async (promise: Promise<AxiosResponse>) => {
     .then((res) => {
       if (res.status === 200) return res.data;
       throw new Error(JSON.stringify(res.data) || 'Request failed');
+      // throw new Error(res.data || 'Request failed');
     })
     .catch((err) => {
       throw new Error(err.message);
@@ -87,6 +88,9 @@ const apiClient = axios.create({
     Accept: 'application/json;odata.metadata=minimal;odata.streaming=true',
     'Content-Type':
       'application/json;odata.metadata=minimal;odata.streaming=true',
+    // 'Content-Type':
+    //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    responseType: 'blob',
   },
 });
 
@@ -189,6 +193,8 @@ export const get =
       apiClient.get(`${getGateway(gw)}${url}`, {
         headers,
         ...options,
+        // 'Content-Type':
+        //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       }),
       timeout
     );
@@ -235,5 +241,22 @@ export const deleteGW =
       timeout
     );
 
+    return axiosResolver(axiosPromise);
+  };
+
+export const uploadFile =
+  ({ data, headers, gw, timeout }: CRUDProps<FormData>) =>
+  async (url: string) => {
+    const axiosPromise = requestWithTimeout(
+      apiClient.post(`${getGateway(gw)}${url}`, data, {
+        headers: {
+          ...headers,
+          // 'Content-Type': 'multipart/form-data',
+          'Content-Type':
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        },
+      }),
+      timeout
+    );
     return axiosResolver(axiosPromise);
   };

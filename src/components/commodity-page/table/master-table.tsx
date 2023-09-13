@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -32,11 +32,17 @@ import {
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteCommodity, getCommoditySearch } from '../fetcher';
+import {
+  deleteCommodity,
+  getCommoditySearch,
+  importCommodity,
+} from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table from '../../commons/table/table';
+import Table, { COUNT_DATA } from '@/components/commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
+import ImportCSVModal, { ImportFormValues } from '../import-data';
+import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -91,12 +97,48 @@ export default function MasterDataTable() {
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParams);
   const [dataTable, setDataTable] = useState<CommodityTable[]>([]);
+  const [dataExport, setDatExport] = useState<CommodityTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
     useState<SelectSearch>(initalSelectSearch);
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
   >(initalValueDisplayColumn);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
+  const [loadingImport, setLoadingImport] = useState(false);
+  const [openImportModal, setOpenImportModal] = useState(false);
+
+  const excelHeaders = useMemo(
+    () => [
+      {
+        name: translateCommodity('name'),
+        value: 'commodityName',
+      },
+      {
+        name: translateCommodity('status'),
+        value: 'statusCommodity',
+      },
+      {
+        name: translateCommon('date_created'),
+        value: 'dateInserted',
+        converter: (value: string) => formatDate(Number(value)) || '',
+      },
+      {
+        name: translateCommon('creator'),
+        value: 'insertedByUser',
+      },
+      {
+        name: translateCommon('date_inserted'),
+        value: 'dateUpdated',
+        converter: (value: string) => formatDate(Number(value)) || '',
+      },
+      {
+        name: translateCommon('inserter'),
+        value: 'updatedByUser',
+      },
+    ],
+    []
+  );
 
   // Handle data
   const dataSelectSearch =
@@ -452,32 +494,128 @@ export default function MasterDataTable() {
     router.push(ROUTERS.COMMODITY_CREATE);
   };
 
+  // export table data to csv
+  useQuery({
+    queryKey: [API_COMMODITY.GET_SEARCH],
+    queryFn: () =>
+      getCommoditySearch({
+        ...queryInputParams,
+        statusCommodity: [
+          STATUS_MATER_LABELS.ACTIVE,
+          STATUS_MATER_LABELS.DEACTIVE,
+        ],
+        paginateRequest: {
+          currentPage: 1,
+          pageSize: COUNT_DATA,
+        },
+      }),
+    onSuccess(data) {
+      if (data.status) {
+        setDatExport(
+          data.data.data.map((data) => ({
+            key: data.commodityID,
+            commodityName: data.commodityName,
+            statusCommodity: data.statusCommodity,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            isDelete: data.isDelete,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            searchAll: '',
+          }))
+        );
+      } else {
+        setDatExport([]);
+      }
+    },
+  });
+  const exportTableData = () => {
+    setExportLoading(true);
+    if (selectedRowKeys.length === 0) {
+      exportExcel(dataExport, excelHeaders, 'Commodity');
+    } else {
+      const data = dataTable.filter((item) =>
+        selectedRowKeys.includes(item.key)
+      );
+      exportExcel(data, excelHeaders, 'Commodity');
+    }
+
+    setExportLoading(false);
+  };
+
+  // import table data from csv=
+  const importData = useMutation({
+    mutationFn: (value: FormData) => importCommodity(value),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [API_COMMODITY.GET_SEARCH],
+        });
+        setLoadingImport(false);
+        setOpenImportModal(false);
+      } else {
+        errorToast(data.message);
+        setLoadingImport(false);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
+      setLoadingImport(false);
+    },
+  });
+  const confirmImportTableData = (formValues: ImportFormValues) => {
+    setLoadingImport(true);
+    const _requestData = new FormData();
+    _requestData.append('File', formValues.file[0]);
+    importData.mutate(_requestData);
+  };
+  const cancelImportTableData = () => {
+    setOpenImportModal(false);
+  };
+  const importTableData = () => {
+    setOpenImportModal(true);
+  };
+
   return (
     <div style={{ marginTop: -18 }}>
       {querySearch.isLoading ? (
         <SkeletonTable />
       ) : (
-        <Table
-          dataTable={dataTable}
-          columns={columns}
-          headerTitle={translateCommodity('title')}
-          selectedRowKeys={selectedRowKeys}
-          handleSelectionChange={handleSelectionChange}
-          handlePaginationChange={handlePaginationChange}
-          handleChangeInputSearchAll={handleChangeInputSearchAll}
-          handleSearchInputKeyAll={handleSearchInputKeyAll}
-          valueSearchAll={selectedActiveKey.searchAll.value}
-          handleOnDoubleClick={handleOnDoubleClick}
-          handleCreate={handleCreate}
-          showPropsConfirmDelete={showPropsConfirmDelete}
-          refreshingQuery={refreshingQuery}
-          refreshingLoading={refreshingLoading}
-          pagination={pagination}
-          handleColumnsStateChange={handleColumnsStateChange}
-          columnsStateMap={columnsStateMap}
-          handleSearchSelect={handleSearchSelect}
-          checkTableMaster={true}
-        />
+        <>
+          <ImportCSVModal
+            loading={loadingImport}
+            open={openImportModal}
+            handleOk={confirmImportTableData}
+            handleCancel={cancelImportTableData}
+          />
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            headerTitle={translateCommodity('title')}
+            selectedRowKeys={selectedRowKeys}
+            handleSelectionChange={handleSelectionChange}
+            handlePaginationChange={handlePaginationChange}
+            handleChangeInputSearchAll={handleChangeInputSearchAll}
+            handleSearchInputKeyAll={handleSearchInputKeyAll}
+            valueSearchAll={selectedActiveKey.searchAll.value}
+            handleOnDoubleClick={handleOnDoubleClick}
+            handleCreate={handleCreate}
+            showPropsConfirmDelete={showPropsConfirmDelete}
+            refreshingQuery={refreshingQuery}
+            refreshingLoading={refreshingLoading}
+            pagination={pagination}
+            handleColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            handleSearchSelect={handleSearchSelect}
+            checkTableMaster={true}
+            importTableData={importTableData}
+            exportLoading={exportLoading}
+            exportTableData={exportTableData}
+          />
+        </>
       )}
     </div>
   );

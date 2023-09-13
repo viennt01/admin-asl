@@ -2,6 +2,8 @@ import {
   DeleteOutlined,
   PlusOutlined,
   ReloadOutlined,
+  CloudUploadOutlined,
+  CloudDownloadOutlined,
 } from '@ant-design/icons';
 import COLORS from '@/constant/color';
 import {
@@ -10,13 +12,14 @@ import {
   ProColumns,
   ProTable,
 } from '@ant-design/pro-components';
-import { Button, Input, TablePaginationConfig } from 'antd';
+import { Button, Input, TablePaginationConfig, Tooltip } from 'antd';
 import style from './index.module.scss';
 import useI18n from '@/i18n/useI18N';
 import { ChangeEvent, MouseEvent } from 'react';
 import { PaginationOfAntd } from '@/components/commons/table/table-deafault';
 import { FilterValue } from 'antd/lib/table/interface';
 
+export const COUNT_DATA = 9999999999;
 interface Props<T extends Record<string, any>> {
   dataTable: T[];
   columns: ProColumns<T>[];
@@ -43,6 +46,9 @@ interface Props<T extends Record<string, any>> {
     filters: Record<string, FilterValue | null>
   ) => void;
   checkTableMaster: boolean;
+  importTableData?: () => void;
+  exportLoading?: boolean;
+  exportTableData?: () => void;
 }
 const Table = <T extends Record<string, any>>({
   dataTable,
@@ -64,6 +70,9 @@ const Table = <T extends Record<string, any>>({
   columnsStateMap,
   handleSearchSelect,
   checkTableMaster,
+  importTableData,
+  exportLoading,
+  exportTableData,
 }: Props<T>) => {
   const { translate: translateCommon } = useI18n('common');
   const dataSourceUnknown = dataTable as unknown;
@@ -161,6 +170,31 @@ const Table = <T extends Record<string, any>>({
                   padding: 6,
                 }}
               />,
+              <Tooltip title="Import data" key={'import-data"'}>
+                <Button
+                  icon={<CloudUploadOutlined />}
+                  size="large"
+                  onClick={importTableData}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: '3px 6px 0px 6px',
+                  }}
+                />
+              </Tooltip>,
+              <Tooltip title="Export data" key={'export-data'}>
+                <Button
+                  loading={exportLoading}
+                  icon={<CloudDownloadOutlined />}
+                  size="large"
+                  onClick={exportTableData}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: '3px 6px 0px 6px',
+                  }}
+                />
+              </Tooltip>,
             ]
           : []
       }

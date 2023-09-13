@@ -1,4 +1,4 @@
-import { ResponseWithPayload, post } from '@/fetcherAxios';
+import { ResponseWithPayload, get, post, uploadFile } from '@/fetcherAxios';
 import {
   CommodityRequire,
   RequestLocationType,
@@ -74,4 +74,14 @@ export const getTable = (data: RequestUnitTableRequest) => {
   return post<RequestUnitTableRequest, ResponseWithPayload<CommodityRequire>>({
     data,
   })(API_COMMODITY.GET_REQUEST);
+};
+
+//----------------------------------------------------------------
+export const importCommodity = (data: FormData) => {
+  return uploadFile({ data, timeout: 10000 })(API_COMMODITY.IMPORT_COMMODITY);
+};
+export const downloadExampleFileCommodity = () => {
+  return get<ResponseWithPayload<BlobPart>>({})(
+    API_COMMODITY.DOWNLOAD_EXAMPLE_FILE_COMMODITY
+  );
 };

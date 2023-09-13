@@ -96,6 +96,8 @@ export const API_COMMODITY = {
   UPDATE_STATUS: '/update-status-commodity',
   GET_DRAFT: '/get-commodity-with-status-and-id-User',
   GET_REQUEST: '/get-commodity-with-status-request',
+  IMPORT_COMMODITY: '/import-commodity-with-excel',
+  DOWNLOAD_EXAMPLE_FILE_COMMODITY: '/download-commodity-excel',
 };
 
 export const API_MASTER_DATA = {
