@@ -19,7 +19,7 @@ import { ChangeEvent, MouseEvent } from 'react';
 import { PaginationOfAntd } from '@/components/commons/table/table-deafault';
 import { FilterValue } from 'antd/lib/table/interface';
 
-export const COUNT_DATA = 9999999999;
+export const COUNT_DATA = 2147483640;
 interface Props<T extends Record<string, any>> {
   dataTable: T[];
   columns: ProColumns<T>[];

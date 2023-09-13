@@ -498,7 +498,7 @@ export default function MasterDataTable() {
 
   // export table data to csv
   useQuery({
-    queryKey: [API_COMMODITY.GET_SEARCH],
+    queryKey: [],
     queryFn: () =>
       getCommoditySearch({
         ...queryInputParams,
@@ -543,11 +543,10 @@ export default function MasterDataTable() {
       );
       exportExcel(data, excelHeaders, 'Commodity');
     }
-
     setExportLoading(false);
   };
 
-  // import table data from csv=
+  // import table data from excel file
   const importData = useMutation({
     mutationFn: (value: FormData) => importCommodity(value),
     onSuccess: (data) => {
