@@ -42,45 +42,16 @@ import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table, { COUNT_DATA } from '@/components/commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
-import ImportCSVModal, { ImportFormValues } from '../../commons/import-data';
+import ImportCSVModal, { ImportFormValues } from '../import-data';
 import { exportExcel } from '@/utils/common';
+import {
+  initalSelectSearchMaster,
+  initalValueDisplayColumnMaster,
+  initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
+} from '../constant';
 
 const { confirm } = Modal;
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  commodityName: '',
-};
-
-const initalValueQuerySelectParams = {
-  statusCommodity: [],
-};
-
-const initalValueDisplayColumn = {
-  operation: {
-    order: 0,
-    fixed: 'left' as const,
-  },
-  index: {
-    order: 1,
-    fixed: 'left' as const,
-  },
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  commodityName: {
-    label: '',
-    value: '',
-  },
-  statusCommodity: {
-    label: '',
-    value: [],
-  },
-};
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -93,24 +64,25 @@ export default function MasterDataTable() {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsMaster
   );
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectParamType>(initalValueQuerySelectParams);
+    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<CommodityTable[]>([]);
   const [dataExport, setDatExport] = useState<CommodityTable[]>([]);
-  const [selectedActiveKey, setSelectedActiveKey] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    initalSelectSearchMaster
+  );
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
-  >(initalValueDisplayColumn);
+  >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
   const [exportLoading, setExportLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
-  const excelHeaders = useMemo(
+  const excelHeadersMaster = useMemo(
     () => [
       {
         name: translateCommodity('name'),
@@ -220,8 +192,8 @@ export default function MasterDataTable() {
   });
 
   const refreshingQuery = () => {
-    setSelectedActiveKey(initalSelectSearch);
-    setQueryInputParams(initalValueQueryInputParams);
+    setSelectedActiveKey(initalSelectSearchMaster);
+    setQueryInputParams(initalValueQueryInputParamsMaster);
     setRefreshingLoading(true);
     setPagination((state) => ({
       ...state,
@@ -236,18 +208,18 @@ export default function MasterDataTable() {
   // Handle search
   const handleSearchInputKeyAll = (value: string) => {
     setSelectedActiveKey({
-      ...initalSelectSearch,
+      ...initalSelectSearchMaster,
       searchAll: {
         label: 'searchAll',
         value: value,
       },
     });
     setQueryInputParams({
-      ...initalValueQueryInputParams,
+      ...initalValueQueryInputParamsMaster,
       searchAll: value,
     });
     setQuerySelectParams({
-      ...initalValueQuerySelectParams,
+      ...initalValueQuerySelectParamsMaster,
     });
   };
 
@@ -536,12 +508,12 @@ export default function MasterDataTable() {
   const exportTableData = () => {
     setExportLoading(true);
     if (selectedRowKeys.length === 0) {
-      exportExcel(dataExport, excelHeaders, 'Commodity');
+      exportExcel(dataExport, excelHeadersMaster, 'Commodity');
     } else {
       const data = dataTable.filter((item) =>
         selectedRowKeys.includes(item.key)
       );
-      exportExcel(data, excelHeaders, 'Commodity');
+      exportExcel(data, excelHeadersMaster, 'Commodity');
     }
     setExportLoading(false);
   };
