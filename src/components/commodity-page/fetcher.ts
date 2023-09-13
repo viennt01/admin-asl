@@ -1,4 +1,9 @@
-import { ResponseWithPayload, get, post, uploadFile } from '@/fetcherAxios';
+import {
+  ResponseWithPayload,
+  downloadFile,
+  post,
+  uploadFile,
+} from '@/fetcherAxios';
 import {
   CommodityRequire,
   RequestLocationType,
@@ -81,7 +86,7 @@ export const importCommodity = (data: FormData) => {
   return uploadFile({ data, timeout: 10000 })(API_COMMODITY.IMPORT_COMMODITY);
 };
 export const downloadExampleFileCommodity = () => {
-  return get<ResponseWithPayload<BlobPart>>({})(
+  return downloadFile<BlobPart>({})(
     API_COMMODITY.DOWNLOAD_EXAMPLE_FILE_COMMODITY
   );
 };

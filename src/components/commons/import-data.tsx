@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react';
 import { Button, Modal, Form, Row, Col, Typography, Upload } from 'antd';
-import { InboxOutlined } from '@ant-design/icons';
+import { InboxOutlined, DownloadOutlined } from '@ant-design/icons';
 import { InternalFieldProps } from 'rc-field-form/lib/Field';
-import { useMutation } from '@tanstack/react-query';
-import { downloadExampleFileCommodity } from './fetcher';
+import { UseMutationResult } from '@tanstack/react-query';
 export interface ImportFormValues {
   file: FileList;
 }
 
 interface ImportModalProps {
-  loading: boolean;
+  loadingImport: boolean;
   open: boolean;
   handleOk: (formValues: ImportFormValues) => void;
   handleCancel: () => void;
+  downloadFile: UseMutationResult<BlobPart, unknown, void, unknown>;
+  isLoadingDownload: boolean;
 }
 
 const { Text } = Typography;
 const { Dragger } = Upload;
 
 const ImportCSVModal: React.FC<ImportModalProps> = ({
-  loading,
+  loadingImport,
+  downloadFile,
   open,
   handleOk,
   handleCancel,
+  isLoadingDownload,
 }) => {
   const [form] = Form.useForm();
 
@@ -37,35 +40,32 @@ const ImportCSVModal: React.FC<ImportModalProps> = ({
   const onOke = () => form.submit();
 
   const onCancel = () => handleCancel();
-  const downloadFile = useMutation({
-    mutationFn: () => downloadExampleFileCommodity(),
-    retry: 0,
-  });
+
   return (
     <Modal
       title="Import excel file"
       open={open}
       onOk={onOke}
-      onCancel={loading ? () => null : onCancel}
-      maskClosable={!loading}
+      onCancel={loadingImport ? () => null : onCancel}
+      maskClosable={!loadingImport}
       footer={[
         <Row key="back">
           <Col span={8}>
             <Row>
               <Button
-                disabled
-                loading={loading}
                 onClick={() => downloadFile.mutate()}
+                disabled={isLoadingDownload}
+                icon={<DownloadOutlined />}
               >
-                Download example (coming soon)
+                Download example
               </Button>
             </Row>
           </Col>
           <Col span={8} offset={8}>
-            <Button onClick={onCancel} disabled={loading}>
+            <Button onClick={onCancel} disabled={loadingImport}>
               Cancel
             </Button>
-            <Button type="primary" loading={loading} onClick={onOke}>
+            <Button type="primary" loading={loadingImport} onClick={onOke}>
               Ok
             </Button>
           </Col>

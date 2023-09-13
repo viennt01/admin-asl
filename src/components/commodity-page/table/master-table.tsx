@@ -34,6 +34,7 @@ import {
 } from '@/components/commons/table/table-deafault';
 import {
   deleteCommodity,
+  downloadExampleFileCommodity,
   getCommoditySearch,
   importCommodity,
 } from '../fetcher';
@@ -41,7 +42,7 @@ import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table, { COUNT_DATA } from '@/components/commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
-import ImportCSVModal, { ImportFormValues } from '../import-data';
+import ImportCSVModal, { ImportFormValues } from '../../commons/import-data';
 import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
@@ -107,6 +108,7 @@ export default function MasterDataTable() {
   const [exportLoading, setExportLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
+  const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   const excelHeaders = useMemo(
     () => [
@@ -579,6 +581,29 @@ export default function MasterDataTable() {
     setOpenImportModal(true);
   };
 
+  // download example file
+  const downloadFile = useMutation({
+    mutationFn: () => downloadExampleFileCommodity(),
+    onSuccess: (data) => {
+      // Tạo một URL đối tượng từ blob dữ liệu trả về
+      const url = window.URL.createObjectURL(new Blob([data]));
+
+      // Tạo một thẻ a để tạo sự kiện nhấp chuột và tải xuống tệp
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_Loai_Container.xlsx'); // Tên tệp bạn muốn đặt
+
+      // Thêm thẻ a vào DOM và kích hoạt sự kiện nhấp chuột để tải xuống
+      document.body.appendChild(link);
+      link.click();
+
+      // Loại bỏ URL đối tượng sau khi tải xuống
+      window.URL.revokeObjectURL(url);
+
+      setIsLoadingDownload(false);
+    },
+  });
+
   return (
     <div style={{ marginTop: -18 }}>
       {querySearch.isLoading ? (
@@ -586,10 +611,12 @@ export default function MasterDataTable() {
       ) : (
         <>
           <ImportCSVModal
-            loading={loadingImport}
+            loadingImport={loadingImport}
             open={openImportModal}
             handleOk={confirmImportTableData}
             handleCancel={cancelImportTableData}
+            isLoadingDownload={isLoadingDownload}
+            downloadFile={downloadFile}
           />
           <Table
             dataTable={dataTable}

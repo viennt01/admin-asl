@@ -88,9 +88,6 @@ const apiClient = axios.create({
     Accept: 'application/json;odata.metadata=minimal;odata.streaming=true',
     'Content-Type':
       'application/json;odata.metadata=minimal;odata.streaming=true',
-    // 'Content-Type':
-    //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    responseType: 'blob',
   },
 });
 
@@ -193,8 +190,6 @@ export const get =
       apiClient.get(`${getGateway(gw)}${url}`, {
         headers,
         ...options,
-        // 'Content-Type':
-        //   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       }),
       timeout
     );
@@ -251,12 +246,26 @@ export const uploadFile =
       apiClient.post(`${getGateway(gw)}${url}`, data, {
         headers: {
           ...headers,
-          // 'Content-Type': 'multipart/form-data',
           'Content-Type':
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         },
       }),
       timeout
     );
+    return axiosResolver(axiosPromise);
+  };
+
+export const downloadFile =
+  <R>({ options, headers, gw, timeout }: CRUDProps<undefined>) =>
+  (url: string): Promise<R> => {
+    const axiosPromise = requestWithTimeout(
+      apiClient.get(`${getGateway(gw)}${url}`, {
+        headers,
+        ...options,
+        responseType: 'blob',
+      }),
+      timeout
+    );
+
     return axiosResolver(axiosPromise);
   };
