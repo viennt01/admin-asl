@@ -52,6 +52,7 @@ const BankForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const propCopyAndCreate = router.query;
 
   useEffect(() => {
     if (!id) return;
@@ -134,6 +135,24 @@ const BankForm = ({
     }
   };
 
+  const handleCopyAndCreate = () => {
+    const props = {
+      bankNo: form.getFieldValue('bankNo'),
+      bankName: form.getFieldValue('bankName'),
+      accountNumberVND: form.getFieldValue('accountNumberVND'),
+      accountNumberUSD: form.getFieldValue('accountNumberUSD'),
+      phoneNumber: form.getFieldValue('phoneNumber'),
+      email: form.getFieldValue('email'),
+      address: form.getFieldValue('address'),
+      bankBranch: form.getFieldValue('bankBranch'),
+      note: form.getFieldValue('note'),
+    };
+    router.push({
+      pathname: ROUTERS.BANK_CREATE,
+      query: props,
+    });
+  };
+
   useEffect(() => {
     if (form.getFieldValue('statusBank')) {
       form.getFieldValue('statusBank') === STATUS_ALL_LABELS.ACTIVE
@@ -143,7 +162,20 @@ const BankForm = ({
     if (edit && checkRow) {
       setCheckPermissionEdit(true);
     }
-  }, [form, edit, checkRow]);
+    if (propCopyAndCreate) {
+      form.setFieldsValue({
+        bankNo: propCopyAndCreate.bankNo as string,
+        bankName: propCopyAndCreate.bankName as string,
+        accountNumberVND: propCopyAndCreate.accountNumberVND as string,
+        accountNumberUSD: propCopyAndCreate.accountNumberUSD as string,
+        phoneNumber: propCopyAndCreate.phoneNumber as string,
+        email: propCopyAndCreate.email as string,
+        address: propCopyAndCreate.address as string,
+        bankBranch: propCopyAndCreate.bankBranch as string,
+        note: propCopyAndCreate.note as string,
+      });
+    }
+  }, [form, edit, checkRow, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -420,6 +452,7 @@ const BankForm = ({
           handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
+          handleCopyAndCreate={handleCopyAndCreate}
         />
       </Form>
     </div>

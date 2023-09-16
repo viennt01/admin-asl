@@ -49,6 +49,7 @@ const TypeOfContainerTypeForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const propCopyAndCreate = router.query;
 
   useEffect(() => {
     if (!id) return;
@@ -127,6 +128,20 @@ const TypeOfContainerTypeForm = ({
     }
   };
 
+  const handleCopyAndCreate = () => {
+    const props = {
+      containerTypeCode: form.getFieldValue('containerTypeCode'),
+      name: form.getFieldValue('name'),
+      detailsEN: form.getFieldValue('detailsEN'),
+      detailsVN: form.getFieldValue('detailsVN'),
+      teus: form.getFieldValue('teus'),
+    };
+    router.push({
+      pathname: ROUTERS.TYPES_OF_CONTAINER_CREATE,
+      query: props,
+    });
+  };
+
   useEffect(() => {
     if (form.getFieldValue('statusTypeLocation')) {
       form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
@@ -136,7 +151,16 @@ const TypeOfContainerTypeForm = ({
     if (edit && checkRow) {
       setCheckPermissionEdit(true);
     }
-  }, [form, edit, checkRow]);
+    if (propCopyAndCreate) {
+      form.setFieldsValue({
+        containerTypeCode: propCopyAndCreate.containerTypeCode as string,
+        name: propCopyAndCreate.name as string,
+        detailsEN: propCopyAndCreate.detailsEN as string,
+        detailsVN: propCopyAndCreate.detailsVN as string,
+        teus: propCopyAndCreate.teus as string,
+      });
+    }
+  }, [form, edit, checkRow, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -352,6 +376,7 @@ const TypeOfContainerTypeForm = ({
           handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
+          handleCopyAndCreate={handleCopyAndCreate}
         />
       </Form>
     </div>

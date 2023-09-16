@@ -51,6 +51,7 @@ const LocationForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const propCopyAndCreate = router.query;
 
   const typeLocations = useQuery(
     [API_LOCATION_TYPE.GET_TYPE_LOCATION],
@@ -140,16 +141,39 @@ const LocationForm = ({
     }
   };
 
+  const handleCopyAndCreate = () => {
+    const props = {
+      cityID: form.getFieldValue('cityID'),
+      locationCode: form.getFieldValue('locationCode'),
+      locationNameEN: form.getFieldValue('locationNameEN'),
+      locationNameVN: form.getFieldValue('locationNameVN'),
+      typeLocations: form.getFieldValue('typeLocations)'),
+    };
+    router.push({
+      pathname: ROUTERS.LOCATION_CREATE,
+      query: props,
+    });
+  };
+
   useEffect(() => {
-    if (form.getFieldValue('statusTypeLocation')) {
-      form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusLocation')) {
+      form.getFieldValue('statusLocation') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
     if (edit && checkRow) {
       setCheckPermissionEdit(true);
     }
-  }, [form, edit, checkRow]);
+    if (propCopyAndCreate) {
+      form.setFieldsValue({
+        cityID: propCopyAndCreate.cityID as string,
+        locationCode: propCopyAndCreate.locationCode as string,
+        locationNameEN: propCopyAndCreate.locationNameEN as string,
+        locationNameVN: propCopyAndCreate.locationNameVN as string,
+        // typeLocations: propCopyAndCreate.typeLocations as string[],
+      });
+    }
+  }, [form, edit, checkRow, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -352,6 +376,7 @@ const LocationForm = ({
           handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
+          handleCopyAndCreate={handleCopyAndCreate}
         />
       </Form>
     </div>

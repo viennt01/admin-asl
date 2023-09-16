@@ -50,6 +50,7 @@ const UnitForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const propCopyAndCreate = router.query;
 
   useEffect(() => {
     if (!id) return;
@@ -81,8 +82,6 @@ const UnitForm = ({
     queryFn: () => getUnitDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
-      console.log(data.data.statusUnit);
-
       if (data.status) {
         form.setFieldsValue({
           internationalCode: data.data.internationalCode,
@@ -127,6 +126,18 @@ const UnitForm = ({
     },
   });
 
+  const handleCopyAndCreate = () => {
+    const props = {
+      internationalCode: form.getFieldValue('internationalCode'),
+      descriptionVN: form.getFieldValue('descriptionVN'),
+      descriptionEN: form.getFieldValue('descriptionEN'),
+    };
+    router.push({
+      pathname: ROUTERS.UNIT_CREATE,
+      query: props,
+    });
+  };
+
   useEffect(() => {
     if (form.getFieldValue('statusUnit')) {
       form.getFieldValue('statusUnit') === STATUS_ALL_LABELS.ACTIVE
@@ -136,8 +147,14 @@ const UnitForm = ({
     if (edit && checkRow) {
       setCheckPermissionEdit(true);
     }
-  }, [form, edit, checkRow]);
-  console.log(form.getFieldsValue());
+    if (propCopyAndCreate) {
+      form.setFieldsValue({
+        internationalCode: propCopyAndCreate.internationalCode as string,
+        descriptionVN: propCopyAndCreate.descriptionVN as string,
+        descriptionEN: propCopyAndCreate.descriptionEN as string,
+      });
+    }
+  }, [form, edit, checkRow, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -300,6 +317,7 @@ const UnitForm = ({
           handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
+          handleCopyAndCreate={handleCopyAndCreate}
         />
       </Form>
     </div>

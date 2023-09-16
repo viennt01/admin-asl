@@ -7,6 +7,7 @@ import {
   CheckOutlined,
   CloseOutlined,
   ExclamationCircleFilled,
+  CopyOutlined,
 } from '@ant-design/icons';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 
@@ -26,6 +27,7 @@ interface Props {
   handleAR: (status: string) => void;
   checkQuery?: boolean;
   useDraft?: boolean;
+  handleCopyAndCreate?: () => void;
 }
 const { confirm } = Modal;
 export const BottomCreateEdit = ({
@@ -44,6 +46,7 @@ export const BottomCreateEdit = ({
   handleAR: handleAJ,
   checkQuery,
   useDraft,
+  handleCopyAndCreate,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
   const handleCancel = () => {
@@ -151,6 +154,14 @@ export const BottomCreateEdit = ({
                 >
                   {translateCommon('button_bottom_form.edit')}
                 </Button>
+                <Button
+                  onClick={() => handleCopyAndCreate && handleCopyAndCreate()}
+                  style={{ marginLeft: '12px' }}
+                  loading={loading}
+                  icon={<CopyOutlined />}
+                >
+                  {translateCommon('button_bottom_form.create_save')}
+                </Button>
               </>
             ) : (
               <>
@@ -171,6 +182,14 @@ export const BottomCreateEdit = ({
                   loading={loading}
                 >
                   {translateCommon('button_bottom_form.save')}
+                </Button>
+                <Button
+                  onClick={() => handleCopyAndCreate && handleCopyAndCreate()}
+                  style={{ marginLeft: '12px' }}
+                  loading={loading}
+                  icon={<CopyOutlined />}
+                >
+                  {translateCommon('button_bottom_form.create_save')}
                 </Button>
               </>
             ))}

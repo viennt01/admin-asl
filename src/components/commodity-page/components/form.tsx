@@ -48,6 +48,7 @@ const CommodityForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const propCopyAndCreate = router.query;
 
   useEffect(() => {
     if (!id) return;
@@ -186,6 +187,17 @@ const CommodityForm = ({
     },
   });
 
+  const handleCopyAndCreate = () => {
+    const props = {
+      commodityNameEN: form.getFieldValue('commodityNameEN'),
+      commodityNameVN: form.getFieldValue('commodityNameVN'),
+    };
+    router.push({
+      pathname: ROUTERS.COMMODITY_CREATE,
+      query: props,
+    });
+  };
+
   useEffect(() => {
     if (form.getFieldValue('statusCommodity')) {
       form.getFieldValue('statusCommodity') === STATUS_ALL_LABELS.ACTIVE
@@ -195,7 +207,13 @@ const CommodityForm = ({
     if (edit && checkRow) {
       setCheckPermissionEdit(true);
     }
-  }, [form, edit, checkRow]);
+    if (propCopyAndCreate) {
+      form.setFieldsValue({
+        commodityNameEN: propCopyAndCreate.commodityNameEN as string,
+        commodityNameVN: propCopyAndCreate.commodityNameVN as string,
+      });
+    }
+  }, [form, edit, checkRow, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -301,6 +319,7 @@ const CommodityForm = ({
           handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
+          handleCopyAndCreate={handleCopyAndCreate}
         />
       </Form>
     </div>

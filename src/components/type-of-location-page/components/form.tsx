@@ -49,6 +49,7 @@ const LocationTypeForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const propCopyAndCreate = router.query;
 
   useEffect(() => {
     if (!id) return;
@@ -231,6 +232,20 @@ const LocationTypeForm = ({
       forceRender: true,
     },
   ];
+
+  const handleCopyAndCreate = () => {
+    const props = {
+      typeLocationNameEN: form.getFieldValue('typeLocationNameEN'),
+      descriptionEN: form.getFieldValue('descriptionEN'),
+      typeLocationNameVN: form.getFieldValue('typeLocationNameVN'),
+      descriptionVN: form.getFieldValue('descriptionVN'),
+    };
+    router.push({
+      pathname: ROUTERS.TYPE_OF_LOCATION_CREATE,
+      query: props,
+    });
+  };
+
   useEffect(() => {
     if (form.getFieldValue('statusTypeLocation')) {
       form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
@@ -240,7 +255,15 @@ const LocationTypeForm = ({
     if (edit && checkRow) {
       setCheckPermissionEdit(true);
     }
-  }, [form, edit, checkRow]);
+    if (propCopyAndCreate) {
+      form.setFieldsValue({
+        typeLocationNameEN: propCopyAndCreate.typeLocationNameEN as string,
+        descriptionEN: propCopyAndCreate.descriptionEN as string,
+        typeLocationNameVN: propCopyAndCreate.typeLocationNameVN as string,
+        descriptionVN: propCopyAndCreate.descriptionVN as string,
+      });
+    }
+  }, [form, edit, checkRow, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -339,6 +362,7 @@ const LocationTypeForm = ({
           handleAR={handleAR}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
+          handleCopyAndCreate={handleCopyAndCreate}
         />
       </Form>
     </div>

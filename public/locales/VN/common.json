@@ -71,6 +71,7 @@
         "send_request": "Gửi yêu cầu",
         "cancel": "Huỷ",
         "approval": "Chấp nhận",
-        "reject": "Từ chối"
+        "reject": "Từ chối",
+        "create_save": "Copy and Create"
     }
 }

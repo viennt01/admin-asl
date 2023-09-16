@@ -48,6 +48,7 @@ const CurrencyForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const propCopyAndCreate = router.query;
 
   useEffect(() => {
     if (!id) return;
@@ -124,6 +125,18 @@ const CurrencyForm = ({
     }
   };
 
+  const handleCopyAndCreate = () => {
+    const props = {
+      currencyName: form.getFieldValue('currencyName'),
+      exchangeRateToVND: form.getFieldValue('exchangeRateToVND'),
+      exchangeRateToUSD: form.getFieldValue('exchangeRateToUSD'),
+    };
+    router.push({
+      pathname: ROUTERS.CURRENCY_CREATE,
+      query: props,
+    });
+  };
+
   useEffect(() => {
     if (form.getFieldValue('statusCurrency')) {
       form.getFieldValue('statusCurrency') === STATUS_ALL_LABELS.ACTIVE
@@ -133,7 +146,14 @@ const CurrencyForm = ({
     if (edit && checkRow) {
       setCheckPermissionEdit(true);
     }
-  }, [form, edit, checkRow]);
+    if (propCopyAndCreate) {
+      form.setFieldsValue({
+        currencyName: propCopyAndCreate.currencyName as string,
+        exchangeRateToVND: propCopyAndCreate.exchangeRateToVND as string,
+        exchangeRateToUSD: propCopyAndCreate.exchangeRateToUSD as string,
+      });
+    }
+  }, [form, edit, checkRow, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -304,6 +324,7 @@ const CurrencyForm = ({
           handleAR={handleAJ}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
+          handleCopyAndCreate={handleCopyAndCreate}
         />
       </Form>
     </div>
