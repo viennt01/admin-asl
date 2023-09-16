@@ -204,7 +204,7 @@ const CommodityForm = ({
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
-    if (edit && checkRow) {
+    if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
     if (propCopyAndCreate) {
@@ -213,7 +213,7 @@ const CommodityForm = ({
         commodityNameVN: propCopyAndCreate.commodityNameVN as string,
       });
     }
-  }, [form, edit, checkRow, propCopyAndCreate]);
+  }, [form, edit, checkRow, manager, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>

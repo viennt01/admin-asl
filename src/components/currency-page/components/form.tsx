@@ -143,7 +143,7 @@ const CurrencyForm = ({
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
-    if (edit && checkRow) {
+    if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
     if (propCopyAndCreate) {
@@ -153,7 +153,7 @@ const CurrencyForm = ({
         exchangeRateToUSD: propCopyAndCreate.exchangeRateToUSD as string,
       });
     }
-  }, [form, edit, checkRow, propCopyAndCreate]);
+  }, [form, edit, checkRow, manager, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>

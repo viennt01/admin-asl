@@ -161,7 +161,7 @@ const LocationForm = ({
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
-    if (edit && checkRow) {
+    if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
     if (propCopyAndCreate) {
@@ -173,7 +173,7 @@ const LocationForm = ({
         typeLocations: propCopyAndCreate.typeLocations as string[],
       });
     }
-  }, [form, edit, checkRow, propCopyAndCreate]);
+  }, [form, edit, checkRow, manager, propCopyAndCreate]);
 
   return (
     <div style={{ padding: '24px 0' }}>
