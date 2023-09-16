@@ -1,8 +1,8 @@
 export const ROUTERS = {
-  LOGIN: '/login',
+  LOGIN: '/',
   LOGOUT: '/logout',
   FORGOT_PASSWORD: '/forgot-password',
-  HOME: '/',
+  HOME: '/home',
   REQUEST_FOR_APPROVAL: '/request-for-approval',
   REQUEST_FOR_APPROVAL_EDIT: (requestForApprovalId: string) =>
     `/request-for-approval/edit/${requestForApprovalId}`,

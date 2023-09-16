@@ -1,24 +1,15 @@
-import DashboardPage from '@/components/home/home';
 import withAuthentication from '@/hook/useAuthentication';
-import { Inter } from '@next/font/google';
-import Head from 'next/head';
+import { PageWithNoLayout } from '@/layout/no-layout';
+import L from '@/components/login-page/login-page';
 
-const inter = Inter({ subsets: ['latin'] });
-
-function Home() {
-  return (
-    <>
-      <Head>
-        <title>ASL | HOME</title>
-      </Head>
-      <main className={inter.className}>
-        <DashboardPage />
-      </main>
-    </>
-  );
+function Login() {
+  return <L />;
 }
 
-export default withAuthentication(Home);
+const LoginPage = withAuthentication(Login);
 
-import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'home']);
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+LoginPage.Layout = PageWithNoLayout;
+
+export default LoginPage;
