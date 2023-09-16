@@ -6,7 +6,7 @@ const SHOW_ROUTER_HEADER = () => {
   const { translate: translateCommon } = useI18n('common');
 
   return {
-    '/': [{ title: `${translateCommon('home')}` }],
+    '/home': [{ title: `${translateCommon('home')}` }],
 
     '/quotation/sea-quotation': [
       { title: `${translateCommon('quotation')}` },
