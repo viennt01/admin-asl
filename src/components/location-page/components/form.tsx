@@ -147,7 +147,7 @@ const LocationForm = ({
       locationCode: form.getFieldValue('locationCode'),
       locationNameEN: form.getFieldValue('locationNameEN'),
       locationNameVN: form.getFieldValue('locationNameVN'),
-      typeLocations: form.getFieldValue('typeLocations)'),
+      typeLocations: form.getFieldValue('typeLocations'),
     };
     router.push({
       pathname: ROUTERS.LOCATION_CREATE,
@@ -170,7 +170,7 @@ const LocationForm = ({
         locationCode: propCopyAndCreate.locationCode as string,
         locationNameEN: propCopyAndCreate.locationNameEN as string,
         locationNameVN: propCopyAndCreate.locationNameVN as string,
-        // typeLocations: propCopyAndCreate.typeLocations as string[],
+        typeLocations: propCopyAndCreate.typeLocations as string[],
       });
     }
   }, [form, edit, checkRow, propCopyAndCreate]);
