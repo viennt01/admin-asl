@@ -16,15 +16,9 @@ function UnitManagerPage() {
 export default withAuthentication(UnitManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'unit']);
-export const getStaticPaths = async ({ locales }: { locales: [] }) => {
-  const ids: string[] = [];
-  const paths = ids.map(() =>
-    locales.map(() => ({
-      params: {},
-    }))
-  );
+export const getStaticPaths = () => {
   return {
-    paths,
+    paths: [],
     fallback: true,
   };
 };
