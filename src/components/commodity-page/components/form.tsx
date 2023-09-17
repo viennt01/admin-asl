@@ -251,49 +251,39 @@ const CommodityForm = ({
               {create && useDraft && (
                 <DraftTable handleIdQuery={handleIdQuery} />
               )}
-              {edit &&
-                (checkRow ? (
-                  <>
-                    {isCheckPermissionEdit && 'View'}
-                    {!isCheckPermissionEdit &&
-                      translateCommodity('information_edit_unit')}
-                    {edit && idQuery && !isCheckPermissionEdit && (
-                      <Switch
-                        checked={checkStatus}
-                        checkedChildren="Active"
-                        unCheckedChildren="Deactive"
-                        style={{
-                          backgroundColor: checkStatus
-                            ? STATUS_MASTER_COLORS.ACTIVE
-                            : STATUS_MASTER_COLORS.DEACTIVE,
-                        }}
-                        onChange={(value) => {
-                          const _requestData: UpdateStatusCommodity = {
-                            id: idQuery,
-                            status: value
-                              ? STATUS_ALL_LABELS.ACTIVE
-                              : STATUS_ALL_LABELS.DEACTIVE,
-                          };
+              {edit && idQuery && !isCheckPermissionEdit && (
+                <Switch
+                  checked={checkStatus}
+                  checkedChildren="Active"
+                  unCheckedChildren="Deactive"
+                  style={{
+                    backgroundColor: checkStatus
+                      ? STATUS_MASTER_COLORS.ACTIVE
+                      : STATUS_MASTER_COLORS.DEACTIVE,
+                  }}
+                  onChange={(value) => {
+                    const _requestData: UpdateStatusCommodity = {
+                      id: idQuery,
+                      status: value
+                        ? STATUS_ALL_LABELS.ACTIVE
+                        : STATUS_ALL_LABELS.DEACTIVE,
+                    };
 
-                          updateStatusMutation.mutate(_requestData, {
-                            onSuccess: (data) => {
-                              data.status
-                                ? (successToast(data.message),
-                                  setCheckStatus(!checkStatus))
-                                : errorToast(data.message);
-                            },
-                            onError() {
-                              errorToast(API_MESSAGE.ERROR);
-                            },
-                          });
-                        }}
-                        loading={updateStatusMutation.isLoading}
-                      />
-                    )}
-                  </>
-                ) : (
-                  translateCommodity('information_edit_unit')
-                ))}
+                    updateStatusMutation.mutate(_requestData, {
+                      onSuccess: (data) => {
+                        data.status
+                          ? (successToast(data.message),
+                            setCheckStatus(!checkStatus))
+                          : errorToast(data.message);
+                      },
+                      onError() {
+                        errorToast(API_MESSAGE.ERROR);
+                      },
+                    });
+                  }}
+                  loading={updateStatusMutation.isLoading}
+                />
+              )}
             </>
           }
         >
