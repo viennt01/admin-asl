@@ -15,10 +15,16 @@ function UnitEditPage() {
 
 export default withAuthentication(UnitEditPage);
 import { getStatic } from '@/lib/getStaticProps';
+import { LANGUAGES } from '@/constant';
 export const getStaticProps = getStatic(['common', 'unit']);
 export const getStaticPaths = () => {
   return {
-    paths: [],
+    paths: LANGUAGES.map((locale: string) => {
+      return {
+        params: { id: '' },
+        locale: locale,
+      };
+    }),
     fallback: true,
   };
 };

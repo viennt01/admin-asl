@@ -15,11 +15,16 @@ function LocationEditPage() {
 
 export default withAuthentication(LocationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
+import { LANGUAGES } from '@/constant';
 export const getStaticProps = getStatic(['common', 'location']);
-
 export const getStaticPaths = () => {
   return {
-    paths: [],
+    paths: LANGUAGES.map((locale: string) => {
+      return {
+        params: { id: '' },
+        locale: locale,
+      };
+    }),
     fallback: true,
   };
 };

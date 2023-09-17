@@ -8,6 +8,8 @@ export enum LANGUAGE {
   'EN' = 'EN',
 }
 
+export const LANGUAGES = ['VN', 'EN'];
+
 export function useLocale(): LANGUAGE {
   const router = useRouter();
   return (router.locale as LANGUAGE) || LANGUAGE.EN;

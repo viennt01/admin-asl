@@ -15,10 +15,16 @@ function CurrencyManagerPage() {
 export default withAuthentication(CurrencyManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
 import ManagerCurrency from '@/components/currency-page/manager';
+import { LANGUAGES } from '@/constant';
 export const getStaticProps = getStatic(['common', 'currency']);
 export const getStaticPaths = () => {
   return {
-    paths: [],
+    paths: LANGUAGES.map((locale: string) => {
+      return {
+        params: { id: '' },
+        locale: locale,
+      };
+    }),
     fallback: true,
   };
 };
