@@ -121,3 +121,8 @@ export interface QueryInputRequest {
 export interface RequestContainerTypeTableRequest extends QueryInputRequest {
   paginateRequest: Pagination;
 }
+// export table
+export interface RequestExportData {
+  ids: React.Key[];
+  status: string[];
+}

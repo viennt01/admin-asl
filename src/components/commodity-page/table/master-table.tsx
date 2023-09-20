@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -35,15 +35,15 @@ import {
 import {
   deleteCommodity,
   downloadExampleFileCommodity,
+  exportTableFile,
   getCommoditySearch,
   importCommodity,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table, { COUNT_DATA } from '@/components/commons/table/table';
+import Table from '@/components/commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import ImportCSVModal, { ImportFormValues } from '../../commons/import-data';
-import { exportExcel } from '@/utils/common';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
@@ -69,7 +69,6 @@ export default function MasterDataTable() {
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<CommodityTable[]>([]);
-  const [dataExport, setDatExport] = useState<CommodityTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -77,42 +76,9 @@ export default function MasterDataTable() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
-  const [exportLoading, setExportLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
-
-  const excelHeadersMaster = useMemo(
-    () => [
-      {
-        name: translateCommodity('name'),
-        value: 'commodityName',
-      },
-      {
-        name: translateCommodity('status'),
-        value: 'statusCommodity',
-      },
-      {
-        name: translateCommon('date_created'),
-        value: 'dateInserted',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('creator'),
-        value: 'insertedByUser',
-      },
-      {
-        name: translateCommon('date_inserted'),
-        value: 'dateUpdated',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('inserter'),
-        value: 'updatedByUser',
-      },
-    ],
-    []
-  );
 
   // Handle data
   const dataSelectSearch =
@@ -468,54 +434,27 @@ export default function MasterDataTable() {
     router.push(ROUTERS.COMMODITY_CREATE);
   };
 
-  // export table data to csv
-  useQuery({
-    queryKey: [],
-    queryFn: () =>
-      getCommoditySearch({
-        ...queryInputParams,
-        statusCommodity: [
-          STATUS_MATER_LABELS.ACTIVE,
-          STATUS_MATER_LABELS.DEACTIVE,
-        ],
-        paginateRequest: {
-          currentPage: 1,
-          pageSize: COUNT_DATA,
-        },
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusCommodity,
       }),
-    onSuccess(data) {
-      if (data.status) {
-        setDatExport(
-          data.data.data.map((data) => ({
-            key: data.commodityID,
-            commodityName: data.commodityName,
-            statusCommodity: data.statusCommodity,
-            dateInserted: data.dateInserted,
-            insertedByUser: data.insertedByUser,
-            dateUpdated: data.dateUpdated,
-            updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
-            searchAll: '',
-          }))
-        );
-      } else {
-        setDatExport([]);
-      }
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_TYPE_CONTAINER.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
     },
   });
+
   const exportTableData = () => {
-    setExportLoading(true);
-    if (selectedRowKeys.length === 0) {
-      exportExcel(dataExport, excelHeadersMaster, 'Commodity');
-    } else {
-      const data = dataTable.filter((item) =>
-        selectedRowKeys.includes(item.key)
-      );
-      exportExcel(data, excelHeadersMaster, 'Commodity');
-    }
-    setExportLoading(false);
+    exportData.mutate();
   };
 
   // import table data from excel file
@@ -562,7 +501,7 @@ export default function MasterDataTable() {
       // Tạo một thẻ a để tạo sự kiện nhấp chuột và tải xuống tệp
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_Loai_Container.xlsx'); // Tên tệp bạn muốn đặt
+      link.setAttribute('download', 'ASL_TYPE_CONTAINER.xlsx'); // Tên tệp bạn muốn đặt
 
       // Thêm thẻ a vào DOM và kích hoạt sự kiện nhấp chuột để tải xuống
       document.body.appendChild(link);
@@ -610,7 +549,7 @@ export default function MasterDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             importTableData={importTableData}
-            exportLoading={exportLoading}
+            exportLoading={exportData.isLoading}
             exportTableData={exportTableData}
           />
         </>

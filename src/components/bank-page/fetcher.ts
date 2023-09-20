@@ -1,6 +1,7 @@
 import {
   ResponseWithPayload,
   downloadFile,
+  exportFile,
   post,
   uploadFile,
 } from '@/fetcherAxios';
@@ -15,6 +16,7 @@ import {
   BankEdit,
   UpdateStatusBank,
   RequestBankTableRequest,
+  RequestExportData,
 } from './interface';
 import { API_BANK } from '@/fetcherAxios/endpoint';
 
@@ -77,4 +79,7 @@ export const importDataTable = (data: FormData) => {
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_BANK.DOWNLOAD_EXAMPLE_FILE);
+};
+export const exportTableFile = (data: RequestExportData) => {
+  return exportFile<RequestExportData, BlobPart>({ data })(API_BANK.EXPORT);
 };

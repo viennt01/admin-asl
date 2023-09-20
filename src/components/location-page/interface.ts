@@ -147,3 +147,8 @@ export interface RequestLocationTypeTableRequest
     QuerySelectRequest {
   paginateRequest: Pagination;
 }
+// export table
+export interface RequestExportData {
+  ids: React.Key[];
+  status: string[];
+}

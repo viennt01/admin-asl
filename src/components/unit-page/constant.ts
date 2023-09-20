@@ -7,7 +7,7 @@ export const initalValueQueryInputParamsMaster = {
 };
 
 export const initalValueQuerySelectParamsMaster = {
-  statusCommodity: [],
+  statusUnit: [],
 };
 
 export const initalValueDisplayColumnMaster = {

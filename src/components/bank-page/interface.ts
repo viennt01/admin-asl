@@ -152,3 +152,8 @@ export interface QueryInputRequest {
 export interface RequestBankTableRequest extends QueryInputRequest {
   paginateRequest: Pagination;
 }
+// export table
+export interface RequestExportData {
+  ids: React.Key[];
+  status: string[];
+}

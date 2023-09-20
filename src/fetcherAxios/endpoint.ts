@@ -20,6 +20,7 @@ export const API_UNIT = {
   GET_REQUEST: '/get-unit-with-status-request',
   DOWNLOAD_EXAMPLE_FILE: '/download-unit-excel',
   IMPORT: '/import-unit-with-excel',
+  EXPORT: '/export-unit-with-excel',
 };
 
 export const API_SEA_PRICING = {
@@ -33,6 +34,7 @@ export const API_SEA_PRICING = {
   GET_REQUEST: '/get-unit-with-status-request',
   DOWNLOAD_EXAMPLE_FILE: '/download-sea-pricing-excel',
   IMPORT: '/import-sea-pricing-with-excel',
+  EXPORT: '/export-sea-pricing-with-excel',
 };
 
 export const API_CONTAINER_TYPE = {
@@ -46,6 +48,7 @@ export const API_CONTAINER_TYPE = {
   GET_REQUEST: '/get-container-type-with-status-request',
   DOWNLOAD_EXAMPLE_FILE: '/download-container-type-excel',
   IMPORT: '/import-container-type-with-excel',
+  EXPORT: '/export-container-type-with-excel',
 };
 
 export const API_CURRENCY = {
@@ -60,6 +63,7 @@ export const API_CURRENCY = {
   DOWNLOAD_EXAMPLE_FILE: '/download-currency-excel',
   IMPORT: '/import-currency-with-excel',
   GET_ALL: '/get-all-currency',
+  EXPORT: '/export-currency-with-excel',
 };
 
 export const API_BANK = {
@@ -73,6 +77,7 @@ export const API_BANK = {
   GET_REQUEST: '/get-bank-with-status-request',
   DOWNLOAD_EXAMPLE_FILE: '/download-bank-excel',
   IMPORT: '/import-bank-with-excel',
+  EXPORT: '/export-bank-with-excel',
 };
 
 export const API_LOCATION_TYPE = {
@@ -87,6 +92,7 @@ export const API_LOCATION_TYPE = {
   GET_TYPE_LOCATION: '/get-all-type-location',
   DOWNLOAD_EXAMPLE_FILE: '/download-type-location-excel',
   IMPORT: '/import-type-location-with-excel',
+  EXPORT: '/export-type-location-with-excel',
 };
 
 export const API_LOCATION = {
@@ -101,6 +107,7 @@ export const API_LOCATION = {
   DOWNLOAD_EXAMPLE_FILE: '/download-location-excel',
   IMPORT: '/import-location-with-excel',
   GET_ALL: '/get-all-location',
+  EXPORT: '/export-location-with-excel',
 };
 
 export const API_COMMODITY = {
@@ -115,6 +122,7 @@ export const API_COMMODITY = {
   IMPORT: '/import-commodity-with-excel',
   DOWNLOAD_EXAMPLE_FILE: '/download-commodity-excel',
   GET_ALL: '/get-all-commodity',
+  EXPORT: '/export-commodity-with-excel',
 };
 
 export const API_MASTER_DATA = {

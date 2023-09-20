@@ -1,6 +1,7 @@
 import {
   ResponseWithPayload,
   downloadFile,
+  exportFile,
   post,
   uploadFile,
 } from '@/fetcherAxios';
@@ -15,6 +16,7 @@ import {
   EditCommodity,
   UpdateStatusCommodity,
   RequestUnitTableRequest,
+  RequestExportData,
 } from './interface';
 import { API_COMMODITY } from '@/fetcherAxios/endpoint';
 
@@ -87,4 +89,9 @@ export const importCommodity = (data: FormData) => {
 };
 export const downloadExampleFileCommodity = () => {
   return downloadFile<BlobPart>({})(API_COMMODITY.DOWNLOAD_EXAMPLE_FILE);
+};
+export const exportTableFile = (data: RequestExportData) => {
+  return exportFile<RequestExportData, BlobPart>({ data })(
+    API_COMMODITY.EXPORT
+  );
 };

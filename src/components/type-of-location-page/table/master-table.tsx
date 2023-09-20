@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -36,11 +36,12 @@ import {
 import {
   deleteLocationType,
   downloadExampleFile,
+  exportTableFile,
   getLocationTypeSearch,
   importDataTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table, { COUNT_DATA } from '../../commons/table/table';
+import Table from '../../commons/table/table';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import {
   initalSelectSearchMaster,
@@ -51,7 +52,6 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
-import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -71,7 +71,6 @@ export default function MasterDataTable() {
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
-  const [dataExport, setDatExport] = useState<LocationTypeTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -79,46 +78,10 @@ export default function MasterDataTable() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
-  const [exportLoading, setExportLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
-  const excelHeadersMaster = useMemo(
-    () => [
-      {
-        name: translateLocationType('name'),
-        value: 'typeLocationName',
-      },
-      {
-        name: translateLocationType('description'),
-        value: 'description',
-      },
-      {
-        name: translateLocationType('status'),
-        value: 'statusTypeLocation',
-      },
-      {
-        name: translateCommon('date_created'),
-        value: 'dateInserted',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('creator'),
-        value: 'insertedByUser',
-      },
-      {
-        name: translateCommon('date_inserted'),
-        value: 'dateUpdated',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('inserter'),
-        value: 'updatedByUser',
-      },
-    ],
-    []
-  );
   // Handle data
   const dataSelectSearch =
     querySelectParams.statusTypeLocation.length === 0
@@ -500,56 +463,27 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.TYPE_OF_LOCATION_CREATE);
   };
-  // export table data to csv
-  useQuery({
-    queryKey: [],
-    queryFn: () =>
-      getLocationTypeSearch({
-        ...queryInputParams,
-        ...querySelectParams,
-        statusTypeLocation: [
-          STATUS_MATER_LABELS.ACTIVE,
-          STATUS_MATER_LABELS.DEACTIVE,
-        ],
-        paginateRequest: {
-          currentPage: 1,
-          pageSize: COUNT_DATA,
-        },
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusTypeLocation,
       }),
-    onSuccess(data) {
-      if (data.status) {
-        setDatExport(
-          data.data.data.map((data) => ({
-            key: data.typeLocationID,
-            typeLocationName: data.typeLocationName,
-            description: data.description,
-            statusTypeLocation: data.statusTypeLocation,
-            dateInserted: data.dateInserted,
-            insertedByUser: data.insertedByUser,
-            dateUpdated: data.dateUpdated,
-            updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
-            searchAll: '',
-          }))
-        );
-      } else {
-        setDatExport([]);
-      }
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_TYPE_LOCATION.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
     },
   });
+
   const exportTableData = () => {
-    setExportLoading(true);
-    if (selectedRowKeys.length === 0) {
-      exportExcel(dataExport, excelHeadersMaster, 'Type_Location');
-    } else {
-      const data = dataTable.filter((item) =>
-        selectedRowKeys.includes(item.key)
-      );
-      exportExcel(data, excelHeadersMaster, 'Type_Location');
-    }
-    setExportLoading(false);
+    exportData.mutate();
   };
 
   // import table data from excel file
@@ -635,7 +569,7 @@ export default function MasterDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             importTableData={importTableData}
-            exportLoading={exportLoading}
+            exportLoading={exportData.isLoading}
             exportTableData={exportTableData}
           />
         </>

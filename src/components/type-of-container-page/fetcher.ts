@@ -1,6 +1,7 @@
 import {
   ResponseWithPayload,
   downloadFile,
+  exportFile,
   post,
   uploadFile,
 } from '@/fetcherAxios';
@@ -15,6 +16,7 @@ import {
   ContainerTypeEdit,
   UpdateStatusContainerType,
   RequestContainerTypeTableRequest,
+  RequestExportData,
 } from './interface';
 import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
 
@@ -92,4 +94,9 @@ export const importDataTable = (data: FormData) => {
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_CONTAINER_TYPE.DOWNLOAD_EXAMPLE_FILE);
+};
+export const exportTableFile = (data: RequestExportData) => {
+  return exportFile<RequestExportData, BlobPart>({ data })(
+    API_CONTAINER_TYPE.EXPORT
+  );
 };

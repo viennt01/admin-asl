@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -35,46 +35,42 @@ import {
 import {
   deleteUnit,
   downloadExampleFile,
+  exportTableFile,
   getLocationsSearch,
   importDataTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table, { COUNT_DATA } from '../../commons/table/table';
+import Table from '../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
   initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
 } from '../constant';
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
-import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
-
-const initalValueQuerySelectParams = {
-  statusUnit: [],
-};
 
 type DataIndex = keyof QueryInputParamType;
 
 export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translateUnit } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParamsMaster
   );
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectParamType>(initalValueQuerySelectParams);
+    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<UnitTable[]>([]);
-  const [dataExport, setDatExport] = useState<UnitTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -82,46 +78,9 @@ export default function MasterDataTable() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
-  const [exportLoading, setExportLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
-
-  const excelHeadersMaster = useMemo(
-    () => [
-      {
-        name: translateUnit('international_code'),
-        value: 'internationalCode',
-      },
-      {
-        name: translateUnit('description'),
-        value: 'description',
-      },
-      {
-        name: translateUnit('status'),
-        value: 'statusUnit',
-      },
-      {
-        name: translateCommon('date_created'),
-        value: 'dateInserted',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('creator'),
-        value: 'insertedByUser',
-      },
-      {
-        name: translateCommon('date_inserted'),
-        value: 'dateUpdated',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('inserter'),
-        value: 'updatedByUser',
-      },
-    ],
-    []
-  );
 
   // Handle data
   const dataSelectSearch =
@@ -223,7 +182,7 @@ export default function MasterDataTable() {
       searchAll: value,
     });
     setQuerySelectParams({
-      ...initalValueQuerySelectParams,
+      ...initalValueQuerySelectParamsMaster,
     });
   };
 
@@ -488,52 +447,28 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.UNIT_CREATE);
   };
-  // export table data to csv
-  useQuery({
-    queryKey: [],
-    queryFn: () =>
-      getLocationsSearch({
-        ...queryInputParams,
-        statusUnit: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
-        paginateRequest: {
-          currentPage: 1,
-          pageSize: COUNT_DATA,
-        },
+
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusUnit,
       }),
-    onSuccess(data) {
-      if (data.status) {
-        setDatExport(
-          data.data.data.map((data) => ({
-            key: data.unitID,
-            internationalCode: data.internationalCode,
-            description: data.description,
-            statusUnit: data.statusUnit,
-            dateInserted: data.dateInserted,
-            insertedByUser: data.insertedByUser,
-            dateUpdated: data.dateUpdated,
-            updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
-            searchAll: '',
-          }))
-        );
-      } else {
-        setDatExport([]);
-      }
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_UNIT.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
     },
   });
+
   const exportTableData = () => {
-    setExportLoading(true);
-    if (selectedRowKeys.length === 0) {
-      exportExcel(dataExport, excelHeadersMaster, 'Unit');
-    } else {
-      const data = dataTable.filter((item) =>
-        selectedRowKeys.includes(item.key)
-      );
-      exportExcel(data, excelHeadersMaster, 'Unit');
-    }
-    setExportLoading(false);
+    exportData.mutate();
   };
 
   // import table data from excel file
@@ -619,7 +554,7 @@ export default function MasterDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             importTableData={importTableData}
-            exportLoading={exportLoading}
+            exportLoading={exportData.isLoading}
             exportTableData={exportTableData}
           />
         </>

@@ -9,7 +9,7 @@ import {
   QueryInputParamType,
   SelectSearch,
   UpdateStatusUnit,
-} from '@/components/unit-page/interface';
+} from '../interface';
 import { ROUTERS } from '@/constant/router';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';

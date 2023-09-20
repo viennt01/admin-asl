@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -36,11 +36,12 @@ import {
 import {
   deleteCurrency,
   downloadExampleFile,
+  exportTableFile,
   getCurrencySearch,
   importDataTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table, { COUNT_DATA } from '../../commons/table/table';
+import Table from '../../commons/table/table';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import {
   initalSelectSearchMaster,
@@ -51,7 +52,6 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
-import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -71,7 +71,6 @@ export default function MasterDataTable() {
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
-  const [dataExport, setDatExport] = useState<CurrencyTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -79,50 +78,10 @@ export default function MasterDataTable() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
-  const [exportLoading, setExportLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
-  const excelHeadersMaster = useMemo(
-    () => [
-      {
-        name: translateCurrency('currency'),
-        value: 'currencyName',
-      },
-      {
-        name: translateCurrency('exchange_rate_to_VND'),
-        value: 'exchangeRateToVND',
-      },
-      {
-        name: translateCurrency('exchange_rate_to_USD'),
-        value: 'exchangeRateToUSD',
-      },
-      {
-        name: translateCurrency('status'),
-        value: 'statusCurrency',
-      },
-      {
-        name: translateCommon('date_created'),
-        value: 'dateInserted',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('creator'),
-        value: 'insertedByUser',
-      },
-      {
-        name: translateCommon('date_inserted'),
-        value: 'dateUpdated',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('inserter'),
-        value: 'updatedByUser',
-      },
-    ],
-    []
-  );
   // Handle data
   const dataSelectSearch =
     querySelectParams.statusCurrency.length === 0
@@ -520,56 +479,27 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.CURRENCY_CREATE);
   };
-  // export table data to csv
-  useQuery({
-    queryKey: [],
-    queryFn: () =>
-      getCurrencySearch({
-        ...queryInputParams,
-        statusCurrency: [
-          STATUS_MATER_LABELS.ACTIVE,
-          STATUS_MATER_LABELS.DEACTIVE,
-        ],
-        paginateRequest: {
-          currentPage: 1,
-          pageSize: COUNT_DATA,
-        },
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusCurrency,
       }),
-    onSuccess(data) {
-      if (data.status) {
-        setDatExport(
-          data.data.data.map((data) => ({
-            key: data.currencyID,
-            currencyName: data.currencyName,
-            exchangeRateToVND: data.exchangeRateToVND,
-            exchangeRateToUSD: data.exchangeRateToUSD,
-            statusCurrency: data.statusCurrency,
-            dateInserted: data.dateInserted,
-            insertedByUser: data.insertedByUser,
-            dateUpdated: data.dateUpdated,
-            updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
-            searchAll: '',
-          }))
-        );
-      } else {
-        setDatExport([]);
-      }
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_CURRENCY.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
     },
   });
+
   const exportTableData = () => {
-    setExportLoading(true);
-    if (selectedRowKeys.length === 0) {
-      exportExcel(dataExport, excelHeadersMaster, 'Currency');
-    } else {
-      const data = dataTable.filter((item) =>
-        selectedRowKeys.includes(item.key)
-      );
-      exportExcel(data, excelHeadersMaster, 'Currency');
-    }
-    setExportLoading(false);
+    exportData.mutate();
   };
 
   // import table data from excel file
@@ -655,7 +585,7 @@ export default function MasterDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             importTableData={importTableData}
-            exportLoading={exportLoading}
+            exportLoading={exportData.isLoading}
             exportTableData={exportTableData}
           />
         </>

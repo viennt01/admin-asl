@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -38,11 +38,12 @@ import {
 import {
   deleteBank,
   downloadExampleFile,
+  exportTableFile,
   getBankSearch,
   importDataTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table, { COUNT_DATA } from '../../commons/table/table';
+import Table from '../../commons/table/table';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
@@ -52,7 +53,6 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
-import { exportExcel } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -72,7 +72,6 @@ export default function MasterDataTable() {
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<BankTable[]>([]);
-  const [dataExport, setDatExport] = useState<BankTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -80,74 +79,10 @@ export default function MasterDataTable() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
-  const [exportLoading, setExportLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
-  const excelHeadersMaster = useMemo(
-    () => [
-      {
-        name: translateBank('bank_code'),
-        value: 'bankNo',
-      },
-      {
-        name: translateBank('bank_name'),
-        value: 'bankName',
-      },
-      {
-        name: translateBank('VND_account_number'),
-        value: 'VND_account_number',
-      },
-      {
-        name: translateBank('USD_account_number'),
-        value: 'USD_account_number',
-      },
-      {
-        name: translateBank('phone'),
-        value: 'phoneNumber',
-      },
-      {
-        name: translateBank('bank_email'),
-        value: 'email',
-      },
-      {
-        name: translateBank('bank_address'),
-        value: 'address',
-      },
-      {
-        name: translateBank('bank_branch'),
-        value: 'bankBranch',
-      },
-      {
-        name: translateBank('bank_note'),
-        value: 'note',
-      },
-      {
-        name: translateBank('status'),
-        value: 'status',
-      },
-      {
-        name: translateCommon('date_created'),
-        value: 'dateInserted',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('creator'),
-        value: 'insertedByUser',
-      },
-      {
-        name: translateCommon('date_inserted'),
-        value: 'dateUpdated',
-        converter: (value: string) => formatDate(Number(value)) || '',
-      },
-      {
-        name: translateCommon('inserter'),
-        value: 'updatedByUser',
-      },
-    ],
-    []
-  );
   // Handle data
   const dataSelectSearch =
     querySelectParams.statusBank.length === 0
@@ -649,59 +584,28 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.BANK_CREATE);
   };
-  // export table data to csv
-  useQuery({
-    queryKey: [],
-    queryFn: () =>
-      getBankSearch({
-        ...queryInputParams,
-        statusBank: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
-        paginateRequest: {
-          currentPage: 1,
-          pageSize: COUNT_DATA,
-        },
+
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusBank,
       }),
-    onSuccess(data) {
-      if (data.status) {
-        setDatExport(
-          data.data.data.map((data) => ({
-            key: data.bankID,
-            bankNo: data.bankNo,
-            bankName: data.bankName,
-            accountNumberVND: data.accountNumberVND,
-            accountNumberUSD: data.accountNumberUSD,
-            phoneNumber: data.phoneNumber,
-            email: data.email,
-            address: data.address,
-            bankBranch: data.bankBranch,
-            note: data.note,
-            statusBank: data.statusBank,
-            dateInserted: data.dateInserted,
-            insertedByUser: data.insertedByUser,
-            dateUpdated: data.dateUpdated,
-            updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
-            searchAll: '',
-          }))
-        );
-      } else {
-        setDatExport([]);
-      }
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_BANK.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
     },
   });
+
   const exportTableData = () => {
-    setExportLoading(true);
-    if (selectedRowKeys.length === 0) {
-      exportExcel(dataExport, excelHeadersMaster, 'Bank');
-    } else {
-      const data = dataTable.filter((item) =>
-        selectedRowKeys.includes(item.key)
-      );
-      exportExcel(data, excelHeadersMaster, 'Bank');
-    }
-    setExportLoading(false);
+    exportData.mutate();
   };
 
   // import table data from excel file
@@ -788,7 +692,7 @@ export default function MasterDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             importTableData={importTableData}
-            exportLoading={exportLoading}
+            exportLoading={exportData.isLoading}
             exportTableData={exportTableData}
           />
         </>

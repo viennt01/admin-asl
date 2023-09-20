@@ -269,3 +269,18 @@ export const downloadFile =
 
     return axiosResolver(axiosPromise);
   };
+
+export const exportFile =
+  <T, R>({ data, options, headers, gw, timeout }: CRUDProps<T>) =>
+  (url: string): Promise<R> => {
+    const axiosPromise = requestWithTimeout(
+      apiClient.post(`${getGateway(gw)}${url}`, data, {
+        headers,
+        ...options,
+        responseType: 'blob',
+      }),
+      timeout
+    );
+
+    return axiosResolver(axiosPromise);
+  };
