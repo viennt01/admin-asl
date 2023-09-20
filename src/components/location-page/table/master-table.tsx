@@ -400,7 +400,7 @@ export default function MasterDataTable() {
       align: 'center',
       filteredValue: querySelectParams.typeLocations || null,
       filters:
-        typeLocation.data?.data.map((data) => ({
+        typeLocation.data?.data?.map((data) => ({
           text: data.typeLocationName,
           value: data.typeLocationID,
         })) || [],

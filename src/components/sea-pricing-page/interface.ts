@@ -1,16 +1,6 @@
+import { Dayjs } from 'dayjs';
 import { Pagination } from '../commons/table/table-deafault';
-import COLORS from '@/constant/color';
 
-export const STATUS_MASTER_COLORS = {
-  ACTIVE: COLORS.STATUS_CODE.ACTIVE,
-  DEACTIVE: COLORS.STATUS_CODE.DEACTIVE,
-};
-
-export const STATUS_MATER_LABELS = {
-  ACTIVE: 'ACTIVE',
-  DEACTIVE: 'DEACTIVE',
-};
-//
 export interface SeaPricing {
   seaPricingID: string;
   podid: string;
@@ -19,10 +9,6 @@ export interface SeaPricing {
   polName: string;
   commodityID: string;
   commodityName: string;
-  currencyID: string;
-  currencyName: string;
-  partnerID: string;
-  partnerName: string;
   note: string;
   effectDate: string;
   validity: string;
@@ -34,12 +20,12 @@ export interface SeaPricing {
   lcl: string;
   public: boolean;
   statusSeaPricing: string;
-  insertedByUser: string;
-  dateInserted: string;
-  dateUpdated: string;
-  updatedByUser: string;
   confirmDated: string;
   confirmByUser: string;
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
   isDelete: boolean;
   dateDeleted: string;
   deleteByUser: string;
@@ -52,15 +38,20 @@ export interface SeaPricingDetailDTOs {
   containerTypeID: string;
   containerTypeCode: string;
   containerTypeName: string;
-  cost: string;
+  currencyID: string;
+  currencyName: string;
+  price: string;
 }
-
 export interface SeaPricingFeeDTOs {
   seaPricingFeeID: string;
   feeID: string;
   feeName: string;
   feeNo: string;
-  cost: string;
+  currencyID: string;
+  currencyName: string;
+  unitID: string;
+  internationalCode: string;
+  price: string;
 }
 
 export interface SeaPricingTable extends Omit<SeaPricing, 'seaPricingID'> {
@@ -68,7 +59,7 @@ export interface SeaPricingTable extends Omit<SeaPricing, 'seaPricingID'> {
   searchAll: string;
 }
 
-export interface SeaPricesRequire extends Pagination {
+export interface SeaPricingRequire extends Pagination {
   data: SeaPricing[];
 }
 //
@@ -79,7 +70,7 @@ export interface QuerySelectParamType {
   statusSeaPricing: string[];
 }
 
-export interface RequestPricingType
+export interface RequestSeaPricing
   extends QueryInputParamType,
     QuerySelectParamType {
   paginateRequest: Pagination;
@@ -92,7 +83,7 @@ export type SelectSearch = {
   };
 };
 
-export interface PricingDetailDataBody {
+export interface SeaPricingDetailDataBody {
   id: string;
 }
 
@@ -101,40 +92,47 @@ export interface FormValues {
   podid: string;
   polid: string;
   commodityID: string;
-  currencyID: string;
-  partnerID: string;
   note: string;
-  effectDate: string;
-  validity: string;
-  freg: string;
-  dem: string;
-  det: string;
-  sto: string;
-  lclMin: string;
-  lcl: string;
+  dateEffect: Dayjs;
+  validityDate: Dayjs;
+  fregDate: Dayjs;
+  demSeaPricing: string;
+  detSeaPricing: string;
+  stoSeaPricing: string;
+  lclMinSeaPricing: string;
+  lclMinCurrency: string;
+  lclSeaPricing: string;
+  lclCurrency: string;
   public: boolean;
   statusSeaPricing: string;
-  // seaPricingDetailUpdateRequests: {
-  //   containerTypeID: string;
-  //   cost: string;
-  // }[];
-  // seaPricingFeeUpdateRequests: {
-  //   feeID: string;
-  //   cost: string;
-  // }[];
+  seaPricingDetailDTOs: SeaPricingDetailDTOs[];
+  seaPricingFeeDTOs: SeaPricingFeeDTOs[];
 }
 
-export interface SeaPricingDetail extends FormValues {
+export interface SeaPricingDetailType extends FormValues {
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
 }
 
-export type SeaPricingCreate = Omit<FormValues, 'seaPricingID'>;
+export type SeaPricingCreate = Omit<
+  FormValues,
+  'dateEffect' | 'fregDate' | 'validityDate' | 'seaPricingID'
+> & {
+  dateEffect: string;
+  validityDate: string;
+  fregDate: string;
+};
 
-export type SeaPricingEdit = FormValues;
-
+export type SeaPricingEdit = Omit<
+  FormValues,
+  'dateEffect' | 'fregDate' | 'validityDate'
+> & {
+  dateEffect: string;
+  validityDate: string;
+  fregDate: string;
+};
 export type SeaPricingDelete = {
   ids: React.Key[];
 };
@@ -147,9 +145,7 @@ export interface QueryInputDraft {
 export interface QuerySelectDraft {
   status: string[];
 }
-export interface RequestUnitTableDraft
-  extends QueryInputDraft,
-    QuerySelectDraft {
+export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
   paginateRequest: Pagination;
 }
 
@@ -162,7 +158,7 @@ export type SelectDratSearch = {
 
 //----------------------------------------------------------------
 
-export interface UpdateStatusUnit {
+export interface UpdateStatus {
   id: string;
   status: string;
 }
@@ -171,6 +167,24 @@ export interface QueryInputRequest {
   internationalCode: string;
   description: string;
 }
-export interface RequestUnitTableRequest extends QueryInputRequest {
+export interface RequestTableRequest extends QueryInputRequest {
   paginateRequest: Pagination;
+}
+
+// get all location
+export interface RequireLocation {
+  locationID: string;
+  locationName: string;
+}
+
+// get all commodity
+export interface RequireCommodity {
+  commodityID: string;
+  commodityName: string;
+}
+
+// get all currency
+export interface RequireCurrency {
+  currencyID: string;
+  currencyName: string;
 }

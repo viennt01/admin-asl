@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import PricingSeaPage from '@/components/pricing-sea-page';
+import SeaPricingPage from '@/components/sea-pricing-page';
 
 function PricingSea() {
   return (
@@ -8,7 +8,7 @@ function PricingSea() {
       <Head>
         <title>ASL | SEA PRICING</title>
       </Head>
-      <PricingSeaPage />
+      <SeaPricingPage />
     </>
   );
 }

@@ -135,12 +135,7 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [
-      API_UNIT.GET_SEARCH,
-      pagination,
-      queryInputParams,
-      querySelectParams,
-    ],
+    queryKey: [API_UNIT.GET_SEARCH, queryInputParams, querySelectParams],
     queryFn: () =>
       getLocationsSearch({
         ...queryInputParams,
@@ -169,9 +164,11 @@ export default function MasterDataTable() {
             searchAll: '',
           }))
         );
-        pagination.current = currentPage;
-        pagination.pageSize = pageSize;
-        pagination.total = totalPages;
+        setPagination({
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalPages,
+        });
       } else {
         setDataTable([]);
       }
@@ -205,10 +202,7 @@ export default function MasterDataTable() {
     setSelectedActiveKey(initalSelectSearchMaster);
     setQueryInputParams(initalValueQueryInputParamsMaster);
     setRefreshingLoading(true);
-    setPagination((state) => ({
-      ...state,
-      current: 1,
-    }));
+    pagination.current = 1;
     locationsQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
@@ -449,11 +443,9 @@ export default function MasterDataTable() {
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    setPagination((state) => ({
-      ...state,
-      current: page,
-      pageSize: size,
-    }));
+    pagination.current = page;
+    pagination.pageSize = size;
+    locationsQuerySearch.refetch();
   };
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {

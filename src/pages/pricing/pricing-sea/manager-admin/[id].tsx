@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditSeaPricing from '@/components/sea-pricing-page/edit';
+import ManagerSeaPricing from '@/components/sea-pricing-page/manager';
 
-function PricingSeaEditPage() {
+function SeaPricingManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | SEA PRICING EDIT</title>
+        <title>ASL | SEA PRICING MANAGER</title>
       </Head>
-      <EditSeaPricing />
+      <ManagerSeaPricing />
     </>
   );
 }
 
-export default withAuthentication(PricingSeaEditPage);
+export default withAuthentication(SeaPricingManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'pricingSea']);
 export const getStaticPaths = () => {

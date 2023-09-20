@@ -31,6 +31,8 @@ export const API_SEA_PRICING = {
   UPDATE_STATUS: '/update-status-unit',
   GET_DRAFT: '/get-unit-with-status-and-id-User',
   GET_REQUEST: '/get-unit-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-sea-pricing-excel',
+  IMPORT: '/import-sea-pricing-with-excel',
 };
 
 export const API_CONTAINER_TYPE = {
@@ -57,6 +59,7 @@ export const API_CURRENCY = {
   GET_REQUEST: '/get-currency-with-status-request',
   DOWNLOAD_EXAMPLE_FILE: '/download-currency-excel',
   IMPORT: '/import-currency-with-excel',
+  GET_ALL: '/get-all-currency',
 };
 
 export const API_BANK = {
@@ -97,6 +100,7 @@ export const API_LOCATION = {
   GET_REQUEST: '/get-location-with-status-request',
   DOWNLOAD_EXAMPLE_FILE: '/download-location-excel',
   IMPORT: '/import-location-with-excel',
+  GET_ALL: '/get-all-location',
 };
 
 export const API_COMMODITY = {
@@ -110,6 +114,7 @@ export const API_COMMODITY = {
   GET_REQUEST: '/get-commodity-with-status-request',
   IMPORT: '/import-commodity-with-excel',
   DOWNLOAD_EXAMPLE_FILE: '/download-commodity-excel',
+  GET_ALL: '/get-all-commodity',
 };
 
 export const API_MASTER_DATA = {

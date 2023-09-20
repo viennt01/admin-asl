@@ -8,7 +8,7 @@ import {
   SelectDratSearch,
 } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
-import { deleteUnit, getDartTable } from '../fetcher';
+import { deleteSeaPricing, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -27,35 +27,12 @@ import { formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import style from './index.module.scss';
-
-const initalValueQueryInputParams = {
-  internationalCode: '',
-  description: '',
-};
-
-const initalValueQuerySelectParams = {
-  status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  internationalCode: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusUnit: {
-    label: '',
-    value: '',
-  },
-};
+import style from '@/components/commons/table/index.module.scss';
+import {
+  initalSelectSearchDraft,
+  initalValueQueryInputParamsDraft,
+  initalValueQuerySelectParamsDraft,
+} from '../constant';
 
 type DataIndex = keyof QueryInputDraft;
 
@@ -70,11 +47,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsDraft
   );
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectDratSearch>(initalSelectSearch);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
+    initalSelectSearchDraft
+  );
 
   // Handle data
   useQuery({
@@ -82,7 +60,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
-        ...initalValueQuerySelectParams,
+        ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -91,22 +69,40 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
-        // setDataTable(
-        //   data.data.data.map((data) => ({
-        //     key: data.unitID,
-        //     internationalCode: data.internationalCode,
-        //     description: data.description,
-        //     statusUnit: data.statusUnit,
-        //     dateInserted: data.dateInserted,
-        //     insertedByUser: data.insertedByUser,
-        //     dateUpdated: data.dateUpdated,
-        //     updatedByUser: data.updatedByUser,
-        //     isDelete: data.isDelete,
-        //     dateDeleted: data.dateDeleted,
-        //     deleteByUser: data.deleteByUser,
-        //     searchAll: '',
-        //   }))
-        // );
+        setDataTable(
+          data.data.data.map((data) => ({
+            key: data.seaPricingID,
+            podid: data.podid,
+            podName: data.podName,
+            polid: data.polid,
+            polName: data.polName,
+            commodityID: data.commodityID,
+            commodityName: data.commodityName,
+            note: data.note,
+            effectDate: data.effectDate,
+            validity: data.validity,
+            freg: data.freg,
+            dem: data.dem,
+            det: data.det,
+            sto: data.sto,
+            lclMin: data.lclMin,
+            lcl: data.lcl,
+            public: data.public,
+            statusSeaPricing: data.statusSeaPricing,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
+            seaPricingDetailDTOs: data.seaPricingDetailDTOs,
+            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            isDelete: data.isDelete,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            searchAll: '',
+          }))
+        );
         pagination.current = currentPage;
         pagination.pageSize = pageSize;
         pagination.total = totalPages;
@@ -117,7 +113,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   const deleteItemDraftMutation = useMutation({
-    mutationFn: (id: string[]) => deleteUnit(id),
+    mutationFn: (id: string[]) => deleteSeaPricing(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);

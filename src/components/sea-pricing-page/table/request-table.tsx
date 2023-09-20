@@ -5,7 +5,6 @@ import {
 } from '@/components/commons/table/table-deafault';
 import Table from '@/components/commons/table/table';
 import {
-  UnitTable,
   QueryInputParamType,
   SelectSearch,
   UpdateStatusUnit,
@@ -26,32 +25,12 @@ import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
-import style from './index.module.scss';
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-  internationalCode: '',
-  description: '',
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  internationalCode: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusUnit: {
-    label: '',
-    value: '',
-  },
-};
+import style from '@/components/commons/table/index.module.scss';
+import {
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+} from '../constant';
+import { SeaPricingTable } from '../interface';
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -63,11 +42,12 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsRequest
   );
-  const [dataTable, setDataTable] = useState<UnitTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
+    initalSelectSearchRequest
+  );
   // Handle data
   useQuery({
     queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
@@ -82,22 +62,40 @@ const RequestTable = () => {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
-        // setDataTable(
-        //   data.data.data.map((data) => ({
-        //     key: data.unitID,
-        //     internationalCode: data.internationalCode,
-        //     description: data.description,
-        //     statusUnit: data.statusUnit,
-        //     dateInserted: data.dateInserted,
-        //     insertedByUser: data.insertedByUser,
-        //     dateUpdated: data.dateUpdated,
-        //     updatedByUser: data.updatedByUser,
-        //     isDelete: data.isDelete,
-        //     dateDeleted: data.dateDeleted,
-        //     deleteByUser: data.deleteByUser,
-        //     searchAll: '',
-        //   }))
-        // );
+        setDataTable(
+          data.data.data.map((data) => ({
+            key: data.seaPricingID,
+            podid: data.podid,
+            podName: data.podName,
+            polid: data.polid,
+            polName: data.polName,
+            commodityID: data.commodityID,
+            commodityName: data.commodityName,
+            note: data.note,
+            effectDate: data.effectDate,
+            validity: data.validity,
+            freg: data.freg,
+            dem: data.dem,
+            det: data.det,
+            sto: data.sto,
+            lclMin: data.lclMin,
+            lcl: data.lcl,
+            public: data.public,
+            statusSeaPricing: data.statusSeaPricing,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
+            seaPricingDetailDTOs: data.seaPricingDetailDTOs,
+            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            isDelete: data.isDelete,
+            dateDeleted: data.dateDeleted,
+            deleteByUser: data.deleteByUser,
+            searchAll: '',
+          }))
+        );
         pagination.current = currentPage;
         pagination.pageSize = pageSize;
         pagination.total = totalPages;
@@ -146,7 +144,7 @@ const RequestTable = () => {
   };
 
   // Handle data show table
-  const columns: ProColumns<UnitTable>[] = [
+  const columns: ProColumns<SeaPricingTable>[] = [
     {
       title: <div className={style.title}>{translateUnit('code')}</div>,
       dataIndex: 'index',
@@ -300,7 +298,7 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: UnitTable
+    record: SeaPricingTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

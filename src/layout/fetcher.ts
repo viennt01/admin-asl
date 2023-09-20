@@ -46,7 +46,7 @@ export const checkNewUser = () => {
 };
 
 export const getListTypeLocations = () => {
-  return post<undefined, ResponseWithPayload<TypePortData[]>>({})(
+  return get<ResponseWithPayload<TypePortData[]>>({})(
     API_LOCATION_TYPE.GET_TYPE_LOCATION
   );
 };

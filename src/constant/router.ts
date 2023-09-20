@@ -25,8 +25,10 @@ export const ROUTERS = {
     `/quotation/quotation-all-in/edit/${quotationAllInId}`,
   SEA_PRICING: '/pricing/pricing-sea',
   SEA_PRICING_CREATE: '/pricing/pricing-sea/create',
-  SEA_PRICING_EDIT: (seaPricingId: string) =>
-    `/pricing/pricing-sea/edit/${seaPricingId}`,
+  SEA_PRICING_EDIT: (seaPricingId: string, checkRow = false) =>
+    `/pricing/pricing-sea/edit/${seaPricingId}?checkRow=${checkRow}`,
+  SEA_PRICING_MANAGER: (seaPricingId: string) =>
+    `/pricing/pricing-sea/manager-admin/${seaPricingId}`,
   AIR_PRICING: '/pricing/pricing-air',
   AIR_PRICING_EDIT: (airPricingId: string) =>
     `/pricing/pricing-air/edit/${airPricingId}`,

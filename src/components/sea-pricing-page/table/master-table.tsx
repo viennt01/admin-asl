@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -13,87 +13,67 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
-import style from './index.module.scss';
+import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
   QueryInputParamType,
   QuerySelectParamType,
-  STATUS_MASTER_COLORS,
-  STATUS_MATER_LABELS,
   SelectSearch,
   SeaPricingTable,
+  SeaPricingDetailDTOs,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
-import { deleteUnit, getSeaPricingSearch } from '../fetcher';
+import {
+  deleteSeaPricing,
+  downloadExampleFile,
+  getSeaPricingSearch,
+  importDataTable,
+} from '../fetcher';
 import Table from '../../commons/table/table';
+import style from '@/components/commons/table/index.module.scss';
+import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
+import {
+  initalSelectSearchMaster,
+  initalValueDisplayColumnMaster,
+  initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
+} from '../constant';
+import ImportCSVModal, {
+  ImportFormValues,
+} from '@/components/commons/import-data';
 
 const { confirm } = Modal;
-
-const initalValueQueryInputParams = {
-  searchAll: '',
-};
-
-const initalValueQuerySelectParams = {
-  statusSeaPricing: [],
-};
-
-const initalValueDisplayColumn = {
-  operation: {
-    order: 0,
-    fixed: 'left' as const,
-  },
-  index: {
-    order: 1,
-    fixed: 'left' as const,
-  },
-  polName: {
-    order: 2,
-    fixed: 'left' as const,
-  },
-  podName: {
-    order: 3,
-    fixed: 'left' as const,
-  },
-};
-
-const initalSelectSearch = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  statusSeaPricing: {
-    label: '',
-    value: [],
-  },
-};
 
 export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePricingSea } = useI18n('unit');
+  const { translate: translatePricingSea } = useI18n('pricingSea');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParams
+    initalValueQueryInputParamsMaster
   );
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectParamType>(initalValueQuerySelectParams);
+    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
-  const [selectedActiveKey, setSelectedActiveKey] =
-    useState<SelectSearch>(initalSelectSearch);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    initalSelectSearchMaster
+  );
   const [columnsStateMap, setColumnsStateMap] = useState<
     Record<string, ColumnsState>
-  >(initalValueDisplayColumn);
+  >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
+  const [loadingImport, setLoadingImport] = useState(false);
+  const [openImportModal, setOpenImportModal] = useState(false);
+  const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
   const dataSelectSearch =
@@ -107,12 +87,7 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [
-      API_UNIT.GET_SEARCH,
-      pagination,
-      queryInputParams,
-      querySelectParams,
-    ],
+    queryKey: [API_SEA_PRICING.GET_SEARCH, queryInputParams, querySelectParams],
     queryFn: () =>
       getSeaPricingSearch({
         ...queryInputParams,
@@ -134,10 +109,6 @@ export default function MasterDataTable() {
             polName: data.polName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
-            currencyID: data.currencyID,
-            currencyName: data.currencyName,
-            partnerID: data.partnerID,
-            partnerName: data.partnerName,
             note: data.note,
             effectDate: data.effectDate,
             validity: data.validity,
@@ -149,37 +120,39 @@ export default function MasterDataTable() {
             lcl: data.lcl,
             public: data.public,
             statusSeaPricing: data.statusSeaPricing,
-            insertedByUser: data.insertedByUser,
-            dateInserted: data.dateInserted,
-            dateUpdated: data.dateUpdated,
-            updatedByUser: data.updatedByUser,
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
+            seaPricingDetailDTOs: data.seaPricingDetailDTOs,
+            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
+            dateInserted: data.dateInserted,
+            insertedByUser: data.insertedByUser,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
             isDelete: data.isDelete,
             dateDeleted: data.dateDeleted,
             deleteByUser: data.deleteByUser,
-            seaPricingDetailDTOs: data.seaPricingDetailDTOs,
-            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
             searchAll: '',
           }))
         );
-        pagination.current = currentPage;
-        pagination.pageSize = pageSize;
-        pagination.total = totalPages;
+        setPagination({
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalPages,
+        });
       } else {
         setDataTable([]);
       }
     },
   });
 
-  const deleteUnitMutation = useMutation({
-    mutationFn: () => deleteUnit(selectedRowKeys),
+  const deleteMutation = useMutation({
+    mutationFn: () => deleteSeaPricing(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
           queryKey: [
-            API_UNIT.GET_SEARCH,
+            API_SEA_PRICING.GET_SEARCH,
             pagination,
             queryInputParams,
             querySelectParams,
@@ -196,13 +169,10 @@ export default function MasterDataTable() {
   });
 
   const refreshingQuery = () => {
-    setSelectedActiveKey(initalSelectSearch);
-    setQueryInputParams(initalValueQueryInputParams);
+    setSelectedActiveKey(initalSelectSearchMaster);
+    setQueryInputParams(initalValueQueryInputParamsMaster);
     setRefreshingLoading(true);
-    setPagination((state) => ({
-      ...state,
-      current: 1,
-    }));
+    pagination.current = 1;
     locationsQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
@@ -212,20 +182,43 @@ export default function MasterDataTable() {
   // Handle search
   const handleSearchInputKeyAll = (value: string) => {
     setSelectedActiveKey({
-      ...initalSelectSearch,
+      ...initalSelectSearchMaster,
       searchAll: {
         label: 'searchAll',
         value: value,
       },
     });
     setQueryInputParams({
-      ...initalValueQueryInputParams,
+      ...initalValueQueryInputParamsMaster,
       searchAll: value,
     });
     setQuerySelectParams({
-      ...initalValueQuerySelectParams,
+      ...initalValueQuerySelectParamsMaster,
     });
   };
+
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedActiveKey((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //     searchAll: {
+  //       label: 'searchAll',
+  //       value: '',
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   newQueryParams.searchAll = '';
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
   const handleSearchSelect = (
     pagination: TablePaginationConfig,
@@ -234,15 +227,32 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusUnit:
-        filters.statusUnit?.length !== 0 && filters.statusUnit
-          ? (filters.statusUnit as string[])
+      statusSeaPricing:
+        filters.statusSeaPricing?.length !== 0 && filters.statusSeaPricing
+          ? (filters.statusSeaPricing as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);
   };
 
-  // Handle data show table
+  const columnDTOs = useMemo(
+    () =>
+      dataTable[0]?.seaPricingDetailDTOs.map((dto) => ({
+        title: dto.containerTypeName,
+        width: 200,
+        dataIndex: 'seaPricingDetailDTOs',
+        render: (value: any) => {
+          const data = value.find(
+            (item: SeaPricingDetailDTOs) =>
+              item.containerTypeName === dto.containerTypeName
+          );
+
+          return data ? data.price : null;
+        },
+      })) || [{}],
+    [dataTable]
+  );
+
   const columns: ProColumns<SeaPricingTable>[] = [
     {
       title: <div className={style.title}>{translatePricingSea('no')}</div>,
@@ -260,6 +270,7 @@ export default function MasterDataTable() {
       dataIndex: 'polName',
       key: 'polName',
       align: 'center',
+      render: (value) => value,
     },
     {
       title: translatePricingSea('POD'),
@@ -379,9 +390,16 @@ export default function MasterDataTable() {
       align: 'center',
     },
     {
+      title: translatePricingSea('DET'),
+      width: 200,
+      dataIndex: 'det',
+      key: 'det',
+      align: 'center',
+    },
+    {
       title: translatePricingSea('note'),
       width: 200,
-      dataIndex: 'seaPricingDetailDTOs.cost',
+      dataIndex: 'note',
       key: 'note',
       align: 'center',
     },
@@ -439,7 +457,7 @@ export default function MasterDataTable() {
             cancelText={translateCommon('modal_delete.button_cancel')}
             onConfirm={() => {
               setSelectedRowKeys([value as string]);
-              deleteUnitMutation.mutate();
+              deleteMutation.mutate();
             }}
           >
             <Button
@@ -453,26 +471,32 @@ export default function MasterDataTable() {
         </div>
       ),
     },
+    ...columnDTOs,
   ];
-
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_EDIT(id));
+    router.push(ROUTERS.SEA_PRICING_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
+  console.log('pagination', pagination);
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    setPagination((state) => ({
-      ...state,
-      current: page,
-      pageSize: size,
-    }));
+    console.log('page', page, size);
+    console.log('pagination', pagination);
+
+    pagination.current = page;
+    pagination.pageSize = size;
+    console.log('pagination1', pagination);
+
+    locationsQuerySearch.refetch();
   };
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
+    console.log(map);
+
     setColumnsStateMap(map);
   };
 
@@ -484,7 +508,7 @@ export default function MasterDataTable() {
       cancelText: translateCommon('modal_delete.button_cancel'),
       okType: 'danger',
       onOk() {
-        deleteUnitMutation.mutate();
+        deleteMutation.mutate();
       },
     });
   };
@@ -505,40 +529,104 @@ export default function MasterDataTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_EDIT(record.key, true));
+      router.push(ROUTERS.SEA_PRICING_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
     router.push(ROUTERS.SEA_PRICING_CREATE);
   };
+  // export table data to csv
+  const exportTableData = () => {
+    console.log('export');
+  };
 
+  // import table data from excel file
+  const importData = useMutation({
+    mutationFn: (value: FormData) => importDataTable(value),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [API_SEA_PRICING.GET_REQUEST],
+        });
+        setLoadingImport(false);
+        setOpenImportModal(false);
+      } else {
+        errorToast(data.message);
+        setLoadingImport(false);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
+      setLoadingImport(false);
+    },
+  });
+  const confirmImportTableData = (formValues: ImportFormValues) => {
+    setLoadingImport(true);
+    const _requestData = new FormData();
+    _requestData.append('File', formValues.file[0]);
+    importData.mutate(_requestData);
+  };
+  const cancelImportTableData = () => {
+    setOpenImportModal(false);
+  };
+  const importTableData = () => {
+    setOpenImportModal(true);
+  };
+
+  // download example file
+  const downloadFile = useMutation({
+    mutationFn: () => downloadExampleFile(),
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'ASL_SEA_PRICING.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
+    },
+  });
   return (
     <div style={{ marginTop: -18 }}>
       {locationsQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
-        <Table
-          dataTable={dataTable}
-          columns={columns}
-          headerTitle={translatePricingSea('title')}
-          selectedRowKeys={selectedRowKeys}
-          handleSelectionChange={handleSelectionChange}
-          handlePaginationChange={handlePaginationChange}
-          handleChangeInputSearchAll={handleChangeInputSearchAll}
-          handleSearchInputKeyAll={handleSearchInputKeyAll}
-          valueSearchAll={selectedActiveKey.searchAll.value}
-          handleOnDoubleClick={handleOnDoubleClick}
-          handleCreate={handleCreate}
-          showPropsConfirmDelete={showPropsConfirmDelete}
-          refreshingQuery={refreshingQuery}
-          refreshingLoading={refreshingLoading}
-          pagination={pagination}
-          handleColumnsStateChange={handleColumnsStateChange}
-          columnsStateMap={columnsStateMap}
-          handleSearchSelect={handleSearchSelect}
-          checkTableMaster={true}
-        />
+        <>
+          <ImportCSVModal
+            loadingImport={loadingImport}
+            open={openImportModal}
+            handleOk={confirmImportTableData}
+            handleCancel={cancelImportTableData}
+            isLoadingDownload={isLoadingDownload}
+            downloadFile={downloadFile}
+          />
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            headerTitle={translatePricingSea('title')}
+            selectedRowKeys={selectedRowKeys}
+            handleSelectionChange={handleSelectionChange}
+            handlePaginationChange={handlePaginationChange}
+            handleChangeInputSearchAll={handleChangeInputSearchAll}
+            handleSearchInputKeyAll={handleSearchInputKeyAll}
+            valueSearchAll={selectedActiveKey.searchAll.value}
+            handleOnDoubleClick={handleOnDoubleClick}
+            handleCreate={handleCreate}
+            showPropsConfirmDelete={showPropsConfirmDelete}
+            refreshingQuery={refreshingQuery}
+            refreshingLoading={refreshingLoading}
+            pagination={pagination}
+            handleColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            handleSearchSelect={handleSearchSelect}
+            checkTableMaster={true}
+            importTableData={importTableData}
+            exportTableData={exportTableData}
+          />
+        </>
       )}
     </div>
   );
