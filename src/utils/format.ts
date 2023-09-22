@@ -32,3 +32,15 @@ export function formatCurrency(amount: number) {
     currencyDisplay: 'narrowSymbol',
   }).format(amount);
 }
+
+export function formatCurrencyHasCurrency(input: string): string {
+  const parts = input.split(' ');
+  if (parts.length !== 2) {
+    return '-';
+  }
+  const amount = parseFloat(parts[0]);
+  if (isNaN(amount)) {
+    return '-';
+  }
+  return `${amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ` ${parts[1]}`;
+}

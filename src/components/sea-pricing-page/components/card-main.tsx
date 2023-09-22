@@ -11,6 +11,7 @@ import {
   DatePicker,
   Switch,
   InputNumber,
+  FormInstance,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -38,6 +39,7 @@ interface Props {
   checkRow: boolean;
   useDraft?: boolean;
   optionCurrency: { value: string; label: string }[];
+  form: FormInstance<FormValues>;
 }
 
 const { Title } = Typography;
@@ -49,10 +51,10 @@ const CardMain = ({
   checkRow,
   useDraft,
   optionCurrency,
+  form,
 }: Props) => {
   const { translate: translatePricingSea } = useI18n('pricingSea');
   const router = useRouter();
-  const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
@@ -109,7 +111,8 @@ const CardMain = ({
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate) {
+
+    if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         podid: propCopyAndCreate.podid as string,
         polid: propCopyAndCreate.polid as string,
@@ -131,7 +134,14 @@ const CardMain = ({
           propCopyAndCreate.seaPricingFeeDTOs as unknown as SeaPricingFeeDTOs[],
       });
     }
-  }, [form, edit, checkRow, manager, propCopyAndCreate]);
+  }, [
+    form,
+    edit,
+    checkRow,
+    manager,
+    propCopyAndCreate,
+    form.getFieldValue('statusSeaPricing'),
+  ]);
 
   const updateStatusMutation = useMutation({
     mutationFn: (body: UpdateStatus) => {
@@ -171,7 +181,6 @@ const CardMain = ({
             <Title level={3} style={{ margin: '-4px 0' }}>
               {create && 'Create a new sea pricing'}
               {manager && 'Approval needed requests'}
-              {edit && 'Edit a new sea pricing'}
               {edit &&
                 (checkRow ? (
                   <>
@@ -362,10 +371,6 @@ const CardMain = ({
                 required: true,
                 message: translatePricingSea('STO_placeholder'),
               },
-              {
-                type: 'integer',
-                message: 'Vui lòng nhập số nguyên',
-              },
             ]}
           >
             <InputNumber
@@ -523,6 +528,15 @@ const CardMain = ({
               disabled={checkRow && isCheckPermissionEdit}
             />
           </Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="statusSeaPricing"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="seaPricingDetailDTOs"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="seaPricingFeeDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

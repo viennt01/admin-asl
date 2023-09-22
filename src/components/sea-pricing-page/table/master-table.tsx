@@ -14,7 +14,7 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
-import { formatDate } from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -100,6 +100,7 @@ export default function MasterDataTable() {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
+
         setDataTable(
           data.data.data.map((data) => ({
             key: data.seaPricingID,
@@ -234,24 +235,22 @@ export default function MasterDataTable() {
     };
     setQuerySelectParams(newQueryParams);
   };
-
-  const columnDTOs = useMemo(
-    () =>
-      dataTable[0]?.seaPricingDetailDTOs.map((dto) => ({
-        title: dto.containerTypeName,
-        width: 200,
-        dataIndex: 'seaPricingDetailDTOs',
-        render: (value: any) => {
-          const data = value.find(
-            (item: SeaPricingDetailDTOs) =>
-              item.containerTypeName === dto.containerTypeName
-          );
-
-          return data ? data.price : null;
-        },
-      })) || [{}],
-    [dataTable]
-  );
+  const columnDTOs = useMemo(() => {
+    const result = [{}];
+    for (const key in dataTable[0]?.seaPricingDetailDTOs) {
+      if (dataTable[0].seaPricingDetailDTOs.hasOwnProperty(key)) {
+        const obj = {
+          title: key,
+          width: 200,
+          dataIndex: 'seaPricingDetailDTOs',
+          render: (value: SeaPricingDetailDTOs) =>
+            formatCurrencyHasCurrency(value[key]),
+        };
+        result.push(obj);
+      }
+    }
+    return result;
+  }, [dataTable]);
 
   const columns: ProColumns<SeaPricingTable>[] = [
     {
@@ -481,15 +480,10 @@ export default function MasterDataTable() {
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
-  console.log('pagination', pagination);
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    console.log('page', page, size);
-    console.log('pagination', pagination);
-
     pagination.current = page;
     pagination.pageSize = size;
-    console.log('pagination1', pagination);
 
     locationsQuerySearch.refetch();
   };

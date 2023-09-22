@@ -130,6 +130,7 @@ const TypeOfContainerTypeForm = ({
 
   const handleCopyAndCreate = () => {
     const props = {
+      checkCopyAndCreate: true,
       containerTypeCode: form.getFieldValue('containerTypeCode'),
       name: form.getFieldValue('name'),
       detailsEN: form.getFieldValue('detailsEN'),
@@ -143,15 +144,17 @@ const TypeOfContainerTypeForm = ({
   };
 
   useEffect(() => {
-    if (form.getFieldValue('statusTypeLocation')) {
-      form.getFieldValue('statusTypeLocation') === STATUS_ALL_LABELS.ACTIVE
+    console.log(form.getFieldValue('statusContainerType'));
+
+    if (form.getFieldValue('statusContainerType')) {
+      form.getFieldValue('statusContainerType') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate) {
+    if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         containerTypeCode: propCopyAndCreate.containerTypeCode as string,
         name: propCopyAndCreate.name as string,
@@ -160,7 +163,16 @@ const TypeOfContainerTypeForm = ({
         teus: propCopyAndCreate.teus as string,
       });
     }
-  }, [form, edit, checkRow, manager, propCopyAndCreate]);
+  }, [
+    form,
+    edit,
+    checkRow,
+    manager,
+    propCopyAndCreate,
+    form.getFieldValue('statusContainerType'),
+  ]);
+
+  console.log('formall', form.getFieldsValue());
 
   return (
     <div style={{ padding: '24px 0' }}>

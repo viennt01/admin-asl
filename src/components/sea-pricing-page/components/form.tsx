@@ -12,6 +12,8 @@ import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import dayjs from 'dayjs';
 import CardMain from './card-main';
+import CollapseCard from '@/components/commons/collapse-card';
+import SeaPricingDetailDTO from './sea-pricing-detail-dto';
 
 interface PortFormProps {
   create?: boolean;
@@ -154,6 +156,7 @@ const SeaPricing = ({
 
   const handleCopyAndCreate = () => {
     const props = {
+      checkCopyAndCreate: true,
       podid: form.getFieldValue('podid'),
       polid: form.getFieldValue('polid'),
       commodityID: form.getFieldValue('commodityID'),
@@ -195,7 +198,16 @@ const SeaPricing = ({
           checkRow={checkRow}
           useDraft={useDraft}
           optionCurrency={optionCurrency}
+          form={form}
         />
+
+        <CollapseCard
+          title="Sea Pricing Detail"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <SeaPricingDetailDTO form={form} />
+        </CollapseCard>
 
         <BottomCreateEdit
           create={create}

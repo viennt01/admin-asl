@@ -127,6 +127,7 @@ const CurrencyForm = ({
 
   const handleCopyAndCreate = () => {
     const props = {
+      checkCopyAndCreate: true,
       currencyName: form.getFieldValue('currencyName'),
       exchangeRateToVND: form.getFieldValue('exchangeRateToVND'),
       exchangeRateToUSD: form.getFieldValue('exchangeRateToUSD'),
@@ -146,14 +147,21 @@ const CurrencyForm = ({
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate) {
+    if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         currencyName: propCopyAndCreate.currencyName as string,
         exchangeRateToVND: propCopyAndCreate.exchangeRateToVND as string,
         exchangeRateToUSD: propCopyAndCreate.exchangeRateToUSD as string,
       });
     }
-  }, [form, edit, checkRow, manager, propCopyAndCreate]);
+  }, [
+    form,
+    edit,
+    checkRow,
+    manager,
+    propCopyAndCreate,
+    form.getFieldValue('statusCurrency'),
+  ]);
 
   return (
     <div style={{ padding: '24px 0' }}>

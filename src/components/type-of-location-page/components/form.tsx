@@ -235,6 +235,7 @@ const LocationTypeForm = ({
 
   const handleCopyAndCreate = () => {
     const props = {
+      checkCopyAndCreate: true,
       typeLocationNameEN: form.getFieldValue('typeLocationNameEN'),
       descriptionEN: form.getFieldValue('descriptionEN'),
       typeLocationNameVN: form.getFieldValue('typeLocationNameVN'),
@@ -255,7 +256,7 @@ const LocationTypeForm = ({
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate) {
+    if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         typeLocationNameEN: propCopyAndCreate.typeLocationNameEN as string,
         descriptionEN: propCopyAndCreate.descriptionEN as string,
@@ -263,7 +264,14 @@ const LocationTypeForm = ({
         descriptionVN: propCopyAndCreate.descriptionVN as string,
       });
     }
-  }, [form, edit, checkRow, manager, propCopyAndCreate]);
+  }, [
+    form,
+    edit,
+    checkRow,
+    manager,
+    propCopyAndCreate,
+    form.getFieldValue('statusTypeLocation'),
+  ]);
 
   return (
     <div style={{ padding: '24px 0' }}>

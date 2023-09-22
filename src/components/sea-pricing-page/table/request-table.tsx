@@ -4,56 +4,41 @@ import {
   PaginationOfAntd,
 } from '@/components/commons/table/table-deafault';
 import Table from '@/components/commons/table/table';
-import {
-  QueryInputParamType,
-  SelectSearch,
-  UpdateStatusUnit,
-} from '@/components/unit-page/interface';
+import { UpdateStatusUnit } from '@/components/unit-page/interface';
 import { ROUTERS } from '@/constant/router';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps, Tag } from 'antd';
+import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
-import { FilterConfirmProps } from 'antd/lib/table/interface';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
-import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
-import {
-  initalSelectSearchRequest,
-  initalValueQueryInputParamsRequest,
-} from '../constant';
+import { initalValueQueryInputParamsRequest } from '../constant';
 import { SeaPricingTable } from '../interface';
-
-type DataIndex = keyof QueryInputParamType;
 
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateUnit } = useI18n('unit');
+  const { translate: translatePricingSea } = useI18n('pricingSea');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParamsRequest
-  );
+
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
-    initalSelectSearchRequest
-  );
+
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_UNIT.GET_REQUEST, pagination],
     queryFn: () =>
       getTable({
-        ...queryInputParams,
+        ...initalValueQueryInputParamsRequest,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -112,41 +97,41 @@ const RequestTable = () => {
   });
 
   // Handle search
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-    }));
-    const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    setQueryInputParams(newQueryParams);
-    confirm();
-  };
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryInputParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
+  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+  //   setQueryInputParams((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: '',
+  //   }));
 
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: { label: dataIndex, value: '' },
+  //   }));
+  //   clearFilters();
+  // };
 
   // Handle data show table
   const columns: ProColumns<SeaPricingTable>[] = [
     {
-      title: <div className={style.title}>{translateUnit('code')}</div>,
+      title: <div className={style.title}>{translatePricingSea('no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -191,40 +176,47 @@ const RequestTable = () => {
       ),
     },
     {
-      title: (
-        <div className={style.title}>{translateUnit('international_code')}</div>
-      ),
-      dataIndex: 'internationalCode',
-      key: 'internationalCode',
-      width: 150,
+      title: translatePricingSea('POL'),
+      width: 200,
+      dataIndex: 'polName',
+      key: 'polName',
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'internationalCode',
-        },
-      }),
+      render: (value) => value,
     },
     {
-      title: <div className={style.title}>{translateUnit('description')}</div>,
-      dataIndex: 'description',
-      key: 'description',
-      width: 250,
+      title: translatePricingSea('POD'),
+      width: 200,
+      dataIndex: 'podName',
+      key: 'podName',
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'description',
-        },
-      }),
+    },
+    {
+      title: translatePricingSea('vendor'),
+      width: 200,
+      dataIndex: 'partnerName',
+      key: 'partnerName',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('commodity'),
+      width: 300,
+      dataIndex: 'commodityName',
+      key: 'commodityName',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('LCLMin'),
+      width: 200,
+      dataIndex: 'lclMin',
+      key: 'lclMin',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('LCL'),
+      width: 200,
+      dataIndex: 'lcl',
+      key: 'lcl',
+      align: 'center',
     },
     {
       title: (
@@ -243,24 +235,6 @@ const RequestTable = () => {
       key: 'insertedByUser',
       align: 'center',
     },
-    {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
-      width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
-      align: 'center',
-      fixed: 'right',
-      render: (value) => (
-        <Tag
-          color={STATUS_ALL_COLORS[value as keyof typeof STATUS_ALL_COLORS]}
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
-        </Tag>
-      ),
-    },
   ];
 
   // Handle logic table
@@ -278,7 +252,7 @@ const RequestTable = () => {
         data.status
           ? (successToast(data.message),
             queryClient.invalidateQueries({
-              queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
+              queryKey: [API_UNIT.GET_REQUEST, pagination],
             }))
           : errorToast(data.message);
       },

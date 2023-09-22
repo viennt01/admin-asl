@@ -189,6 +189,7 @@ const CommodityForm = ({
 
   const handleCopyAndCreate = () => {
     const props = {
+      checkCopyAndCreate: true,
       commodityNameEN: form.getFieldValue('commodityNameEN'),
       commodityNameVN: form.getFieldValue('commodityNameVN'),
     };
@@ -207,13 +208,20 @@ const CommodityForm = ({
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate) {
+    if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         commodityNameEN: propCopyAndCreate.commodityNameEN as string,
         commodityNameVN: propCopyAndCreate.commodityNameVN as string,
       });
     }
-  }, [form, edit, checkRow, manager, propCopyAndCreate]);
+  }, [
+    form,
+    edit,
+    checkRow,
+    manager,
+    propCopyAndCreate,
+    form.getFieldValue('statusCommodity'),
+  ]);
 
   return (
     <div style={{ padding: '24px 0' }}>

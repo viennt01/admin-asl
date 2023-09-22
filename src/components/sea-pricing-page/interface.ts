@@ -29,18 +29,12 @@ export interface SeaPricing {
   isDelete: boolean;
   dateDeleted: string;
   deleteByUser: string;
-  seaPricingDetailDTOs: SeaPricingDetailDTOs[];
+  seaPricingDetailDTOs: { [key: string]: string };
   seaPricingFeeDTOs: SeaPricingFeeDTOs[];
 }
 
 export interface SeaPricingDetailDTOs {
-  seaPricingDetailID: string;
-  containerTypeID: string;
-  containerTypeCode: string;
-  containerTypeName: string;
-  currencyID: string;
-  currencyName: string;
-  price: string;
+  [key: string]: string;
 }
 export interface SeaPricingFeeDTOs {
   seaPricingFeeID: string;
@@ -105,9 +99,64 @@ export interface FormValues {
   lclCurrency: string;
   public: boolean;
   statusSeaPricing: string;
-  seaPricingDetailDTOs: SeaPricingDetailDTOs[];
-  seaPricingFeeDTOs: SeaPricingFeeDTOs[];
+  seaPricingDetailDTOs: SeaPricingDetailDTOsFormValue[];
+  seaPricingFeeDTOs: SeaPricingFeeDTOsFormValue[];
 }
+
+export interface SeaPricingDetailDTOsFormValue {
+  seaPricingDetailID: string;
+  containerTypeID: string;
+  containerTypeCode: string;
+  containerTypeName: string;
+  currencyID: string;
+  currencyName: string;
+  price: string;
+}
+
+export type SeaPricingDetailDTOsCreate = Omit<
+  SeaPricingDetailDTOsFormValue,
+  | 'seaPricingDetailID'
+  | 'containerTypeCode'
+  | 'containerTypeName'
+  | 'currencyName'
+  | 'price'
+> & {
+  priceSeaPricingDetail: string;
+};
+
+export type SeaPricingDetailDTOsUpdate = Omit<
+  SeaPricingDetailDTOsFormValue,
+  'containerTypeCode' | 'containerTypeName' | 'currencyName'
+>;
+
+export interface SeaPricingFeeDTOsFormValue {
+  seaPricingFeeID: string;
+  feeID: string;
+  feeName: string;
+  feeNo: string;
+  currencyID: string;
+  currencyName: string;
+  unitID: string;
+  internationalCode: string;
+  price: string;
+}
+
+export type SeaPricingFeeDTOsCreate = Omit<
+  SeaPricingFeeDTOsFormValue,
+  | 'seaPricingFeeID'
+  | 'feeName'
+  | 'feeNo'
+  | 'currencyName'
+  | 'internationalCode'
+  | 'price'
+> & {
+  priceSeaPricingFee: string;
+};
+
+export type SeaPricingFeeDTOsUpdate = Omit<
+  SeaPricingFeeDTOsFormValue,
+  'feeName' | 'feeNo' | 'currencyName' | 'internationalCode'
+>;
 
 export interface SeaPricingDetailType extends FormValues {
   dateInserted: string;
@@ -118,7 +167,7 @@ export interface SeaPricingDetailType extends FormValues {
 
 export type SeaPricingCreate = Omit<
   FormValues,
-  'dateEffect' | 'fregDate' | 'validityDate' | 'seaPricingID'
+  'seaPricingID' | 'dateEffect' | 'fregDate' | 'validityDate'
 > & {
   dateEffect: string;
   validityDate: string;
@@ -164,8 +213,7 @@ export interface UpdateStatus {
 }
 
 export interface QueryInputRequest {
-  internationalCode: string;
-  description: string;
+  searchAll: string;
 }
 export interface RequestTableRequest extends QueryInputRequest {
   paginateRequest: Pagination;

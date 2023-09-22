@@ -137,6 +137,7 @@ const BankForm = ({
 
   const handleCopyAndCreate = () => {
     const props = {
+      checkCopyAndCreate: true,
       bankNo: form.getFieldValue('bankNo'),
       bankName: form.getFieldValue('bankName'),
       accountNumberVND: form.getFieldValue('accountNumberVND'),
@@ -162,7 +163,7 @@ const BankForm = ({
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate) {
+    if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         bankNo: propCopyAndCreate.bankNo as string,
         bankName: propCopyAndCreate.bankName as string,
@@ -175,7 +176,14 @@ const BankForm = ({
         note: propCopyAndCreate.note as string,
       });
     }
-  }, [form, edit, checkRow, manager, propCopyAndCreate]);
+  }, [
+    form,
+    edit,
+    checkRow,
+    manager,
+    propCopyAndCreate,
+    form.getFieldValue('statusBank'),
+  ]);
 
   return (
     <div style={{ padding: '24px 0' }}>

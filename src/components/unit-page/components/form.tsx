@@ -128,6 +128,7 @@ const UnitForm = ({
 
   const handleCopyAndCreate = () => {
     const props = {
+      checkCopyAndCreate: true,
       internationalCode: form.getFieldValue('internationalCode'),
       descriptionVN: form.getFieldValue('descriptionVN'),
       descriptionEN: form.getFieldValue('descriptionEN'),
@@ -147,14 +148,21 @@ const UnitForm = ({
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate) {
+    if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         internationalCode: propCopyAndCreate.internationalCode as string,
         descriptionVN: propCopyAndCreate.descriptionVN as string,
         descriptionEN: propCopyAndCreate.descriptionEN as string,
       });
     }
-  }, [form, edit, checkRow, manager, propCopyAndCreate]);
+  }, [
+    form,
+    edit,
+    checkRow,
+    manager,
+    propCopyAndCreate,
+    form.getFieldValue('statusUnit'),
+  ]);
 
   return (
     <div style={{ padding: '24px 0' }}>

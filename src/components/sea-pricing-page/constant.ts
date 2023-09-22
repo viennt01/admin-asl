@@ -62,8 +62,6 @@ export const initalSelectSearchDraft = {
 //request
 export const initalValueQueryInputParamsRequest = {
   searchAll: '',
-  internationalCode: '',
-  description: '',
 };
 
 export const initalSelectSearchRequest = {
