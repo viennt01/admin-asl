@@ -4,9 +4,18 @@ import { Form } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormValues, UpdateStatus } from '../interface';
-import { API_CURRENCY, API_SEA_PRICING } from '@/fetcherAxios/endpoint';
+import {
+  API_CONTAINER_TYPE,
+  API_CURRENCY,
+  API_SEA_PRICING,
+} from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getAllCurrency, getSeaPricingDetail, updateStatus } from '../fetcher';
+import {
+  getAllContainerType,
+  getAllCurrency,
+  getSeaPricingDetail,
+  updateStatus,
+} from '../fetcher';
 import { UpdateStatusLocationType } from '@/components/type-of-location-page/interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -45,6 +54,9 @@ const SeaPricing = ({
   const [optionCurrency, setOptionCurrency] = useState<
     { value: string; label: string }[]
   >([]);
+  const [optionTypeContainer, setOptionTypeContainer] = useState<
+    { value: string; label: string }[]
+  >([]);
 
   useEffect(() => {
     if (!id) return;
@@ -63,7 +75,31 @@ const SeaPricing = ({
           data.data.map((currency) => {
             return {
               value: currency.currencyID,
-              label: currency.currencyName,
+              label: currency.abbreviations,
+            };
+          })
+        );
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  useQuery({
+    queryKey: [API_CONTAINER_TYPE.GET_ALL],
+    queryFn: () => getAllContainerType(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        setOptionTypeContainer(
+          data.data.map((currency) => {
+            return {
+              value: currency.containerTypeID,
+              label: currency.name,
             };
           })
         );
@@ -91,6 +127,12 @@ const SeaPricing = ({
     }
   };
 
+  const handleIdQuery = (id: string) => {
+    console.log(id);
+
+    setIdQuery(id as string);
+  };
+
   const detailQuery = useQuery({
     queryKey: [API_SEA_PRICING.GET_DETAIL, idQuery],
     queryFn: () => getSeaPricingDetail(idQuery as string),
@@ -104,14 +146,13 @@ const SeaPricing = ({
           note: data.data.note,
           dateEffect: dayjs(Number(data.data.dateEffect)),
           validityDate: dayjs(Number(data.data.validityDate)),
-          fregDate: dayjs(Number(data.data.fregDate)),
+          freqDate: data.data.freqDate,
           demSeaPricing: data.data.demSeaPricing,
           detSeaPricing: data.data.detSeaPricing,
           stoSeaPricing: data.data.stoSeaPricing,
           lclMinSeaPricing: data.data.lclMinSeaPricing,
-          lclMinCurrency: data.data.lclMinCurrency,
           lclSeaPricing: data.data.lclSeaPricing,
-          lclCurrency: data.data.lclCurrency,
+          currencyID: data.data.currencyID,
           public: data.data.public,
           statusSeaPricing: data.data.statusSeaPricing,
           seaPricingDetailDTOs: data.data.seaPricingDetailDTOs,
@@ -163,12 +204,13 @@ const SeaPricing = ({
       note: form.getFieldValue('note'),
       dateEffect: form.getFieldValue('dateEffect'),
       validityDate: form.getFieldValue('validityDate'),
-      fregDate: form.getFieldValue('fregDate'),
+      freqDate: form.getFieldValue('freqDate'),
       demSeaPricing: form.getFieldValue('demSeaPricing'),
       detSeaPricing: form.getFieldValue('detSeaPricing'),
       stoSeaPricing: form.getFieldValue('stoSeaPricing'),
       lclMinSeaPricing: form.getFieldValue('lclMinSeaPricing'),
       lclSeaPricing: form.getFieldValue('lclSeaPricing'),
+      currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
       statusSeaPricing: form.getFieldValue('statusSeaPricing'),
       seaPricingDetailDTOs: form.getFieldValue('seaPricingDetailDTOs'),
@@ -199,6 +241,8 @@ const SeaPricing = ({
           useDraft={useDraft}
           optionCurrency={optionCurrency}
           form={form}
+          idQuery={idQuery}
+          handleIdQuery={handleIdQuery}
         />
 
         <CollapseCard
@@ -206,7 +250,12 @@ const SeaPricing = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <SeaPricingDetailDTO form={form} />
+          <SeaPricingDetailDTO
+            form={form}
+            edit={edit}
+            optionCurrency={optionCurrency}
+            optionTypeContainer={optionTypeContainer}
+          />
         </CollapseCard>
 
         <BottomCreateEdit

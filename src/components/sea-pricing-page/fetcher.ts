@@ -19,9 +19,11 @@ import {
   RequireLocation,
   RequireCommodity,
   RequireCurrency,
+  RequireTypeContainer,
 } from './interface';
 import {
   API_COMMODITY,
+  API_CONTAINER_TYPE,
   API_CURRENCY,
   API_LOCATION,
   API_SEA_PRICING,
@@ -104,4 +106,10 @@ export const getAllCommodity = () => {
 
 export const getAllCurrency = () => {
   return get<ResponseWithPayload<RequireCurrency[]>>({})(API_CURRENCY.GET_ALL);
+};
+
+export const getAllContainerType = () => {
+  return get<ResponseWithPayload<RequireTypeContainer[]>>({})(
+    API_CONTAINER_TYPE.GET_ALL
+  );
 };

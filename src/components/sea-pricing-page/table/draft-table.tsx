@@ -2,11 +2,7 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import {
-  SeaPricingTable,
-  QueryInputDraft,
-  SelectDratSearch,
-} from '../interface';
+import { SeaPricingTable } from '../interface';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { deleteSeaPricing, getDartTable } from '../fetcher';
 import {
@@ -20,21 +16,16 @@ import {
   PaginationOfAntd,
 } from '@/components/commons/table/table-deafault';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
-import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ProColumns } from '@ant-design/pro-components';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import style from '@/components/commons/table/index.module.scss';
 import {
-  initalSelectSearchDraft,
   initalValueQueryInputParamsDraft,
   initalValueQuerySelectParamsDraft,
 } from '../constant';
-
-type DataIndex = keyof QueryInputDraft;
 
 interface PortFormProps {
   handleIdQuery: (id: string) => void;
@@ -42,24 +33,24 @@ interface PortFormProps {
 
 const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
-  const { translate: translateUnit } = useI18n('unit');
+  const { translate: translatePricingSea } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
-    initalValueQueryInputParamsDraft
-  );
+  // const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
+  //   initalValueQueryInputParamsDraft
+  // );
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
-    initalSelectSearchDraft
-  );
+  // const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
+  //   initalSelectSearchDraft
+  // );
 
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_SEARCH, pagination, queryInputParams],
+    queryKey: [API_UNIT.GET_SEARCH, pagination],
     queryFn: () =>
       getDartTable({
-        ...queryInputParams,
+        ...initalValueQueryInputParamsDraft,
         ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
           currentPage: pagination.current,
@@ -81,12 +72,13 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             note: data.note,
             effectDate: data.effectDate,
             validity: data.validity,
-            freg: data.freg,
+            freq: data.freq,
             dem: data.dem,
             det: data.det,
             sto: data.sto,
             lclMin: data.lclMin,
             lcl: data.lcl,
+            currencyID: data.currencyID,
             public: data.public,
             statusSeaPricing: data.statusSeaPricing,
             confirmDated: data.confirmDated,
@@ -130,41 +122,41 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   // Handle search
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-    }));
-    const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    setQueryInputParams(newQueryParams);
-    confirm();
-  };
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryInputParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
+  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+  //   setQueryInputParams((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: '',
+  //   }));
 
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: { label: dataIndex, value: '' },
+  //   }));
+  //   clearFilters();
+  // };
 
   // Handle data show table
   const columns: ProColumns<SeaPricingTable>[] = [
     {
-      title: <div className={style.title}>{translateUnit('code')}</div>,
+      title: <div className={style.title}>{translatePricingSea('no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -175,40 +167,47 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: (
-        <div className={style.title}>{translateUnit('international_code')}</div>
-      ),
-      dataIndex: 'internationalCode',
-      key: 'internationalCode',
-      width: 150,
+      title: translatePricingSea('POL'),
+      width: 200,
+      dataIndex: 'polName',
+      key: 'polName',
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputDraft>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'internationalCode',
-        },
-      }),
+      render: (value) => value,
     },
     {
-      title: <div className={style.title}>{translateUnit('description')}</div>,
-      dataIndex: 'description',
-      key: 'description',
-      width: 250,
+      title: translatePricingSea('POD'),
+      width: 200,
+      dataIndex: 'podName',
+      key: 'podName',
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputDraft>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'description',
-        },
-      }),
+    },
+    {
+      title: translatePricingSea('vendor'),
+      width: 200,
+      dataIndex: 'partnerName',
+      key: 'partnerName',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('commodity'),
+      width: 300,
+      dataIndex: 'commodityName',
+      key: 'commodityName',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('LCLMin'),
+      width: 200,
+      dataIndex: 'lclMin',
+      key: 'lclMin',
+      align: 'center',
+    },
+    {
+      title: translatePricingSea('LCL'),
+      width: 200,
+      dataIndex: 'lcl',
+      key: 'lcl',
+      align: 'center',
     },
     {
       title: (
@@ -221,10 +220,10 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
+      title: <div className={style.title}>{translateCommon('status')}</div>,
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusSeaPricing',
+      key: 'statusSeaPricing',
       align: 'center',
       fixed: 'right',
       render: (value) => (

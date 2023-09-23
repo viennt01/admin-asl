@@ -40,6 +40,8 @@ interface Props {
   useDraft?: boolean;
   optionCurrency: { value: string; label: string }[];
   form: FormInstance<FormValues>;
+  idQuery?: string;
+  handleIdQuery: (id: string) => void;
 }
 
 const { Title } = Typography;
@@ -52,21 +54,17 @@ const CardMain = ({
   useDraft,
   optionCurrency,
   form,
+  idQuery,
+  handleIdQuery,
 }: Props) => {
   const { translate: translatePricingSea } = useI18n('pricingSea');
   const router = useRouter();
-  const { id } = router.query;
-  const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   const propCopyAndCreate = router.query;
   const dateFormat = 'YYYY/MM/DD';
-  useEffect(() => {
-    if (!id) return;
-    setIdQuery(id as string);
-  }, [router, form]);
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
@@ -98,10 +96,6 @@ const CardMain = ({
     },
   });
 
-  const handleIdQuery = (id: string) => {
-    setIdQuery(id as string);
-  };
-
   useEffect(() => {
     if (form.getFieldValue('statusSeaPricing')) {
       form.getFieldValue('statusSeaPricing') === STATUS_ALL_LABELS.ACTIVE
@@ -120,12 +114,13 @@ const CardMain = ({
         note: propCopyAndCreate.note as string,
         dateEffect: propCopyAndCreate.dateEffect as string,
         validityDate: propCopyAndCreate.validityDate as string,
-        fregDate: propCopyAndCreate.fregDate as string,
+        freqDate: propCopyAndCreate.freqDate as string,
         demSeaPricing: propCopyAndCreate.demSeaPricing as string,
         detSeaPricing: propCopyAndCreate.detSeaPricing as string,
         stoSeaPricing: propCopyAndCreate.stoSeaPricing as string,
         lclMinSeaPricing: propCopyAndCreate.lclMinSeaPricing as string,
         lclSeaPricing: propCopyAndCreate.lclSeaPricing as string,
+        currencyID: propCopyAndCreate.currencyID as string,
         public: propCopyAndCreate.public as unknown as boolean,
         statusSeaPricing: propCopyAndCreate.statusSeaPricing as string,
         seaPricingDetailDTOs:
@@ -150,7 +145,16 @@ const CardMain = ({
   });
 
   const suffixSelectorCurrencyLCLMin = (
-    <Form.Item name="lclMinCurrency" noStyle>
+    <Form.Item
+      name="currencyID"
+      noStyle
+      rules={[
+        {
+          required: true,
+          message: 'Please chooses currency',
+        },
+      ]}
+    >
       <Select
         placeholder={'$'}
         disabled={checkRow && isCheckPermissionEdit}
@@ -162,7 +166,16 @@ const CardMain = ({
   );
 
   const suffixSelectorCurrencyLCL = (
-    <Form.Item name="lclCurrency" noStyle>
+    <Form.Item
+      name="currencyID"
+      noStyle
+      rules={[
+        {
+          required: true,
+          message: 'Please chooses currency',
+        },
+      ]}
+    >
       <Select
         placeholder={'$'}
         disabled={checkRow && isCheckPermissionEdit}
@@ -346,7 +359,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingSea('freq')}
-            name="fregDate"
+            name="freqDate"
             rules={[
               {
                 required: true,
@@ -354,9 +367,13 @@ const CardMain = ({
               },
             ]}
           >
-            <DatePicker
+            <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              format={dateFormat}
+              placeholder={translatePricingSea('freq_placeholder')}
+              formatter={(value) =>
+                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+              }
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
             />
           </Form.Item>

@@ -1,9 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import type { InputRef } from 'antd';
-import { Button, Form, Input, Popconfirm, Table } from 'antd';
+import React, {
+  Ref,
+  MutableRefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  Key,
+} from 'react';
+import { Button, Form, InputNumber, Popconfirm, Select, Table } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { FormValues, SeaPricingDetailDTOsFormValue } from '../interface';
-
+import type { BaseSelectRef } from 'rc-select';
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
@@ -23,8 +30,6 @@ interface EditableRowProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
   const [form] = Form.useForm();
-  //   console.log('EditableRow', form.getFieldsValue());
-
   return (
     <Form form={form} component={false}>
       <EditableContext.Provider value={form}>
@@ -37,6 +42,9 @@ const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
 interface EditableCellProps {
   title: React.ReactNode;
   editable: boolean;
+  inputType: 'number' | 'selectCurrency' | 'selectContainerType';
+  optionCurrency: { value: string; label: string }[];
+  optionTypeContainer: { value: string; label: string }[];
   children: React.ReactNode;
   dataIndex: keyof Item;
   record: Item;
@@ -46,14 +54,17 @@ interface EditableCellProps {
 const EditableCell: React.FC<EditableCellProps> = ({
   title,
   editable,
+  inputType,
   children,
+  optionCurrency,
+  optionTypeContainer,
   dataIndex,
   record,
   handleSave,
   ...restProps
 }) => {
   const [editing, setEditing] = useState(false);
-  const inputRef = useRef<InputRef>(null);
+  const inputRef = useRef() as MutableRefObject<BaseSelectRef>;
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
@@ -79,7 +90,38 @@ const EditableCell: React.FC<EditableCellProps> = ({
       console.log('Save failed:', errInfo);
     }
   };
-
+  const inputNode =
+    inputType === 'number' ? (
+      <InputNumber
+        ref={inputRef as unknown as Ref<HTMLInputElement>}
+        onPressEnter={save}
+        onBlur={save}
+      />
+    ) : inputType === 'selectCurrency' ? (
+      <Select
+        ref={inputRef}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            save();
+          }
+        }}
+        style={{ width: '100%' }}
+        onBlur={save}
+        options={optionCurrency}
+      />
+    ) : (
+      <Select
+        ref={inputRef}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            save();
+          }
+        }}
+        style={{ width: '100%' }}
+        onBlur={save}
+        options={optionTypeContainer}
+      />
+    );
   let childNode = children;
 
   if (editable) {
@@ -94,7 +136,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
           },
         ]}
       >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+        {inputNode}
       </Form.Item>
     ) : (
       <div
@@ -120,58 +162,117 @@ interface DataType {
   currencyID: string;
   currencyName: string;
   price: string;
-  //   seaPricingDetailID: '5e7212f3-d873-49a4-8058-07cae2ec9d12';
 }
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
 interface Props {
   form: FormInstance<FormValues>;
+  edit?: boolean;
+  optionCurrency: { value: string; label: string }[];
+  optionTypeContainer: { value: string; label: string }[];
 }
 
-const SeaPricingDetailDTO = ({ form }: Props) => {
+const SeaPricingDetailDTO = ({
+  form,
+  edit,
+  optionCurrency,
+  optionTypeContainer,
+}: Props) => {
   const [dataSource, setDataSource] = useState<DataType[]>([]);
-
+  const [dataRequire, setDataRequire] = useState<DataType[]>([]);
+  const [optionTypeContainerActive, setOptionTypeContainerActive] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [idKeyAndContainerType, setIdKeyAndContainerType] = useState<
+    { idSeaPricingDetailID: Key; idContainerType: string }[]
+  >([]);
+  const [countLoadData, setCountLoadData] = useState(0);
   useEffect(() => {
-    if (form.getFieldValue('seaPricingDetailDTOs')) {
-      setDataSource(
+    if (form.getFieldValue('seaPricingDetailDTOs') && countLoadData === 0) {
+      setDataRequire(
         form
           .getFieldValue('seaPricingDetailDTOs')
           .map((item: SeaPricingDetailDTOsFormValue) => {
             return {
-              key: item.seaPricingDetailID,
-              containerTypeCode: item.containerTypeCode,
-              containerTypeID: item.containerTypeID,
-              containerTypeName: item.containerTypeName,
-              currencyID: item.currencyID,
-              currencyName: item.currencyName,
-              price: item.price,
+              key: item.seaPricingDetailID || '',
+              containerTypeCode: item.containerTypeCode || '',
+              containerTypeID: item.containerTypeID || '',
+              containerTypeName: item.containerTypeName || '',
+              currencyID: item.currencyID || '',
+              currencyName: item.currencyName || '',
+              price: item.price || '',
             };
           })
       );
+      setDataSource(dataRequire.filter((itemA) => itemA.currencyID !== ''));
+      edit
+        ? form.setFieldValue(
+            'seaPricingDetailDTOs',
+            dataSource.map((item) => {
+              return {
+                seaPricingDetailID: item.key,
+                containerTypeID: item.containerTypeID,
+                currencyID: item.currencyID,
+                price: item.price,
+              };
+            })
+          )
+        : form.setFieldValue(
+            'seaPricingDetailDTOs',
+            dataSource.map((item) => {
+              return {
+                containerTypeID: item.containerTypeID,
+                currencyID: item.currencyID,
+                priceSeaPricingDetail: item.price,
+              };
+            })
+          );
+      setCountLoadData(1);
     }
   }, [form.getFieldValue('seaPricingDetailDTOs')]);
+  // console.log('dataRequire', dataRequire);
 
-  const [count, setCount] = useState(2);
-  console.log(
-    'seaPricingDetailDTOs',
-    form
-      .getFieldValue('seaPricingDetailDTOs')
-      .map((item: SeaPricingDetailDTOsFormValue) => {
+  useEffect(() => {
+    setOptionTypeContainerActive(
+      optionTypeContainer.filter(
+        (itemB) =>
+          !dataSource.some(
+            (itemA) =>
+              itemA.containerTypeID === itemB.value && itemA.currencyID !== ''
+          )
+      )
+    );
+    setIdKeyAndContainerType(
+      dataRequire.map((item) => {
         return {
-          key: item.seaPricingDetailID,
-          containerTypeCode: item.containerTypeCode,
-          containerTypeID: item.containerTypeID,
-          containerTypeName: item.containerTypeName,
-          currencyID: item.currencyID,
-          currencyName: item.currencyName,
-          price: item.price,
+          idSeaPricingDetailID: item.key,
+          idContainerType: item.containerTypeID,
         };
       })
+    );
+    // setDataSource(dataRequire.filter((itemA) => itemA.currencyID !== ''));
+    // form.setFieldValue('seaPricingDetailDTOs', dataSource);
+  }, [optionCurrency, dataRequire]);
+  console.log(idKeyAndContainerType);
+  console.log(
+    idKeyAndContainerType.find(
+      (item) => item.idContainerType === optionTypeContainerActive[0]?.value
+    )?.idSeaPricingDetailID
   );
+
+  const [count, setCount] = useState(2);
 
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
+    const itemDelete = dataSource.filter((item) => item.key == key);
+    setOptionTypeContainerActive([
+      {
+        value: itemDelete[0].containerTypeID,
+        label: itemDelete[0].containerTypeName,
+      },
+      ...optionTypeContainerActive,
+    ]);
     setDataSource(newData);
   };
 
@@ -181,17 +282,25 @@ const SeaPricingDetailDTO = ({ form }: Props) => {
   })[] = [
     {
       title: 'Type container',
-      dataIndex: 'containerTypeCode',
+      dataIndex: 'containerTypeID',
       width: '30%',
       editable: true,
+      render: (value) => {
+        return optionTypeContainer.find((item) => item.value === value)?.label;
+      },
     },
     {
       title: 'Price',
       dataIndex: 'price',
+      editable: true,
     },
     {
       title: 'Currency',
-      dataIndex: 'currencyName',
+      dataIndex: 'currencyID',
+      editable: true,
+      render: (value) => {
+        return optionCurrency.find((item) => item.value === value)?.label;
+      },
     },
     {
       title: 'operation',
@@ -210,15 +319,21 @@ const SeaPricingDetailDTO = ({ form }: Props) => {
 
   const handleAdd = () => {
     const newData: DataType = {
-      key: count,
-      containerTypeCode: 'BOXES',
-      containerTypeID: 'a0555191-7312-43ab-91a9-ff16207f0e86',
-      containerTypeName: 'BOXES',
-      currencyID: 'null',
-      currencyName: 'null',
-      price: 'null',
+      key:
+        idKeyAndContainerType.find(
+          (item) => item.idContainerType === optionTypeContainerActive[0]?.value
+        )?.idSeaPricingDetailID || '',
+      containerTypeCode: '',
+      containerTypeID: optionTypeContainerActive[0]?.value || '',
+      containerTypeName: optionTypeContainerActive[0].label || '',
+      currencyID: optionCurrency[0].value || '',
+      currencyName: optionCurrency[0].label || '',
+      price: '1000000',
     };
-    setDataSource([...dataSource, newData]);
+    setDataSource([newData, ...dataSource]);
+    if (optionTypeContainerActive.length > 0) {
+      setOptionTypeContainerActive(optionTypeContainerActive.slice(1));
+    }
     setCount(count + 1);
   };
 
@@ -230,7 +345,38 @@ const SeaPricingDetailDTO = ({ form }: Props) => {
       ...item,
       ...row,
     });
+    setOptionTypeContainerActive(
+      optionTypeContainer.filter(
+        (itemB) =>
+          !newData.some(
+            (itemA) =>
+              itemA.containerTypeID === itemB.value && itemA.currencyID !== ''
+          )
+      )
+    );
     setDataSource(newData);
+    edit
+      ? form.setFieldValue(
+          'seaPricingDetailDTOs',
+          dataSource.map((item) => {
+            return {
+              seaPricingDetailID: item.key,
+              containerTypeID: item.containerTypeID,
+              currencyID: item.currencyID,
+              price: item.price,
+            };
+          })
+        )
+      : form.setFieldValue(
+          'seaPricingDetailDTOs',
+          dataSource.map((item) => {
+            return {
+              containerTypeID: item.containerTypeID,
+              currencyID: item.currencyID,
+              priceSeaPricingDetail: item.price,
+            };
+          })
+        );
   };
 
   const components = {
@@ -249,6 +395,14 @@ const SeaPricingDetailDTO = ({ form }: Props) => {
       onCell: (record: DataType) => ({
         record,
         editable: col.editable,
+        inputType:
+          col.dataIndex === 'price'
+            ? 'number'
+            : col.dataIndex === 'currencyID'
+            ? 'selectCurrency'
+            : 'selectContainerType',
+        optionCurrency: optionCurrency,
+        optionTypeContainer: optionTypeContainerActive,
         dataIndex: col.dataIndex,
         title: col.title,
         handleSave,
@@ -258,7 +412,14 @@ const SeaPricingDetailDTO = ({ form }: Props) => {
 
   return (
     <div>
-      <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
+      <Button
+        onClick={handleAdd}
+        type="primary"
+        style={{
+          marginBottom: 16,
+          display: optionTypeContainerActive.length === 0 ? 'none' : '',
+        }}
+      >
         Add a row
       </Button>
       <Table

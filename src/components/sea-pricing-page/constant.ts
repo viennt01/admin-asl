@@ -32,12 +32,11 @@ export const initalSelectSearchMaster = {
 
 //draft
 export const initalValueQueryInputParamsDraft = {
-  internationalCode: '',
-  description: '',
+  searchAll: '',
 };
 
 export const initalValueQuerySelectParamsDraft = {
-  status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
+  status: STATUS_ALL_LABELS.DRAFT,
 };
 
 export const initalSelectSearchDraft = {
@@ -45,15 +44,7 @@ export const initalSelectSearchDraft = {
     label: '',
     value: '',
   },
-  internationalCode: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusUnit: {
+  statusSeaPricing: {
     label: '',
     value: '',
   },
@@ -62,6 +53,7 @@ export const initalSelectSearchDraft = {
 //request
 export const initalValueQueryInputParamsRequest = {
   searchAll: '',
+  status: STATUS_ALL_LABELS.REQUEST,
 };
 
 export const initalSelectSearchRequest = {

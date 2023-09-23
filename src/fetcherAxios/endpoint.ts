@@ -30,8 +30,8 @@ export const API_SEA_PRICING = {
   EDIT: '/update-sea-pricing',
   DELETE: '/delete-sea-pricing',
   UPDATE_STATUS: '/update-status-sea-pricing',
-  GET_DRAFT: '/get-sea-pricing-with-status-and-id-User',
-  GET_REQUEST: '/get-sea-pricing-with-status-request',
+  GET_DRAFT: '/search-sea-pricing-with-status',
+  GET_REQUEST: '/search-sea-pricing-with-status',
   DOWNLOAD_EXAMPLE_FILE: '/download-sea-pricing-excel',
   IMPORT: '/import-sea-pricing-with-excel',
   EXPORT: '/export-sea-pricing-with-excel',
@@ -49,6 +49,7 @@ export const API_CONTAINER_TYPE = {
   DOWNLOAD_EXAMPLE_FILE: '/download-container-type-excel',
   IMPORT: '/import-container-type-with-excel',
   EXPORT: '/export-container-type-with-excel',
+  GET_ALL: '/get-all-container-type',
 };
 
 export const API_CURRENCY = {

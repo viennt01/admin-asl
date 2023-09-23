@@ -23,22 +23,23 @@ const EditSeaPricing = () => {
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
-        dateEffect: formValues.dateEffect.valueOf().toString() || '',
-        validityDate: formValues.validityDate.valueOf().toString() || '',
-        fregDate: formValues.fregDate.valueOf().toString() || '',
+        dateEffect: formValues.dateEffect.valueOf(),
+        validityDate: formValues.validityDate.valueOf(),
+        freqDate: formValues.freqDate || '',
         demSeaPricing: formValues.demSeaPricing || '',
         detSeaPricing: formValues.detSeaPricing || '',
         stoSeaPricing: formValues.stoSeaPricing || '',
         lclMinSeaPricing: formValues.lclMinSeaPricing || '',
-        lclMinCurrency: formValues.lclMinCurrency || '',
         lclSeaPricing: formValues.lclSeaPricing || '',
-        lclCurrency: formValues.lclCurrency || '',
+        currencyID: formValues.currencyID || '',
         public: formValues.public || true,
-        seaPricingDetailDTOs: formValues.seaPricingDetailDTOs || [],
-        seaPricingFeeDTOs: formValues.seaPricingFeeDTOs || [],
+        seaPricingDetailUpdateRequests: formValues.seaPricingDetailDTOs || [],
+        seaPricingFeeUpdateRequests: formValues.seaPricingFeeDTOs || [],
         statusSeaPricing:
           formValues.statusSeaPricing || STATUS_ALL_LABELS.ACTIVE,
       };
+      console.log(_requestData);
+
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status ? successToast(data.message) : errorToast(data.message);

@@ -12,12 +12,13 @@ export interface SeaPricing {
   note: string;
   effectDate: string;
   validity: string;
-  freg: string;
+  freq: string;
   dem: string;
   det: string;
   sto: string;
   lclMin: string;
   lcl: string;
+  currencyID: string;
   public: boolean;
   statusSeaPricing: string;
   confirmDated: string;
@@ -89,18 +90,17 @@ export interface FormValues {
   note: string;
   dateEffect: Dayjs;
   validityDate: Dayjs;
-  fregDate: Dayjs;
+  freqDate: string;
   demSeaPricing: string;
   detSeaPricing: string;
   stoSeaPricing: string;
   lclMinSeaPricing: string;
-  lclMinCurrency: string;
+  currencyID: string;
   lclSeaPricing: string;
-  lclCurrency: string;
   public: boolean;
   statusSeaPricing: string;
   seaPricingDetailDTOs: SeaPricingDetailDTOsFormValue[];
-  seaPricingFeeDTOs: SeaPricingFeeDTOsFormValue[];
+  seaPricingFeeDTOs: SeaPricingFeeFormValue[];
 }
 
 export interface SeaPricingDetailDTOsFormValue {
@@ -129,7 +129,7 @@ export type SeaPricingDetailDTOsUpdate = Omit<
   'containerTypeCode' | 'containerTypeName' | 'currencyName'
 >;
 
-export interface SeaPricingFeeDTOsFormValue {
+export interface SeaPricingFeeFormValue {
   seaPricingFeeID: string;
   feeID: string;
   feeName: string;
@@ -142,7 +142,7 @@ export interface SeaPricingFeeDTOsFormValue {
 }
 
 export type SeaPricingFeeDTOsCreate = Omit<
-  SeaPricingFeeDTOsFormValue,
+  SeaPricingFeeFormValue,
   | 'seaPricingFeeID'
   | 'feeName'
   | 'feeNo'
@@ -153,8 +153,8 @@ export type SeaPricingFeeDTOsCreate = Omit<
   priceSeaPricingFee: string;
 };
 
-export type SeaPricingFeeDTOsUpdate = Omit<
-  SeaPricingFeeDTOsFormValue,
+export type SeaPricingFeeUpdate = Omit<
+  SeaPricingFeeFormValue,
   'feeName' | 'feeNo' | 'currencyName' | 'internationalCode'
 >;
 
@@ -167,20 +167,26 @@ export interface SeaPricingDetailType extends FormValues {
 
 export type SeaPricingCreate = Omit<
   FormValues,
-  'seaPricingID' | 'dateEffect' | 'fregDate' | 'validityDate'
+  | 'seaPricingID'
+  | 'dateEffect'
+  | 'validityDate'
+  | 'seaPricingDetailDTOs'
+  | 'seaPricingFeeDTOs'
 > & {
-  dateEffect: string;
-  validityDate: string;
-  fregDate: string;
+  dateEffect: number;
+  validityDate: number;
+  seaPricingDetailRegisterRequests: SeaPricingDetailDTOsFormValue[];
+  seaPricingFeeRegisterRequests: SeaPricingFeeFormValue[];
 };
 
 export type SeaPricingEdit = Omit<
   FormValues,
-  'dateEffect' | 'fregDate' | 'validityDate'
+  'dateEffect' | 'validityDate' | 'seaPricingDetailDTOs' | 'seaPricingFeeDTOs'
 > & {
-  dateEffect: string;
-  validityDate: string;
-  fregDate: string;
+  dateEffect: number;
+  validityDate: number;
+  seaPricingDetailUpdateRequests: SeaPricingDetailDTOsUpdate[];
+  seaPricingFeeUpdateRequests: SeaPricingFeeUpdate[];
 };
 export type SeaPricingDelete = {
   ids: React.Key[];
@@ -188,11 +194,10 @@ export type SeaPricingDelete = {
 
 //----------------------------------------------------------------
 export interface QueryInputDraft {
-  internationalCode: string;
-  description: string;
+  searchAll: string;
 }
 export interface QuerySelectDraft {
-  status: string[];
+  status: string;
 }
 export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
   paginateRequest: Pagination;
@@ -214,6 +219,7 @@ export interface UpdateStatus {
 
 export interface QueryInputRequest {
   searchAll: string;
+  status: string;
 }
 export interface RequestTableRequest extends QueryInputRequest {
   paginateRequest: Pagination;
@@ -234,5 +240,10 @@ export interface RequireCommodity {
 // get all currency
 export interface RequireCurrency {
   currencyID: string;
-  currencyName: string;
+  abbreviations: string;
+}
+// get all type container
+export interface RequireTypeContainer {
+  containerTypeID: string;
+  name: string;
 }
