@@ -38,8 +38,6 @@ const EditSeaPricing = () => {
         statusSeaPricing:
           formValues.statusSeaPricing || STATUS_ALL_LABELS.ACTIVE,
       };
-      console.log(_requestData);
-
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status ? successToast(data.message) : errorToast(data.message);

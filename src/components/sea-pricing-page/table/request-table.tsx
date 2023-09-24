@@ -6,7 +6,7 @@ import {
 import Table from '@/components/commons/table/table';
 import { UpdateStatusUnit } from '@/components/unit-page/interface';
 import { ROUTERS } from '@/constant/router';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -35,7 +35,7 @@ const RequestTable = () => {
 
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_REQUEST, pagination],
+    queryKey: [API_SEA_PRICING.GET_REQUEST, pagination],
     queryFn: () =>
       getTable({
         ...initalValueQueryInputParamsRequest,
@@ -253,7 +253,7 @@ const RequestTable = () => {
         data.status
           ? (successToast(data.message),
             queryClient.invalidateQueries({
-              queryKey: [API_UNIT.GET_REQUEST, pagination],
+              queryKey: [API_SEA_PRICING.GET_REQUEST, pagination],
             }))
           : errorToast(data.message);
       },

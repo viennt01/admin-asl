@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
 import { SeaPricingTable } from '../interface';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
 import { deleteSeaPricing, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
@@ -47,7 +47,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_UNIT.GET_SEARCH, pagination],
+    queryKey: [API_SEA_PRICING.GET_SEARCH, pagination],
     queryFn: () =>
       getDartTable({
         ...initalValueQueryInputParamsDraft,
@@ -110,7 +110,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_UNIT.GET_SEARCH],
+          queryKey: [API_SEA_PRICING.GET_SEARCH],
         });
       } else {
         errorToast(data.message);

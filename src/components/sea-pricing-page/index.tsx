@@ -3,7 +3,7 @@ import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
 
 export default function SeaPricingPage() {
   const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ export default function SeaPricingPage() {
       items={[
         {
           label: 'Master Data',
-          key: API_UNIT.GET_SEARCH,
+          key: API_SEA_PRICING.GET_SEARCH,
           children: <MasterDataTable />,
         },
         {
@@ -41,7 +41,7 @@ export default function SeaPricingPage() {
               </div>
             </Badge>
           ),
-          key: API_UNIT.GET_REQUEST,
+          key: API_SEA_PRICING.GET_REQUEST,
           children: <RequestTable />,
         },
       ]}

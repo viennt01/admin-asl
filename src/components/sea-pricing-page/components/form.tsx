@@ -62,7 +62,7 @@ const SeaPricing = ({
     if (!id) return;
     setIdQuery(id as string);
   }, [router, form, id]);
-
+  //get currencies
   useQuery({
     queryKey: [API_CURRENCY.GET_ALL],
     queryFn: () => getAllCurrency(),
@@ -86,7 +86,7 @@ const SeaPricing = ({
       errorToast(API_MESSAGE.ERROR);
     },
   });
-
+  // get container type
   useQuery({
     queryKey: [API_CONTAINER_TYPE.GET_ALL],
     queryFn: () => getAllContainerType(),
