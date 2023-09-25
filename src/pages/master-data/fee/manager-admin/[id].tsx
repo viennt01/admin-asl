@@ -1,20 +1,20 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 
-function FeeEditPage() {
+function FeeManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | FEE EDIT</title>
+        <title>ASL | FEE MANAGER</title>
       </Head>
-      <EditFee />
+      <ManagerFee />
     </>
   );
 }
 
-export default withAuthentication(FeeEditPage);
+export default withAuthentication(FeeManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-import EditFee from '@/components/fee-page/edit';
+import ManagerFee from '@/components/fee-page/manager';
 export const getStaticProps = getStatic(['common', 'fee']);
 export const getStaticPaths = () => {
   return {

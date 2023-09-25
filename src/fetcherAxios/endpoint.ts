@@ -131,3 +131,18 @@ export const API_MASTER_DATA = {
   GET_CITY: '/get-all-city-by-countryID',
   GET_ALL_CITY: '/get-all-city',
 };
+
+export const API_FEE = {
+  GET_SEARCH: '/search-fee',
+  GET_DETAIL: '/get-fee',
+  CREATE: '/add-fee',
+  EDIT: '/update-fee',
+  DELETE: '/delete-fee',
+  UPDATE_STATUS: '/update-status-fee',
+  GET_DRAFT: '/get-fee-with-status-and-id-User',
+  GET_REQUEST: '/get-fee-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-fee-excel',
+  IMPORT: '/import-fee-with-excel',
+  GET_ALL: '/get-all-fee',
+  EXPORT: '/export-fee-with-excel',
+};
