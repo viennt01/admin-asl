@@ -1,24 +1,35 @@
 {
     "title": "List Fee",
-    "add_fee_no": "No",
+    "fee_no": "No",
     "code": "Code",
     "name": "Name",
-    "customs": "Customs",
-    "currency": "Currency",
     "vat": "VAT",
-    "cost": "Cost",
     "status":"Status",
-    "date_created": "Date Created",
-    "date_update": "Date update",
-    "updater": "Updater",
-    "creator": "Creator",
 
     "information_add_fee": "Add new fee",
     "information_edit_fee": "Edit fee",
-    "name_placeholder": "Please input the fee name",
-    "customs_placeholder": "Please input customs",
-    "currency_placeholder": "Please select currency",
-    "vat_placeholder": "Please input VAT",
-    "cost_placeholder": "Please input cost",
-    "status_placeholder":"Please select status"
+
+    "fee_code_form": {
+        "title": "Fee No",
+        "placeholder": "Enter fee no",
+        "error_required": "Please enter fee no"
+    },
+
+    "status_form": {
+        "title": "Status",
+        "placeholder": "Select status",
+        "error_required": "Please select status"
+    },
+
+    "vat_fee_form": {
+        "title": "VAT",
+        "placeholder": "Enter vat",
+        "error_required": "Please enter vat"
+    },
+
+    "fee_name_form": {
+        "title": "Fee Name",
+        "placeholder": "Enter fee name",
+        "error_required": "Please enter fee name"
+    }
 }

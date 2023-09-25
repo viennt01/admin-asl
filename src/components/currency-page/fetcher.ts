@@ -18,7 +18,7 @@ import {
   RequestCurrencyTableRequest,
   RequestExportData,
 } from './interface';
-import { API_CURRENCY, API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_CURRENCY } from '@/fetcherAxios/endpoint';
 
 export const getCurrencySearch = (data: RequestCurrencyType) => {
   return post<RequestCurrencyType, ResponseWithPayload<CurrencyRequire>>({
@@ -84,5 +84,5 @@ export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_CURRENCY.DOWNLOAD_EXAMPLE_FILE);
 };
 export const exportTableFile = (data: RequestExportData) => {
-  return exportFile<RequestExportData, BlobPart>({ data })(API_UNIT.EXPORT);
+  return exportFile<RequestExportData, BlobPart>({ data })(API_CURRENCY.EXPORT);
 };
