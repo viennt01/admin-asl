@@ -243,6 +243,8 @@ const SeaPricing = ({
           form={form}
           idQuery={idQuery}
           handleIdQuery={handleIdQuery}
+          handleCheckEdit={handleCheckEdit}
+          isCheckPermissionEdit={isCheckPermissionEdit}
         />
 
         <CollapseCard
@@ -252,9 +254,9 @@ const SeaPricing = ({
         >
           <SeaPricingDetailDTO
             form={form}
-            edit={edit}
             optionCurrency={optionCurrency}
             optionTypeContainer={optionTypeContainer}
+            isCheckPermissionEdit={isCheckPermissionEdit}
           />
         </CollapseCard>
 

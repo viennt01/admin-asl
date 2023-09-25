@@ -9,16 +9,17 @@ export interface SeaPricing {
   polName: string;
   commodityID: string;
   commodityName: string;
-  note: string;
-  effectDate: string;
-  validity: string;
-  freq: string;
-  dem: string;
-  det: string;
-  sto: string;
-  lclMin: string;
-  lcl: string;
   currencyID: string;
+  currencyAbbreviations: string;
+  note: string;
+  dateEffect: string;
+  validityDate: string;
+  freqDate: string;
+  demSeaPricing: string;
+  detSeaPricing: string;
+  stoSeaPricing: string;
+  lclMinSeaPricing: string;
+  lclSeaPricing: string;
   public: boolean;
   statusSeaPricing: string;
   confirmDated: string;
@@ -175,7 +176,7 @@ export type SeaPricingCreate = Omit<
 > & {
   dateEffect: number;
   validityDate: number;
-  seaPricingDetailRegisterRequests: SeaPricingDetailDTOsFormValue[];
+  seaPricingDetailRegisterRequests: SeaPricingDetailDTOsCreate[];
   seaPricingFeeRegisterRequests: SeaPricingFeeFormValue[];
 };
 

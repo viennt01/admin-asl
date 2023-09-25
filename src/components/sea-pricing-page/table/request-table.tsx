@@ -50,22 +50,24 @@ const RequestTable = () => {
         setDataTable(
           data.data.data.map((data) => ({
             key: data.seaPricingID,
+            seaPricingID: data.seaPricingID,
             podid: data.podid,
             podName: data.podName,
             polid: data.polid,
             polName: data.polName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
-            note: data.note,
-            effectDate: data.effectDate,
-            validity: data.validity,
-            freq: data.freq,
-            dem: data.dem,
-            det: data.det,
-            sto: data.sto,
-            lclMin: data.lclMin,
-            lcl: data.lcl,
             currencyID: data.currencyID,
+            currencyAbbreviations: data.currencyAbbreviations,
+            note: data.note,
+            dateEffect: data.dateEffect,
+            validityDate: data.validityDate,
+            freqDate: data.freqDate,
+            demSeaPricing: data.demSeaPricing,
+            detSeaPricing: data.detSeaPricing,
+            stoSeaPricing: data.stoSeaPricing,
+            lclMinSeaPricing: data.lclMinSeaPricing,
+            lclSeaPricing: data.lclSeaPricing,
             public: data.public,
             statusSeaPricing: data.statusSeaPricing,
             confirmDated: data.confirmDated,
@@ -208,16 +210,22 @@ const RequestTable = () => {
     {
       title: translatePricingSea('LCLMin'),
       width: 200,
-      dataIndex: 'lclMin',
-      key: 'lclMin',
+      dataIndex: 'lclMinSeaPricing',
+      key: 'lclMinSeaPricing',
       align: 'center',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: translatePricingSea('LCL'),
       width: 200,
-      dataIndex: 'lcl',
-      key: 'lcl',
+      dataIndex: 'lclSeaPricing',
+      key: 'lclSeaPricing',
       align: 'center',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: (
@@ -240,7 +248,7 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_MANAGER(id));
+    router.push(ROUTERS.SEA_PRICING_MANAGER(id));
   };
 
   const handleApproveAndReject = (id: string, status: string) => {
@@ -277,7 +285,7 @@ const RequestTable = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_MANAGER(record.key));
+      router.push(ROUTERS.SEA_PRICING_MANAGER(record.key));
     }
   };
 

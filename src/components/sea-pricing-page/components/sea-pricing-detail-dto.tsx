@@ -11,6 +11,10 @@ import { Button, Form, InputNumber, Popconfirm, Select, Table } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { FormValues, SeaPricingDetailDTOsFormValue } from '../interface';
 import type { BaseSelectRef } from 'rc-select';
+import COLORS from '@/constant/color';
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import useI18n from '@/i18n/useI18N';
+
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
@@ -44,6 +48,7 @@ interface EditableCellProps {
   editable: boolean;
   inputType: 'number' | 'selectCurrency' | 'selectContainerType';
   optionCurrency: { value: string; label: string }[];
+  optionTypeContainerActive: { value: string; label: string }[];
   optionTypeContainer: { value: string; label: string }[];
   children: React.ReactNode;
   dataIndex: keyof Item;
@@ -57,6 +62,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   inputType,
   children,
   optionCurrency,
+  optionTypeContainerActive,
   optionTypeContainer,
   dataIndex,
   record,
@@ -66,6 +72,22 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const [editing, setEditing] = useState(false);
   const inputRef = useRef() as MutableRefObject<BaseSelectRef>;
   const form = useContext(EditableContext)!;
+  const [optionTypeContainerSelected, setOptionTypeContainerSelect] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  useEffect(() => {
+    if (optionTypeContainer) {
+      const itemActive = optionTypeContainer.find(
+        (item) => item.value === record.containerTypeID
+      );
+      setOptionTypeContainerSelect(
+        itemActive
+          ? [itemActive, ...optionTypeContainerActive]
+          : optionTypeContainerActive
+      );
+    }
+  }, [optionTypeContainer, optionTypeContainerActive, record?.containerTypeID]);
 
   useEffect(() => {
     if (editing) {
@@ -81,10 +103,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const save = async () => {
     try {
       const values = await form.validateFields();
-
       toggleEdit();
-      console.log({ ...record, ...values });
-
       handleSave({ ...record, ...values });
     } catch (errInfo) {
       console.log('Save failed:', errInfo);
@@ -96,6 +115,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
         ref={inputRef as unknown as Ref<HTMLInputElement>}
         onPressEnter={save}
         onBlur={save}
+        style={{ width: '100%' }}
+        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
       />
     ) : inputType === 'selectCurrency' ? (
       <Select
@@ -119,7 +140,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         }}
         style={{ width: '100%' }}
         onBlur={save}
-        options={optionTypeContainer}
+        options={optionTypeContainerSelected}
       />
     );
   let childNode = children;
@@ -168,17 +189,18 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
 interface Props {
   form: FormInstance<FormValues>;
-  edit?: boolean;
+  isCheckPermissionEdit: boolean;
   optionCurrency: { value: string; label: string }[];
   optionTypeContainer: { value: string; label: string }[];
 }
 
 const SeaPricingDetailDTO = ({
   form,
-  edit,
+  isCheckPermissionEdit,
   optionCurrency,
   optionTypeContainer,
 }: Props) => {
+  const { translate: translateCommon } = useI18n('common');
   const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [dataRequire, setDataRequire] = useState<DataType[]>([]);
   const [optionTypeContainerActive, setOptionTypeContainerActive] = useState<
@@ -188,7 +210,10 @@ const SeaPricingDetailDTO = ({
     { idSeaPricingDetailID: Key; idContainerType: string }[]
   >([]);
   const [countLoadData, setCountLoadData] = useState(0);
+
+  // Lấy data từ API và chỉ lấy lần đầu (setDataRequire)
   useEffect(() => {
+    // Chỉ lấy data từ API khi lần đầu vào form
     if (form.getFieldValue('seaPricingDetailDTOs') && countLoadData === 0) {
       setDataRequire(
         form
@@ -205,34 +230,11 @@ const SeaPricingDetailDTO = ({
             };
           })
       );
-      setDataSource(dataRequire.filter((itemA) => itemA.currencyID !== ''));
-      edit
-        ? form.setFieldValue(
-            'seaPricingDetailDTOs',
-            dataSource.map((item) => {
-              return {
-                seaPricingDetailID: item.key,
-                containerTypeID: item.containerTypeID,
-                currencyID: item.currencyID,
-                price: item.price,
-              };
-            })
-          )
-        : form.setFieldValue(
-            'seaPricingDetailDTOs',
-            dataSource.map((item) => {
-              return {
-                containerTypeID: item.containerTypeID,
-                currencyID: item.currencyID,
-                priceSeaPricingDetail: item.price,
-              };
-            })
-          );
       setCountLoadData(1);
     }
   }, [form.getFieldValue('seaPricingDetailDTOs')]);
-  // console.log('dataRequire', dataRequire);
 
+  // setOptionTypeContainerActive, setIdKeyAndContainerType
   useEffect(() => {
     setOptionTypeContainerActive(
       optionTypeContainer.filter(
@@ -251,17 +253,30 @@ const SeaPricingDetailDTO = ({
         };
       })
     );
-    // setDataSource(dataRequire.filter((itemA) => itemA.currencyID !== ''));
-    // form.setFieldValue('seaPricingDetailDTOs', dataSource);
-  }, [optionCurrency, dataRequire]);
-  console.log(idKeyAndContainerType);
-  console.log(
-    idKeyAndContainerType.find(
-      (item) => item.idContainerType === optionTypeContainerActive[0]?.value
-    )?.idSeaPricingDetailID
-  );
+  }, [optionCurrency, dataRequire, optionTypeContainer, dataSource]);
 
-  const [count, setCount] = useState(2);
+  // setFieldValue seaPricingDetailDTOs
+  useEffect(() => {
+    if (countLoadData === 1 && dataSource.length !== 0) {
+      form.setFieldValue(
+        'seaPricingDetailDTOs',
+        dataSource.map((item) => {
+          return {
+            seaPricingDetailID: item.key,
+            containerTypeID: item.containerTypeID,
+            currencyID: item.currencyID,
+            price: item.price,
+          };
+        })
+      );
+      setCountLoadData(2);
+    }
+  }, [dataSource, countLoadData]);
+
+  //setDataSource
+  useEffect(() => {
+    setDataSource(dataRequire.filter((itemA) => itemA.currencyID !== ''));
+  }, [dataRequire]);
 
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
@@ -274,6 +289,17 @@ const SeaPricingDetailDTO = ({
       ...optionTypeContainerActive,
     ]);
     setDataSource(newData);
+    form.setFieldValue(
+      'seaPricingDetailDTOs',
+      newData.map((item) => {
+        return {
+          seaPricingDetailID: item.key,
+          containerTypeID: item.containerTypeID,
+          currencyID: item.currencyID,
+          price: item.price,
+        };
+      })
+    );
   };
 
   const defaultColumns: (ColumnTypes[number] & {
@@ -284,7 +310,8 @@ const SeaPricingDetailDTO = ({
       title: 'Type container',
       dataIndex: 'containerTypeID',
       width: '30%',
-      editable: true,
+      align: 'center',
+      editable: !isCheckPermissionEdit,
       render: (value) => {
         return optionTypeContainer.find((item) => item.value === value)?.label;
       },
@@ -292,37 +319,51 @@ const SeaPricingDetailDTO = ({
     {
       title: 'Price',
       dataIndex: 'price',
-      editable: true,
+      align: 'center',
+      editable: !isCheckPermissionEdit,
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: 'Currency',
       dataIndex: 'currencyID',
-      editable: true,
+      align: 'center',
+      editable: !isCheckPermissionEdit,
       render: (value) => {
         return optionCurrency.find((item) => item.value === value)?.label;
       },
     },
     {
-      title: 'operation',
       dataIndex: 'key',
+      width: 10,
       render: (value) =>
         dataSource.length >= 1 ? (
           <Popconfirm
             title="Sure to delete?"
             onConfirm={() => handleDelete(value)}
+            disabled={isCheckPermissionEdit}
           >
-            <a>Delete</a>
+            <Button
+              icon={<DeleteOutlined />}
+              style={{
+                color: COLORS.ERROR,
+                borderColor: COLORS.ERROR,
+              }}
+              disabled={isCheckPermissionEdit}
+            />
           </Popconfirm>
         ) : null,
     },
   ];
 
+  const [count, setCount] = useState(0);
   const handleAdd = () => {
     const newData: DataType = {
       key:
         idKeyAndContainerType.find(
           (item) => item.idContainerType === optionTypeContainerActive[0]?.value
-        )?.idSeaPricingDetailID || '',
+        )?.idSeaPricingDetailID || count,
       containerTypeCode: '',
       containerTypeID: optionTypeContainerActive[0]?.value || '',
       containerTypeName: optionTypeContainerActive[0].label || '',
@@ -330,11 +371,23 @@ const SeaPricingDetailDTO = ({
       currencyName: optionCurrency[0].label || '',
       price: '1000000',
     };
-    setDataSource([newData, ...dataSource]);
+    const newDataSource = [newData, ...dataSource];
+    setDataSource(newDataSource);
     if (optionTypeContainerActive.length > 0) {
       setOptionTypeContainerActive(optionTypeContainerActive.slice(1));
     }
     setCount(count + 1);
+    form.setFieldValue(
+      'seaPricingDetailDTOs',
+      newDataSource.map((item) => {
+        return {
+          seaPricingDetailID: item.key,
+          containerTypeID: item.containerTypeID,
+          currencyID: item.currencyID,
+          price: item.price,
+        };
+      })
+    );
   };
 
   const handleSave = (row: DataType) => {
@@ -355,28 +408,18 @@ const SeaPricingDetailDTO = ({
       )
     );
     setDataSource(newData);
-    edit
-      ? form.setFieldValue(
-          'seaPricingDetailDTOs',
-          dataSource.map((item) => {
-            return {
-              seaPricingDetailID: item.key,
-              containerTypeID: item.containerTypeID,
-              currencyID: item.currencyID,
-              price: item.price,
-            };
-          })
-        )
-      : form.setFieldValue(
-          'seaPricingDetailDTOs',
-          dataSource.map((item) => {
-            return {
-              containerTypeID: item.containerTypeID,
-              currencyID: item.currencyID,
-              priceSeaPricingDetail: item.price,
-            };
-          })
-        );
+
+    form.setFieldValue(
+      'seaPricingDetailDTOs',
+      dataSource.map((item) => {
+        return {
+          seaPricingDetailID: item.key,
+          containerTypeID: item.containerTypeID,
+          currencyID: item.currencyID,
+          price: item.price,
+        };
+      })
+    );
   };
 
   const components = {
@@ -402,7 +445,8 @@ const SeaPricingDetailDTO = ({
             ? 'selectCurrency'
             : 'selectContainerType',
         optionCurrency: optionCurrency,
-        optionTypeContainer: optionTypeContainerActive,
+        optionTypeContainerActive: optionTypeContainerActive,
+        optionTypeContainer: optionTypeContainer,
         dataIndex: col.dataIndex,
         title: col.title,
         handleSave,
@@ -413,14 +457,20 @@ const SeaPricingDetailDTO = ({
   return (
     <div>
       <Button
-        onClick={handleAdd}
-        type="primary"
+        icon={<PlusOutlined />}
         style={{
-          marginBottom: 16,
           display: optionTypeContainerActive.length === 0 ? 'none' : '',
+          backgroundColor: COLORS.BRIGHT,
+          color: COLORS.GREEN,
+          borderColor: COLORS.GREEN,
+          fontWeight: '500',
+          float: 'right',
+          marginBottom: 16,
         }}
+        disabled={isCheckPermissionEdit}
+        onClick={handleAdd}
       >
-        Add a row
+        {translateCommon('button_add')}
       </Button>
       <Table
         components={components}

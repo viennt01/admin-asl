@@ -42,6 +42,8 @@ interface Props {
   form: FormInstance<FormValues>;
   idQuery?: string;
   handleIdQuery: (id: string) => void;
+  handleCheckEdit: (data: boolean) => void;
+  isCheckPermissionEdit: boolean;
 }
 
 const { Title } = Typography;
@@ -56,11 +58,11 @@ const CardMain = ({
   form,
   idQuery,
   handleIdQuery,
+  handleCheckEdit,
+  isCheckPermissionEdit,
 }: Props) => {
   const { translate: translatePricingSea } = useI18n('pricingSea');
   const router = useRouter();
-  const [isCheckPermissionEdit, setCheckPermissionEdit] =
-    useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   const propCopyAndCreate = router.query;
@@ -103,7 +105,7 @@ const CardMain = ({
         : setCheckStatus(false);
     }
     if ((edit && checkRow) || manager) {
-      setCheckPermissionEdit(true);
+      handleCheckEdit(true);
     }
 
     if (propCopyAndCreate.checkCopyAndCreate) {

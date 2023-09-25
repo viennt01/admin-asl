@@ -25,6 +25,14 @@ const CreateSeaPricing = () => {
   });
 
   const handleSubmit = (formValues: FormValues, id?: string) => {
+    const seaPricingDetailRegisterRequests =
+      formValues.seaPricingDetailDTOs.map((data) => {
+        return {
+          containerTypeID: data.containerTypeID,
+          currencyID: data.currencyID,
+          priceSeaPricingDetail: data.price,
+        };
+      });
     if (id) {
       const _requestData: SeaPricingEdit = {
         seaPricingID: id || '',
@@ -72,7 +80,8 @@ const CreateSeaPricing = () => {
         lclSeaPricing: formValues.lclSeaPricing || '',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
-        seaPricingDetailRegisterRequests: formValues.seaPricingDetailDTOs || [],
+        seaPricingDetailRegisterRequests:
+          seaPricingDetailRegisterRequests || [],
         seaPricingFeeRegisterRequests: formValues.seaPricingFeeDTOs || [],
         statusSeaPricing: STATUS_ALL_LABELS.REQUEST,
       };
@@ -90,6 +99,15 @@ const CreateSeaPricing = () => {
   };
 
   const handleSaveDraft = (formValues: FormValues, id?: string) => {
+    const seaPricingDetailRegisterRequests =
+      formValues.seaPricingDetailDTOs.map((data) => {
+        return {
+          containerTypeID: data.containerTypeID,
+          currencyID: data.currencyID,
+          priceSeaPricingDetail: data.price,
+        };
+      });
+
     if (id) {
       const _requestData: SeaPricingEdit = {
         seaPricingID: id,
@@ -140,7 +158,8 @@ const CreateSeaPricing = () => {
         lclSeaPricing: formValues.lclSeaPricing || '',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
-        seaPricingDetailRegisterRequests: formValues.seaPricingDetailDTOs || [],
+        seaPricingDetailRegisterRequests:
+          seaPricingDetailRegisterRequests || [],
         seaPricingFeeRegisterRequests: formValues.seaPricingFeeDTOs || [],
         statusSeaPricing: STATUS_ALL_LABELS.DRAFT,
       };
