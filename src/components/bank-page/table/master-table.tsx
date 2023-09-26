@@ -53,6 +53,7 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
+import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -596,7 +597,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_BANK.xlsx');
+      link.setAttribute('download', 'ASL_BANK.xlsx' + '_' + getSystemDate());
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -649,7 +650,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_BANK.xlsx');
+      link.setAttribute('download', 'ASL_BANK.xlsx' + '_' + getSystemDate());
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);

@@ -50,6 +50,7 @@ import {
   initalValueQueryInputParamsMaster,
   initalValueQuerySelectParamsMaster,
 } from '../constant';
+import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -445,7 +446,10 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_TYPE_CONTAINER.xlsx');
+      link.setAttribute(
+        'download',
+        'ASL_TYPE_CONTAINER.xlsx' + '_' + getSystemDate()
+      );
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -501,7 +505,10 @@ export default function MasterDataTable() {
       // Tạo một thẻ a để tạo sự kiện nhấp chuột và tải xuống tệp
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_TYPE_CONTAINER.xlsx'); // Tên tệp bạn muốn đặt
+      link.setAttribute(
+        'download',
+        'ASL_TYPE_CONTAINER.xlsx' + '_' + getSystemDate()
+      ); // Tên tệp bạn muốn đặt
 
       // Thêm thẻ a vào DOM và kích hoạt sự kiện nhấp chuột để tải xuống
       document.body.appendChild(link);
