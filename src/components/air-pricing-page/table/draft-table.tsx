@@ -2,9 +2,9 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { SeaPricingTable } from '../interface';
-import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
-import { deleteSeaPricing, getDartTable } from '../fetcher';
+import { AirPricingTable } from '../interface';
+import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
+import { deleteAirPricing, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -33,21 +33,21 @@ interface PortFormProps {
 
 const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
-  const { translate: translatePricingSea } = useI18n('pricingSea');
+  const { translate: translatePricingAir } = useI18n('pricingAir');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
   // const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
   //   initalValueQueryInputParamsDraft
   // );
-  const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
+  const [dataTable, setDataTable] = useState<AirPricingTable[]>([]);
   // const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
   //   initalSelectSearchDraft
   // );
 
   // Handle data
   useQuery({
-    queryKey: [API_SEA_PRICING.GET_SEARCH, pagination],
+    queryKey: [API_AIR_PRICING.GET_SEARCH, pagination],
     queryFn: () =>
       getDartTable({
         ...initalValueQueryInputParamsDraft,
@@ -62,12 +62,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.seaPricingID,
-            seaPricingID: data.seaPricingID,
-            podid: data.podid,
-            podName: data.podName,
-            polid: data.polid,
-            polName: data.polName,
+            key: data.airPricingID,
+            aodid: data.aodid,
+            aodName: data.aodName,
+            aolid: data.aolid,
+            aolName: data.aolName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
@@ -76,17 +75,17 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             dateEffect: data.dateEffect,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            demSeaPricing: data.demSeaPricing,
-            detSeaPricing: data.detSeaPricing,
-            stoSeaPricing: data.stoSeaPricing,
-            lclMinSeaPricing: data.lclMinSeaPricing,
-            lclSeaPricing: data.lclSeaPricing,
+            demAirPricing: data.demAirPricing,
+            detAirPricing: data.detAirPricing,
+            stoAirPricing: data.stoAirPricing,
+            lclMinAirPricing: data.lclMinAirPricing,
+            lclAirPricing: data.lclAirPricing,
             public: data.public,
-            statusSeaPricing: data.statusSeaPricing,
+            statusAirPricing: data.statusAirPricing,
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
-            seaPricingDetailDTOs: data.seaPricingDetailDTOs,
-            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
+            airPricingDetailDTOs: data.airPricingDetailDTOs,
+            airPricingFeeDTOs: data.airPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -107,12 +106,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   const deleteItemDraftMutation = useMutation({
-    mutationFn: (id: string[]) => deleteSeaPricing(id),
+    mutationFn: (id: string[]) => deleteAirPricing(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_SEA_PRICING.GET_SEARCH],
+          queryKey: [API_AIR_PRICING.GET_SEARCH],
         });
       } else {
         errorToast(data.message);
@@ -156,9 +155,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   // };
 
   // Handle data show table
-  const columns: ProColumns<SeaPricingTable>[] = [
+  const columns: ProColumns<AirPricingTable>[] = [
     {
-      title: <div className={style.title}>{translatePricingSea('no')}</div>,
+      title: <div className={style.title}>{translatePricingAir('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -169,46 +168,46 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingSea('POL'),
+      title: 'AOL',
       width: 200,
-      dataIndex: 'polName',
-      key: 'polName',
+      dataIndex: 'aolName',
+      key: 'aolName',
       align: 'center',
       render: (value) => value,
     },
     {
-      title: translatePricingSea('POD'),
+      title: 'AOD',
       width: 200,
-      dataIndex: 'podName',
-      key: 'podName',
+      dataIndex: 'aodName',
+      key: 'aodName',
       align: 'center',
     },
     {
-      title: translatePricingSea('vendor'),
+      title: translatePricingAir('vendor'),
       width: 200,
       dataIndex: 'partnerName', // TODO: check again
       key: 'partnerName',
       align: 'center',
     },
     {
-      title: translatePricingSea('commodity'),
+      title: translatePricingAir('commodity'),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'center',
     },
     {
-      title: translatePricingSea('LCLMin'),
+      title: 'LCLMin',
       width: 200,
-      dataIndex: 'lclMinSeaPricing',
-      key: 'lclMinSeaPricing',
+      dataIndex: 'lclMinAirPricing',
+      key: 'lclMinAirPricing',
       align: 'center',
     },
     {
-      title: translatePricingSea('LCL'),
+      title: translatePricingAir('LCL'),
       width: 200,
-      dataIndex: 'lclSeaPricing',
-      key: 'lclSeaPricing',
+      dataIndex: 'lclAirPricing',
+      key: 'lclAirPricing',
       align: 'center',
     },
     {
@@ -224,8 +223,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: <div className={style.title}>{translateCommon('status')}</div>,
       width: 120,
-      dataIndex: 'statusSeaPricing',
-      key: 'statusSeaPricing',
+      dataIndex: 'statusAirPricing',
+      key: 'statusAirPricing',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -284,7 +283,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: SeaPricingTable
+    record: AirPricingTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

@@ -37,6 +37,20 @@ export const API_SEA_PRICING = {
   EXPORT: '/export-sea-pricing-with-excel',
 };
 
+export const API_AIR_PRICING = {
+  GET_SEARCH: '/search-air-pricing',
+  GET_DETAIL: '/get-air-pricing-by-id',
+  CREATE: '/add-air-pricing',
+  EDIT: '/update-air-pricing',
+  DELETE: '/delete-air-pricing',
+  UPDATE_STATUS: '/update-status-air-pricing',
+  GET_DRAFT: '/search-air-pricing-with-status',
+  GET_REQUEST: '/search-air-pricing-with-status',
+  DOWNLOAD_EXAMPLE_FILE: '/download-air-pricing-excel',
+  IMPORT: '/import-air-pricing-with-excel',
+  EXPORT: '/export-air-pricing-with-excel',
+};
+
 export const API_CONTAINER_TYPE = {
   GET_SEARCH: '/search-container-type',
   GET_DETAIL: '/get-container-type',
