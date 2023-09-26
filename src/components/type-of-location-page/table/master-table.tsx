@@ -321,8 +321,6 @@ export default function MasterDataTable() {
         );
       },
       render: (value) => {
-        console.log(value);
-
         return (
           <Tag
             color={
@@ -475,10 +473,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute(
-        'download',
-        'ASL_TYPE_LOCATION.xlsx' + '_' + getSystemDate()
-      );
+      link.setAttribute('download', `ASL_TYPE_LOCATION${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -531,10 +526,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute(
-        'download',
-        'ASL_TYPE_LOCATION.xlsx' + '_' + getSystemDate()
-      );
+      link.setAttribute('download', `ASL_TYPE_LOCATION${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
