@@ -190,6 +190,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           dataIndex: 'exchangeRateToVND',
         },
       }),
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: (
@@ -211,6 +214,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           dataIndex: 'exchangeRateToUSD',
         },
       }),
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: (

@@ -3,46 +3,42 @@
     "port_no": "No",
     "code": "Code",
     "name": "Name",
-    "country_name": "Country",
+    "country_name": "City",
     "type_of_port": "Type of Location",
-    "address": "Address",
     "company":"Management Company",
     "status":"Status",
     
     "information_add_port": "Add New Location",
     "information_edit_port": "Edit Location",
 
-    "port_code": {
+    "location_code_form": {
         "title": "Code",
         "placeholder": "Enter location code",
         "error_required": "Please enter location Code"
     },
-    "port_name": {
+    "location_name_form": {
         "title": "Location Name",
+        "titleEn": "Location name in English",
+        "titleVn": "Location name in Vietnamese",
         "placeholder": "Enter Location name",
         "error_required": "Please enter location name"
     },
-    "type_port": {
+    "type_location_form": {
         "title": "Type Of Location",
         "placeholder": "Enter type of location",
         "error_required": "Please enter type of location"
     },
-    "country": {
-        "title": "Country",
-        "placeholder": "Enter country",
-        "error_required": "Please enter country"
+    "city_form": {
+        "title": "City",
+        "placeholder": "Enter city",
+        "error_required": "Please enter city"
     }, 
-    "status_port": {
+    "status_location_form": {
         "title": "Status",
         "placeholder": "Select status",
         "error_required": "Please select status"
     },
-    "address_port": {
-        "title": "Address",
-        "placeholder": "Enter address",
-        "error_required": "Please enter address"
-    },
-    "description": {
+    "description_form": {
         "title": "Description",
         "placeholder": "Please enter description"
     }

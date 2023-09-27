@@ -9,8 +9,17 @@
     "updater": "Người cập nhật",
     "creator": "Người tạo",
 
-    "information_add_fee": "Thêm mới hàng hóa",
-    "information_edit_fee": "Chỉnh sửa hàng hóa",
+    "information_add_commodity": "Thêm mới hàng hóa",
+    "information_edit_commodity": "Chỉnh sửa hàng hóa",
+
+    "name_commodity_form": {
+        "title": "Name",
+        "titleEn": "Tên hàng hóa bằng tiếng Anh",
+        "titleVn": "Tên hàng hóa bằng tiếng Việt",
+        "placeholder": "Nhập tên hàng hóa",
+        "error_required": "Vui lòng nhập tên hàng hóa"
+    },
+
     "name_placeholder": "Nhập tên chi phí",
     "status_placeholder":"Chọn trạng thái"
 }

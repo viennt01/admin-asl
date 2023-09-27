@@ -4,7 +4,7 @@
     "code": "Stt",
     "container_no": "Mã",
     "type_of_container": "Loại Container",
-    "detail": "Chi tiết",
+    "detail": "Mô tả",
     "status":"Trạng thái",
     "teus": "Teus",
     "date_created": "Ngày tạo",
@@ -37,15 +37,15 @@
         "error_required": "Vui lòng nhập teus!"
     },
 
-    "details_en_form": {
-        "title": "Mô tả tiếng Anh",
-        "placeholder": "Nhập mô tả tiếng Anh",
-        "error_required": "Vui lòng nhập mô tả tiếng Anh!"
+    "description_en_form": {
+        "title": "Mô tả bằng tiếng Anh",
+        "placeholder": "Nhập mô tả bằng tiếng Anh",
+        "error_required": "Vui lòng nhập mô tả bằng tiếng Anh!"
     },
 
-    "details_vn_form": {
-        "title": "Mô tả tiếng Việt",
-        "placeholder": "Nhập mô tả tiếng Việt",
-        "error_required": "Vui lòng nhập mô tả tiếng Việt!"
+    "description_vn_form": {
+        "title": "Mô tả bằng tiếng Việt",
+        "placeholder": "Nhập mô tả bằng tiếng Việt",
+        "error_required": "Vui lòng nhập mô tả bằng tiếng Việt!"
     }
 }

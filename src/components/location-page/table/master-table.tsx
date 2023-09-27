@@ -342,6 +342,7 @@ export default function MasterDataTable() {
       title: translateLocation('type_of_port'),
       dataIndex: 'typeLocations',
       key: 'typeLocations',
+      width: 180,
       align: 'center',
       filteredValue: querySelectParams.typeLocations || null,
       filters:
