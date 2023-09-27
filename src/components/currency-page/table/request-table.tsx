@@ -212,6 +212,9 @@ const RequestTable = () => {
           dataIndex: 'exchangeRateToVND',
         },
       }),
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: (
@@ -233,6 +236,9 @@ const RequestTable = () => {
           dataIndex: 'exchangeRateToUSD',
         },
       }),
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: (

@@ -122,21 +122,17 @@ const CommodityForm = ({
     return (
       <Col span={24}>
         <Form.Item
-          label={translateCommodity('NameEN')}
+          label={translateCommodity('name_commodity_form.titleEn')}
           name="commodityNameEN"
           rules={[
             {
               required: true,
-              message: translateCommodity(
-                'international_code_form.error_required'
-              ),
+              message: translateCommodity('name_commodity_form.error_required'),
             },
           ]}
         >
           <Input
-            placeholder={translateCommodity(
-              'international_code_form.placeholder'
-            )}
+            placeholder={translateCommodity('name_commodity_form.placeholder')}
             size="large"
             disabled={checkRow && isCheckPermissionEdit}
           />
@@ -150,12 +146,12 @@ const CommodityForm = ({
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            label={translateCommodity('NameVN')}
+            label={translateCommodity('name_commodity_form.titleVn')}
             name="commodityNameVN"
           >
             <Input
               placeholder={translateCommodity(
-                'international_code_form.placeholder'
+                'name_commodity_form.placeholder'
               )}
               size="large"
               disabled={checkRow && isCheckPermissionEdit}

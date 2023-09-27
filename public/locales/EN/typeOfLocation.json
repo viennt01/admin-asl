@@ -11,6 +11,26 @@
     
     "information_add_type_of_location": "Add new type of location",
     "information_edit_type_of_location": "Edit type of location",
+
+    "name_type_location_form": {
+        "title": "Name",
+        "titleEn": "Name of the location type in English",
+        "titleVn": "Name of the location type in Vietnamese",
+        "placeholder": "Please enter the name of the location type",
+        "error_required": "Please enter the name of the location type"
+    },
+    "description_type_location_form": {
+        "title": "Description",
+        "titleEn": "Description by English",
+        "titleVn": "Description by Vietnamese",
+        "placeholder": "Please enter description"
+    }, 
+    "status_type_location_form": {
+        "title": "Status",
+        "placeholder": "Select status",
+        "error_required": "Please select status"
+    },
+
     "name_placeholder": "Please input name!",
     "description_placeholder": "Please input description!",
     "status_placeholder":"Please choose status!",

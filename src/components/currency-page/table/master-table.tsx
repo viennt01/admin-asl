@@ -289,6 +289,9 @@ export default function MasterDataTable() {
           dataIndex: 'exchangeRateToVND',
         },
       }),
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: (
@@ -310,6 +313,9 @@ export default function MasterDataTable() {
           dataIndex: 'exchangeRateToUSD',
         },
       }),
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     {
       title: <div className={style.title}>{translateCurrency('status')}</div>,

@@ -4,7 +4,7 @@
     "code": "No",
     "container_no": "Code",
     "type_of_container": "Type of Container",
-    "detail": "Details",
+    "detail": "Description",
     "status":"Status",
     "teus": "Teus",
     "date_created": "Date Created",
@@ -37,15 +37,15 @@
         "error_required": "Please enter teus!"
     },
 
-    "details_en_form": {
-        "title": "English Detail",
-        "placeholder": "Enter english detail",
-        "error_required": "Please enter english detail!"
+    "description_en_form": {
+        "title": "Description in English",
+        "placeholder": "Enter description in English",
+        "error_required": "Please enter description in English"
     },
 
-    "details_vn_form": {
-        "title": "Vietnamese detail",
-        "placeholder": "Enter vietnamese detail",
-        "error_required": "Please enter vietnamese detail!"
+    "description_vn_form": {
+        "title": "Description in Vietnamese",
+        "placeholder": "Enter description in Vietnamese",
+        "error_required": "Please enter description in Vietnamese!"
     }
 }

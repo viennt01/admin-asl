@@ -321,13 +321,13 @@ const TypeOfContainerTypeForm = ({
 
             <Col span={24}>
               <Form.Item
-                label={translateContainerType('details_en_form.title')}
+                label={translateContainerType('description_en_form.title')}
                 name="detailsEN"
                 rules={[
                   {
                     required: true,
                     message: translateContainerType(
-                      'details_en_form.error_required'
+                      'description_en_form.error_required'
                     ),
                   },
                 ]}
@@ -335,7 +335,7 @@ const TypeOfContainerTypeForm = ({
                 <TextArea
                   size="large"
                   placeholder={translateContainerType(
-                    'details_en_form.placeholder'
+                    'description_en_form.placeholder'
                   )}
                   disabled={checkRow && isCheckPermissionEdit}
                   allowClear
@@ -345,13 +345,13 @@ const TypeOfContainerTypeForm = ({
 
             <Col span={24}>
               <Form.Item
-                label={translateContainerType('details_vn_form.title')}
+                label={translateContainerType('description_vn_form.title')}
                 name="detailsVN"
                 rules={[
                   {
                     required: true,
                     message: translateContainerType(
-                      'details_vn_form.error_required'
+                      'description_vn_form.error_required'
                     ),
                   },
                 ]}
@@ -359,7 +359,7 @@ const TypeOfContainerTypeForm = ({
                 <TextArea
                   size="large"
                   placeholder={translateContainerType(
-                    'details_vn_form.placeholder'
+                    'description_vn_form.placeholder'
                   )}
                   disabled={checkRow && isCheckPermissionEdit}
                   allowClear

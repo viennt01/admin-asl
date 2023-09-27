@@ -11,6 +11,15 @@
 
     "information_add_commodity": "Add new commodity",
     "information_edit_commodity": "Edit commodity",
+
+    "name_commodity_form": {
+        "title": "Name",
+        "titleEn": "Commodity name in English",
+        "titleVn": "Commodity name in Vietnamese",
+        "placeholder": "Please enter commodity name",
+        "error_required": "Please enter commodity name"
+    },
+
     "code_placeholder": "Please input the commodity code",
     "name_placeholder": "Please input the commodity name",
     "status_placeholder":"Please select status"

@@ -258,18 +258,22 @@ const LocationForm = ({
           <Row gutter={16}>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocation('port_code.title')}
+                label={translateLocation('location_code_form.title')}
                 tooltip={translateLocation('code')}
                 name="locationCode"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation('port_code.error_required'),
+                    message: translateLocation(
+                      'location_code_form.error_required'
+                    ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateLocation('port_code.placeholder')}
+                  placeholder={translateLocation(
+                    'location_code_form.placeholder'
+                  )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -277,17 +281,21 @@ const LocationForm = ({
             </Col>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocation('type_port.title')}
+                label={translateLocation('type_location_form.title')}
                 name="typeLocations"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation('type_port.error_required'),
+                    message: translateLocation(
+                      'type_location_form.error_required'
+                    ),
                   },
                 ]}
               >
                 <Select
-                  placeholder={translateLocation('type_port.placeholder')}
+                  placeholder={translateLocation(
+                    'type_location_form.placeholder'
+                  )}
                   mode="multiple"
                   size="large"
                   options={
@@ -303,17 +311,21 @@ const LocationForm = ({
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocation('port_name.titleEn')}
+                label={translateLocation('location_name_form.titleEn')}
                 name="locationNameEN"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation('port_name.error_required'),
+                    message: translateLocation(
+                      'location_name_form.error_required'
+                    ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateLocation('port_name.placeholder')}
+                  placeholder={translateLocation(
+                    'location_name_form.placeholder'
+                  )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -321,11 +333,13 @@ const LocationForm = ({
             </Col>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocation('port_name.titleVn')}
+                label={translateLocation('location_name_form.titleVn')}
                 name="locationNameVN"
               >
                 <Input
-                  placeholder={translateLocation('port_name.placeholder')}
+                  placeholder={translateLocation(
+                    'location_name_form.placeholder'
+                  )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -334,17 +348,17 @@ const LocationForm = ({
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocation('City')}
+                label={translateLocation('city_form.title')}
                 name="cityID"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation('country.error_required'),
+                    message: translateLocation('city_form.error_required'),
                   },
                 ]}
               >
                 <Select
-                  placeholder={translateLocation('country.placeholder')}
+                  placeholder={translateLocation('city_form.placeholder')}
                   showSearch
                   size="large"
                   options={

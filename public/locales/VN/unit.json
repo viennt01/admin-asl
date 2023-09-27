@@ -23,14 +23,14 @@
     },
 
     "description_vn_form": {
-        "title": "Mô tả tiếng Việt",
-        "placeholder": "Nhập mô tả tiếng Việt",
-        "error_required": "Vui lòng nhập mô tả tiếng Việt"
+        "title": "Mô tả bằng tiếng Việt",
+        "placeholder": "Nhập mô tả bằng tiếng Việt",
+        "error_required": "Vui lòng nhập mô tả bằng tiếng Việt"
     },
     
     "description_en_form": {
-        "title": "Mô tả tiếng Anh",
-        "placeholder": "Nhập mô tả tiếng Anh",
-        "error_required": "Vui lòng nhập mô tả tiếng Anh"
+        "title": "Mô tả bằng tiếng Anh",
+        "placeholder": "Nhập mô tả bằng tiếng Anh",
+        "error_required": "Vui lòng nhập mô tả bằng tiếng Anh"
     }
 }

@@ -133,20 +133,20 @@ const LocationTypeForm = ({
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            label={translateLocationType('international_code_form.title')}
+            label={translateLocationType('name_type_location_form.titleEn')}
             name="typeLocationNameEN"
             rules={[
               {
                 required: true,
                 message: translateLocationType(
-                  'international_code_form.error_required'
+                  'name_type_location_form.error_required'
                 ),
               },
             ]}
           >
             <Input
               placeholder={translateLocationType(
-                'international_code_form.placeholder'
+                'name_type_location_form.placeholder'
               )}
               size="large"
               disabled={checkRow && isCheckPermissionEdit}
@@ -156,13 +156,15 @@ const LocationTypeForm = ({
 
         <Col span={24}>
           <Form.Item
-            label={translateLocationType('descriptionEN_vn_form.title')}
+            label={translateLocationType(
+              'description_type_location_form.titleEn'
+            )}
             name="descriptionEN"
             rules={[
               {
                 required: true,
                 message: translateLocationType(
-                  'descriptionEN_vn_form.error_required'
+                  'description_type_location_form.error_required'
                 ),
               },
             ]}
@@ -170,7 +172,7 @@ const LocationTypeForm = ({
             <Input.TextArea
               size="large"
               placeholder={translateLocationType(
-                'descriptionEN_vn_form.placeholder'
+                'description_type_location_form.placeholder'
               )}
               allowClear
               disabled={checkRow && isCheckPermissionEdit}
@@ -186,12 +188,12 @@ const LocationTypeForm = ({
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            label={translateLocationType('international_code_form.title')}
+            label={translateLocationType('name_type_location_form.titleVn')}
             name="typeLocationNameVN"
           >
             <Input
               placeholder={translateLocationType(
-                'international_code_form.placeholder'
+                'name_type_location_form.placeholder'
               )}
               size="large"
               disabled={checkRow && isCheckPermissionEdit}
@@ -201,13 +203,15 @@ const LocationTypeForm = ({
 
         <Col span={24}>
           <Form.Item
-            label={translateLocationType('descriptionEN_vn_form.title')}
+            label={translateLocationType(
+              'description_type_location_form.titleVn'
+            )}
             name="descriptionVN"
           >
             <Input.TextArea
               size="large"
               placeholder={translateLocationType(
-                'descriptionEN_vn_form.placeholder'
+                'description_type_location_form.placeholder'
               )}
               allowClear
               disabled={checkRow && isCheckPermissionEdit}
