@@ -155,12 +155,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [
-            API_SEA_PRICING.GET_SEARCH,
-            pagination,
-            queryInputParams,
-            querySelectParams,
-          ],
+          queryKey: [API_SEA_PRICING.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -507,8 +502,6 @@ export default function MasterDataTable() {
   };
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
-    console.log(map);
-
     setColumnsStateMap(map);
   };
 

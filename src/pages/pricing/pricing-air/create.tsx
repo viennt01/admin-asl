@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import AirPricingPage from '@/components/air-pricing-page';
+import CreateAirPricing from '@/components/air-pricing-page/create';
 
-function PricingAir() {
+function CreateAirPricingPage() {
   return (
     <>
       <Head>
-        <title>ASL | AIR PRICING</title>
+        <title>ASL | CREATE AIR PRICING</title>
       </Head>
-      <AirPricingPage />
+      <CreateAirPricing />
     </>
   );
 }
 
-export default withAuthentication(PricingAir);
+export default withAuthentication(CreateAirPricingPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'pricingAir']);

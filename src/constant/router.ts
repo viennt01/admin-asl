@@ -30,8 +30,11 @@ export const ROUTERS = {
   SEA_PRICING_MANAGER: (seaPricingId: string) =>
     `/pricing/pricing-sea/manager-admin/${seaPricingId}`,
   AIR_PRICING: '/pricing/pricing-air',
-  AIR_PRICING_EDIT: (airPricingId: string) =>
-    `/pricing/pricing-air/edit/${airPricingId}`,
+  AIR_PRICING_CREATE: '/pricing/pricing-air/create',
+  AIR_PRICING_EDIT: (airPricingId: string, checkRow = false) =>
+    `/pricing/pricing-air/edit/${airPricingId}?checkRow=${checkRow}`,
+  AIR_PRICING_MANAGER: (airPricingId: string) =>
+    `/pricing/pricing-air/manager-admin/${airPricingId}`,
   CUSTOMS_PRICING: '/pricing/pricing-customs',
   CUSTOMS_PRICING_EDIT: (customsPricingId: string) =>
     `/pricing/pricing-customs/edit/${customsPricingId}`,

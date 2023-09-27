@@ -140,12 +140,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [
-            API_FEE.GET_SEARCH,
-            pagination,
-            queryInputParams,
-            querySelectParams,
-          ],
+          queryKey: [API_FEE.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {

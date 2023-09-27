@@ -5,28 +5,24 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
-import {
-  FilterConfirmProps,
-  FilterValue,
-  TablePaginationConfig,
-} from 'antd/es/table/interface';
+import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_CURRENCY } from '@/fetcherAxios/endpoint';
-import style from '@/components/commons/table/index.module.scss';
-import { formatDate } from '@/utils/format';
+import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
   QueryInputParamType,
   QuerySelectParamType,
   SelectSearch,
-  CurrencyTable,
+  AirPricingTable,
+  AirPricingDetailDTOs,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -34,14 +30,13 @@ import {
   SkeletonTable,
 } from '@/components/commons/table/table-deafault';
 import {
-  deleteCurrency,
+  deleteAirPricing,
   downloadExampleFile,
-  exportTableFile,
-  getCurrencySearch,
+  getAirPricingSearch,
   importDataTable,
 } from '../fetcher';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
+import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import {
   initalSelectSearchMaster,
@@ -52,17 +47,14 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
-import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
-
-type DataIndex = keyof QueryInputParamType;
 
 export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateCurrency } = useI18n('currency');
+  const { translate: translatePricingAir } = useI18n('pricingAir');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
@@ -71,7 +63,7 @@ export default function MasterDataTable() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
-  const [dataTable, setDataTable] = useState<CurrencyTable[]>([]);
+  const [dataTable, setDataTable] = useState<AirPricingTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -85,9 +77,9 @@ export default function MasterDataTable() {
 
   // Handle data
   const dataSelectSearch =
-    querySelectParams.statusCurrency.length === 0
+    querySelectParams.statusAirPricing.length === 0
       ? {
-          statusCurrency: [
+          statusAirPricing: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -95,14 +87,9 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [
-      API_CURRENCY.GET_SEARCH,
-      pagination,
-      queryInputParams,
-      querySelectParams,
-    ],
+    queryKey: [API_AIR_PRICING.GET_SEARCH, queryInputParams, querySelectParams],
     queryFn: () =>
-      getCurrencySearch({
+      getAirPricingSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -113,13 +100,33 @@ export default function MasterDataTable() {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
+
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.currencyID,
-            currencyName: data.currencyName,
-            exchangeRateToVND: data.exchangeRateToVND,
-            exchangeRateToUSD: data.exchangeRateToUSD,
-            statusCurrency: data.statusCurrency,
+            key: data.airPricingID,
+            aodid: data.aodid,
+            aodName: data.aodName,
+            aolid: data.aolid,
+            aolName: data.aolName,
+            commodityID: data.commodityID,
+            commodityName: data.commodityName,
+            currencyID: data.currencyID,
+            currencyAbbreviations: data.currencyAbbreviations,
+            note: data.note,
+            dateEffect: data.dateEffect,
+            validityDate: data.validityDate,
+            freqDate: data.freqDate,
+            demAirPricing: data.demAirPricing,
+            detAirPricing: data.detAirPricing,
+            stoAirPricing: data.stoAirPricing,
+            lclMinAirPricing: data.lclMinAirPricing,
+            lclAirPricing: data.lclAirPricing,
+            public: data.public,
+            statusAirPricing: data.statusAirPricing,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
+            airPricingDetailDTOs: data.airPricingDetailDTOs,
+            airPricingFeeDTOs: data.airPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -130,9 +137,11 @@ export default function MasterDataTable() {
             searchAll: '',
           }))
         );
-        pagination.current = currentPage;
-        pagination.pageSize = pageSize;
-        pagination.total = totalPages;
+        setPagination({
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalPages,
+        });
       } else {
         setDataTable([]);
       }
@@ -140,12 +149,17 @@ export default function MasterDataTable() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: () => deleteCurrency(selectedRowKeys),
+    mutationFn: () => deleteAirPricing(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_CURRENCY.GET_SEARCH],
+          queryKey: [
+            API_AIR_PRICING.GET_SEARCH,
+            pagination,
+            queryInputParams,
+            querySelectParams,
+          ],
         });
         setSelectedRowKeys([]);
       } else {
@@ -161,10 +175,7 @@ export default function MasterDataTable() {
     setSelectedActiveKey(initalSelectSearchMaster);
     setQueryInputParams(initalValueQueryInputParamsMaster);
     setRefreshingLoading(true);
-    setPagination((state) => ({
-      ...state,
-      current: 1,
-    }));
+    pagination.current = 1;
     locationsQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
@@ -189,28 +200,28 @@ export default function MasterDataTable() {
     });
   };
 
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedActiveKey((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-      searchAll: {
-        label: 'searchAll',
-        value: '',
-      },
-    }));
-    const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    newQueryParams.searchAll = '';
-    setQueryInputParams(newQueryParams);
-    confirm();
-  };
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedActiveKey((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //     searchAll: {
+  //       label: 'searchAll',
+  //       value: '',
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   newQueryParams.searchAll = '';
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
   const handleSearchSelect = (
     pagination: TablePaginationConfig,
@@ -219,31 +230,33 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusCurrency:
-        filters.statusCurrency?.length !== 0 && filters.statusCurrency
-          ? (filters.statusCurrency as string[])
+      statusAirPricing:
+        filters.statusAirPricing?.length !== 0 && filters.statusAirPricing
+          ? (filters.statusAirPricing as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);
   };
+  const columnDTOs = useMemo(() => {
+    const result = [{}];
+    for (const key in dataTable[0]?.airPricingDetailDTOs) {
+      if (dataTable[0].airPricingDetailDTOs.hasOwnProperty(key)) {
+        const obj = {
+          title: key,
+          width: 200,
+          dataIndex: 'airPricingDetailDTOs',
+          render: (value: AirPricingDetailDTOs) =>
+            formatCurrencyHasCurrency(value[key]),
+        };
+        result.push(obj);
+      }
+    }
+    return result;
+  }, [dataTable]);
 
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryInputParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
-
-    setSelectedActiveKey((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
-
-  // Handle data show table
-  const columns: ProColumns<CurrencyTable>[] = [
+  const columns: ProColumns<AirPricingTable>[] = [
     {
-      title: <div className={style.title}>{translateCurrency('code')}</div>,
+      title: <div className={style.title}>{translatePricingAir('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -253,82 +266,38 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: <div className={style.title}>{translateCurrency('currency')}</div>,
-      dataIndex: 'currencyName',
-      key: 'currencyName',
-      width: 150,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'currencyName',
-        },
-      }),
+      title: 'AOL',
+      width: 200,
+      dataIndex: 'aolName',
+      key: 'aolName',
+      align: 'center',
+      render: (value) => value,
     },
     {
-      title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_VND')}
-        </div>
-      ),
-      dataIndex: 'exchangeRateToVND',
-      key: 'exchangeRateToVND',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'exchangeRateToVND',
-        },
-      }),
+      title: 'AOD',
+      width: 200,
+      dataIndex: 'aodName',
+      key: 'aodName',
+      align: 'center',
     },
     {
-      title: (
-        <div className={style.title}>
-          {translateCurrency('exchange_rate_to_USD')}
-        </div>
-      ),
-      dataIndex: 'exchangeRateToUSD',
-      key: 'exchangeRateToUSD',
-      width: 250,
-      align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'exchangeRateToUSD',
-        },
-      }),
-    },
-    {
-      title: <div className={style.title}>{translateCurrency('status')}</div>,
+      title: <div className={style.title}>{translatePricingAir('status')}</div>,
       width: 120,
-      dataIndex: 'statusCurrency',
-      key: 'statusCurrency',
+      dataIndex: 'statusAirPricing',
+      key: 'statusAirPricing',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusCurrency || null,
+      filteredValue: querySelectParams.statusAirPricing || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusCurrency.length !== 0
+                querySelectParams.statusAirPricing.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -347,6 +316,108 @@ export default function MasterDataTable() {
           {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
         </Tag>
       ),
+    },
+    {
+      title: translatePricingAir('vendor'),
+      width: 200,
+      dataIndex: 'partnerName', // TODO:Check again
+      key: 'partnerName',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('commodity'),
+      width: 300,
+      dataIndex: 'commodityName',
+      key: 'commodityName',
+      align: 'center',
+    },
+    {
+      title: 'LCLMin',
+      width: 200,
+      dataIndex: 'lclMinAirPricing',
+      key: 'lclMinAirPricing',
+      align: 'center',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+    },
+    {
+      title: 'LCL',
+      width: 200,
+      dataIndex: 'lclAirPricing',
+      key: 'lclAirPricing',
+      align: 'center',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+    },
+    {
+      title: 'Currency',
+      width: 200,
+      dataIndex: 'currencyAbbreviations',
+      key: 'currencyAbbreviations',
+      align: 'center',
+    },
+    {
+      title: translatePricingAir('effect_date'),
+      width: 200,
+      dataIndex: 'dateEffect',
+      key: 'dateEffect',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: translatePricingAir('validity'),
+      width: 200,
+      dataIndex: 'validityDate',
+      key: 'validityDate',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: translatePricingAir('freq'),
+      width: 150,
+      dataIndex: 'freqDate',
+      key: 'freqDate',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: translatePricingAir('DEM'),
+      width: 200,
+      dataIndex: 'demAirPricing',
+      key: 'demAirPricing',
+      align: 'center',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+    },
+    {
+      title: translatePricingAir('STO'),
+      width: 200,
+      dataIndex: 'stoAirPricing',
+      key: 'stoAirPricing',
+      align: 'center',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+    },
+    {
+      title: translatePricingAir('DET'),
+      width: 200,
+      dataIndex: 'detAirPricing',
+      key: 'detAirPricing',
+      align: 'center',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+    },
+    {
+      title: translatePricingAir('note'),
+      width: 200,
+      dataIndex: 'note',
+      key: 'note',
+      align: 'center',
     },
     {
       title: (
@@ -416,11 +487,11 @@ export default function MasterDataTable() {
         </div>
       ),
     },
+    ...columnDTOs,
   ];
-
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.CURRENCY_EDIT(id));
+    router.push(ROUTERS.AIR_PRICING_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -428,14 +499,15 @@ export default function MasterDataTable() {
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    setPagination((state) => ({
-      ...state,
-      current: page,
-      pageSize: size,
-    }));
+    pagination.current = page;
+    pagination.pageSize = size;
+
+    locationsQuerySearch.refetch();
   };
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
+    console.log(map);
+
     setColumnsStateMap(map);
   };
 
@@ -464,38 +536,20 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: CurrencyTable
+    record: AirPricingTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.CURRENCY_EDIT(record.key, true));
+      router.push(ROUTERS.AIR_PRICING_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.CURRENCY_CREATE);
+    router.push(ROUTERS.AIR_PRICING_CREATE);
   };
-  // export table data
-  const exportData = useMutation({
-    mutationFn: () =>
-      exportTableFile({
-        ids: selectedRowKeys,
-        status: querySelectParams.statusCurrency,
-      }),
-    onSuccess: (data) => {
-      const url = window.URL.createObjectURL(new Blob([data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `ASL_CURRENCY${getSystemDate()}.xlsx`);
-      document.body.appendChild(link);
-      link.click();
-      window.URL.revokeObjectURL(url);
-      setIsLoadingDownload(false);
-    },
-  });
-
+  // export table data to csv
   const exportTableData = () => {
-    exportData.mutate();
+    console.log('export');
   };
 
   // import table data from excel file
@@ -505,7 +559,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_CURRENCY.GET_REQUEST],
+          queryKey: [API_AIR_PRICING.GET_REQUEST],
         });
         setLoadingImport(false);
         setOpenImportModal(false);
@@ -539,7 +593,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `ASL_CURRENCY${getSystemDate()}.xlsx`);
+      link.setAttribute('download', 'ASL_AIR_PRICING.xlsx');
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -563,7 +617,7 @@ export default function MasterDataTable() {
           <Table
             dataTable={dataTable}
             columns={columns}
-            headerTitle={translateCurrency('title')}
+            headerTitle={translatePricingAir('title')}
             selectedRowKeys={selectedRowKeys}
             handleSelectionChange={handleSelectionChange}
             handlePaginationChange={handlePaginationChange}
@@ -581,7 +635,6 @@ export default function MasterDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             importTableData={importTableData}
-            exportLoading={exportData.isLoading}
             exportTableData={exportTableData}
           />
         </>
