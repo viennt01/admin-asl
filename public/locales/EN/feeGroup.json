@@ -1,0 +1,33 @@
+{
+    "title": "List of Fee Group",
+    "no" : "No",
+    "fee_group_code": "Code",
+    "fee_group_name": "Name",
+    "type_of_fee_group": "Type of Fee Group",
+    "status": "Status",
+    "date_created": "Date created",
+    "creator": "Creator",
+    "date_inserted": "Date updated",
+    "inserter": "Update by user",
+
+    "information_add_fee_group": "Add New Fee Group",
+    "information_edit_fee_group": "Edit Fee Group",
+
+    "fee_group_code_form": {
+        "title": "Code",
+        "placeholder": "Enter Fee Group code",
+        "error_required": "Please enter Fee Group Code"
+    },
+    "fee_group_name_form": {
+        "title": "Name",
+        "titleEn": "Fee Group name in English",
+        "titleVn": "Fee Group name in Vietnamese",
+        "placeholder": "Enter Fee Group name",
+        "error_required": "Please enter Fee Group name"
+    },
+    "type_of_fee_group_form": {
+        "title": "Type of Fee Group",
+        "placeholder": "Enter type of Fee Group",
+        "error_required": "Please enter type of Fee Group"
+    }
+}

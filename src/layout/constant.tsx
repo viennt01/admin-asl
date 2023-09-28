@@ -556,31 +556,71 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
-    '/master-data/fee': [
+    '/master-data/fee-catalog/fee': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
       { title: `${translateCommon('fee')}` },
     ],
-    '/master-data/fee/create': [
+    '/master-data/fee-catalog/fee/create': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
       {
         title: <Link href={ROUTERS.FEE}>{translateCommon('fee')}</Link>,
       },
       { title: `${translateCommon('create')}` },
     ],
-    '/master-data/fee/edit/[id]': [
+    '/master-data/fee-catalog/fee/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
       {
         title: <Link href={ROUTERS.FEE}>{translateCommon('fee')}</Link>,
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/fee/manager-admin/[id]': [
+    '/master-data/fee-catalog/fee/manager-admin/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
       {
         title: <Link href={ROUTERS.FEE}>{translateCommon('fee')}</Link>,
       },
       { title: `${translateCommon('request_for_approval')}` },
     ],
+
+    '/master-data/fee-catalog/fee-group': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      { title: `${translateCommon('fee_group')}` },
+    ],
+    '/master-data/fee-catalog/fee-group/create': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.FEE_GROUP}>{translateCommon('fee_group')}</Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/master-data/fee-catalog/fee-group/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.FEE_GROUP}>{translateCommon('fee_group')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    // '/master-data/fee-catalog/fee-group/manager-admin/[id]': [
+    //   { title: `${translateCommon('master_data')}` },
+    //   { title: `${translateCommon('fee_catalog')}` },
+    //   {
+    //     title: (
+    //       <Link href={ROUTERS.FEE_GROUP}>{translateCommon('fee_group')}</Link>
+    //     ),
+    //   },
+    //   { title: `${translateCommon('request_for_approval')}` },
+    // ],
 
     '/master-data/commodity': [
       { title: `${translateCommon('master_data')}` },

@@ -8,8 +8,8 @@
     "company":"Công ty quản lý",
     "status":"Trạng thái",
     
-    "information_add_port": "Thêm mới",
-    "information_edit_port": "Chỉnh sửa",
+    "information_add_port": "Thêm mới địa điểm",
+    "information_edit_port": "Chỉnh sửa địa điểm",
 
     "location_code_form": {
         "title": "Mã",
@@ -20,7 +20,7 @@
         "title": "Tên",
         "titleEn": "Tên địa điểm bằng tiếng Anh",
         "titleVn": "Tên địa điểm bằng tiếng Việt",
-        "placeholder": "Vui lòng nhập tên địa điểm",
+        "placeholder": "Nhập tên địa điểm",
         "error_required": "Vui lòng nhập tên địa điểm"
     },
     "type_location_form": {

@@ -89,7 +89,9 @@ const AppSider = ({ collapsed }: Props) => {
   const refLocation = useRef(null);
   const refCommodity = useRef(null);
   const refTypeOfContainer = useRef(null);
+  const refFeeCatalog = useRef(null);
   const refFee = useRef(null);
+  const refFeeGroup = useRef(null);
   const refAccountant = useRef(null);
   const refCurrency = useRef(null);
   const refBank = useRef(null);
@@ -256,13 +258,26 @@ const AppSider = ({ collapsed }: Props) => {
         ),
 
         getItem(
-          `${translateCommon('fee')}`,
-          ROUTERS.FEE,
-          <ProfileOutlined ref={refFee} />
+          `${translateCommon('fee_catalog')}`,
+          '7',
+          <FolderOpenOutlined ref={refFeeCatalog} />,
+          [
+            getItem(
+              `${translateCommon('fee')}`,
+              ROUTERS.FEE,
+              <ProfileOutlined ref={refFee} />
+            ),
+            getItem(
+              `${translateCommon('fee_group')}`,
+              ROUTERS.FEE_GROUP,
+              <ProfileOutlined ref={refFeeGroup} />
+            ),
+          ]
         ),
+
         getItem(
           `${translateCommon('accountant')}`,
-          '7',
+          '8',
           <DollarOutlined ref={refAccountant} />,
           [
             getItem(
@@ -306,7 +321,7 @@ const AppSider = ({ collapsed }: Props) => {
     ),
     getItem(
       `${translateCommon('system')}`,
-      '8',
+      '9',
       <ClusterOutlined ref={refSystem} />,
       [
         getItem(

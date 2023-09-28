@@ -59,11 +59,16 @@ export const ROUTERS = {
   LOCATION_MANAGER: (locationId: string) =>
     `/master-data/location-catalog/location/manager-admin/${locationId}`,
 
-  FEE: '/master-data/fee',
-  FEE_CREATE: '/master-data/fee/create',
+  FEE: '/master-data/fee-catalog/fee',
+  FEE_CREATE: '/master-data/fee-catalog/fee/create',
   FEE_EDIT: (feeId: string, checkRow = false) =>
-    `/master-data/fee/edit/${feeId}?checkRow=${checkRow}`,
-  FEE_MANAGER: (feeId: string) => `/master-data/fee/manager-admin/${feeId}`,
+    `/master-data/fee-catalog/fee/edit/${feeId}?checkRow=${checkRow}`,
+  FEE_MANAGER: (feeId: string) =>
+    `/master-data/fee-catalog/fee/manager-admin/${feeId}`,
+
+  FEE_GROUP: '/master-data/fee-catalog/fee-group',
+  FEE_GROUP_EDIT: (feeGroupId: string) =>
+    `/master-data/fee-catalog/fee-group/edit/${feeGroupId}`,
 
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_CREATE: '/master-data/accountant/currency/create',
