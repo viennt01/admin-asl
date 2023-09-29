@@ -17,7 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
@@ -30,15 +30,19 @@ import {
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
+  DENSITY,
   PaginationOfAntd,
   SkeletonTable,
-} from '@/components/commons/table/table-deafault';
+  TABLE_NAME,
+} from '@/components/commons/table/table-default';
 import {
   deleteLocationType,
   downloadExampleFile,
   exportTableFile,
+  getColumnTable,
   getLocationTypeSearch,
   importDataTable,
+  updateColumnTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../commons/table/table';
@@ -84,6 +88,18 @@ export default function MasterDataTable() {
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
+  useQuery({
+    queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
+    queryFn: () => getColumnTable(),
+    onSuccess(data) {
+      data.status
+        ? !('operation' in data.data.columnFixed)
+          ? setColumnsStateMap(initalValueDisplayColumnMaster)
+          : setColumnsStateMap(data.data.columnFixed)
+        : setColumnsStateMap(initalValueDisplayColumnMaster);
+    },
+  });
+
   const dataSelectSearch =
     querySelectParams.statusTypeLocation.length === 0
       ? {
@@ -134,6 +150,22 @@ export default function MasterDataTable() {
         pagination.total = totalPages;
       } else {
         setDataTable([]);
+      }
+    },
+  });
+
+  const updateColumnMutation = useMutation({
+    mutationFn: () =>
+      updateColumnTable({
+        tableName: TABLE_NAME.TYPE_OF_LOCATION,
+        density: DENSITY.Middle,
+        columnFixed: columnsStateMap,
+      }),
+    onSuccess: (data) => {
+      if (data.status) {
+        queryClient.invalidateQueries({
+          queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
+        });
       }
     },
   });
@@ -419,6 +451,7 @@ export default function MasterDataTable() {
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
     setColumnsStateMap(map);
+    updateColumnMutation.mutate();
   };
 
   const showPropsConfirmDelete = () => {

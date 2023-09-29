@@ -1,4 +1,4 @@
-import { Pagination } from '../commons/table/table-deafault';
+import { Pagination } from '../commons/table/table-default';
 
 export interface Commodity {
   commodityID: string;

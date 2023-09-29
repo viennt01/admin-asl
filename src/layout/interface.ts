@@ -1,4 +1,4 @@
-import { Pagination } from '@/components/commons/table/table-deafault';
+import { Pagination } from '@/components/commons/table/table-default';
 
 export interface TypePortData {
   typeLocationID: string;

@@ -5,7 +5,7 @@ import {
   API_USER,
 } from '@/fetcherAxios/endpoint';
 import { CityType, CountriesType, TypePortData } from './interface';
-import { Pagination } from '@/components/commons/table/table-deafault';
+import { Pagination } from '@/components/commons/table/table-default';
 
 export interface UserInfo {
   idUser: string;

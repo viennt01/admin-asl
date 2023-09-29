@@ -18,7 +18,11 @@ import {
   RequestContainerTypeTableRequest,
   RequestExportData,
 } from './interface';
-import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
+import {
+  ColumnTable,
+  TABLE_NAME,
+} from '@/components/commons/table/table-default';
 
 export const getTypeContainersSearch = (data: RequestTypeContainerType) => {
   return post<
@@ -99,4 +103,18 @@ export const exportTableFile = (data: RequestExportData) => {
   return exportFile<RequestExportData, BlobPart>({ data })(
     API_CONTAINER_TYPE.EXPORT
   );
+};
+//----------------------------------------------------------------
+//Get format column
+export const getColumnTable = () => {
+  return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
+    data: {
+      tableName: TABLE_NAME.TYPE_OF_CONTAINER,
+    },
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
+};
+export const updateColumnTable = (data: ColumnTable) => {
+  return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
+    data,
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };

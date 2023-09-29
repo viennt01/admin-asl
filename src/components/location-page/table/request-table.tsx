@@ -7,7 +7,7 @@ import {
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
-} from '@/components/commons/table/table-deafault';
+} from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
 
 import { ROUTERS } from '@/constant/router';

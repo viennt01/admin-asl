@@ -18,8 +18,11 @@ import {
   RequestLocationTypeTableRequest,
   RequestExportData,
 } from './interface';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
-
+import { API_COLUMN, API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import {
+  ColumnTable,
+  TABLE_NAME,
+} from '@/components/commons/table/table-default';
 export const getLocationTypeSearch = (data: RequestLocationTypeType) => {
   return post<
     RequestLocationTypeType,
@@ -99,4 +102,18 @@ export const exportTableFile = (data: RequestExportData) => {
   return exportFile<RequestExportData, BlobPart>({ data })(
     API_LOCATION_TYPE.EXPORT
   );
+};
+//----------------------------------------------------------------
+//Get format column
+export const getColumnTable = () => {
+  return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
+    data: {
+      tableName: TABLE_NAME.TYPE_OF_LOCATION,
+    },
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
+};
+export const updateColumnTable = (data: ColumnTable) => {
+  return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
+    data,
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };

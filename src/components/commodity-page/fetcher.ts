@@ -1,4 +1,8 @@
 import {
+  ColumnTable,
+  TABLE_NAME,
+} from '@/components/commons/table/table-default';
+import {
   ResponseWithPayload,
   downloadFile,
   exportFile,
@@ -18,7 +22,7 @@ import {
   RequestUnitTableRequest,
   RequestExportData,
 } from './interface';
-import { API_COMMODITY } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_COMMODITY } from '@/fetcherAxios/endpoint';
 
 export const getCommoditySearch = (data: RequestLocationType) => {
   return post<RequestLocationType, ResponseWithPayload<CommodityRequire>>({
@@ -94,4 +98,18 @@ export const exportTableFile = (data: RequestExportData) => {
   return exportFile<RequestExportData, BlobPart>({ data })(
     API_COMMODITY.EXPORT
   );
+};
+//----------------------------------------------------------------
+//Get format column
+export const getColumnTable = () => {
+  return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
+    data: {
+      tableName: TABLE_NAME.COMMODITY,
+    },
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
+};
+export const updateColumnTable = (data: ColumnTable) => {
+  return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
+    data,
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };

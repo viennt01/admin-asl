@@ -18,7 +18,11 @@ import {
   RequestFeeTableRequest,
   RequestExportData,
 } from './interface';
-import { API_FEE } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_FEE } from '@/fetcherAxios/endpoint';
+import {
+  ColumnTable,
+  TABLE_NAME,
+} from '@/components/commons/table/table-default';
 
 export const getFeeSearch = (data: RequestFeeType) => {
   return post<RequestFeeType, ResponseWithPayload<FeeRequire>>({
@@ -82,4 +86,18 @@ export const downloadExampleFile = () => {
 };
 export const exportTableFile = (data: RequestExportData) => {
   return exportFile<RequestExportData, BlobPart>({ data })(API_FEE.EXPORT);
+};
+//----------------------------------------------------------------
+//Get format column
+export const getColumnTable = () => {
+  return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
+    data: {
+      tableName: TABLE_NAME.FEE,
+    },
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
+};
+export const updateColumnTable = (data: ColumnTable) => {
+  return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
+    data,
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };

@@ -1,3 +1,4 @@
+import { ColumnTable, TABLE_NAME } from '../commons/table/table-default';
 import {
   ResponseWithPayload,
   downloadFile,
@@ -18,7 +19,12 @@ import {
   RequestLocationTypeTableRequest,
   RequestExportData,
 } from './interface';
-import { API_CURRENCY, API_LOCATION, API_UNIT } from '@/fetcherAxios/endpoint';
+import {
+  API_COLUMN,
+  API_CURRENCY,
+  API_LOCATION,
+  API_UNIT,
+} from '@/fetcherAxios/endpoint';
 
 export const getLocationSearch = (data: RequestLocationTypeType) => {
   return post<
@@ -94,4 +100,18 @@ export const downloadExampleFile = () => {
 };
 export const exportTableFile = (data: RequestExportData) => {
   return exportFile<RequestExportData, BlobPart>({ data })(API_UNIT.EXPORT);
+};
+//----------------------------------------------------------------
+//Get format column
+export const getColumnTable = () => {
+  return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
+    data: {
+      tableName: TABLE_NAME.LOCATION,
+    },
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
+};
+export const updateColumnTable = (data: ColumnTable) => {
+  return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
+    data,
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };

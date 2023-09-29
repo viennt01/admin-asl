@@ -14,7 +14,7 @@ import Table from '../../commons/table/table';
 import {
   DEFAULT_PAGINATION_5,
   PaginationOfAntd,
-} from '@/components/commons/table/table-deafault';
+} from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ProColumns } from '@ant-design/pro-components';

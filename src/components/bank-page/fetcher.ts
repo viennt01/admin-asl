@@ -18,8 +18,11 @@ import {
   RequestBankTableRequest,
   RequestExportData,
 } from './interface';
-import { API_BANK } from '@/fetcherAxios/endpoint';
-
+import { API_BANK, API_COLUMN } from '@/fetcherAxios/endpoint';
+import {
+  ColumnTable,
+  TABLE_NAME,
+} from '@/components/commons/table/table-default';
 export const getBankSearch = (data: RequestBankType) => {
   return post<RequestBankType, ResponseWithPayload<BankRequire>>({
     data,
@@ -82,4 +85,18 @@ export const downloadExampleFile = () => {
 };
 export const exportTableFile = (data: RequestExportData) => {
   return exportFile<RequestExportData, BlobPart>({ data })(API_BANK.EXPORT);
+};
+//----------------------------------------------------------------
+//Get format column
+export const getColumnTable = () => {
+  return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
+    data: {
+      tableName: TABLE_NAME.BANK,
+    },
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
+};
+export const updateColumnTable = (data: ColumnTable) => {
+  return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
+    data,
+  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };

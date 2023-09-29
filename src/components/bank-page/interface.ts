@@ -1,4 +1,4 @@
-import { Pagination } from '../commons/table/table-deafault';
+import { Pagination } from '../commons/table/table-default';
 import COLORS from '@/constant/color';
 
 export const STATUS_MASTER_COLORS = {

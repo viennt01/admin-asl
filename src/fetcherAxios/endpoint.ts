@@ -9,6 +9,11 @@ export const API_USER = {
   UPDATE_NEW_USER: '/change-status-new-user',
 };
 
+export const API_COLUMN = {
+  GET_COLUMN_TABLE_NAME: '/get-column-fixed',
+  UPDATE_COLUMN_TABLE_NAME: '/update-column-fixed',
+};
+
 export const API_UNIT = {
   GET_SEARCH: '/search-unit',
   GET_DETAIL: '/get-unit',

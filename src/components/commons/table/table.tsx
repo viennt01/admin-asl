@@ -16,7 +16,7 @@ import { Button, Input, TablePaginationConfig, Tooltip } from 'antd';
 import style from './index.module.scss';
 import useI18n from '@/i18n/useI18N';
 import { ChangeEvent, MouseEvent } from 'react';
-import { PaginationOfAntd } from '@/components/commons/table/table-deafault';
+import { PaginationOfAntd } from '@/components/commons/table/table-default';
 import { FilterValue } from 'antd/lib/table/interface';
 
 export const COUNT_DATA = 2147483640;

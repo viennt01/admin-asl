@@ -28,7 +28,7 @@ import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
   SkeletonTable,
-} from '@/components/commons/table/table-deafault';
+} from '@/components/commons/table/table-default';
 import {
   deleteAirPricing,
   downloadExampleFile,

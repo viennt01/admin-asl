@@ -1,4 +1,4 @@
-import { ProColumns, ProTable } from '@ant-design/pro-components';
+import { ColumnsState, ProColumns, ProTable } from '@ant-design/pro-components';
 import { Skeleton } from 'antd';
 
 export const DEFAULT_PAGINATION = {
@@ -21,6 +21,30 @@ export interface PaginationOfAntd {
   current: number;
   pageSize: number;
   total?: number;
+}
+
+export enum DENSITY {
+  'Larger' = 'Larger',
+  'Middle' = 'Middle',
+  'Compact' = 'Compact',
+}
+
+export enum TABLE_NAME {
+  LOCATION = 'Location',
+  TYPE_OF_LOCATION = 'Type of Location',
+  FEE = 'Fee',
+  FEE_GROUP = 'Fee Group',
+  CURRENCY = 'Currency',
+  BANK = 'Bank',
+  COMMODITY = 'Commodity',
+  TYPE_OF_CONTAINER = 'Type of Container',
+  TYPE_OF_UNIT = 'Type of Unit',
+}
+
+export interface ColumnTable {
+  tableName: string;
+  density: DENSITY;
+  columnFixed: Record<string, ColumnsState>;
 }
 
 export const SkeletonTable = () => {
