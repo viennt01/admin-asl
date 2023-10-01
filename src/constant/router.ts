@@ -70,6 +70,10 @@ export const ROUTERS = {
   FEE_GROUP_EDIT: (feeGroupId: string) =>
     `/master-data/fee-catalog/fee-group/edit/${feeGroupId}`,
 
+  TYPE_FEE_GROUP: '/master-data/fee-catalog/type-fee-group',
+  TYPE_FEE_GROUP_EDIT: (typeFeeGroupId: string) =>
+    `/master-data/fee-catalog/type-fee-group/edit/${typeFeeGroupId}`,
+
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_CREATE: '/master-data/accountant/currency/create',
   CURRENCY_EDIT: (currencyId: string, checkRow = false) =>
