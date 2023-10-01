@@ -111,5 +111,5 @@ export const getColumnTable = () => {
 export const updateColumnTable = (data: ColumnTable) => {
   return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
     data,
-  })(API_COLUMN.GET_COLUMN_TABLE_NAME);
+  })(API_COLUMN.UPDATE_COLUMN_TABLE_NAME);
 };
