@@ -21,6 +21,7 @@
     "fee_catalog": "Fee catalog",
     "fee": "Fee",
     "fee_group": "Fee Group",
+    "type_fee_group": "Type of Fee Group",
     "commodity": "Commodity",
     "type_of_container": "Type of Container",
     "unit": "Type of Unit",

@@ -21,6 +21,7 @@
     "fee_catalog": "Danh mục chi phí",
     "fee": "Chi phí",
     "fee_group": "Nhóm chi phí",
+    "type_fee_group": "Loại của nhóm chi phí",
     "commodity": "Hàng hóa",
     "type_of_container": "Loại Container",
     "unit": "Đơn vị",

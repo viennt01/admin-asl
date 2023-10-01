@@ -1,0 +1,27 @@
+{
+    "title": "List type of Fee Group",
+    "no" : "No",
+    "type_fee_group_code": "Code",
+    "type_fee_group_name": "Name",
+    "status": "Status",
+    "date_created": "Date created",
+    "creator": "Creator",
+    "date_inserted": "Date updated",
+    "inserter": "Update by user",
+
+    "information_add_type_fee_group": "Add New type of Fee Group",
+    "information_edit_type_fee_group": "Edit type of Fee Group",
+
+    "type_fee_group_code_form": {
+        "title": "Code",
+        "placeholder": "Enter type of Fee Group code",
+        "error_required": "Please enter type of Fee Group Code"
+    },
+    "type_fee_group_name_form": {
+        "title": "Name",
+        "titleEn": "Type of Fee Group name in English",
+        "titleVn": "Type of Fee Group name in Vietnamese",
+        "placeholder": "Enter type of Fee Group name",
+        "error_required": "Please enter type of Fee Group name"
+    }
+}
