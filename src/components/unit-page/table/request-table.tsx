@@ -15,13 +15,13 @@ import { API_UNIT } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps, Tag } from 'antd';
+import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
-import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -87,7 +87,7 @@ const RequestTable = () => {
     },
   });
 
-  const updateStatusUnitMutation = useMutation({
+  const updateStatusMutation = useMutation({
     mutationFn: (body: UpdateStatusUnit) => {
       return updateStatus(body);
     },
@@ -225,24 +225,6 @@ const RequestTable = () => {
       key: 'insertedByUser',
       align: 'center',
     },
-    {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
-      width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
-      align: 'center',
-      fixed: 'right',
-      render: (value) => (
-        <Tag
-          color={STATUS_ALL_COLORS[value as keyof typeof STATUS_ALL_COLORS]}
-          style={{
-            margin: 0,
-          }}
-        >
-          {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
-        </Tag>
-      ),
-    },
   ];
 
   // Handle logic table
@@ -255,7 +237,7 @@ const RequestTable = () => {
       id,
       status,
     };
-    updateStatusUnitMutation.mutate(_requestData, {
+    updateStatusMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
           ? (successToast(data.message),

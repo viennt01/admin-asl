@@ -71,8 +71,11 @@ export const ROUTERS = {
     `/master-data/fee-catalog/fee-group/edit/${feeGroupId}`,
 
   TYPE_FEE_GROUP: '/master-data/fee-catalog/type-fee-group',
-  TYPE_FEE_GROUP_EDIT: (typeFeeGroupId: string) =>
-    `/master-data/fee-catalog/type-fee-group/edit/${typeFeeGroupId}`,
+  TYPE_FEE_GROUP_CREATE: '/master-data/fee-catalog/type-fee-group/create',
+  TYPE_FEE_GROUP_EDIT: (typeFeeGroupId: string, checkRow = false) =>
+    `/master-data/fee-catalog/type-fee-group/edit/${typeFeeGroupId}?checkRow=${checkRow}`,
+  TYPE_FEE_GROUP_MANAGER: (typeFeeGroupId: string) =>
+    `/master-data/fee-catalog/type-fee-group/manager-admin/${typeFeeGroupId}`,
 
   CURRENCY: '/master-data/accountant/currency',
   CURRENCY_CREATE: '/master-data/accountant/currency/create',

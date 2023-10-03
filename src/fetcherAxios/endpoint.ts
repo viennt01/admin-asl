@@ -165,3 +165,17 @@ export const API_FEE = {
   GET_ALL: '/get-all-fee',
   EXPORT: '/export-fee-with-excel',
 };
+
+export const API_TYPE_FEE_GROUP = {
+  GET_SEARCH: '/search-type-fee-group',
+  GET_DETAIL: '/get-type-fee-group',
+  CREATE: '/add-type-fee-group',
+  EDIT: '/update-type-fee-group',
+  DELETE: '/delete-type-fee-group',
+  UPDATE_STATUS: '/update-status-type-fee-group',
+  GET_DRAFT: '/get-type-fee-group-with-status-and-id-User',
+  GET_REQUEST: '/get-type-fee-group-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-type-fee-group-excel',
+  IMPORT: '/import-type-fee-group-with-excel',
+  EXPORT: '/export-type-fee-group-with-excel',
+};

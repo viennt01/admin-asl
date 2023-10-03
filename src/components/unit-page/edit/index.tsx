@@ -5,10 +5,11 @@ import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import UnitForm from '../components/form';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 const EditUnit = () => {
   const checkRow = router.query.checkRow as string;
-  const updateUnitMutation = useMutation({
+  const updateMutation = useMutation({
     mutationFn: (body: UnitEdit) => {
       return editUnit(body);
     },
@@ -20,12 +21,12 @@ const EditUnit = () => {
     if (idQuery) {
       const _requestData: UnitEdit = {
         unitID: idQuery,
-        internationalCode: formValues.internationalCode,
-        descriptionVN: formValues.descriptionVN,
-        descriptionEN: formValues.descriptionEN,
-        statusUnit: formValues.statusUnit,
+        internationalCode: formValues.internationalCode || '',
+        descriptionVN: formValues.descriptionVN || '',
+        descriptionEN: formValues.descriptionEN || '',
+        statusUnit: formValues.statusUnit || STATUS_ALL_LABELS.ACTIVE,
       };
-      updateUnitMutation.mutate(_requestData, {
+      updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status ? successToast(data.message) : errorToast(data.message);
         },
@@ -42,7 +43,7 @@ const EditUnit = () => {
     <UnitForm
       edit
       handleSubmit={handleSubmit}
-      loadingSubmit={updateUnitMutation.isLoading}
+      loadingSubmit={updateMutation.isLoading}
       checkRow={checkRow === 'true' ? true : false}
     />
   );

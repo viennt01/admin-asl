@@ -1,20 +1,20 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
+import TypeFeeGroupFormManger from '@/components/type-fee-group-page/manager';
 
 function FeeManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | FEE MANAGER</title>
+        <title>ASL | TYPE OF FEE GROUP MANAGER</title>
       </Head>
-      <ManagerFee />
+      <TypeFeeGroupFormManger />
     </>
   );
 }
 
 export default withAuthentication(FeeManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-import ManagerFee from '@/components/fee-page/manager';
 export const getStaticProps = getStatic(['common', 'fee']);
 export const getStaticPaths = () => {
   return {

@@ -151,7 +151,7 @@ export default function MasterDataTable() {
     },
   });
 
-  const deleteUnitMutation = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: () => deleteUnit(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
@@ -404,7 +404,7 @@ export default function MasterDataTable() {
             cancelText={translateCommon('modal_delete.button_cancel')}
             onConfirm={() => {
               setSelectedRowKeys([value as string]);
-              deleteUnitMutation.mutate();
+              deleteMutation.mutate();
             }}
           >
             <Button
@@ -448,7 +448,7 @@ export default function MasterDataTable() {
       cancelText: translateCommon('modal_delete.button_cancel'),
       okType: 'danger',
       onOk() {
-        deleteUnitMutation.mutate();
+        deleteMutation.mutate();
       },
     });
   };

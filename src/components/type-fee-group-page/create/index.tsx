@@ -1,169 +1,123 @@
-import COLORS from '@/constant/color';
-import { PlusOutlined } from '@ant-design/icons';
-import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { Button, Form } from 'antd';
-import useI18n from '@/i18n/useI18N';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ROUTERS } from '@/constant/router';
+import { errorToast, successToast } from '@/hook/toast';
+import router from 'next/router';
+import { API_MESSAGE } from '@/constant/message';
+import TypeFeeGroupForm from '../components/form';
+import { FormValues, TypeFeeGroupCreate, TypeFeeGroupEdit } from '../interface';
+import { createTypeFeeGroup, editTypeFeeGroup } from '../fetcher';
+import { STATUS_ALL_LABELS } from '@/constant/form';
+import { API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
 
-// const waitTime = (time = 100) => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(true);
-//     }, time);
-//   });
-// };
-export default function CreateTypeFeeGroup() {
-  const [form] = Form.useForm<{ name: string; company: string }>();
-  const { translate: translateCommon } = useI18n('common');
-  const { translate: translateTypeFeeGroup } = useI18n('typeFeeGroup');
+const CreateTypeFeeGroup = () => {
+  const queryClient = useQueryClient();
+
+  const createMutation = useMutation({
+    mutationFn: (body: TypeFeeGroupCreate) => {
+      return createTypeFeeGroup(body);
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (body: TypeFeeGroupEdit) => {
+      return editTypeFeeGroup(body);
+    },
+  });
+
+  const handleSubmit = (formValues: FormValues, id?: string) => {
+    if (id) {
+      const _requestData: TypeFeeGroupEdit = {
+        typeFeeGroupID: id,
+        typeFeeGroupNo: formValues.typeFeeGroupNo || '',
+        typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
+        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        statusTypeFeeGroup: STATUS_ALL_LABELS.REQUEST,
+      };
+      updateMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.TYPE_FEE_GROUP))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      const _requestData: TypeFeeGroupCreate = {
+        typeFeeGroupNo: formValues.typeFeeGroupNo || '',
+        typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
+        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        statusTypeFeeGroup: STATUS_ALL_LABELS.REQUEST,
+      };
+      createMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message), router.push(ROUTERS.TYPE_FEE_GROUP))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
+  };
+
+  const handleSaveDraft = (formValues: FormValues, id?: string) => {
+    if (id) {
+      const _requestData: TypeFeeGroupEdit = {
+        typeFeeGroupID: id,
+        typeFeeGroupNo: formValues.typeFeeGroupNo || '',
+        typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
+        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        statusTypeFeeGroup: STATUS_ALL_LABELS.DRAFT,
+      };
+      updateMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_TYPE_FEE_GROUP.GET_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      const _requestData: TypeFeeGroupCreate = {
+        typeFeeGroupNo: formValues.typeFeeGroupNo || '',
+        typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
+        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        statusTypeFeeGroup: STATUS_ALL_LABELS.DRAFT,
+      };
+      createMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_TYPE_FEE_GROUP.GET_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
+  };
 
   return (
-    <ModalForm<{
-      name: string;
-      company: string;
-    }>
-      title={translateTypeFeeGroup('information_add_customer')}
-      trigger={
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          style={{
-            marginRight: '4px',
-            backgroundColor: COLORS.BRIGHT,
-            color: COLORS.GREEN,
-            borderColor: COLORS.GREEN,
-            fontWeight: '500',
-          }}
-        >
-          {translateCommon('button_add')}
-        </Button>
-      }
-      submitter={{
-        searchConfig: {
-          submitText: 'Add',
-          resetText: 'Cancel',
-        },
-      }}
-      form={form}
-      autoFocusFirstInput
-      modalProps={{
-        destroyOnClose: true,
-      }}
-      // submitTimeout={2000}
-      // onFinish={async (values) => {
-      //   await waitTime(2000);
-      //   message.success('提交成功');
-      //   return true;
-      // }}
-    >
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="Abbreviation"
-          label={translateTypeFeeGroup('abbreviation')}
-          placeholder={translateTypeFeeGroup('abbreviation_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="NameCustomer"
-          label={translateTypeFeeGroup('name')}
-          placeholder={translateTypeFeeGroup('name_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="NumberCustomer"
-          label={translateTypeFeeGroup('number')}
-          placeholder={translateTypeFeeGroup('number_placeholder')}
-          rules={[
-            {
-              type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập số lượng giao dịch',
-            },
-          ]}
-        />
-
-        <ProFormText
-          width="md"
-          name="Phone"
-          label={translateTypeFeeGroup('phone')}
-          placeholder={translateTypeFeeGroup('phone_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormSelect
-          request={async () => [
-            {
-              value: 'VietNam',
-              label: 'Việt Nam',
-            },
-            {
-              value: 'American',
-              label: 'Mỹ',
-            },
-          ]}
-          width="md"
-          name="CountryName"
-          label={translateTypeFeeGroup('country')}
-          placeholder={translateTypeFeeGroup('country_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="Address"
-          label={translateTypeFeeGroup('address')}
-          placeholder={translateTypeFeeGroup('address_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="sm"
-          name="Email"
-          label={translateTypeFeeGroup('email')}
-          placeholder={translateTypeFeeGroup('email_placeholder')}
-        />
-
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Nguyễn Văn A',
-            },
-            {
-              value: '2',
-              label: 'Nguyễn Văn B',
-            },
-          ]}
-          width="sm"
-          name="Saleman"
-          label={translateTypeFeeGroup('saleman')}
-          placeholder={translateTypeFeeGroup('saleman_placeholder')}
-        />
-
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Tạm ngừng',
-            },
-          ]}
-          width="sm"
-          name="Status"
-          label={translateTypeFeeGroup('status')}
-          placeholder={translateTypeFeeGroup('status_placeholder')}
-        />
-      </ProForm.Group>
-    </ModalForm>
+    <TypeFeeGroupForm
+      create
+      handleSubmit={handleSubmit}
+      handleSaveDraft={handleSaveDraft}
+      loadingSubmit={createMutation.isLoading || updateMutation.isLoading}
+      checkRow={false}
+      useDraft
+    />
   );
-}
+};
+
+export default CreateTypeFeeGroup;
