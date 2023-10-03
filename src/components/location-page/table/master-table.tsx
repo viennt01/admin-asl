@@ -380,7 +380,7 @@ export default function MasterDataTable() {
       title: translateLocation('type_of_port'),
       dataIndex: 'typeLocations',
       key: 'typeLocations',
-      width: 180,
+      width: 240,
       align: 'center',
       filteredValue: querySelectParams.typeLocations || null,
       filters:
@@ -417,18 +417,14 @@ export default function MasterDataTable() {
           <Popover content={content(value.typeLocations)}>
             {value.typeLocations.length <= 2 ? (
               value.typeLocations.map((type) => (
-                <Tag key={type.typeLocationID} style={{ marginTop: '8px' }}>
-                  {type.typeLocationName}
-                </Tag>
+                <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
               ))
             ) : (
               <>
                 {value.typeLocations.slice(0, 2).map((type) => (
-                  <Tag key={type.typeLocationID} style={{ marginTop: '8px' }}>
-                    {type.typeLocationName}
-                  </Tag>
+                  <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
                 ))}
-                <Tag style={{ marginTop: '8px' }}>...</Tag>
+                <Tag>...</Tag>
               </>
             )}
           </Popover>
