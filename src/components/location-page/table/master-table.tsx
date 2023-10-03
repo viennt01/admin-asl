@@ -4,7 +4,7 @@ import {
   FilterFilled,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
+import { Button, Modal, PaginationProps, Tag, Popconfirm, Popover } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -21,6 +21,7 @@ import {
   API_COLUMN,
   API_LOCATION_TYPE,
   API_MASTER_DATA,
+  API_LOCATION,
 } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
@@ -31,6 +32,7 @@ import {
   QuerySelectParamType,
   SelectSearch,
   LocationTable,
+  TypeLocations,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -129,7 +131,7 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_LOCATION_TYPE.GET_SEARCH,
+      API_LOCATION.GET_SEARCH,
       pagination,
       queryInputParams,
       querySelectParams,
@@ -196,7 +198,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_LOCATION_TYPE.GET_SEARCH],
+          queryKey: [API_LOCATION.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -399,10 +401,39 @@ export default function MasterDataTable() {
         );
       },
       filterMultiple: true,
-      render: (_, value) =>
-        value.typeLocations.map((type) => {
-          return <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>;
-        }),
+      render: (_, value) => {
+        const content = (valueTypeLocations: TypeLocations[]) => {
+          return (
+            <div>
+              {valueTypeLocations.map((type) => {
+                return (
+                  <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
+                );
+              })}
+            </div>
+          );
+        };
+        return (
+          <Popover content={content(value.typeLocations)}>
+            {value.typeLocations.length <= 2 ? (
+              value.typeLocations.map((type) => (
+                <Tag key={type.typeLocationID} style={{ marginTop: '8px' }}>
+                  {type.typeLocationName}
+                </Tag>
+              ))
+            ) : (
+              <>
+                {value.typeLocations.slice(0, 2).map((type) => (
+                  <Tag key={type.typeLocationID} style={{ marginTop: '8px' }}>
+                    {type.typeLocationName}
+                  </Tag>
+                ))}
+                <Tag style={{ marginTop: '8px' }}>...</Tag>
+              </>
+            )}
+          </Popover>
+        );
+      },
     },
     {
       title: translateLocation('status'),
@@ -581,7 +612,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_LOCATION_TYPE.GET_REQUEST],
+          queryKey: [API_LOCATION.GET_REQUEST],
         });
         setLoadingImport(false);
         setOpenImportModal(false);

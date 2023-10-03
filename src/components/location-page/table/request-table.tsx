@@ -15,7 +15,13 @@ import { API_LOCATION, API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps, TablePaginationConfig, Tag } from 'antd';
+import {
+  Button,
+  PaginationProps,
+  Popover,
+  TablePaginationConfig,
+  Tag,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
@@ -33,6 +39,7 @@ import {
   QueryInputRequest,
   QuerySelectRequest,
   SelectSearchRequest,
+  TypeLocations,
   UpdateStatusLocation,
 } from '../interface';
 import { getListTypeLocations } from '@/layout/fetcher';
@@ -249,10 +256,39 @@ const RequestTable = () => {
         );
       },
       filterMultiple: false,
-      render: (_, value) =>
-        value.typeLocations.map((type) => {
-          return <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>;
-        }),
+      render: (_, value) => {
+        const content = (valueTypeLocations: TypeLocations[]) => {
+          return (
+            <div>
+              {valueTypeLocations.map((type) => {
+                return (
+                  <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
+                );
+              })}
+            </div>
+          );
+        };
+        return (
+          <Popover content={content(value.typeLocations)}>
+            {value.typeLocations.length <= 2 ? (
+              value.typeLocations.map((type) => (
+                <Tag key={type.typeLocationID} style={{ marginTop: '8px' }}>
+                  {type.typeLocationName}
+                </Tag>
+              ))
+            ) : (
+              <>
+                {value.typeLocations.slice(0, 2).map((type) => (
+                  <Tag key={type.typeLocationID} style={{ marginTop: '8px' }}>
+                    {type.typeLocationName}
+                  </Tag>
+                ))}
+                <Tag style={{ marginTop: '8px' }}>...</Tag>
+              </>
+            )}
+          </Popover>
+        );
+      },
     },
     {
       title: <div className={style.title}>{translateLocation('name')}</div>,
