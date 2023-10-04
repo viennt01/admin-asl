@@ -160,7 +160,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'commodityName',
       key: 'commodityName',
       width: 150,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,

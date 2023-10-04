@@ -137,7 +137,7 @@ const RequestTable = () => {
       title: <div className={style.title}>{translatePricingSea('no')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -183,7 +183,7 @@ const RequestTable = () => {
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
-      align: 'center',
+      align: 'left',
       render: (value) => value,
     },
     {
@@ -191,28 +191,28 @@ const RequestTable = () => {
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('vendor'),
       width: 200,
       dataIndex: 'partnerName',
       key: 'partnerName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('commodity'),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('LCLMin'),
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
-      align: 'center',
+      align: 'right',
       render: (value) => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },
@@ -222,7 +222,7 @@ const RequestTable = () => {
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',
-      align: 'center',
+      align: 'right',
       render: (value) => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },

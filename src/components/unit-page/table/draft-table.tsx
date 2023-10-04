@@ -145,7 +145,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       title: <div className={style.title}>{translateUnit('code')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -176,7 +176,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'description',
       key: 'description',
       width: 250,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,

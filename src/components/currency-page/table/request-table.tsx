@@ -180,7 +180,7 @@ const RequestTable = () => {
       dataIndex: 'currencyName',
       key: 'currencyName',
       width: 150,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -201,7 +201,7 @@ const RequestTable = () => {
       dataIndex: 'exchangeRateToVND',
       key: 'exchangeRateToVND',
       width: 250,
-      align: 'center',
+      align: 'right',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -225,7 +225,7 @@ const RequestTable = () => {
       dataIndex: 'exchangeRateToUSD',
       key: 'exchangeRateToUSD',
       width: 250,
-      align: 'center',
+      align: 'right',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,

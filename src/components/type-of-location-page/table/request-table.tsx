@@ -130,12 +130,10 @@ const RequestTable = () => {
   // Handle data show table
   const columns: ProColumns<LocationTypeTable>[] = [
     {
-      title: (
-        <div className={style.title}>{translateLocationType('bank_no')}</div>
-      ),
+      title: <div className={style.title}>{translateLocationType('no')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -181,7 +179,7 @@ const RequestTable = () => {
       dataIndex: 'typeLocationName',
       key: 'typeLocationName',
       width: 150,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -202,7 +200,7 @@ const RequestTable = () => {
       dataIndex: 'description',
       key: 'description',
       width: 250,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,

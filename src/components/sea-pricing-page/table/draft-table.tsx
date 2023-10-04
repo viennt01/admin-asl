@@ -162,7 +162,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'index',
       width: 50,
       align: 'center',
-      fixed: 'left',
+      fixed: 'right',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
@@ -173,7 +173,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
-      align: 'center',
+      align: 'left',
       render: (value) => value,
     },
     {
@@ -181,35 +181,35 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('vendor'),
       width: 200,
       dataIndex: 'partnerName', // TODO: check again
       key: 'partnerName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('commodity'),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('LCLMin'),
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
-      align: 'center',
+      align: 'right',
     },
     {
       title: translatePricingSea('LCL'),
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',
-      align: 'center',
+      align: 'right',
     },
     {
       title: (

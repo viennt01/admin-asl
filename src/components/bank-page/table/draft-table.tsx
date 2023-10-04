@@ -152,7 +152,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       title: <div className={style.title}>{translateBank('bank_no')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -181,7 +181,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'bankName',
       key: 'bankName',
       width: 250,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
@@ -200,7 +200,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'accountNumberVND',
       key: 'accountNumberVND',
       width: 250,
-      align: 'center',
+      align: 'right',
       ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
@@ -219,7 +219,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'accountNumberUSD',
       key: 'accountNumberUSD',
       width: 250,
-      align: 'center',
+      align: 'right',
       ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,

@@ -160,7 +160,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       title: <div className={style.title}>{translatePricingAir('code')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};

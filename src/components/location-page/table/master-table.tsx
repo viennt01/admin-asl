@@ -307,7 +307,7 @@ export default function MasterDataTable() {
       title: <div className={style.title}>{translateLocation('no')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
@@ -334,7 +334,7 @@ export default function MasterDataTable() {
       title: translateLocation('name'),
       dataIndex: 'locationName',
       key: 'locationName',
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -351,7 +351,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'cityID',
       key: 'cityID',
-      align: 'center',
+      align: 'left',
       filteredValue: [querySelectParams.cityID] || null,
       filters:
         city.data?.data?.data.map((item) => ({
@@ -457,7 +457,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
-      align: 'right',
+      align: 'center',
       render: (value) => formatDate(Number(value)),
     },
     {
