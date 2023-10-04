@@ -10,14 +10,14 @@ const SHOW_ROUTER_HEADER = () => {
 
     '/quotation/sea-quotation': [
       { title: `${translateCommon('quotation')}` },
-      { title: `${translateCommon('sea_pricing')}` },
+      { title: `${translateCommon('sea_quotation')}` },
     ],
     '/quotation/sea-quotation/create': [
       { title: `${translateCommon('quotation')}` },
       {
         title: (
           <Link href={ROUTERS.SEA_QUOTATION}>
-            {translateCommon('sea_pricing')}
+            {translateCommon('sea_quotation')}
           </Link>
         ),
       },
@@ -28,7 +28,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.SEA_QUOTATION}>
-            {translateCommon('sea_pricing')}
+            {translateCommon('sea_quotation')}
           </Link>
         ),
       },
@@ -39,7 +39,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.SEA_QUOTATION}>
-            {translateCommon('sea_pricing')}
+            {translateCommon('sea_quotation')}
           </Link>
         ),
       },
@@ -48,14 +48,14 @@ const SHOW_ROUTER_HEADER = () => {
 
     '/quotation/air-quotation': [
       { title: `${translateCommon('quotation')}` },
-      { title: `${translateCommon('air_pricing')}` },
+      { title: `${translateCommon('air_quotation')}` },
     ],
     '/quotation/air-quotation/create': [
       { title: `${translateCommon('quotation')}` },
       {
         title: (
           <Link href={ROUTERS.AIR_QUOTATION}>
-            {translateCommon('air_pricing')}
+            {translateCommon('air_quotation')}
           </Link>
         ),
       },
@@ -66,7 +66,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.AIR_QUOTATION}>
-            {translateCommon('air_pricing')}
+            {translateCommon('air_quotation')}
           </Link>
         ),
       },
@@ -77,7 +77,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.AIR_QUOTATION}>
-            {translateCommon('air_pricing')}
+            {translateCommon('air_quotation')}
           </Link>
         ),
       },
@@ -86,14 +86,14 @@ const SHOW_ROUTER_HEADER = () => {
 
     '/quotation/customs-quotation': [
       { title: `${translateCommon('quotation')}` },
-      { title: `${translateCommon('customs_pricing')}` },
+      { title: `${translateCommon('customs_quotation')}` },
     ],
     '/quotation/customs-quotation/create': [
       { title: `${translateCommon('quotation')}` },
       {
         title: (
           <Link href={ROUTERS.CUSTOMS_QUOTATION}>
-            {translateCommon('customs_pricing')}
+            {translateCommon('customs_quotation')}
           </Link>
         ),
       },
@@ -104,7 +104,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.CUSTOMS_QUOTATION}>
-            {translateCommon('customs_pricing')}
+            {translateCommon('customs_quotation')}
           </Link>
         ),
       },
@@ -115,7 +115,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.CUSTOMS_QUOTATION}>
-            {translateCommon('customs_pricing')}
+            {translateCommon('customs_quotation')}
           </Link>
         ),
       },
@@ -124,14 +124,14 @@ const SHOW_ROUTER_HEADER = () => {
 
     '/quotation/trucking-quotation': [
       { title: `${translateCommon('quotation')}` },
-      { title: `${translateCommon('trucking_pricing')}` },
+      { title: `${translateCommon('trucking_quotation')}` },
     ],
     '/quotation/trucking-quotation/create': [
       { title: `${translateCommon('quotation')}` },
       {
         title: (
           <Link href={ROUTERS.TRUCKING_QUOTATION}>
-            {translateCommon('trucking_pricing')}
+            {translateCommon('trucking_quotation')}
           </Link>
         ),
       },
@@ -142,7 +142,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.TRUCKING_QUOTATION}>
-            {translateCommon('trucking_pricing')}
+            {translateCommon('trucking_quotation')}
           </Link>
         ),
       },
@@ -153,7 +153,7 @@ const SHOW_ROUTER_HEADER = () => {
       {
         title: (
           <Link href={ROUTERS.TRUCKING_QUOTATION}>
-            {translateCommon('trucking_pricing')}
+            {translateCommon('trucking_quotation')}
           </Link>
         ),
       },

@@ -153,7 +153,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: 'Please chooses currency',
+          message: translatePricingSea('currency_form.placeholder'),
         },
       ]}
     >
@@ -174,7 +174,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: 'Please chooses currency',
+          message: translatePricingSea('currency_form.placeholder'),
         },
       ]}
     >
@@ -257,13 +257,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('POL_placeholder'),
+                message: translatePricingSea('POL_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('POL_placeholder')}
+              placeholder={translatePricingSea('POL_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -293,13 +293,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('POD_placeholder'),
+                message: translatePricingSea('POD_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('POD_placeholder')}
+              placeholder={translatePricingSea('POD_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -329,7 +329,7 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('validity_placeholder'),
+                message: translatePricingSea('validity_form.placeholder'),
               },
             ]}
           >
@@ -347,7 +347,7 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('effect_date_placeholder'),
+                message: translatePricingSea('effect_date_form.placeholder'),
               },
             ]}
           >
@@ -365,13 +365,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('freq_placeholder'),
+                message: translatePricingSea('freq_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingSea('freq_placeholder')}
+              placeholder={translatePricingSea('freq_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -388,13 +388,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('STO_placeholder'),
+                message: translatePricingSea('STO_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingSea('STO_placeholder')}
+              placeholder={translatePricingSea('STO_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -410,13 +410,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('DEM_placeholder'),
+                message: translatePricingSea('DEM_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               style={{ width: '100%' }}
-              placeholder={translatePricingSea('DEM_placeholder')}
+              placeholder={translatePricingSea('DEM_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -432,13 +432,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('DET_placeholder'),
+                message: translatePricingSea('DET_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               style={{ width: '100%' }}
-              placeholder={translatePricingSea('DET_placeholder')}
+              placeholder={translatePricingSea('DET_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -455,13 +455,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('commodity_placeholder'),
+                message: translatePricingSea('commodity_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('commodity_placeholder')}
+              placeholder={translatePricingSea('commodity_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -490,13 +490,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('LCL_placeholder'),
+                message: translatePricingSea('LCL_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCL}
-              placeholder={translatePricingSea('LCL_placeholder')}
+              placeholder={translatePricingSea('LCL_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -513,13 +513,13 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translatePricingSea('LCLMin_placeholder'),
+                message: translatePricingSea('LCLMin_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCLMin}
-              placeholder={translatePricingSea('LCLMin_placeholder')}
+              placeholder={translatePricingSea('LCLMin_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -533,7 +533,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item label={translatePricingSea('vendor')} name="vendor">
             <Input
-              placeholder={translatePricingSea('vendor_placeholder')}
+              placeholder={translatePricingSea('vendor_form.placeholder')}
               disabled
             />
           </Form.Item>

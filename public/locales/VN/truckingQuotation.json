@@ -1,11 +1,11 @@
 {
-    "title": "Danh sách định giá đường biển",
+    "title": "Danh sách báo giá vận chuyển bằng xe tải",
     "no" : "No",
     "POL": "POL",
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
-    "vendor": "Vendor",
+    "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
@@ -39,10 +39,10 @@
     "date_created": "Date created",
     "creator": "Creator",
 
-    "title_sea_freight": "Vận tải bằng đường biển",
+    "title_trucking_freight": "Vận chuyển bằng xe tải",
     "title_local_chart": "Phụ phí",
-    "information_add_sea_pricing": "Thêm mới định giá đường biển",
-    "information_edit_sea_pricing": "Chỉnh sửa định giá đường biển",
+    "information_add_trucking_pricing": "Thêm mới định giá vận chuyển bằng xe tải",
+    "information_edit_trucking_pricing": "Chỉnh sửa định giá vận chuyển bằng xe tải",
 
     "POL_form": {
         "title": "POL",
@@ -68,10 +68,10 @@
         "error_required": "Vui lòng nhập country"
     },
 
-    "vendor_form": {
-        "title": "Vendor",
-        "placeholder": "Nhập vendor",
-        "error_required": "Vui lòng nhập vendor"
+    "customerID_form": {
+        "title": "Customer ID",
+        "placeholder": "Nhập Customer ID",
+        "error_required": "Vui lòng nhập customer ID"
     },
 
     "carrier_form": {

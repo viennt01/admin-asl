@@ -8,39 +8,64 @@ export const ROUTERS = {
     `/request-for-approval/edit/${requestForApprovalId}`,
   BOOKING: '/booking',
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
-  SEA_QUOTATION: '/quotation/quotation-sea',
-  SEA_QUOTATION_EDIT: (quotationSeaId: string) =>
-    `/quotation/quotation-sea/edit/${quotationSeaId}`,
-  AIR_QUOTATION: '/quotation/quotation-air',
-  AIR_QUOTATION_EDIT: (quotationAirId: string) =>
-    `/quotation/quotation-air/edit/${quotationAirId}`,
-  CUSTOMS_QUOTATION: '/quotation/quotation-customs',
-  CUSTOMS_QUOTATION_EDIT: (quotationCustomsId: string) =>
-    `/quotation/quotation-customs/edit/${quotationCustomsId}`,
-  TRUCKING_QUOTATION: '/quotation/quotation-trucking',
-  TRUCKING_QUOTATION_EDIT: (quotationTruckingId: string) =>
-    `/quotation/quotation-trucking/edit/${quotationTruckingId}`,
+
+  SEA_QUOTATION: '/quotation/sea-quotation',
+  SEA_QUOTATION_CREATE: '/quotation/sea-quotation/create',
+  SEA_QUOTATION_EDIT: (seaQuotationId: string) =>
+    `/quotation/sea-quotation/edit/${seaQuotationId}`,
+  SEA_QUOTATION_MANAGER: (seaQuotationId: string) =>
+    `/quotation/sea-quotation/manager-admin/${seaQuotationId}`,
+
+  AIR_QUOTATION: '/quotation/air-quotation',
+  //AIR_QUOTATION_CREATE: '/quotation/air-quotation/create',
+  AIR_QUOTATION_EDIT: (airQuotationId: string) =>
+    `/quotation/air-quotation/edit/${airQuotationId}`,
+  // AIR_QUOTATION_MANAGER: (airQuotationId: string) =>
+  //   `/quotation/air-quotation/manager-admin/${airQuotationId}`,
+
+  CUSTOMS_QUOTATION: '/quotation/customs-quotation',
+  //CUSTOMS_QUOTATION_CREATE: '/quotation/customs-quotation/create',
+  CUSTOMS_QUOTATION_EDIT: (customsQuotationId: string) =>
+    `/quotation/customs-quotation/edit/${customsQuotationId}`,
+  // CUSTOMS_QUOTATION_MANAGER: (customsQuotationId: string) =>
+  //   `/quotation/customs-quotation/manager-admin/${customsQuotationId}`,
+
+  TRUCKING_QUOTATION: '/quotation/trucking-quotation',
+  TRUCKING_QUOTATION_CREATE: '/quotation/trucking-quotation/create',
+  TRUCKING_QUOTATION_EDIT: (truckingQuotationId: string) =>
+    `/quotation/trucking-quotation/edit/${truckingQuotationId}`,
+  TRUCKING_QUOTATION_MANAGER: (truckingQuotationId: string) =>
+    `/quotation/trucking-quotation/manager-admin/${truckingQuotationId}`,
+
   QUOTATION_ALL_IN: '/quotation/quotation-all-in',
+  //QUOTATION_ALL_IN_CREATE: '/quotation/quotation-all-in/create',
   QUOTATION_ALL_IN_EDIT: (quotationAllInId: string) =>
     `/quotation/quotation-all-in/edit/${quotationAllInId}`,
+  // QUOTATION_ALL_IN_MANAGER: (quotationAllInId: string) =>
+  //   `/quotation/quotation-all-in/manager-admin/${quotationAllInId}`,
+
   SEA_PRICING: '/pricing/pricing-sea',
   SEA_PRICING_CREATE: '/pricing/pricing-sea/create',
   SEA_PRICING_EDIT: (seaPricingId: string, checkRow = false) =>
     `/pricing/pricing-sea/edit/${seaPricingId}?checkRow=${checkRow}`,
   SEA_PRICING_MANAGER: (seaPricingId: string) =>
     `/pricing/pricing-sea/manager-admin/${seaPricingId}`,
+
   AIR_PRICING: '/pricing/pricing-air',
   AIR_PRICING_CREATE: '/pricing/pricing-air/create',
   AIR_PRICING_EDIT: (airPricingId: string, checkRow = false) =>
     `/pricing/pricing-air/edit/${airPricingId}?checkRow=${checkRow}`,
   AIR_PRICING_MANAGER: (airPricingId: string) =>
     `/pricing/pricing-air/manager-admin/${airPricingId}`,
+
   CUSTOMS_PRICING: '/pricing/pricing-customs',
   CUSTOMS_PRICING_EDIT: (customsPricingId: string) =>
     `/pricing/pricing-customs/edit/${customsPricingId}`,
+
   TRUCKING_PRICING: '/pricing/pricing-trucking',
   TRUCKING_PRICING_EDIT: (truckingPricingId: string) =>
     `/pricing/pricing-trucking/edit/${truckingPricingId}`,
+
   PARTNER: '/partner',
   PARTNER_EDIT: (partnerId: string) => `/partner/edit/${partnerId}`,
 
@@ -67,8 +92,11 @@ export const ROUTERS = {
     `/master-data/fee-catalog/fee/manager-admin/${feeId}`,
 
   FEE_GROUP: '/master-data/fee-catalog/fee-group',
+  FEE_GROUP_CREATE: '/master-data/fee-catalog/fee-group/create',
   FEE_GROUP_EDIT: (feeGroupId: string) =>
     `/master-data/fee-catalog/fee-group/edit/${feeGroupId}`,
+  // FEE_GROUP_MANAGER: (feeGroupId: string) =>
+  //   `/master-data/fee-catalog/fee-group/manager-admin/${feeGroupId}`,
 
   TYPE_FEE_GROUP: '/master-data/fee-catalog/type-fee-group',
   TYPE_FEE_GROUP_CREATE: '/master-data/fee-catalog/type-fee-group/create',

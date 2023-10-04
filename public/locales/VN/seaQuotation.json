@@ -1,11 +1,11 @@
 {
-    "title": "Danh sách định giá đường biển",
+    "title": "Danh sách báo giá đường biển",
     "no" : "No",
     "POL": "POL",
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
-    "vendor": "Vendor",
+    "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
@@ -68,10 +68,10 @@
         "error_required": "Vui lòng nhập country"
     },
 
-    "vendor_form": {
-        "title": "Vendor",
-        "placeholder": "Nhập vendor",
-        "error_required": "Vui lòng nhập vendor"
+    "customerID_form": {
+        "title": "Customer ID",
+        "placeholder": "Nhập Customer ID",
+        "error_required": "Vui lòng nhập customer ID"
     },
 
     "carrier_form": {
