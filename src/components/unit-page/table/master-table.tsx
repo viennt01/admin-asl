@@ -271,7 +271,7 @@ export default function MasterDataTable() {
       title: <div className={style.title}>{translateUnit('code')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
@@ -284,7 +284,7 @@ export default function MasterDataTable() {
       dataIndex: 'internationalCode',
       key: 'internationalCode',
       width: 150,
-      align: 'left',
+      align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -357,7 +357,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
-      align: 'right',
+      align: 'center',
       render: (value) => formatDate(Number(value)),
     },
     {

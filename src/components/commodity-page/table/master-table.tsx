@@ -341,7 +341,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
-      align: 'right',
+      align: 'center',
       render: (value) => formatDate(Number(value)),
     },
     {

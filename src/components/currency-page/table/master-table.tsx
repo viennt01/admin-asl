@@ -310,7 +310,7 @@ export default function MasterDataTable() {
       dataIndex: 'exchangeRateToVND',
       key: 'exchangeRateToVND',
       width: 250,
-      align: 'left',
+      align: 'right',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -334,7 +334,7 @@ export default function MasterDataTable() {
       dataIndex: 'exchangeRateToUSD',
       key: 'exchangeRateToUSD',
       width: 250,
-      align: 'left',
+      align: 'right',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -393,7 +393,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
-      align: 'right',
+      align: 'center',
       render: (value) => formatDate(Number(value)),
     },
     {

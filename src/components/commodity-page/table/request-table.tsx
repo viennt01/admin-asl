@@ -176,7 +176,7 @@ const RequestTable = () => {
       dataIndex: 'commodityName',
       key: 'commodityName',
       width: 150,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,

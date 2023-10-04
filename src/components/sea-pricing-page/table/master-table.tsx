@@ -255,7 +255,7 @@ export default function MasterDataTable() {
       title: <div className={style.title}>{translatePricingSea('no')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
@@ -266,7 +266,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
-      align: 'center',
+      align: 'left',
       render: (value) => value,
     },
     {
@@ -274,7 +274,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: <div className={style.title}>{translatePricingSea('status')}</div>,
@@ -318,21 +318,21 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'partnerName', // TODO:Check again
       key: 'partnerName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('commodity'),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingSea('LCLMin'),
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
-      align: 'center',
+      align: 'right',
       render: (value) => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },
@@ -342,7 +342,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',
-      align: 'center',
+      align: 'right',
       render: (value) => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },
@@ -352,14 +352,14 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
-      align: 'center',
+      align: 'right',
     },
     {
       title: translatePricingSea('effect_date'),
       width: 200,
       dataIndex: 'dateEffect',
       key: 'dateEffect',
-      align: 'center',
+      align: 'right',
       render: (value) => formatDate(Number(value)),
     },
     {
@@ -367,7 +367,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
-      align: 'center',
+      align: 'right',
       render: (value) => formatDate(Number(value)),
     },
     {
@@ -375,7 +375,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
-      align: 'center',
+      align: 'right',
       render: (value) => formatDate(Number(value)),
     },
     {
@@ -383,7 +383,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'demSeaPricing',
       key: 'demSeaPricing',
-      align: 'center',
+      align: 'right',
       render: (value) => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },
@@ -393,7 +393,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'stoSeaPricing',
       key: 'stoSeaPricing',
-      align: 'center',
+      align: 'right',
       render: (value) => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },
@@ -403,7 +403,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'detSeaPricing',
       key: 'detSeaPricing',
-      align: 'center',
+      align: 'right',
       render: (value) => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },
@@ -413,7 +413,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'note',
       key: 'note',
-      align: 'center',
+      align: 'left',
     },
     {
       title: (
@@ -422,7 +422,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
-      align: 'right',
+      align: 'center',
       render: (value) => formatDate(Number(value)),
     },
     {

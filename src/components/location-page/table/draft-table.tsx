@@ -149,7 +149,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'index',
       width: 50,
       align: 'center',
-      fixed: 'left',
+      fixed: 'right',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
@@ -177,7 +177,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'locationName',
       key: 'locationName',
       width: 250,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,

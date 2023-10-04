@@ -132,7 +132,7 @@ const RequestTable = () => {
       title: <div className={style.title}>{translateFee('fee_no')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -195,7 +195,7 @@ const RequestTable = () => {
       dataIndex: 'feeName',
       key: 'feeName',
       width: 250,
-      align: 'center',
+      align: 'left',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
@@ -212,7 +212,7 @@ const RequestTable = () => {
       dataIndex: 'vatFee',
       key: 'vatFee',
       width: 250,
-      align: 'center',
+      align: 'right',
       ...ColumnSearchTableProps<QueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
