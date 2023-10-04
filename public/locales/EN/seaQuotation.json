@@ -1,11 +1,11 @@
 {
-    "title": "List of Sea Pricing",
+    "title": "List of Sea Quotation",
     "no" : "No",
     "POL": "POL",
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
-    "vendor": "Vendor",
+    "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
@@ -41,9 +41,8 @@
 
     "title_sea_freight": "Sea Freight",
     "title_local_chart": "Local Chart",
-    "information_add_sea_pricing": "Add new Sea Pricing",
     "information_edit_sea_pricing": "Edit Sea Pricing",
-
+    
     "POL_form": {
         "title": "POL",
         "placeholder": "Enter POL",
@@ -68,10 +67,10 @@
         "error_required": "Please enter country"
     },
 
-    "vendor_form": {
-        "title": "Vendor",
-        "placeholder": "Enter vendor",
-        "error_required": "Please enter vendor"
+    "customerID_form": {
+        "title": "Customer ID",
+        "placeholder": "Enter Customer ID",
+        "error_required": "Please enter Customer ID"
     },
 
     "carrier_form": {
@@ -161,7 +160,7 @@
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
-        "error_required": "Please chooses currency"
+        "error_required": "Please enter currency"
     },
 
     "VAT_form": {
@@ -209,7 +208,7 @@
     "empty_return_form": {
         "title": "empty_return",
         "placeholder": "Enter empty_return",
-        "error_required": "Please enter Empty Return"
+        "error_required": "Please enter empty_return"
     },
 
     "amend_form": {
