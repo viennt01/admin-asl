@@ -22,12 +22,7 @@ import {
   RequestLocationTypeTableRequest,
   RequestExportData,
 } from './interface';
-import {
-  API_COLUMN,
-  API_CURRENCY,
-  API_LOCATION,
-  API_UNIT,
-} from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_LOCATION } from '@/fetcherAxios/endpoint';
 
 export const getLocationSearch = (data: RequestLocationTypeType) => {
   return post<
@@ -96,13 +91,13 @@ export const getTableRequire = (data: RequestLocationTypeTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_CURRENCY.IMPORT);
+  return uploadFile({ data, timeout: 10000 })(API_LOCATION.IMPORT);
 };
 export const downloadExampleFile = () => {
-  return downloadFile<BlobPart>({})(API_CURRENCY.DOWNLOAD_EXAMPLE_FILE);
+  return downloadFile<BlobPart>({})(API_LOCATION.DOWNLOAD_EXAMPLE_FILE);
 };
 export const exportTableFile = (data: RequestExportData) => {
-  return exportFile<RequestExportData, BlobPart>({ data })(API_UNIT.EXPORT);
+  return exportFile<RequestExportData, BlobPart>({ data })(API_LOCATION.EXPORT);
 };
 //----------------------------------------------------------------
 //Get format column
