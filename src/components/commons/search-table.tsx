@@ -2,7 +2,7 @@ import { ProColumns } from '@ant-design/pro-components';
 import { Button, Input, InputRef, Space } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { useRef } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
@@ -45,6 +45,16 @@ export const ColumnSearchTableProps = <T,>({
 }) => {
   const searchInput = useRef<InputRef>(null);
   const { translate: translateCommon } = useI18n('common');
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: {
+        label: dataIndex,
+        value: e.target.value.toUpperCase(),
+      },
+    }));
+  };
   const getColumnSearchProps: ColumnSearchProps<T>['filterDropdown'] = ({
     confirm,
     clearFilters,
@@ -56,10 +66,7 @@ export const ColumnSearchTableProps = <T,>({
         placeholder={translateCommon('search')}
         value={selectedKeyShow[dataIndex]?.value}
         onChange={(e) => {
-          setSelectedKeyShow((prevData) => ({
-            ...prevData,
-            [dataIndex]: { label: dataIndex, value: e.target.value },
-          }));
+          handleInputChange(e);
         }}
         onPressEnter={() =>
           handleSearch(selectedKeyShow[dataIndex].value, confirm, dataIndex)
