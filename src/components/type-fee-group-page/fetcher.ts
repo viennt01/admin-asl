@@ -7,7 +7,7 @@ import {
 } from '@/fetcherAxios';
 import {
   TypeFeeGroupsRequire,
-  RequestLocationType,
+  RequestFeeGroupType,
   RequestTypeFeeGroupTableDraft,
   TypeFeeGroupCreate,
   TypeFeeGroupDelete,
@@ -24,8 +24,8 @@ import {
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
 
-export const getLocationsSearch = (data: RequestLocationType) => {
-  return post<RequestLocationType, ResponseWithPayload<TypeFeeGroupsRequire>>({
+export const getLocationsSearch = (data: RequestFeeGroupType) => {
+  return post<RequestFeeGroupType, ResponseWithPayload<TypeFeeGroupsRequire>>({
     data,
   })(API_TYPE_FEE_GROUP.GET_SEARCH);
 };

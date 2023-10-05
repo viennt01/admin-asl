@@ -1,10 +1,13 @@
 import { Pagination } from '../commons/table/table-default';
 
-export interface TypeFeeGroup {
+export interface FeeGroup {
+  feeGroupID: string;
   typeFeeGroupID: string;
-  typeFeeGroupNo: string;
   typeFeeGroupName: string;
-  statusTypeFeeGroup: string;
+  feeGroupNo: string;
+  feeGroupName: string;
+  statusFeeGroup: string;
+  public: true;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
@@ -14,26 +17,26 @@ export interface TypeFeeGroup {
   deleteByUser: string;
 }
 
-export interface TypeFeeGroupTable
-  extends Omit<TypeFeeGroup, 'typeFeeGroupID'> {
+export interface FeeGroupTable extends Omit<FeeGroup, 'feeGroupID'> {
   key: string;
   searchAll: string;
 }
 
-export interface TypeFeeGroupsRequire extends Pagination {
-  data: TypeFeeGroup[];
+export interface FeeGroupsRequire extends Pagination {
+  data: FeeGroup[];
 }
 //
 export interface QueryInputParamType {
   searchAll: string;
-  typeFeeGroupNo: string;
-  typeFeeGroupName: string;
+  feeGroupNo: string;
+  feeGroupName: string;
 }
 export interface QuerySelectParamType {
-  statusTypeFeeGroup: string[];
+  statusFeeGroup: string[];
+  typeFeeGroupID: string;
 }
 
-export interface RequestFeeGroupType
+export interface RequestFeeGroup
   extends QueryInputParamType,
     QuerySelectParamType {
   paginateRequest: Pagination;
@@ -46,19 +49,20 @@ export type SelectSearch = {
   };
 };
 
-export interface TypeFeeGroupDetailDataBody {
+export interface FeeGroupDetailDataBody {
   id: string;
 }
 
 export interface FormValues {
+  feeGroupID: string;
   typeFeeGroupID: string;
-  typeFeeGroupNo: string;
-  typeFeeGroupNameEN: string;
-  typeFeeGroupNameVN: string;
-  statusTypeFeeGroup: string;
+  feeGroupNo: string;
+  feeGroupNameEN: string;
+  feeGroupNameVN: string;
+  statusFeeGroup: string;
 }
 
-export interface TypeFeeGroupDetailType extends FormValues {
+export interface FeeGroupDetailType extends FormValues {
   public: boolean;
   dateInserted: string;
   insertedByUser: string;
@@ -66,23 +70,24 @@ export interface TypeFeeGroupDetailType extends FormValues {
   updatedByUser: string;
 }
 
-export type TypeFeeGroupCreate = Omit<FormValues, 'typeFeeGroupID'>;
+export type FeeGroupCreate = Omit<FormValues, 'feeGroupID'>;
 
-export type TypeFeeGroupEdit = FormValues;
+export type FeeGroupEdit = FormValues;
 
-export type TypeFeeGroupDelete = {
+export type FeeGroupDelete = {
   ids: React.Key[];
 };
 
 //----------------------------------------------------------------
 export interface QueryInputDraft {
-  typeFeeGroupNo: string;
-  typeFeeGroupName: string;
+  feeGroupNo: string;
+  feeGroupName: string;
 }
 export interface QuerySelectDraft {
   status: string[];
+  typeFeeGroupID: string;
 }
-export interface RequestTypeFeeGroupTableDraft
+export interface RequestFeeGroupTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
   paginateRequest: Pagination;
@@ -97,16 +102,16 @@ export type SelectDratSearch = {
 
 //----------------------------------------------------------------
 
-export interface UpdateStatusTypeFeeGroup {
+export interface UpdateStatusFeeGroup {
   id: string;
   status: string;
 }
 
 export interface QueryInputRequest {
-  typeFeeGroupNo: string;
-  typeFeeGroupName: string;
+  feeGroupNo: string;
+  feeGroupName: string;
 }
-export interface RequestTypeFeeGroupTableRequest extends QueryInputRequest {
+export interface RequestFeeGroupTableRequest extends QueryInputRequest {
   paginateRequest: Pagination;
 }
 // export table

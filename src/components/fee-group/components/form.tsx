@@ -1,26 +1,24 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Select, Switch } from 'antd';
+import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { API_LOCATION_TYPE, API_MASTER_DATA } from '@/fetcherAxios/endpoint';
+import { FormValues, UpdateStatusFeeGroup } from '../interface';
+import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { geLocationDetail, updateStatus } from '../fetcher';
+import { getFeeGroupDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
-import { FormValues, UpdateStatusLocation } from '../interface';
-import { getListCity, getListTypeLocations } from '@/layout/fetcher';
-import { UpdateStatusLocationType } from '@/components/type-of-location-page/interface';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
+import { UpdateStatusLocationType } from '@/components/type-of-location-page/interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
 const initialValue = {
-  typeLocationName: '',
   description: '',
 };
 
-interface FormProps {
+interface PortFormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
@@ -33,7 +31,7 @@ interface FormProps {
 
 const { Title } = Typography;
 
-const LocationForm = ({
+const FeeGroupForm = ({
   create,
   manager,
   edit,
@@ -42,8 +40,8 @@ const LocationForm = ({
   loadingSubmit,
   checkRow,
   useDraft,
-}: FormProps) => {
-  const { translate: translateLocation } = useI18n('location');
+}: PortFormProps) => {
+  const { translate: translateFeeGroup } = useI18n('feeGroup');
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
@@ -52,17 +50,6 @@ const LocationForm = ({
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query;
-
-  const typeLocations = useQuery(
-    [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    getListTypeLocations
-  );
-  const city = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
-    getListCity({
-      currentPage: 1,
-      pageSize: 500,
-    })
-  );
 
   useEffect(() => {
     if (!id) return;
@@ -90,24 +77,20 @@ const LocationForm = ({
   };
 
   const detailQuery = useQuery({
-    queryKey: [API_LOCATION_TYPE.GET_DETAIL, idQuery],
-    queryFn: () => geLocationDetail(idQuery as string),
+    queryKey: [API_FEE_GROUP.GET_DETAIL, idQuery],
+    queryFn: () => getFeeGroupDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          locationID: data.data.locationID,
-          cityID: data.data.cityID,
-          locationCode: data.data.locationCode,
-          locationNameEN: data.data.locationNameEN,
-          locationNameVN: data.data.locationNameVN,
-          statusLocation: data.data.statusLocation,
-          typeLocations: data.data.typeLocations.map(
-            (type) => type.typeLocationID
-          ),
+          typeFeeGroupID: data.data.typeFeeGroupID,
+          feeGroupNo: data.data.feeGroupNo,
+          feeGroupNameEN: data.data.feeGroupNameEN,
+          feeGroupNameVN: data.data.feeGroupNameVN,
+          statusFeeGroup: data.data.statusFeeGroup,
         });
       } else {
-        router.push(ROUTERS.LOCATION);
+        router.push(ROUTERS.FEE_GROUP);
       }
     },
   });
@@ -116,49 +99,49 @@ const LocationForm = ({
     setCheckPermissionEdit(data);
   };
 
-  const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusLocation) => {
-      return updateStatus(body);
-    },
-  });
-
   const handleAR = (status: string) => {
     if (idQuery) {
-      const _requestData: UpdateStatusLocation = {
+      const _requestData: UpdateStatusLocationType = {
         id: idQuery,
         status,
       };
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.LOCATION))
+            ? (successToast(data.message), router.push(ROUTERS.FEE_GROUP))
             : errorToast(data.message);
         },
         onError() {
           errorToast(API_MESSAGE.ERROR);
         },
       });
+    } else {
+      errorToast(API_MESSAGE.ERROR);
     }
   };
+
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusFeeGroup) => {
+      return updateStatus(body);
+    },
+  });
 
   const handleCopyAndCreate = () => {
     const props = {
       checkCopyAndCreate: true,
-      cityID: form.getFieldValue('cityID'),
-      locationCode: form.getFieldValue('locationCode'),
-      locationNameEN: form.getFieldValue('locationNameEN'),
-      locationNameVN: form.getFieldValue('locationNameVN'),
-      typeLocations: form.getFieldValue('typeLocations'),
+      internationalCode: form.getFieldValue('internationalCode'),
+      descriptionVN: form.getFieldValue('descriptionVN'),
+      descriptionEN: form.getFieldValue('descriptionEN'),
     };
     router.push({
-      pathname: ROUTERS.LOCATION_CREATE,
+      pathname: ROUTERS.FEE_GROUP_CREATE,
       query: props,
     });
   };
 
   useEffect(() => {
-    if (form.getFieldValue('statusLocation')) {
-      form.getFieldValue('statusLocation') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusFeeGroup')) {
+      form.getFieldValue('statusFeeGroup') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -167,11 +150,10 @@ const LocationForm = ({
     }
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
-        cityID: propCopyAndCreate.cityID as string,
-        locationCode: propCopyAndCreate.locationCode as string,
-        locationNameEN: propCopyAndCreate.locationNameEN as string,
-        locationNameVN: propCopyAndCreate.locationNameVN as string,
-        typeLocations: propCopyAndCreate.typeLocations as string[],
+        typeFeeGroupID: propCopyAndCreate.typeFeeGroupID as string,
+        feeGroupNo: propCopyAndCreate.feeGroupNo as string,
+        feeGroupNameEN: propCopyAndCreate.feeGroupNameEN as string,
+        feeGroupNameVN: propCopyAndCreate.feeGroupNameVN as string,
       });
     }
   }, [
@@ -180,7 +162,7 @@ const LocationForm = ({
     checkRow,
     manager,
     propCopyAndCreate,
-    form.getFieldValue('statusLocation'),
+    form.getFieldValue('statusFeeGroup'),
   ]);
 
   return (
@@ -198,17 +180,17 @@ const LocationForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create && translateLocation('information_add_port')}
+                  {create && translateFeeGroup('information_add_fee_group')}
                   {manager && 'Approval needed requests'}
                   {edit &&
                     (checkRow ? (
                       <>
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
-                          translateLocation('information_edit_port')}
+                          translateFeeGroup('information_edit_fee_group')}
                       </>
                     ) : (
-                      translateLocation('information_edit_port')
+                      translateFeeGroup('information_edit_fee_group')
                     ))}
                 </Title>
               </Col>
@@ -256,89 +238,22 @@ const LocationForm = ({
           }
         >
           <Row gutter={16}>
-            <Col lg={12} span={24}>
+            <Col span={24}>
               <Form.Item
-                label={translateLocation('location_code_form.title')}
-                tooltip={translateLocation('code')}
-                name="locationCode"
+                label={translateFeeGroup('fee_group_code_form.title')}
+                name="feeGroupNo"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation(
-                      'location_code_form.error_required'
+                    message: translateFeeGroup(
+                      'fee_group_code_form.error_required'
                     ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateLocation(
-                    'location_code_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateLocation('type_location_form.title')}
-                name="typeLocations"
-                rules={[
-                  {
-                    required: true,
-                    message: translateLocation(
-                      'type_location_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Select
-                  placeholder={translateLocation(
-                    'type_location_form.placeholder'
-                  )}
-                  mode="multiple"
-                  size="large"
-                  options={
-                    typeLocations.data?.data.map((type) => ({
-                      label: type.typeLocationName,
-                      value: type.typeLocationID,
-                    })) || []
-                  }
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateLocation('location_name_form.titleEn')}
-                name="locationNameEN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateLocation(
-                      'location_name_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateLocation(
-                    'location_name_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateLocation('location_name_form.titleVn')}
-                name="locationNameVN"
-              >
-                <Input
-                  placeholder={translateLocation(
-                    'location_name_form.placeholder'
+                  placeholder={translateFeeGroup(
+                    'fee_group_code_form.placeholder'
                   )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
@@ -346,38 +261,53 @@ const LocationForm = ({
               </Form.Item>
             </Col>
 
-            <Col lg={12} span={24}>
+            <Col span={24}>
               <Form.Item
-                label={translateLocation('city_form.title')}
-                name="cityID"
+                label={translateFeeGroup('fee_group_name_form.titleEn')}
+                name="feeGroupNameEN"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation('city_form.error_required'),
+                    message: translateFeeGroup(
+                      'fee_group_name_form.error_required'
+                    ),
                   },
                 ]}
               >
-                <Select
-                  placeholder={translateLocation('city_form.placeholder')}
-                  showSearch
+                <Input
+                  placeholder={translateFeeGroup(
+                    'fee_group_name_form.placeholder'
+                  )}
                   size="large"
-                  options={
-                    city.data?.data?.data.map((item) => ({
-                      value: item.cityID,
-                      label: item.cityName,
-                    })) || []
-                  }
-                  filterOption={(input, option) =>
-                    (option?.label ?? '')
-                      .toLowerCase()
-                      .includes(input.toLowerCase())
-                  }
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Form.Item
+                label={translateFeeGroup('fee_group_name_form.titleVn')}
+                name="feeGroupNameVN"
+                rules={[
+                  {
+                    required: true,
+                    message: translateFeeGroup(
+                      'fee_group_name_form.error_required'
+                    ),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateFeeGroup(
+                    'fee_group_name_form.placeholder'
+                  )}
+                  size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
             <Col span={0}>
-              <Form.Item name="typeLocations"></Form.Item>
+              <Form.Item name="statusFeeGroup"></Form.Item>
             </Col>
           </Row>
         </Card>
@@ -405,4 +335,4 @@ const LocationForm = ({
   );
 };
 
-export default LocationForm;
+export default FeeGroupForm;

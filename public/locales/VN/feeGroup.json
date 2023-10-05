@@ -15,7 +15,7 @@
 
     "fee_group_code_form": {
         "title": "Mã",
-        "placeholder": "nhập mã nhóm phí",
+        "placeholder": "Nhập mã nhóm phí",
         "error_required": "Vui lòng nhập mã nhóm phí"
     },
     "fee_group_name_form": {

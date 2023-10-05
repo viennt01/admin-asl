@@ -179,3 +179,17 @@ export const API_TYPE_FEE_GROUP = {
   IMPORT: '/import-type-fee-group-with-excel',
   EXPORT: '/export-type-fee-group-with-excel',
 };
+
+export const API_FEE_GROUP = {
+  GET_SEARCH: '/search-fee-group',
+  GET_DETAIL: '/get-fee-group',
+  CREATE: '/add-fee-group',
+  EDIT: '/update-fee-group',
+  DELETE: '/delete-fee-group',
+  UPDATE_STATUS: '/update-status-fee-group',
+  GET_DRAFT: '/get-fee-group-with-status-and-id-User',
+  GET_REQUEST: '/get-fee-group-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-fee-group-excel',
+  IMPORT: '/import-fee-group-with-excel',
+  EXPORT: '/export-fee-group-with-excel',
+};

@@ -93,10 +93,10 @@ export const ROUTERS = {
 
   FEE_GROUP: '/master-data/fee-catalog/fee-group',
   FEE_GROUP_CREATE: '/master-data/fee-catalog/fee-group/create',
-  FEE_GROUP_EDIT: (feeGroupId: string) =>
-    `/master-data/fee-catalog/fee-group/edit/${feeGroupId}`,
-  // FEE_GROUP_MANAGER: (feeGroupId: string) =>
-  //   `/master-data/fee-catalog/fee-group/manager-admin/${feeGroupId}`,
+  FEE_GROUP_EDIT: (feeGroupId: string, checkRow = false) =>
+    `/master-data/fee-catalog/fee-group/edit/${feeGroupId}?checkRow=${checkRow}`,
+  FEE_GROUP_MANAGER: (feeGroupId: string) =>
+    `/master-data/fee-catalog/fee-group/manager-admin/${feeGroupId}`,
 
   TYPE_FEE_GROUP: '/master-data/fee-catalog/type-fee-group',
   TYPE_FEE_GROUP_CREATE: '/master-data/fee-catalog/type-fee-group/create',

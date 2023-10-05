@@ -611,16 +611,16 @@ const SHOW_ROUTER_HEADER = () => {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    // '/master-data/fee-catalog/fee-group/manager-admin/[id]': [
-    //   { title: `${translateCommon('master_data')}` },
-    //   { title: `${translateCommon('fee_catalog')}` },
-    //   {
-    //     title: (
-    //       <Link href={ROUTERS.FEE_GROUP}>{translateCommon('fee_group')}</Link>
-    //     ),
-    //   },
-    //   { title: `${translateCommon('request_for_approval')}` },
-    // ],
+    '/master-data/fee-catalog/fee-group/manager-admin/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.FEE_GROUP}>{translateCommon('fee_group')}</Link>
+        ),
+      },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
 
     '/master-data/fee-catalog/type-fee-group': [
       { title: `${translateCommon('master_data')}` },

@@ -23,9 +23,7 @@ import {
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { LANGUAGE, useLocale } from '@/constant';
-// import Link from 'next/link';
 import { ROUTERS } from '@/constant/router';
-// import useI18n from '@/i18n/useI18N';
 import {
   UserInfo,
   getListCity,
@@ -131,7 +129,6 @@ const SelectLanguage = ({
 };
 
 export function AppLayout(props: Props) {
-  // const { translate: translateCommon } = useI18n('common');
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(true);
   const [languageSelected, setLanguage] = useState<string>(LANGUAGE.EN);

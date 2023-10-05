@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditFeeGroup from '@/components/fee-group-page/edit';
+import EditFeeGroup from '@/components/fee-group/edit';
 
 function FeeGroupEditPage() {
   return (
