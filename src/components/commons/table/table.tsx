@@ -159,17 +159,19 @@ const Table = <T extends Record<string, any>>({
               >
                 {translateCommon('button_delete')}
               </Button>,
-              <Button
-                key={'refresh'}
-                onClick={refreshingQuery}
-                icon={<ReloadOutlined />}
-                loading={refreshingLoading}
-                style={{
-                  width: 32,
-                  height: 32,
-                  padding: 6,
-                }}
-              />,
+              <Tooltip title="Refresh data" key={'refresh-data'}>
+                <Button
+                  key={'refresh'}
+                  onClick={refreshingQuery}
+                  icon={<ReloadOutlined />}
+                  loading={refreshingLoading}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: 6,
+                  }}
+                />
+              </Tooltip>,
               <Tooltip title="Import data" key={'import-data"'}>
                 <Button
                   icon={<CloudUploadOutlined />}
