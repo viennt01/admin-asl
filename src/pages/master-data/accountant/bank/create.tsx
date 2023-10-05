@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateBank from '@/components/bank/create';
+import CreateBank from '@/components/menu-item/master-data/accounting/bank/create';
 
 function CreateCurrencyPage() {
   return (

@@ -14,7 +14,7 @@ function FeeEditPage() {
 
 export default withAuthentication(FeeEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-import EditFee from '@/components/fee-page/edit';
+import EditFee from '@/components/menu-item/master-data/fee-catalog/fee/edit';
 export const getStaticProps = getStatic(['common', 'fee']);
 export const getStaticPaths = () => {
   return {

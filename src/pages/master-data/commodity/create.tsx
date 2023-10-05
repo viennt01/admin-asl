@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CommodityPage from '@/components/commodity/create';
+import CommodityPage from '@/components/menu-item/master-data/commodity/create';
 
 function CreateUnitPage() {
   return (

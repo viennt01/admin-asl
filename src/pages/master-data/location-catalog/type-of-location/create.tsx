@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateLocationType from '@/components/type-of-location/create';
+import CreateLocationType from '@/components/menu-item/master-data/location-catalog/type-of-location/create';
 
 function CreateCurrencyPage() {
   return (

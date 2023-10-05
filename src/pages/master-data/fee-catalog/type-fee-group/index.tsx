@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import TypeFeeGroupPage from '@/components/type-fee-group';
+import TypeFeeGroupPage from '@/components/menu-item/master-data/fee-catalog/type-fee-group';
 
 function TypeFeeGroup() {
   return (

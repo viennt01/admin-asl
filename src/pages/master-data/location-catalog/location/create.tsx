@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateLocation from '@/components/location/create';
+import CreateLocation from '@/components/menu-item/master-data/location-catalog/location/create';
 
 function CreateLocationPage() {
   return (

@@ -14,5 +14,5 @@ function CreateFeeGroupPage() {
 
 export default withAuthentication(CreateFeeGroupPage);
 import { getStatic } from '@/lib/getStaticProps';
-import CreateFeeGroup from '@/components/fee-group/create';
+import CreateFeeGroup from '@/components/menu-item/master-data/fee-catalog/fee-group/create';
 export const getStaticProps = getStatic(['common', 'feeGroup']);

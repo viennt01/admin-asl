@@ -1,4 +1,4 @@
-import DashboardPage from '@/components/home/home';
+import DashboardPage from '@/components/menu-item/home/home';
 import withAuthentication from '@/hook/useAuthentication';
 import { Inter } from '@next/font/google';
 import Head from 'next/head';

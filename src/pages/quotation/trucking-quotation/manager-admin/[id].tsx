@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerTruckingQuotation from '@/components/sea-pricing/manager';
+import ManagerTruckingQuotation from '@/components/menu-item/pricing/pricing/manager';
 
 function TruckingQuotationManagerPage() {
   return (

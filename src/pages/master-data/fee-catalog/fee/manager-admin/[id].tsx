@@ -14,7 +14,7 @@ function FeeManagerPage() {
 
 export default withAuthentication(FeeManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-import ManagerFee from '@/components/fee-page/manager';
+import ManagerFee from '@/components/menu-item/master-data/fee-catalog/fee/manager';
 export const getStaticProps = getStatic(['common', 'fee']);
 export const getStaticPaths = () => {
   return {

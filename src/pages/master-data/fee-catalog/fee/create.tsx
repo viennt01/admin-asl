@@ -14,5 +14,5 @@ function CreateFeePage() {
 
 export default withAuthentication(CreateFeePage);
 import { getStatic } from '@/lib/getStaticProps';
-import CreateFee from '@/components/fee-page/create';
+import CreateFee from '@/components/menu-item/master-data/fee-catalog/fee/create';
 export const getStaticProps = getStatic(['common', 'fee']);

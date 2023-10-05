@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CurrencyPage from '@/components/currency';
+import CurrencyPage from '@/components/menu-item/master-data/accounting/currency';
 
 function Currency() {
   return (

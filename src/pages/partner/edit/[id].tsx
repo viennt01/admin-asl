@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditPartner from '@/components/partner/partner-edit';
+import EditPartner from '@/components/menu-item/partner/partner-edit';
 
 function PartnerEditPage() {
   return (

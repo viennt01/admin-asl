@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import TruckingQuotationPage from '@/components/trucking-quotation';
+import TruckingQuotationPage from '@/components/menu-item/quotation/trucking';
 
 function TruckingQuotation() {
   return (

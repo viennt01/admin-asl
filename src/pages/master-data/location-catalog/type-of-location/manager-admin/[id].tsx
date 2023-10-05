@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerLocationType from '@/components/type-of-location/manager';
+import ManagerLocationType from '@/components/menu-item/master-data/location-catalog/type-of-location/manager';
 
 function BankManagerPage() {
   return (

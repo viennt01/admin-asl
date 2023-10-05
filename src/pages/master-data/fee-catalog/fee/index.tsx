@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import FeePage from '@/components/fee-page';
+import FeePage from '@/components/menu-item/master-data/fee-catalog/fee';
 
 function Fee() {
   return (

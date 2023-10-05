@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditBank from '@/components/bank/edit';
+import EditBank from '@/components/menu-item/master-data/accounting/bank/edit';
 
 function BankEditPage() {
   return (

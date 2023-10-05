@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditLocationType from '@/components/type-of-location/edit';
+import EditLocationType from '@/components/menu-item/master-data/location-catalog/type-of-location/edit';
 
 function TypeOfLocationEditPage() {
   return (

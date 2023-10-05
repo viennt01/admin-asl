@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditUser from '@/components/user/user-edit';
+import EditUser from '@/components/menu-item/system/user/user-edit';
 
 function UserEditPage() {
   return (

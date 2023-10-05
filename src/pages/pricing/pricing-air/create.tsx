@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateAirPricing from '@/components/air-pricing/create';
+import CreateAirPricing from '@/components/menu-item/pricing/air/create';
 
 function CreateAirPricingPage() {
   return (

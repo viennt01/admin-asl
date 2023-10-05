@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerBank from '@/components/bank/manager';
+import ManagerBank from '@/components/menu-item/master-data/accounting/bank/manager';
 
 function BankManagerPage() {
   return (

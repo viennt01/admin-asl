@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditStaff from '@/components/staff/staff-edit';
+import EditStaff from '@/components/menu-item/system/staff/staff-edit';
 
 function StaffEditPage() {
   return (

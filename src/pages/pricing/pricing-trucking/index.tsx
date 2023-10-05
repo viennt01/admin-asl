@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import PricingTruckingPage from '@/components/pricing-trucking';
+import PricingTruckingPage from '@/components/menu-item/pricing/trucking';
 
 function PricingTrucking() {
   return (

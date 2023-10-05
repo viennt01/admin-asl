@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerSeaPricing from '@/components/sea-pricing/manager';
+import ManagerSeaPricing from '@/components/menu-item/pricing/pricing/manager';
 
 function SeaPricingManagerPage() {
   return (
