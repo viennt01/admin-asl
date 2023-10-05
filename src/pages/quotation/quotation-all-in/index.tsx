@@ -5,7 +5,7 @@ function SeaQuotation() {
   return (
     <>
       <Head>
-        <title>ASL | AIR QUOTATION</title>
+        <title>ASL | ALL IN QUOTATION</title>
       </Head>
       <ComingSoon />
     </>
