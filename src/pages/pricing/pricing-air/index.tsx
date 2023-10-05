@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import AirPricingPage from '@/components/air-pricing-page';
+import AirPricingPage from '@/components/air-pricing';
 
 function PricingAir() {
   return (

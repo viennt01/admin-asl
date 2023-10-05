@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import BookingPage from '@/components/booking-page';
+import BookingPage from '@/components/booking';
 
 function Booking() {
   return (

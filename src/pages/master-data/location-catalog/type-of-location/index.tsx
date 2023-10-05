@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import TypeOfLocationPage from '@/components/type-of-location-page';
+import TypeOfLocationPage from '@/components/type-of-location';
 
 function TypeOfLocation() {
   return (

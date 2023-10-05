@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerAirPricing from '@/components/air-pricing-page/manager';
+import ManagerAirPricing from '@/components/air-pricing/manager';
 
 function AirPricingManagerPage() {
   return (

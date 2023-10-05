@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateTruckingQuotation from '@/components/trucking-quotation-page/create';
+import CreateTruckingQuotation from '@/components/trucking-quotation/create';
 
 function CreateTruckingQuotationPage() {
   return (

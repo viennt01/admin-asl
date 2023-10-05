@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import StaffPage from '@/components/staff-page';
+import StaffPage from '@/components/staff';
 
 function Staff() {
   return (

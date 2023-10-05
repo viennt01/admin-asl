@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateSeaQuotation from '@/components/sea-quotation-page/create';
+import CreateSeaQuotation from '@/components/sea-quotation/create';
 
 function CreateSeaQuotationPage() {
   return (

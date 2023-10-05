@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import UserPage from '@/components/user-page';
+import UserPage from '@/components/user';
 
 function User() {
   return (

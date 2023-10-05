@@ -14,7 +14,7 @@ function CurrencyManagerPage() {
 
 export default withAuthentication(CurrencyManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-import ManagerCurrency from '@/components/currency-page/manager';
+import ManagerCurrency from '@/components/currency/manager';
 export const getStaticProps = getStatic(['common', 'currency']);
 export const getStaticPaths = () => {
   return {

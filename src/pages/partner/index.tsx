@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import PartnerPage from '@/components/partner-page';
+import PartnerPage from '@/components/partner';
 
 function Partner() {
   return (

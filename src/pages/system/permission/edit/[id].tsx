@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditPermission from '@/components/permission-page/permission-edit';
+import EditPermission from '@/components/permission/permission-edit';
 
 function PermissionEditPage() {
   return (

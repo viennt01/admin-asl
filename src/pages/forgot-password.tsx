@@ -1,5 +1,5 @@
 import { PageWithNoLayout } from '@/layout/no-layout';
-import ForgotPasswordPage from '@/components/forgot-password-page/forgot-password-page';
+import ForgotPasswordPage from '@/components/forgot-password';
 
 function ForgotPassword() {
   return <ForgotPasswordPage />;

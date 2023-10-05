@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateUnit from '@/components/unit-page/create';
+import CreateUnit from '@/components/unit/create';
 
 function CreateUnitPage() {
   return (

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerLocation from '@/components/location-page/manager';
+import ManagerLocation from '@/components/location/manager';
 
 function LocationManagerPage() {
   return (

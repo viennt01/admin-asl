@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import PermissionPage from '@/components/permission-page';
+import PermissionPage from '@/components/permission';
 
 function Permission() {
   return (

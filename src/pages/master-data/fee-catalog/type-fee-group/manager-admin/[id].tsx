@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import TypeFeeGroupFormManger from '@/components/type-fee-group-page/manager';
+import TypeFeeGroupFormManger from '@/components/type-fee-group/manager';
 
 function FeeManagerPage() {
   return (

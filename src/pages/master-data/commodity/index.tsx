@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CommodityPage from '@/components/commodity-page';
+import CommodityPage from '@/components/commodity';
 
 function Commodity() {
   return (

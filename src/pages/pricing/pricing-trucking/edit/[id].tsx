@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditPricingTrucking from '@/components/pricing-trucking-page/pricing-trucking-edit';
+import EditPricingTrucking from '@/components/pricing-trucking/pricing-trucking-edit';
 
 function PricingTruckingEditPage() {
   return (

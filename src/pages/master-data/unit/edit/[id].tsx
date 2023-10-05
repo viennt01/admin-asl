@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditUnit from '@/components/unit-page/edit';
+import EditUnit from '@/components/unit/edit';
 
 function UnitEditPage() {
   return (

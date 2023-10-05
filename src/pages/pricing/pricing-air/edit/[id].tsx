@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditAirPricing from '@/components/air-pricing-page/edit';
+import EditAirPricing from '@/components/air-pricing/edit';
 
 function PricingSeaEditPage() {
   return (

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerTypeOfContainer from '@/components/type-of-container-page/manager';
+import ManagerTypeOfContainer from '@/components/type-of-container/manager';
 
 function TypeOfContainerManagerPage() {
   return (

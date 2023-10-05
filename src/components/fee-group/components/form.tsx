@@ -10,7 +10,7 @@ import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager
 import { getFeeGroupDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
-import { UpdateStatusLocationType } from '@/components/type-of-location-page/interface';
+import { UpdateStatusLocationType } from '@/components/type-of-location/interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 

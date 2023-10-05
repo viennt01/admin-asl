@@ -1,6 +1,6 @@
 import withAuthentication from '@/hook/useAuthentication';
 import { PageWithNoLayout } from '@/layout/no-layout';
-import L from '@/components/login-page/login-page';
+import L from '@/components/login';
 
 function Login() {
   return <L />;

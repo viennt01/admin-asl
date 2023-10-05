@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import SeaPricingPage from '@/components/sea-pricing-page';
+import SeaPricingPage from '@/components/sea-pricing';
 
 function PricingSea() {
   return (

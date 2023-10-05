@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateSeaPricing from '@/components/sea-pricing-page/create';
+import CreateSeaPricing from '@/components/sea-pricing/create';
 
 function CreateSeaPricingPage() {
   return (

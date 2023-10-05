@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import TypeOfContainerPage from '@/components/type-of-container-page';
+import TypeOfContainerPage from '@/components/type-of-container';
 
 function TypeOfContainer() {
   return (
