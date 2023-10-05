@@ -5,8 +5,7 @@ export default function ComingSoon() {
   return (
     <Space
       style={{
-        width: '90vw',
-        height: '80vh',
+        height: '85vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
