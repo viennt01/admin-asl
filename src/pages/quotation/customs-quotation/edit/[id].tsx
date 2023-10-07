@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditSeaQuotation from '@/components/menu-item/quotation/sea/edit';
+import EditCustomsQuotation from '@/components/menu-item/quotation/customs/edit';
 
-function SeaQuotationEditPage() {
+function CustomsQuotationEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | SEA QUOTATION EDIT</title>
+        <title>ASL | CUSTOM QUOTATION EDIT</title>
       </Head>
-      <EditSeaQuotation />
+      <EditCustomsQuotation />
     </>
   );
 }
 
-export default withAuthentication(SeaQuotationEditPage);
+export default withAuthentication(CustomsQuotationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'seaQuotation']);
+export const getStaticProps = getStatic(['common', 'customsQuotation']);
 export const getStaticPaths = () => {
   return {
     paths: [],

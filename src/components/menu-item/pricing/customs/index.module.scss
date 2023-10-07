@@ -1,0 +1,11 @@
+.table {
+  :global {
+    .ant-table-sticky-scroll {
+      display: none;
+    }
+
+    .ant-table-column-title, th.ant-table-cell {
+      text-transform: uppercase;
+    }
+  }
+}

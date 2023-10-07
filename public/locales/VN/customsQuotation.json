@@ -1,5 +1,5 @@
 {
-    "title": "Danh sách định giá hải quan",
+    "title": "Danh sách báo giá hải quan",
     "no" : "STT",
     "commodity": "Hàng hóa",
     "customs_office": "Chi cục mở tờ khai",
@@ -18,8 +18,8 @@
     "title_customs_service": "Phí dịch vụ hải quam",
     "title_customs_other_fee": "Chi phí khác",
     "title_customs_condition": "Điều kiện",
-    "information_add_customs_pricing": "Thêm mới định giá hải quan",
-    "information_edit_customs_pricing": "Chỉnh sửa định giá hải quan",
+    "information_add_customs_quotation": "Thêm mới báo giá hải quan",
+    "information_edit_customs_quotation": "Chỉnh sửa báo giá hải quan",
 
     "commodity_form": {
         "title": "Hàng hóa",

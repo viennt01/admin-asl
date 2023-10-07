@@ -24,11 +24,11 @@ export const ROUTERS = {
   //   `/quotation/air-quotation/manager-admin/${airQuotationId}`,
 
   CUSTOMS_QUOTATION: '/quotation/customs-quotation',
-  //CUSTOMS_QUOTATION_CREATE: '/quotation/customs-quotation/create',
+  CUSTOMS_QUOTATION_CREATE: '/quotation/customs-quotation/create',
   CUSTOMS_QUOTATION_EDIT: (customsQuotationId: string) =>
     `/quotation/customs-quotation/edit/${customsQuotationId}`,
-  // CUSTOMS_QUOTATION_MANAGER: (customsQuotationId: string) =>
-  //   `/quotation/customs-quotation/manager-admin/${customsQuotationId}`,
+  CUSTOMS_QUOTATION_MANAGER: (customsQuotationId: string) =>
+    `/quotation/customs-quotation/manager-admin/${customsQuotationId}`,
 
   TRUCKING_QUOTATION: '/quotation/trucking-quotation',
   TRUCKING_QUOTATION_CREATE: '/quotation/trucking-quotation/create',
@@ -59,8 +59,11 @@ export const ROUTERS = {
     `/pricing/pricing-air/manager-admin/${airPricingId}`,
 
   CUSTOMS_PRICING: '/pricing/pricing-customs',
+  CUSTOMS_PRICING_CREATE: '/pricing/pricing-customs/create',
   CUSTOMS_PRICING_EDIT: (customsPricingId: string) =>
     `/pricing/pricing-customs/edit/${customsPricingId}`,
+  CUSTOMS_PRICING_MANAGER: (customsPricingId: string) =>
+    `/pricing/pricing-customs/manager-admin/${customsPricingId}`,
 
   TRUCKING_PRICING: '/pricing/pricing-trucking',
   TRUCKING_PRICING_EDIT: (truckingPricingId: string) =>

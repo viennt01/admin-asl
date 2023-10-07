@@ -1,5 +1,5 @@
 {
-    "title": "List of Customs Pricing",
+    "title": "List of Customs Quotation",
     "no" : "No",
     "commodity": "Commodity",
     "customs_office": "Customs Office",
@@ -15,9 +15,8 @@
 
     "title_customs_service": "Customs Service",
     "title_customs_other_fee": "Other Fee",
-    "title_customs_condition": "Condition",
-    "information_add_customs_pricing": "Add new Customs Pricing",
-    "information_edit_customs_pricing": "Edit Customs Pricing",
+    "information_add_customs_quotation": "Add new Customs Quotation",
+    "information_edit_customs_quotation": "Edit Customs Quotation",
 
     "commodity_form": {
         "title": "Customs Office",
