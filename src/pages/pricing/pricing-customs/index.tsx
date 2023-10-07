@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import SeaPricingPage from '@/components/menu-item/pricing/sea';
+import CustomPricingPage from '@/components/menu-item/pricing/customs';
 
 function PricingSea() {
   return (
     <>
       <Head>
-        <title>ASL | SEA PRICING</title>
+        <title>ASL | CUSTOM PRICING</title>
       </Head>
-      <SeaPricingPage />
+      <CustomPricingPage />
     </>
   );
 }
 
 export default withAuthentication(PricingSea);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'pricingSea']);
+export const getStaticProps = getStatic(['common', 'pricingCustoms']);

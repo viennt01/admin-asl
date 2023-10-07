@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerSeaQuotation from '@/components/menu-item/pricing/pricing/manager';
+import ManagerCustomQuotation from '@/components/menu-item/pricing/sea/manager';
 
-function SeaQuotationManagerPage() {
+function CustomQuotationManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | SEA QUOTATION MANAGER</title>
+        <title>ASL | CUSTOM QUOTATION MANAGER</title>
       </Head>
-      <ManagerSeaQuotation />
+      <ManagerCustomQuotation />
     </>
   );
 }
 
-export default withAuthentication(SeaQuotationManagerPage);
+export default withAuthentication(CustomQuotationManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'seaQuotation']);
+export const getStaticProps = getStatic(['common', 'customQuotation']);
 export const getStaticPaths = () => {
   return {
     paths: [],
