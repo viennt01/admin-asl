@@ -2,6 +2,7 @@ export const ROUTERS = {
   LOGIN: '/',
   LOGOUT: '/logout',
   FORGOT_PASSWORD: '/forgot-password',
+  CONFIRM_OTP: '/confirm-otp',
   HOME: '/home',
   REQUEST_FOR_APPROVAL: '/request-for-approval',
   REQUEST_FOR_APPROVAL_EDIT: (requestForApprovalId: string) =>

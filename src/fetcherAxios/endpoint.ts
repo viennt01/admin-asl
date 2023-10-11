@@ -2,6 +2,7 @@ export const API_AUTHENTICATE = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   REFRESH_TOKEN: '/refresh-token',
+  CONFIRM_OTP: '/confirm-otp-with-login',
 };
 
 export const API_USER = {

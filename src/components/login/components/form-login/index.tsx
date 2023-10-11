@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { LoginData } from '../../interface';
-import { errorToast } from '@/hook/toast';
+import { errorToast, successToast } from '@/hook/toast';
 
 interface LoginProps {
   formLogin: FormInstance;
@@ -65,12 +65,27 @@ const FormLogin = ({ formLogin }: LoginProps) => {
     loginUser.mutate(data, {
       onSuccess(data) {
         if (data.status) {
-          appLocalStorage.set(LOCAL_STORAGE_KEYS.TOKEN, data.data.accessToken);
-          appLocalStorage.set(
-            LOCAL_STORAGE_KEYS.REFRESH_TOKEN,
-            data.data.refreshToken
-          );
-          router.push(ROUTERS.HOME);
+          if (data.message === 'Send OTP successfully!') {
+            const props = {
+              email: formLogin.getFieldValue('email'),
+              ...dataHeader,
+            };
+            router.push({
+              pathname: ROUTERS.CONFIRM_OTP,
+              query: props,
+            });
+            successToast(data.message);
+          } else {
+            appLocalStorage.set(
+              LOCAL_STORAGE_KEYS.TOKEN,
+              data.data.accessToken
+            );
+            appLocalStorage.set(
+              LOCAL_STORAGE_KEYS.REFRESH_TOKEN,
+              data.data.refreshToken
+            );
+            router.push(ROUTERS.HOME);
+          }
         } else {
           errorToast(data.message);
         }

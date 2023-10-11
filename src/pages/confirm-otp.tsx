@@ -1,15 +1,15 @@
-import { Inter } from '@next/font/google';
-import ForgotPasswordPage from '@/components/forgot-password';
 import { PageWithNoLayout } from '@/layout/no-layout';
+import ConfirmOtp from '@/components/cofirm-otp';
+
 const inter = Inter({ subsets: ['latin'] });
-function ForgotPassword() {
+function ConfirmOtpPage() {
   return (
     <>
       <Head>
-        <title>ASL | FORGOT PASSWORD</title>
+        <title>ASL | CONFIRM OTP</title>
       </Head>
       <main className={inter.className}>
-        <ForgotPasswordPage />
+        <ConfirmOtp />
       </main>
     </>
   );
@@ -17,9 +17,10 @@ function ForgotPassword() {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-ForgotPassword.Layout = PageWithNoLayout;
+ConfirmOtpPage.Layout = PageWithNoLayout;
 
-export default ForgotPassword;
+export default ConfirmOtpPage;
 import { getStatic } from '@/lib/getStaticProps';
+import { Inter } from '@next/font/google';
 import Head from 'next/head';
 export const getStaticProps = getStatic(['common', 'forgot-password']);
