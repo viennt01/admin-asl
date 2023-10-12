@@ -4,6 +4,7 @@ export const API_AUTHENTICATE = {
   RESET_PASSWORD: '/reset-password',
   REGISTER: '/signup',
   ACTIVE_ACCOUNT: '/active-account',
+  CHECK_TAX_CODE: '/check-tax-code',
 };
 
 export const API_COMMON = {

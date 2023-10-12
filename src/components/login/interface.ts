@@ -12,43 +12,50 @@ export interface HeadersLogin {
 }
 
 export interface RegisterForm {
-  email: string;
-  password: string;
-  passwordConfirm: string;
   firstName: string;
   lastName: string;
   fullName: string;
-  address: string;
-  DateOfBirth: string;
-  phoneNumber: string;
-  genderID: string;
   roleID: string;
+
+  email: string;
+  workingBranch: string;
+  nationality: string;
+  visa: string;
+  citizenIdentification: string;
+
+  password: string;
+  passwordConfirm: string;
+
+  taxCode: string;
   companyName: string;
-  taxCodeCompany: string;
+  address: string;
   emailCompany: string;
   phoneNumberCompany: string;
-  addressCompany: string;
+  websiteCompany: string;
+  abbreviationsCompany: string;
 }
 
 export type InformationForm = Pick<
   RegisterForm,
-  'firstName' | 'lastName' | 'DateOfBirth' | 'genderID'
+  'firstName' | 'lastName' | 'roleID'
 >;
 
 export type ContactForm = Pick<
   RegisterForm,
-  'email' | 'phoneNumber' | 'address' | 'roleID'
+  'email' | 'workingBranch' | 'nationality' | 'visa' | 'citizenIdentification'
 >;
 
 export type PasswordForm = Pick<RegisterForm, 'password' | 'passwordConfirm'>;
 
 export type CompanyForm = Pick<
   RegisterForm,
+  | 'address'
+  | 'websiteCompany'
   | 'companyName'
-  | 'phoneNumberCompany'
+  | 'taxCode'
   | 'emailCompany'
-  | 'addressCompany'
-  | 'taxCodeCompany'
+  | 'phoneNumberCompany'
+  | 'abbreviationsCompany'
 >;
 
 export interface DataRole {
@@ -56,11 +63,14 @@ export interface DataRole {
   name: string;
 }
 
-export interface DataGender {
-  genderID: string;
-  name: string;
-}
-
 export interface DataActiveAccount {
   email: string;
+}
+
+export interface RequestCheckTaxCode {
+  taxCode: string;
+}
+export interface RequireCheckTaxCode {
+  companyName: string;
+  address: string;
 }

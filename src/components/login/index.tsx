@@ -7,12 +7,11 @@ import { Form } from 'antd';
 import {
   CompanyForm,
   ContactForm,
-  DataGender,
   DataRole,
   InformationForm,
   PasswordForm,
 } from './interface';
-import { listGender, listRole } from './fetcher';
+import { listRole } from './fetcher';
 
 export default function LoginPage() {
   const [classActiveForm, setClassActiveForm] = useState('signinMode');
@@ -21,7 +20,6 @@ export default function LoginPage() {
   const [formPassword] = Form.useForm<PasswordForm>();
   const [formCompany] = Form.useForm<CompanyForm>();
   const [formLogin] = Form.useForm();
-  const [genderOptions, setGenderOptions] = useState<DataGender[]>([]);
   const [roleOptions, setRoleOptions] = useState<DataRole[]>([]);
 
   function onClickAnimationChangeForm() {
@@ -50,18 +48,6 @@ export default function LoginPage() {
         }
       })
       .catch((e: Error) => console.log(e));
-    listGender()
-      .then((res) => {
-        if (res.status) {
-          setGenderOptions(
-            res.data.map((item: DataGender) => ({
-              name: item.name,
-              genderID: item.genderID,
-            }))
-          );
-        }
-      })
-      .catch((e: Error) => console.log(e));
   }, []);
 
   return (
@@ -81,7 +67,6 @@ export default function LoginPage() {
               formPassword={formPassword}
               formCompany={formCompany}
               onClickAnimationChangeForm={onClickAnimationChangeForm}
-              genderOptions={genderOptions}
               roleOptions={roleOptions}
             />
           </div>

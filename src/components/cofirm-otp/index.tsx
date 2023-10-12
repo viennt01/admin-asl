@@ -31,7 +31,6 @@ export default function ConfirmOtp() {
     const data = {
       otpCode: values.otpCode,
       email: (email as string) || '',
-      password: '123456Aa!',
     };
     const header = {
       deviceName: (deviceName as string) || '',

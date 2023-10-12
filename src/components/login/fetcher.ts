@@ -11,12 +11,13 @@ import {
 } from '@/fetcher';
 import {
   DataActiveAccount,
-  DataGender,
+  RequestCheckTaxCode,
   DataLogin,
   DataRole,
   HeadersLogin,
   LoginData,
   RegisterForm,
+  RequireCheckTaxCode,
 } from './interface';
 
 export const login = (data: LoginData, headers: HeadersLogin) => {
@@ -41,12 +42,6 @@ export const listRole = () => {
   );
 };
 
-export const listGender = () => {
-  return get<undefined, ResponseWithPayloadRegister<DataGender[]>>({})(
-    API_COMMON.GET_GENDER
-  );
-};
-
 export const activeAccount = (data: DataActiveAccount) => {
   return post<
     DataActiveAccount,
@@ -54,4 +49,13 @@ export const activeAccount = (data: DataActiveAccount) => {
   >({
     data,
   })(API_AUTHENTICATE_REGISTER.ACTIVE_ACCOUNT);
+};
+
+export const checkTaxCode = (data: RequestCheckTaxCode) => {
+  return post<
+    RequestCheckTaxCode,
+    ResponseWithPayloadRegister<RequireCheckTaxCode>
+  >({
+    data,
+  })(API_AUTHENTICATE_REGISTER.CHECK_TAX_CODE);
 };

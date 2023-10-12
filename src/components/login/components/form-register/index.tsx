@@ -1,7 +1,6 @@
 import {
   Button,
   Col,
-  DatePicker,
   Form,
   Input,
   Row,
@@ -19,14 +18,15 @@ import {
   EnvironmentOutlined,
   InfoOutlined,
   BarcodeOutlined,
+  WindowsOutlined,
+  ReadOutlined,
 } from '@ant-design/icons';
-import { register } from '../../fetcher';
+import { checkTaxCode, register } from '../../fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { errorToast, successToast } from '@/hook/toast';
 import {
   CompanyForm,
   ContactForm,
-  DataGender,
   DataRole,
   PasswordForm,
 } from '../../interface';
@@ -36,20 +36,17 @@ interface RegisterProps {
   formContact: FormInstance;
   formPassword: FormInstance;
   formCompany: FormInstance;
-  genderOptions: DataGender[];
   roleOptions: DataRole[];
 }
 
 const initialValuesInformationForm = {
   firstName: '',
   lastName: '',
-  DateOfBirth: '',
 };
 
 const initialValuesContactForm = {
   email: '',
   phoneNumber: '',
-  address: '',
 };
 
 const initialValuesPasswordForm = {
@@ -58,11 +55,13 @@ const initialValuesPasswordForm = {
 };
 
 const initialValuesCompanyForm = {
+  taxCode: '',
   companyName: '',
-  taxCodeCompany: '',
+  address: '',
   emailCompany: '',
   phoneNumberCompany: '',
-  addressCompany: '',
+  websiteCompany: '',
+  abbreviationsCompany: '',
 };
 
 const FormRegister = ({
@@ -71,7 +70,6 @@ const FormRegister = ({
   formContact,
   formPassword,
   formCompany,
-  genderOptions,
   roleOptions,
 }: RegisterProps) => {
   const [current, setCurrent] = useState(0);
@@ -85,19 +83,25 @@ const FormRegister = ({
       fullName: `${formInformation.getFieldValue(
         'firstName'
       )} ${formInformation.getFieldValue('lastName')}`,
-      DateOfBirth: `${formInformation.getFieldValue('DateOfBirth').valueOf()}`,
-      genderID: formInformation.getFieldValue('genderID'),
       roleID: formInformation.getFieldValue('roleID'),
-      address: formContact.getFieldValue('address'),
+
       email: formContact.getFieldValue('email'),
-      phoneNumber: formContact.getFieldValue('phoneNumber'),
+      workingBranch: formContact.getFieldValue('workingBranch'),
+      nationality: formContact.getFieldValue('nationality'),
+      visa: formContact.getFieldValue('visa'),
+      citizenIdentification: formContact.getFieldValue('citizenIdentification'),
+
       password: formPassword.getFieldValue('password'),
       passwordConfirm: formPassword.getFieldValue('passwordConfirm'),
+
+      taxCode: formCompany.getFieldValue('taxCode'),
       companyName: formCompany.getFieldValue('companyName'),
-      taxCodeCompany: formCompany.getFieldValue('taxCodeCompany'),
+      address: formCompany.getFieldValue('address'),
       emailCompany: formCompany.getFieldValue('emailCompany'),
-      phoneNumberCompany: formCompany.getFieldValue('phoneNumberCompany'),
-      addressCompany: formCompany.getFieldValue('addressCompany'),
+      phoneNumberCompany: formCompany.getFieldValue('phoneNumberCompany') || '',
+      websiteCompany: formCompany.getFieldValue('websiteCompany') || '',
+      abbreviationsCompany:
+        formCompany.getFieldValue('abbreviationsCompany') || '',
     };
 
     register(data)
@@ -130,8 +134,13 @@ const FormRegister = ({
 
   const submitContact = (value: ContactForm) => {
     formContact.setFieldValue('email', value.email);
-    formContact.setFieldValue('phoneNumber', value.phoneNumber);
-    formContact.setFieldValue('address', value.address);
+    formContact.setFieldValue('workingBranch', value.workingBranch);
+    formContact.setFieldValue('nationality', value.nationality);
+    formContact.setFieldValue('visa', value.visa);
+    formContact.setFieldValue(
+      'citizenIdentification',
+      value.citizenIdentification
+    );
     next();
   };
 
@@ -142,22 +151,18 @@ const FormRegister = ({
   };
 
   const submitCompany = (value: CompanyForm) => {
+    formCompany.setFieldValue('taxCode', value.taxCode);
     formCompany.setFieldValue('companyName', value.companyName);
-    formCompany.setFieldValue('taxCodeCompany', value.taxCodeCompany);
+    formCompany.setFieldValue('address', value.address);
     formCompany.setFieldValue('emailCompany', value.emailCompany);
     formCompany.setFieldValue('phoneNumberCompany', value.phoneNumberCompany);
-    formCompany.setFieldValue('addressCompany', value.addressCompany);
+    formCompany.setFieldValue('websiteCompany', value.websiteCompany);
+    formCompany.setFieldValue(
+      'abbreviationsCompany',
+      value.abbreviationsCompany
+    );
     onFinish();
   };
-
-  const genderOptionSelect = useMemo(
-    () =>
-      genderOptions.map((item) => ({
-        label: item.name,
-        value: item.genderID,
-      })),
-    [genderOptions]
-  );
 
   const roleOptionSelect = useMemo(
     () =>
@@ -167,6 +172,22 @@ const FormRegister = ({
       })),
     [roleOptions]
   );
+
+  const handleCheckTaxCode = (value: React.FocusEvent<HTMLInputElement>) => {
+    if (value.target.value) {
+      const data = {
+        taxCode: value.target.value,
+      };
+      checkTaxCode(data).then((payload) => {
+        if (payload.status) {
+          formCompany.setFieldsValue({
+            companyName: payload.data.companyName,
+            address: payload.data.address,
+          });
+        }
+      });
+    }
+  };
 
   const steps = [
     {
@@ -186,16 +207,7 @@ const FormRegister = ({
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please input your first name!
-                      </div>
-                    ),
+                    message: 'Please input your first name!',
                   },
                 ]}
               >
@@ -213,16 +225,7 @@ const FormRegister = ({
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please input your last name!
-                      </div>
-                    ),
+                    message: 'Please input your last name!',
                   },
                 ]}
               >
@@ -234,77 +237,13 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={9} span={24}>
-              <Form.Item
-                name="DateOfBirth"
-                rules={[
-                  {
-                    required: true,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please input choose birthday!
-                      </div>
-                    ),
-                  },
-                ]}
-              >
-                <DatePicker
-                  size="large"
-                  placeholder="BirthDay"
-                  style={{ width: '100%' }}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={7} span={24}>
-              <Form.Item
-                name="genderID"
-                rules={[
-                  {
-                    required: true,
-                    message: (
-                      <div
-                        className={style.message}
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please select gender!
-                      </div>
-                    ),
-                  },
-                ]}
-              >
-                <Select
-                  size="large"
-                  options={genderOptionSelect}
-                  placeholder="Gender"
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={8} span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 name="roleID"
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please select role!
-                      </div>
-                    ),
+                    message: 'Please select role!',
                   },
                 ]}
               >
@@ -340,35 +279,17 @@ const FormRegister = ({
           name="formContact"
         >
           <Row gutter={24}>
-            <Col lg={13} span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 name="email"
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please input your email!
-                      </div>
-                    ),
+                    message: 'Please input your email!',
                   },
                   {
                     pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please enter a valid email format!
-                      </div>
-                    ),
+                    message: 'Please enter a valid email format!',
                   },
                 ]}
               >
@@ -380,69 +301,73 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={11} span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
-                name="phoneNumber"
+                name="workingBranch"
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please input phone number!
-                      </div>
-                    ),
-                  },
-                  {
-                    pattern: /^[0-9]{7,15}$/,
-                    message: (
-                      <div
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please enter a vailid phone number!
-                      </div>
-                    ),
+                    message: 'Please input working branch!',
                   },
                 ]}
               >
                 <Input
-                  placeholder="Phone Number"
-                  prefix={<PhoneOutlined />}
+                  placeholder="Working Branch"
+                  prefix={<EnvironmentOutlined />}
                   size="large"
                 />
               </Form.Item>
             </Col>
 
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
-                name="address"
+                name="nationality"
                 rules={[
                   {
                     required: true,
-                    message: (
-                      <div
-                        className={style.message}
-                        style={{
-                          fontSize: '15px',
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Please input address!
-                      </div>
-                    ),
+                    message: 'Please input nationality!',
                   },
                 ]}
               >
                 <Input
-                  placeholder="Address"
+                  placeholder="Nationality"
                   prefix={<EnvironmentOutlined />}
+                  size="large"
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                name="visa"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input visa!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Visa"
+                  prefix={<ReadOutlined />}
+                  size="large"
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                name="citizenIdentification"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input citizen identification!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Citizen identification"
+                  prefix={<ReadOutlined />}
                   size="large"
                 />
               </Form.Item>
@@ -581,6 +506,43 @@ const FormRegister = ({
           name="formCompany"
         >
           <Row gutter={16}>
+            <Col lg={12} span={24}>
+              <Form.Item
+                name="taxCode"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input tax code!',
+                  },
+                ]}
+              >
+                <Input
+                  onBlur={(value) => handleCheckTaxCode(value)}
+                  placeholder="Tax Code Company"
+                  prefix={<BarcodeOutlined />}
+                  size="large"
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                name="abbreviationsCompany"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input abbreviations company!',
+                  },
+                ]}
+              >
+                <Input
+                  placeholder="Abbreviations company"
+                  prefix={<InfoOutlined />}
+                  size="large"
+                />
+              </Form.Item>
+            </Col>
+
             <Col lg={24} span={24}>
               <Form.Item
                 name="companyName"
@@ -599,19 +561,19 @@ const FormRegister = ({
               </Form.Item>
             </Col>
 
-            <Col lg={14} span={24}>
+            <Col lg={24} span={24}>
               <Form.Item
-                name="taxCodeCompany"
+                name="address"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input tax code!',
+                    message: 'Please input address!',
                   },
                 ]}
               >
                 <Input
-                  placeholder="Tax Code Company"
-                  prefix={<BarcodeOutlined />}
+                  placeholder="Address"
+                  prefix={<EnvironmentOutlined />}
                   size="large"
                 />
               </Form.Item>
@@ -649,7 +611,7 @@ const FormRegister = ({
                   },
                   {
                     pattern: /^[0-9]{7,15}$/,
-                    message: 'Please enter a valid number phone format!',
+                    message: 'Please enter a vailid phone number!',
                   },
                 ]}
               >
@@ -663,17 +625,17 @@ const FormRegister = ({
 
             <Col span={24}>
               <Form.Item
-                name="addressCompany"
+                name="websiteCompany"
                 rules={[
                   {
                     required: true,
-                    message: 'Please input address!',
+                    message: 'Please input website company!',
                   },
                 ]}
               >
                 <Input
-                  placeholder="Address"
-                  prefix={<EnvironmentOutlined />}
+                  placeholder="Website company"
+                  prefix={<WindowsOutlined />}
                   size="large"
                 />
               </Form.Item>
