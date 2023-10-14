@@ -22,6 +22,7 @@ const EditSeaPricing = () => {
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
+        feeGroupID: formValues.feeGroupID || '',
         note: formValues.note || '',
         dateEffect: formValues.dateEffect.valueOf(),
         validityDate: formValues.validityDate.valueOf(),

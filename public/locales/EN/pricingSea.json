@@ -236,6 +236,12 @@
         "error_required": "Please enter STO"
     },
 
+    "Fee_Group_form": {
+        "title": "Fee group",
+        "placeholder": "Enter fee group",
+        "error_required": "Please enter fee group"
+    },
+    
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

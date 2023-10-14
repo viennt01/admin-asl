@@ -11,6 +11,7 @@ export interface SeaPricing {
   commodityName: string;
   currencyID: string;
   currencyAbbreviations: string;
+  feeGroupID: string;
   note: string;
   dateEffect: string;
   validityDate: string;
@@ -88,6 +89,7 @@ export interface FormValues {
   podid: string;
   polid: string;
   commodityID: string;
+  feeGroupID: string;
   note: string;
   dateEffect: Dayjs;
   validityDate: Dayjs;
@@ -134,7 +136,6 @@ export interface SeaPricingFeeFormValue {
   seaPricingFeeID: string;
   feeID: string;
   feeName: string;
-  feeNo: string;
   currencyID: string;
   currencyName: string;
   unitID: string;
@@ -144,19 +145,14 @@ export interface SeaPricingFeeFormValue {
 
 export type SeaPricingFeeDTOsCreate = Omit<
   SeaPricingFeeFormValue,
-  | 'seaPricingFeeID'
-  | 'feeName'
-  | 'feeNo'
-  | 'currencyName'
-  | 'internationalCode'
-  | 'price'
+  'seaPricingFeeID' | 'feeName' | 'currencyName' | 'price'
 > & {
   priceSeaPricingFee: string;
 };
 
 export type SeaPricingFeeUpdate = Omit<
   SeaPricingFeeFormValue,
-  'feeName' | 'feeNo' | 'currencyName' | 'internationalCode'
+  'feeName' | 'currencyName' | 'internationalCode'
 >;
 
 export interface SeaPricingDetailType extends FormValues {
@@ -247,4 +243,9 @@ export interface RequireCurrency {
 export interface RequireTypeContainer {
   containerTypeID: string;
   name: string;
+}
+// get all fee group
+export interface RequireFeeGroup {
+  feeGroupID: string;
+  feeGroupName: string;
 }

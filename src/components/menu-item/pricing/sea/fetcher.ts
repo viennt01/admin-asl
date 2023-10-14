@@ -20,11 +20,13 @@ import {
   RequireCommodity,
   RequireCurrency,
   RequireTypeContainer,
+  RequireFeeGroup,
 } from './interface';
 import {
   API_COMMODITY,
   API_CONTAINER_TYPE,
   API_CURRENCY,
+  API_FEE_GROUP,
   API_LOCATION,
   API_SEA_PRICING,
 } from '@/fetcherAxios/endpoint';
@@ -112,4 +114,8 @@ export const getAllContainerType = () => {
   return get<ResponseWithPayload<RequireTypeContainer[]>>({})(
     API_CONTAINER_TYPE.GET_ALL
   );
+};
+
+export const getAllFeeGroup = () => {
+  return get<ResponseWithPayload<RequireFeeGroup[]>>({})(API_FEE_GROUP.GET_ALL);
 };

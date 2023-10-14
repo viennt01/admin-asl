@@ -128,8 +128,6 @@ const SeaPricing = ({
   };
 
   const handleIdQuery = (id: string) => {
-    console.log(id);
-
     setIdQuery(id as string);
   };
 

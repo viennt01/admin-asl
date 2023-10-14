@@ -21,8 +21,17 @@ import {
   SeaPricingFeeDTOs,
   UpdateStatus,
 } from '../interface';
-import { API_COMMODITY, API_LOCATION } from '@/fetcherAxios/endpoint';
-import { getAllCommodity, getAllLocation, updateStatus } from '../fetcher';
+import {
+  API_COMMODITY,
+  API_FEE_GROUP,
+  API_LOCATION,
+} from '@/fetcherAxios/endpoint';
+import {
+  getAllCommodity,
+  getAllFeeGroup,
+  getAllLocation,
+  updateStatus,
+} from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { UpdateStatusLocationType } from '@/components/menu-item/master-data/location-catalog/type-of-location/interface';
@@ -97,6 +106,20 @@ const CardMain = ({
       errorToast(API_MESSAGE.ERROR);
     },
   });
+  const getFeeGroup = useQuery({
+    queryKey: [API_FEE_GROUP.GET_ALL],
+    queryFn: () => getAllFeeGroup(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
 
   useEffect(() => {
     if (form.getFieldValue('statusSeaPricing')) {
@@ -113,6 +136,7 @@ const CardMain = ({
         podid: propCopyAndCreate.podid as string,
         polid: propCopyAndCreate.polid as string,
         commodityID: propCopyAndCreate.commodityID as string,
+        feeGroupID: propCopyAndCreate.feeGroupID as string,
         note: propCopyAndCreate.note as string,
         dateEffect: propCopyAndCreate.dateEffect as string,
         validityDate: propCopyAndCreate.validityDate as string,
@@ -535,6 +559,42 @@ const CardMain = ({
             <Input
               placeholder={translatePricingSea('vendor_form.placeholder')}
               disabled
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingSea('Fee_Group_form.title')}
+            name="feeGroupID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingSea('Fee_Group_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translatePricingSea('Fee_Group_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getFeeGroup.data?.data.map((item) => {
+                  return {
+                    value: item.feeGroupID,
+                    label: item.feeGroupName,
+                  };
+                }) || []
+              }
             />
           </Form.Item>
         </Col>

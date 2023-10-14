@@ -236,6 +236,12 @@
         "error_required": "Vui lòng nhập STO"
     },
 
+    "Fee_Group_form": {
+        "title": "Loại nhóm phí",
+        "placeholder": "Nhập loại nhóm phí",
+        "error_required": "Vui lòng chọn loại nhóm phí"
+    },
+
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

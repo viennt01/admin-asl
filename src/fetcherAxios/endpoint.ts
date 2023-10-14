@@ -27,6 +27,7 @@ export const API_UNIT = {
   DOWNLOAD_EXAMPLE_FILE: '/download-unit-excel',
   IMPORT: '/import-unit-with-excel',
   EXPORT: '/export-unit-with-excel',
+  GET_ALL: '/get-all-unit',
 };
 
 export const API_SEA_PRICING = {
@@ -165,6 +166,7 @@ export const API_FEE = {
   IMPORT: '/import-fee-with-excel',
   GET_ALL: '/get-all-fee',
   EXPORT: '/export-fee-with-excel',
+  GET_ALL_FEE_WITH_FEE_GROUP: '/get-all-fee-with-fee-group',
 };
 
 export const API_TYPE_FEE_GROUP = {
@@ -183,6 +185,7 @@ export const API_TYPE_FEE_GROUP = {
 
 export const API_FEE_GROUP = {
   GET_SEARCH: '/search-fee-group',
+  GET_ALL: '/get-all-fee-group',
   GET_DETAIL: '/get-fee-group',
   CREATE: '/add-fee-group',
   EDIT: '/update-fee-group',
