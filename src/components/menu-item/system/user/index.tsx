@@ -1,459 +1,601 @@
-import {
-  DeleteOutlined,
-  EditOutlined,
-  SearchOutlined,
-} from '@ant-design/icons';
-import { Button, Input, InputRef, Space, Tag } from 'antd';
-import { Key, useRef, useState } from 'react';
-import CreateUser from './create-user';
+import { EyeOutlined, FilterFilled } from '@ant-design/icons';
+import { Button, PaginationProps, Tag } from 'antd';
+import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
-import { ProColumns, ProTable } from '@ant-design/pro-components';
-import Highlighter from 'react-highlight-words';
-import { FilterConfirmProps } from 'antd/es/table/interface';
-import style from './index.module.scss';
+import { ColumnsState, ProColumns } from '@ant-design/pro-components';
+import {
+  FilterConfirmProps,
+  FilterValue,
+  TablePaginationConfig,
+} from 'antd/es/table/interface';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { API_COLUMN, API_USER } from '@/fetcherAxios/endpoint';
+import { formatDate } from '@/utils/format';
+import {
+  QueryInputParamType,
+  QuerySelectParamType,
+  SelectSearch,
+  UserTable,
+} from './interface';
+import {
+  DEFAULT_PAGINATION,
+  DENSITY,
+  PaginationOfAntd,
+  SkeletonTable,
+  TABLE_NAME,
+} from '@/components/commons/table/table-default';
+import {
+  exportTableFile,
+  getColumnTable,
+  getUserSearch,
+  updateColumnTable,
+} from './fetcher';
+import { ColumnSearchTableProps } from '@/components/commons/search-table';
+import style from '@/components/commons/table/index.module.scss';
+import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
+import {
+  initalSelectSearchMaster,
+  initalValueDisplayColumnMaster,
+  initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
+} from './constant';
+import { getSystemDate } from '@/utils/common';
+import Table from '@/components/commons/table/table';
 
-const STATUS_COLORS = {
-  Active: '#00A651',
-  DeActive: '#ED1C27',
-};
-
-const STATUS_LABELS = {
-  Active: 'Active',
-  DeActive: 'Tạm ngừng',
-};
+type DataIndex = keyof QueryInputParamType;
 
 export default function CalculationUserPage() {
   const router = useRouter();
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const queryClient = useQueryClient();
   const { translate: translateUser } = useI18n('user');
   const { translate: translateCommon } = useI18n('common');
-  interface DataType {
-    key: number;
-    account: string;
-    first_name: string;
-    last_name: string;
-    full_name: string;
-    gender: string;
-    dob: string;
-    phone: string;
-    address: string;
-    email: string;
-    CCCD_Visa: string;
-    nationality: string;
-    company: string;
-    working_branch: string;
-    role: string;
-    status: string;
-    last_login: string;
-    update_created: string;
-    dateCreated: string;
-  }
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [pagination, setPagination] =
+    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
+    initalValueQueryInputParamsMaster
+  );
+  const [querySelectParams, setQuerySelectParams] =
+    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
+  const [dataTable, setDataTable] = useState<UserTable[]>([]);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    initalSelectSearchMaster
+  );
+  const [columnsStateMap, setColumnsStateMap] = useState<
+    Record<string, ColumnsState>
+  >(initalValueDisplayColumnMaster);
+  const [refreshingLoading, setRefreshingLoading] = useState(false);
 
-  const data: DataType[] = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i + 1,
-      account: 'ThuNCN',
-      first_name: 'Thu',
-      last_name: 'Nguyễn',
-      full_name: 'Nguyễn Cao Ngọc Thu',
-      gender: 'Female',
-      dob: '05/12/2001',
-      phone: '0975169203',
-      address: 'Quận 9, TP. Hồ Chí Minh',
-      email: 'nganncnse150413@fpt.edu.com',
-      CCCD_Visa: '4563436465',
-      nationality: 'Việt Nam',
-      company: 'ABC',
-      working_branch: 'Chi nhánh Lý Thường Kiệt, Quận 10, TP. Hồ Chí Minh',
-      role: 'Importer',
-      status: i % 2 === 1 ? 'Active' : 'DeActive',
-      last_login: '26/07/2023',
-      update_created: '05/02/2023',
-      dateCreated: '05/02/2023',
+  // Handle data
+  useQuery({
+    queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
+    queryFn: () => getColumnTable(),
+    onSuccess(data) {
+      data.status
+        ? !('operation' in data.data.columnFixed)
+          ? setColumnsStateMap(initalValueDisplayColumnMaster)
+          : setColumnsStateMap(data.data.columnFixed)
+        : setColumnsStateMap(initalValueDisplayColumnMaster);
+    },
+  });
+
+  const dataSelectSearch =
+    querySelectParams.statusUser.length === 0
+      ? {
+          statusUser: [
+            STATUS_MATER_LABELS.ACTIVE,
+            STATUS_MATER_LABELS.DEACTIVE,
+          ],
+        }
+      : querySelectParams;
+
+  const locationsQuerySearch = useQuery({
+    queryKey: [API_USER.GET_SEARCH, queryInputParams, querySelectParams],
+    queryFn: () =>
+      getUserSearch({
+        ...queryInputParams,
+        ...dataSelectSearch,
+        paginateRequest: {
+          currentPage: pagination.current,
+          pageSize: pagination.pageSize,
+        },
+      }),
+    onSuccess(data) {
+      if (data.status) {
+        const { currentPage, pageSize, totalPages } = data.data;
+        setDataTable(
+          data.data.data.map((data) => ({
+            key: data.userID,
+            roleID: data.roleID,
+            roleName: data.roleName,
+            genderID: data.genderID,
+            genderName: data.genderName,
+            emailAccount: data.emailAccount,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            fullName: data.fullName,
+            companyName: data.companyName,
+            abbreviationsCompany: data.abbreviationsCompany,
+            emailCompany: data.emailCompany,
+            birthday: data.birthday,
+            employeeCode: data.employeeCode,
+            taxCode: data.taxCode,
+            phoneNumber: data.phoneNumber,
+            address: data.address,
+            citizenIdentification: data.citizenIdentification,
+            visa: data.visa,
+            nationality: data.nationality,
+            workingBranch: data.workingBranch,
+            note: data.note,
+            website: data.website,
+            avatar: data.avatar,
+            colorAvatar: data.colorAvatar,
+            defaultAvatar: data.defaultAvatar,
+            lastLoginUser: data.lastLoginUser,
+            lastFailedLoginUser: data.lastFailedLoginUser,
+            statusUser: data.statusUser,
+            createdDateUser: data.createdDateUser,
+            updatedDateUser: data.updatedDateUser,
+            searchAll: '',
+          }))
+        );
+        setPagination({
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalPages,
+        });
+      } else {
+        setDataTable([]);
+      }
+    },
+  });
+
+  const updateColumnMutation = useMutation({
+    mutationFn: () =>
+      updateColumnTable({
+        tableName: TABLE_NAME.USER,
+        density: DENSITY.Middle,
+        columnFixed: columnsStateMap,
+      }),
+    onSuccess: (data) => {
+      if (data.status) {
+        queryClient.invalidateQueries({
+          queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
+        });
+      }
+    },
+  });
+
+  const refreshingQuery = () => {
+    setSelectedActiveKey(initalSelectSearchMaster);
+    setQueryInputParams(initalValueQueryInputParamsMaster);
+    setRefreshingLoading(true);
+    pagination.current = 1;
+    locationsQuerySearch.refetch();
+    setTimeout(() => {
+      setRefreshingLoading(false);
+    }, 500);
+  };
+
+  // Handle search
+  const handleSearchInputKeyAll = (value: string) => {
+    setSelectedActiveKey({
+      ...initalSelectSearchMaster,
+      searchAll: {
+        label: 'searchAll',
+        value: value,
+      },
     });
-  }
+    setQueryInputParams({
+      ...initalValueQueryInputParamsMaster,
+      searchAll: value,
+    });
+    setQuerySelectParams({
+      ...initalValueQuerySelectParamsMaster,
+    });
+  };
 
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
-  const searchInput = useRef<InputRef>(null);
-
-  const handleSearch = (
-    selectedKeys: string[],
+  const handleSearchInput = (
+    selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
     dataIndex: DataIndex
   ) => {
+    setSelectedActiveKey((prevData) => ({
+      ...prevData,
+      [dataIndex]: {
+        label: dataIndex,
+        value: selectedKeys,
+      },
+      searchAll: {
+        label: 'searchAll',
+        value: '',
+      },
+    }));
+    const newQueryParams = { ...queryInputParams };
+    newQueryParams[dataIndex] = selectedKeys;
+    newQueryParams.searchAll = '';
+    setQueryInputParams(newQueryParams);
     confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
   };
 
-  const handleReset = (clearFilters: () => void) => {
+  const handleSearchSelect = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>
+  ) => {
+    const newQueryParams = {
+      ...querySelectParams,
+      searchAll: '',
+      statusUser:
+        filters.statusUser?.length !== 0 && filters.statusUser
+          ? (filters.statusUser as string[])
+          : [],
+    };
+    setQuerySelectParams(newQueryParams);
+  };
+
+  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+    setQueryInputParams((prevData) => ({
+      ...prevData,
+      [dataIndex]: '',
+    }));
+
+    setSelectedActiveKey((prevData) => ({
+      ...prevData,
+      [dataIndex]: { label: dataIndex, value: '' },
+    }));
     clearFilters();
-    setSearchText('');
   };
 
-  type DataIndex = keyof DataType;
-
-  const getColumnSearchProps = (
-    dataIndex: DataIndex
-  ): ProColumns<DataType> => ({
-    filterDropdown: ({
-      setSelectedKeys,
-      selectedKeys,
-      confirm,
-      clearFilters,
-      close,
-    }) => (
-      <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
-        <Input
-          ref={searchInput}
-          placeholder={`Search ${dataIndex}`}
-          value={selectedKeys[0]}
-          onChange={(e) =>
-            setSelectedKeys(e.target.value ? [e.target.value] : [])
-          }
-          onPressEnter={() =>
-            handleSearch(selectedKeys as string[], confirm, dataIndex)
-          }
-          style={{ marginBottom: 8, display: 'block' }}
-        />
-        <Space>
-          <Button
-            type="primary"
-            onClick={() =>
-              handleSearch(selectedKeys as string[], confirm, dataIndex)
-            }
-            icon={<SearchOutlined />}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Search
-          </Button>
-          <Button
-            onClick={() => clearFilters && handleReset(clearFilters)}
-            size="small"
-            style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({ closeDropdown: false });
-              setSearchText((selectedKeys as string[])[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              close();
-            }}
-          >
-            close
-          </Button>
-        </Space>
-      </div>
-    ),
-    filterIcon: (filtered: boolean) => (
-      <SearchOutlined style={{ color: filtered ? '#1677ff' : undefined }} />
-    ),
-    onFilter: (value, record) =>
-      record[dataIndex]
-        .toString()
-        .toLowerCase()
-        .includes((value as string).toLowerCase()),
-    onFilterDropdownOpenChange: (visible) => {
-      if (visible) {
-        setTimeout(() => searchInput.current?.select(), 100);
-      }
-    },
-    render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ''}
-        />
-      ) : (
-        text
-      ),
-  });
-
-  const columns: ProColumns<DataType>[] = [
+  // Handle data show table
+  const columns: ProColumns<UserTable>[] = [
     {
-      title: translateUser('code'),
-      width: 100,
-      dataIndex: 'key',
-      key: 'key',
-      fixed: 'left',
-      align: 'center',
-      sorter: (a, b) => a.key - b.key,
+      title: <div className={style.title}>{translateUser('code')}</div>,
+      dataIndex: 'index',
+      width: 50,
+      align: 'right',
+      render: (_, record, index) => {
+        const { pageSize = 0, current = 0 } = pagination ?? {};
+        return index + pageSize * (current - 1) + 1;
+      },
     },
-
     {
-      title: translateUser('account'),
-      dataIndex: 'account',
-      key: 'account',
-      fixed: 'left',
+      title: <div className={style.title}>{translateUser('Account')}</div>,
+      dataIndex: 'emailAccount',
+      key: 'emailAccount',
       width: 150,
       align: 'center',
-      ...getColumnSearchProps('account'),
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'emailAccount',
+        },
+      }),
     },
-
     {
-      title: translateUser('first_name'),
-      width: 150,
-      dataIndex: 'first_name',
-      key: 'first_name',
-      align: 'center',
-      ...getColumnSearchProps('first_name'),
-    },
-
-    {
-      title: translateUser('last_name'),
-      width: 150,
-      dataIndex: 'last_name',
-      key: 'last_name',
-      align: 'center',
-      ...getColumnSearchProps('last_name'),
-    },
-
-    {
-      title: translateUser('full_name'),
+      title: <div className={style.title}>{translateUser('full_name')}</div>,
+      dataIndex: 'fullName',
+      key: 'fullName',
       width: 250,
-      dataIndex: 'full_name',
-      key: 'full_name',
-      align: 'center',
-      ...getColumnSearchProps('full_name'),
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'fullName',
+        },
+      }),
     },
-
     {
-      title: translateUser('gender'),
-      width: 150,
-      dataIndex: 'gender',
-      key: 'gender',
-      align: 'center',
-      ...getColumnSearchProps('gender'),
-    },
-
-    {
-      title: translateUser('dob'),
-      width: 150,
-      dataIndex: 'dob',
-      key: 'dob',
-      align: 'center',
-      ...getColumnSearchProps('dob'),
-    },
-
-    {
-      title: translateUser('phone'),
-      width: 150,
-      dataIndex: 'phone',
-      key: 'phone',
-      align: 'center',
-      ...getColumnSearchProps('phone'),
-    },
-
-    {
-      title: translateUser('address'),
-      width: 350,
-      dataIndex: 'address',
-      key: 'address',
-      align: 'center',
-      ...getColumnSearchProps('address'),
-    },
-
-    {
-      title: translateUser('email'),
+      title: <div className={style.title}>{translateUser('dob')}</div>,
+      dataIndex: 'birthday',
+      key: 'birthday',
       width: 250,
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-      ...getColumnSearchProps('email'),
+      align: 'left',
+      render: (value) => formatDate(Number(value)),
     },
-
     {
-      title: translateUser('CCCD_Visa'),
+      title: <div className={style.title}>{translateUser('gender')}</div>,
+      dataIndex: 'genderName',
+      key: 'genderName',
       width: 250,
-      dataIndex: 'CCCD_Visa',
-      key: 'CCCD_Visa',
-      align: 'center',
-      ...getColumnSearchProps('CCCD_Visa'),
+      align: 'left',
     },
-
     {
-      title: translateUser('nationality'),
-      width: 200,
+      title: <div className={style.title}>{translateUser('nationality')}</div>,
       dataIndex: 'nationality',
       key: 'nationality',
-      align: 'center',
-      ...getColumnSearchProps('nationality'),
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'nationality',
+        },
+      }),
     },
-
     {
-      title: translateUser('company'),
-      width: 200,
-      dataIndex: 'company',
-      key: 'company',
-      align: 'center',
-      ...getColumnSearchProps('company'),
+      title: <div className={style.title}>{translateUser('CCCD_Visa')}</div>,
+      dataIndex: 'visa',
+      key: 'visa',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'visa',
+        },
+      }),
     },
-
     {
-      title: translateUser('working_branch'),
-      width: 400,
-      dataIndex: 'working_branch',
-      key: 'working_branch',
-      align: 'center',
-      ...getColumnSearchProps('working_branch'),
+      title: <div className={style.title}>{translateUser('phone')}</div>,
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'phoneNumber',
+        },
+      }),
     },
-
     {
-      title: translateUser('role'),
-      width: 200,
-      dataIndex: 'role',
-      key: 'role',
-      align: 'center',
-      ...getColumnSearchProps('role'),
+      title: <div className={style.title}>{translateUser('address')}</div>,
+      dataIndex: 'address',
+      key: 'address',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'address',
+        },
+      }),
     },
-
     {
-      title: translateUser('status'),
+      title: <div className={style.title}>{translateUser('company')}</div>,
+      dataIndex: 'companyName',
+      key: 'companyName',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'companyName',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateUser('role')}</div>,
+      dataIndex: 'roleName',
+      key: 'roleName',
+      width: 250,
+      align: 'left',
+    },
+    {
+      title: (
+        <div className={style.title}>{translateUser('working_branch')}</div>
+      ),
+      dataIndex: 'workingBranch',
+      key: 'workingBranch',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<QueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'workingBranch',
+        },
+      }),
+    },
+    {
+      title: <div className={style.title}>{translateCommon('last_login')}</div>,
+      width: 150,
+      dataIndex: 'lastLoginUser',
+      key: 'lastLoginUser',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: <div className={style.title}>{translateUser('status')}</div>,
       width: 120,
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'statusUser',
+      key: 'statusUser',
       align: 'center',
-      filters: [
-        {
-          text: 'Sử dụng',
-          value: 'Active',
-        },
-        {
-          text: 'Tạm ngừng',
-          value: 'DeActive',
-        },
-      ],
-      // onFilter: (value: string, record) => record.address.startsWith(value),
-      filterSearch: true,
+      filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
+        text: key,
+        value: key,
+      })),
+      filterSearch: false,
+      filteredValue: querySelectParams.statusUser || null,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.statusUser.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
       render: (value) => (
         <Tag
-          color={STATUS_COLORS[value as keyof typeof STATUS_COLORS]}
+          color={
+            STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
+          }
           style={{
             margin: 0,
           }}
         >
-          {STATUS_LABELS[value as keyof typeof STATUS_LABELS]}
+          {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
         </Tag>
       ),
     },
-
-    {
-      title: translateUser('last_login'),
-      width: 150,
-      dataIndex: 'last_login',
-      key: 'last_login',
-      align: 'center',
-      ...getColumnSearchProps('last_login'),
-    },
-
-    {
-      title: translateUser('update_created'),
-      width: 150,
-      dataIndex: 'update_created',
-      key: 'update_created',
-      align: 'center',
-      ...getColumnSearchProps('update_created'),
-    },
-
     {
       title: (
-        <div style={{ textTransform: 'uppercase' }}>
-          {translateUser('date_created')}
-        </div>
+        <div className={style.title}>{translateCommon('date_created')}</div>
       ),
       width: 150,
-      dataIndex: 'dateCreated',
-      key: 'dateCreated',
+      dataIndex: 'createdDateUser',
+      key: 'createdDateUser',
       align: 'center',
-      ...getColumnSearchProps('dateCreated'),
+      render: (value) => formatDate(Number(value)),
     },
-
+    {
+      title: (
+        <div className={style.title}>{translateCommon('date_inserted')}</div>
+      ),
+      width: 150,
+      dataIndex: 'updatedDateUser',
+      key: 'updatedDateUser',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
     {
       key: 'operation',
-      fixed: 'right',
       width: 50,
       align: 'center',
       dataIndex: 'key',
       render: (value) => (
-        <Button
-          onClick={() => handleEditCustomer(value as string)}
-          icon={<EditOutlined />}
-        ></Button>
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => handleEditCustomer(value as string)}
+            icon={<EyeOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
+        </div>
       ),
     },
   ];
 
+  // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.USER_EDIT(id));
+    router.push(ROUTERS.USER_DETAIL(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
 
+  const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
+    pagination.current = page;
+    pagination.pageSize = size;
+    locationsQuerySearch.refetch();
+  };
+
+  const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
+    setColumnsStateMap(map);
+    updateColumnMutation.mutate();
+  };
+
+  const handleChangeInputSearchAll = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedActiveKey((prevData) => ({
+      ...prevData,
+      searchAll: {
+        label: 'searchAll',
+        value: e.target.value ? e.target.value : '',
+      },
+    }));
+  };
+
+  const handleOnDoubleClick = (
+    e: MouseEvent<any, globalThis.MouseEvent>,
+    record: UserTable
+  ) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('button')) {
+      router.push(ROUTERS.USER_DETAIL(record.key));
+    }
+  };
+
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusUser,
+      }),
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `ASL_USER${getSystemDate()}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+    },
+  });
+
+  const exportTableData = () => {
+    exportData.mutate();
+  };
+
   return (
-    <ProTable<DataType>
-      className={style.table}
-      style={{ marginTop: '8px' }}
-      rowKey="key"
-      dataSource={data}
-      rowSelection={{
-        type: 'checkbox',
-        selectedRowKeys: selectedRowKeys,
-        onChange: handleSelectionChange,
-      }}
-      pagination={{
-        position: ['bottomCenter'],
-        showTotal: () => '',
-        showSizeChanger: true,
-      }}
-      columns={columns}
-      search={false}
-      dateFormatter="string"
-      headerTitle={translateUser('title')}
-      scroll={{
-        x: 'max-content',
-      }}
-      sticky={{ offsetHeader: 0 }}
-      options={{
-        fullScreen: true,
-        search: true,
-      }}
-      toolBarRender={() => [
-        <CreateUser key={'create'} />,
-        <Button
-          icon={<DeleteOutlined />}
-          style={{
-            backgroundColor: COLORS.RED,
-            color: COLORS.WHITE,
-            borderColor: COLORS.RED,
-            fontWeight: '500',
-          }}
-          key={'delete'}
-        >
-          {translateCommon('button_delete')}
-        </Button>,
-      ]}
-    />
+    <div style={{ marginTop: '24px' }}>
+      {locationsQuerySearch.isLoading ? (
+        <SkeletonTable />
+      ) : (
+        <>
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            headerTitle={translateUser('title')}
+            selectedRowKeys={selectedRowKeys}
+            handleSelectionChange={handleSelectionChange}
+            handlePaginationChange={handlePaginationChange}
+            handleChangeInputSearchAll={handleChangeInputSearchAll}
+            handleSearchInputKeyAll={handleSearchInputKeyAll}
+            valueSearchAll={selectedActiveKey.searchAll.value}
+            handleOnDoubleClick={handleOnDoubleClick}
+            refreshingQuery={refreshingQuery}
+            refreshingLoading={refreshingLoading}
+            pagination={pagination}
+            handleColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            handleSearchSelect={handleSearchSelect}
+            checkTableMaster={true}
+            exportLoading={exportData.isLoading}
+            exportTableData={exportTableData}
+          />
+        </>
+      )}
+    </div>
   );
 }

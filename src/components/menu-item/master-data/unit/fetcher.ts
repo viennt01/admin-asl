@@ -7,7 +7,7 @@ import {
 } from '@/fetcherAxios';
 import {
   UnitsRequire,
-  RequestLocationType,
+  RequestUnitType,
   RequestUnitTableDraft,
   UnitCreate,
   UnitDelete,
@@ -24,8 +24,8 @@ import {
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
 
-export const getLocationsSearch = (data: RequestLocationType) => {
-  return post<RequestLocationType, ResponseWithPayload<UnitsRequire>>({
+export const getUnitSearch = (data: RequestUnitType) => {
+  return post<RequestUnitType, ResponseWithPayload<UnitsRequire>>({
     data,
   })(API_UNIT.GET_SEARCH);
 };

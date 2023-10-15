@@ -144,7 +144,7 @@ export const ROUTERS = {
   UNIT_MANAGER: (unitId: string) => `/master-data/unit/manager-admin/${unitId}`,
 
   USER: '/system/user',
-  USER_EDIT: (userId: string) => `/system/user/edit/${userId}`,
+  USER_DETAIL: (id: string) => `/system/user/detail/${id}`,
   STAFF: '/system/staff',
   STAFF_EDIT: (staffId: string) => `/system/staff/edit/${staffId}`,
   PERMISSION: '/system/permission',

@@ -40,6 +40,7 @@ export enum TABLE_NAME {
   TYPE_OF_CONTAINER = 'Type of Container',
   TYPE_OF_UNIT = 'Type of Unit',
   TYPE_OF_FEE_GROUP = 'Type of Fee Group',
+  USER = 'User',
 }
 
 export interface ColumnTable {

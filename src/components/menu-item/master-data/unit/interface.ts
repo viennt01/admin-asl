@@ -32,7 +32,7 @@ export interface QuerySelectParamType {
   statusUnit: string[];
 }
 
-export interface RequestLocationType
+export interface RequestUnitType
   extends QueryInputParamType,
     QuerySelectParamType {
   paginateRequest: Pagination;

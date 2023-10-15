@@ -8,6 +8,10 @@ export const API_AUTHENTICATE = {
 export const API_USER = {
   CHECK_USER: '/check-user',
   UPDATE_NEW_USER: '/change-status-new-user',
+  GET_SEARCH: '/search-user',
+  GET_DETAIL: '/get-user',
+  UPDATE_STATUS: '/update-status-user',
+  EXPORT: '/export-user-with-excel',
 };
 
 export const API_COLUMN = {

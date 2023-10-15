@@ -131,6 +131,9 @@ const Table = <T extends Record<string, any>>({
                 onChange={(e) =>
                   handleChangeInputSearchAll && handleChangeInputSearchAll(e)
                 }
+                style={{
+                  display: handleChangeInputSearchAll ? '' : 'none',
+                }}
               />,
               <Button
                 key={'create'}
@@ -141,6 +144,7 @@ const Table = <T extends Record<string, any>>({
                   color: COLORS.GREEN,
                   borderColor: COLORS.GREEN,
                   fontWeight: '500',
+                  display: handleCreate ? '' : 'none',
                 }}
                 onClick={handleCreate}
               >
@@ -154,6 +158,7 @@ const Table = <T extends Record<string, any>>({
                   color: COLORS.WHITE,
                   borderColor: COLORS.RED,
                   fontWeight: '500',
+                  display: showPropsConfirmDelete ? '' : 'none',
                 }}
                 onClick={showPropsConfirmDelete}
               >
@@ -169,6 +174,7 @@ const Table = <T extends Record<string, any>>({
                     width: 32,
                     height: 32,
                     padding: 6,
+                    display: refreshingQuery ? '' : 'none',
                   }}
                 />
               </Tooltip>,
@@ -181,6 +187,7 @@ const Table = <T extends Record<string, any>>({
                     width: 32,
                     height: 32,
                     padding: '3px 6px 0px 6px',
+                    display: importTableData ? '' : 'none',
                   }}
                 />
               </Tooltip>,
@@ -194,6 +201,7 @@ const Table = <T extends Record<string, any>>({
                     width: 32,
                     height: 32,
                     padding: '3px 6px 0px 6px',
+                    display: exportTableData ? '' : 'none',
                   }}
                 />
               </Tooltip>,

@@ -39,7 +39,7 @@ import {
   downloadExampleFile,
   exportTableFile,
   getColumnTable,
-  getLocationsSearch,
+  getUnitSearch,
   importDataTable,
   updateColumnTable,
 } from '../fetcher';
@@ -113,7 +113,7 @@ export default function MasterDataTable() {
   const locationsQuerySearch = useQuery({
     queryKey: [API_UNIT.GET_SEARCH, queryInputParams, querySelectParams],
     queryFn: () =>
-      getLocationsSearch({
+      getUnitSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
