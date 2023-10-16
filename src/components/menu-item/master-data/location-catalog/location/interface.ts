@@ -123,7 +123,7 @@ export interface LocationTableRequest extends Omit<Location, 'locationID'> {
   key: string;
 }
 export interface UpdateStatusLocation {
-  id: string;
+  id: React.Key[];
   status: string;
 }
 

@@ -107,7 +107,7 @@ const TypeFeeForm = ({
   const handleAJ = (status: string) => {
     if (idQuery) {
       const _requestData: UpdateStatusTypeFee = {
-        id: idQuery,
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
@@ -211,7 +211,7 @@ const TypeFeeForm = ({
                   }}
                   onChange={(value) => {
                     const _requestData: UpdateStatusTypeFee = {
-                      id: idQuery,
+                      id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
                         : STATUS_ALL_LABELS.DEACTIVE,

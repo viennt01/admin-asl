@@ -21,7 +21,7 @@ import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 import { initalValueQueryInputParamsRequest } from '../constant';
-import { SeaPricingTable } from '../interface';
+import { SeaPricingTable, UpdateStatus } from '../interface';
 
 const RequestTable = () => {
   const router = useRouter();
@@ -32,6 +32,7 @@ const RequestTable = () => {
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
 
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   // Handle data
   useQuery({
@@ -94,7 +95,7 @@ const RequestTable = () => {
     },
   });
 
-  const updateStatusUnitMutation = useMutation({
+  const updateStatusMutation = useMutation({
     mutationFn: (body: UpdateStatusUnit) => {
       return updateStatus(body);
     },
@@ -159,9 +160,10 @@ const RequestTable = () => {
             style={{ marginRight: '10px' }}
           />
           <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.ACTIVE)
-            }
+            onClick={() => {
+              setSelectedRowKeys([value as string]);
+              handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE);
+            }}
             icon={<CheckOutlined />}
             style={{
               marginRight: '10px',
@@ -170,9 +172,10 @@ const RequestTable = () => {
             }}
           />
           <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.REJECT)
-            }
+            onClick={() => {
+              setSelectedRowKeys([value as string]);
+              handleApproveAndReject(STATUS_ALL_LABELS.REJECT);
+            }}
             icon={<CloseOutlined />}
             style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
           />
@@ -252,15 +255,16 @@ const RequestTable = () => {
     router.push(ROUTERS.SEA_PRICING_MANAGER(id));
   };
 
-  const handleApproveAndReject = (id: string, status: string) => {
-    const _requestData: UpdateStatusUnit = {
-      id,
+  const handleApproveAndReject = (status: string) => {
+    const _requestData: UpdateStatus = {
+      id: selectedRowKeys,
       status,
     };
-    updateStatusUnitMutation.mutate(_requestData, {
+    updateStatusMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
           ? (successToast(data.message),
+            setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [API_SEA_PRICING.GET_REQUEST, pagination],
             }))
@@ -270,6 +274,10 @@ const RequestTable = () => {
         errorToast(API_MESSAGE.ERROR);
       },
     });
+  };
+
+  const handleSelectionChange = (selectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(selectedRowKeys);
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
@@ -300,7 +308,9 @@ const RequestTable = () => {
           handlePaginationChange={handlePaginationChange}
           handleOnDoubleClick={handleOnDoubleClick}
           pagination={pagination}
-          checkTableMaster={false}
+          checkTableMaster={true}
+          handleSelectionChange={handleSelectionChange}
+          handleApproveAndReject={handleApproveAndReject}
         />
       </div>
     </>

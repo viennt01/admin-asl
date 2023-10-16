@@ -3,7 +3,7 @@ import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_FEE } from '@/fetcherAxios/endpoint';
+import { API_TYPE_FEE } from '@/fetcherAxios/endpoint';
 
 export default function TypeFeePage() {
   const queryClient = useQueryClient();
@@ -22,7 +22,7 @@ export default function TypeFeePage() {
       items={[
         {
           label: 'Master Data',
-          key: API_FEE.GET_SEARCH,
+          key: API_TYPE_FEE.GET_SEARCH,
           children: <MasterDataTable />,
         },
         {
@@ -42,7 +42,7 @@ export default function TypeFeePage() {
               </div>
             </Badge>
           ),
-          key: API_FEE.GET_REQUEST,
+          key: API_TYPE_FEE.GET_REQUEST,
           children: <RequestTable />,
         },
       ]}

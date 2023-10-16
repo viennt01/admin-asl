@@ -4,6 +4,8 @@ import {
   ReloadOutlined,
   CloudUploadOutlined,
   CloudDownloadOutlined,
+  CheckOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import COLORS from '@/constant/color';
 import {
@@ -18,6 +20,7 @@ import useI18n from '@/i18n/useI18N';
 import { ChangeEvent, MouseEvent } from 'react';
 import { PaginationOfAntd } from '@/components/commons/table/table-default';
 import { FilterValue } from 'antd/lib/table/interface';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 export const COUNT_DATA = 2147483640;
 interface Props<T extends Record<string, any>> {
@@ -49,6 +52,7 @@ interface Props<T extends Record<string, any>> {
   importTableData?: () => void;
   exportLoading?: boolean;
   exportTableData?: () => void;
+  handleApproveAndReject?: (status: string) => void;
 }
 const Table = <T extends Record<string, any>>({
   dataTable,
@@ -73,6 +77,7 @@ const Table = <T extends Record<string, any>>({
   importTableData,
   exportLoading,
   exportTableData,
+  handleApproveAndReject,
 }: Props<T>) => {
   const { translate: translateCommon } = useI18n('common');
   const dataSourceUnknown = dataTable as unknown;
@@ -202,6 +207,44 @@ const Table = <T extends Record<string, any>>({
                     height: 32,
                     padding: '3px 6px 0px 6px',
                     display: exportTableData ? '' : 'none',
+                  }}
+                />
+              </Tooltip>,
+              <Tooltip title="Export data" key={'export-data'}>
+                <Button
+                  loading={exportLoading}
+                  icon={<CheckOutlined />}
+                  size="large"
+                  onClick={() =>
+                    handleApproveAndReject &&
+                    handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE)
+                  }
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: '3px 6px 0px 6px',
+                    color: COLORS.SUCCESS,
+                    borderColor: COLORS.SUCCESS,
+                    display: handleApproveAndReject ? '' : 'none',
+                  }}
+                />
+              </Tooltip>,
+              <Tooltip title="Export data" key={'export-data'}>
+                <Button
+                  loading={exportLoading}
+                  icon={<CloseOutlined />}
+                  size="large"
+                  onClick={() =>
+                    handleApproveAndReject &&
+                    handleApproveAndReject(STATUS_ALL_LABELS.REJECT)
+                  }
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: '3px 6px 0px 6px',
+                    color: COLORS.ERROR,
+                    borderColor: COLORS.ERROR,
+                    display: handleApproveAndReject ? '' : 'none',
                   }}
                 />
               </Tooltip>,

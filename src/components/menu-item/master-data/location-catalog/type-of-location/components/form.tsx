@@ -109,7 +109,7 @@ const LocationTypeForm = ({
   const handleAR = (status: string) => {
     if (idQuery) {
       const _requestData: UpdateStatusLocationType = {
-        id: idQuery,
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
@@ -328,7 +328,7 @@ const LocationTypeForm = ({
                   }}
                   onChange={(value) => {
                     const _requestData: UpdateStatusLocationType = {
-                      id: idQuery,
+                      id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
                         : STATUS_ALL_LABELS.DEACTIVE,

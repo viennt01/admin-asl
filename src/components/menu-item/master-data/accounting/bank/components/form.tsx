@@ -117,7 +117,7 @@ const BankForm = ({
   const handleAR = (status: string) => {
     if (idQuery) {
       const _requestData: UpdateStatusBank = {
-        id: idQuery,
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
@@ -233,7 +233,7 @@ const BankForm = ({
                   }}
                   onChange={(value) => {
                     const _requestData: UpdateStatusBank = {
-                      id: idQuery,
+                      id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
                         : STATUS_ALL_LABELS.DEACTIVE,

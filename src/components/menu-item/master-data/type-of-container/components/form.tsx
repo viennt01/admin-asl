@@ -109,7 +109,7 @@ const TypeOfContainerTypeForm = ({
   const handleAR = (status: string) => {
     if (idQuery) {
       const _requestData: UpdateStatusContainerType = {
-        id: idQuery,
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
@@ -227,7 +227,7 @@ const TypeOfContainerTypeForm = ({
                   }}
                   onChange={(value) => {
                     const _requestData: UpdateStatusContainerType = {
-                      id: idQuery,
+                      id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
                         : STATUS_ALL_LABELS.DEACTIVE,

@@ -107,7 +107,7 @@ const CurrencyForm = ({
   const handleAJ = (status: string) => {
     if (idQuery) {
       const _requestData: UpdateStatusCurrency = {
-        id: idQuery,
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
@@ -211,7 +211,7 @@ const CurrencyForm = ({
                   }}
                   onChange={(value) => {
                     const _requestData: UpdateStatusCurrency = {
-                      id: idQuery,
+                      id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
                         : STATUS_ALL_LABELS.DEACTIVE,

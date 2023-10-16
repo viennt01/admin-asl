@@ -10,7 +10,6 @@ import { geLocationDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { FormValues, UpdateStatusLocation } from '../interface';
 import { getListCity, getListTypeLocations } from '@/layout/fetcher';
-import { UpdateStatusLocationType } from '@/components/menu-item/master-data/location-catalog/type-of-location/interface';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -125,7 +124,7 @@ const LocationForm = ({
   const handleAR = (status: string) => {
     if (idQuery) {
       const _requestData: UpdateStatusLocation = {
-        id: idQuery,
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
@@ -230,8 +229,8 @@ const LocationForm = ({
                       : STATUS_MASTER_COLORS.DEACTIVE,
                   }}
                   onChange={(value) => {
-                    const _requestData: UpdateStatusLocationType = {
-                      id: idQuery,
+                    const _requestData: UpdateStatusLocation = {
+                      id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
                         : STATUS_ALL_LABELS.DEACTIVE,

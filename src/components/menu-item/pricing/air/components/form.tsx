@@ -16,7 +16,6 @@ import {
   getAirPricingDetail,
   updateStatus,
 } from '../fetcher';
-import { UpdateStatusLocationType } from '@/components/menu-item/master-data/location-catalog/type-of-location/interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import dayjs from 'dayjs';
@@ -170,8 +169,8 @@ const AirPricing = ({
 
   const handleAR = (status: string) => {
     if (idQuery) {
-      const _requestData: UpdateStatusLocationType = {
-        id: idQuery,
+      const _requestData: UpdateStatus = {
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {

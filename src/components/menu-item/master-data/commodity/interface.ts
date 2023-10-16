@@ -92,7 +92,7 @@ export type SelectDratSearch = {
 //----------------------------------------------------------------
 
 export interface UpdateStatusCommodity {
-  id: string;
+  id: React.Key[];
   status: string;
 }
 

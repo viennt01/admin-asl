@@ -97,7 +97,7 @@ export type SelectDratSearch = {
 //----------------------------------------------------------------
 
 export interface UpdateStatusCurrency {
-  id: string;
+  id: React.Key[];
   status: string;
 }
 

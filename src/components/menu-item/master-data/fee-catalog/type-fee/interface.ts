@@ -1,3 +1,4 @@
+import { Key } from 'react';
 import { Pagination } from '../../../../commons/table/table-default';
 
 export interface TypeFee {
@@ -92,7 +93,7 @@ export type SelectDratSearch = {
 };
 
 export interface UpdateStatusTypeFee {
-  id: string;
+  id: Key[];
   status: string;
 }
 

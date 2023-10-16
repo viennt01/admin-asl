@@ -48,6 +48,8 @@ const RequestTable = () => {
   const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
     initalSelectSearchRequest
   );
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
   // Handle data
   useQuery({
     queryKey: [API_COMMODITY.GET_REQUEST, pagination, queryInputParams],
@@ -151,9 +153,10 @@ const RequestTable = () => {
             style={{ marginRight: '10px' }}
           />
           <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.ACTIVE)
-            }
+            onClick={() => {
+              setSelectedRowKeys([value as string]);
+              handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE);
+            }}
             icon={<CheckOutlined />}
             style={{
               marginRight: '10px',
@@ -162,9 +165,10 @@ const RequestTable = () => {
             }}
           />
           <Button
-            onClick={() =>
-              handleApproveAndReject(value as string, STATUS_ALL_LABELS.REJECT)
-            }
+            onClick={() => {
+              setSelectedRowKeys([value as string]);
+              handleApproveAndReject(STATUS_ALL_LABELS.REJECT);
+            }}
             icon={<CloseOutlined />}
             style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
           />
@@ -230,15 +234,16 @@ const RequestTable = () => {
     router.push(ROUTERS.COMMODITY_MANAGER(id));
   };
 
-  const handleApproveAndReject = (id: string, status: string) => {
+  const handleApproveAndReject = (status: string) => {
     const _requestData: UpdateStatusCommodity = {
-      id,
+      id: selectedRowKeys,
       status,
     };
     updateStatusMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
           ? (successToast(data.message),
+            setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [
                 API_COMMODITY.GET_REQUEST,
@@ -252,6 +257,10 @@ const RequestTable = () => {
         errorToast(API_MESSAGE.ERROR);
       },
     });
+  };
+
+  const handleSelectionChange = (selectedRowKeys: React.Key[]) => {
+    setSelectedRowKeys(selectedRowKeys);
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
@@ -282,7 +291,9 @@ const RequestTable = () => {
           handlePaginationChange={handlePaginationChange}
           handleOnDoubleClick={handleOnDoubleClick}
           pagination={pagination}
-          checkTableMaster={false}
+          checkTableMaster={true}
+          handleSelectionChange={handleSelectionChange}
+          handleApproveAndReject={handleApproveAndReject}
         />
       </div>
     </>

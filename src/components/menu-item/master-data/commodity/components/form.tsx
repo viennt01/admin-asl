@@ -100,7 +100,7 @@ const CommodityForm = ({
   const handleAR = (status: string) => {
     if (idQuery) {
       const _requestData: UpdateStatusCommodity = {
-        id: idQuery,
+        id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
@@ -267,7 +267,7 @@ const CommodityForm = ({
                   }}
                   onChange={(value) => {
                     const _requestData: UpdateStatusCommodity = {
-                      id: idQuery,
+                      id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
                         : STATUS_ALL_LABELS.DEACTIVE,
