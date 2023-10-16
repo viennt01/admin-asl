@@ -586,6 +586,42 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
+    '/master-data/fee-catalog/type-fee': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      { title: `${translateCommon('type_fee')}` },
+    ],
+    '/master-data/fee-catalog/type-fee/create': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_FEE}>{translateCommon('type_fee')}</Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/master-data/fee-catalog/type-fee/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_FEE}>{translateCommon('type_fee')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/fee-catalog/type-fee/manager-admin/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('fee_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_FEE}>{translateCommon('type_fee')}</Link>
+        ),
+      },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+
     '/master-data/fee-catalog/fee-group': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('fee_catalog')}` },

@@ -1,0 +1,24 @@
+{
+    "title": "Danh sách các loại chi phí",
+    "type_fee_no": "STT",
+    "code": "Mã",
+    "name": "Tên",
+    "vat": "VAT",
+    "status":"Trạng thái",
+
+    "information_add_type_fee": "Thêm mới loại chi phí",
+    "information_edit_type_fee": "Chỉnh sửa loại chi phí",
+
+    "type_fee_code_form": {
+        "title": "Mã",
+        "placeholder": "Nhập mã loại chi phí",
+        "error_required": "Vui lòng nhập mã loại chi phí"
+    },
+
+    "type_fee_name_form": {
+        "title_EN": "Tên(EN)",
+        "title_VN": "Tên(VN)",
+        "placeholder": "Nhập tên chi phí",
+        "error_required": "Vui lòng nhập tên chi phí"
+    }
+}

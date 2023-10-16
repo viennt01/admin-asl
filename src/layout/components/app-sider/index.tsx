@@ -91,6 +91,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refTypeOfContainer = useRef(null);
   const refFeeCatalog = useRef(null);
   const refFee = useRef(null);
+  const refTypeFee = useRef(null);
   const refFeeGroup = useRef(null);
   const refTypeFeeGroup = useRef(null);
   const refAccountant = useRef(null);
@@ -267,6 +268,11 @@ const AppSider = ({ collapsed }: Props) => {
               `${translateCommon('fee')}`,
               ROUTERS.FEE,
               <ProfileOutlined ref={refFee} />
+            ),
+            getItem(
+              `${translateCommon('type_fee')}`,
+              ROUTERS.TYPE_FEE,
+              <ProfileOutlined ref={refTypeFee} />
             ),
             getItem(
               `${translateCommon('fee_group')}`,

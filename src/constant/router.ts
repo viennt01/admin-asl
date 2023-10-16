@@ -95,6 +95,13 @@ export const ROUTERS = {
   FEE_MANAGER: (feeId: string) =>
     `/master-data/fee-catalog/fee/manager-admin/${feeId}`,
 
+  TYPE_FEE: '/master-data/fee-catalog/type-fee',
+  TYPE_FEE_CREATE: '/master-data/fee-catalog/type-fee/create',
+  TYPE_FEE_EDIT: (typeFeeId: string, checkRow = false) =>
+    `/master-data/fee-catalog/type-fee/edit/${typeFeeId}?checkRow=${checkRow}`,
+  TYPE_FEE_MANAGER: (typeFeeId: string) =>
+    `/master-data/fee-catalog/type-fee/manager-admin/${typeFeeId}`,
+
   FEE_GROUP: '/master-data/fee-catalog/fee-group',
   FEE_GROUP_CREATE: '/master-data/fee-catalog/fee-group/create',
   FEE_GROUP_EDIT: (feeGroupId: string, checkRow = false) =>

@@ -1,0 +1,23 @@
+{
+    "title": "List Type Fee",
+    "type_fee_no": "No",
+    "code": "Code",
+    "name": "Name",
+    "status":"Status",
+
+    "information_add_type_fee": "Add new type fee",
+    "information_edit_type_fee": "Edit type fee",
+
+    "type_fee_code_form": {
+        "title": "Fee No",
+        "placeholder": "Enter type fee no",
+        "error_required": "Please enter type fee no"
+    },
+
+    "type_fee_name_form": {
+        "title_EN": "Name(EN)",
+        "title_VN": "Name(VN)",
+        "placeholder": "Enter fee name",
+        "error_required": "Please enter fee name"
+    }
+}

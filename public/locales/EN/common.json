@@ -20,6 +20,7 @@
     "type_of_location": "Type of Location",
     "fee_catalog": "Fee catalog",
     "fee": "Fee",
+    "type_fee": "Type Fee",
     "fee_group": "Fee Group",
     "type_fee_group": "Type of Fee Group",
     "commodity": "Commodity",

@@ -33,6 +33,7 @@ export enum TABLE_NAME {
   LOCATION = 'Location',
   TYPE_OF_LOCATION = 'Type of Location',
   FEE = 'Fee',
+  TYPE_FEE = 'Type Fee',
   FEE_GROUP = 'Fee Group',
   CURRENCY = 'Currency',
   BANK = 'Bank',
