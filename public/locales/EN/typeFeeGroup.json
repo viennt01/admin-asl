@@ -19,8 +19,8 @@
     },
     "type_fee_group_name_form": {
         "title": "Name",
-        "titleEn": "Type of Fee Group name in English",
-        "titleVn": "Type of Fee Group name in Vietnamese",
+        "titleEn": "Type of Fee Group name (EN)",
+        "titleVn": "Type of Fee Group name (VN)",
         "placeholder": "Enter type of Fee Group name",
         "error_required": "Please enter type of Fee Group name"
     }

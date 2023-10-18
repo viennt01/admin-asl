@@ -15,7 +15,7 @@ function SeaQuotationEditPage() {
 
 export default withAuthentication(SeaQuotationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'seaQuotation']);
+export const getStaticProps = getStatic(['common', 'seaQuotation', 'partner']);
 export const getStaticPaths = () => {
   return {
     paths: [],

@@ -15,7 +15,7 @@ function CustomsQuotationEditPage() {
 
 export default withAuthentication(CustomsQuotationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'customsQuotation']);
+export const getStaticProps = getStatic(['common', 'customsQuotation', 'fee']);
 export const getStaticPaths = () => {
   return {
     paths: [],

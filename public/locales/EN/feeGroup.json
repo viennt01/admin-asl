@@ -20,8 +20,8 @@
     },
     "fee_group_name_form": {
         "title": "Name",
-        "titleEn": "Fee Group name in English",
-        "titleVn": "Fee Group name in Vietnamese",
+        "titleEn": "Fee Group name (EN)",
+        "titleVn": "Fee Group name (VN)",
         "placeholder": "Enter Fee Group name",
         "error_required": "Please enter Fee Group name"
     },

@@ -5,6 +5,7 @@
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
+    "venderID": "Vender ID",
     "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
@@ -39,6 +40,7 @@
     "date_created": "Date created",
     "creator": "Creator",
 
+    "title_list_of_customer": "List of Customer",
     "title_trucking_freight": "Trucking Freight",
     "title_local_chart": "Local Chart",
     "information_edit_trucking_pricing": "Edit Trucking Pricing",
@@ -65,6 +67,12 @@
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
+    },
+
+    "venderID_form": {
+        "title": "Vender ID",
+        "placeholder": "Enter Vender ID",
+        "error_required": "Please enter Vender ID"
     },
 
     "customerID_form": {

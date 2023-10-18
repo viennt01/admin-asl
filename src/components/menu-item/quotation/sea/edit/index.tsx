@@ -40,6 +40,7 @@ export default function EditSeaQuotation() {
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const { translate: translateSeaQuotation } = useI18n('seaQuotation');
+  const { translate: translatePartner } = useI18n('partner');
   const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
@@ -132,6 +133,65 @@ export default function EditSeaQuotation() {
     },
   ];
 
+  const columnsListCustomer: ColumnsType<DataType> = [
+    {
+      title: translatePartner('code'),
+      width: 200,
+      dataIndex: 'code',
+      key: 'code',
+      align: 'center',
+    },
+    {
+      title: translatePartner('abbreviation'),
+      width: 200,
+      dataIndex: 'abbreviation',
+      key: 'abbreviation',
+      align: 'center',
+    },
+    {
+      title: translatePartner('name'),
+      width: 200,
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
+    },
+    {
+      title: translatePartner('phone'),
+      width: 200,
+      dataIndex: 'phone',
+      key: 'phone',
+      align: 'center',
+    },
+    {
+      title: translatePartner('email'),
+      width: 200,
+      dataIndex: 'email',
+      key: 'email',
+      align: 'center',
+    },
+    {
+      title: translatePartner('country'),
+      width: 200,
+      dataIndex: 'country',
+      key: 'country',
+      align: 'center',
+    },
+    {
+      title: translatePartner('zone'),
+      width: 200,
+      dataIndex: 'zone',
+      key: 'zone',
+      align: 'center',
+    },
+    {
+      title: translatePartner('status'),
+      width: 200,
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+    },
+  ];
+
   return (
     <div style={{ padding: '24px 0' }}>
       <ConfigProvider
@@ -151,7 +211,7 @@ export default function EditSeaQuotation() {
             <Row justify={'center'}>
               <Col>
                 <Title level={3}>
-                  {translateSeaQuotation('information_edit_sea_pricing')}
+                  {translateSeaQuotation('information_edit_sea_quotation')}
                 </Title>
               </Col>
             </Row>
@@ -239,19 +299,17 @@ export default function EditSeaQuotation() {
 
               <Col lg={7} span={24}>
                 <Form.Item
-                  label={translateSeaQuotation('customerID')}
-                  name="customerID"
+                  label={translateSeaQuotation('venderID')}
+                  name="venderID"
                   rules={[
                     {
                       required: true,
-                      message: translateSeaQuotation('customerID_placeholder'),
+                      message: translateSeaQuotation('venderID_placeholder'),
                     },
                   ]}
                 >
                   <Input
-                    placeholder={translateSeaQuotation(
-                      'customerID_placeholder'
-                    )}
+                    placeholder={translateSeaQuotation('venderID_placeholder')}
                   />
                 </Form.Item>
               </Col>
@@ -620,6 +678,20 @@ export default function EditSeaQuotation() {
               <Col lg={24} span={24}>
                 <Card style={{ marginBottom: 24 }}>
                   <Table columns={columnsSeaFreight} dataSource={data} />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
+
+          <CollapseCard
+            title={translateSeaQuotation('title_list_of_customer')}
+            style={{ marginBottom: '24px' }}
+            defaultActive={true}
+          >
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table columns={columnsListCustomer} dataSource={data} />
                 </Card>
               </Col>
             </Row>

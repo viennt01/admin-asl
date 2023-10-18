@@ -5,6 +5,7 @@
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
+    "venderID": "Vender ID",
     "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
@@ -39,9 +40,11 @@
     "date_created": "Date created",
     "creator": "Creator",
 
+    "title_list_of_customer": "List of Customer",
     "title_sea_freight": "Sea Freight",
     "title_local_chart": "Local Chart",
-    "information_edit_sea_pricing": "Edit Sea Pricing",
+    "information_add_sea_quotation": "Add new Sea Quotation",
+    "information_edit_sea_quotation": "Edit Sea Quotation",
     
     "POL_form": {
         "title": "POL",
@@ -65,6 +68,12 @@
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
+    },
+
+    "venderID_form": {
+        "title": "Vender ID",
+        "placeholder": "Enter Vender ID",
+        "error_required": "Please enter Vender ID"
     },
 
     "customerID_form": {

@@ -15,7 +15,11 @@ function TruckingQuotationEditPage() {
 
 export default withAuthentication(TruckingQuotationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'truckingQuotation']);
+export const getStaticProps = getStatic([
+  'common',
+  'truckingQuotation',
+  'partner',
+]);
 export const getStaticPaths = () => {
   return {
     paths: [],

@@ -14,8 +14,8 @@
 
     "name_commodity_form": {
         "title": "Name",
-        "titleEn": "Commodity name in English",
-        "titleVn": "Commodity name in Vietnamese",
+        "titleEn": "Commodity name (EN)",
+        "titleVn": "Commodity name (VN)",
         "placeholder": "Please enter commodity name",
         "error_required": "Please enter commodity name"
     },
