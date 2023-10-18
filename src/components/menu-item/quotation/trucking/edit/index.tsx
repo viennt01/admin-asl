@@ -41,6 +41,7 @@ export default function EditTruckingQuotation() {
   const { id } = router.query;
   const { translate: translateTruckingQuotation } =
     useI18n('truckingQuotation');
+  const { translate: translatePartner } = useI18n('partner');
   const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
@@ -129,6 +130,65 @@ export default function EditTruckingQuotation() {
       width: 300,
       dataIndex: 'type',
       key: 'type',
+      align: 'center',
+    },
+  ];
+
+  const columnsListCustomer: ColumnsType<DataType> = [
+    {
+      title: translatePartner('code'),
+      width: 200,
+      dataIndex: 'code',
+      key: 'code',
+      align: 'center',
+    },
+    {
+      title: translatePartner('abbreviation'),
+      width: 200,
+      dataIndex: 'abbreviation',
+      key: 'abbreviation',
+      align: 'center',
+    },
+    {
+      title: translatePartner('name'),
+      width: 200,
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
+    },
+    {
+      title: translatePartner('phone'),
+      width: 200,
+      dataIndex: 'phone',
+      key: 'phone',
+      align: 'center',
+    },
+    {
+      title: translatePartner('email'),
+      width: 200,
+      dataIndex: 'email',
+      key: 'email',
+      align: 'center',
+    },
+    {
+      title: translatePartner('country'),
+      width: 200,
+      dataIndex: 'country',
+      key: 'country',
+      align: 'center',
+    },
+    {
+      title: translatePartner('zone'),
+      width: 200,
+      dataIndex: 'zone',
+      key: 'zone',
+      align: 'center',
+    },
+    {
+      title: translatePartner('status'),
+      width: 200,
+      dataIndex: 'status',
+      key: 'status',
       align: 'center',
     },
   ];
@@ -246,20 +306,20 @@ export default function EditTruckingQuotation() {
 
               <Col lg={7} span={24}>
                 <Form.Item
-                  label={translateTruckingQuotation('customerID')}
-                  name="customerID"
+                  label={translateTruckingQuotation('venderID')}
+                  name="venderID"
                   rules={[
                     {
                       required: true,
                       message: translateTruckingQuotation(
-                        'customerID_placeholder'
+                        'venderID_placeholder'
                       ),
                     },
                   ]}
                 >
                   <Input
                     placeholder={translateTruckingQuotation(
-                      'customerID_placeholder'
+                      'venderID_placeholder'
                     )}
                   />
                 </Form.Item>
@@ -659,6 +719,20 @@ export default function EditTruckingQuotation() {
               <Col lg={24} span={24}>
                 <Card style={{ marginBottom: 24 }}>
                   <Table columns={columnstruckingFreight} dataSource={data} />
+                </Card>
+              </Col>
+            </Row>
+          </CollapseCard>
+
+          <CollapseCard
+            title={translateTruckingQuotation('title_list_of_customer')}
+            style={{ marginBottom: '24px' }}
+            defaultActive={true}
+          >
+            <Row gutter={16}>
+              <Col lg={24} span={24}>
+                <Card style={{ marginBottom: 24 }}>
+                  <Table columns={columnsListCustomer} dataSource={data} />
                 </Card>
               </Col>
             </Row>

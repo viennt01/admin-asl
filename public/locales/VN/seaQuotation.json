@@ -5,6 +5,7 @@
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
+    "venderID": "Vender ID",
     "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
@@ -39,10 +40,11 @@
     "date_created": "Date created",
     "creator": "Creator",
 
+    "title_list_of_customer": "Danh sách khách hàng",
     "title_sea_freight": "Vận tải bằng đường biển",
     "title_local_chart": "Phụ phí",
-    "information_add_sea_pricing": "Thêm mới định giá đường biển",
-    "information_edit_sea_pricing": "Chỉnh sửa định giá đường biển",
+    "information_add_sea_quotation": "Thêm mới định giá đường biển",
+    "information_edit_sea_quotation": "Chỉnh sửa định giá đường biển",
 
     "POL_form": {
         "title": "POL",
@@ -66,6 +68,12 @@
         "title": "Country",
         "placeholder": "Nhập country",
         "error_required": "Vui lòng nhập country"
+    },
+
+    "venderID_form": {
+        "title": "Vender ID",
+        "placeholder": "Nhập Vender ID",
+        "error_required": "Vui lòng nhập Vender ID"
     },
 
     "customerID_form": {

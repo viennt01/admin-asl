@@ -18,8 +18,8 @@
     },
     "location_name_form": {
         "title": "Location Name",
-        "titleEn": "Location name in English",
-        "titleVn": "Location name in Vietnamese",
+        "titleEn": "Location name (EN)",
+        "titleVn": "Location name (VN)",
         "placeholder": "Enter Location name",
         "error_required": "Please enter location name"
     },

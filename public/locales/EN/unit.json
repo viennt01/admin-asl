@@ -23,14 +23,14 @@
     },
 
     "description_vn_form": {
-        "title": "Description in Vietnamese",
-        "placeholder": "Enter description in Vietnamese",
-        "error_required": "Please enter description in Vietnamese"
+        "title": "Description (VN)",
+        "placeholder": "Enter description (VN)",
+        "error_required": "Please enter description (VN)"
     },
     
     "description_en_form": {
-        "title": "Description in English",
-        "placeholder": "Enter description in English",
-        "error_required": "Please enter description in English"
+        "title": "Description (EN)",
+        "placeholder": "Enter description (EN)",
+        "error_required": "Please enter description (EN)"
     }
 }
