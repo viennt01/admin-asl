@@ -86,10 +86,11 @@ const FormRegister = ({
       roleID: formInformation.getFieldValue('roleID'),
 
       email: formContact.getFieldValue('email'),
-      workingBranch: formContact.getFieldValue('workingBranch'),
+      workingBranch: formContact.getFieldValue('workingBranch') || '',
       nationality: formContact.getFieldValue('nationality'),
-      visa: formContact.getFieldValue('visa'),
-      citizenIdentification: formContact.getFieldValue('citizenIdentification'),
+      visa: formContact.getFieldValue('visa') || '',
+      citizenIdentification:
+        formContact.getFieldValue('citizenIdentification') || '',
 
       password: formPassword.getFieldValue('password'),
       passwordConfirm: formPassword.getFieldValue('passwordConfirm'),
@@ -134,12 +135,12 @@ const FormRegister = ({
 
   const submitContact = (value: ContactForm) => {
     formContact.setFieldValue('email', value.email);
-    formContact.setFieldValue('workingBranch', value.workingBranch);
+    formContact.setFieldValue('workingBranch', value.workingBranch || '');
     formContact.setFieldValue('nationality', value.nationality);
-    formContact.setFieldValue('visa', value.visa);
+    formContact.setFieldValue('visa', value.visa || '');
     formContact.setFieldValue(
       'citizenIdentification',
-      value.citizenIdentification
+      value.citizenIdentification || ''
     );
     next();
   };
@@ -156,10 +157,10 @@ const FormRegister = ({
     formCompany.setFieldValue('address', value.address);
     formCompany.setFieldValue('emailCompany', value.emailCompany);
     formCompany.setFieldValue('phoneNumberCompany', value.phoneNumberCompany);
-    formCompany.setFieldValue('websiteCompany', value.websiteCompany);
+    formCompany.setFieldValue('websiteCompany', value.websiteCompany || '');
     formCompany.setFieldValue(
       'abbreviationsCompany',
-      value.abbreviationsCompany
+      value.abbreviationsCompany || ''
     );
     onFinish();
   };
@@ -302,15 +303,7 @@ const FormRegister = ({
             </Col>
 
             <Col lg={12} span={24}>
-              <Form.Item
-                name="workingBranch"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input working branch!',
-                  },
-                ]}
-              >
+              <Form.Item name="workingBranch">
                 <Input
                   placeholder="Working Branch"
                   prefix={<EnvironmentOutlined />}
@@ -338,15 +331,7 @@ const FormRegister = ({
             </Col>
 
             <Col lg={12} span={24}>
-              <Form.Item
-                name="visa"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input visa!',
-                  },
-                ]}
-              >
+              <Form.Item name="visa">
                 <Input
                   placeholder="Visa"
                   prefix={<ReadOutlined />}
@@ -356,15 +341,7 @@ const FormRegister = ({
             </Col>
 
             <Col lg={12} span={24}>
-              <Form.Item
-                name="citizenIdentification"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input citizen identification!',
-                  },
-                ]}
-              >
+              <Form.Item name="citizenIdentification">
                 <Input
                   placeholder="Citizen identification"
                   prefix={<ReadOutlined />}
@@ -526,15 +503,7 @@ const FormRegister = ({
             </Col>
 
             <Col lg={12} span={24}>
-              <Form.Item
-                name="abbreviationsCompany"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input abbreviations company!',
-                  },
-                ]}
-              >
+              <Form.Item name="abbreviationsCompany">
                 <Input
                   placeholder="Abbreviations company"
                   prefix={<InfoOutlined />}
@@ -624,15 +593,7 @@ const FormRegister = ({
             </Col>
 
             <Col span={24}>
-              <Form.Item
-                name="websiteCompany"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input website company!',
-                  },
-                ]}
-              >
+              <Form.Item name="websiteCompany">
                 <Input
                   placeholder="Website company"
                   prefix={<WindowsOutlined />}
