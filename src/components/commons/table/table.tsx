@@ -216,7 +216,7 @@ const Table = <T extends Record<string, any>>({
               >
                 <Button
                   loading={exportLoading}
-                  icon={<CloseOutlined />}
+                  icon={<CheckOutlined />}
                   size="large"
                   onClick={() =>
                     handleApproveAndReject &&
@@ -242,7 +242,7 @@ const Table = <T extends Record<string, any>>({
               >
                 <Button
                   loading={exportLoading}
-                  icon={<CheckOutlined />}
+                  icon={<CloseOutlined />}
                   size="large"
                   onClick={() =>
                     handleApproveAndReject &&

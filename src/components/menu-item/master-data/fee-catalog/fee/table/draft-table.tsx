@@ -75,8 +75,16 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             statusFee: data.statusFee,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
+            typeFeeID: data.typeFeeID,
+            typeFeeName: data.typeFeeName,
+            currencyID: data.currencyID,
+            currencyName: data.currencyName,
+            unitID: data.unitID,
+            unitInternationalCode: data.unitInternationalCode,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );

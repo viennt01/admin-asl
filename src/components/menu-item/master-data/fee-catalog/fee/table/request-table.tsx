@@ -1,4 +1,9 @@
-import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  EyeOutlined,
+  CheckOutlined,
+  CloseOutlined,
+  FilterFilled,
+} from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
   PaginationOfAntd,
@@ -6,32 +11,45 @@ import {
 import Table from '@/components/commons/table/table';
 
 import { ROUTERS } from '@/constant/router';
-import { API_FEE } from '@/fetcherAxios/endpoint';
+import {
+  API_CURRENCY,
+  API_FEE,
+  API_TYPE_FEE,
+  API_UNIT,
+} from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps, Tag } from 'antd';
+import { Button, PaginationProps, TablePaginationConfig, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent, Key } from 'react';
-import { FilterConfirmProps } from 'antd/lib/table/interface';
+import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getTableRequire, updateStatus } from '../fetcher';
+import {
+  getListTypeCurrency,
+  getListTypeFee,
+  getListTypeUnit,
+  getTableRequire,
+  updateStatus,
+} from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 
 import {
   FeeTable,
   QueryInputParamType,
+  QuerySelectRequest,
   SelectSearch,
   UpdateStatusFee,
 } from '../interface';
 import {
   initalSelectSearchRequest,
   initalValueQueryInputParamsRequest,
+  initalValueQuerySelectParamsRequest,
 } from '../constant';
 
 type DataIndex = keyof QueryInputParamType;
@@ -46,6 +64,8 @@ const RequestTable = () => {
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParamsRequest
   );
+  const [querySelectParams, setQuerySelectParams] =
+    useState<QuerySelectRequest>(initalValueQuerySelectParamsRequest);
   const [dataTable, setDataTable] = useState<FeeTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
     initalSelectSearchRequest
@@ -53,10 +73,15 @@ const RequestTable = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   // Handle data
+  const typeFee = useQuery([API_TYPE_FEE.GET_ALL], getListTypeFee);
+  const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
+  const typeUnit = useQuery([API_UNIT.GET_ALL], getListTypeUnit);
+
   useQuery({
     queryKey: [API_FEE.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTableRequire({
+        ...querySelectParams,
         ...queryInputParams,
         paginateRequest: {
           currentPage: pagination.current,
@@ -76,8 +101,16 @@ const RequestTable = () => {
             statusFee: data.statusFee,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
+            typeFeeID: data.typeFeeID,
+            typeFeeName: data.typeFeeName,
+            currencyID: data.currencyID,
+            currencyName: data.currencyName,
+            unitID: data.unitID,
+            unitInternationalCode: data.unitInternationalCode,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );
@@ -229,6 +262,96 @@ const RequestTable = () => {
       }),
     },
     {
+      title: translateFee('type_fee'),
+      width: 150,
+      dataIndex: 'typeFeeID',
+      key: 'typeFeeID',
+      align: 'left',
+      filteredValue: [querySelectParams.typeFeeID] || null,
+      filters:
+        typeFee.data?.data.map((item) => ({
+          text: item.typeFeeName,
+          value: item.typeFeeID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.typeFeeID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) => {
+        return <div>{value.typeFeeName}</div>;
+      },
+    },
+    {
+      title: translateFee('currency'),
+      width: 150,
+      dataIndex: 'currencyID',
+      key: 'currencyID',
+      align: 'left',
+      filteredValue: [querySelectParams.currencyID] || null,
+      filters:
+        typeCurrency.data?.data.map((item) => ({
+          text: item.abbreviations,
+          value: item.currencyID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.currencyID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) => {
+        return <div>{value.currencyName}</div>;
+      },
+    },
+    {
+      title: translateFee('unit'),
+      width: 150,
+      dataIndex: 'unitID',
+      key: 'unitID',
+      align: 'left',
+      filteredValue: [querySelectParams.unitID] || null,
+      filters:
+        typeUnit.data?.data.map((item) => ({
+          text: item.internationalCode,
+          value: item.unitID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.unitID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) => {
+        return <div>{value.unitInternationalCode}</div>;
+      },
+    },
+    {
       title: (
         <div className={style.title}>{translateCommon('date_created')}</div>
       ),
@@ -313,6 +436,33 @@ const RequestTable = () => {
     }
   };
 
+  const handleSearchSelect = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>
+  ) => {
+    const newQueryParams = {
+      ...querySelectParams,
+      searchAll: '',
+      statusFee:
+        filters.statusFee?.length !== 0 && filters.statusFee
+          ? (filters.statusFee as string[])
+          : [],
+      typeFeeID:
+        filters.typeFeeID?.length !== 0 && filters.typeFeeID
+          ? (filters.typeFeeID[0] as string)
+          : '',
+      currencyID:
+        filters.currencyID?.length !== 0 && filters.currencyID
+          ? (filters.currencyID[0] as string)
+          : '',
+      currencyName:
+        filters.currencyName?.length !== 0 && filters.currencyName
+          ? (filters.currencyName[0] as string)
+          : '',
+    };
+    setQuerySelectParams(newQueryParams);
+  };
+
   return (
     <>
       <div style={{ marginTop: -18 }}>
@@ -326,6 +476,7 @@ const RequestTable = () => {
           checkTableMaster={true}
           handleSelectionChange={handleSelectionChange}
           handleApproveAndReject={handleApproveAndReject}
+          handleSearchSelect={handleSearchSelect}
         />
       </div>
     </>

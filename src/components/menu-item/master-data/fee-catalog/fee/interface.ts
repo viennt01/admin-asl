@@ -8,10 +8,18 @@ export interface Fee {
   vatFee: string;
   public: boolean;
   statusFee: string;
+  typeFeeID: string;
+  typeFeeName: string;
+  currencyID: string;
+  currencyName: string;
+  unitID: string;
+  unitInternationalCode: string;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
+  confirmDated: string;
+  confirmByUser: string;
 }
 
 export interface FeeTable extends Omit<Fee, 'feeID'> {
@@ -32,6 +40,9 @@ export interface QueryInputParamType {
 
 export interface QuerySelectParamType {
   statusFee: string[];
+  typeFeeID: string;
+  currencyID: string;
+  unitID: string;
 }
 
 export interface RequestFeeType
@@ -54,16 +65,25 @@ export interface FeeDetailDataBody {
 export interface FormValues {
   feeID: string;
   feeNo: string;
-  feeName: string;
+  feeNameEN: string;
+  feeNameVN: string;
   vatFee: string;
   statusFee: string;
+  typeFeeID: string;
+  currencyID: string;
+  unitID: string;
 }
 
 export interface FeeDetailType extends FormValues {
+  typeFeeName: string;
+  currencyName: string;
+  unitInternationalCode: string;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
+  confirmDated: string;
+  confirmByUser: string;
 }
 
 export type FeeCreate = Omit<FormValues, 'feeID'>;
@@ -82,6 +102,9 @@ export interface QueryInputDraft {
 
 export interface QuerySelectDraft {
   status: string[];
+  typeFeeID: string;
+  currencyID: string;
+  unitID: string;
 }
 
 export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
@@ -106,11 +129,32 @@ export interface QueryInputRequest {
   vatFee: string;
 }
 
-export interface RequestFeeTableRequest extends QueryInputRequest {
+export interface QuerySelectRequest {
+  typeFeeID: string;
+  currencyID: string;
+  unitID: string;
+}
+
+export interface RequestFeeTableRequest
+  extends QueryInputRequest,
+    QuerySelectRequest {
   paginateRequest: Pagination;
 }
 
 export interface RequestExportData {
   ids: React.Key[];
   status: string[];
+}
+
+export interface TypeFeeData {
+  typeFeeID: string;
+  typeFeeName: string;
+}
+export interface TypeCurrencyData {
+  currencyID: string;
+  abbreviations: string;
+}
+export interface TypeUnitData {
+  unitID: string;
+  internationalCode: string;
 }

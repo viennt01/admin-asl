@@ -29,8 +29,12 @@ const CreateFee = () => {
       const _requestData: FeeEdit = {
         feeID: id,
         feeNo: formValues.feeNo || '',
-        feeName: formValues.feeName || '',
+        feeNameEN: formValues.feeNameEN || '',
+        feeNameVN: formValues.feeNameVN || '',
         vatFee: formValues.vatFee || '',
+        typeFeeID: formValues.typeFeeID || '',
+        currencyID: formValues.currencyID || '',
+        unitID: formValues.unitID || '',
         statusFee: STATUS_ALL_LABELS.REQUEST,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -46,8 +50,12 @@ const CreateFee = () => {
     } else {
       const _requestData: FeeCreate = {
         feeNo: formValues.feeNo || '',
-        feeName: formValues.feeName || '',
+        feeNameEN: formValues.feeNameEN || '',
+        feeNameVN: formValues.feeNameVN || '',
         vatFee: formValues.vatFee || '',
+        typeFeeID: formValues.typeFeeID || '',
+        currencyID: formValues.currencyID || '',
+        unitID: formValues.unitID || '',
         statusFee: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -68,8 +76,12 @@ const CreateFee = () => {
       const _requestData: FeeEdit = {
         feeID: id,
         feeNo: formValues.feeNo || '',
-        feeName: formValues.feeName || '',
+        feeNameEN: formValues.feeNameEN || '',
+        feeNameVN: formValues.feeNameVN || '',
         vatFee: formValues.vatFee || '',
+        typeFeeID: formValues.typeFeeID || '',
+        currencyID: formValues.currencyID || '',
+        unitID: formValues.unitID || '',
         statusFee: STATUS_ALL_LABELS.DRAFT,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -88,8 +100,12 @@ const CreateFee = () => {
     } else {
       const _requestData: FeeCreate = {
         feeNo: formValues.feeNo || '',
-        feeName: formValues.feeName || '',
+        feeNameEN: formValues.feeNameEN || '',
+        feeNameVN: formValues.feeNameVN || '',
         vatFee: formValues.vatFee || '',
+        typeFeeID: formValues.typeFeeID || '',
+        currencyID: formValues.currencyID || '',
+        unitID: formValues.unitID || '',
         statusFee: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

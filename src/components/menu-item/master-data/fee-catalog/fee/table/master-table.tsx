@@ -17,7 +17,13 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_FEE } from '@/fetcherAxios/endpoint';
+import {
+  API_COLUMN,
+  API_CURRENCY,
+  API_FEE,
+  API_TYPE_FEE,
+  API_UNIT,
+} from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
@@ -41,6 +47,9 @@ import {
   exportTableFile,
   getColumnTable,
   getFeeSearch,
+  getListTypeCurrency,
+  getListTypeFee,
+  getListTypeUnit,
   importDataTable,
   updateColumnTable,
 } from '../fetcher';
@@ -88,6 +97,10 @@ export default function MasterDataTable() {
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
+  const typeFee = useQuery([API_TYPE_FEE.GET_ALL], getListTypeFee);
+  const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
+  const typeUnit = useQuery([API_UNIT.GET_ALL], getListTypeUnit);
+
   useQuery({
     queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
     queryFn: () => getColumnTable(),
@@ -103,6 +116,7 @@ export default function MasterDataTable() {
   const dataSelectSearch =
     querySelectParams.statusFee.length === 0
       ? {
+          ...querySelectParams,
           statusFee: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
         }
       : querySelectParams;
@@ -136,8 +150,16 @@ export default function MasterDataTable() {
             statusFee: data.statusFee,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
+            typeFeeID: data.typeFeeID,
+            typeFeeName: data.typeFeeName,
+            currencyID: data.currencyID,
+            currencyName: data.currencyName,
+            unitID: data.unitID,
+            unitInternationalCode: data.unitInternationalCode,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );
@@ -250,6 +272,18 @@ export default function MasterDataTable() {
         filters.statusFee?.length !== 0 && filters.statusFee
           ? (filters.statusFee as string[])
           : [],
+      typeFeeID:
+        filters.typeFeeID?.length !== 0 && filters.typeFeeID
+          ? (filters.typeFeeID[0] as string)
+          : '',
+      currencyID:
+        filters.currencyID?.length !== 0 && filters.currencyID
+          ? (filters.currencyID[0] as string)
+          : '',
+      currencyName:
+        filters.currencyName?.length !== 0 && filters.currencyName
+          ? (filters.currencyName[0] as string)
+          : '',
     };
     setQuerySelectParams(newQueryParams);
   };
@@ -329,6 +363,96 @@ export default function MasterDataTable() {
           dataIndex: 'vatFee',
         },
       }),
+    },
+    {
+      title: translateFee('type_fee'),
+      width: 150,
+      dataIndex: 'typeFeeID',
+      key: 'typeFeeID',
+      align: 'left',
+      filteredValue: [querySelectParams.typeFeeID] || null,
+      filters:
+        typeFee.data?.data.map((item) => ({
+          text: item.typeFeeName,
+          value: item.typeFeeID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.typeFeeID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) => {
+        return <div>{value.typeFeeName}</div>;
+      },
+    },
+    {
+      title: translateFee('currency'),
+      width: 150,
+      dataIndex: 'currencyID',
+      key: 'currencyID',
+      align: 'left',
+      filteredValue: [querySelectParams.currencyID] || null,
+      filters:
+        typeCurrency.data?.data.map((item) => ({
+          text: item.abbreviations,
+          value: item.currencyID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.currencyID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) => {
+        return <div>{value.currencyName}</div>;
+      },
+    },
+    {
+      title: translateFee('unit'),
+      width: 150,
+      dataIndex: 'unitID',
+      key: 'unitID',
+      align: 'left',
+      filteredValue: [querySelectParams.unitID] || null,
+      filters:
+        typeUnit.data?.data.map((item) => ({
+          text: item.internationalCode,
+          value: item.unitID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.unitID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) => {
+        return <div>{value.unitInternationalCode}</div>;
+      },
     },
     {
       title: <div className={style.title}>{translateFee('status')}</div>,

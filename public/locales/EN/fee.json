@@ -14,22 +14,35 @@
         "placeholder": "Enter fee no",
         "error_required": "Please enter fee no"
     },
-
     "status_form": {
         "title": "Status",
         "placeholder": "Select status",
         "error_required": "Please select status"
     },
-
     "vat_fee_form": {
         "title": "VAT",
         "placeholder": "Enter vat",
         "error_required": "Please enter vat"
     },
-
     "fee_name_form": {
-        "title": "Fee Name",
+        "titleEN": "Name(EN)",
+        "titleVN": "Name(VN)",
         "placeholder": "Enter fee name",
         "error_required": "Please enter fee name"
+    },
+    "type_fee_form": {
+        "title": "Type fee",
+        "placeholder": "Enter type fee",
+        "error_required": "Please enter type fee"
+    },
+    "currency_form": {
+        "title": "Currency",
+        "placeholder": "Enter currency",
+        "error_required": "Please enter currency"
+    },
+    "unit_form": {
+        "title": "Unit",
+        "placeholder": "Enter unit",
+        "error_required": "Please enter unit"
     }
 }

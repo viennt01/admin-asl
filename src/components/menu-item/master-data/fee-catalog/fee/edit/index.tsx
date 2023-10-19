@@ -19,8 +19,12 @@ const EditFee = () => {
       const _requestData: FeeEdit = {
         feeID: idQuery,
         feeNo: formValues.feeNo || '',
-        feeName: formValues.feeName || '',
+        feeNameEN: formValues.feeNameEN || '',
+        feeNameVN: formValues.feeNameVN || '',
         vatFee: formValues.vatFee || '',
+        typeFeeID: formValues.typeFeeID || '',
+        currencyID: formValues.currencyID || '',
+        unitID: formValues.unitID || '',
         statusFee: formValues.statusFee,
       };
       updateMutation.mutate(_requestData, {

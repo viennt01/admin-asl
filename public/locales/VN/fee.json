@@ -4,8 +4,8 @@
     "code": "Mã chi phí",
     "name": "Tên chi phí",
     "vat": "VAT",
-    "status":"Trạng thái",
-
+    "status": "Trạng thái",
+    
     "information_add_fee": "Thêm mới loại chi phí",
     "information_edit_fee": "Chỉnh sửa loại chi phí",
 
@@ -14,22 +14,35 @@
         "placeholder": "Nhập mã chi phí",
         "error_required": "Vui lòng nhập mã chi phí"
     },
-
     "status_form": {
         "title": "Trạng thái",
         "placeholder": "Chọn trạng thái",
         "error_required": "Vui lòng chọn trạng thái"
     },
-
     "vat_fee_form": {
         "title": "VAT",
         "placeholder": "Nhập vat",
         "error_required": "Vui lòng nhập vat"
     },
-
     "fee_name_form": {
-        "title": "Tên chi phí",
+        "titleEN": "Tên(EN)",
+        "titleVN": "Tên(VN)",
         "placeholder": "Nhập tên chi phí",
         "error_required": "Vui lòng nhập tên chi phí"
+    },
+    "type_fee_form": {
+        "title": "Loại chi phí",
+        "placeholder": "Nhập loại chi phí",
+        "error_required": "Vui lòng nhập loại chi phí"
+    },
+    "currency_form": {
+        "title": "Tiền tệ",
+        "placeholder": "Chọn tiền tệ",
+        "error_required": "Vui lòng chọn tiền tệ"
+    },
+    "unit_form": {
+        "title": "Unit",
+        "placeholder": "Nhập unit",
+        "error_required": "Vui lòng nhập unit"
     }
 }

@@ -9,6 +9,9 @@ export const initalValueQueryInputParamsMaster = {
 
 export const initalValueQuerySelectParamsMaster = {
   statusFee: [],
+  typeFeeID: '',
+  currencyID: '',
+  unitID: '',
 };
 
 export const initalValueDisplayColumnMaster = {
@@ -43,6 +46,18 @@ export const initalSelectSearchMaster = {
     label: '',
     value: [],
   },
+  typeFeeID: {
+    label: '',
+    value: '',
+  },
+  currencyID: {
+    label: '',
+    value: '',
+  },
+  unitID: {
+    label: '',
+    value: '',
+  },
 };
 
 //draft
@@ -54,6 +69,9 @@ export const initalValueQueryInputParamsDraft = {
 
 export const initalValueQuerySelectParamsDraft = {
   status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
+  typeFeeID: '',
+  currencyID: '',
+  unitID: '',
 };
 
 export const initalSelectSearchDraft = {
@@ -77,6 +95,18 @@ export const initalSelectSearchDraft = {
     label: '',
     value: [],
   },
+  typeFeeID: {
+    label: '',
+    value: '',
+  },
+  currencyID: {
+    label: '',
+    value: '',
+  },
+  unitID: {
+    label: '',
+    value: '',
+  },
 };
 
 //request
@@ -85,6 +115,12 @@ export const initalValueQueryInputParamsRequest = {
   feeNo: '',
   feeName: '',
   vatFee: '',
+};
+
+export const initalValueQuerySelectParamsRequest = {
+  typeFeeID: '',
+  currencyID: '',
+  unitID: '',
 };
 
 export const initalSelectSearchRequest = {
@@ -107,5 +143,17 @@ export const initalSelectSearchRequest = {
   statusFee: {
     label: '',
     value: [],
+  },
+  typeFeeID: {
+    label: '',
+    value: '',
+  },
+  currencyID: {
+    label: '',
+    value: '',
+  },
+  unitID: {
+    label: '',
+    value: '',
   },
 };

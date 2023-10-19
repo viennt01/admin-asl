@@ -1,13 +1,24 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
+import { Form, Input, Typography, Card, Row, Col, Switch, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, UpdateStatusFee } from '../interface';
-import { API_FEE } from '@/fetcherAxios/endpoint';
+import { FeeDetailType, FormValues, UpdateStatusFee } from '../interface';
+import {
+  API_CURRENCY,
+  API_FEE,
+  API_TYPE_FEE,
+  API_UNIT,
+} from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getFeeDetail, updateStatus } from '../fetcher';
+import {
+  getFeeDetail,
+  getListTypeCurrency,
+  getListTypeFee,
+  getListTypeUnit,
+  updateStatus,
+} from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -42,7 +53,7 @@ const FeeForm = ({
 }: FormProps) => {
   const { translate: translateFee } = useI18n('fee');
   const router = useRouter();
-  const [form] = Form.useForm<FormValues>();
+  const [form] = Form.useForm<FeeDetailType>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
@@ -75,6 +86,10 @@ const FeeForm = ({
     }
   };
 
+  const typeFee = useQuery([API_TYPE_FEE.GET_ALL], getListTypeFee);
+  const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
+  const typeUnit = useQuery([API_UNIT.GET_ALL], getListTypeUnit);
+
   const detailQuery = useQuery({
     queryKey: [API_FEE.GET_DETAIL, idQuery],
     queryFn: () => getFeeDetail(idQuery as string),
@@ -84,9 +99,16 @@ const FeeForm = ({
         form.setFieldsValue({
           feeID: data.data.feeID,
           feeNo: data.data.feeNo,
-          feeName: data.data.feeName,
+          feeNameEN: data.data.feeNameEN,
+          feeNameVN: data.data.feeNameVN,
           vatFee: data.data.vatFee,
           statusFee: data.data.statusFee,
+          typeFeeID: data.data.typeFeeID,
+          typeFeeName: data.data.typeFeeName,
+          currencyID: data.data.currencyID,
+          currencyName: data.data.currencyName,
+          unitID: data.data.unitID,
+          unitInternationalCode: data.data.unitInternationalCode,
         });
       } else {
         router.push(ROUTERS.FEE);
@@ -131,6 +153,12 @@ const FeeForm = ({
       feeNo: form.getFieldValue('feeNo'),
       feeName: form.getFieldValue('feeName'),
       vatFee: form.getFieldValue('vatFee'),
+      typeFeeID: form.getFieldValue('typeFeeID'),
+      typeFeeName: form.getFieldValue('typeFeeName'),
+      currencyID: form.getFieldValue('currencyID'),
+      currencyName: form.getFieldValue('currencyName'),
+      unitID: form.getFieldValue('unitID'),
+      unitInternationalCode: form.getFieldValue('unitInternationalCode'),
     };
     router.push({
       pathname: ROUTERS.FEE_CREATE,
@@ -150,8 +178,16 @@ const FeeForm = ({
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         feeNo: propCopyAndCreate.feeNo as string,
-        feeName: propCopyAndCreate.feeName as string,
+        feeNameEN: propCopyAndCreate.feeNameEN as string,
+        feeNameVN: propCopyAndCreate.feeNameVN as string,
         vatFee: propCopyAndCreate.vatFee as string,
+        typeFeeID: propCopyAndCreate.typeFeeID as string,
+        typeFeeName: propCopyAndCreate.typeFeeName as string,
+        currencyID: propCopyAndCreate.currencyID as string,
+        currencyName: propCopyAndCreate.currencyName as string,
+        unitID: propCopyAndCreate.unitID as string,
+        unitInternationalCode:
+          propCopyAndCreate.unitInternationalCode as string,
       });
     }
   }, [
@@ -238,6 +274,37 @@ const FeeForm = ({
           <Row gutter={16}>
             <Col lg={12} span={24}>
               <Form.Item
+                label={translateFee('fee_name_form.titleEN')}
+                name="feeNameEN"
+                rules={[
+                  {
+                    required: true,
+                    message: translateFee('fee_name_form.error_required'),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateFee('fee_name_form.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateFee('fee_name_form.titleVN')}
+                name="feeNameVN"
+              >
+                <Input
+                  placeholder={translateFee('fee_name_form.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
                 label={translateFee('fee_code_form.title')}
                 name="feeNo"
                 rules={[
@@ -254,7 +321,6 @@ const FeeForm = ({
                 />
               </Form.Item>
             </Col>
-
             <Col lg={12} span={24}>
               <Form.Item
                 label={translateFee('vat_fee_form.title')}
@@ -278,20 +344,75 @@ const FeeForm = ({
               </Form.Item>
             </Col>
 
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
-                label={translateFee('fee_name_form.title')}
-                name="feeName"
+                label={translateFee('type_fee_form.title')}
+                name="typeFeeID"
                 rules={[
                   {
                     required: true,
-                    message: translateFee('fee_name_form.error_required'),
+                    message: translateFee('type_fee_form.error_required'),
                   },
                 ]}
               >
-                <Input
-                  placeholder={translateFee('fee_name_form.placeholder')}
+                <Select
+                  placeholder={translateFee('type_fee_form.placeholder')}
                   size="large"
+                  options={
+                    typeFee.data?.data.map((type) => ({
+                      label: type.typeFeeName,
+                      value: type.typeFeeID,
+                    })) || []
+                  }
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateFee('currency_form.title')}
+                name="currencyID"
+                rules={[
+                  {
+                    required: true,
+                    message: translateFee('currency_form.error_required'),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={translateFee('currency_form.placeholder')}
+                  size="large"
+                  options={
+                    typeCurrency.data?.data.map((type) => ({
+                      label: type.abbreviations,
+                      value: type.currencyID,
+                    })) || []
+                  }
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateFee('unit_form.title')}
+                name="unitID"
+                rules={[
+                  {
+                    required: true,
+                    message: translateFee('unit_form.error_required'),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={translateFee('unit_form.placeholder')}
+                  size="large"
+                  options={
+                    typeUnit.data?.data.map((type) => ({
+                      label: type.internationalCode,
+                      value: type.unitID,
+                    })) || []
+                  }
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
