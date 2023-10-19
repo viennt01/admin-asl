@@ -210,43 +210,57 @@ const Table = <T extends Record<string, any>>({
                   }}
                 />
               </Tooltip>,
-              <Tooltip title="Export data" key={'export-data'}>
-                <Button
-                  loading={exportLoading}
-                  icon={<CheckOutlined />}
-                  size="large"
-                  onClick={() =>
-                    handleApproveAndReject &&
-                    handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE)
-                  }
-                  style={{
-                    width: 32,
-                    height: 32,
-                    padding: '3px 6px 0px 6px',
-                    color: COLORS.SUCCESS,
-                    borderColor: COLORS.SUCCESS,
-                    display: handleApproveAndReject ? '' : 'none',
-                  }}
-                />
-              </Tooltip>,
-              <Tooltip title="Export data" key={'export-data'}>
+              <Tooltip
+                title={translateCommon('button_bottom_form.approval')}
+                key={'approve'}
+              >
                 <Button
                   loading={exportLoading}
                   icon={<CloseOutlined />}
                   size="large"
                   onClick={() =>
                     handleApproveAndReject &&
+                    handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE)
+                  }
+                  style={{
+                    fontWeight: '500',
+                    height: '32px',
+                    fontSize: '14px',
+                    padding: '4px 15px',
+                    borderRadius: '6px',
+                    color: COLORS.SUCCESS,
+                    borderColor: COLORS.SUCCESS,
+                    display: handleApproveAndReject ? '' : 'none',
+                  }}
+                >
+                  {translateCommon('button_bottom_form.approval')}
+                </Button>
+              </Tooltip>,
+              <Tooltip
+                title={translateCommon('button_bottom_form.reject')}
+                key={'reject'}
+              >
+                <Button
+                  loading={exportLoading}
+                  icon={<CheckOutlined />}
+                  size="large"
+                  onClick={() =>
+                    handleApproveAndReject &&
                     handleApproveAndReject(STATUS_ALL_LABELS.REJECT)
                   }
                   style={{
-                    width: 32,
-                    height: 32,
-                    padding: '3px 6px 0px 6px',
+                    fontWeight: '500',
+                    height: '32px',
+                    fontSize: '14px',
+                    padding: '4px 15px',
+                    borderRadius: '6px',
                     color: COLORS.ERROR,
                     borderColor: COLORS.ERROR,
                     display: handleApproveAndReject ? '' : 'none',
                   }}
-                />
+                >
+                  {translateCommon('button_bottom_form.reject')}
+                </Button>
               </Tooltip>,
             ]
           : []
