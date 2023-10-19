@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import {
   FormValues,
   SeaPricingDetailDTOs,
-  SeaPricingFeeDTOs,
+  // SeaPricingFeeDTOs,
   UpdateStatus,
 } from '../interface';
 import {
@@ -150,8 +150,8 @@ const CardMain = ({
         statusSeaPricing: propCopyAndCreate.statusSeaPricing as string,
         seaPricingDetailDTOs:
           propCopyAndCreate.seaPricingDetailDTOs as unknown as SeaPricingDetailDTOs[],
-        seaPricingFeeDTOs:
-          propCopyAndCreate.seaPricingFeeDTOs as unknown as SeaPricingFeeDTOs[],
+        // seaPricingFeeDTOs:
+        //   propCopyAndCreate.seaPricingFeeDTOs as unknown as SeaPricingFeeDTOs[],
       });
     }
   }, [
@@ -575,6 +575,7 @@ const CardMain = ({
           >
             <Select
               showSearch
+              mode="multiple"
               placeholder={translatePricingSea('Fee_Group_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"

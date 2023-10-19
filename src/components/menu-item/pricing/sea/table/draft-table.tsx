@@ -71,7 +71,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
-            feeGroupID: data.feeGroupID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
             dateEffect: data.dateEffect,
@@ -87,14 +86,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             seaPricingDetailDTOs: data.seaPricingDetailDTOs,
-            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
+            vendor: data.vendor,
             searchAll: '',
           }))
         );
@@ -187,8 +183,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: translatePricingSea('vendor'),
       width: 200,
-      dataIndex: 'partnerName', // TODO: check again
-      key: 'partnerName',
+      dataIndex: 'vendor',
+      key: 'vendor',
       align: 'left',
     },
     {

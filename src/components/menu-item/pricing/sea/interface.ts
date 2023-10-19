@@ -11,7 +11,7 @@ export interface SeaPricing {
   commodityName: string;
   currencyID: string;
   currencyAbbreviations: string;
-  feeGroupID: string;
+  // feeGroupID: string;
   note: string;
   dateEffect: string;
   validityDate: string;
@@ -29,27 +29,28 @@ export interface SeaPricing {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  isDelete: boolean;
-  dateDeleted: string;
-  deleteByUser: string;
+  // isDelete: boolean;
+  // dateDeleted: string;
+  // deleteByUser: string;
   seaPricingDetailDTOs: { [key: string]: string };
-  seaPricingFeeDTOs: SeaPricingFeeDTOs[];
+  vendor: string;
+  // seaPricingFeeDTOs: SeaPricingFeeDTOs[];
 }
 
 export interface SeaPricingDetailDTOs {
   [key: string]: string;
 }
-export interface SeaPricingFeeDTOs {
-  seaPricingFeeID: string;
-  feeID: string;
-  feeName: string;
-  feeNo: string;
-  currencyID: string;
-  currencyName: string;
-  unitID: string;
-  internationalCode: string;
-  price: string;
-}
+// export interface SeaPricingFeeDTOs {
+//   seaPricingFeeID: string;
+//   feeID: string;
+//   feeName: string;
+//   feeNo: string;
+//   currencyID: string;
+//   currencyName: string;
+//   unitID: string;
+//   internationalCode: string;
+//   price: string;
+// }
 
 export interface SeaPricingTable extends Omit<SeaPricing, 'seaPricingID'> {
   key: string;
@@ -133,14 +134,13 @@ export type SeaPricingDetailDTOsUpdate = Omit<
 >;
 
 export interface SeaPricingFeeFormValue {
-  seaPricingFeeID: string;
-  feeID: string;
-  feeName: string;
-  currencyID: string;
-  currencyName: string;
-  unitID: string;
-  internationalCode: string;
-  price: string;
+  seaPricingFeeGroupID: string;
+  feeGroupID: string;
+  public: boolean;
+  insertedByUser: string;
+  dateInserted: string;
+  dateUpdated: string;
+  updatedByUser: string;
 }
 
 export type SeaPricingFeeDTOsCreate = Omit<

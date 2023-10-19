@@ -112,7 +112,6 @@ export default function MasterDataTable() {
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
-            feeGroupID: data.feeGroupID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
             dateEffect: data.dateEffect,
@@ -128,14 +127,11 @@ export default function MasterDataTable() {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             seaPricingDetailDTOs: data.seaPricingDetailDTOs,
-            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
+            vendor: data.vendor,
             searchAll: '',
           }))
         );
@@ -317,8 +313,8 @@ export default function MasterDataTable() {
     {
       title: translatePricingSea('vendor'),
       width: 200,
-      dataIndex: 'partnerName', // TODO:Check again
-      key: 'partnerName',
+      dataIndex: 'vendor',
+      key: 'vendor',
       align: 'left',
     },
     {

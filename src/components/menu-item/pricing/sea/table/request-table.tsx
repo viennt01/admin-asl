@@ -59,7 +59,6 @@ const RequestTable = () => {
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
-            feeGroupID: data.feeGroupID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
             dateEffect: data.dateEffect,
@@ -75,14 +74,11 @@ const RequestTable = () => {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             seaPricingDetailDTOs: data.seaPricingDetailDTOs,
-            seaPricingFeeDTOs: data.seaPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
+            vendor: data.vendor,
             searchAll: '',
           }))
         );
@@ -200,8 +196,8 @@ const RequestTable = () => {
     {
       title: translatePricingSea('vendor'),
       width: 200,
-      dataIndex: 'partnerName',
-      key: 'partnerName',
+      dataIndex: 'vendor',
+      key: 'vendor',
       align: 'left',
     },
     {
