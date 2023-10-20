@@ -7,6 +7,8 @@
     "status": "Status",
     "date_created": "Date created",
     "creator": "Creator",
+    "date_start": "Date start",
+    "date_expiration": "Date expiration",
     "date_inserted": "Date updated",
     "inserter": "Update by user",
 
@@ -17,6 +19,11 @@
         "title": "Code",
         "placeholder": "Enter Fee Group code",
         "error_required": "Please enter Fee Group Code"
+    },
+    "type_fee_group_code_form": {
+        "title": "Type",
+        "placeholder": "Select type",
+        "error_required": "Please select type"
     },
     "fee_group_name_form": {
         "title": "Name",

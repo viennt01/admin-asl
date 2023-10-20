@@ -11,7 +11,7 @@ import {
   UpdateStatusFeeGroup,
 } from '../interface';
 import { ROUTERS } from '@/constant/router';
-import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
+import { API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -52,7 +52,7 @@ const RequestTable = () => {
 
   // Handle data
   useQuery({
-    queryKey: [API_FEE_GROUP.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_TYPE_FEE_GROUP.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
         ...queryInputParams,
@@ -72,6 +72,8 @@ const RequestTable = () => {
             feeGroupNo: data.feeGroupNo,
             feeGroupName: data.feeGroupName,
             statusFeeGroup: data.statusFeeGroup,
+            dateStart: data.dateStart,
+            dateExpiration: data.dateExpiration,
             public: data.public,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
@@ -80,6 +82,8 @@ const RequestTable = () => {
             isDelete: data.isDelete,
             dateDeleted: data.dateDeleted,
             deleteByUser: data.deleteByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );
@@ -253,7 +257,7 @@ const RequestTable = () => {
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [
-                API_FEE_GROUP.GET_REQUEST,
+                API_TYPE_FEE_GROUP.GET_REQUEST,
                 pagination,
                 queryInputParams,
               ],

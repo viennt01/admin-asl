@@ -2,6 +2,7 @@ import {
   ResponseWithPayload,
   downloadFile,
   exportFile,
+  get,
   post,
   uploadFile,
 } from '@/fetcherAxios';
@@ -17,8 +18,18 @@ import {
   UpdateStatusFeeGroup,
   RequestFeeGroupTableRequest,
   RequestExportData,
+  TypeFeeGroupData,
+  FeeData,
+  RequestFee,
+  FeeTable,
+  RequestUpdateFeeOfFeeGroup,
 } from './interface';
-import { API_COLUMN, API_FEE_GROUP } from '@/fetcherAxios/endpoint';
+import {
+  API_COLUMN,
+  API_FEE,
+  API_FEE_GROUP,
+  API_TYPE_FEE_GROUP,
+} from '@/fetcherAxios/endpoint';
 import {
   ColumnTable,
   TABLE_NAME,
@@ -107,4 +118,31 @@ export const updateColumnTable = (data: ColumnTable) => {
   return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
     data,
   })(API_COLUMN.UPDATE_COLUMN_TABLE_NAME);
+};
+//----------------------------------------------------------------
+//Get type fee group
+export const getListTypeFeeGroup = () => {
+  return get<ResponseWithPayload<TypeFeeGroupData[]>>({})(
+    API_TYPE_FEE_GROUP.GET_ALL
+  );
+};
+//Get fee
+export const getListFee = () => {
+  return get<ResponseWithPayload<FeeData[]>>({})(API_FEE.GET_ALL);
+};
+//----------------------------------------------------------------
+// Get table fee with feeGroup
+export const getFeeWithFeeGroup = (data: RequestFee) => {
+  return post<RequestFee, ResponseWithPayload<FeeTable[]>>({ data })(
+    API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP
+  );
+};
+// Update fee with feeGroup
+export const updateFeeWithFeeGroup = (data: RequestUpdateFeeOfFeeGroup) => {
+  return post<
+    RequestUpdateFeeOfFeeGroup,
+    ResponseWithPayload<RequestUpdateFeeOfFeeGroup>
+  >({
+    data,
+  })(API_FEE_GROUP.UPDATE_FEE_WITH_FEE_GROUP);
 };

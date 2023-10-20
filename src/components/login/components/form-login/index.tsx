@@ -65,17 +65,7 @@ const FormLogin = ({ formLogin }: LoginProps) => {
     loginUser.mutate(data, {
       onSuccess(data) {
         if (data.status) {
-          if (data.message === 'Send OTP successfully!') {
-            const props = {
-              email: formLogin.getFieldValue('email'),
-              ...dataHeader,
-            };
-            router.push({
-              pathname: ROUTERS.CONFIRM_OTP,
-              query: props,
-            });
-            successToast(data.message);
-          } else {
+          if (data.data) {
             appLocalStorage.set(
               LOCAL_STORAGE_KEYS.TOKEN,
               data.data.accessToken
@@ -85,6 +75,16 @@ const FormLogin = ({ formLogin }: LoginProps) => {
               data.data.refreshToken
             );
             router.push(ROUTERS.HOME);
+          } else {
+            const props = {
+              email: formLogin.getFieldValue('email'),
+              ...dataHeader,
+            };
+            router.push({
+              pathname: ROUTERS.CONFIRM_OTP,
+              query: props,
+            });
+            successToast(data.message);
           }
         } else {
           errorToast(data.message);

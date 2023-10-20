@@ -1,28 +1,55 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
+import {
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  Switch,
+  Select,
+  DatePicker,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, UpdateStatusFeeGroup } from '../interface';
-import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
+import { Fee, FeeTable, FormValues, UpdateStatusFeeGroup } from '../interface';
+import {
+  API_FEE,
+  API_FEE_GROUP,
+  API_TYPE_FEE_GROUP,
+} from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getFeeGroupDetail, updateStatus } from '../fetcher';
+import {
+  getFeeGroupDetail,
+  getListFee,
+  getListTypeFeeGroup,
+  updateStatus,
+} from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import dayjs from 'dayjs';
+import CollapseCard from '@/components/commons/collapse-card';
+import FeeList from './fee-list';
 
 const initialValue = {
   description: '',
 };
+const dateFormat = 'YYYY/MM/DD';
 
 interface PortFormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
-  handleSubmit?: (formValues: FormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: FormValues, id?: string) => void;
+  handleSubmit?: (formValues: FormValues, id?: string, listFee?: Fee[]) => void;
+  handleSaveDraft?: (
+    formValues: FormValues,
+    id?: string,
+    listFee?: Fee[]
+  ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
@@ -48,12 +75,29 @@ const FeeGroupForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
-  const propCopyAndCreate = router.query;
+  const propCopyAndCreate = router.query.props as string;
+  const [optionFee, setOptionFee] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [dataSource, setDataSource] = useState<FeeTable[]>([]);
+  const [listFeeData, setListFeeData] = useState<Fee[]>([]);
 
   useEffect(() => {
     if (!id) return;
     setIdQuery(id as string);
   }, [router, form]);
+
+  useEffect(() => {
+    setListFeeData(
+      dataSource.map((fee) => {
+        return {
+          feeID: fee.feeID,
+          priceFeeGroup: fee.priceFeeGroup,
+          vatFeeGroup: fee.vatFeeGroup,
+        };
+      })
+    );
+  }, [dataSource]);
 
   const handleIdQuery = (id: string) => {
     setIdQuery(id as string);
@@ -63,7 +107,7 @@ const FeeGroupForm = ({
     if (idQuery) {
       handleSubmit && handleSubmit(formValues, idQuery);
     } else {
-      handleSubmit && handleSubmit(formValues);
+      handleSubmit && handleSubmit(formValues, '', listFeeData);
     }
   };
 
@@ -71,9 +115,40 @@ const FeeGroupForm = ({
     if (idQuery) {
       handleSaveDraft && handleSaveDraft(form.getFieldsValue(), idQuery);
     } else {
-      handleSaveDraft && handleSaveDraft(form.getFieldsValue());
+      handleSaveDraft &&
+        handleSaveDraft(form.getFieldsValue(), '', listFeeData);
     }
   };
+
+  // get Fee
+  useQuery({
+    queryKey: [API_FEE.GET_ALL],
+    queryFn: () => getListFee(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        setOptionFee(
+          data.data.map((fee) => {
+            return {
+              value: fee.feeID,
+              label: fee.feeName,
+            };
+          })
+        );
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  const typeFeeGroup = useQuery(
+    [API_TYPE_FEE_GROUP.GET_ALL],
+    getListTypeFeeGroup
+  );
 
   const detailQuery = useQuery({
     queryKey: [API_FEE_GROUP.GET_DETAIL, idQuery],
@@ -87,6 +162,8 @@ const FeeGroupForm = ({
           feeGroupNameEN: data.data.feeGroupNameEN,
           feeGroupNameVN: data.data.feeGroupNameVN,
           statusFeeGroup: data.data.statusFeeGroup,
+          dateStart: dayjs(Number(data.data.dateStart)),
+          dateExpiration: dayjs(Number(data.data.dateExpiration)),
         });
       } else {
         router.push(ROUTERS.FEE_GROUP);
@@ -126,15 +203,17 @@ const FeeGroupForm = ({
   });
 
   const handleCopyAndCreate = () => {
-    const props = {
+    const props = JSON.stringify({
       checkCopyAndCreate: true,
-      internationalCode: form.getFieldValue('internationalCode'),
-      descriptionVN: form.getFieldValue('descriptionVN'),
-      descriptionEN: form.getFieldValue('descriptionEN'),
-    };
+      typeFeeGroupID: form.getFieldValue('typeFeeGroupID'),
+      feeGroupNo: form.getFieldValue('feeGroupNo'),
+      feeGroupNameEN: form.getFieldValue('feeGroupNameEN'),
+      feeGroupNameVN: form.getFieldValue('feeGroupNameVN'),
+      listFee: dataSource,
+    });
     router.push({
       pathname: ROUTERS.FEE_GROUP_CREATE,
-      query: props,
+      query: { props: props },
     });
   };
 
@@ -147,13 +226,17 @@ const FeeGroupForm = ({
     if ((edit && checkRow) || manager) {
       setCheckPermissionEdit(true);
     }
-    if (propCopyAndCreate.checkCopyAndCreate) {
-      form.setFieldsValue({
-        typeFeeGroupID: propCopyAndCreate.typeFeeGroupID as string,
-        feeGroupNo: propCopyAndCreate.feeGroupNo as string,
-        feeGroupNameEN: propCopyAndCreate.feeGroupNameEN as string,
-        feeGroupNameVN: propCopyAndCreate.feeGroupNameVN as string,
-      });
+    if (propCopyAndCreate) {
+      const dataPropCopyAndCreate = JSON.parse(propCopyAndCreate);
+      if (dataPropCopyAndCreate.checkCopyAndCreate) {
+        form.setFieldsValue({
+          typeFeeGroupID: dataPropCopyAndCreate.typeFeeGroupID as string,
+          feeGroupNo: dataPropCopyAndCreate.feeGroupNo as string,
+          feeGroupNameEN: dataPropCopyAndCreate.feeGroupNameEN as string,
+          feeGroupNameVN: dataPropCopyAndCreate.feeGroupNameVN as string,
+        });
+        setDataSource(dataPropCopyAndCreate.listFee);
+      }
     }
   }, [
     form,
@@ -237,7 +320,7 @@ const FeeGroupForm = ({
           }
         >
           <Row gutter={16}>
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 label={translateFeeGroup('fee_group_code_form.title')}
                 name="feeGroupNo"
@@ -259,8 +342,36 @@ const FeeGroupForm = ({
                 />
               </Form.Item>
             </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateFeeGroup('type_fee_group_code_form.title')}
+                name="typeFeeGroupID"
+                rules={[
+                  {
+                    required: true,
+                    message: translateFeeGroup(
+                      'type_fee_group_code_form.error_required'
+                    ),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={translateFeeGroup(
+                    'type_fee_group_code_form.placeholder'
+                  )}
+                  size="large"
+                  options={
+                    typeFeeGroup.data?.data.map((type) => ({
+                      label: type.typeFeeGroupName,
+                      value: type.typeFeeGroupID,
+                    })) || []
+                  }
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
 
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 label={translateFeeGroup('fee_group_name_form.titleEn')}
                 name="feeGroupNameEN"
@@ -282,8 +393,7 @@ const FeeGroupForm = ({
                 />
               </Form.Item>
             </Col>
-
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 label={translateFeeGroup('fee_group_name_form.titleVn')}
                 name="feeGroupNameVN"
@@ -305,11 +415,55 @@ const FeeGroupForm = ({
                 />
               </Form.Item>
             </Col>
+            {!create && (
+              <>
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    label={translateFeeGroup('date_start')}
+                    name="dateStart"
+                  >
+                    <DatePicker
+                      disabled
+                      format={dateFormat}
+                      style={{ width: '100%' }}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col lg={12} span={24}>
+                  <Form.Item
+                    label={translateFeeGroup('date_expiration')}
+                    name="dateExpiration"
+                  >
+                    <DatePicker
+                      disabled
+                      format={dateFormat}
+                      style={{ width: '100%' }}
+                    />
+                  </Form.Item>
+                </Col>
+              </>
+            )}
+
             <Col span={0}>
               <Form.Item name="statusFeeGroup"></Form.Item>
             </Col>
           </Row>
         </Card>
+
+        <CollapseCard
+          title="List Fee"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <FeeList
+            optionFee={optionFee}
+            isCheckPermissionEdit={isCheckPermissionEdit}
+            idFeeGroup={id as string}
+            dataSource={dataSource}
+            setDataSource={setDataSource}
+            edit={edit}
+          />
+        </CollapseCard>
 
         <BottomCreateEdit
           create={create}

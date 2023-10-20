@@ -73,6 +73,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             feeGroupNo: data.feeGroupNo,
             feeGroupName: data.feeGroupName,
             statusFeeGroup: data.statusFeeGroup,
+            dateStart: data.dateStart,
+            dateExpiration: data.dateExpiration,
             public: data.public,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
@@ -81,6 +83,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             isDelete: data.isDelete,
             dateDeleted: data.dateDeleted,
             deleteByUser: data.deleteByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );

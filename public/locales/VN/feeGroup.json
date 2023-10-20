@@ -7,6 +7,8 @@
     "status": "Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
+    "date_start": "Ngày bắt đầu",
+    "date_expiration": "Ngày hết hạn",
     "date_inserted": "Ngày cập nhật",
     "inserter": "Người cập nhật",
 
@@ -17,6 +19,11 @@
         "title": "Mã",
         "placeholder": "Nhập mã nhóm phí",
         "error_required": "Vui lòng nhập mã nhóm phí"
+    },
+    "type_fee_group_code_form": {
+        "title": "Loại",
+        "placeholder": "Nhập loại",
+        "error_required": "Vui lòng nhập loại"
     },
     "fee_group_name_form": {
         "title": "Tên",

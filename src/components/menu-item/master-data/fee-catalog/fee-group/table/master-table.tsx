@@ -17,7 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_FEE_GROUP } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -112,7 +112,11 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [API_FEE_GROUP.GET_SEARCH, queryInputParams, querySelectParams],
+    queryKey: [
+      API_TYPE_FEE_GROUP.GET_SEARCH,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
       getFeeGroupSearch({
         ...queryInputParams,
@@ -133,6 +137,8 @@ export default function MasterDataTable() {
             feeGroupNo: data.feeGroupNo,
             feeGroupName: data.feeGroupName,
             statusFeeGroup: data.statusFeeGroup,
+            dateStart: data.dateStart,
+            dateExpiration: data.dateExpiration,
             public: data.public,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
@@ -141,6 +147,8 @@ export default function MasterDataTable() {
             isDelete: data.isDelete,
             dateDeleted: data.dateDeleted,
             deleteByUser: data.deleteByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );
@@ -161,7 +169,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_FEE_GROUP.GET_SEARCH],
+          queryKey: [API_TYPE_FEE_GROUP.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -391,6 +399,24 @@ export default function MasterDataTable() {
       ),
     },
     {
+      title: <div className={style.title}>{translateCommon('date_start')}</div>,
+      width: 200,
+      dataIndex: 'dateStart',
+      key: 'dateStart',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateCommon('date_expiration')}</div>
+      ),
+      width: 200,
+      dataIndex: 'dateExpiration',
+      key: 'dateExpiration',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
       title: (
         <div className={style.title}>{translateCommon('date_created')}</div>
       ),
@@ -547,7 +573,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_FEE_GROUP.GET_REQUEST],
+          queryKey: [API_TYPE_FEE_GROUP.GET_REQUEST],
         });
         setLoadingImport(false);
         setOpenImportModal(false);

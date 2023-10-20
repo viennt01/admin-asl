@@ -4,7 +4,7 @@ import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import FeeGroupForm from '../components/form';
-import { FormValues, FeeGroupCreate, FeeGroupEdit } from '../interface';
+import { FormValues, FeeGroupCreate, FeeGroupEdit, Fee } from '../interface';
 import { createFeeGroup, editFeeGroup } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
@@ -24,7 +24,11 @@ const CreateFeeGroup = () => {
     },
   });
 
-  const handleSubmit = (formValues: FormValues, id?: string) => {
+  const handleSubmit = (
+    formValues: FormValues,
+    id?: string,
+    listFee?: Fee[]
+  ) => {
     if (id) {
       const _requestData: FeeGroupEdit = {
         feeGroupID: id,
@@ -50,6 +54,7 @@ const CreateFeeGroup = () => {
         feeGroupNo: formValues.feeGroupNo || '',
         feeGroupNameEN: formValues.feeGroupNameEN || '',
         feeGroupNameVN: formValues.feeGroupNameVN || '',
+        listFee: listFee || [],
         statusFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -65,7 +70,11 @@ const CreateFeeGroup = () => {
     }
   };
 
-  const handleSaveDraft = (formValues: FormValues, id?: string) => {
+  const handleSaveDraft = (
+    formValues: FormValues,
+    id?: string,
+    listFee?: Fee[]
+  ) => {
     if (id) {
       const _requestData: FeeGroupEdit = {
         feeGroupID: id,
@@ -94,6 +103,7 @@ const CreateFeeGroup = () => {
         feeGroupNo: formValues.feeGroupNo || '',
         feeGroupNameEN: formValues.feeGroupNameEN || '',
         feeGroupNameVN: formValues.feeGroupNameVN || '',
+        listFee: listFee || [],
         statusFeeGroup: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

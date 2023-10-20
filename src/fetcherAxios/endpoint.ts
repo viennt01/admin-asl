@@ -200,6 +200,7 @@ export const API_TYPE_FEE_GROUP = {
   DOWNLOAD_EXAMPLE_FILE: '/download-type-fee-group-excel',
   IMPORT: '/import-type-fee-group-with-excel',
   EXPORT: '/export-type-fee-group-with-excel',
+  GET_ALL: '/get-all-type-fee-group',
 };
 
 export const API_FEE_GROUP = {
@@ -215,4 +216,6 @@ export const API_FEE_GROUP = {
   DOWNLOAD_EXAMPLE_FILE: '/download-fee-group-excel',
   IMPORT: '/import-fee-group-with-excel',
   EXPORT: '/export-fee-group-with-excel',
+  GET_ALL_FEE_WITH_FEE_GROUP: '/get-all-fee-with-fee-group',
+  UPDATE_FEE_WITH_FEE_GROUP: '/update-fee-in-fee-group',
 };
