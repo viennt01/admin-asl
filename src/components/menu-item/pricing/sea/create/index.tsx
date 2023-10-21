@@ -42,8 +42,6 @@ const CreateSeaPricing = () => {
         }))
       )
     );
-    // const resultArray = JSON.parse(JSON.stringify(seaPricingFeeDTOs));
-    console.log(resultArray);
 
     for (const item of resultArray) {
       if (
@@ -83,7 +81,7 @@ const CreateSeaPricing = () => {
         return {
           containerTypeID: data.containerTypeID,
           currencyID: data.currencyID,
-          priceSeaPricingDetail: data.price,
+          pricePricingDetail: data.price,
         };
       });
     const returnFeeDTO = returnFeeDTOs(
@@ -165,7 +163,7 @@ const CreateSeaPricing = () => {
         return {
           containerTypeID: data.containerTypeID,
           currencyID: data.currencyID,
-          priceSeaPricingDetail: data.price,
+          pricePricingDetail: data.price,
         };
       });
     const returnFeeDTO = returnFeeDTOs(

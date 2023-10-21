@@ -1,14 +1,22 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button, Popconfirm, Table } from 'antd';
-import { FeeTable, RequestUpdateFeeOfFeeGroup } from '../../interface';
+import {
+  FeeTable,
+  RequestDeleteFeeOfFeeGroup,
+  RequestUpdateFeeOfFeeGroup,
+} from '../../interface';
 import COLORS from '@/constant/color';
 import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import useI18n from '@/i18n/useI18N';
 import { EditableCell, EditableRow } from './edit-item';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getFeeWithFeeGroup, updateFeeWithFeeGroup } from '../../fetcher';
+import {
+  deleteFeeWithFeeGroup,
+  getFeeWithFeeGroup,
+  updateFeeWithFeeGroup,
+} from '../../fetcher';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import { errorToast, successToast } from '@/hook/toast';
+import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
 type EditableTableProps = Parameters<typeof Table>[0];
@@ -22,6 +30,7 @@ interface Props {
   dataSource: FeeTable[];
   setDataSource: Dispatch<SetStateAction<FeeTable[]>>;
   edit?: boolean;
+  create?: boolean;
 }
 
 const FeeList = ({
@@ -30,7 +39,7 @@ const FeeList = ({
   idFeeGroup,
   dataSource,
   setDataSource,
-  edit,
+  create,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
   const [optionFeeActive, setOptionFeeActive] = useState<
@@ -45,7 +54,14 @@ const FeeList = ({
     onSuccess(data) {
       if (data.status) {
         if (data.data) {
-          setDataSource(data.data);
+          setDataSource(
+            data.data.map((fee) => ({
+              key: fee.feeID,
+              feeID: fee.feeID,
+              priceFeeGroup: fee.priceFeeGroup,
+              vatFeeGroup: fee.vatFeeGroup,
+            }))
+          );
         }
       }
     },
@@ -68,10 +84,16 @@ const FeeList = ({
     },
   });
 
-  const handleUpdateFee = () => {
+  const deleteFeeMutation = useMutation({
+    mutationFn: (body: RequestDeleteFeeOfFeeGroup) => {
+      return deleteFeeWithFeeGroup(body);
+    },
+  });
+
+  const handleUpdateFee = (newDataSource: FeeTable[]) => {
     const _requestData = {
       feeGroupID: idFeeGroup,
-      feeList: dataSource.map((fee) => {
+      feeList: newDataSource.map((fee) => {
         return {
           feeID: fee.feeID,
           priceFeeGroup: fee.priceFeeGroup,
@@ -82,10 +104,33 @@ const FeeList = ({
     updateFeeMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
-          ? (successToast(data.message),
-            queryClient.invalidateQueries({
+          ? queryClient.invalidateQueries({
               queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP],
-            }))
+            })
+          : errorToast(data.message);
+      },
+      onError() {
+        errorToast(API_MESSAGE.ERROR);
+      },
+    });
+  };
+
+  const handleDeleteFee = (key: React.Key) => {
+    const _requestData = {
+      feeGroupID: idFeeGroup,
+      ids: [key],
+    };
+    console.log({
+      feeGroupID: idFeeGroup,
+      ids: [key],
+    });
+
+    deleteFeeMutation.mutate(_requestData, {
+      onSuccess: (data) => {
+        data.status
+          ? queryClient.invalidateQueries({
+              queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP],
+            })
           : errorToast(data.message);
       },
       onError() {
@@ -98,9 +143,19 @@ const FeeList = ({
 
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
-    if (edit) {
-      handleUpdateFee();
+    const itemDelete = dataSource.filter((item) => item.key == key);
+    setOptionFeeActive([
+      {
+        value: itemDelete[0].feeID,
+        label: itemDelete[0].feeName || '',
+      },
+      ...optionFeeActive,
+    ]);
+
+    if (create) {
+      setDataSource(newData);
+    } else {
+      handleDeleteFee(key);
     }
   };
 
@@ -163,10 +218,12 @@ const FeeList = ({
       priceFeeGroup: '1000000',
       vatFeeGroup: '1000000',
     };
-    setDataSource([...dataSource, newData]);
+    const newDataSource = [...dataSource, newData];
+    setDataSource(newDataSource);
     setCount(count + 1);
-    if (edit) {
-      handleUpdateFee();
+
+    if (!create) {
+      handleUpdateFee(newDataSource);
     }
   };
 
@@ -179,8 +236,9 @@ const FeeList = ({
       ...row,
     });
     setDataSource(newData);
-    if (edit) {
-      handleUpdateFee();
+
+    if (!create) {
+      handleUpdateFee(newData);
     }
   };
 

@@ -23,6 +23,7 @@ import {
   RequestFee,
   FeeTable,
   RequestUpdateFeeOfFeeGroup,
+  RequestDeleteFeeOfFeeGroup,
 } from './interface';
 import {
   API_COLUMN,
@@ -145,4 +146,13 @@ export const updateFeeWithFeeGroup = (data: RequestUpdateFeeOfFeeGroup) => {
   >({
     data,
   })(API_FEE_GROUP.UPDATE_FEE_WITH_FEE_GROUP);
+};
+// Delete fee with feeGroup
+export const deleteFeeWithFeeGroup = (data: RequestDeleteFeeOfFeeGroup) => {
+  return post<
+    RequestDeleteFeeOfFeeGroup,
+    ResponseWithPayload<RequestDeleteFeeOfFeeGroup>
+  >({
+    data,
+  })(API_FEE_GROUP.DELETE_FEE_WITH_FEE_GROUP);
 };

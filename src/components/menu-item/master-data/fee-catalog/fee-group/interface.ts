@@ -173,3 +173,8 @@ export interface RequestUpdateFeeOfFeeGroup {
   feeGroupID: string;
   feeList: Fee[];
 }
+//delete fee of fee group
+export interface RequestDeleteFeeOfFeeGroup {
+  feeGroupID: string;
+  ids: React.Key[];
+}

@@ -461,7 +461,8 @@ const FeeGroupForm = ({
             idFeeGroup={id as string}
             dataSource={dataSource}
             setDataSource={setDataSource}
-            edit={edit}
+            edit
+            create={create}
           />
         </CollapseCard>
 

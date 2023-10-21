@@ -218,4 +218,5 @@ export const API_FEE_GROUP = {
   EXPORT: '/export-fee-group-with-excel',
   GET_ALL_FEE_WITH_FEE_GROUP: '/get-all-fee-with-fee-group',
   UPDATE_FEE_WITH_FEE_GROUP: '/update-fee-in-fee-group',
+  DELETE_FEE_WITH_FEE_GROUP: '/delete-fee-in-fee-group',
 };

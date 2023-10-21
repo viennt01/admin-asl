@@ -134,7 +134,7 @@ export type SeaPricingDetailDTOsCreate = Omit<
   | 'currencyName'
   | 'price'
 > & {
-  priceSeaPricingDetail: string;
+  pricePricingDetail: string;
 };
 
 export type SeaPricingDetailDTOsUpdate = Omit<
