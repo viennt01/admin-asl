@@ -1,0 +1,462 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,300&family=Roboto+Slab:wght@200;400;700;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap');
+
+.body {
+    .bodyContent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        background-image: url(/images/login/Global.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: hidden;
+
+
+        .bodyfiller {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.207);
+
+        }
+
+        .imgCoverPlane {
+            position: absolute;
+            z-index: 10;
+            top: 30%;
+            left: 63%;
+            transform: translate(-50%, -50%);
+            webkit-transform: scaleX(-1);
+            animation: 5s run ease-in-out;
+            overflow: hidden;
+
+            img {
+                width: 85%;
+                height: 85%;
+            }
+
+            @keyframes run {
+                0% {
+                    top: 70%;
+                    left: -10%;
+                    transform: translate(-50%, -50%);
+                }
+
+                100% {
+                    top: 30%;
+                    left: 63%;
+                    transform: translate(-50%, -50%);
+                    webkit-transform: scaleX(-1);
+                }
+            }
+        }
+
+        .bodyContainer {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+
+            .introCover {
+                padding-top: 14%;
+                display: flex;
+                justify-content: start;
+                align-items: start;
+                flex-direction: column;
+                gap: 40px;
+                width: 100%;
+                min-height: 100vh;
+                margin-left: 3rem;
+
+                .intro {
+                    color: #2c3350;
+                    font-size: 35px;
+                    display: flex;
+
+                    .typingText {
+                        overflow: hidden;
+                        white-space: nowrap;
+                        border-right: 4px solid white;
+                        animation: typing 9s steps(30), cursorBlink .6s infinite alternate;
+                    }
+
+                    .one {
+                        color: white;
+                        font-family: 'Roboto Slab', serif;
+                        font-weight: 900;
+                        text-transform: uppercase;
+                    }
+
+                    .two {
+                        color: red;
+                        font-family: 'Roboto Slab';
+                        font-weight: 900;
+                        font-size: 45px;
+                        text-transform: uppercase;
+
+                        .textBlue {
+                            color: #0033cc;
+                        }
+                    }
+                }
+
+                .cssTyping {
+                    background-color: white;
+                    padding: 20px;
+                    background: #ffffff9d;
+                    border: 2px solid rgba(255, 255, 255, 0.5);
+                    border-radius: 20px;
+                    box-shadow: 4px 4px 10px -1px #1d4486;
+
+                    p {
+                        margin-bottom: unset;
+                        border-right: .15em solid black;
+                        font-size: 18px;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        font-family: 'Roboto Slab', serif;
+                        font-weight: 400;
+                        color: black;
+
+                        .textBlue {
+                            color: #0033cc;
+                            font-weight: 900;
+                        }
+
+
+                        &:nth-child(1) {
+                            width: 53ch;
+                            -webkit-animation: type 4s steps(40, end);
+                            animation: type 4s steps(40, end);
+                            -webkit-animation-fill-mode: forwards;
+                            animation-fill-mode: forwards;
+                        }
+
+                        &:nth-child(2) {
+                            width: 62ch;
+                            opacity: 0;
+                            -webkit-animation: type2 4s steps(40, end);
+                            animation: type2 4s steps(40, end);
+                            -webkit-animation-delay: 4s;
+                            animation-delay: 4s;
+                            -webkit-animation-fill-mode: forwards;
+                            animation-fill-mode: forwards;
+                        }
+
+                        &:nth-child(3) {
+                            width: 58ch;
+                            opacity: 0;
+                            -webkit-animation: type2 4s steps(40, end);
+                            animation: type2 4s steps(40, end);
+                            -webkit-animation-delay: 8s;
+                            animation-delay: 8s;
+                            -webkit-animation-fill-mode: forwards;
+                            animation-fill-mode: forwards;
+                        }
+
+                        &:nth-child(4) {
+                            width: 58ch;
+                            opacity: 0;
+                            -webkit-animation: type2 4s steps(40, end);
+                            animation: type2 4s steps(40, end);
+                            -webkit-animation-delay: 12s;
+                            animation-delay: 12s;
+                            -webkit-animation-fill-mode: forwards;
+                            animation-fill-mode: forwards;
+                        }
+
+                        &:nth-child(5) {
+                            width: 45ch;
+                            opacity: 0;
+                            -webkit-animation: type2 4s steps(40, end);
+                            animation: type2 4s steps(40, end);
+                            -webkit-animation-delay: 16s;
+                            animation-delay: 16s;
+                            -webkit-animation-fill-mode: forwards;
+                            animation-fill-mode: forwards;
+                        }
+
+                        &:nth-child(6) {
+                            width: 18ch;
+                            opacity: 0;
+                            -webkit-animation: type6 4s steps(40, end), blink .5s step-end infinite alternate;
+                            animation: type6 4s steps(40, end), blink .5s step-end infinite alternate;
+                            animation-delay: 20s;
+                            -webkit-animation-fill-mode: forwards;
+                            animation-fill-mode: forwards;
+                        }
+                    }
+                }
+            }
+
+            .rightCover {
+                position: relative;
+                width: 100%;
+                min-height: 100vh;
+
+                .right {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: 100%;
+                    // background-color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .signinForm {
+                        width: 440px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                        padding: 3rem;
+                        overflow: hidden;
+                        grid-column: 1 / 2;
+                        grid-row: 1 / 2;
+                        transition: 0.2s 0.7s ease-in-out;
+                        z-index: 2;
+                        background: #ffffff9d;
+                        border: 2px solid rgba(255, 255, 255, 0.5);
+                        border-radius: 20px;
+                        box-shadow: 4px 4px 10px -1px #1d4486;
+
+                        .signinLogo {
+                            margin-bottom: 15px;
+                            width: 180px;
+                        }
+
+                        .titleSignIn {
+                            position: relative;
+                            margin-bottom: 30px;
+                            height: 40px;
+                            width: 100%;
+                            display: flex;
+                            justify-content: center;
+
+                            h2 {
+                                position: absolute;
+                                font-size: 3em;
+                                margin-bottom: unset;
+                                font-weight: bold;
+                                text-transform: uppercase;
+
+                                &:nth-child(1) {
+                                    color: transparent;
+                                    -webkit-text-stroke: 2px #1d4486;
+                                }
+
+                                &:nth-child(2) {
+                                    color: #1d4486;
+                                    animation: animateText 4s ease-in-out infinite;
+                                }
+                            }
+                        }
+
+                        .loginOptions {
+                            display: flex;
+                            align-items: center;
+                            justify-content: end;
+                            width: 100%;
+
+                            .forgotFieldLink {
+                                text-decoration: none;
+                                color: red;
+                                font-size: 17px;
+                                font-weight: 700;
+                            }
+                        }
+
+                        .btnLogin {
+                            width: 150px;
+                            height: 49px;
+                            border: none;
+                            outline: none;
+                            border-radius: 50px;
+                            cursor: pointer;
+                            background-color: #1d4486;
+                            color: #fff;
+                            text-transform: uppercase;
+                            font-weight: 600;
+                            margin-top: 30px;
+                            transition: 0.5s;
+                            z-index: 1;
+                            overflow: hidden;
+
+                            &:hover {
+                                opacity: 0.9;
+                            }
+                        }
+
+                        .LoginDoNotHaveAcc {
+                            padding-top: 1rem;
+                            font-size: 16px;
+                            margin-bottom: unset;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            .signUpButton {
+                                background: transparent;
+                                outline: none;
+                                border: none;
+                                font-size: 18px;
+                                font-weight: bold;
+                                margin-left: 5px;
+                                cursor: pointer;
+                                color: #0033cc;
+                                transition: all .5s;
+
+                                &:hover {
+                                    color: #1d4486;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@keyframes animateText {
+
+    0%,
+    100% {
+        clip-path: polygon(0% 45%, 15% 44%, 32% 50%, 54% 60%, 70% 61%, 84% 59%, 100% 52%, 100% 100%, 0% 100%);
+    }
+
+    50% {
+        clip-path: polygon(0% 60%, 16% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%);
+    }
+}
+
+@keyframes typing {
+    0% {
+        width: 0ch;
+    }
+
+    100% {
+        width: 24.5ch;
+    }
+}
+
+@keyframes cursorBlink {
+    0% {
+        border-color: transparent;
+    }
+
+    100% {
+        border-color: white;
+    }
+}
+
+@keyframes type {
+    0% {
+        width: 0;
+    }
+
+    99.9% {
+        border-right: .15em solid black;
+    }
+
+    100% {
+        border: none;
+    }
+}
+
+@keyframes type2 {
+    0% {
+        width: 0;
+    }
+
+    1% {
+        opacity: 1;
+    }
+
+    99.9% {
+        border-right: .15em solid black;
+    }
+
+    100% {
+        opacity: 1;
+        border: none;
+    }
+}
+
+@keyframes type6 {
+    0% {
+        width: 0;
+    }
+
+    1% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+
+@media only screen and (max-width: 1336px) {
+    .imgCoverPlane {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1194px) and (max-width: 1281px) {
+    .introCover {
+        width: unset !important;
+    }
+
+    .signinForm {
+        width: 400px !important;
+        padding: 3rem !important;
+    }
+}
+
+@media only screen and (min-width: 991px) and (max-width: 1194px) {
+    .introCover {
+        display: none !important;
+    }
+
+    .signinForm {
+        width: 400px !important;
+        padding: 3rem !important;
+    }
+}
+
+@media only screen and (min-width: 380px) and (max-width: 460px) {
+    .signinForm {
+        width: 380px !important;
+        padding: 1rem !important;
+    }
+}
+
+@media only screen and (min-width: 200px) and (max-width: 381px) {
+    .signinForm {
+        width: 340px !important;
+        padding: 1.5rem !important;
+    }
+
+    .LoginDoNotHaveAcc {
+        font-size: 14px !important;
+
+        .signUpButton {
+            font-size: 16px !important;
+        }
+    }
+}
