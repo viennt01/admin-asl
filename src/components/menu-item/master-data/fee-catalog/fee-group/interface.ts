@@ -155,6 +155,14 @@ export interface Fee {
 }
 export interface FeeTable extends Fee {
   key: React.Key;
+  typeFeeID?: string;
+  typeFeeName?: string;
+  currencyID?: string;
+  currencyName?: string;
+  unitID?: string;
+  unitInternationalCode?: string;
+  feeNo?: string;
+  feeName?: string;
 }
 export interface RequestFee {
   id: string[];

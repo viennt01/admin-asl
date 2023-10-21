@@ -1,5 +1,9 @@
 import router from 'next/router';
-import { FormValues, SeaPricingEdit } from '../interface';
+import {
+  FormValues,
+  SeaPricingEdit,
+  SeaPricingFeeFormValue,
+} from '../interface';
 import { editSeaPricing } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
@@ -15,14 +19,65 @@ const EditSeaPricing = () => {
     },
   });
 
-  const handleSubmit = (formValues: FormValues, idQuery?: string) => {
+  const returnFeeDTOs = (
+    seaPricingFeeDTOs?: SeaPricingFeeFormValue[],
+    fromSeaPricingFeeDTOs?: string[]
+  ) => {
+    const resultArray = JSON.parse(
+      JSON.stringify(
+        seaPricingFeeDTOs?.map((item) => ({
+          seaPricingFeeGroupID: item.seaPricingFeeGroupID,
+          feeGroupID: item.feeGroupID,
+          public: item.public,
+        }))
+      )
+    );
+    console.log(resultArray);
+
+    for (const item of resultArray) {
+      if (
+        fromSeaPricingFeeDTOs &&
+        fromSeaPricingFeeDTOs.includes(item.feeGroupID)
+      ) {
+        item.isDelete = false;
+      } else {
+        item.isDelete = true;
+      }
+    }
+    if (fromSeaPricingFeeDTOs) {
+      for (const id of fromSeaPricingFeeDTOs) {
+        if (
+          !resultArray.some(
+            (item: SeaPricingFeeFormValue) => item.feeGroupID === id
+          )
+        ) {
+          resultArray.push({
+            feeGroupID: id,
+            public: true,
+            isDelete: false,
+          });
+        }
+      }
+    }
+    return resultArray;
+  };
+
+  const handleSubmit = (
+    formValues: FormValues,
+    idQuery?: string,
+    seaPricingFeeDTOs?: SeaPricingFeeFormValue[]
+  ) => {
+    const returnFeeDTO = returnFeeDTOs(
+      seaPricingFeeDTOs,
+      formValues.seaPricingFeeDTOs
+    );
+
     if (idQuery) {
       const _requestData: SeaPricingEdit = {
         seaPricingID: idQuery,
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
-        feeGroupID: formValues.feeGroupID || '',
         note: formValues.note || '',
         dateEffect: formValues.dateEffect.valueOf(),
         validityDate: formValues.validityDate.valueOf(),
@@ -35,7 +90,7 @@ const EditSeaPricing = () => {
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         seaPricingDetailUpdateRequests: formValues.seaPricingDetailDTOs || [],
-        seaPricingFeeUpdateRequests: formValues.seaPricingFeeDTOs || [],
+        seaPricingFeeGroupUpdateRequests: returnFeeDTO,
         statusSeaPricing:
           formValues.statusSeaPricing || STATUS_ALL_LABELS.ACTIVE,
       };

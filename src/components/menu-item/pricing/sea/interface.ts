@@ -90,7 +90,7 @@ export interface FormValues {
   podid: string;
   polid: string;
   commodityID: string;
-  feeGroupID: string;
+  // feeGroupID: string;
   note: string;
   dateEffect: Dayjs;
   validityDate: Dayjs;
@@ -104,6 +104,15 @@ export interface FormValues {
   public: boolean;
   statusSeaPricing: string;
   seaPricingDetailDTOs: SeaPricingDetailDTOsFormValue[];
+  seaPricingFeeDTOs: string[];
+}
+
+export interface SeaPricingDetailType
+  extends Omit<FormValues, 'seaPricingFeeDTOs'> {
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
   seaPricingFeeDTOs: SeaPricingFeeFormValue[];
 }
 
@@ -145,22 +154,19 @@ export interface SeaPricingFeeFormValue {
 
 export type SeaPricingFeeDTOsCreate = Omit<
   SeaPricingFeeFormValue,
-  'seaPricingFeeID' | 'feeName' | 'currencyName' | 'price'
-> & {
-  priceSeaPricingFee: string;
-};
+  | 'seaPricingFeeGroupID'
+  | 'insertedByUser'
+  | 'dateInserted'
+  | 'dateUpdated'
+  | 'updatedByUser'
+>;
 
 export type SeaPricingFeeUpdate = Omit<
   SeaPricingFeeFormValue,
-  'feeName' | 'currencyName' | 'internationalCode'
->;
-
-export interface SeaPricingDetailType extends FormValues {
-  dateInserted: string;
-  insertedByUser: string;
-  dateUpdated: string;
-  updatedByUser: string;
-}
+  'insertedByUser' | 'dateInserted' | 'dateUpdated' | 'updatedByUser'
+> & {
+  isDelete: boolean;
+};
 
 export type SeaPricingCreate = Omit<
   FormValues,
@@ -173,7 +179,7 @@ export type SeaPricingCreate = Omit<
   dateEffect: number;
   validityDate: number;
   seaPricingDetailRegisterRequests: SeaPricingDetailDTOsCreate[];
-  seaPricingFeeRegisterRequests: SeaPricingFeeFormValue[];
+  seaPricingFeeGroupRegisterRequests: SeaPricingFeeDTOsCreate[];
 };
 
 export type SeaPricingEdit = Omit<
@@ -183,7 +189,7 @@ export type SeaPricingEdit = Omit<
   dateEffect: number;
   validityDate: number;
   seaPricingDetailUpdateRequests: SeaPricingDetailDTOsUpdate[];
-  seaPricingFeeUpdateRequests: SeaPricingFeeUpdate[];
+  seaPricingFeeGroupUpdateRequests: SeaPricingFeeUpdate[];
 };
 export type SeaPricingDelete = {
   ids: React.Key[];

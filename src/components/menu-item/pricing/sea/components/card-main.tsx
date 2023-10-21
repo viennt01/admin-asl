@@ -135,7 +135,7 @@ const CardMain = ({
         podid: propCopyAndCreate.podid as string,
         polid: propCopyAndCreate.polid as string,
         commodityID: propCopyAndCreate.commodityID as string,
-        feeGroupID: propCopyAndCreate.feeGroupID as string,
+        // feeGroupID: propCopyAndCreate.feeGroupID as string,
         note: propCopyAndCreate.note as string,
         dateEffect: propCopyAndCreate.dateEffect as string,
         validityDate: propCopyAndCreate.validityDate as string,
@@ -565,7 +565,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingSea('Fee_Group_form.title')}
-            name="feeGroupID"
+            name="seaPricingFeeDTOs"
             rules={[
               {
                 required: true,
@@ -613,9 +613,6 @@ const CardMain = ({
         </Col>
         <Col span={0}>
           <Form.Item name="seaPricingDetailDTOs"></Form.Item>
-        </Col>
-        <Col span={0}>
-          <Form.Item name="seaPricingFeeDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

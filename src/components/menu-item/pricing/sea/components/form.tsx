@@ -3,10 +3,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, UpdateStatus } from '../interface';
+import { FormValues, SeaPricingFeeFormValue, UpdateStatus } from '../interface';
 import {
   API_CONTAINER_TYPE,
   API_CURRENCY,
+  API_FEE_GROUP,
   API_SEA_PRICING,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
@@ -22,13 +23,24 @@ import dayjs from 'dayjs';
 import CardMain from './card-main';
 import CollapseCard from '@/components/commons/collapse-card';
 import SeaPricingDetailDTO from './sea-pricing-detail-dto';
+import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-catalog/fee-group/fetcher';
+import { FeeTable } from '@/components/menu-item/master-data/fee-catalog/fee-group/interface';
+import ListFee from './list-fee';
 
 interface PortFormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
-  handleSubmit?: (formValues: FormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: FormValues, id?: string) => void;
+  handleSubmit?: (
+    formValues: FormValues,
+    id?: string,
+    seaPricingFeeDTOs?: SeaPricingFeeFormValue[]
+  ) => void;
+  handleSaveDraft?: (
+    formValues: FormValues,
+    id?: string,
+    seaPricingFeeDTOs?: SeaPricingFeeFormValue[]
+  ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
@@ -56,6 +68,13 @@ const SeaPricing = ({
   const [optionTypeContainer, setOptionTypeContainer] = useState<
     { value: string; label: string }[]
   >([]);
+  const [seaPricingFeeDTOs, setSeaPricingFeeDTOs] = useState<
+    SeaPricingFeeFormValue[]
+  >([]);
+  const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
+
+  const listIdFeeGroup = Form.useWatch('seaPricingFeeDTOs', form);
+  console.log('listIdFeeGroup =>>>>', listIdFeeGroup);
 
   useEffect(() => {
     if (!id) return;
@@ -110,19 +129,37 @@ const SeaPricing = ({
     },
   });
 
+  useQuery({
+    queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, listIdFeeGroup],
+    queryFn: () => getFeeWithFeeGroup({ id: listIdFeeGroup }),
+    enabled: listIdFeeGroup !== undefined,
+    onSuccess(data) {
+      setDataFeeTable([]);
+      if (data.status) {
+        if (data.data) {
+          setDataFeeTable(data.data);
+        }
+      }
+    },
+  });
+
+  console.log(dataFeeTable);
+
   const onFinish = (formValues: FormValues) => {
     if (idQuery) {
-      handleSubmit && handleSubmit(formValues, idQuery);
+      handleSubmit && handleSubmit(formValues, idQuery, seaPricingFeeDTOs);
     } else {
-      handleSubmit && handleSubmit(formValues);
+      handleSubmit && handleSubmit(formValues, '', seaPricingFeeDTOs);
     }
   };
 
   const onSaveDraft = () => {
     if (idQuery) {
-      handleSaveDraft && handleSaveDraft(form.getFieldsValue(), idQuery);
+      handleSaveDraft &&
+        handleSaveDraft(form.getFieldsValue(), idQuery, seaPricingFeeDTOs);
     } else {
-      handleSaveDraft && handleSaveDraft(form.getFieldsValue());
+      handleSaveDraft &&
+        handleSaveDraft(form.getFieldsValue(), '', seaPricingFeeDTOs);
     }
   };
 
@@ -153,8 +190,11 @@ const SeaPricing = ({
           public: data.data.public,
           statusSeaPricing: data.data.statusSeaPricing,
           seaPricingDetailDTOs: data.data.seaPricingDetailDTOs,
-          seaPricingFeeDTOs: data.data.seaPricingFeeDTOs,
+          seaPricingFeeDTOs: data.data.seaPricingFeeDTOs.map(
+            (fee) => fee.feeGroupID
+          ),
         });
+        setSeaPricingFeeDTOs(data.data.seaPricingFeeDTOs);
       } else {
         router.push(ROUTERS.SEA_PRICING);
       }
@@ -255,6 +295,14 @@ const SeaPricing = ({
             optionTypeContainer={optionTypeContainer}
             isCheckPermissionEdit={isCheckPermissionEdit}
           />
+        </CollapseCard>
+
+        <CollapseCard
+          title="List Fee"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <ListFee FeeDataTable={dataFeeTable} />
         </CollapseCard>
 
         <BottomCreateEdit
