@@ -102,12 +102,12 @@ export const ROUTERS = {
   TYPE_FEE_MANAGER: (typeFeeId: string) =>
     `/master-data/fee-catalog/type-fee/manager-admin/${typeFeeId}`,
 
-  FEE_GROUP: '/master-data/fee-catalog/fee-group',
-  FEE_GROUP_CREATE: '/master-data/fee-catalog/fee-group/create',
+  FEE_GROUP: '/master-data/fee-group',
+  FEE_GROUP_CREATE: '/master-data/fee-group/create',
   FEE_GROUP_EDIT: (feeGroupId: string, checkRow = false) =>
-    `/master-data/fee-catalog/fee-group/edit/${feeGroupId}?checkRow=${checkRow}`,
+    `/master-data/fee-group/edit/${feeGroupId}?checkRow=${checkRow}`,
   FEE_GROUP_MANAGER: (feeGroupId: string) =>
-    `/master-data/fee-catalog/fee-group/manager-admin/${feeGroupId}`,
+    `/master-data/fee-group/manager-admin/${feeGroupId}`,
 
   TYPE_FEE_GROUP: '/master-data/fee-catalog/type-fee-group',
   TYPE_FEE_GROUP_CREATE: '/master-data/fee-catalog/type-fee-group/create',

@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { Pagination } from '../../../../commons/table/table-default';
+import { Pagination } from '../../../commons/table/table-default';
 
 export interface FeeGroup {
   feeGroupID: string;

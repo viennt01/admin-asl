@@ -622,12 +622,12 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
-    '/master-data/fee-catalog/fee-group': [
+    '/master-data/fee-group': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('fee_catalog')}` },
       { title: `${translateCommon('fee_group')}` },
     ],
-    '/master-data/fee-catalog/fee-group/create': [
+    '/master-data/fee-group/create': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
@@ -637,7 +637,7 @@ const SHOW_ROUTER_HEADER = () => {
       },
       { title: `${translateCommon('create')}` },
     ],
-    '/master-data/fee-catalog/fee-group/edit/[id]': [
+    '/master-data/fee-group/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
@@ -647,7 +647,7 @@ const SHOW_ROUTER_HEADER = () => {
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/fee-catalog/fee-group/manager-admin/[id]': [
+    '/master-data/fee-group/manager-admin/[id]': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {

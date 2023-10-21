@@ -44,7 +44,7 @@ import {
   updateColumnTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table from '../../../../../commons/table/table';
+import Table from '../../../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import {

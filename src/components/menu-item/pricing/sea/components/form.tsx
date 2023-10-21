@@ -23,8 +23,8 @@ import dayjs from 'dayjs';
 import CardMain from './card-main';
 import CollapseCard from '@/components/commons/collapse-card';
 import SeaPricingDetailDTO from './sea-pricing-detail-dto';
-import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-catalog/fee-group/fetcher';
-import { FeeTable } from '@/components/menu-item/master-data/fee-catalog/fee-group/interface';
+import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
 import ListFee from './list-fee';
 
 interface PortFormProps {

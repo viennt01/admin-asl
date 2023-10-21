@@ -1,4 +1,4 @@
-import { FeeTable } from '@/components/menu-item/master-data/fee-catalog/fee-group/interface';
+import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
 import { Button, Input, InputRef, Space, Table } from 'antd';
 import {
   ColumnType,
@@ -126,13 +126,6 @@ const ListFee = ({ FeeDataTable }: Props) => {
 
   const columns: ColumnsType<FeeTable> = [
     {
-      title: 'NO',
-      dataIndex: 'feeNo',
-      key: 'feeNo',
-      fixed: 'left',
-      ...getColumnSearchProps('feeNo'),
-    },
-    {
       title: 'Name',
       dataIndex: 'feeName',
       key: 'feeName',
@@ -179,6 +172,13 @@ const ListFee = ({ FeeDataTable }: Props) => {
       key: 'unitInternationalCode',
       fixed: 'left',
       ...getColumnSearchProps('unitInternationalCode'),
+    },
+    {
+      title: 'NO',
+      dataIndex: 'feeNo',
+      key: 'feeNo',
+      fixed: 'left',
+      ...getColumnSearchProps('feeNo'),
     },
   ];
   return <Table columns={columns} dataSource={FeeDataTable} />;

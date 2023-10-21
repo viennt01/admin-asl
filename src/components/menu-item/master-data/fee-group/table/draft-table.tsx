@@ -10,7 +10,7 @@ import {
   DownloadOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
-import Table from '../../../../../commons/table/table';
+import Table from '../../../../commons/table/table';
 import {
   DEFAULT_PAGINATION_5,
   PaginationOfAntd,

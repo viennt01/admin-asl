@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import FeeGroupPage from '@/components/menu-item/master-data/fee-catalog/fee-group';
 
-function FeeGroup() {
+function CreateFeeGroupPage() {
   return (
     <>
       <Head>
-        <title>ASL | FEE GROUP</title>
+        <title>ASL | CREATE FEE GROUP</title>
       </Head>
-      <FeeGroupPage />
+      <CreateFeeGroup />
     </>
   );
 }
 
-export default withAuthentication(FeeGroup);
+export default withAuthentication(CreateFeeGroupPage);
 import { getStatic } from '@/lib/getStaticProps';
+import CreateFeeGroup from '@/components/menu-item/master-data/fee-group/create';
 export const getStaticProps = getStatic(['common', 'feeGroup']);

@@ -52,6 +52,7 @@ const FeeList = ({
     queryFn: () => getFeeWithFeeGroup({ id: [idFeeGroup] }),
     enabled: idFeeGroup !== undefined,
     onSuccess(data) {
+      setDataSource([]);
       if (data.status) {
         if (data.data) {
           setDataSource(
@@ -120,11 +121,6 @@ const FeeList = ({
       feeGroupID: idFeeGroup,
       ids: [key],
     };
-    console.log({
-      feeGroupID: idFeeGroup,
-      ids: [key],
-    });
-
     deleteFeeMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
@@ -214,7 +210,7 @@ const FeeList = ({
   const handleAdd = () => {
     const newData: FeeTable = {
       key: count,
-      feeID: optionFee[0]?.value || '',
+      feeID: optionFeeActive[0].value,
       priceFeeGroup: '1000000',
       vatFeeGroup: '1000000',
     };
