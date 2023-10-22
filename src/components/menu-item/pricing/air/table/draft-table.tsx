@@ -85,7 +85,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             airPricingDetailDTOs: data.airPricingDetailDTOs,
-            airPricingFeeDTOs: data.airPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -93,6 +92,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             isDelete: data.isDelete,
             dateDeleted: data.dateDeleted,
             deleteByUser: data.deleteByUser,
+            vendor: data.vendor,
             searchAll: '',
           }))
         );

@@ -1,11 +1,16 @@
 import router from 'next/router';
-import { FormValues, AirPricingEdit } from '../interface';
+import {
+  FormValues,
+  AirPricingEdit,
+  AirPricingFeeFormValue,
+} from '../interface';
 import { editAirPricing } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import AirPricing from '../components/form';
 import { STATUS_ALL_LABELS } from '@/constant/form';
+import { returnFeeDTOs } from '../create';
 
 const EditAirPricing = () => {
   const checkRow = router.query.checkRow as string;
@@ -15,7 +20,16 @@ const EditAirPricing = () => {
     },
   });
 
-  const handleSubmit = (formValues: FormValues, idQuery?: string) => {
+  const handleSubmit = (
+    formValues: FormValues,
+    idQuery?: string,
+    airPricingFeeDTOs?: AirPricingFeeFormValue[]
+  ) => {
+    const returnFeeDTO = returnFeeDTOs(
+      airPricingFeeDTOs,
+      formValues.airPricingFeeDTOs
+    );
+
     if (idQuery) {
       const _requestData: AirPricingEdit = {
         airPricingID: idQuery,
@@ -34,7 +48,7 @@ const EditAirPricing = () => {
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
-        airPricingFeeUpdateRequests: formValues.airPricingFeeDTOs || [],
+        airPricingFeeGroupUpdateRequests: returnFeeDTO,
         statusAirPricing:
           formValues.statusAirPricing || STATUS_ALL_LABELS.ACTIVE,
       };

@@ -18,15 +18,20 @@ import { useEffect, useState } from 'react';
 import {
   FormValues,
   AirPricingDetailDTOs,
-  AirPricingFeeDTOs,
+  // AirPricingFeeDTOs,
   UpdateStatus,
 } from '../interface';
-import { API_COMMODITY, API_LOCATION } from '@/fetcherAxios/endpoint';
+import {
+  API_COMMODITY,
+  API_FEE_GROUP,
+  API_LOCATION,
+} from '@/fetcherAxios/endpoint';
 import { getAllCommodity, getAllLocation, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import { getAllFeeGroup } from '@/components/menu-item/pricing/sea/fetcher';
 
 interface Props {
   create?: boolean;
@@ -97,6 +102,21 @@ const CardMain = ({
     },
   });
 
+  const getFeeGroup = useQuery({
+    queryKey: [API_FEE_GROUP.GET_ALL],
+    queryFn: () => getAllFeeGroup(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
   useEffect(() => {
     if (form.getFieldValue('statusAirPricing')) {
       form.getFieldValue('statusAirPricing') === STATUS_ALL_LABELS.ACTIVE
@@ -126,8 +146,8 @@ const CardMain = ({
         statusAirPricing: propCopyAndCreate.statusAirPricing as string,
         airPricingDetailDTOs:
           propCopyAndCreate.airPricingDetailDTOs as unknown as AirPricingDetailDTOs[],
-        airPricingFeeDTOs:
-          propCopyAndCreate.airPricingFeeDTOs as unknown as AirPricingFeeDTOs[],
+        // airPricingFeeDTOs:
+        //   propCopyAndCreate.airPricingFeeDTOs as unknown as AirPricingFeeDTOs[],
       });
     }
   }, [
@@ -152,7 +172,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: 'Please chooses currency',
+          message: translatePricingAir('currency_form.placeholder'),
         },
       ]}
     >
@@ -173,7 +193,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: 'Please chooses currency',
+          message: translatePricingAir('currency_form.placeholder'),
         },
       ]}
     >
@@ -193,16 +213,17 @@ const CardMain = ({
         <Row justify={'center'}>
           <Col>
             <Title level={3} style={{ margin: '-4px 0' }}>
-              {create && 'Create a new air pricing'}
+              {create && translatePricingAir('information_add_air_pricing')}
               {manager && 'Approval needed requests'}
               {edit &&
                 (checkRow ? (
                   <>
                     {isCheckPermissionEdit && 'View'}
-                    {!isCheckPermissionEdit && 'Edit a new air pricing'}
+                    {!isCheckPermissionEdit &&
+                      translatePricingAir('information_edit_air_pricing')}
                   </>
                 ) : (
-                  'Edit a new air pricing'
+                  translatePricingAir('information_edit_air_pricing')
                 ))}
             </Title>
           </Col>
@@ -250,19 +271,19 @@ const CardMain = ({
       <Row gutter={16}>
         <Col lg={12} span={24}>
           <Form.Item
-            label={translatePricingAir('POL')}
-            tooltip={translatePricingAir('POL')}
-            name="polid"
+            label={translatePricingAir('AOL_form.title')}
+            tooltip={translatePricingAir('AOL_form.title')}
+            name="aolid"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('POL_placeholder'),
+                message: translatePricingAir('AOL_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingAir('POL_placeholder')}
+              placeholder={translatePricingAir('AOL_form.error_required')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -286,19 +307,19 @@ const CardMain = ({
         </Col>
         <Col lg={12} span={24}>
           <Form.Item
-            label={translatePricingAir('POD')}
-            tooltip={translatePricingAir('POD')}
-            name="podid"
+            label={translatePricingAir('AOD_form.title')}
+            tooltip={translatePricingAir('AOD_form.title')}
+            name="aodid"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('POD_placeholder'),
+                message: translatePricingAir('AOD_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingAir('POD_placeholder')}
+              placeholder={translatePricingAir('AOD_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -323,12 +344,12 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('validity')}
+            label={translatePricingAir('validity_form.title')}
             name="validityDate"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('validity_placeholder'),
+                message: translatePricingAir('validity_form.error_required'),
               },
             ]}
           >
@@ -341,12 +362,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('effect_date')}
+            label={translatePricingAir('effect_date_form.title')}
             name="dateEffect"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('effect_date_placeholder'),
+                message: translatePricingAir('effect_date_form.error_required'),
               },
             ]}
           >
@@ -359,18 +380,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('freq')}
+            label={translatePricingAir('freq_form.title')}
             name="freqDate"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('freq_placeholder'),
+                message: translatePricingAir('freq_form.error_required'),
               },
             ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingAir('freq_placeholder')}
+              placeholder={translatePricingAir('freq_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -382,18 +403,18 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('STO')}
+            label={translatePricingAir('STO_form.title')}
             name="stoAirPricing"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('STO_placeholder'),
+                message: translatePricingAir('STO_form.error_required'),
               },
             ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingAir('STO_placeholder')}
+              placeholder={translatePricingAir('STO_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -404,18 +425,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('DEM')}
+            label={translatePricingAir('DEM_form.title')}
             name="demAirPricing"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('DEM_placeholder'),
+                message: translatePricingAir('DEM_form.error_required'),
               },
             ]}
           >
             <InputNumber
               style={{ width: '100%' }}
-              placeholder={translatePricingAir('DEM_placeholder')}
+              placeholder={translatePricingAir('DEM_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -426,18 +447,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('DET')}
+            label={translatePricingAir('DET_form.title')}
             name="detAirPricing"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('DET_placeholder'),
+                message: translatePricingAir('DET_form.error_required'),
               },
             ]}
           >
             <InputNumber
               style={{ width: '100%' }}
-              placeholder={translatePricingAir('DET_placeholder')}
+              placeholder={translatePricingAir('DET_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -449,18 +470,18 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('commodity')}
+            label={translatePricingAir('commodity_form.title')}
             name="commodityID"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('commodity_placeholder'),
+                message: translatePricingAir('commodity_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingAir('commodity_placeholder')}
+              placeholder={translatePricingAir('commodity_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -484,18 +505,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('LCL')}
+            label={translatePricingAir('LCL_form.title')}
             name="lclAirPricing"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('LCL_placeholder'),
+                message: translatePricingAir('LCL_form.error_required'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCL}
-              placeholder={translatePricingAir('LCL_placeholder')}
+              placeholder={translatePricingAir('LCL_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -507,18 +528,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('LCLMin')}
-            name="lclMinAirPricing"
+            label={translatePricingAir('LCLMin_form.title')}
+            name="LCLMin_form.error_required"
             rules={[
               {
                 required: true,
-                message: translatePricingAir('LCLMin_placeholder'),
+                message: translatePricingAir('LCLMin_form.error_required'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCLMin}
-              placeholder={translatePricingAir('LCLMin_placeholder')}
+              placeholder={translatePricingAir('LCLMin_form.placeholder')}
               formatter={(value) =>
                 `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
               }
@@ -530,10 +551,50 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item label={translatePricingAir('vendor')} name="vendor">
+          <Form.Item
+            label={translatePricingAir('vendor_form.title')}
+            name="vendor"
+          >
             <Input
-              placeholder={translatePricingAir('vendor_placeholder')}
+              placeholder={translatePricingAir('vendor_form.placeholder')}
               disabled
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('Fee_Group_form.title')}
+            name="airPricingFeeDTOs"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('Fee_Group_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              mode="multiple"
+              placeholder={translatePricingAir('Fee_Group_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getFeeGroup.data?.data.map((item) => {
+                  return {
+                    value: item.feeGroupID,
+                    label: item.feeGroupName,
+                  };
+                }) || []
+              }
             />
           </Form.Item>
         </Col>
@@ -552,9 +613,6 @@ const CardMain = ({
         </Col>
         <Col span={0}>
           <Form.Item name="airPricingDetailDTOs"></Form.Item>
-        </Col>
-        <Col span={0}>
-          <Form.Item name="airPricingFeeDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

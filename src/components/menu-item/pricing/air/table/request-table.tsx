@@ -12,8 +12,8 @@ import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
-import { useState, MouseEvent } from 'react';
-import { formatDate } from '@/utils/format';
+import { useState, MouseEvent, useMemo } from 'react';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -21,7 +21,11 @@ import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 import { initalValueQueryInputParamsRequest } from '../constant';
-import { AirPricingTable, UpdateStatus } from '../interface';
+import {
+  AirPricingDetailDTOs,
+  AirPricingTable,
+  UpdateStatus,
+} from '../interface';
 
 const RequestTable = () => {
   const router = useRouter();
@@ -73,7 +77,6 @@ const RequestTable = () => {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             airPricingDetailDTOs: data.airPricingDetailDTOs,
-            airPricingFeeDTOs: data.airPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -81,6 +84,7 @@ const RequestTable = () => {
             isDelete: data.isDelete,
             dateDeleted: data.dateDeleted,
             deleteByUser: data.deleteByUser,
+            vendor: data.vendor,
             searchAll: '',
           }))
         );
@@ -132,6 +136,22 @@ const RequestTable = () => {
   // };
 
   // Handle data show table
+  const columnDTOs = useMemo(() => {
+    const result = [{}];
+    for (const key in dataTable[0]?.airPricingDetailDTOs) {
+      if (dataTable[0].airPricingDetailDTOs.hasOwnProperty(key)) {
+        const obj = {
+          title: key,
+          width: 200,
+          dataIndex: 'airPricingDetailDTOs',
+          render: (value: AirPricingDetailDTOs) =>
+            formatCurrencyHasCurrency(value[key]),
+        };
+        result.push(obj);
+      }
+    }
+    return result;
+  }, [dataTable]);
   const columns: ProColumns<AirPricingTable>[] = [
     {
       title: <div className={style.title}>{translatePricingAir('code')}</div>,
@@ -159,8 +179,9 @@ const RequestTable = () => {
           />
           <Button
             onClick={() => {
-              setSelectedRowKeys([value as string]);
-              handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE);
+              handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE, [
+                value as React.Key,
+              ]);
             }}
             icon={<CheckOutlined />}
             style={{
@@ -171,8 +192,9 @@ const RequestTable = () => {
           />
           <Button
             onClick={() => {
-              setSelectedRowKeys([value as string]);
-              handleApproveAndReject(STATUS_ALL_LABELS.REJECT);
+              handleApproveAndReject(STATUS_ALL_LABELS.REJECT, [
+                value as React.Key,
+              ]);
             }}
             icon={<CloseOutlined />}
             style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
@@ -245,6 +267,7 @@ const RequestTable = () => {
       key: 'insertedByUser',
       align: 'center',
     },
+    ...columnDTOs,
   ];
 
   // Handle logic table
@@ -252,9 +275,9 @@ const RequestTable = () => {
     router.push(ROUTERS.AIR_PRICING_MANAGER(id));
   };
 
-  const handleApproveAndReject = (status: string) => {
+  const handleApproveAndReject = (status: string, id?: React.Key[]) => {
     const _requestData: UpdateStatus = {
-      id: selectedRowKeys,
+      id: id || selectedRowKeys,
       status,
     };
     updateStatusMutation.mutate(_requestData, {

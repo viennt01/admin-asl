@@ -11,7 +11,6 @@ export interface SeaPricing {
   commodityName: string;
   currencyID: string;
   currencyAbbreviations: string;
-  // feeGroupID: string;
   note: string;
   dateEffect: string;
   validityDate: string;
@@ -29,28 +28,13 @@ export interface SeaPricing {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  // isDelete: boolean;
-  // dateDeleted: string;
-  // deleteByUser: string;
   seaPricingDetailDTOs: { [key: string]: string };
   vendor: string;
-  // seaPricingFeeDTOs: SeaPricingFeeDTOs[];
 }
 
 export interface SeaPricingDetailDTOs {
   [key: string]: string;
 }
-// export interface SeaPricingFeeDTOs {
-//   seaPricingFeeID: string;
-//   feeID: string;
-//   feeName: string;
-//   feeNo: string;
-//   currencyID: string;
-//   currencyName: string;
-//   unitID: string;
-//   internationalCode: string;
-//   price: string;
-// }
 
 export interface SeaPricingTable extends Omit<SeaPricing, 'seaPricingID'> {
   key: string;
@@ -90,7 +74,6 @@ export interface FormValues {
   podid: string;
   polid: string;
   commodityID: string;
-  // feeGroupID: string;
   note: string;
   dateEffect: Dayjs;
   validityDate: Dayjs;

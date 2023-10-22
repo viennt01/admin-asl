@@ -14,6 +14,48 @@ import { createSeaPricing, editSeaPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
 
+export const returnFeeDTOs = (
+  seaPricingFeeDTOs?: SeaPricingFeeFormValue[],
+  fromSeaPricingFeeDTOs?: string[]
+) => {
+  const resultArray = JSON.parse(
+    JSON.stringify(
+      seaPricingFeeDTOs?.map((item) => ({
+        seaPricingFeeGroupID: item.seaPricingFeeGroupID,
+        feeGroupID: item.feeGroupID,
+        public: item.public,
+      }))
+    )
+  );
+
+  for (const item of resultArray) {
+    if (
+      fromSeaPricingFeeDTOs &&
+      fromSeaPricingFeeDTOs.includes(item.feeGroupID)
+    ) {
+      item.isDelete = false;
+    } else {
+      item.isDelete = true;
+    }
+  }
+  if (fromSeaPricingFeeDTOs) {
+    for (const id of fromSeaPricingFeeDTOs) {
+      if (
+        !resultArray.some(
+          (item: SeaPricingFeeFormValue) => item.feeGroupID === id
+        )
+      ) {
+        resultArray.push({
+          feeGroupID: id,
+          public: true,
+          isDelete: false,
+        });
+      }
+    }
+  }
+  return resultArray;
+};
+
 const CreateSeaPricing = () => {
   const queryClient = useQueryClient();
 
@@ -28,48 +70,6 @@ const CreateSeaPricing = () => {
       return editSeaPricing(body);
     },
   });
-
-  const returnFeeDTOs = (
-    seaPricingFeeDTOs?: SeaPricingFeeFormValue[],
-    fromSeaPricingFeeDTOs?: string[]
-  ) => {
-    const resultArray = JSON.parse(
-      JSON.stringify(
-        seaPricingFeeDTOs?.map((item) => ({
-          seaPricingFeeGroupID: item.seaPricingFeeGroupID,
-          feeGroupID: item.feeGroupID,
-          public: item.public,
-        }))
-      )
-    );
-
-    for (const item of resultArray) {
-      if (
-        fromSeaPricingFeeDTOs &&
-        fromSeaPricingFeeDTOs.includes(item.feeGroupID)
-      ) {
-        item.isDelete = false;
-      } else {
-        item.isDelete = true;
-      }
-    }
-    if (fromSeaPricingFeeDTOs) {
-      for (const id of fromSeaPricingFeeDTOs) {
-        if (
-          !resultArray.some(
-            (item: SeaPricingFeeFormValue) => item.feeGroupID === id
-          )
-        ) {
-          resultArray.push({
-            feeGroupID: id,
-            public: true,
-            isDelete: false,
-          });
-        }
-      }
-    }
-    return resultArray;
-  };
 
   const handleSubmit = (
     formValues: FormValues,

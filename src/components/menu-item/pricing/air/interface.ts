@@ -32,22 +32,11 @@ export interface AirPricing {
   dateDeleted: string;
   deleteByUser: string;
   airPricingDetailDTOs: { [key: string]: string };
-  airPricingFeeDTOs: AirPricingFeeDTOs[];
+  vendor: string;
 }
 
 export interface AirPricingDetailDTOs {
   [key: string]: string;
-}
-export interface AirPricingFeeDTOs {
-  airPricingFeeID: string;
-  feeID: string;
-  feeName: string;
-  feeNo: string;
-  currencyID: string;
-  currencyName: string;
-  unitID: string;
-  internationalCode: string;
-  price: string;
 }
 
 export interface AirPricingTable extends Omit<AirPricing, 'airPricingID'> {
@@ -101,6 +90,15 @@ export interface FormValues {
   public: boolean;
   statusAirPricing: string;
   airPricingDetailDTOs: AirPricingDetailDTOsFormValue[];
+  airPricingFeeDTOs: string[];
+}
+
+export interface AirPricingDetailType
+  extends Omit<FormValues, 'airPricingFeeDTOs'> {
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
   airPricingFeeDTOs: AirPricingFeeFormValue[];
 }
 
@@ -122,7 +120,7 @@ export type AirPricingDetailDTOsCreate = Omit<
   | 'currencyName'
   | 'price'
 > & {
-  priceAirPricingDetail: string;
+  pricePricingDetail: string;
 };
 
 export type AirPricingDetailDTOsUpdate = Omit<
@@ -131,40 +129,30 @@ export type AirPricingDetailDTOsUpdate = Omit<
 >;
 
 export interface AirPricingFeeFormValue {
-  airPricingFeeID: string;
-  feeID: string;
-  feeName: string;
-  feeNo: string;
-  currencyID: string;
-  currencyName: string;
-  unitID: string;
-  internationalCode: string;
-  price: string;
+  airPricingFeeGroupID: string;
+  feeGroupID: string;
+  public: boolean;
+  insertedByUser: string;
+  dateInserted: string;
+  dateUpdated: string;
+  updatedByUser: string;
 }
 
 export type AirPricingFeeDTOsCreate = Omit<
   AirPricingFeeFormValue,
-  | 'airPricingFeeID'
-  | 'feeName'
-  | 'feeNo'
-  | 'currencyName'
-  | 'internationalCode'
-  | 'price'
-> & {
-  priceAirPricingFee: string;
-};
+  | 'airPricingFeeGroupID'
+  | 'insertedByUser'
+  | 'dateInserted'
+  | 'dateUpdated'
+  | 'updatedByUser'
+>;
 
 export type AirPricingFeeUpdate = Omit<
   AirPricingFeeFormValue,
-  'feeName' | 'feeNo' | 'currencyName' | 'internationalCode'
->;
-
-export interface AirPricingDetailType extends FormValues {
-  dateInserted: string;
-  insertedByUser: string;
-  dateUpdated: string;
-  updatedByUser: string;
-}
+  'insertedByUser' | 'dateInserted' | 'dateUpdated' | 'updatedByUser'
+> & {
+  isDelete: boolean;
+};
 
 export type AirPricingCreate = Omit<
   FormValues,
@@ -177,7 +165,7 @@ export type AirPricingCreate = Omit<
   dateEffect: number;
   validityDate: number;
   airPricingDetailRegisterRequests: AirPricingDetailDTOsCreate[];
-  airPricingFeeRegisterRequests: AirPricingFeeFormValue[];
+  airPricingFeeGroupRegisterRequests: AirPricingFeeDTOsCreate[];
 };
 
 export type AirPricingEdit = Omit<
@@ -187,7 +175,7 @@ export type AirPricingEdit = Omit<
   dateEffect: number;
   validityDate: number;
   airPricingDetailUpdateRequests: AirPricingDetailDTOsUpdate[];
-  airPricingFeeUpdateRequests: AirPricingFeeUpdate[];
+  airPricingFeeGroupUpdateRequests: AirPricingFeeUpdate[];
 };
 export type AirPricingDelete = {
   ids: React.Key[];

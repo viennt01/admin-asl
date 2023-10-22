@@ -74,7 +74,6 @@ const SeaPricing = ({
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
 
   const listIdFeeGroup = Form.useWatch('seaPricingFeeDTOs', form);
-  console.log('listIdFeeGroup =>>>>', listIdFeeGroup);
 
   useEffect(() => {
     if (!id) return;
@@ -142,8 +141,6 @@ const SeaPricing = ({
       }
     },
   });
-
-  console.log(dataFeeTable);
 
   const onFinish = (formValues: FormValues) => {
     if (idQuery) {

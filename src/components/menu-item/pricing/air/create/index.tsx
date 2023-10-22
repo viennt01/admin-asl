@@ -4,10 +4,57 @@ import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import AirPricing from '../components/form';
-import { FormValues, AirPricingCreate, AirPricingEdit } from '../interface';
+import {
+  FormValues,
+  AirPricingCreate,
+  AirPricingEdit,
+  AirPricingFeeFormValue,
+} from '../interface';
 import { createAirPricing, editAirPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
+
+export const returnFeeDTOs = (
+  seaPricingFeeDTOs?: AirPricingFeeFormValue[],
+  fromSeaPricingFeeDTOs?: string[]
+) => {
+  const resultArray = JSON.parse(
+    JSON.stringify(
+      seaPricingFeeDTOs?.map((item) => ({
+        seaPricingFeeGroupID: item.airPricingFeeGroupID,
+        feeGroupID: item.feeGroupID,
+        public: item.public,
+      }))
+    )
+  );
+
+  for (const item of resultArray) {
+    if (
+      fromSeaPricingFeeDTOs &&
+      fromSeaPricingFeeDTOs.includes(item.feeGroupID)
+    ) {
+      item.isDelete = false;
+    } else {
+      item.isDelete = true;
+    }
+  }
+  if (fromSeaPricingFeeDTOs) {
+    for (const id of fromSeaPricingFeeDTOs) {
+      if (
+        !resultArray.some(
+          (item: AirPricingFeeFormValue) => item.feeGroupID === id
+        )
+      ) {
+        resultArray.push({
+          feeGroupID: id,
+          public: true,
+          isDelete: false,
+        });
+      }
+    }
+  }
+  return resultArray;
+};
 
 const CreateAirPricing = () => {
   const queryClient = useQueryClient();
@@ -24,15 +71,23 @@ const CreateAirPricing = () => {
     },
   });
 
-  const handleSubmit = (formValues: FormValues, id?: string) => {
+  const handleSubmit = (
+    formValues: FormValues,
+    id?: string,
+    seaPricingFeeDTOs?: AirPricingFeeFormValue[]
+  ) => {
     const airPricingDetailRegisterRequests =
       formValues.airPricingDetailDTOs.map((data) => {
         return {
           containerTypeID: data.containerTypeID,
           currencyID: data.currencyID,
-          priceAirPricingDetail: data.price,
+          pricePricingDetail: data.price,
         };
       });
+    const returnFeeDTO = returnFeeDTOs(
+      seaPricingFeeDTOs,
+      formValues.airPricingFeeDTOs
+    );
     if (id) {
       const _requestData: AirPricingEdit = {
         airPricingID: id || '',
@@ -51,7 +106,7 @@ const CreateAirPricing = () => {
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
-        airPricingFeeUpdateRequests: formValues.airPricingFeeDTOs || [],
+        airPricingFeeGroupUpdateRequests: returnFeeDTO,
         statusAirPricing: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -82,7 +137,7 @@ const CreateAirPricing = () => {
         public: formValues.public || true,
         airPricingDetailRegisterRequests:
           airPricingDetailRegisterRequests || [],
-        airPricingFeeRegisterRequests: formValues.airPricingFeeDTOs || [],
+        airPricingFeeGroupRegisterRequests: returnFeeDTO,
         statusAirPricing: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -98,16 +153,23 @@ const CreateAirPricing = () => {
     }
   };
 
-  const handleSaveDraft = (formValues: FormValues, id?: string) => {
+  const handleSaveDraft = (
+    formValues: FormValues,
+    id?: string,
+    seaPricingFeeDTOs?: AirPricingFeeFormValue[]
+  ) => {
     const airPricingDetailRegisterRequests =
       formValues.airPricingDetailDTOs.map((data) => {
         return {
           containerTypeID: data.containerTypeID,
           currencyID: data.currencyID,
-          priceAirPricingDetail: data.price,
+          pricePricingDetail: data.price,
         };
       });
-
+    const returnFeeDTO = returnFeeDTOs(
+      seaPricingFeeDTOs,
+      formValues.airPricingFeeDTOs
+    );
     if (id) {
       const _requestData: AirPricingEdit = {
         airPricingID: id,
@@ -126,7 +188,7 @@ const CreateAirPricing = () => {
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
-        airPricingFeeUpdateRequests: formValues.airPricingFeeDTOs || [],
+        airPricingFeeGroupUpdateRequests: returnFeeDTO,
         statusAirPricing: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -160,7 +222,7 @@ const CreateAirPricing = () => {
         public: formValues.public || true,
         airPricingDetailRegisterRequests:
           airPricingDetailRegisterRequests || [],
-        airPricingFeeRegisterRequests: formValues.airPricingFeeDTOs || [],
+        airPricingFeeGroupRegisterRequests: returnFeeDTO,
         statusAirPricing: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

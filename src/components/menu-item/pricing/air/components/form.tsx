@@ -3,10 +3,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FormValues, UpdateStatus } from '../interface';
+import { AirPricingFeeFormValue, FormValues, UpdateStatus } from '../interface';
 import {
   API_CONTAINER_TYPE,
   API_CURRENCY,
+  API_FEE_GROUP,
   API_AIR_PRICING,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
@@ -22,13 +23,24 @@ import dayjs from 'dayjs';
 import CardMain from './card-main';
 import CollapseCard from '@/components/commons/collapse-card';
 import AirPricingDetailDTO from './air-pricing-detail-dto';
+import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
+import ListFee from './list-fee';
+import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
 
 interface PortFormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
-  handleSubmit?: (formValues: FormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: FormValues, id?: string) => void;
+  handleSubmit?: (
+    formValues: FormValues,
+    id?: string,
+    airPricingFeeDTOs?: AirPricingFeeFormValue[]
+  ) => void;
+  handleSaveDraft?: (
+    formValues: FormValues,
+    id?: string,
+    airPricingFeeDTOs?: AirPricingFeeFormValue[]
+  ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
@@ -56,6 +68,12 @@ const AirPricing = ({
   const [optionTypeContainer, setOptionTypeContainer] = useState<
     { value: string; label: string }[]
   >([]);
+  const [airPricingFeeDTOs, setAirPricingFeeDTOs] = useState<
+    AirPricingFeeFormValue[]
+  >([]);
+  const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
+
+  const listIdFeeGroup = Form.useWatch('airPricingFeeDTOs', form);
 
   useEffect(() => {
     if (!id) return;
@@ -110,25 +128,39 @@ const AirPricing = ({
     },
   });
 
+  useQuery({
+    queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, listIdFeeGroup],
+    queryFn: () => getFeeWithFeeGroup({ id: listIdFeeGroup }),
+    enabled: listIdFeeGroup !== undefined,
+    onSuccess(data) {
+      setDataFeeTable([]);
+      if (data.status) {
+        if (data.data) {
+          setDataFeeTable(data.data);
+        }
+      }
+    },
+  });
+
   const onFinish = (formValues: FormValues) => {
     if (idQuery) {
-      handleSubmit && handleSubmit(formValues, idQuery);
+      handleSubmit && handleSubmit(formValues, idQuery, airPricingFeeDTOs);
     } else {
-      handleSubmit && handleSubmit(formValues);
+      handleSubmit && handleSubmit(formValues, '', airPricingFeeDTOs);
     }
   };
 
   const onSaveDraft = () => {
     if (idQuery) {
-      handleSaveDraft && handleSaveDraft(form.getFieldsValue(), idQuery);
+      handleSaveDraft &&
+        handleSaveDraft(form.getFieldsValue(), idQuery, airPricingFeeDTOs);
     } else {
-      handleSaveDraft && handleSaveDraft(form.getFieldsValue());
+      handleSaveDraft &&
+        handleSaveDraft(form.getFieldsValue(), '', airPricingFeeDTOs);
     }
   };
 
   const handleIdQuery = (id: string) => {
-    console.log(id);
-
     setIdQuery(id as string);
   };
 
@@ -155,8 +187,11 @@ const AirPricing = ({
           public: data.data.public,
           statusAirPricing: data.data.statusAirPricing,
           airPricingDetailDTOs: data.data.airPricingDetailDTOs,
-          airPricingFeeDTOs: data.data.airPricingFeeDTOs,
+          airPricingFeeDTOs: data.data.airPricingFeeDTOs.map(
+            (fee) => fee.feeGroupID
+          ),
         });
+        setAirPricingFeeDTOs(data.data.airPricingFeeDTOs);
       } else {
         router.push(ROUTERS.AIR_PRICING);
       }
@@ -257,6 +292,14 @@ const AirPricing = ({
             optionTypeContainer={optionTypeContainer}
             isCheckPermissionEdit={isCheckPermissionEdit}
           />
+        </CollapseCard>
+
+        <CollapseCard
+          title="List Fee"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <ListFee FeeDataTable={dataFeeTable} />
         </CollapseCard>
 
         <BottomCreateEdit

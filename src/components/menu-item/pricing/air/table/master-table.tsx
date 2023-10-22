@@ -126,7 +126,6 @@ export default function MasterDataTable() {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             airPricingDetailDTOs: data.airPricingDetailDTOs,
-            airPricingFeeDTOs: data.airPricingFeeDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
@@ -134,6 +133,7 @@ export default function MasterDataTable() {
             isDelete: data.isDelete,
             dateDeleted: data.dateDeleted,
             deleteByUser: data.deleteByUser,
+            vendor: data.vendor,
             searchAll: '',
           }))
         );
