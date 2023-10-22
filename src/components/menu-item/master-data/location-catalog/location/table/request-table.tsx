@@ -198,8 +198,9 @@ const RequestTable = () => {
           />
           <Button
             onClick={() => {
-              setSelectedRowKeys([value as string]);
-              handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE);
+              handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE, [
+                value as React.Key,
+              ]);
             }}
             icon={<CheckOutlined />}
             style={{
@@ -210,8 +211,9 @@ const RequestTable = () => {
           />
           <Button
             onClick={() => {
-              setSelectedRowKeys([value as string]);
-              handleApproveAndReject(STATUS_ALL_LABELS.REJECT);
+              handleApproveAndReject(STATUS_ALL_LABELS.REJECT, [
+                value as React.Key,
+              ]);
             }}
             icon={<CloseOutlined />}
             style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
@@ -350,9 +352,9 @@ const RequestTable = () => {
     router.push(ROUTERS.LOCATION_MANAGER(id));
   };
 
-  const handleApproveAndReject = (status: string) => {
+  const handleApproveAndReject = (status: string, id?: React.Key[]) => {
     const _requestData: UpdateStatusLocation = {
-      id: selectedRowKeys,
+      id: id || selectedRowKeys,
       status,
     };
     updateStatusMutation.mutate(_requestData, {
