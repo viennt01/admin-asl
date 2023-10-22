@@ -325,26 +325,6 @@ export default function MasterDataTable() {
       align: 'left',
     },
     {
-      title: translatePricingSea('LCLMin'),
-      width: 200,
-      dataIndex: 'lclMinSeaPricing',
-      key: 'lclMinSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      },
-    },
-    {
-      title: translatePricingSea('LCL'),
-      width: 200,
-      dataIndex: 'lclSeaPricing',
-      key: 'lclSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      },
-    },
-    {
       title: translatePricingSea('currency'),
       width: 200,
       dataIndex: 'currencyAbbreviations',
@@ -479,6 +459,26 @@ export default function MasterDataTable() {
           </Popconfirm>
         </div>
       ),
+    },
+    {
+      title: translatePricingSea('LCLMin'),
+      width: 200,
+      dataIndex: 'lclMinSeaPricing',
+      key: 'lclMinSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+    },
+    {
+      title: translatePricingSea('LCL'),
+      width: 200,
+      dataIndex: 'lclSeaPricing',
+      key: 'lclSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     ...columnDTOs,
   ];

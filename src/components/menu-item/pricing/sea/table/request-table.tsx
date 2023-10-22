@@ -12,8 +12,8 @@ import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
-import { useState, MouseEvent } from 'react';
-import { formatDate } from '@/utils/format';
+import { useState, MouseEvent, useMemo } from 'react';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -21,7 +21,11 @@ import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 import { initalValueQueryInputParamsRequest } from '../constant';
-import { SeaPricingTable, UpdateStatus } from '../interface';
+import {
+  SeaPricingDetailDTOs,
+  SeaPricingTable,
+  UpdateStatus,
+} from '../interface';
 
 const RequestTable = () => {
   const router = useRouter();
@@ -130,6 +134,23 @@ const RequestTable = () => {
   // };
 
   // Handle data show table
+  const columnDTOs = useMemo(() => {
+    const result = [{}];
+    for (const key in dataTable[0]?.seaPricingDetailDTOs) {
+      if (dataTable[0].seaPricingDetailDTOs.hasOwnProperty(key)) {
+        const obj = {
+          title: key,
+          width: 200,
+          dataIndex: 'seaPricingDetailDTOs',
+          render: (value: SeaPricingDetailDTOs) =>
+            formatCurrencyHasCurrency(value[key]),
+        };
+        result.push(obj);
+      }
+    }
+    return result;
+  }, [dataTable]);
+
   const columns: ProColumns<SeaPricingTable>[] = [
     {
       title: <div className={style.title}>{translatePricingSea('no')}</div>,
@@ -210,6 +231,23 @@ const RequestTable = () => {
       align: 'left',
     },
     {
+      title: (
+        <div className={style.title}>{translateCommon('date_created')}</div>
+      ),
+      width: 150,
+      dataIndex: 'dateInserted',
+      key: 'dateInserted',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: <div className={style.title}>{translateCommon('creator')}</div>,
+      width: 200,
+      dataIndex: 'insertedByUser',
+      key: 'insertedByUser',
+      align: 'center',
+    },
+    {
       title: translatePricingSea('LCLMin'),
       width: 200,
       dataIndex: 'lclMinSeaPricing',
@@ -229,23 +267,7 @@ const RequestTable = () => {
         return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       },
     },
-    {
-      title: (
-        <div className={style.title}>{translateCommon('date_created')}</div>
-      ),
-      width: 150,
-      dataIndex: 'dateInserted',
-      key: 'dateInserted',
-      align: 'center',
-      render: (value) => formatDate(Number(value)),
-    },
-    {
-      title: <div className={style.title}>{translateCommon('creator')}</div>,
-      width: 200,
-      dataIndex: 'insertedByUser',
-      key: 'insertedByUser',
-      align: 'center',
-    },
+    ...columnDTOs,
   ];
 
   // Handle logic table
