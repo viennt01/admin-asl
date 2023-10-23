@@ -411,6 +411,13 @@
 }
 
 
+
+@media only screen and (min-width: 1337px) and (max-width: 1400px) {
+    .signinForm {
+        width: 415px !important;
+    }
+}
+
 @media only screen and (max-width: 1336px) {
     .imgCoverPlane {
         display: none;
