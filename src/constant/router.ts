@@ -67,8 +67,11 @@ export const ROUTERS = {
     `/pricing/pricing-customs/manager-admin/${customsPricingId}`,
 
   TRUCKING_PRICING: '/pricing/pricing-trucking',
-  TRUCKING_PRICING_EDIT: (truckingPricingId: string) =>
-    `/pricing/pricing-trucking/edit/${truckingPricingId}`,
+  TRUCKING_PRICING_CREATE: '/pricing/pricing-trucking/create',
+  TRUCKING_PRICING_EDIT: (truckingPricingId: string, checkRow = false) =>
+    `/pricing/pricing-trucking/edit/${truckingPricingId}?checkRow=${checkRow}`,
+  TRUCKING_PRICING_MANAGER: (truckingPricingId: string) =>
+    `/pricing/pricing-trucking/manager-admin/${truckingPricingId}`,
 
   PARTNER: '/partner',
   PARTNER_EDIT: (partnerId: string) => `/partner/edit/${partnerId}`,

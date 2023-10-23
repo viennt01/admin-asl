@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import TruckingPricingPage from '@/components/menu-item/pricing/trucking';
+import CreateTruckingPricing from '@/components/menu-item/pricing/trucking/create';
 
-function TruckingSea() {
+function CreateTruckingPricingPage() {
   return (
     <>
       <Head>
-        <title>ASL | TRUCKING PRICING</title>
+        <title>ASL | TRUCKING PRICING CREATE</title>
       </Head>
-      <TruckingPricingPage />
+      <CreateTruckingPricing />
     </>
   );
 }
 
-export default withAuthentication(TruckingSea);
+export default withAuthentication(CreateTruckingPricingPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'pricingTrucking']);

@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditTruckingPricing from '@/components/menu-item/pricing/trucking/edit';
+import ManagerTruckingPricing from '@/components/menu-item/pricing/trucking/manager';
 
-function PricingTruckingEditPage() {
+function TruckingPricingManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | TRUCKING PRICING EDIT</title>
+        <title>ASL | TRUCKING PRICING MANAGER</title>
       </Head>
-      <EditTruckingPricing />
+      <ManagerTruckingPricing />
     </>
   );
 }
 
-export default withAuthentication(PricingTruckingEditPage);
+export default withAuthentication(TruckingPricingManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'pricingTrucking']);
 export const getStaticPaths = () => {
