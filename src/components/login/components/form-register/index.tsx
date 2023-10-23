@@ -622,7 +622,7 @@ const FormRegister = ({
                   htmlType="submit"
                   loading={loadingButtonRegister}
                 >
-                  SING UP
+                  SIGN UP
                 </Button>
               </Form.Item>
             </Col>

@@ -1,5 +1,6 @@
 export const ROUTERS = {
   LOGIN: '/',
+  REGISTER: '/register',
   LOGOUT: '/logout',
   FORGOT_PASSWORD: '/forgot-password',
   CONFIRM_OTP: '/confirm-otp',
