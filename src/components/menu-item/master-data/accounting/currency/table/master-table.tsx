@@ -19,7 +19,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_COLUMN, API_CURRENCY } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
-import { formatDate } from '@/utils/format';
+import { formatDate, formatNumber } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -322,7 +322,7 @@ export default function MasterDataTable() {
         },
       }),
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -346,7 +346,7 @@ export default function MasterDataTable() {
         },
       }),
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {

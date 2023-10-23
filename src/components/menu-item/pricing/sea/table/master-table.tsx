@@ -14,7 +14,11 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import {
+  formatCurrencyHasCurrency,
+  formatDate,
+  formatNumber,
+} from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -362,7 +366,7 @@ export default function MasterDataTable() {
       key: 'demSeaPricing',
       align: 'right',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -372,7 +376,7 @@ export default function MasterDataTable() {
       key: 'stoSeaPricing',
       align: 'right',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -382,7 +386,7 @@ export default function MasterDataTable() {
       key: 'detSeaPricing',
       align: 'right',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -467,7 +471,7 @@ export default function MasterDataTable() {
       key: 'lclMinSeaPricing',
       align: 'right',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -477,7 +481,7 @@ export default function MasterDataTable() {
       key: 'lclSeaPricing',
       align: 'right',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     ...columnDTOs,

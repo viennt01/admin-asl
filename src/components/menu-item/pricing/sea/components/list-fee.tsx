@@ -8,6 +8,7 @@ import {
 import { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
+import { formatNumber } from '@/utils/format';
 
 interface Props {
   FeeDataTable: FeeTable[];
@@ -139,7 +140,7 @@ const ListFee = ({ FeeDataTable }: Props) => {
       fixed: 'right',
       ...getColumnSearchProps('priceFeeGroup'),
       render: (value) => {
-        return value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '-';
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {
@@ -149,7 +150,7 @@ const ListFee = ({ FeeDataTable }: Props) => {
       fixed: 'right',
       ...getColumnSearchProps('vatFeeGroup'),
       render: (value) => {
-        return value ? `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '-';
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {

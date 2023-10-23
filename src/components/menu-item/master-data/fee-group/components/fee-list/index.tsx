@@ -18,6 +18,7 @@ import {
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import { formatNumber } from '@/utils/format';
 
 type EditableTableProps = Parameters<typeof Table>[0];
 
@@ -173,7 +174,7 @@ const FeeList = ({
       dataIndex: 'priceFeeGroup',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(value);
       },
     },
     {
@@ -181,7 +182,7 @@ const FeeList = ({
       dataIndex: 'vatFeeGroup',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(value);
       },
     },
     {

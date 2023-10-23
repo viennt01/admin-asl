@@ -19,7 +19,7 @@ import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ProColumns } from '@ant-design/pro-components';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import { formatDate } from '@/utils/format';
+import { formatDate, formatNumber } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -191,7 +191,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         },
       }),
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {
@@ -215,7 +215,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         },
       }),
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {

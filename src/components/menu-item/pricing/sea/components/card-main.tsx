@@ -36,6 +36,7 @@ import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import { formatNumber } from '@/utils/format';
 
 interface Props {
   create?: boolean;
@@ -395,9 +396,7 @@ const CardMain = ({
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
               placeholder={translatePricingSea('freq_form.placeholder')}
-              formatter={(value) =>
-                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              }
+              formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
             />
@@ -418,9 +417,7 @@ const CardMain = ({
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
               placeholder={translatePricingSea('STO_form.placeholder')}
-              formatter={(value) =>
-                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              }
+              formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
             />
@@ -441,9 +438,7 @@ const CardMain = ({
               style={{ width: '100%' }}
               placeholder={translatePricingSea('DEM_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) =>
-                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              }
+              formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -463,9 +458,7 @@ const CardMain = ({
               style={{ width: '100%' }}
               placeholder={translatePricingSea('DET_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) =>
-                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              }
+              formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -520,9 +513,7 @@ const CardMain = ({
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCL}
               placeholder={translatePricingSea('LCL_form.placeholder')}
-              formatter={(value) =>
-                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              }
+              formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
@@ -543,9 +534,7 @@ const CardMain = ({
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCLMin}
               placeholder={translatePricingSea('LCLMin_form.placeholder')}
-              formatter={(value) =>
-                `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-              }
+              formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}

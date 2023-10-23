@@ -14,6 +14,7 @@ import type { BaseSelectRef } from 'rc-select';
 import COLORS from '@/constant/color';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import useI18n from '@/i18n/useI18N';
+import { formatNumber } from '@/utils/format';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -116,7 +117,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         onPressEnter={save}
         onBlur={save}
         style={{ width: '100%' }}
-        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        formatter={(value) => formatNumber(Number(value) || 0)}
       />
     ) : inputType === 'selectCurrency' ? (
       <Select
@@ -322,7 +323,7 @@ const SeaPricingDetailDTO = ({
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {

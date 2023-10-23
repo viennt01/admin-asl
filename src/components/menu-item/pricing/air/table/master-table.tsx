@@ -14,7 +14,11 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import {
+  formatCurrencyHasCurrency,
+  formatDate,
+  formatNumber,
+} from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -338,7 +342,7 @@ export default function MasterDataTable() {
       key: 'lclMinAirPricing',
       align: 'center',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {
@@ -348,7 +352,7 @@ export default function MasterDataTable() {
       key: 'lclAirPricing',
       align: 'center',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {
@@ -389,7 +393,7 @@ export default function MasterDataTable() {
       key: 'demAirPricing',
       align: 'center',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {
@@ -399,7 +403,7 @@ export default function MasterDataTable() {
       key: 'stoAirPricing',
       align: 'center',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {
@@ -409,7 +413,7 @@ export default function MasterDataTable() {
       key: 'detAirPricing',
       align: 'center',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
     {

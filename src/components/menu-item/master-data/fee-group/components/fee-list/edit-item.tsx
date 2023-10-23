@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import type { BaseSelectRef } from 'rc-select';
 import { FeeTable } from '../../interface';
+import { formatNumber } from '@/utils/format';
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface EditableRowProps {
@@ -97,7 +98,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
         onPressEnter={save}
         onBlur={save}
         style={{ width: '100%' }}
-        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        formatter={(value) => formatNumber(value || 0)}
       />
     ) : (
       <Select

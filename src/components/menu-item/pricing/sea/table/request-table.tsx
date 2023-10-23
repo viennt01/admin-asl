@@ -13,7 +13,11 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent, useMemo } from 'react';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import {
+  formatCurrencyHasCurrency,
+  formatDate,
+  formatNumber,
+} from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -254,7 +258,7 @@ const RequestTable = () => {
       key: 'lclMinSeaPricing',
       align: 'right',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -264,7 +268,7 @@ const RequestTable = () => {
       key: 'lclSeaPricing',
       align: 'right',
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     ...columnDTOs,

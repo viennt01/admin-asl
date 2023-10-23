@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import { formatDate } from '@/utils/format';
+import { formatDate, formatNumber } from '@/utils/format';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -219,7 +219,7 @@ const RequestTable = () => {
         },
       }),
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -243,7 +243,7 @@ const RequestTable = () => {
         },
       }),
       render: (value) => {
-        return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return formatNumber(Number(value) || 0);
       },
     },
     {
