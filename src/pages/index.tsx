@@ -18,14 +18,11 @@ function Login() {
     </>
   );
 }
-//const LoginPage = withAuthentication(Login);
 const LoginPageV2 = withAuthentication(Login);
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 
-//LoginPage.Layout = PageWithNoLayout;
 LoginPageV2.Layout = PageWithNoLayout;
 
-//export default LoginPage;
 export default LoginPageV2;

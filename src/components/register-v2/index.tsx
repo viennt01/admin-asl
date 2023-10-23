@@ -2,8 +2,7 @@ import { Layout, Image, Form, Input, Button, Row, Col, Select } from 'antd';
 import style from './register.module.scss';
 import CustomCard from '../commons/custom-card';
 import Link from 'next/link';
-import { ConfirmOtpData } from '../cofirm-otp/interface';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import {
   LockOutlined,
@@ -16,28 +15,109 @@ import {
   WindowsOutlined,
   ReadOutlined,
 } from '@ant-design/icons';
+import { DataRole, RegisterForm } from './interface';
+import { checkTaxCode, listRole, register } from './fetcher';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
+import { useRouter } from 'next/router';
 const { Content } = Layout;
 
-export default function RegisterV2() {
-  const [isLoadingConfirmOtp] = useState(false);
-  const handleSubmitVerifyOtp = (values: ConfirmOtpData) => {
-    console.log(values);
-  };
+const initialValuesRegisterForm = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phoneNumber: '',
+  password: '',
+  passwordConfirm: '',
+  taxCode: '',
+  companyName: '',
+  address: '',
+  emailCompany: '',
+  phoneNumberCompany: '',
+  websiteCompany: '',
+  abbreviationsCompany: '',
+};
 
-  const initialValuesRegisterForm = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNumber: '',
-    password: '',
-    passwordConfirm: '',
-    taxCode: '',
-    companyName: '',
-    address: '',
-    emailCompany: '',
-    phoneNumberCompany: '',
-    websiteCompany: '',
-    abbreviationsCompany: '',
+export default function RegisterV2() {
+  const [isLoadingConfirmOtp, setLoadingButtonRegister] = useState(false);
+  const router = useRouter();
+  const [form] = Form.useForm<RegisterForm>();
+  const [roleOptions, setRoleOptions] = useState<
+    { label: string; value: string }[]
+  >([]);
+
+  const handleSubmitVerifyOtp = (values: RegisterForm) => {
+    setLoadingButtonRegister(true);
+    const data = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      fullName: `${values.firstName} ${values.lastName}`,
+      roleID: values.roleID,
+
+      email: values.email,
+      workingBranch: values.workingBranch || '',
+      nationality: values.nationality,
+      visa: values.visa || '',
+      citizenIdentification: values.citizenIdentification || '',
+
+      password: values.password,
+      passwordConfirm: values.passwordConfirm,
+
+      taxCode: values.taxCode,
+      companyName: values.companyName,
+      address: values.address,
+      emailCompany: values.emailCompany,
+      phoneNumberCompany: values.phoneNumberCompany || '',
+      websiteCompany: values.websiteCompany || '',
+      abbreviationsCompany: values.abbreviationsCompany || '',
+    };
+    register(data)
+      .then((res) => {
+        if (res.status) {
+          router.push(ROUTERS.LOGIN);
+          successToast(res.message);
+          return;
+        } else {
+          errorToast(res.message);
+          return;
+        }
+      })
+      .catch(() => {
+        errorToast(API_MESSAGE.ERROR);
+      })
+      .finally(() => {
+        setLoadingButtonRegister(false);
+      });
+  };
+  useEffect(() => {
+    listRole()
+      .then((res) => {
+        if (res.status) {
+          setRoleOptions(
+            res.data.map((item: DataRole) => ({
+              label: item.name,
+              value: item.roleID,
+            }))
+          );
+        }
+      })
+      .catch((e: Error) => console.log(e));
+  }, []);
+
+  const handleCheckTaxCode = (value: React.FocusEvent<HTMLInputElement>) => {
+    if (value.target.value) {
+      const data = {
+        taxCode: value.target.value,
+      };
+      checkTaxCode(data).then((payload) => {
+        if (payload.status) {
+          form.setFieldsValue({
+            companyName: payload.data.companyName,
+            address: payload.data.address,
+          });
+        }
+      });
+    }
   };
 
   return (
@@ -86,6 +166,7 @@ export default function RegisterV2() {
           </div>
 
           <Form
+            form={form}
             onFinish={handleSubmitVerifyOtp}
             initialValues={initialValuesRegisterForm}
             style={{
@@ -143,7 +224,7 @@ export default function RegisterV2() {
                   ]}
                 >
                   <Select
-                    // options={roleOptionSelect}
+                    options={roleOptions}
                     placeholder="Please select role"
                     size="large"
                   />
@@ -284,7 +365,7 @@ export default function RegisterV2() {
                   ]}
                 >
                   <Input
-                    // onBlur={(value) => handleCheckTaxCode(value)}
+                    onBlur={(value) => handleCheckTaxCode(value)}
                     placeholder="Tax Code Company"
                     prefix={<BarcodeOutlined />}
                     size="large"

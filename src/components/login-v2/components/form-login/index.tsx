@@ -26,7 +26,7 @@ const FormLogin = ({ formLogin }: LoginProps) => {
   const router = useRouter();
   const { email } = router.query;
   const [ip, setIp] = useState();
-  const deviceName = '';
+  const deviceName = navigator.userAgent;
   const getIp = async () => {
     const response = await fetch('https://api.ipify.org/?format=json');
     const data = await response.json();
