@@ -212,6 +212,8 @@ const SeaPricingDetailDTO = ({
   >([]);
   const [countLoadData, setCountLoadData] = useState(0);
 
+  const valueCurrencyID = Form.useWatch('currencyID', form);
+
   // Lấy data từ API và chỉ lấy lần đầu (setDataRequire)
   useEffect(() => {
     // Chỉ lấy data từ API khi lần đầu vào form
@@ -234,6 +236,16 @@ const SeaPricingDetailDTO = ({
       setCountLoadData(1);
     }
   }, [form.getFieldValue('seaPricingDetailDTOs')]);
+
+  useEffect(() => {
+    setDataSource(
+      dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
+    );
+    form.setFieldValue(
+      'seaPricingDetailDTOs',
+      dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
+    );
+  }, [valueCurrencyID]);
 
   // setOptionTypeContainerActive, setIdKeyAndContainerType
   useEffect(() => {
@@ -330,7 +342,6 @@ const SeaPricingDetailDTO = ({
       title: 'Currency',
       dataIndex: 'currencyID',
       align: 'center',
-      editable: !isCheckPermissionEdit,
       render: (value) => {
         return optionCurrency.find((item) => item.value === value)?.label;
       },
@@ -368,7 +379,7 @@ const SeaPricingDetailDTO = ({
       containerTypeCode: '',
       containerTypeID: optionTypeContainerActive[0]?.value || '',
       containerTypeName: optionTypeContainerActive[0].label || '',
-      currencyID: optionCurrency[0].value || '',
+      currencyID: valueCurrencyID || optionCurrency[0].value || '',
       currencyName: optionCurrency[0].label || '',
       price: '1000000',
     };
