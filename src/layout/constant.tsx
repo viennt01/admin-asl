@@ -470,6 +470,49 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
 
+    '/master-data/load-capacity-catalog/type-of-load-capacity': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('load_capacity_catalog')}` },
+      { title: `${translateCommon('type_load_capacity')}` },
+    ],
+    '/master-data/load-capacity-catalog/type-of-load-capacity/create': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('load_capacity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_OF_LOAD_CAPACITY}>
+            {translateCommon('type_load_capacity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/master-data/load-capacity-catalog/type-of-load-capacity/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('load_capacity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_OF_LOAD_CAPACITY}>
+            {translateCommon('type_load_capacity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/load-capacity-catalog/type-of-load-capacity/manager-admin/[id]':
+      [
+        { title: `${translateCommon('master_data')}` },
+        { title: `${translateCommon('load_capacity_catalog')}` },
+        {
+          title: (
+            <Link href={ROUTERS.TYPE_OF_LOAD_CAPACITY}>
+              {translateCommon('type_load_capacity')}
+            </Link>
+          ),
+        },
+        { title: `${translateCommon('request_for_approval')}` },
+      ],
+
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('unit')}` },

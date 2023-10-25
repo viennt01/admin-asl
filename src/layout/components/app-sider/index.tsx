@@ -90,6 +90,9 @@ const AppSider = ({ collapsed }: Props) => {
   const refCommodity = useRef(null);
   const refTypeOfContainer = useRef(null);
   const refFeeCatalog = useRef(null);
+  const refLoadCapacityCatalog = useRef(null);
+  const refLoadCapacity = useRef(null);
+  const refTypeLoadCapacity = useRef(null);
   const refFee = useRef(null);
   const refTypeFee = useRef(null);
   const refFeeGroup = useRef(null);
@@ -260,8 +263,26 @@ const AppSider = ({ collapsed }: Props) => {
         ),
 
         getItem(
+          `${translateCommon('load_capacity_catalog')}`,
+          'load_capacity_catalog',
+          <FolderOpenOutlined ref={refLoadCapacityCatalog} />,
+          [
+            getItem(
+              `${translateCommon('load_capacity')}`,
+              ROUTERS.LOAD_CAPACITY,
+              <EnvironmentOutlined ref={refLoadCapacity} />
+            ),
+            getItem(
+              `${translateCommon('type_load_capacity')}`,
+              ROUTERS.TYPE_OF_LOAD_CAPACITY,
+              <GlobalOutlined ref={refTypeLoadCapacity} />
+            ),
+          ]
+        ),
+
+        getItem(
           `${translateCommon('fee_catalog')}`,
-          '7',
+          'fee_catalog',
           <FolderOpenOutlined ref={refFeeCatalog} />,
           [
             getItem(

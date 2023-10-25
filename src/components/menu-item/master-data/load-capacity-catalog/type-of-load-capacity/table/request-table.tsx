@@ -6,15 +6,13 @@ import {
 import Table from '@/components/commons/table/table';
 
 import { ROUTERS } from '@/constant/router';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { API_LOAD_CAPACITY_TYPE } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
-import { FilterConfirmProps } from 'antd/lib/table/interface';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
@@ -24,40 +22,37 @@ import { getTableRequire, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 
 import {
-  LocationTypeTable,
-  QueryInputParamType,
-  SelectSearch,
-  UpdateStatusLocationType,
+  ILoadCapacityTypeTable,
+  // ISelectSearch,
+  IUpdateStatusLoadCapacityType,
 } from '../interface';
 import {
-  initalSelectSearchRequest,
+  // initalSelectSearchRequest,
   initalValueQueryInputParamsRequest,
+  initalValueQuerySelectParamsRequest,
 } from '../constant';
 
-type DataIndex = keyof QueryInputParamType;
+// type DataIndex = keyof IQueryInputParamType;
 
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateLocationType } = useI18n('typeOfLocation');
+  const { translate: translateLoadCapacityType } =
+    useI18n('typeOfLoadCapacity');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParamsRequest
-  );
-  const [dataTable, setDataTable] = useState<LocationTypeTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
-    initalSelectSearchRequest
-  );
+  const [dataTable, setDataTable] = useState<ILoadCapacityTypeTable[]>([]);
+
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   // Handle data
   useQuery({
-    queryKey: [API_LOCATION_TYPE.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_LOAD_CAPACITY_TYPE.GET_REQUEST, pagination],
     queryFn: () =>
       getTableRequire({
-        ...queryInputParams,
+        ...initalValueQuerySelectParamsRequest,
+        ...initalValueQueryInputParamsRequest,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -68,17 +63,18 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.typeLocationID,
-            typeLocationName: data.typeLocationName,
+            key: data.typeLoadCapacityID,
+            typeLoadCapacityCode: data.typeLoadCapacityCode,
+            typeLoadCapacityName: data.typeLoadCapacityName,
             description: data.description,
-            statusTypeLocation: data.statusTypeLocation,
-            dateInserted: data.dateInserted,
+            statusTypeLoadCapacity: data.statusTypeLoadCapacity,
+            public: data.public,
             insertedByUser: data.insertedByUser,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );
@@ -92,47 +88,49 @@ const RequestTable = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusLocationType) => {
+    mutationFn: (body: IUpdateStatusLoadCapacityType) => {
       return updateStatus(body);
     },
   });
 
   // Handle search
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-    }));
-    const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    setQueryInputParams(newQueryParams);
-    confirm();
-  };
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryInputParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
+  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+  //   setQueryInputParams((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: '',
+  //   }));
 
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: { label: dataIndex, value: '' },
+  //   }));
+  //   clearFilters();
+  // };
 
   // Handle data show table
-  const columns: ProColumns<LocationTypeTable>[] = [
+  const columns: ProColumns<ILoadCapacityTypeTable>[] = [
     {
-      title: <div className={style.title}>{translateLocationType('no')}</div>,
+      title: (
+        <div className={style.title}>{translateLoadCapacityType('no')}</div>
+      ),
       dataIndex: 'index',
       width: 50,
       align: 'right',
@@ -181,42 +179,33 @@ const RequestTable = () => {
       ),
     },
     {
-      title: <div className={style.title}>{translateLocationType('name')}</div>,
-      dataIndex: 'typeLocationName',
-      key: 'typeLocationName',
+      title: (
+        <div className={style.title}>{translateLoadCapacityType('code')}</div>
+      ),
+      dataIndex: 'typeLoadCapacityCode',
+      key: 'typeLoadCapacityCode',
       width: 150,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'typeLocationName',
-        },
-      }),
+    },
+    {
+      title: (
+        <div className={style.title}>{translateLoadCapacityType('name')}</div>
+      ),
+      dataIndex: 'typeLoadCapacityName',
+      key: 'typeLoadCapacityName',
+      width: 150,
+      align: 'left',
     },
     {
       title: (
         <div className={style.title}>
-          {translateLocationType('description')}
+          {translateLoadCapacityType('description')}
         </div>
       ),
       dataIndex: 'description',
       key: 'description',
       width: 250,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'description',
-        },
-      }),
     },
     {
       title: (
@@ -237,11 +226,11 @@ const RequestTable = () => {
     },
     {
       title: (
-        <div className={style.title}>{translateLocationType('status')}</div>
+        <div className={style.title}>{translateLoadCapacityType('status')}</div>
       ),
       width: 120,
-      dataIndex: 'statusTypeLocation',
-      key: 'statusTypeLocation',
+      dataIndex: 'statusTypeLoadCapacity',
+      key: 'statusTypeLoadCapacity',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -259,11 +248,11 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPE_OF_LOCATION_MANAGER(id));
+    router.push(ROUTERS.TYPE_OF_LOAD_CAPACITY_MANAGER(id));
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
-    const _requestData: UpdateStatusLocationType = {
+    const _requestData: IUpdateStatusLoadCapacityType = {
       id: id || selectedRowKeys,
       status,
     };
@@ -273,11 +262,7 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [
-                API_LOCATION_TYPE.GET_REQUEST,
-                pagination,
-                queryInputParams,
-              ],
+              queryKey: [API_LOAD_CAPACITY_TYPE.GET_REQUEST, pagination],
             }))
           : errorToast(data.message);
       },
@@ -301,11 +286,11 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTypeTable
+    record: ILoadCapacityTypeTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.TYPE_OF_LOCATION_MANAGER(record.key));
+      router.push(ROUTERS.TYPE_OF_LOAD_CAPACITY_MANAGER(record.key));
     }
   };
 

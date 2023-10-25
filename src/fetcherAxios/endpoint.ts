@@ -136,6 +136,21 @@ export const API_LOCATION = {
   EXPORT: '/export-location-with-excel',
 };
 
+export const API_LOAD_CAPACITY_TYPE = {
+  GET_SEARCH: '/search-type-load-capacity',
+  GET_DETAIL: '/get-type-load-capacity-by-id',
+  CREATE: '/add-type-load-capacity',
+  EDIT: '/update-type-load-capacity',
+  DELETE: '/delete-type-load-capacity',
+  UPDATE_STATUS: '/update-status-type-load-capacity',
+  GET_DRAFT: '/get-type-load-capacity-with-status-and-id-User',
+  GET_REQUEST: '/search-type-load-capacity-with-status',
+  GET_TYPE_LOAD_CAPACITY: '/get-all-type-load-capacity',
+  DOWNLOAD_EXAMPLE_FILE: '/download-type-load-capacity-excel',
+  IMPORT: '/import-type-load-capacity-with-excel',
+  EXPORT: '/export-type-load-capacity-with-excel',
+};
+
 export const API_COMMODITY = {
   GET_SEARCH: '/search-commodity',
   GET_DETAIL: '/get-commodity',

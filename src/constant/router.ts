@@ -89,6 +89,26 @@ export const ROUTERS = {
   LOCATION_MANAGER: (locationId: string) =>
     `/master-data/location-catalog/location/manager-admin/${locationId}`,
 
+  TYPE_OF_LOAD_CAPACITY:
+    '/master-data/load-capacity-catalog/type-of-load-capacity',
+  TYPE_OF_LOAD_CAPACITY_EDIT: (
+    typeOfLoadCapacityId: string,
+    checkRow = false
+  ) =>
+    `/master-data/load-capacity-catalog/type-of-load-capacity/edit/${typeOfLoadCapacityId}?checkRow=${checkRow}`,
+  TYPE_OF_LOAD_CAPACITY_CREATE:
+    '/master-data/load-capacity-catalog/type-of-load-capacity/create',
+  TYPE_OF_LOAD_CAPACITY_MANAGER: (typeOfLoadCapacityId: string) =>
+    `/master-data/load-capacity-catalog/type-of-load-capacity/manager-admin/${typeOfLoadCapacityId}`,
+
+  LOAD_CAPACITY: '/master-data/load-capacity-catalog/load-capacity',
+  LOAD_CAPACITY_EDIT: (loadCapacityId: string, checkRow = false) =>
+    `/master-data/load-capacity-catalog/load-capacity/edit/${loadCapacityId}?checkRow=${checkRow}`,
+  LOAD_CAPACITY_CREATE:
+    '/master-data/load-capacity-catalog/load-capacity/create',
+  LOAD_CAPACITY_MANAGER: (loadCapacityId: string) =>
+    `/master-data/load-capacity-catalog/load-capacity/manager-admin/${loadCapacityId}`,
+
   FEE: '/master-data/fee-catalog/fee',
   FEE_CREATE: '/master-data/fee-catalog/fee/create',
   FEE_EDIT: (feeId: string, checkRow = false) =>
