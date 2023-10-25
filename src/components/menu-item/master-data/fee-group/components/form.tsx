@@ -14,11 +14,19 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Fee, FeeTable, FormValues, UpdateStatusFeeGroup } from '../interface';
 import {
+  Fee,
+  FeeDataOption,
+  FeeTable,
+  FormValues,
+  UpdateStatusFeeGroup,
+} from '../interface';
+import {
+  API_CURRENCY,
   API_FEE,
   API_FEE_GROUP,
   API_TYPE_FEE_GROUP,
+  API_UNIT,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import {
@@ -34,6 +42,10 @@ import { API_MESSAGE } from '@/constant/message';
 import dayjs from 'dayjs';
 import CollapseCard from '@/components/commons/collapse-card';
 import FeeList from './fee-list';
+import {
+  getListTypeCurrency,
+  getListTypeUnit,
+} from '../../fee-catalog/fee/fetcher';
 
 const initialValue = {
   description: '',
@@ -76,11 +88,12 @@ const FeeGroupForm = ({
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query.props as string;
-  const [optionFee, setOptionFee] = useState<
-    { value: string; label: string }[]
-  >([]);
+  const [optionFee, setOptionFee] = useState<FeeDataOption[]>([]);
   const [dataSource, setDataSource] = useState<FeeTable[]>([]);
   const [listFeeData, setListFeeData] = useState<Fee[]>([]);
+
+  const typeUnit = useQuery([API_UNIT.GET_ALL], getListTypeUnit);
+  const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
 
   useEffect(() => {
     if (!id) return;
@@ -94,6 +107,8 @@ const FeeGroupForm = ({
           feeID: fee.feeID,
           priceFeeGroup: fee.priceFeeGroup,
           vatFeeGroup: fee.vatFeeGroup,
+          unitID: fee.unitID,
+          currencyID: fee.currencyID,
         };
       })
     );
@@ -134,6 +149,14 @@ const FeeGroupForm = ({
             return {
               value: fee.feeID,
               label: fee.feeName,
+              currencyID: fee.currencyID,
+              currencyName: fee.currencyName,
+              feeNo: fee.feeNo,
+              feeName: fee.feeName,
+              priceFeeGroup: fee.priceFeeGroup,
+              unitID: fee.unitID,
+              unitInternationalCode: fee.unitInternationalCode,
+              vatFeeGroup: fee.vatFeeGroup,
             };
           })
         );
@@ -457,6 +480,18 @@ const FeeGroupForm = ({
         >
           <FeeList
             optionFee={optionFee}
+            optionUnit={
+              typeUnit.data?.data.map((type) => ({
+                label: type.internationalCode,
+                value: type.unitID,
+              })) || []
+            }
+            optionCurrency={
+              typeCurrency.data?.data.map((type) => ({
+                label: type.abbreviations,
+                value: type.currencyID,
+              })) || []
+            }
             isCheckPermissionEdit={isCheckPermissionEdit}
             idFeeGroup={id as string}
             dataSource={dataSource}

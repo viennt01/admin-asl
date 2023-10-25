@@ -34,9 +34,16 @@ export const EditableRow: React.FC<EditableRowProps> = ({
 interface EditableCellProps {
   title: React.ReactNode;
   editable: boolean;
-  inputType: 'input' | 'select';
+  inputType:
+    | 'feeID'
+    | 'priceFeeGroup'
+    | 'vatFeeGroup'
+    | 'currencyID'
+    | 'unitID';
   optionFeeActive: { value: string; label: string }[];
   optionFee: { value: string; label: string }[];
+  optionUnit: { value: string; label: string }[];
+  optionCurrency: { value: string; label: string }[];
   children: React.ReactNode;
   dataIndex: keyof FeeTable;
   record: FeeTable;
@@ -50,6 +57,8 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   children,
   optionFeeActive,
   optionFee,
+  optionUnit,
+  optionCurrency,
   dataIndex,
   record,
   handleSave,
@@ -92,15 +101,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     }
   };
   const inputNode =
-    inputType === 'input' ? (
-      <InputNumber
-        ref={inputRef as unknown as Ref<HTMLInputElement>}
-        onPressEnter={save}
-        onBlur={save}
-        style={{ width: '100%' }}
-        formatter={(value) => formatNumber(value || 0)}
-      />
-    ) : (
+    inputType === 'feeID' ? (
       <Select
         ref={inputRef}
         onKeyDown={(e) => {
@@ -111,6 +112,38 @@ export const EditableCell: React.FC<EditableCellProps> = ({
         style={{ width: '100%' }}
         onBlur={save}
         options={optionFeeSelected}
+      />
+    ) : inputType === 'currencyID' ? (
+      <Select
+        ref={inputRef}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            save();
+          }
+        }}
+        style={{ width: '100%' }}
+        onBlur={save}
+        options={optionCurrency}
+      />
+    ) : inputType === 'unitID' ? (
+      <Select
+        ref={inputRef}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            save();
+          }
+        }}
+        style={{ width: '100%' }}
+        onBlur={save}
+        options={optionUnit}
+      />
+    ) : (
+      <InputNumber
+        ref={inputRef as unknown as Ref<HTMLInputElement>}
+        onPressEnter={save}
+        onBlur={save}
+        style={{ width: '100%' }}
+        formatter={(value) => formatNumber(value || 0)}
       />
     );
   let childNode = children;

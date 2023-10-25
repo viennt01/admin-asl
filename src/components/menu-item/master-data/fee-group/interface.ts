@@ -145,24 +145,35 @@ export interface TypeFeeGroupData {
 export interface FeeData {
   feeID: string;
   feeName: string;
+  currencyID: string;
+  currencyName: string;
+  feeNo: string;
+  priceFeeGroup: string;
+  unitID: string;
+  unitInternationalCode: string;
+  vatFeeGroup: string;
 }
+
+export type FeeDataOption = Omit<FeeData, 'feeID'> & {
+  value: string;
+  label: string;
+};
 //----------------------------------------------------------------
 //table fee
 export interface Fee {
   feeID: string;
   priceFeeGroup: string;
   vatFeeGroup: string;
+  unitID: string;
+  currencyID: string;
 }
 export interface FeeTable extends Fee {
   key: React.Key;
-  typeFeeID?: string;
+  currencyName: string;
+  unitInternationalCode: string;
+  feeNo: string;
+  feeName: string;
   typeFeeName?: string;
-  currencyID?: string;
-  currencyName?: string;
-  unitID?: string;
-  unitInternationalCode?: string;
-  feeNo?: string;
-  feeName?: string;
 }
 export interface RequestFee {
   id: string[];

@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button, Popconfirm, Table } from 'antd';
 import {
+  FeeDataOption,
   FeeTable,
   RequestDeleteFeeOfFeeGroup,
   RequestUpdateFeeOfFeeGroup,
@@ -26,7 +27,9 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
 interface Props {
   isCheckPermissionEdit: boolean;
-  optionFee: { value: string; label: string }[];
+  optionFee: FeeDataOption[];
+  optionUnit: { label: string; value: string }[];
+  optionCurrency: { label: string; value: string }[];
   idFeeGroup: string;
   dataSource: FeeTable[];
   setDataSource: Dispatch<SetStateAction<FeeTable[]>>;
@@ -37,15 +40,15 @@ interface Props {
 const FeeList = ({
   isCheckPermissionEdit,
   optionFee,
+  optionUnit,
+  optionCurrency,
   idFeeGroup,
   dataSource,
   setDataSource,
   create,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
-  const [optionFeeActive, setOptionFeeActive] = useState<
-    { value: string; label: string }[]
-  >([]);
+  const [optionFeeActive, setOptionFeeActive] = useState<FeeDataOption[]>([]);
   const queryClient = useQueryClient();
 
   useQuery({
@@ -62,6 +65,12 @@ const FeeList = ({
               feeID: fee.feeID,
               priceFeeGroup: fee.priceFeeGroup,
               vatFeeGroup: fee.vatFeeGroup,
+              currencyID: fee.currencyID,
+              currencyName: fee.currencyName,
+              unitID: fee.unitID,
+              unitInternationalCode: fee.unitInternationalCode,
+              feeNo: fee.feeNo,
+              feeName: fee.feeName,
             }))
           );
         }
@@ -100,6 +109,8 @@ const FeeList = ({
           feeID: fee.feeID,
           priceFeeGroup: fee.priceFeeGroup,
           vatFeeGroup: fee.vatFeeGroup,
+          unitID: fee.unitID,
+          currencyID: fee.currencyID,
         };
       }),
     };
@@ -137,14 +148,21 @@ const FeeList = ({
   };
 
   const [count, setCount] = useState(0);
-
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
     const itemDelete = dataSource.filter((item) => item.key == key);
     setOptionFeeActive([
       {
         value: itemDelete[0].feeID,
-        label: itemDelete[0].feeName || '',
+        label: itemDelete[0].feeName,
+        currencyID: itemDelete[0].currencyID,
+        currencyName: itemDelete[0].currencyName,
+        feeNo: itemDelete[0].feeNo,
+        feeName: itemDelete[0].feeName,
+        priceFeeGroup: itemDelete[0].priceFeeGroup,
+        unitID: itemDelete[0].unitID,
+        unitInternationalCode: itemDelete[0].unitInternationalCode,
+        vatFeeGroup: itemDelete[0].vatFeeGroup,
       },
       ...optionFeeActive,
     ]);
@@ -163,8 +181,9 @@ const FeeList = ({
     {
       title: 'Fee',
       dataIndex: 'feeID',
-      width: '30%',
+      width: '20%',
       editable: !isCheckPermissionEdit,
+      fixed: 'left',
       render: (value) => {
         return optionFee.find((item) => item.value === value)?.label;
       },
@@ -173,16 +192,36 @@ const FeeList = ({
       title: 'Price',
       dataIndex: 'priceFeeGroup',
       editable: !isCheckPermissionEdit,
+      fixed: 'right',
       render: (value) => {
         return formatNumber(value);
       },
     },
     {
-      title: 'Vat',
+      title: 'VAT',
       dataIndex: 'vatFeeGroup',
       editable: !isCheckPermissionEdit,
+      fixed: 'right',
       render: (value) => {
         return formatNumber(value);
+      },
+    },
+    {
+      title: 'Currency',
+      dataIndex: 'currencyID',
+      editable: !isCheckPermissionEdit,
+      fixed: 'left',
+      render: (value) => {
+        return optionCurrency.find((item) => item.value === value)?.label;
+      },
+    },
+    {
+      title: 'Unit',
+      dataIndex: 'unitID',
+      editable: !isCheckPermissionEdit,
+      fixed: 'left',
+      render: (value) => {
+        return optionUnit.find((item) => item.value === value)?.label;
       },
     },
     {
@@ -212,8 +251,14 @@ const FeeList = ({
     const newData: FeeTable = {
       key: count,
       feeID: optionFeeActive[0].value,
-      priceFeeGroup: '1000000',
-      vatFeeGroup: '1000000',
+      priceFeeGroup: optionFeeActive[0].priceFeeGroup,
+      vatFeeGroup: optionFeeActive[0].vatFeeGroup,
+      currencyID: optionFeeActive[0].currencyID,
+      currencyName: optionFeeActive[0].currencyName,
+      unitID: optionFeeActive[0].unitID,
+      unitInternationalCode: optionFeeActive[0].unitInternationalCode,
+      feeNo: optionFeeActive[0].feeNo,
+      feeName: optionFeeActive[0].feeName,
     };
     const newDataSource = [...dataSource, newData];
     setDataSource(newDataSource);
@@ -257,9 +302,11 @@ const FeeList = ({
         editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-        inputType: col.dataIndex === 'feeID' ? 'select' : 'input',
+        inputType: col.dataIndex,
         optionFeeActive: optionFeeActive,
         optionFee: optionFee,
+        optionUnit: optionUnit,
+        optionCurrency: optionCurrency,
         handleSave,
       }),
     };
