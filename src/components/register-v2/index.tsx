@@ -7,13 +7,10 @@ import { ROUTERS } from '@/constant/router';
 import {
   LockOutlined,
   MailOutlined,
-  UserOutlined,
   PhoneOutlined,
-  EnvironmentOutlined,
   InfoOutlined,
   BarcodeOutlined,
-  WindowsOutlined,
-  ReadOutlined,
+  UserOutlined,
 } from '@ant-design/icons';
 import { DataRole, RegisterForm } from './interface';
 import { checkTaxCode, listRole, register } from './fetcher';
@@ -23,8 +20,6 @@ import { useRouter } from 'next/router';
 const { Content } = Layout;
 
 const initialValuesRegisterForm = {
-  firstName: '',
-  lastName: '',
   email: '',
   phoneNumber: '',
   password: '',
@@ -34,8 +29,6 @@ const initialValuesRegisterForm = {
   address: '',
   emailCompany: '',
   phoneNumberCompany: '',
-  websiteCompany: '',
-  abbreviationsCompany: '',
 };
 
 export default function RegisterV2() {
@@ -49,27 +42,18 @@ export default function RegisterV2() {
   const handleSubmitVerifyOtp = (values: RegisterForm) => {
     setLoadingButtonRegister(true);
     const data = {
-      firstName: values.firstName,
-      lastName: values.lastName,
-      fullName: `${values.firstName} ${values.lastName}`,
       roleID: values.roleID,
-
       email: values.email,
-      workingBranch: values.workingBranch || '',
-      nationality: values.nationality,
-      visa: values.visa || '',
-      citizenIdentification: values.citizenIdentification || '',
-
-      password: values.password,
-      passwordConfirm: values.passwordConfirm,
+      fullName: values.fullName,
 
       taxCode: values.taxCode,
       companyName: values.companyName,
       address: values.address,
       emailCompany: values.emailCompany,
-      phoneNumberCompany: values.phoneNumberCompany || '',
-      websiteCompany: values.websiteCompany || '',
-      abbreviationsCompany: values.abbreviationsCompany || '',
+      phoneNumberCompany: values.phoneNumberCompany,
+
+      password: values.password,
+      passwordConfirm: values.passwordConfirm,
     };
     register(data)
       .then((res) => {
@@ -132,8 +116,8 @@ export default function RegisterV2() {
       >
         <CustomCard
           style={{
-            marginLeft: '24px',
-            marginRight: '24px',
+            margin: '100px 24px',
+            maxWidth: 480,
             width: '100%',
             background: 'rgba(255, 255, 255, 0.6156862745)',
             border: '2px solid rgba(255, 255, 255, 0.5)',
@@ -177,43 +161,7 @@ export default function RegisterV2() {
             }}
           >
             <Row gutter={24}>
-              <Col lg={9} span={24}>
-                <Form.Item
-                  name="firstName"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input your first name!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="First Name"
-                    prefix={<UserOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={9} span={24}>
-                <Form.Item
-                  name="lastName"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input your last name!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Last Name"
-                    prefix={<UserOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={6} span={24}>
+              <Col span={24}>
                 <Form.Item
                   name="roleID"
                   rules={[
@@ -222,6 +170,7 @@ export default function RegisterV2() {
                       message: 'Please select role!',
                     },
                   ]}
+                  hasFeedback
                 >
                   <Select
                     options={roleOptions}
@@ -231,7 +180,25 @@ export default function RegisterV2() {
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
+              <Col span={24}>
+                <Form.Item
+                  name="fullName"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your full name!',
+                    },
+                  ]}
+                  hasFeedback
+                >
+                  <Input
+                    placeholder="Full Name"
+                    prefix={<UserOutlined />}
+                    size="large"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={24}>
                 <Form.Item
                   name="email"
                   rules={[
@@ -244,6 +211,7 @@ export default function RegisterV2() {
                       message: 'Please enter a valid email format!',
                     },
                   ]}
+                  hasFeedback
                 >
                   <Input
                     placeholder="Email"
@@ -253,45 +221,107 @@ export default function RegisterV2() {
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
+              <Col span={24}>
                 <Form.Item
-                  name="nationality"
+                  name="taxCode"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input nationality!',
+                      message: 'Please input tax code!',
                     },
                   ]}
+                  hasFeedback
                 >
                   <Input
-                    placeholder="Nationality"
-                    prefix={<EnvironmentOutlined />}
+                    onBlur={(value) => handleCheckTaxCode(value)}
+                    placeholder="Tax Code Company"
+                    prefix={<BarcodeOutlined />}
                     size="large"
                   />
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
-                <Form.Item name="visa">
+              <Col span={24}>
+                <Form.Item
+                  name="companyName"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input name company!',
+                    },
+                  ]}
+                  hasFeedback
+                >
                   <Input
-                    placeholder="Visa"
-                    prefix={<ReadOutlined />}
+                    placeholder="Name Company"
+                    prefix={<InfoOutlined />}
                     size="large"
                   />
                 </Form.Item>
               </Col>
 
-              <Col lg={6} span={24}>
-                <Form.Item name="citizenIdentification">
+              <Col span={24}>
+                <Form.Item
+                  name="emailCompany"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input email company!',
+                    },
+                    {
+                      pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                      message: 'Please enter a valid email format!',
+                    },
+                  ]}
+                  hasFeedback
+                >
                   <Input
-                    placeholder="Citizen identification"
-                    prefix={<ReadOutlined />}
+                    placeholder="Email Company"
+                    prefix={<MailOutlined />}
                     size="large"
                   />
                 </Form.Item>
               </Col>
 
-              <Col span={12}>
+              <Col span={24}>
+                <Form.Item
+                  name="phoneNumberCompany"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input phone number!',
+                    },
+                    {
+                      pattern: /^[0-9]{7,15}$/,
+                      message: 'Please enter a vailid phone number!',
+                    },
+                  ]}
+                  hasFeedback
+                >
+                  <Input
+                    placeholder="Phone Number"
+                    prefix={<PhoneOutlined />}
+                    size="large"
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={24}>
+                <Form.Item
+                  name="address"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input address!',
+                    },
+                  ]}
+                  hasFeedback
+                >
+                  <Input.TextArea placeholder="Address" size="large" />
+                </Form.Item>
+              </Col>
+
+              <Col span={24}>
                 <Form.Item
                   name="password"
                   rules={[
@@ -317,7 +347,7 @@ export default function RegisterV2() {
                 </Form.Item>
               </Col>
 
-              <Col span={12}>
+              <Col span={24}>
                 <Form.Item
                   name="passwordConfirm"
                   rules={[
@@ -345,6 +375,7 @@ export default function RegisterV2() {
                       },
                     }),
                   ]}
+                  hasFeedback
                 >
                   <Input.Password
                     placeholder="Confirm Password"
@@ -353,143 +384,14 @@ export default function RegisterV2() {
                   />
                 </Form.Item>
               </Col>
-
-              <Col lg={6} span={24}>
-                <Form.Item
-                  name="taxCode"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input tax code!',
-                    },
-                  ]}
-                >
-                  <Input
-                    onBlur={(value) => handleCheckTaxCode(value)}
-                    placeholder="Tax Code Company"
-                    prefix={<BarcodeOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  name="companyName"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input name company!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Name Company"
-                    prefix={<InfoOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={6} span={24}>
-                <Form.Item name="abbreviationsCompany">
-                  <Input
-                    placeholder="Abbreviations company"
-                    prefix={<InfoOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={6} span={24}>
-                <Form.Item
-                  name="emailCompany"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input email company!',
-                    },
-                    {
-                      pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                      message: 'Please enter a valid email format!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Email Company"
-                    prefix={<MailOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item
-                  name="address"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input address!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Address"
-                    prefix={<EnvironmentOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={6} span={24}>
-                <Form.Item
-                  name="phoneNumberCompany"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input phone number!',
-                    },
-                    {
-                      pattern: /^[0-9]{7,15}$/,
-                      message: 'Please enter a vailid phone number!',
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Phone Number"
-                    prefix={<PhoneOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col lg={12} span={24}>
-                <Form.Item name="workingBranch">
-                  <Input
-                    placeholder="Working Branch"
-                    prefix={<EnvironmentOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={12}>
-                <Form.Item name="websiteCompany">
-                  <Input
-                    placeholder="Website company"
-                    prefix={<WindowsOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
             </Row>
 
             <Button
-              // size="200px"
-              type="primary"
-              htmlType="submit"
-              style={{ width: '30%' }}
               loading={isLoadingConfirmOtp}
+              className={style.btnSubmit}
+              htmlType="submit"
+              // style={{ width: '30%' }}
+              style={{ width: '100%', marginTop: '15px' }}
             >
               SIGN UP
             </Button>

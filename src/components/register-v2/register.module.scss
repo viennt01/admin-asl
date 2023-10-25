@@ -15,7 +15,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.397);
+    // background-color: rgba(0, 0, 0, 0.397);
   }
 
   .titleForgotPassword {
@@ -44,6 +44,27 @@
       }
     }
   }
+
+  .btnSubmit {
+    width: 150px;
+    height: 49px;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    cursor: pointer;
+    background-color: #1d4486;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 30px;
+    transition: 0.5s;
+    z-index: 1;
+    overflow: hidden;
+
+    &:hover {
+        opacity: 0.9;
+    }
+}
 }
 
 @keyframes animateText {
