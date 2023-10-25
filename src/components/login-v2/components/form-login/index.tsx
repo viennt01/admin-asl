@@ -197,7 +197,7 @@ const FormLogin = ({ formLogin }: LoginProps) => {
           <p className={style.LoginDoNotHaveAcc}>
             Already have an account ?
             <Link href={ROUTERS.REGISTER} className={style.signUpButton}>
-              Sign in
+              Sign up
             </Link>
           </p>
         </Form>

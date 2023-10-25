@@ -189,17 +189,17 @@ const FeeList = ({
       },
     },
     {
-      title: 'Price',
-      dataIndex: 'priceFeeGroup',
+      title: 'Unit',
+      dataIndex: 'unitID',
       editable: !isCheckPermissionEdit,
-      fixed: 'right',
+      fixed: 'left',
       render: (value) => {
-        return formatNumber(value);
+        return optionUnit.find((item) => item.value === value)?.label;
       },
     },
     {
-      title: 'VAT',
-      dataIndex: 'vatFeeGroup',
+      title: 'Price',
+      dataIndex: 'priceFeeGroup',
       editable: !isCheckPermissionEdit,
       fixed: 'right',
       render: (value) => {
@@ -216,14 +216,15 @@ const FeeList = ({
       },
     },
     {
-      title: 'Unit',
-      dataIndex: 'unitID',
+      title: 'VAT',
+      dataIndex: 'vatFeeGroup',
       editable: !isCheckPermissionEdit,
-      fixed: 'left',
+      fixed: 'right',
       render: (value) => {
-        return optionUnit.find((item) => item.value === value)?.label;
+        return formatNumber(value);
       },
     },
+
     {
       dataIndex: 'key',
       width: 10,

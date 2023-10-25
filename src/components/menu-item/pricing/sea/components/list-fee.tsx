@@ -134,6 +134,13 @@ const ListFee = ({ FeeDataTable }: Props) => {
       ...getColumnSearchProps('feeName'),
     },
     {
+      title: 'Unit',
+      dataIndex: 'unitInternationalCode',
+      key: 'unitInternationalCode',
+      fixed: 'left',
+      ...getColumnSearchProps('unitInternationalCode'),
+    },
+    {
       title: 'Price',
       dataIndex: 'priceFeeGroup',
       key: 'priceFeeGroup',
@@ -143,6 +150,14 @@ const ListFee = ({ FeeDataTable }: Props) => {
         return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
+    {
+      title: 'Currency',
+      dataIndex: 'currencyName',
+      key: 'currencyName',
+      fixed: 'left',
+      ...getColumnSearchProps('currencyName'),
+    },
+
     {
       title: 'VAT',
       dataIndex: 'vatFeeGroup',
@@ -159,20 +174,6 @@ const ListFee = ({ FeeDataTable }: Props) => {
       key: 'typeFeeName',
       fixed: 'left',
       ...getColumnSearchProps('typeFeeName'),
-    },
-    {
-      title: 'Currency',
-      dataIndex: 'currencyName',
-      key: 'currencyName',
-      fixed: 'left',
-      ...getColumnSearchProps('currencyName'),
-    },
-    {
-      title: 'Unit',
-      dataIndex: 'unitInternationalCode',
-      key: 'unitInternationalCode',
-      fixed: 'left',
-      ...getColumnSearchProps('unitInternationalCode'),
     },
     {
       title: 'NO',

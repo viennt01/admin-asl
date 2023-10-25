@@ -295,7 +295,7 @@ const SeaPricing = ({
         </CollapseCard>
 
         <CollapseCard
-          title="List Fee"
+          title="Other Charges"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
