@@ -23,16 +23,18 @@ import style from '@/components/commons/table/index.module.scss';
 
 import {
   ILoadCapacityTypeTable,
-  // ISelectSearch,
+  IQueryInputRequest,
+  ISelectSearchRequest,
   IUpdateStatusLoadCapacityType,
 } from '../interface';
 import {
-  // initalSelectSearchRequest,
+  initalSelectSearchRequest,
   initalValueQueryInputParamsRequest,
-  initalValueQuerySelectParamsRequest,
 } from '../constant';
+import { ColumnSearchTableProps } from '@/components/commons/search-table';
+import { FilterConfirmProps } from 'antd/lib/table/interface';
 
-// type DataIndex = keyof IQueryInputParamType;
+type DataIndex = keyof IQueryInputRequest;
 
 const RequestTable = () => {
   const router = useRouter();
@@ -43,7 +45,12 @@ const RequestTable = () => {
   const [pagination, setPagination] =
     useState<PaginationOfAntd>(DEFAULT_PAGINATION);
   const [dataTable, setDataTable] = useState<ILoadCapacityTypeTable[]>([]);
-
+  const [queryInputParams, setQueryInputParams] = useState<IQueryInputRequest>(
+    initalValueQueryInputParamsRequest
+  );
+  const [selectedKeyShow, setSelectedKeyShow] = useState<ISelectSearchRequest>(
+    initalSelectSearchRequest
+  );
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   // Handle data
@@ -51,7 +58,6 @@ const RequestTable = () => {
     queryKey: [API_LOAD_CAPACITY_TYPE.GET_REQUEST, pagination],
     queryFn: () =>
       getTableRequire({
-        ...initalValueQuerySelectParamsRequest,
         ...initalValueQueryInputParamsRequest,
         paginateRequest: {
           currentPage: pagination.current,
@@ -94,36 +100,36 @@ const RequestTable = () => {
   });
 
   // Handle search
-  // const handleSearchInput = (
-  //   selectedKeys: string,
-  //   confirm: (param?: FilterConfirmProps) => void,
-  //   dataIndex: DataIndex
-  // ) => {
-  //   setSelectedKeyShow((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: {
-  //       label: dataIndex,
-  //       value: selectedKeys,
-  //     },
-  //   }));
-  //   const newQueryParams = { ...queryInputParams };
-  //   newQueryParams[dataIndex] = selectedKeys;
-  //   setQueryInputParams(newQueryParams);
-  //   confirm();
-  // };
+  const handleSearchInput = (
+    selectedKeys: string,
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: {
+        label: dataIndex,
+        value: selectedKeys,
+      },
+    }));
+    const newQueryParams = { ...queryInputParams };
+    newQueryParams[dataIndex] = selectedKeys;
+    setQueryInputParams(newQueryParams);
+    confirm();
+  };
 
-  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-  //   setQueryInputParams((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: '',
-  //   }));
+  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+    setQueryInputParams((prevData) => ({
+      ...prevData,
+      [dataIndex]: '',
+    }));
 
-  //   setSelectedKeyShow((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: { label: dataIndex, value: '' },
-  //   }));
-  //   clearFilters();
-  // };
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: { label: dataIndex, value: '' },
+    }));
+    clearFilters();
+  };
 
   // Handle data show table
   const columns: ProColumns<ILoadCapacityTypeTable>[] = [
@@ -186,6 +192,16 @@ const RequestTable = () => {
       key: 'typeLoadCapacityCode',
       width: 150,
       align: 'left',
+      ...ColumnSearchTableProps<IQueryInputRequest>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'typeLoadCapacityCode',
+        },
+      }),
     },
     {
       title: (

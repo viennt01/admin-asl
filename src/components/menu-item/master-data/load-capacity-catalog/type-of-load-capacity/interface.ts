@@ -80,6 +80,9 @@ export type ILoadCapacityTypeDelete = {
 //----------------------------------------------------------------
 export interface IQueryInputDraft {
   searchAll: string;
+  typeLoadCapacityCode: string;
+  typeLoadCapacityName: string;
+  description: string;
 }
 export interface IQuerySelectDraft {
   status: string[];
@@ -105,16 +108,23 @@ export interface IUpdateStatusLoadCapacityType {
 }
 
 export interface IQueryInputRequest {
-  searchAll: string;
+  typeLoadCapacityCode: string;
+  typeLoadCapacityName: string;
+  description: string;
 }
-export interface IQuerySelectRequest {
-  status: string[];
-}
+
 export interface IRequestLoadCapacityTypeTableRequest
-  extends IQueryInputRequest,
-    IQuerySelectRequest {
+  extends IQueryInputRequest {
   paginateRequest: Pagination;
 }
+
+export type ISelectSearchRequest = {
+  [key in keyof IQueryInputRequest]: {
+    label: string;
+    value: string;
+  };
+};
+
 // export table
 export interface IRequestExportData {
   ids: React.Key[];

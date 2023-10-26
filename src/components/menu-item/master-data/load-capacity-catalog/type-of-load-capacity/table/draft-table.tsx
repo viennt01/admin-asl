@@ -7,7 +7,7 @@ import {
   IQueryInputDraft,
   ISelectDratSearch,
 } from '../interface';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { API_LOAD_CAPACITY_TYPE } from '@/fetcherAxios/endpoint';
 import { deleteLoadCapacityType, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
@@ -32,6 +32,7 @@ import {
   initalValueQueryInputParamsDraft,
   initalValueQuerySelectParamsDraft,
 } from '../constant';
+import { ColumnSearchTableProps } from '@/components/commons/search-table';
 
 type DataIndex = keyof IQueryInputDraft;
 
@@ -50,14 +51,13 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     initalValueQueryInputParamsDraft
   );
   const [dataTable, setDataTable] = useState<ILoadCapacityTypeTable[]>([]);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedKeyShow, setSelectedKeyShow] = useState<ISelectDratSearch>(
     initalSelectSearchDraft
   );
 
   // Handle data
   useQuery({
-    queryKey: [API_LOCATION_TYPE.GET_DRAFT, pagination, queryInputParams],
+    queryKey: [API_LOAD_CAPACITY_TYPE.GET_DRAFT, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -102,7 +102,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_LOCATION_TYPE.GET_DRAFT],
+          queryKey: [API_LOAD_CAPACITY_TYPE.GET_DRAFT],
         });
       } else {
         errorToast(data.message);
@@ -114,7 +114,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   // Handle search
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearchInput = (
     selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
@@ -132,7 +131,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     setQueryInputParams(newQueryParams);
     confirm();
   };
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
     setQueryInputParams((prevData) => ({
       ...prevData,
@@ -169,6 +167,16 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'typeLoadCapacityCode',
       width: 150,
       align: 'left',
+      ...ColumnSearchTableProps<IQueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'typeLoadCapacityCode',
+        },
+      }),
     },
     {
       title: (
@@ -178,6 +186,16 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'typeLoadCapacityName',
       width: 150,
       align: 'left',
+      ...ColumnSearchTableProps<IQueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'typeLoadCapacityName',
+        },
+      }),
     },
     {
       title: (
@@ -189,6 +207,16 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'description',
       width: 250,
       align: 'left',
+      ...ColumnSearchTableProps<IQueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'description',
+        },
+      }),
     },
     {
       title: (

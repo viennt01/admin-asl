@@ -32,6 +32,9 @@ export const initalSelectSearchMaster = {
 //draft
 export const initalValueQueryInputParamsDraft = {
   searchAll: '',
+  typeLoadCapacityCode: '',
+  typeLoadCapacityName: '',
+  description: '',
 };
 
 export const initalValueQuerySelectParamsDraft = {
@@ -43,6 +46,18 @@ export const initalSelectSearchDraft = {
     label: '',
     value: '',
   },
+  typeLoadCapacityCode: {
+    label: '',
+    value: '',
+  },
+  typeLoadCapacityName: {
+    label: '',
+    value: '',
+  },
+  description: {
+    label: '',
+    value: '',
+  },
   statusTypeLoadCapacity: {
     label: '',
     value: [],
@@ -51,19 +66,25 @@ export const initalSelectSearchDraft = {
 
 //request
 export const initalValueQueryInputParamsRequest = {
-  searchAll: '',
+  typeLoadCapacityCode: '',
+  typeLoadCapacityName: '',
+  description: '',
 };
-export const initalValueQuerySelectParamsRequest = {
-  status: [STATUS_ALL_LABELS.REQUEST],
-};
+// export const initalValueQuerySelectParamsRequest = {
+//   status: [STATUS_ALL_LABELS.REQUEST],
+// };
 
 export const initalSelectSearchRequest = {
-  searchAll: {
+  typeLoadCapacityCode: {
     label: '',
     value: '',
   },
-  statusTypeLoadCapacity: {
+  typeLoadCapacityName: {
     label: '',
-    value: [],
+    value: '',
+  },
+  description: {
+    label: '',
+    value: '',
   },
 };
