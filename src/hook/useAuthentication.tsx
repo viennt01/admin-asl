@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { useRouter } from 'next/router';
 import { ROUTERS } from '@/constant/router';
+import { apiClient } from '@/fetcherAxios';
 
 export default function withAuthentication(ChildComponent: () => JSX.Element) {
   const Container = () => {
@@ -15,12 +16,18 @@ export default function withAuthentication(ChildComponent: () => JSX.Element) {
           router.push(ROUTERS.LOGIN);
         }
       } else {
+        // Đặt token vào apiClient
+        apiClient.interceptors.request.use((config) => {
+          config.headers.Authorization = `Bearer ${token}`;
+          return config;
+        });
+
         if (router.pathname === ROUTERS.LOGIN) {
           router.push(ROUTERS.HOME);
         }
       }
       setLoading(false);
-    }, [router]);
+    }, [router.pathname]);
     if (loading) return <></>;
     return <ChildComponent />;
   };

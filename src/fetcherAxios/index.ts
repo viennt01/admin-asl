@@ -83,7 +83,7 @@ const axiosResolver = async (promise: Promise<AxiosResponse>) => {
     });
 };
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   headers: {
     Accept: 'application/json;odata.metadata=minimal;odata.streaming=true',
     'Content-Type':
