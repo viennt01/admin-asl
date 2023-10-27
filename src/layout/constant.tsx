@@ -513,6 +513,48 @@ const SHOW_ROUTER_HEADER = () => {
         { title: `${translateCommon('request_for_approval')}` },
       ],
 
+    '/master-data/load-capacity-catalog/load-capacity': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('load_capacity_catalog')}` },
+      { title: `${translateCommon('load_capacity')}` },
+    ],
+    '/master-data/load-capacity-catalog/load-capacity/create': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('load_capacity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.LOAD_CAPACITY}>
+            {translateCommon('load_capacity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/master-data/load-capacity-catalog/load-capacity/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('load_capacity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.LOAD_CAPACITY}>
+            {translateCommon('load_capacity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/load-capacity-catalog/load-capacity/manager-admin/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('load_capacity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.LOAD_CAPACITY}>
+            {translateCommon('load_capacity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+
     '/master-data/unit': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('unit')}` },
