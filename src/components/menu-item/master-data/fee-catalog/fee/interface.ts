@@ -1,5 +1,5 @@
 import { Key } from 'react';
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
 export interface Fee {
   feeID: string;
@@ -27,7 +27,7 @@ export interface FeeTable extends Omit<Fee, 'feeID'> {
   searchAll: string;
 }
 
-export interface FeeRequire extends Pagination {
+export interface FeeRequire extends IPagination {
   data: Fee[];
 }
 
@@ -48,7 +48,7 @@ export interface QuerySelectParamType {
 export interface RequestFeeType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -108,7 +108,7 @@ export interface QuerySelectDraft {
 }
 
 export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -138,7 +138,7 @@ export interface QuerySelectRequest {
 export interface RequestFeeTableRequest
   extends QueryInputRequest,
     QuerySelectRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export interface RequestExportData {

@@ -1,21 +1,38 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Select, Switch } from 'antd';
+import {
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  Select,
+  Switch,
+  Tabs,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { API_LOCATION_TYPE, API_MASTER_DATA } from '@/fetcherAxios/endpoint';
+import {
+  API_LOAD_CAPACITY,
+  API_LOAD_CAPACITY_TYPE,
+} from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { geLocationDetail, updateStatus } from '../fetcher';
+import {
+  getListTypeLoadCapacityID,
+  getLoadCapacityDetail,
+  updateStatus,
+} from '../fetcher';
 import DraftTable from '../table/draft-table';
-import { FormValues, UpdateStatusLocation } from '../interface';
-import { getListCity, getListTypeLocations } from '@/layout/fetcher';
+import { IFormValues, IUpdateStatusLoadCapacity } from '../interface';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 
 const initialValue = {
-  typeLocationName: '',
+  name: '',
+  code: '',
   description: '',
 };
 
@@ -23,8 +40,8 @@ interface FormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
-  handleSubmit?: (formValues: FormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: FormValues, id?: string) => void;
+  handleSubmit?: (formValues: IFormValues, id?: string) => void;
+  handleSaveDraft?: (formValues: IFormValues, id?: string) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
@@ -32,7 +49,7 @@ interface FormProps {
 
 const { Title } = Typography;
 
-const LocationForm = ({
+const LoadCapacityForm = ({
   create,
   manager,
   edit,
@@ -42,9 +59,9 @@ const LocationForm = ({
   checkRow,
   useDraft,
 }: FormProps) => {
-  const { translate: translateLocation } = useI18n('location');
+  const { translate: translateLoadCapacity } = useI18n('loadCapacity');
   const router = useRouter();
-  const [form] = Form.useForm<FormValues>();
+  const [form] = Form.useForm<IFormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
@@ -52,15 +69,9 @@ const LocationForm = ({
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query;
 
-  const typeLocations = useQuery(
-    [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    getListTypeLocations
-  );
-  const city = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
-    getListCity({
-      currentPage: 1,
-      pageSize: 500,
-    })
+  const typeLoadCapacity = useQuery(
+    [API_LOAD_CAPACITY_TYPE.GET_ALL],
+    getListTypeLoadCapacityID
   );
 
   useEffect(() => {
@@ -72,7 +83,7 @@ const LocationForm = ({
     setIdQuery(id as string);
   };
 
-  const onFinish = (formValues: FormValues) => {
+  const onFinish = (formValues: IFormValues) => {
     if (idQuery) {
       handleSubmit && handleSubmit(formValues, idQuery);
     } else {
@@ -89,24 +100,22 @@ const LocationForm = ({
   };
 
   const detailQuery = useQuery({
-    queryKey: [API_LOCATION_TYPE.GET_DETAIL, idQuery],
-    queryFn: () => geLocationDetail(idQuery as string),
+    queryKey: [API_LOAD_CAPACITY.GET_DETAIL, idQuery],
+    queryFn: () => getLoadCapacityDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          locationID: data.data.locationID,
-          cityID: data.data.cityID,
-          locationCode: data.data.locationCode,
-          locationNameEN: data.data.locationNameEN,
-          locationNameVN: data.data.locationNameVN,
-          statusLocation: data.data.statusLocation,
-          typeLocations: data.data.typeLocations.map(
-            (type) => type.typeLocationID
-          ),
+          loadCapacityID: data.data.loadCapacityID,
+          code: data.data.code,
+          name: data.data.name,
+          typeLoadCapacityID: data.data.typeLoadCapacityID,
+          descriptionEN: data.data.descriptionEN,
+          descriptionVN: data.data.descriptionVN,
+          statusLoadCapacity: data.data.statusLoadCapacity,
         });
       } else {
-        router.push(ROUTERS.LOCATION);
+        router.push(ROUTERS.LOAD_CAPACITY);
       }
     },
   });
@@ -116,21 +125,21 @@ const LocationForm = ({
   };
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusLocation) => {
+    mutationFn: (body: IUpdateStatusLoadCapacity) => {
       return updateStatus(body);
     },
   });
 
   const handleAR = (status: string) => {
     if (idQuery) {
-      const _requestData: UpdateStatusLocation = {
+      const _requestData: IUpdateStatusLoadCapacity = {
         id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.LOCATION))
+            ? (successToast(data.message), router.push(ROUTERS.LOAD_CAPACITY))
             : errorToast(data.message);
         },
         onError() {
@@ -143,21 +152,21 @@ const LocationForm = ({
   const handleCopyAndCreate = () => {
     const props = {
       checkCopyAndCreate: true,
-      cityID: form.getFieldValue('cityID'),
-      locationCode: form.getFieldValue('locationCode'),
-      locationNameEN: form.getFieldValue('locationNameEN'),
-      locationNameVN: form.getFieldValue('locationNameVN'),
-      typeLocations: form.getFieldValue('typeLocations'),
+      code: form.getFieldValue('code'),
+      name: form.getFieldValue('name'),
+      typeLoadCapacityID: form.getFieldValue('typeLoadCapacityID'),
+      descriptionEN: form.getFieldValue('descriptionEN'),
+      descriptionVN: form.getFieldValue('descriptionVN'),
     };
     router.push({
-      pathname: ROUTERS.LOCATION_CREATE,
+      pathname: ROUTERS.LOAD_CAPACITY_CREATE,
       query: props,
     });
   };
 
   useEffect(() => {
-    if (form.getFieldValue('statusLocation')) {
-      form.getFieldValue('statusLocation') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusLoadCapacity')) {
+      form.getFieldValue('statusLoadCapacity') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -166,11 +175,11 @@ const LocationForm = ({
     }
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
-        cityID: propCopyAndCreate.cityID as string,
-        locationCode: propCopyAndCreate.locationCode as string,
-        locationNameEN: propCopyAndCreate.locationNameEN as string,
-        locationNameVN: propCopyAndCreate.locationNameVN as string,
-        typeLocations: propCopyAndCreate.typeLocations as string[],
+        code: propCopyAndCreate.code as string,
+        name: propCopyAndCreate.name as string,
+        typeLoadCapacityID: propCopyAndCreate.typeLoadCapacityID as string,
+        descriptionEN: propCopyAndCreate.descriptionEN as string,
+        descriptionVN: propCopyAndCreate.descriptionVN as string,
       });
     }
   }, [
@@ -179,8 +188,79 @@ const LocationForm = ({
     checkRow,
     manager,
     propCopyAndCreate,
-    form.getFieldValue('statusLocation'),
+    form.getFieldValue('statusLoadCapacity'),
   ]);
+
+  const contentEN = () => {
+    return (
+      <Row gutter={16}>
+        <Col span={24}>
+          <Form.Item
+            label={translateLoadCapacity(
+              'description_load_capacity_form.titleEn'
+            )}
+            name="descriptionEN"
+            rules={[
+              {
+                required: true,
+                message: translateLoadCapacity(
+                  'description_load_capacity_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <Input.TextArea
+              size="large"
+              placeholder={translateLoadCapacity(
+                'description_load_capacity_form.placeholder'
+              )}
+              allowClear
+              disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+    );
+  };
+
+  const contentVN = () => {
+    return (
+      <Row gutter={16}>
+        <Col span={24}>
+          <Form.Item
+            label={translateLoadCapacity(
+              'description_load_capacity_form.titleVn'
+            )}
+            name="descriptionVN"
+          >
+            <Input.TextArea
+              size="large"
+              placeholder={translateLoadCapacity(
+                'description_load_capacity_form.placeholder'
+              )}
+              allowClear
+              disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+    );
+  };
+
+  const items = [
+    {
+      key: 'EN',
+      label: 'EN',
+      children: contentEN(),
+      forceRender: true,
+    },
+    {
+      key: 'VN',
+      label: 'VN',
+      children: contentVN(),
+      forceRender: true,
+    },
+  ];
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -197,17 +277,20 @@ const LocationForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create && translateLocation('information_add_port')}
+                  {create &&
+                    translateLoadCapacity('information_add_of_load_capacity')}
                   {manager && 'Approval needed requests'}
                   {edit &&
                     (checkRow ? (
                       <>
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
-                          translateLocation('information_edit_port')}
+                          translateLoadCapacity(
+                            'information_edit_of_load_capacity'
+                          )}
                       </>
                     ) : (
-                      translateLocation('information_edit_port')
+                      translateLoadCapacity('information_edit_of_load_capacity')
                     ))}
                 </Title>
               </Col>
@@ -229,7 +312,7 @@ const LocationForm = ({
                       : STATUS_MASTER_COLORS.DEACTIVE,
                   }}
                   onChange={(value) => {
-                    const _requestData: UpdateStatusLocation = {
+                    const _requestData: IUpdateStatusLoadCapacity = {
                       id: [idQuery],
                       status: value
                         ? STATUS_ALL_LABELS.ACTIVE
@@ -257,87 +340,20 @@ const LocationForm = ({
           <Row gutter={16}>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocation('location_code_form.title')}
-                tooltip={translateLocation('code')}
-                name="locationCode"
+                label={translateLoadCapacity('code_load_capacity_form.title')}
+                name="code"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation(
-                      'location_code_form.error_required'
+                    message: translateLoadCapacity(
+                      'code_load_capacity_form.error_required'
                     ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translateLocation(
-                    'location_code_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateLocation('type_location_form.title')}
-                name="typeLocations"
-                rules={[
-                  {
-                    required: true,
-                    message: translateLocation(
-                      'type_location_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Select
-                  placeholder={translateLocation(
-                    'type_location_form.placeholder'
-                  )}
-                  mode="multiple"
-                  size="large"
-                  options={
-                    typeLocations.data?.data.map((type) => ({
-                      label: type.typeLocationName,
-                      value: type.typeLocationID,
-                    })) || []
-                  }
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateLocation('location_name_form.titleEn')}
-                name="locationNameEN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateLocation(
-                      'location_name_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateLocation(
-                    'location_name_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} span={24}>
-              <Form.Item
-                label={translateLocation('location_name_form.titleVn')}
-                name="locationNameVN"
-              >
-                <Input
-                  placeholder={translateLocation(
-                    'location_name_form.placeholder'
+                  placeholder={translateLoadCapacity(
+                    'code_load_capacity_form.placeholder'
                   )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
@@ -347,36 +363,61 @@ const LocationForm = ({
 
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateLocation('city_form.title')}
-                name="cityID"
+                label={translateLoadCapacity('name_load_capacity_form.title')}
+                name="name"
                 rules={[
                   {
                     required: true,
-                    message: translateLocation('city_form.error_required'),
+                    message: translateLoadCapacity(
+                      'name_load_capacity_form.error_required'
+                    ),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateLoadCapacity(
+                    'name_load_capacity_form.placeholder'
+                  )}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateLoadCapacity('type_load_capacity_form.title')}
+                name="typeLoadCapacityID"
+                rules={[
+                  {
+                    required: true,
+                    message: translateLoadCapacity(
+                      'type_load_capacity_form.error_required'
+                    ),
                   },
                 ]}
               >
                 <Select
-                  placeholder={translateLocation('city_form.placeholder')}
-                  showSearch
+                  placeholder={translateLoadCapacity(
+                    'type_load_capacity_form.placeholder'
+                  )}
                   size="large"
                   options={
-                    city.data?.data?.data.map((item) => ({
-                      value: item.cityID,
-                      label: item.cityName,
+                    typeLoadCapacity.data?.data.map((type) => ({
+                      label: type.typeLoadCapacityName,
+                      value: type.typeLoadCapacityID,
                     })) || []
-                  }
-                  filterOption={(input, option) =>
-                    (option?.label ?? '')
-                      .toLowerCase()
-                      .includes(input.toLowerCase())
                   }
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
+            <Col span={24}>
+              <Tabs items={items} />
+            </Col>
+
             <Col span={0}>
-              <Form.Item name="typeLocations"></Form.Item>
+              <Form.Item name="statusLoadCapacity"></Form.Item>
             </Col>
           </Row>
         </Card>
@@ -404,4 +445,4 @@ const LocationForm = ({
   );
 };
 
-export default LocationForm;
+export default LoadCapacityForm;

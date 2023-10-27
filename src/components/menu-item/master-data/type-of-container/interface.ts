@@ -1,4 +1,4 @@
-import { Pagination } from '../../../commons/table/table-default';
+import { IPagination } from '../../../commons/table/table-default';
 export interface ContainerType {
   containerTypeID: string;
   containerTypeCode: string;
@@ -21,7 +21,7 @@ export interface ContainerTypeTable
   searchAll: string;
 }
 
-export interface ContainerTypesRequire extends Pagination {
+export interface ContainerTypesRequire extends IPagination {
   data: ContainerType[];
 }
 
@@ -40,7 +40,7 @@ export interface QuerySelectParamType {
 export interface RequestTypeContainerType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -94,7 +94,7 @@ export interface QuerySelectDraft {
 export interface RequestContainerTypeTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -119,7 +119,7 @@ export interface QueryInputRequest {
 }
 
 export interface RequestContainerTypeTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

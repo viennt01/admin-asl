@@ -1,0 +1,40 @@
+{
+    "title": "Danh sách trọng tải",
+    "no": "STT",
+    "code": "Mã",
+    "name": "Tên",
+    "type": "Loại",
+    "description": "Mô tả",
+    "status":"Trạng thái",
+    "date_created": "Ngày tạo",
+    "date_update": "Ngày cập nhật",
+    "updater": "Người cập nhật",
+    "creator": "Người tạo",
+
+    "information_add_of_load_capacity": "Thêm mới trọng tải",
+    "information_edit_of_load_capacity": "Chỉnh sửa trọng tải",
+
+    "name_load_capacity_form": {
+        "title": "Tên",
+        "titleEn": "Tên(EN)",
+        "titleVn": "Tên(VN)",
+        "placeholder": "Nhập tên trọng tải",
+        "error_required": "Vui lòng nhập tên trọng tải"
+    },
+    "description_load_capacity_form": {
+        "titleEn": "Mô tả(EN)",
+        "titleVn": "Mô tả(VN)",
+        "placeholder": "Vui lòng nhập mô tả",
+        "error_required": "Vui lòng nhập mô tả"
+    }, 
+    "code_load_capacity_form": {
+        "title": "Mã",
+        "placeholder": "Nhập mã",
+        "error_required": "Vui lòng nhập mã"
+    },
+    "type_load_capacity_form": {
+        "title": "Loại",
+        "placeholder": "Chọn loại trọng tải",
+        "error_required": "Vui lòng chọn loại trọng tải"
+    }
+}

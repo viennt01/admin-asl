@@ -149,6 +149,22 @@ export const API_LOAD_CAPACITY_TYPE = {
   DOWNLOAD_EXAMPLE_FILE: '/download-type-load-capacity-excel',
   IMPORT: '/import-type-load-capacity-with-excel',
   EXPORT: '/export-type-load-capacity-with-excel',
+  GET_ALL: '/get-all-type-load-capacity',
+};
+
+export const API_LOAD_CAPACITY = {
+  GET_SEARCH: '/search-load-capacity',
+  GET_DETAIL: '/get-load-capacity',
+  CREATE: '/add-load-capacity',
+  EDIT: '/update-load-capacity',
+  DELETE: '/delete-load-capacity',
+  UPDATE_STATUS: '/update-status-load-capacity',
+  GET_DRAFT: '/get-load-capacity-with-status-and-id-User',
+  GET_REQUEST: '/get-load-capacity-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-load-capacity-excel',
+  IMPORT: '/import-load-capacity-with-excel',
+  GET_ALL: '/get-all-load-capacity',
+  EXPORT: '/export-load-capacity-with-excel',
 };
 
 export const API_COMMODITY = {

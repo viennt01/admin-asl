@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { Pagination } from '../../../commons/table/table-default';
+import { IPagination } from '../../../commons/table/table-default';
 
 export interface AirPricing {
   airPricingID: string;
@@ -44,7 +44,7 @@ export interface AirPricingTable extends Omit<AirPricing, 'airPricingID'> {
   searchAll: string;
 }
 
-export interface AirPricingRequire extends Pagination {
+export interface AirPricingRequire extends IPagination {
   data: AirPricing[];
 }
 //
@@ -58,7 +58,7 @@ export interface QuerySelectParamType {
 export interface RequestAirPricing
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -189,7 +189,7 @@ export interface QuerySelectDraft {
   status: string;
 }
 export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -211,7 +211,7 @@ export interface QueryInputRequest {
   status: string;
 }
 export interface RequestTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 // get all location

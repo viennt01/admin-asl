@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditLocation from '@/components/menu-item/master-data/location-catalog/location/edit';
+import EditLoadCapacity from '@/components/menu-item/master-data/load-capacity-catalog/load-capacity/edit';
 
-function LocationEditPage() {
+function EditLoadCapacityPage() {
   return (
     <>
       <Head>
         <title>ASL | EDIT LOAD CAPACITY</title>
       </Head>
-      <EditLocation />
+      <EditLoadCapacity />
     </>
   );
 }
 
-export default withAuthentication(LocationEditPage);
+export default withAuthentication(EditLoadCapacityPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'location']);
+export const getStaticProps = getStatic(['common', 'loadCapacity']);
 export const getStaticPaths = () => {
   return {
     paths: [],

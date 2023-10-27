@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
-  PaginationOfAntd,
+  IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
 
@@ -57,7 +57,7 @@ const RequestTable = () => {
   const { translate: translateLocation } = useI18n('location');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectRequest>(initalValueQuerySelectParamsRequest);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputRequest>(
@@ -330,8 +330,8 @@ const RequestTable = () => {
     {
       title: <div className={style.title}>{translateLocation('status')}</div>,
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusLocation',
+      key: 'statusLocation',
       align: 'center',
       fixed: 'right',
       render: (value) => (

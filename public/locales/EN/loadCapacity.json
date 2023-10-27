@@ -1,8 +1,9 @@
 {
-    "title": "List type of load capacity",
+    "title": "List load capacity",
     "no": "No",
     "code": "Code",
     "name": "Name",
+    "type": "Type",
     "description": "Description",
     "status":"Status",
     "date_created": "Date Created",
@@ -10,25 +11,30 @@
     "updater": "Updater",
     "creator": "Creator",
     
-    "information_add_type_of_load_capacity": "Add new type of load capacity",
-    "information_edit_type_of_load_capacity": "Edit type of load capacity",
+    "information_add_of_load_capacity": "Add new load capacity",
+    "information_edit_of_load_capacity": "Edit load capacity",
 
-    "name_type_load_capacity_form": {
+    "name_load_capacity_form": {
         "title": "Name",
         "titleEn": "Name(EN)",
         "titleVn": "Name (VN)",
         "placeholder": "Please enter the name",
         "error_required": "Please enter the name"
     },
-    "description_type_load_capacity_form": {
+    "description_load_capacity_form": {
         "titleEn": "Description(EN)",
         "titleVn": "Description(VN)",
         "placeholder": "Please enter description",
         "error_required": "Please enter description"
     }, 
-    "code_type_load_capacity_form": {
+    "code_load_capacity_form": {
         "title": "Code",
         "placeholder": "Enter code",
         "error_required": "Please Enter code"
+    },
+    "type_load_capacity_form": {
+        "title": "Type",
+        "placeholder": "Select type of load capacity",
+        "error_required": "Please select type of load capacity"
     }
 }

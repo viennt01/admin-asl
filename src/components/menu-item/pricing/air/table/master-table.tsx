@@ -30,7 +30,7 @@ import {
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
-  PaginationOfAntd,
+  IPaginationOfAntd,
   SkeletonTable,
 } from '@/components/commons/table/table-default';
 import {
@@ -61,7 +61,7 @@ export default function MasterDataTable() {
   const { translate: translatePricingAir } = useI18n('pricingAir');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParamsMaster
   );

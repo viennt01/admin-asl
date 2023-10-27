@@ -6,105 +6,113 @@ import {
   ResponseWithPayload,
   downloadFile,
   exportFile,
+  get,
   post,
   uploadFile,
 } from '@/fetcherAxios';
 import {
-  LocationTypeRequire,
-  RequestLocationTypeType,
-  RequestLocationTypeTableDraft,
-  LocationTypeCreate,
-  LocationTypeDelete,
-  LocationTypeDetailDataBody,
-  LocationTypeDetailType,
-  LocationTypeEdit,
-  UpdateStatusLocation,
-  RequestLocationTypeTableRequest,
-  RequestExportData,
+  ILoadCapacityRequire,
+  IRequestLoadCapacity,
+  IRequestLoadCapacityTableDraft,
+  ICreateLoadCapacity,
+  IDeleteLoadCapacity,
+  ILoadCapacityDetailDataBody,
+  ILoadCapacityDetail,
+  IEditLoadCapacity,
+  IUpdateStatusLoadCapacity,
+  IRequestLoadCapacityTableRequest,
+  IRequestExportData,
+  ILoadCapacityType,
 } from './interface';
-import { API_COLUMN, API_LOCATION } from '@/fetcherAxios/endpoint';
+import {
+  API_COLUMN,
+  API_LOAD_CAPACITY_TYPE,
+  API_LOAD_CAPACITY,
+} from '@/fetcherAxios/endpoint';
 
-export const getLocationSearch = (data: RequestLocationTypeType) => {
-  return post<
-    RequestLocationTypeType,
-    ResponseWithPayload<LocationTypeRequire>
-  >({
+export const getLoadCapacitySearch = (data: IRequestLoadCapacity) => {
+  return post<IRequestLoadCapacity, ResponseWithPayload<ILoadCapacityRequire>>({
     data,
-  })(API_LOCATION.GET_SEARCH);
+  })(API_LOAD_CAPACITY.GET_SEARCH);
 };
 
-export const geLocationDetail = (id: string) => {
+export const getLoadCapacityDetail = (id: string) => {
   return post<
-    LocationTypeDetailDataBody,
-    ResponseWithPayload<LocationTypeDetailType>
+    ILoadCapacityDetailDataBody,
+    ResponseWithPayload<ILoadCapacityDetail>
   >({
     data: {
       id,
     },
-  })(API_LOCATION.GET_DETAIL);
+  })(API_LOAD_CAPACITY.GET_DETAIL);
 };
 
-export const createLocation = (data: LocationTypeCreate) => {
-  return post<LocationTypeCreate, ResponseWithPayload<LocationTypeCreate>>({
+export const createLoadCapacity = (data: ICreateLoadCapacity) => {
+  return post<ICreateLoadCapacity, ResponseWithPayload<ICreateLoadCapacity>>({
     data,
-  })(API_LOCATION.CREATE);
+  })(API_LOAD_CAPACITY.CREATE);
 };
 
-export const editLocation = (data: LocationTypeEdit) => {
-  return post<LocationTypeEdit, ResponseWithPayload<LocationTypeEdit>>({
+export const editLoadCapacity = (data: IEditLoadCapacity) => {
+  return post<IEditLoadCapacity, ResponseWithPayload<IEditLoadCapacity>>({
     data,
-  })(API_LOCATION.EDIT);
+  })(API_LOAD_CAPACITY.EDIT);
 };
 
-export const deleteLocation = (data: React.Key[]) => {
-  return post<LocationTypeDelete, ResponseWithPayload<LocationTypeDelete>>({
+export const deleteLoadCapacity = (data: React.Key[]) => {
+  return post<IDeleteLoadCapacity, ResponseWithPayload<IDeleteLoadCapacity>>({
     data: {
       ids: data,
     },
-  })(API_LOCATION.DELETE);
+  })(API_LOAD_CAPACITY.DELETE);
 };
 
-export const getDartTable = (data: RequestLocationTypeTableDraft) => {
+export const getDartTable = (data: IRequestLoadCapacityTableDraft) => {
   return post<
-    RequestLocationTypeTableDraft,
-    ResponseWithPayload<LocationTypeRequire>
+    IRequestLoadCapacityTableDraft,
+    ResponseWithPayload<ILoadCapacityRequire>
   >({
     data,
-  })(API_LOCATION.GET_DRAFT);
+  })(API_LOAD_CAPACITY.GET_DRAFT);
 };
 
 //----------------------------------------------------------------
 
-export const updateStatus = (data: UpdateStatusLocation) => {
-  return post<UpdateStatusLocation, ResponseWithPayload<UpdateStatusLocation>>({
-    data,
-  })(API_LOCATION.UPDATE_STATUS);
-};
-
-export const getTableRequire = (data: RequestLocationTypeTableRequest) => {
+export const updateStatus = (data: IUpdateStatusLoadCapacity) => {
   return post<
-    RequestLocationTypeTableRequest,
-    ResponseWithPayload<LocationTypeRequire>
+    IUpdateStatusLoadCapacity,
+    ResponseWithPayload<IUpdateStatusLoadCapacity>
   >({
     data,
-  })(API_LOCATION.GET_REQUEST);
+  })(API_LOAD_CAPACITY.UPDATE_STATUS);
+};
+
+export const getTableRequire = (data: IRequestLoadCapacityTableRequest) => {
+  return post<
+    IRequestLoadCapacityTableRequest,
+    ResponseWithPayload<ILoadCapacityRequire>
+  >({
+    data,
+  })(API_LOAD_CAPACITY.GET_REQUEST);
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_LOCATION.IMPORT);
+  return uploadFile({ data, timeout: 10000 })(API_LOAD_CAPACITY.IMPORT);
 };
 export const downloadExampleFile = () => {
-  return downloadFile<BlobPart>({})(API_LOCATION.DOWNLOAD_EXAMPLE_FILE);
+  return downloadFile<BlobPart>({})(API_LOAD_CAPACITY.DOWNLOAD_EXAMPLE_FILE);
 };
-export const exportTableFile = (data: RequestExportData) => {
-  return exportFile<RequestExportData, BlobPart>({ data })(API_LOCATION.EXPORT);
+export const exportTableFile = (data: IRequestExportData) => {
+  return exportFile<IRequestExportData, BlobPart>({ data })(
+    API_LOAD_CAPACITY.EXPORT
+  );
 };
 //----------------------------------------------------------------
 //Get format column
 export const getColumnTable = () => {
   return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
     data: {
-      tableName: TABLE_NAME.LOCATION,
+      tableName: TABLE_NAME.LOAD_CAPACITY,
     },
   })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };
@@ -112,4 +120,11 @@ export const updateColumnTable = (data: ColumnTable) => {
   return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
     data,
   })(API_COLUMN.UPDATE_COLUMN_TABLE_NAME);
+};
+//----------------------------------------------------------------
+//Get all list Type of Load Capacity
+export const getListTypeLoadCapacityID = () => {
+  return get<ResponseWithPayload<ILoadCapacityType[]>>({})(
+    API_LOAD_CAPACITY_TYPE.GET_ALL
+  );
 };

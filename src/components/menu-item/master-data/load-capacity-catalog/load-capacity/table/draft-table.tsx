@@ -2,9 +2,13 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { LocationTable, QueryInputDraft, SelectDratSearch } from '../interface';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
-import { deleteLocation, getDartTable } from '../fetcher';
+import {
+  ILoadCapacityTable,
+  IQueryInputDraft,
+  ISelectDratSearch,
+} from '../interface';
+import { API_LOAD_CAPACITY } from '@/fetcherAxios/endpoint';
+import { deleteLoadCapacity, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -13,7 +17,7 @@ import {
 import Table from '../../../../../commons/table/table';
 import {
   DEFAULT_PAGINATION_5,
-  PaginationOfAntd,
+  IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
@@ -30,7 +34,7 @@ import {
   initalValueQuerySelectParamsDraft,
 } from '../constant';
 
-type DataIndex = keyof QueryInputDraft;
+type DataIndex = keyof IQueryInputDraft;
 
 interface PortFormProps {
   handleIdQuery: (id: string) => void;
@@ -38,21 +42,21 @@ interface PortFormProps {
 
 const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
-  const { translate: translateLocationType } = useI18n('typeOfLocation');
+  const { translate: translateLoadCapacity } = useI18n('loadCapacity');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION_5);
+  const [queryInputParams, setQueryInputParams] = useState<IQueryInputDraft>(
     initalValueQueryInputParamsDraft
   );
-  const [dataTable, setDataTable] = useState<LocationTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
+  const [dataTable, setDataTable] = useState<ILoadCapacityTable[]>([]);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<ISelectDratSearch>(
     initalSelectSearchDraft
   );
 
   // Handle data
   useQuery({
-    queryKey: [API_LOCATION_TYPE.GET_DRAFT, pagination, queryInputParams],
+    queryKey: [API_LOAD_CAPACITY.GET_DRAFT, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -67,21 +71,21 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.locationID,
-            cityID: data.cityID,
-            cityName: data.cityName,
-            locationCode: data.locationCode,
-            locationName: data.locationName,
-            typeLocations: data.typeLocations,
-            statusLocation: data.statusLocation,
-            dateInserted: data.dateInserted,
+            key: data.loadCapacityID,
+            searchAll: '',
+            typeLoadCapacityID: data.typeLoadCapacityID,
+            typeLoadCapacityName: data.typeLoadCapacityName,
+            code: data.code,
+            name: data.name,
+            description: data.description,
+            statusLoadCapacity: data.statusLoadCapacity,
+            public: data.public,
             insertedByUser: data.insertedByUser,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
-            searchAll: '',
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
           }))
         );
         pagination.current = currentPage;
@@ -94,12 +98,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   const deleteItemDraftMutation = useMutation({
-    mutationFn: (id: string[]) => deleteLocation(id),
+    mutationFn: (id: string[]) => deleteLoadCapacity(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_LOCATION_TYPE.GET_DRAFT],
+          queryKey: [API_LOAD_CAPACITY.GET_DRAFT],
         });
       } else {
         errorToast(data.message);
@@ -143,9 +147,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   };
 
   // Handle data show table
-  const columns: ProColumns<LocationTable>[] = [
+  const columns: ProColumns<ILoadCapacityTable>[] = [
     {
-      title: <div className={style.title}>{translateLocationType('no')}</div>,
+      title: <div className={style.title}>{translateLoadCapacity('no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -156,36 +160,36 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: <div className={style.title}>{translateLocationType('code')}</div>,
-      dataIndex: 'locationCode',
-      key: 'locationCode',
+      title: <div className={style.title}>{translateLoadCapacity('code')}</div>,
+      dataIndex: 'code',
+      key: 'code',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputDraft>({
+      ...ColumnSearchTableProps<IQueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'locationCode',
+          dataIndex: 'code',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateLocationType('name')}</div>,
-      dataIndex: 'locationName',
-      key: 'locationName',
+      title: <div className={style.title}>{translateLoadCapacity('name')}</div>,
+      dataIndex: 'name',
+      key: 'name',
       width: 250,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputDraft>({
+      ...ColumnSearchTableProps<IQueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'locationName',
+          dataIndex: 'name',
         },
       }),
     },
@@ -201,11 +205,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     },
     {
       title: (
-        <div className={style.title}>{translateLocationType('status')}</div>
+        <div className={style.title}>{translateLoadCapacity('status')}</div>
       ),
       width: 120,
-      dataIndex: 'statusLocation',
-      key: 'statusLocation',
+      dataIndex: 'statusLoadCapacity',
+      key: 'statusLoadCapacity',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -264,7 +268,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTable
+    record: ILoadCapacityTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
-  PaginationOfAntd,
+  IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
 
@@ -60,7 +60,7 @@ const RequestTable = () => {
   const { translate: translateFee } = useI18n('fee');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParamsRequest
   );

@@ -1,4 +1,4 @@
-import { Pagination } from '@/components/commons/table/table-default';
+import { IPagination } from '@/components/commons/table/table-default';
 import { Dayjs } from 'dayjs';
 
 export interface User {
@@ -40,7 +40,7 @@ export interface UserTable extends Omit<User, 'userID'> {
   searchAll: string;
 }
 
-export interface UserRequire extends Pagination {
+export interface UserRequire extends IPagination {
   data: User[];
 }
 //
@@ -73,7 +73,7 @@ export interface QuerySelectParamType {
 export interface RequestUserType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {

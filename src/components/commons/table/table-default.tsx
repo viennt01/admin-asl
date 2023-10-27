@@ -11,13 +11,13 @@ export const DEFAULT_PAGINATION_5 = {
   pageSize: 5,
 };
 
-export interface Pagination {
+export interface IPagination {
   currentPage: number;
   pageSize: number;
   totalPages?: number;
 }
 
-export interface PaginationOfAntd {
+export interface IPaginationOfAntd {
   current: number;
   pageSize: number;
   total?: number;

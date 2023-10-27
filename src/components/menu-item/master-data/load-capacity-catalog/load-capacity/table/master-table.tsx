@@ -4,7 +4,7 @@ import {
   FilterFilled,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, PaginationProps, Tag, Popconfirm, Popover } from 'antd';
+import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -19,41 +19,39 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   API_COLUMN,
-  API_LOCATION_TYPE,
-  API_MASTER_DATA,
-  API_LOCATION,
+  API_LOAD_CAPACITY,
+  API_LOAD_CAPACITY_TYPE,
 } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
-  QueryInputParamType,
-  QuerySelectParamType,
-  SelectSearch,
-  LocationTable,
-  TypeLocations,
+  IQueryInputParamType,
+  IQuerySelectParamType,
+  ISelectSearch,
+  ILoadCapacityTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
   DENSITY,
-  PaginationOfAntd,
+  IPaginationOfAntd,
   SkeletonTable,
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
 import {
-  deleteLocation,
+  deleteLoadCapacity,
   downloadExampleFile,
   exportTableFile,
   getColumnTable,
-  getLocationSearch,
+  getListTypeLoadCapacityID,
+  getLoadCapacitySearch,
   importDataTable,
   updateColumnTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../../../../commons/table/table';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
-import { getListCity, getListTypeLocations } from '@/layout/fetcher';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
@@ -67,23 +65,22 @@ import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
 
-type DataIndex = keyof QueryInputParamType;
+type DataIndex = keyof IQueryInputParamType;
 
 export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translateLocation } = useI18n('location');
+  const { translate: translateLoadCapacity } = useI18n('loadCapacity');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParamsMaster
-  );
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
+  const [queryInputParams, setQueryInputParams] =
+    useState<IQueryInputParamType>(initalValueQueryInputParamsMaster);
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
-  const [dataTable, setDataTable] = useState<LocationTable[]>([]);
-  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    useState<IQuerySelectParamType>(initalValueQuerySelectParamsMaster);
+  const [dataTable, setDataTable] = useState<ILoadCapacityTable[]>([]);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<ISelectSearch>(
     initalSelectSearchMaster
   );
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -107,37 +104,31 @@ export default function MasterDataTable() {
     },
   });
 
-  const typeLocation = useQuery(
-    [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    getListTypeLocations
-  );
-  const city = useQuery([API_MASTER_DATA.GET_COUNTRY], () =>
-    getListCity({
-      currentPage: 1,
-      pageSize: 500,
-    })
+  const typeLoadCapacity = useQuery(
+    [API_LOAD_CAPACITY_TYPE.GET_ALL],
+    getListTypeLoadCapacityID
   );
 
   const dataSelectSearch =
-    querySelectParams.statusLocation.length === 0
+    querySelectParams.statusLoadCapacity.length === 0
       ? {
           ...querySelectParams,
-          statusLocation: [
+          statusLoadCapacity: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
         }
       : querySelectParams;
 
-  const locationsQuerySearch = useQuery({
+  const loadCapacityQuerySearch = useQuery({
     queryKey: [
-      API_LOCATION.GET_SEARCH,
+      API_LOAD_CAPACITY.GET_SEARCH,
       pagination,
       queryInputParams,
       querySelectParams,
     ],
     queryFn: () =>
-      getLocationSearch({
+      getLoadCapacitySearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -150,21 +141,21 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.locationID,
-            cityID: data.cityID,
-            cityName: data.cityName,
-            locationCode: data.locationCode,
-            locationName: data.locationName,
-            typeLocations: data.typeLocations,
-            statusLocation: data.statusLocation,
-            dateInserted: data.dateInserted,
+            key: data.loadCapacityID,
+            searchAll: '',
+            typeLoadCapacityID: data.typeLoadCapacityID,
+            typeLoadCapacityName: data.typeLoadCapacityName,
+            code: data.code,
+            name: data.name,
+            description: data.description,
+            statusLoadCapacity: data.statusLoadCapacity,
+            public: data.public,
             insertedByUser: data.insertedByUser,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
-            searchAll: '',
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
           }))
         );
         pagination.current = currentPage;
@@ -179,7 +170,7 @@ export default function MasterDataTable() {
   const updateColumnMutation = useMutation({
     mutationFn: () =>
       updateColumnTable({
-        tableName: TABLE_NAME.LOCATION,
+        tableName: TABLE_NAME.LOAD_CAPACITY,
         density: DENSITY.Middle,
         columnFixed: columnsStateMap,
       }),
@@ -193,12 +184,12 @@ export default function MasterDataTable() {
   });
 
   const deletesMutation = useMutation({
-    mutationFn: () => deleteLocation(selectedRowKeys),
+    mutationFn: () => deleteLoadCapacity(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_LOCATION.GET_SEARCH],
+          queryKey: [API_LOAD_CAPACITY.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -218,7 +209,7 @@ export default function MasterDataTable() {
       ...state,
       current: 1,
     }));
-    locationsQuerySearch.refetch();
+    loadCapacityQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
@@ -272,17 +263,13 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusLocation:
-        filters.statusLocation?.length !== 0 && filters.statusLocation
-          ? (filters.statusLocation as string[])
+      statusLoadCapacity:
+        filters.statusLoadCapacity?.length !== 0 && filters.statusLoadCapacity
+          ? (filters.statusLoadCapacity as string[])
           : [],
-      typeLocations:
-        filters.typeLocations?.length !== 0 && filters.typeLocations
-          ? (filters.typeLocations as string[])
-          : [],
-      cityID:
-        filters.cityID?.length !== 0 && filters.cityID
-          ? (filters.cityID[0] as string)
+      typeLoadCapacityID:
+        filters.typeLoadCapacityID?.length !== 0 && filters.typeLoadCapacityID
+          ? (filters.typeLoadCapacityID[0] as string)
           : '',
     };
     setQuerySelectParams(newQueryParams);
@@ -302,9 +289,9 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<LocationTable>[] = [
+  const columns: ProColumns<ILoadCapacityTable>[] = [
     {
-      title: <div className={style.title}>{translateLocation('no')}</div>,
+      title: <div className={style.title}>{translateLoadCapacity('no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'right',
@@ -314,57 +301,57 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateLocation('code'),
-      dataIndex: 'locationCode',
+      title: translateLoadCapacity('code'),
+      dataIndex: 'code',
       width: 120,
       key: '',
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<IQueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'locationCode',
+          dataIndex: 'code',
         },
       }),
     },
     {
-      title: translateLocation('name'),
-      dataIndex: 'locationName',
-      key: 'locationName',
+      title: translateLoadCapacity('name'),
+      dataIndex: 'name',
+      key: 'name',
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      width: 200,
+      ...ColumnSearchTableProps<IQueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'locationName',
+          dataIndex: 'name',
         },
       }),
     },
     {
-      title: translateLocation('country_name'),
-      width: 150,
-      dataIndex: 'cityID',
-      key: 'cityID',
-      align: 'left',
-      filteredValue: [querySelectParams.cityID] || null,
+      title: translateLoadCapacity('type'),
+      dataIndex: 'typeLoadCapacityID',
+      key: 'typeLoadCapacityID',
+      width: 240,
+      align: 'center',
+      filteredValue: [querySelectParams.typeLoadCapacityID] || undefined,
       filters:
-        city.data?.data?.data.map((item) => ({
-          text: item.cityName,
-          value: item.cityID,
+        typeLoadCapacity.data?.data?.map((data) => ({
+          text: data.typeLoadCapacityName,
+          value: data.typeLoadCapacityID,
         })) || [],
-      filterSearch: true,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.cityID?.length !== 0
+                querySelectParams.typeLoadCapacityID?.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -373,68 +360,33 @@ export default function MasterDataTable() {
       },
       filterMultiple: false,
       render: (_, value) => {
-        return <div>{value.cityName}</div>;
-      },
-    },
-    {
-      title: translateLocation('type_of_port'),
-      dataIndex: 'typeLocations',
-      key: 'typeLocations',
-      width: 240,
-      align: 'center',
-      filteredValue: querySelectParams.typeLocations || null,
-      filters:
-        typeLocation.data?.data?.map((data) => ({
-          text: data.typeLocationName,
-          value: data.typeLocationID,
-        })) || [],
-      filterIcon: () => {
         return (
-          <FilterFilled
-            style={{
-              color:
-                querySelectParams.typeLocations?.length !== 0
-                  ? COLORS.SEARCH.FILTER_ACTIVE
-                  : COLORS.SEARCH.FILTER_DEFAULT,
-            }}
-          />
-        );
-      },
-      filterMultiple: true,
-      render: (_, value) => {
-        const content = (valueTypeLocations: TypeLocations[]) => {
-          return (
-            <div>
-              {valueTypeLocations.map((type) => {
-                return (
-                  <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
-                );
-              })}
-            </div>
-          );
-        };
-        return (
-          <Popover content={content(value.typeLocations)}>
-            {value.typeLocations.length <= 2 ? (
-              value.typeLocations.map((type) => (
-                <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
-              ))
-            ) : (
-              <>
-                {value.typeLocations.slice(0, 2).map((type) => (
-                  <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
-                ))}
-                <Tag>...</Tag>
-              </>
-            )}
-          </Popover>
+          typeLoadCapacity.data?.data.find(
+            (item) => item.typeLoadCapacityID === value.typeLoadCapacityID
+          )?.typeLoadCapacityName || ''
         );
       },
     },
     {
-      title: translateLocation('status'),
-      dataIndex: 'statusLocation',
-      key: 'statusLocation',
+      title: translateLoadCapacity('description'),
+      dataIndex: 'description',
+      key: 'description',
+      align: 'left',
+      ...ColumnSearchTableProps<IQueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'description',
+        },
+      }),
+    },
+    {
+      title: translateLoadCapacity('status'),
+      dataIndex: 'statusLoadCapacity',
+      key: 'statusLoadCapacity',
       align: 'center',
       width: 120,
       render: (value) => (
@@ -522,7 +474,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.LOCATION_EDIT(id));
+    router.push(ROUTERS.LOAD_CAPACITY_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -567,29 +519,29 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTable
+    record: ILoadCapacityTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.LOCATION_EDIT(record.key, true));
+      router.push(ROUTERS.LOAD_CAPACITY_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.LOCATION_CREATE);
+    router.push(ROUTERS.LOAD_CAPACITY_CREATE);
   };
   // export table data
   const exportData = useMutation({
     mutationFn: () =>
       exportTableFile({
         ids: selectedRowKeys,
-        status: querySelectParams.statusLocation,
+        status: querySelectParams.statusLoadCapacity,
       }),
     onSuccess: (data) => {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `ASL_LOCATION${getSystemDate()}.xlsx`);
+      link.setAttribute('download', `ASL_LOAD_CAPACITY${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -608,7 +560,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_LOCATION.GET_REQUEST],
+          queryKey: [API_LOAD_CAPACITY.GET_REQUEST],
         });
         setLoadingImport(false);
         setOpenImportModal(false);
@@ -642,7 +594,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `ASL_LOCATION${getSystemDate()}.xlsx`);
+      link.setAttribute('download', `ASL_LOAD_CAPACITY${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -651,7 +603,7 @@ export default function MasterDataTable() {
   });
   return (
     <div style={{ marginTop: -18 }}>
-      {locationsQuerySearch.isLoading ? (
+      {loadCapacityQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
         <>
@@ -666,7 +618,7 @@ export default function MasterDataTable() {
           <Table
             dataTable={dataTable}
             columns={columns}
-            headerTitle={translateLocation('title')}
+            headerTitle={translateLoadCapacity('title')}
             selectedRowKeys={selectedRowKeys}
             handleSelectionChange={handleSelectionChange}
             handlePaginationChange={handlePaginationChange}

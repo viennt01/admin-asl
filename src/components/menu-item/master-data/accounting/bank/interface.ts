@@ -1,4 +1,4 @@
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 import COLORS from '@/constant/color';
 
 export const STATUS_MASTER_COLORS = {
@@ -37,7 +37,7 @@ export interface BankTable extends Omit<Bank, 'bankID'> {
   searchAll: string;
 }
 
-export interface BankRequire extends Pagination {
+export interface BankRequire extends IPagination {
   data: Bank[];
 }
 
@@ -60,7 +60,7 @@ export interface QuerySelectParamType {
 export interface RequestBankType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -121,7 +121,7 @@ export interface QuerySelectDraft {
 export interface RequestBankTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -150,7 +150,7 @@ export interface QueryInputRequest {
   note: string;
 }
 export interface RequestBankTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

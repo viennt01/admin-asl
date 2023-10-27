@@ -13,7 +13,7 @@ import {
 import Table from '../../../../commons/table/table';
 import {
   DEFAULT_PAGINATION_5,
-  PaginationOfAntd,
+  IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
@@ -41,7 +41,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const { translate: translateUnit } = useI18n('unit');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION_5);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION_5);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
     initalValueQueryInputParamsDraft
   );

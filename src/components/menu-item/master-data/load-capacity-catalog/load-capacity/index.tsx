@@ -3,9 +3,9 @@ import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_LOCATION } from '@/fetcherAxios/endpoint';
+import { API_LOAD_CAPACITY } from '@/fetcherAxios/endpoint';
 
-export default function LocationPage() {
+export default function LoadCapacity() {
   const queryClient = useQueryClient();
 
   const onChange = (key: string) => {
@@ -22,7 +22,7 @@ export default function LocationPage() {
       items={[
         {
           label: 'Master Data',
-          key: API_LOCATION.GET_SEARCH,
+          key: API_LOAD_CAPACITY.GET_SEARCH,
           children: <MasterDataTable />,
         },
         {
@@ -42,7 +42,7 @@ export default function LocationPage() {
               </div>
             </Badge>
           ),
-          key: API_LOCATION.GET_REQUEST,
+          key: API_LOAD_CAPACITY.GET_REQUEST,
           children: <RequestTable />,
         },
       ]}

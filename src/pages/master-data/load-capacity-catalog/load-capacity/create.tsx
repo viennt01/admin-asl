@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateLocation from '@/components/menu-item/master-data/location-catalog/location/create';
+import CreateLoadCapacity from '@/components/menu-item/master-data/load-capacity-catalog/load-capacity/create';
 
-function CreateLocationPage() {
+function CreateLoadCapacityPage() {
   return (
     <>
       <Head>
         <title>ASL | CREATE LOAD CAPACITY</title>
       </Head>
-      <CreateLocation />
+      <CreateLoadCapacity />
     </>
   );
 }
 
-export default withAuthentication(CreateLocationPage);
+export default withAuthentication(CreateLoadCapacityPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'location']);
+export const getStaticProps = getStatic(['common', 'loadCapacity']);

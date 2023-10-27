@@ -1,7 +1,7 @@
-import LocationForm from '../components/form';
+import LoadCapacityForm from '../components/form';
 
-const ManagerLocation = () => {
-  return <LocationForm manager checkRow={true} />;
+const ManagerLoadCapacity = () => {
+  return <LoadCapacityForm manager checkRow={true} />;
 };
 
-export default ManagerLocation;
+export default ManagerLoadCapacity;

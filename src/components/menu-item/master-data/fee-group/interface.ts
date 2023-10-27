@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { Pagination } from '../../../commons/table/table-default';
+import { IPagination } from '../../../commons/table/table-default';
 
 export interface FeeGroup {
   feeGroupID: string;
@@ -27,7 +27,7 @@ export interface FeeGroupTable extends Omit<FeeGroup, 'feeGroupID'> {
   searchAll: string;
 }
 
-export interface FeeGroupsRequire extends Pagination {
+export interface FeeGroupsRequire extends IPagination {
   data: FeeGroup[];
 }
 //
@@ -44,7 +44,7 @@ export interface QuerySelectParamType {
 export interface RequestFeeGroup
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -108,7 +108,7 @@ export interface QuerySelectDraft {
 export interface RequestFeeGroupTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -130,7 +130,7 @@ export interface QueryInputRequest {
   feeGroupName: string;
 }
 export interface RequestFeeGroupTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

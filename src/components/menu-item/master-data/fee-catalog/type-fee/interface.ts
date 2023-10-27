@@ -1,5 +1,5 @@
 import { Key } from 'react';
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
 export interface TypeFee {
   typeFeeID: string;
@@ -18,7 +18,7 @@ export interface TypeFeeTable extends Omit<TypeFee, 'typeFeeID'> {
   searchAll: string;
 }
 
-export interface TypeFeeRequire extends Pagination {
+export interface TypeFeeRequire extends IPagination {
   data: TypeFee[];
 }
 
@@ -35,7 +35,7 @@ export interface QuerySelectParamType {
 export interface RequestTypeFeeType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -82,7 +82,7 @@ export interface QuerySelectDraft {
 }
 
 export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -103,7 +103,7 @@ export interface QueryInputRequest {
 }
 
 export interface RequestTypeFeeTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export interface RequestExportData {

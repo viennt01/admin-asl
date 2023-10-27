@@ -1,4 +1,4 @@
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
 export interface LocationType {
   typeLocationID: string;
@@ -20,7 +20,7 @@ export interface LocationTypeTable
   searchAll: string;
 }
 
-export interface LocationTypeRequire extends Pagination {
+export interface LocationTypeRequire extends IPagination {
   data: LocationType[];
 }
 
@@ -36,7 +36,7 @@ export interface QuerySelectParamType {
 export interface RequestLocationTypeType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -85,7 +85,7 @@ export interface QuerySelectDraft {
 export interface RequestLocationTypeTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -107,7 +107,7 @@ export interface QueryInputRequest {
   description: string;
 }
 export interface RequestLocationTypeTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

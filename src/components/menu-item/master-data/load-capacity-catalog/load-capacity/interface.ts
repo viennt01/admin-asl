@@ -1,117 +1,112 @@
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
-export interface Location {
-  locationID: string;
-  cityID: string;
-  cityName: string;
-  locationCode: string;
-  locationName: string;
-  statusLocation: string;
-  typeLocations: TypeLocations[];
-  dateInserted: string;
+export interface ILoadCapacity {
+  loadCapacityID: string;
+  typeLoadCapacityID: string;
+  typeLoadCapacityName: string;
+  code: string;
+  name: string;
+  description: string;
+  statusLoadCapacity: string;
+  public: boolean;
   insertedByUser: string;
+  dateInserted: string;
   dateUpdated: string;
   updatedByUser: string;
-  isDelete: boolean;
-  dateDeleted: string;
-  deleteByUser: string;
+  confirmDated: string;
+  confirmByUser: string;
 }
 
-export interface TypeLocations {
-  typeLocationID: string;
-  typeLocationName: string;
-  description: string;
+export interface ILoadCapacityType {
+  typeLoadCapacityID: string;
+  typeLoadCapacityName: string;
 }
 
-export interface LocationTable extends Omit<Location, 'locationID'> {
+export interface ILoadCapacityTable
+  extends Omit<ILoadCapacity, 'loadCapacityID'> {
   key: string;
   searchAll: string;
 }
 
-export interface LocationTypeRequire extends Pagination {
-  data: Location[];
+export interface ILoadCapacityRequire extends IPagination {
+  data: ILoadCapacity[];
 }
 
-export interface QueryInputParamType {
+export interface IQueryInputParamType {
   searchAll: string;
-  locationCode: string;
-  locationName: string;
+  code: string;
+  name: string;
+  description: string;
 }
-export interface QuerySelectParamType {
-  statusLocation: string[];
-  typeLocations: string[];
-  cityID: string;
-}
-
-export interface RequestLocationTypeType
-  extends QueryInputParamType,
-    QuerySelectParamType {
-  paginateRequest: Pagination;
+export interface IQuerySelectParamType {
+  statusLoadCapacity: string[];
+  typeLoadCapacityID: string;
 }
 
-export type SelectSearch = {
-  [key in keyof QueryInputParamType]: {
+export interface IRequestLoadCapacity
+  extends IQueryInputParamType,
+    IQuerySelectParamType {
+  paginateRequest: IPagination;
+}
+
+export type ISelectSearch = {
+  [key in keyof IQueryInputParamType]: {
     label: string;
     value: string;
   };
 };
 
-export interface LocationTypeDetailDataBody {
+export interface ILoadCapacityDetailDataBody {
   id: string;
 }
 
-export interface FormValues {
-  locationID: string;
-  cityID: string;
-  cityName: string;
-  locationCode: string;
-  locationNameEN: string;
-  locationNameVN: string;
-  statusLocation: string;
-  typeLocations: string[];
+export interface IFormValues {
+  loadCapacityID: string;
+  code: string;
+  name: string;
+  typeLoadCapacityID: string;
+  descriptionEN: string;
+  descriptionVN: string;
+  statusLoadCapacity: string;
 }
 
-export interface LocationTypeDetailType {
-  locationID: string;
-  cityID: string;
-  cityName: string;
-  locationCode: string;
-  locationNameEN: string;
-  locationNameVN: string;
-  statusLocation: string;
-  typeLocations: TypeLocations[];
-  dateInserted: string;
+export interface ILoadCapacityDetail extends IFormValues {
+  typeLoadCapacityName: string;
+  public: boolean;
   insertedByUser: string;
+  dateInserted: string;
   dateUpdated: string;
   updatedByUser: string;
+  confirmDated: string;
+  confirmByUser: string;
 }
 
-export type LocationTypeCreate = Omit<FormValues, 'locationID'>;
+export type ICreateLoadCapacity = Omit<IFormValues, 'loadCapacityID'>;
 
-export type LocationTypeEdit = FormValues;
+export type IEditLoadCapacity = IFormValues;
 
-export type LocationTypeDelete = {
+export type IDeleteLoadCapacity = {
   ids: React.Key[];
 };
 
 //----------------------------------------------------------------
-export interface QueryInputDraft {
-  locationCode: string;
-  locationName: string;
+export interface IQueryInputDraft {
+  code: string;
+  name: string;
+  description: string;
 }
-export interface QuerySelectDraft {
+export interface IQuerySelectDraft {
   status: string[];
-  typeLocations: string[];
-  cityID: string;
+  typeLoadCapacityID: string;
 }
-export interface RequestLocationTypeTableDraft
-  extends QueryInputDraft,
-    QuerySelectDraft {
-  paginateRequest: Pagination;
+export interface IRequestLoadCapacityTableDraft
+  extends IQueryInputDraft,
+    IQuerySelectDraft {
+  paginateRequest: IPagination;
 }
 
-export type SelectDratSearch = {
-  [key in keyof QueryInputDraft]: {
+export type ISelectDratSearch = {
+  [key in keyof IQueryInputDraft]: {
     label: string;
     value: string;
   };
@@ -119,36 +114,37 @@ export type SelectDratSearch = {
 
 //----------------------------------------------------------------
 
-export interface LocationTableRequest extends Omit<Location, 'locationID'> {
+export interface ILoadCapacityTableRequest
+  extends Omit<ILoadCapacity, 'loadCapacityID'> {
   key: string;
 }
-export interface UpdateStatusLocation {
+export interface IUpdateStatusLoadCapacity {
   id: React.Key[];
   status: string;
 }
 
-export interface QueryInputRequest {
-  locationCode: string;
-  locationName: string;
+export interface IQueryInputRequest {
+  code: string;
+  name: string;
+  description: string;
 }
-export interface QuerySelectRequest {
-  cityID: string;
-  typeLocations: string[];
+export interface IQuerySelectRequest {
+  typeLoadCapacityID: string;
 }
 
-export type SelectSearchRequest = {
-  [key in keyof QueryInputRequest]: {
+export type ISelectSearchRequest = {
+  [key in keyof IQueryInputRequest]: {
     label: string;
     value: string;
   };
 };
-export interface RequestLocationTypeTableRequest
-  extends QueryInputRequest,
-    QuerySelectRequest {
-  paginateRequest: Pagination;
+export interface IRequestLoadCapacityTableRequest
+  extends IQueryInputRequest,
+    IQuerySelectRequest {
+  paginateRequest: IPagination;
 }
 // export table
-export interface RequestExportData {
+export interface IRequestExportData {
   ids: React.Key[];
   status: string[];
 }

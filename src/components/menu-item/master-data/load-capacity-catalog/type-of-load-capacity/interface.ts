@@ -1,4 +1,4 @@
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
 export interface ILoadCapacityType {
   typeLoadCapacityID: string;
@@ -21,7 +21,7 @@ export interface ILoadCapacityTypeTable
   searchAll: string;
 }
 
-export interface ILoadCapacityTypeRequire extends Pagination {
+export interface ILoadCapacityTypeRequire extends IPagination {
   data: ILoadCapacityType[];
 }
 
@@ -35,7 +35,7 @@ export interface IQuerySelectParamType {
 export interface IRequestLoadCapacityTypeType
   extends IQueryInputParamType,
     IQuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type ISelectSearch = {
@@ -90,7 +90,7 @@ export interface IQuerySelectDraft {
 export interface IRequestLoadCapacityTypeTableDraft
   extends IQueryInputDraft,
     IQuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type ISelectDratSearch = {
@@ -115,7 +115,7 @@ export interface IQueryInputRequest {
 
 export interface IRequestLoadCapacityTypeTableRequest
   extends IQueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type ISelectSearchRequest = {

@@ -18,7 +18,7 @@ import { Button, Input, TablePaginationConfig, Tooltip } from 'antd';
 import style from './index.module.scss';
 import useI18n from '@/i18n/useI18N';
 import { ChangeEvent, MouseEvent } from 'react';
-import { PaginationOfAntd } from '@/components/commons/table/table-default';
+import { IPaginationOfAntd } from '@/components/commons/table/table-default';
 import { FilterValue } from 'antd/lib/table/interface';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 
@@ -41,7 +41,7 @@ interface Props<T extends Record<string, any>> {
   showPropsConfirmDelete?: () => void;
   refreshingQuery?: () => void;
   refreshingLoading?: boolean;
-  pagination: PaginationOfAntd;
+  pagination: IPaginationOfAntd;
   handleColumnsStateChange?: (map: Record<string, ColumnsState>) => void;
   columnsStateMap?: Record<string, ColumnsState>;
   handleSearchSelect?: (

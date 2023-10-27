@@ -1,4 +1,4 @@
-import { Pagination } from '../../../commons/table/table-default';
+import { IPagination } from '../../../commons/table/table-default';
 
 export interface Unit {
   unitID: string;
@@ -19,7 +19,7 @@ export interface UnitTable extends Omit<Unit, 'unitID'> {
   searchAll: string;
 }
 
-export interface UnitsRequire extends Pagination {
+export interface UnitsRequire extends IPagination {
   data: Unit[];
 }
 //
@@ -35,7 +35,7 @@ export interface QuerySelectParamType {
 export interface RequestUnitType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -83,7 +83,7 @@ export interface QuerySelectDraft {
 export interface RequestUnitTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -105,7 +105,7 @@ export interface QueryInputRequest {
   description: string;
 }
 export interface RequestUnitTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

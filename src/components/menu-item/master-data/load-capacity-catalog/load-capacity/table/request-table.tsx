@@ -6,22 +6,19 @@ import {
 } from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
-  PaginationOfAntd,
+  IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
 
 import { ROUTERS } from '@/constant/router';
-import { API_LOCATION, API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import {
+  API_LOAD_CAPACITY,
+  API_LOAD_CAPACITY_TYPE,
+} from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  Button,
-  PaginationProps,
-  Popover,
-  TablePaginationConfig,
-  Tag,
-} from 'antd';
+import { Button, PaginationProps, TablePaginationConfig, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
@@ -31,51 +28,53 @@ import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getTableRequire, updateStatus } from '../fetcher';
+import {
+  getListTypeLoadCapacityID,
+  getTableRequire,
+  updateStatus,
+} from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 
 import {
-  LocationTableRequest,
-  QueryInputRequest,
-  QuerySelectRequest,
-  SelectSearchRequest,
-  TypeLocations,
-  UpdateStatusLocation,
+  ILoadCapacityTableRequest,
+  IQueryInputRequest,
+  IQuerySelectRequest,
+  ISelectSearchRequest,
+  IUpdateStatusLoadCapacity,
 } from '../interface';
-import { getListTypeLocations } from '@/layout/fetcher';
 import {
   initalSelectSearchRequest,
   initalValueQueryInputParamsRequest,
   initalValueQuerySelectParamsRequest,
 } from '../constant';
 
-type DataIndex = keyof QueryInputRequest;
+type DataIndex = keyof IQueryInputRequest;
 
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateLocation } = useI18n('location');
+  const { translate: translateLoadCapacity } = useI18n('loadCapacity');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectRequest>(initalValueQuerySelectParamsRequest);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputRequest>(
+    useState<IQuerySelectRequest>(initalValueQuerySelectParamsRequest);
+  const [queryInputParams, setQueryInputParams] = useState<IQueryInputRequest>(
     initalValueQueryInputParamsRequest
   );
-  const [dataTable, setDataTable] = useState<LocationTableRequest[]>([]);
+  const [dataTable, setDataTable] = useState<ILoadCapacityTableRequest[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] =
-    useState<SelectSearchRequest>(initalSelectSearchRequest);
+    useState<ISelectSearchRequest>(initalSelectSearchRequest);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   // Handle data
-  const typePorts = useQuery(
-    [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    getListTypeLocations
+  const typeLoadCapacity = useQuery(
+    [API_LOAD_CAPACITY_TYPE.GET_ALL],
+    getListTypeLoadCapacityID
   );
   useQuery({
     queryKey: [
-      API_LOCATION.GET_REQUEST,
+      API_LOAD_CAPACITY.GET_REQUEST,
       pagination,
       queryInputParams,
       querySelectParams,
@@ -94,20 +93,21 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.locationID,
-            cityID: data.cityID,
-            cityName: data.cityName,
-            locationCode: data.locationCode,
-            locationName: data.locationName,
-            typeLocations: data.typeLocations,
-            statusLocation: data.statusLocation,
-            dateInserted: data.dateInserted,
+            key: data.loadCapacityID,
+            searchAll: '',
+            typeLoadCapacityID: data.typeLoadCapacityID,
+            typeLoadCapacityName: data.typeLoadCapacityName,
+            code: data.code,
+            name: data.name,
+            description: data.description,
+            statusLoadCapacity: data.statusLoadCapacity,
+            public: data.public,
             insertedByUser: data.insertedByUser,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
           }))
         );
         pagination.current = currentPage;
@@ -120,7 +120,7 @@ const RequestTable = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusLocation) => {
+    mutationFn: (body: IUpdateStatusLoadCapacity) => {
       return updateStatus(body);
     },
   });
@@ -171,9 +171,9 @@ const RequestTable = () => {
     clearFilters();
   };
   // Handle data show table
-  const columns: ProColumns<LocationTableRequest>[] = [
+  const columns: ProColumns<ILoadCapacityTableRequest>[] = [
     {
-      title: <div className={style.title}>{translateLocation('no')}</div>,
+      title: <div className={style.title}>{translateLoadCapacity('no')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -222,40 +222,57 @@ const RequestTable = () => {
       ),
     },
     {
-      title: <div className={style.title}>{translateLocation('code')}</div>,
-      dataIndex: 'locationCode',
-      key: 'locationCode',
+      title: <div className={style.title}>{translateLoadCapacity('code')}</div>,
+      dataIndex: 'code',
+      key: 'code',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputRequest>({
+      ...ColumnSearchTableProps<IQueryInputRequest>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'locationCode',
+          dataIndex: 'code',
         },
       }),
     },
     {
-      title: translateLocation('type_of_port'),
-      dataIndex: 'typeLocations',
-      key: 'typeLocations',
+      title: <div className={style.title}>{translateLoadCapacity('name')}</div>,
+      dataIndex: 'name',
+      key: 'name',
+      width: 150,
       align: 'center',
+      ...ColumnSearchTableProps<IQueryInputRequest>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'name',
+        },
+      }),
+    },
+    {
+      title: translateLoadCapacity('type'),
+      dataIndex: 'typeLoadCapacityID',
+      key: 'typeLoadCapacityID',
       width: 240,
-      filteredValue: querySelectParams.typeLocations || null,
+      align: 'center',
+      filteredValue: [querySelectParams.typeLoadCapacityID] || undefined,
       filters:
-        typePorts.data?.data.map((data) => ({
-          text: data.typeLocationName,
-          value: data.typeLocationID,
+        typeLoadCapacity.data?.data?.map((data) => ({
+          text: data.typeLoadCapacityName,
+          value: data.typeLoadCapacityID,
         })) || [],
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.typeLocations?.length !== 0
+                querySelectParams.typeLoadCapacityID?.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -264,49 +281,31 @@ const RequestTable = () => {
       },
       filterMultiple: false,
       render: (_, value) => {
-        const content = (valueTypeLocations: TypeLocations[]) => {
-          return (
-            <div>
-              {valueTypeLocations.map((type) => {
-                return (
-                  <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
-                );
-              })}
-            </div>
-          );
-        };
         return (
-          <Popover content={content(value.typeLocations)}>
-            {value.typeLocations.length <= 2 ? (
-              value.typeLocations.map((type) => (
-                <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
-              ))
-            ) : (
-              <>
-                {value.typeLocations.slice(0, 2).map((type) => (
-                  <Tag key={type.typeLocationID}>{type.typeLocationName}</Tag>
-                ))}
-                <Tag>...</Tag>
-              </>
-            )}
-          </Popover>
+          typeLoadCapacity.data?.data.find(
+            (item) => item.typeLoadCapacityID === value.typeLoadCapacityID
+          )?.typeLoadCapacityName || ''
         );
       },
     },
     {
-      title: <div className={style.title}>{translateLocation('name')}</div>,
-      dataIndex: 'locationName',
-      key: 'locationName',
+      title: (
+        <div className={style.title}>
+          {translateLoadCapacity('description')}
+        </div>
+      ),
+      dataIndex: 'description',
+      key: 'description',
       width: 250,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputRequest>({
+      ...ColumnSearchTableProps<IQueryInputRequest>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'locationName',
+          dataIndex: 'description',
         },
       }),
     },
@@ -328,10 +327,12 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: <div className={style.title}>{translateLocation('status')}</div>,
+      title: (
+        <div className={style.title}>{translateLoadCapacity('status')}</div>
+      ),
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusLoadCapacity',
+      key: 'statusLoadCapacity',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -349,11 +350,11 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.LOCATION_MANAGER(id));
+    router.push(ROUTERS.LOAD_CAPACITY_MANAGER(id));
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
-    const _requestData: UpdateStatusLocation = {
+    const _requestData: IUpdateStatusLoadCapacity = {
       id: id || selectedRowKeys,
       status,
     };
@@ -364,7 +365,7 @@ const RequestTable = () => {
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [
-                API_LOCATION.GET_REQUEST,
+                API_LOAD_CAPACITY.GET_REQUEST,
                 pagination,
                 queryInputParams,
               ],
@@ -391,11 +392,11 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: LocationTableRequest
+    record: ILoadCapacityTableRequest
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.LOCATION_MANAGER(record.key));
+      router.push(ROUTERS.LOAD_CAPACITY_MANAGER(record.key));
     }
   };
 

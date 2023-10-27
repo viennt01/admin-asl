@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { Pagination } from '../../../commons/table/table-default';
+import { IPagination } from '../../../commons/table/table-default';
 
 export interface SeaPricing {
   seaPricingID: string;
@@ -41,7 +41,7 @@ export interface SeaPricingTable extends Omit<SeaPricing, 'seaPricingID'> {
   searchAll: string;
 }
 
-export interface SeaPricingRequire extends Pagination {
+export interface SeaPricingRequire extends IPagination {
   data: SeaPricing[];
 }
 //
@@ -55,7 +55,7 @@ export interface QuerySelectParamType {
 export interface RequestSeaPricing
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -186,7 +186,7 @@ export interface QuerySelectDraft {
   status: string;
 }
 export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -208,7 +208,7 @@ export interface QueryInputRequest {
   status: string;
 }
 export interface RequestTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 // get all location

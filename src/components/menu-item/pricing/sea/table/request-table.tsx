@@ -1,7 +1,7 @@
 import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
-  PaginationOfAntd,
+  IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
 import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit/interface';
@@ -37,7 +37,7 @@ const RequestTable = () => {
   const { translate: translatePricingSea } = useI18n('pricingSea');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
 
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);

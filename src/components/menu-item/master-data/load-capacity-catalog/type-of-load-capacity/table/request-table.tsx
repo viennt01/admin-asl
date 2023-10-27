@@ -1,7 +1,7 @@
 import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import {
   DEFAULT_PAGINATION,
-  PaginationOfAntd,
+  IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
 
@@ -43,7 +43,7 @@ const RequestTable = () => {
     useI18n('typeOfLoadCapacity');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [dataTable, setDataTable] = useState<ILoadCapacityTypeTable[]>([]);
   const [queryInputParams, setQueryInputParams] = useState<IQueryInputRequest>(
     initalValueQueryInputParamsRequest

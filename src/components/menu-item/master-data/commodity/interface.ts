@@ -1,4 +1,4 @@
-import { Pagination } from '../../../commons/table/table-default';
+import { IPagination } from '../../../commons/table/table-default';
 
 export interface Commodity {
   commodityID: string;
@@ -18,7 +18,7 @@ export interface CommodityTable extends Omit<Commodity, 'commodityID'> {
   searchAll: string;
 }
 
-export interface CommodityRequire extends Pagination {
+export interface CommodityRequire extends IPagination {
   data: Commodity[];
 }
 //
@@ -33,7 +33,7 @@ export interface QuerySelectParamType {
 export interface RequestLocationType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -79,7 +79,7 @@ export interface QuerySelectDraft {
 export interface RequestCommodityTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -100,7 +100,7 @@ export interface QueryInputRequest {
   commodityName: string;
 }
 export interface RequestUnitTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

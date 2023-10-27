@@ -1,4 +1,4 @@
-import { Pagination } from '@/components/commons/table/table-default';
+import { IPagination } from '@/components/commons/table/table-default';
 
 export interface TypePortData {
   typeLocationID: string;
@@ -6,7 +6,7 @@ export interface TypePortData {
   description: string;
 }
 
-export interface CountriesType extends Pagination {
+export interface CountriesType extends IPagination {
   data: Country[];
 }
 
@@ -32,6 +32,6 @@ export interface City {
   updatedByUser: string;
 }
 
-export interface CityType extends Pagination {
+export interface CityType extends IPagination {
   data: City[];
 }

@@ -5,7 +5,7 @@ import {
   API_USER,
 } from '@/fetcherAxios/endpoint';
 import { CityType, CountriesType, TypePortData } from './interface';
-import { Pagination } from '@/components/commons/table/table-default';
+import { IPagination } from '@/components/commons/table/table-default';
 
 export interface UserInfo {
   idUser: string;
@@ -51,14 +51,14 @@ export const getListTypeLocations = () => {
   );
 };
 
-export const getListCity = (data: Pagination) => {
-  return post<Pagination, ResponseWithPayload<CityType>>({ data })(
+export const getListCity = (data: IPagination) => {
+  return post<IPagination, ResponseWithPayload<CityType>>({ data })(
     API_MASTER_DATA.GET_ALL_CITY
   );
 };
 
-export const getListCountry = (data: Pagination) => {
-  return post<Pagination, ResponseWithPayload<CountriesType>>({
+export const getListCountry = (data: IPagination) => {
+  return post<IPagination, ResponseWithPayload<CountriesType>>({
     data,
   })(API_MASTER_DATA.GET_COUNTRY);
 };

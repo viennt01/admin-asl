@@ -33,7 +33,7 @@ import {
 import {
   DEFAULT_PAGINATION,
   DENSITY,
-  PaginationOfAntd,
+  IPaginationOfAntd,
   SkeletonTable,
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
@@ -70,7 +70,7 @@ export default function MasterDataTable() {
   const { translate: translateBank } = useI18n('bank');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<PaginationOfAntd>(DEFAULT_PAGINATION);
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParamsMaster
   );

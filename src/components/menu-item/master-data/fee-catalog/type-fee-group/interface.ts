@@ -1,4 +1,4 @@
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
 export interface TypeFeeGroup {
   typeFeeGroupID: string;
@@ -20,7 +20,7 @@ export interface TypeFeeGroupTable
   searchAll: string;
 }
 
-export interface TypeFeeGroupsRequire extends Pagination {
+export interface TypeFeeGroupsRequire extends IPagination {
   data: TypeFeeGroup[];
 }
 //
@@ -36,7 +36,7 @@ export interface QuerySelectParamType {
 export interface RequestFeeGroupType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -85,7 +85,7 @@ export interface QuerySelectDraft {
 export interface RequestTypeFeeGroupTableDraft
   extends QueryInputDraft,
     QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -107,7 +107,7 @@ export interface QueryInputRequest {
   typeFeeGroupName: string;
 }
 export interface RequestTypeFeeGroupTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

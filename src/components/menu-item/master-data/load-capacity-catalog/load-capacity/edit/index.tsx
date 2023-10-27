@@ -1,32 +1,32 @@
 import router from 'next/router';
-import { FormValues, LocationTypeEdit } from '../interface';
-import { editLocation } from '../fetcher';
+import { IFormValues, IEditLoadCapacity } from '../interface';
+import { editLoadCapacity } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import LocationForm from '../components/form';
+import LoadCapacityForm from '../components/form';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 
-const EditLocation = () => {
+const EditLoadCapacity = () => {
   const checkRow = router.query.checkRow as string;
   const updateMutation = useMutation({
-    mutationFn: (body: LocationTypeEdit) => {
-      return editLocation(body);
+    mutationFn: (body: IEditLoadCapacity) => {
+      return editLoadCapacity(body);
     },
   });
 
-  const handleSubmit = (formValues: FormValues, idQuery?: string) => {
+  const handleSubmit = (formValues: IFormValues, idQuery?: string) => {
     if (idQuery) {
-      const _requestData: LocationTypeEdit = {
-        locationID: idQuery,
-        cityID: formValues.cityID || '',
-        cityName: formValues.cityName || '',
-        locationCode: formValues.locationCode || '',
-        locationNameEN: formValues.locationNameEN || '',
-        locationNameVN:
-          formValues.locationNameVN || formValues.locationNameEN || '',
-        typeLocations: formValues.typeLocations || [],
-        statusLocation: formValues.statusLocation || STATUS_ALL_LABELS.ACTIVE,
+      const _requestData: IEditLoadCapacity = {
+        loadCapacityID: idQuery,
+        code: formValues.code || '',
+        name: formValues.name || '',
+        typeLoadCapacityID: formValues.typeLoadCapacityID || '',
+        descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
+        statusLoadCapacity:
+          formValues.statusLoadCapacity || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
@@ -42,7 +42,7 @@ const EditLocation = () => {
   };
 
   return (
-    <LocationForm
+    <LoadCapacityForm
       edit
       handleSubmit={handleSubmit}
       loadingSubmit={updateMutation.isLoading}
@@ -51,4 +51,4 @@ const EditLocation = () => {
   );
 };
 
-export default EditLocation;
+export default EditLoadCapacity;

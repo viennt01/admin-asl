@@ -1,21 +1,21 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerLocation from '@/components/menu-item/master-data/location-catalog/location/manager';
+import ManagerLoadCapacity from '@/components/menu-item/master-data/load-capacity-catalog/load-capacity/manager';
 
-function LocationManagerPage() {
+function ManagerLoadCapacityPage() {
   return (
     <>
       <Head>
         <title>ASL | MANAGER LOAD CAPACITY</title>
       </Head>
-      <ManagerLocation />
+      <ManagerLoadCapacity />
     </>
   );
 }
 
-export default withAuthentication(LocationManagerPage);
+export default withAuthentication(ManagerLoadCapacityPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'location']);
+export const getStaticProps = getStatic(['common', 'loadCapacity']);
 export const getStaticPaths = () => {
   return {
     paths: [],

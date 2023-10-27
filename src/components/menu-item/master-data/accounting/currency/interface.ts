@@ -1,4 +1,4 @@
-import { Pagination } from '../../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
 export interface Currency {
   currencyID: string;
@@ -20,7 +20,7 @@ export interface CurrencyTable extends Omit<Currency, 'currencyID'> {
   searchAll: string;
 }
 
-export interface CurrencyRequire extends Pagination {
+export interface CurrencyRequire extends IPagination {
   data: Currency[];
 }
 //
@@ -37,7 +37,7 @@ export interface QuerySelectParamType {
 export interface RequestCurrencyType
   extends QueryInputParamType,
     QuerySelectParamType {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
@@ -84,7 +84,7 @@ export interface QuerySelectDraft {
   status: string[];
 }
 export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 
 export type SelectDratSearch = {
@@ -107,7 +107,7 @@ export interface QueryInputRequest {
   exchangeRateToUSD: string;
 }
 export interface RequestCurrencyTableRequest extends QueryInputRequest {
-  paginateRequest: Pagination;
+  paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {

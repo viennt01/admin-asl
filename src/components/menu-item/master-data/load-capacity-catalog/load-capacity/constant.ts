@@ -2,14 +2,14 @@ import { STATUS_ALL_LABELS } from '@/constant/form';
 
 export const initalValueQueryInputParamsMaster = {
   searchAll: '',
-  locationCode: '',
-  locationName: '',
+  code: '',
+  name: '',
+  description: '',
 };
 
 export const initalValueQuerySelectParamsMaster = {
-  statusLocation: [],
-  typeLocations: [],
-  cityID: '',
+  typeLoadCapacityID: '',
+  statusLoadCapacity: [],
 };
 export const initalValueDisplayColumnMaster = {
   operation: {
@@ -27,19 +27,23 @@ export const initalSelectSearchMaster = {
     label: '',
     value: '',
   },
-  locationCode: {
+  code: {
     label: '',
     value: '',
   },
-  locationName: {
+  name: {
     label: '',
     value: '',
   },
-  typeLocations: {
+  description: {
     label: '',
-    value: [],
+    value: '',
   },
-  statusLocation: {
+  typeLoadCapacityID: {
+    label: '',
+    value: '',
+  },
+  statusLoadCapacity: {
     label: '',
     value: [],
   },
@@ -47,15 +51,14 @@ export const initalSelectSearchMaster = {
 
 //draft
 export const initalValueQueryInputParamsDraft = {
-  searchAll: '',
-  locationCode: '',
-  locationName: '',
+  code: '',
+  name: '',
+  description: '',
 };
 
 export const initalValueQuerySelectParamsDraft = {
   status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
-  typeLocations: [],
-  cityID: '',
+  typeLoadCapacityID: '',
 };
 
 export const initalSelectSearchDraft = {
@@ -63,19 +66,23 @@ export const initalSelectSearchDraft = {
     label: '',
     value: '',
   },
-  locationCode: {
+  code: {
     label: '',
     value: '',
   },
-  locationName: {
+  name: {
     label: '',
     value: '',
   },
-  typeLocations: {
+  description: {
     label: '',
-    value: [],
+    value: '',
   },
-  statusLocation: {
+  typeLoadCapacityID: {
+    label: '',
+    value: '',
+  },
+  statusLoadCapacity: {
     label: '',
     value: [],
   },
@@ -83,29 +90,37 @@ export const initalSelectSearchDraft = {
 
 //request
 export const initalValueQueryInputParamsRequest = {
-  locationCode: '',
-  locationName: '',
+  code: '',
+  name: '',
+  description: '',
 };
 
 export const initalValueQuerySelectParamsRequest = {
-  typeLocations: [],
-  cityID: '',
+  typeLoadCapacityID: '',
 };
 
 export const initalSelectSearchRequest = {
-  locationCode: {
+  searchAll: {
     label: '',
     value: '',
   },
-  locationName: {
+  code: {
     label: '',
     value: '',
   },
-  cityID: {
+  name: {
     label: '',
     value: '',
   },
-  typeLocations: {
+  description: {
+    label: '',
+    value: '',
+  },
+  typeLoadCapacityID: {
+    label: '',
+    value: '',
+  },
+  statusLoadCapacity: {
     label: '',
     value: [],
   },

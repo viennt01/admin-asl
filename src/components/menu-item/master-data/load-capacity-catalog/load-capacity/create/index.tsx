@@ -3,44 +3,47 @@ import { ROUTERS } from '@/constant/router';
 import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
-import LocationForm from '../components/form';
-import { FormValues, LocationTypeCreate, LocationTypeEdit } from '../interface';
-import { createLocation, editLocation } from '../fetcher';
+import LoadCapacityForm from '../components/form';
+import {
+  IFormValues,
+  ICreateLoadCapacity,
+  IEditLoadCapacity,
+} from '../interface';
+import { createLoadCapacity, editLoadCapacity } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { API_LOAD_CAPACITY } from '@/fetcherAxios/endpoint';
 
-const CreateLocation = () => {
+const CreateLoadCapacity = () => {
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
-    mutationFn: (body: LocationTypeCreate) => {
-      return createLocation(body);
+    mutationFn: (body: ICreateLoadCapacity) => {
+      return createLoadCapacity(body);
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: (body: LocationTypeEdit) => {
-      return editLocation(body);
+    mutationFn: (body: IEditLoadCapacity) => {
+      return editLoadCapacity(body);
     },
   });
 
-  const handleSubmit = (formValues: FormValues, id?: string) => {
+  const handleSubmit = (formValues: IFormValues, id?: string) => {
     if (id) {
-      const _requestData: LocationTypeEdit = {
-        locationID: id,
-        cityID: formValues.cityID || '',
-        cityName: formValues.cityName || '',
-        locationCode: formValues.locationCode || '',
-        locationNameEN: formValues.locationNameEN || '',
-        locationNameVN:
-          formValues.locationNameVN || formValues.locationNameEN || '',
-        typeLocations: formValues.typeLocations || [],
-        statusLocation: STATUS_ALL_LABELS.REQUEST,
+      const _requestData: IEditLoadCapacity = {
+        loadCapacityID: id,
+        code: formValues.code || '',
+        name: formValues.name || '',
+        typeLoadCapacityID: formValues.typeLoadCapacityID || '',
+        descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
+        statusLoadCapacity: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.LOCATION))
+            ? (successToast(data.message), router.push(ROUTERS.LOAD_CAPACITY))
             : errorToast(data.message);
         },
         onError() {
@@ -48,20 +51,19 @@ const CreateLocation = () => {
         },
       });
     } else {
-      const _requestData: LocationTypeCreate = {
-        cityID: formValues.cityID || '',
-        cityName: formValues.cityName || '',
-        locationCode: formValues.locationCode || '',
-        locationNameEN: formValues.locationNameEN || '',
-        locationNameVN:
-          formValues.locationNameVN || formValues.locationNameEN || '',
-        typeLocations: formValues.typeLocations || [],
-        statusLocation: STATUS_ALL_LABELS.REQUEST,
+      const _requestData: ICreateLoadCapacity = {
+        code: formValues.code || '',
+        name: formValues.name || '',
+        typeLoadCapacityID: formValues.typeLoadCapacityID || '',
+        descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
+        statusLoadCapacity: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.LOCATION))
+            ? (successToast(data.message), router.push(ROUTERS.LOAD_CAPACITY))
             : errorToast(data.message);
         },
         onError() {
@@ -71,25 +73,24 @@ const CreateLocation = () => {
     }
   };
 
-  const handleSaveDraft = (formValues: FormValues, id?: string) => {
+  const handleSaveDraft = (formValues: IFormValues, id?: string) => {
     if (id) {
-      const _requestData: LocationTypeEdit = {
-        locationID: id,
-        cityID: formValues.cityID || '',
-        cityName: formValues.cityName || '',
-        locationCode: formValues.locationCode || '',
-        locationNameEN: formValues.locationNameEN || '',
-        locationNameVN:
-          formValues.locationNameVN || formValues.locationNameEN || '',
-        typeLocations: formValues.typeLocations || [],
-        statusLocation: STATUS_ALL_LABELS.DRAFT,
+      const _requestData: IEditLoadCapacity = {
+        loadCapacityID: id,
+        code: formValues.code || '',
+        name: formValues.name || '',
+        typeLoadCapacityID: formValues.typeLoadCapacityID || '',
+        descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
+        statusLoadCapacity: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_LOCATION_TYPE.GET_DRAFT],
+                queryKey: [API_LOAD_CAPACITY.GET_DRAFT],
               }))
             : errorToast(data.message);
         },
@@ -98,22 +99,21 @@ const CreateLocation = () => {
         },
       });
     } else {
-      const _requestData: LocationTypeCreate = {
-        cityID: formValues.cityID || '',
-        cityName: formValues.cityName || '',
-        locationCode: formValues.locationCode || '',
-        locationNameEN: formValues.locationNameEN || '',
-        locationNameVN:
-          formValues.locationNameVN || formValues.locationNameEN || '',
-        typeLocations: formValues.typeLocations || [],
-        statusLocation: STATUS_ALL_LABELS.DRAFT,
+      const _requestData: ICreateLoadCapacity = {
+        code: formValues.code || '',
+        name: formValues.name || '',
+        typeLoadCapacityID: formValues.typeLoadCapacityID || '',
+        descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
+        statusLoadCapacity: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_LOCATION_TYPE.GET_DRAFT],
+                queryKey: [API_LOAD_CAPACITY.GET_DRAFT],
               }))
             : errorToast(data.message);
         },
@@ -125,7 +125,7 @@ const CreateLocation = () => {
   };
 
   return (
-    <LocationForm
+    <LoadCapacityForm
       create
       handleSubmit={handleSubmit}
       handleSaveDraft={handleSaveDraft}
@@ -136,4 +136,4 @@ const CreateLocation = () => {
   );
 };
 
-export default CreateLocation;
+export default CreateLoadCapacity;
