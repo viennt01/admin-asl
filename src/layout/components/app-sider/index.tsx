@@ -270,7 +270,7 @@ const AppSider = ({ collapsed }: Props) => {
             getItem(
               `${translateCommon('load_capacity')}`,
               ROUTERS.LOAD_CAPACITY,
-              <EnvironmentOutlined ref={refLoadCapacity} />
+              <InboxOutlined ref={refLoadCapacity} />
             ),
             getItem(
               `${translateCommon('type_load_capacity')}`,
