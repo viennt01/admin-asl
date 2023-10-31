@@ -116,7 +116,8 @@ export default function RegisterV2() {
       >
         <CustomCard
           style={{
-            margin: '100px 24px',
+            // overflowY: 'scroll',
+            // height: '90vh',
             maxWidth: 480,
             width: '100%',
             background: 'rgba(255, 255, 255, 0.6156862745)',
@@ -149,253 +150,296 @@ export default function RegisterV2() {
             <h2>SIGN UP</h2>
           </div>
 
-          <Form
-            form={form}
-            onFinish={handleSubmitVerifyOtp}
-            initialValues={initialValuesRegisterForm}
+          <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
+              overflowY: 'scroll',
+              height: '55vh',
+              overflowX: 'hidden',
             }}
           >
-            <Row gutter={24}>
-              <Col span={24}>
-                <Form.Item
-                  name="roleID"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please select role!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Select
-                    options={roleOptions}
-                    placeholder="Please select role"
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="fullName"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input your full name!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input
-                    placeholder="Full Name"
-                    prefix={<UserOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-              <Col span={24}>
-                <Form.Item
-                  name="email"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input your email!',
-                    },
-                    {
-                      pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                      message: 'Please enter a valid email format!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input
-                    placeholder="Email"
-                    prefix={<MailOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="taxCode"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input tax code!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input
-                    onBlur={(value) => handleCheckTaxCode(value)}
-                    placeholder="Tax Code Company"
-                    prefix={<BarcodeOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="companyName"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input name company!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input
-                    placeholder="Name Company"
-                    prefix={<InfoOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="emailCompany"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input email company!',
-                    },
-                    {
-                      pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                      message: 'Please enter a valid email format!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input
-                    placeholder="Email Company"
-                    prefix={<MailOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="phoneNumberCompany"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input phone number!',
-                    },
-                    {
-                      pattern: /^[0-9]{7,15}$/,
-                      message: 'Please enter a vailid phone number!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input
-                    placeholder="Phone Number"
-                    prefix={<PhoneOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="address"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input address!',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input.TextArea placeholder="Address" size="large" />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="password"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input your password!',
-                    },
-                    {
-                      pattern:
-                        // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
-                        /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
-                      message:
-                        'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character',
-                    },
-                  ]}
-                  hasFeedback
-                >
-                  <Input.Password
-                    placeholder="Password"
-                    prefix={<LockOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item
-                  name="passwordConfirm"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input your password!',
-                    },
-                    {
-                      pattern:
-                        // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
-                        /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
-                      message:
-                        'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character',
-                    },
-                    ({ getFieldValue }) => ({
-                      validator(_, value) {
-                        if (!value || getFieldValue('password') === value) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(
-                          new Error(
-                            'The two passwords that you entered do not match!'
-                          )
-                        );
-                      },
-                    }),
-                  ]}
-                  hasFeedback
-                >
-                  <Input.Password
-                    placeholder="Confirm Password"
-                    prefix={<LockOutlined />}
-                    size="large"
-                  />
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Button
-              loading={isLoadingConfirmOtp}
-              className={style.btnSubmit}
-              htmlType="submit"
-              // style={{ width: '30%' }}
-              style={{ width: '100%', marginTop: '15px' }}
+            <Form
+              form={form}
+              onFinish={handleSubmitVerifyOtp}
+              initialValues={initialValuesRegisterForm}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+              }}
             >
-              SIGN UP
-            </Button>
-          </Form>
+              <Row gutter={24}>
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="roleID"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please select role!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Select
+                      options={roleOptions}
+                      placeholder="Please select role"
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="fullName"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input your full name!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Full Name"
+                      prefix={<UserOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="email"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input your email!',
+                      },
+                      {
+                        pattern:
+                          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                        message: 'Please enter a valid email format!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Email"
+                      prefix={<MailOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="taxCode"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input tax code!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      onBlur={(value) => handleCheckTaxCode(value)}
+                      placeholder="Tax Code Company"
+                      prefix={<BarcodeOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="companyName"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input name company!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Name Company"
+                      prefix={<InfoOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="emailCompany"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input email company!',
+                      },
+                      {
+                        pattern:
+                          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                        message: 'Please enter a valid email format!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Email Company"
+                      prefix={<MailOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="phoneNumberCompany"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input phone number!',
+                      },
+                      {
+                        pattern: /^[0-9]{7,15}$/,
+                        message: 'Please enter a vailid phone number!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input
+                      placeholder="Phone Number"
+                      prefix={<PhoneOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="address"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input address!',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input.TextArea placeholder="Address" size="large" />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="password"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input your password!',
+                      },
+                      {
+                        pattern:
+                          // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
+                          /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
+                        message:
+                          'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character',
+                      },
+                    ]}
+                    hasFeedback
+                  >
+                    <Input.Password
+                      placeholder="Password"
+                      prefix={<LockOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+
+                <Col
+                  span={24}
+                  style={{ paddingLeft: '18px', paddingRight: '18px' }}
+                >
+                  <Form.Item
+                    name="passwordConfirm"
+                    rules={[
+                      {
+                        required: true,
+                        message: 'Please input your password!',
+                      },
+                      {
+                        pattern:
+                          // Bao gồm cả chữ hoa, chữ thường, số, ký tự đặc biệt và ít nhất 8 kỹ tự
+                          /(?=(.*[0-9]))(?=.*[\!@#$%^&*()\\[\]{}\-_+=~`|:;"'<>,./?])(?=.*[a-z])(?=(.*[A-Z]))(?=(.*)).{8,}/,
+                        message:
+                          'Must contain 8 characters, one uppercase, one lowercase, one number and one special case character',
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error(
+                              'The two passwords that you entered do not match!'
+                            )
+                          );
+                        },
+                      }),
+                    ]}
+                    hasFeedback
+                  >
+                    <Input.Password
+                      placeholder="Confirm Password"
+                      prefix={<LockOutlined />}
+                      size="large"
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Button
+                loading={isLoadingConfirmOtp}
+                className={style.btnSubmit}
+                htmlType="submit"
+                // style={{ width: '30%' }}
+                style={{
+                  width: '98%',
+                  marginTop: '15px',
+                }}
+              >
+                SIGN UP
+              </Button>
+            </Form>
+          </div>
         </CustomCard>
       </Content>
     </Layout>
