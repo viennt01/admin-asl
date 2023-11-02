@@ -40,6 +40,7 @@
     "notification_sign_out": "Do you want to sign out of your account?",
     "notification_404": "Sorry, the page you visited does not exist.",
     "button_back_home": "Back Home",
+    "button_create_quotation": "Add quotation",
     "button_add": "Add",
     "button_delete": "Delete",
     "detail": "Detail",

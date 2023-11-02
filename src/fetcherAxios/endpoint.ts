@@ -34,6 +34,21 @@ export const API_UNIT = {
   GET_ALL: '/get-all-unit',
 };
 
+export const API_SEA_QUOTATION = {
+  GET_SEARCH: '/search-sea-quotation',
+  GET_DETAIL: '/get-sea-quotation-by-id',
+  CREATE: '/add-sea-quotation',
+  CREATE_WITH_PRICING: '/add-sea-quotation-by-pricing',
+  EDIT: '/update-sea-quotation',
+  DELETE: '/delete-sea-quotation',
+  UPDATE_STATUS: '/update-status-sea-quotation',
+  GET_DRAFT: '/search-sea-quotation-by-user',
+  GET_REQUEST: '/search-sea-quotation',
+  DOWNLOAD_EXAMPLE_FILE: '/download-sea-quotation-excel',
+  IMPORT: '/import-sea-quotation-with-excel',
+  EXPORT: '/export-sea-quotation-with-excel',
+};
+
 export const API_SEA_PRICING = {
   GET_SEARCH: '/search-sea-pricing',
   GET_DETAIL: '/get-sea-pricing-by-id',

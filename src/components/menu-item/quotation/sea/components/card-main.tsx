@@ -16,8 +16,8 @@ import {
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
-  FormValues,
-  SeaPricingDetailDTOs,
+  IFormValues,
+  ISeaQuotationDetailDTOs,
   // SeaPricingFeeDTOs,
   UpdateStatus,
 } from '../interface';
@@ -42,13 +42,13 @@ interface Props {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
-  handleSubmit?: (formValues: FormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: FormValues, id?: string) => void;
+  handleSubmit?: (formValues: IFormValues, id?: string) => void;
+  handleSaveDraft?: (formValues: IFormValues, id?: string) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
   optionCurrency: { value: string; label: string }[];
-  form: FormInstance<FormValues>;
+  form: FormInstance<IFormValues>;
   idQuery?: string;
   handleIdQuery: (id: string) => void;
   handleCheckEdit: (data: boolean) => void;
@@ -70,7 +70,7 @@ const CardMain = ({
   handleCheckEdit,
   isCheckPermissionEdit,
 }: Props) => {
-  const { translate: translatePricingSea } = useI18n('pricingSea');
+  const { translate: translateQuotationSea } = useI18n('seaQuotation');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
@@ -122,8 +122,8 @@ const CardMain = ({
   });
 
   useEffect(() => {
-    if (form.getFieldValue('statusSeaPricing')) {
-      form.getFieldValue('statusSeaPricing') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusSeaQuotation')) {
+      form.getFieldValue('statusSeaQuotation') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -140,16 +140,16 @@ const CardMain = ({
         dateEffect: propCopyAndCreate.dateEffect as string,
         validityDate: propCopyAndCreate.validityDate as string,
         freqDate: propCopyAndCreate.freqDate as string,
-        demSeaPricing: propCopyAndCreate.demSeaPricing as string,
-        detSeaPricing: propCopyAndCreate.detSeaPricing as string,
-        stoSeaPricing: propCopyAndCreate.stoSeaPricing as string,
-        lclMinSeaPricing: propCopyAndCreate.lclMinSeaPricing as string,
-        lclSeaPricing: propCopyAndCreate.lclSeaPricing as string,
+        demSeaQuotation: propCopyAndCreate.demSeaQuotation as string,
+        detSeaQuotation: propCopyAndCreate.detSeaQuotation as string,
+        stoSeaQuotation: propCopyAndCreate.stoSeaQuotation as string,
+        lclMinSeaQuotation: propCopyAndCreate.lclMinSeaQuotation as string,
+        lclSeaQuotation: propCopyAndCreate.lclSeaQuotation as string,
         currencyID: propCopyAndCreate.currencyID as string,
         public: propCopyAndCreate.public as unknown as boolean,
-        statusSeaPricing: propCopyAndCreate.statusSeaPricing as string,
-        seaPricingDetailDTOs:
-          propCopyAndCreate.seaPricingDetailDTOs as unknown as SeaPricingDetailDTOs[],
+        statusSeaQuotation: propCopyAndCreate.statusSeaQuotation as string,
+        seaQuotationDetailDTOs:
+          propCopyAndCreate.seaQuotationDetailDTOs as unknown as ISeaQuotationDetailDTOs[],
         // seaPricingFeeDTOs:
         //   propCopyAndCreate.seaPricingFeeDTOs as unknown as SeaPricingFeeDTOs[],
       });
@@ -160,7 +160,7 @@ const CardMain = ({
     checkRow,
     manager,
     propCopyAndCreate,
-    form.getFieldValue('statusSeaPricing'),
+    form.getFieldValue('statusSeaQuotation'),
   ]);
 
   const updateStatusMutation = useMutation({
@@ -176,7 +176,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: translatePricingSea('currency_form.placeholder'),
+          message: translateQuotationSea('currency_form.placeholder'),
         },
       ]}
     >
@@ -197,7 +197,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: translatePricingSea('currency_form.placeholder'),
+          message: translateQuotationSea('currency_form.placeholder'),
         },
       ]}
     >
@@ -217,16 +217,17 @@ const CardMain = ({
         <Row justify={'center'}>
           <Col>
             <Title level={3} style={{ margin: '-4px 0' }}>
-              {create && 'Create a new sea pricing'}
+              {create && translateQuotationSea('information_add_sea_quotation')}
               {manager && 'Approval needed requests'}
               {edit &&
                 (checkRow ? (
                   <>
                     {isCheckPermissionEdit && 'View'}
-                    {!isCheckPermissionEdit && 'Edit a new sea pricing'}
+                    {!isCheckPermissionEdit &&
+                      translateQuotationSea('information_edit_sea_quotation')}
                   </>
                 ) : (
-                  'Edit a new sea pricing'
+                  translateQuotationSea('information_edit_sea_quotation')
                 ))}
             </Title>
           </Col>
@@ -274,19 +275,19 @@ const CardMain = ({
       <Row gutter={16}>
         <Col lg={12} span={24}>
           <Form.Item
-            label={translatePricingSea('POL')}
-            tooltip={translatePricingSea('POL')}
+            label={translateQuotationSea('POL')}
+            tooltip={translateQuotationSea('POL')}
             name="polid"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('POL_form.placeholder'),
+                message: translateQuotationSea('POL_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('POL_form.placeholder')}
+              placeholder={translateQuotationSea('POL_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -310,19 +311,19 @@ const CardMain = ({
         </Col>
         <Col lg={12} span={24}>
           <Form.Item
-            label={translatePricingSea('POD')}
-            tooltip={translatePricingSea('POD')}
+            label={translateQuotationSea('POD')}
+            tooltip={translateQuotationSea('POD')}
             name="podid"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('POD_form.placeholder'),
+                message: translateQuotationSea('POD_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('POD_form.placeholder')}
+              placeholder={translateQuotationSea('POD_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -347,12 +348,12 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('validity')}
+            label={translateQuotationSea('validity')}
             name="validityDate"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('validity_form.placeholder'),
+                message: translateQuotationSea('validity_form.placeholder'),
               },
             ]}
           >
@@ -365,12 +366,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('effect_date')}
+            label={translateQuotationSea('effect_date')}
             name="dateEffect"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('effect_date_form.placeholder'),
+                message: translateQuotationSea('effect_date_form.placeholder'),
               },
             ]}
           >
@@ -383,18 +384,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('freq')}
+            label={translateQuotationSea('freq')}
             name="freqDate"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('freq_form.placeholder'),
+                message: translateQuotationSea('freq_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingSea('freq_form.placeholder')}
+              placeholder={translateQuotationSea('freq_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
@@ -404,18 +405,18 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('STO')}
-            name="stoSeaPricing"
+            label={translateQuotationSea('STO')}
+            name="stoSeaQuotation"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('STO_form.placeholder'),
+                message: translateQuotationSea('STO_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingSea('STO_form.placeholder')}
+              placeholder={translateQuotationSea('STO_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
@@ -424,18 +425,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('DEM')}
-            name="demSeaPricing"
+            label={translateQuotationSea('DEM')}
+            name="demSeaQuotation"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('DEM_form.placeholder'),
+                message: translateQuotationSea('DEM_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               style={{ width: '100%' }}
-              placeholder={translatePricingSea('DEM_form.placeholder')}
+              placeholder={translateQuotationSea('DEM_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
@@ -444,18 +445,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('DET')}
-            name="detSeaPricing"
+            label={translateQuotationSea('DET')}
+            name="detSeaQuotation"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('DET_form.placeholder'),
+                message: translateQuotationSea('DET_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               style={{ width: '100%' }}
-              placeholder={translatePricingSea('DET_form.placeholder')}
+              placeholder={translateQuotationSea('DET_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
@@ -465,18 +466,18 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('commodity')}
+            label={translateQuotationSea('commodity')}
             name="commodityID"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('commodity_form.placeholder'),
+                message: translateQuotationSea('commodity_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('commodity_form.placeholder')}
+              placeholder={translateQuotationSea('commodity_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -500,18 +501,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('LCL')}
-            name="lclSeaPricing"
+            label={translateQuotationSea('LCL')}
+            name="lclSeaQuotation"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('LCL_form.placeholder'),
+                message: translateQuotationSea('LCL_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCL}
-              placeholder={translatePricingSea('LCL_form.placeholder')}
+              placeholder={translateQuotationSea('LCL_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
@@ -521,18 +522,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('LCLMin')}
-            name="lclMinSeaPricing"
+            label={translateQuotationSea('LCLMin')}
+            name="lclMinSeaQuotation"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('LCLMin_form.placeholder'),
+                message: translateQuotationSea('LCLMin_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCLMin}
-              placeholder={translatePricingSea('LCLMin_form.placeholder')}
+              placeholder={translateQuotationSea('LCLMin_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
@@ -542,29 +543,20 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item label={translatePricingSea('vendor')} name="vendor">
-            <Input
-              placeholder={translatePricingSea('vendor_form.placeholder')}
-              disabled
-            />
-          </Form.Item>
-        </Col>
-
-        <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('Fee_Group_form.title')}
-            name="seaPricingFeeGroupDTOs"
+            label={translateQuotationSea('Fee_Group_form.title')}
+            name="seaQuotaionFeeGroupDTOs"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('Fee_Group_form.error_required'),
+                message: translateQuotationSea('Fee_Group_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
               mode="multiple"
-              placeholder={translatePricingSea('Fee_Group_form.placeholder')}
+              placeholder={translateQuotationSea('Fee_Group_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -597,10 +589,10 @@ const CardMain = ({
           </Form.Item>
         </Col>
         <Col span={0}>
-          <Form.Item name="statusSeaPricing"></Form.Item>
+          <Form.Item name="statusSeaQuotation"></Form.Item>
         </Col>
         <Col span={0}>
-          <Form.Item name="seaPricingDetailDTOs"></Form.Item>
+          <Form.Item name="seaQuotationDetailDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

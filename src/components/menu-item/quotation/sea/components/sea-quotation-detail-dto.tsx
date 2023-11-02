@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { Button, Form, InputNumber, Popconfirm, Select, Table } from 'antd';
 import type { FormInstance } from 'antd/es/form';
-import { FormValues, SeaPricingDetailDTOsFormValue } from '../interface';
+import { IFormValues, SeaQuotationDetailDTOsFormValue } from '../interface';
 import type { BaseSelectRef } from 'rc-select';
 import COLORS from '@/constant/color';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
@@ -189,7 +189,7 @@ interface DataType {
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
 interface Props {
-  form: FormInstance<FormValues>;
+  form: FormInstance<IFormValues>;
   isCheckPermissionEdit: boolean;
   optionCurrency: { value: string; label: string }[];
   optionTypeContainer: { value: string; label: string }[];
@@ -208,7 +208,7 @@ const SeaPricingDetailDTO = ({
     { value: string; label: string }[]
   >([]);
   const [idKeyAndContainerType, setIdKeyAndContainerType] = useState<
-    { idSeaPricingDetailID: Key; idContainerType: string }[]
+    { idSeaQuotationDetailID: Key; idContainerType: string }[]
   >([]);
   const [countLoadData, setCountLoadData] = useState(0);
 
@@ -217,13 +217,13 @@ const SeaPricingDetailDTO = ({
   // Lấy data từ API và chỉ lấy lần đầu (setDataRequire)
   useEffect(() => {
     // Chỉ lấy data từ API khi lần đầu vào form
-    if (form.getFieldValue('seaPricingDetailDTOs') && countLoadData === 0) {
+    if (form.getFieldValue('seaQuotationDetailDTOs') && countLoadData === 0) {
       setDataRequire(
         form
-          .getFieldValue('seaPricingDetailDTOs')
-          .map((item: SeaPricingDetailDTOsFormValue) => {
+          .getFieldValue('seaQuotationDetailDTOs')
+          .map((item: SeaQuotationDetailDTOsFormValue) => {
             return {
-              key: item.seaPricingDetailID || '',
+              key: item.seaQuotationDetailID || '',
               containerTypeCode: item.containerTypeCode || '',
               containerTypeID: item.containerTypeID || '',
               containerTypeName: item.containerTypeName || '',
@@ -235,7 +235,7 @@ const SeaPricingDetailDTO = ({
       );
       setCountLoadData(1);
     }
-  }, [form.getFieldValue('seaPricingDetailDTOs')]);
+  }, [form.getFieldValue('seaQuotationDetailDTOs')]);
 
   useEffect(() => {
     if (valueCurrencyID) {
@@ -243,12 +243,13 @@ const SeaPricingDetailDTO = ({
         dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
       );
       form.setFieldValue(
-        'seaPricingDetailDTOs',
+        'seaQuotationDetailDTOs',
         dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
       );
     }
   }, [valueCurrencyID]);
 
+  // setOptionTypeContainerActive, setIdKeyAndContainerType
   // setOptionTypeContainerActive, setIdKeyAndContainerType
   useEffect(() => {
     setOptionTypeContainerActive(
@@ -263,21 +264,21 @@ const SeaPricingDetailDTO = ({
     setIdKeyAndContainerType(
       dataRequire.map((item) => {
         return {
-          idSeaPricingDetailID: item.key,
+          idSeaQuotationDetailID: item.key,
           idContainerType: item.containerTypeID,
         };
       })
     );
   }, [optionCurrency, dataRequire, optionTypeContainer, dataSource]);
 
-  // setFieldValue seaPricingDetailDTOs
+  // setFieldValue seaQuotationDetailDTOs
   useEffect(() => {
     if (countLoadData === 1 && dataSource.length !== 0) {
       form.setFieldValue(
-        'seaPricingDetailDTOs',
+        'seaQuotationDetailDTOs',
         dataSource.map((item) => {
           return {
-            seaPricingDetailID: item.key,
+            seaQuotationDetailID: item.key,
             containerTypeID: item.containerTypeID,
             currencyID: item.currencyID,
             price: item.price,
@@ -296,7 +297,6 @@ const SeaPricingDetailDTO = ({
         .map((item) => ({ ...item, currencyID: valueCurrencyID }))
     );
   }, [dataRequire]);
-
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
     const itemDelete = dataSource.filter((item) => item.key == key);
@@ -309,10 +309,10 @@ const SeaPricingDetailDTO = ({
     ]);
     setDataSource(newData);
     form.setFieldValue(
-      'seaPricingDetailDTOs',
+      'seaQuotationDetailDTOs',
       newData.map((item) => {
         return {
-          seaPricingDetailID: item.key,
+          seaQuotationDetailID: item.key,
           containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
@@ -381,7 +381,7 @@ const SeaPricingDetailDTO = ({
       key:
         idKeyAndContainerType.find(
           (item) => item.idContainerType === optionTypeContainerActive[0]?.value
-        )?.idSeaPricingDetailID || count,
+        )?.idSeaQuotationDetailID || count,
       containerTypeCode: '',
       containerTypeID: optionTypeContainerActive[0]?.value || '',
       containerTypeName: optionTypeContainerActive[0].label || '',
@@ -396,10 +396,10 @@ const SeaPricingDetailDTO = ({
     }
     setCount(count + 1);
     form.setFieldValue(
-      'seaPricingDetailDTOs',
+      'seaQuotationDetailDTOs',
       newDataSource.map((item) => {
         return {
-          seaPricingDetailID: item.key,
+          seaQuotationDetailID: item.key,
           containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
@@ -428,10 +428,10 @@ const SeaPricingDetailDTO = ({
     setDataSource(newData);
 
     form.setFieldValue(
-      'seaPricingDetailDTOs',
+      'seaQuotationDetailDTOs',
       dataSource.map((item) => {
         return {
-          seaPricingDetailID: item.key,
+          seaQuotationDetailID: item.key,
           containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,

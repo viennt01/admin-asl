@@ -1,169 +1,320 @@
-import COLORS from '@/constant/color';
-import { PlusOutlined } from '@ant-design/icons';
-import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { Button, Form } from 'antd';
-import useI18n from '@/i18n/useI18N';
+// import { useMutation, useQueryClient } from '@tanstack/react-query';
+// import { ROUTERS } from '@/constant/router';
+// import { errorToast, successToast } from '@/hook/toast';
+// import router from 'next/router';
+// import { API_MESSAGE } from '@/constant/message';
+// import SeaQuotation from '../components/form';
+// import {
+//   IFormValues,
+//   ISeaQuotationCreate,
+//   ISeaQuotationDetailDTOsUpdate,
+//   ISeaQuotationEdit,
+//   ISeaQuotationFeeFormValue,
+//   SeaQuotationDetailDTOsFormValue,
+// } from '../interface';
+// import { createSeaQuotation, editSeaQuotation } from '../fetcher';
+// import { STATUS_ALL_LABELS } from '@/constant/form';
+// import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
 
-// const waitTime = (time = 100) => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(true);
-//     }, time);
-//   });
+// export const returnFeeDTOs = (
+//   seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
+//   fromSeaPricingFeeDTOs?: string[]
+// ) => {
+//   const resultArray = JSON.parse(
+//     JSON.stringify(
+//       seaPricingFeeDTOs?.map((item) => ({
+//         seaQuotationID: item.seaQuotationID,
+//         feeGroupID: item.feeGroupID,
+//         public: item.public,
+//       }))
+//     )
+//   );
+
+//   for (const item of resultArray) {
+//     if (
+//       fromSeaPricingFeeDTOs &&
+//       fromSeaPricingFeeDTOs.includes(item.feeGroupID)
+//     ) {
+//       item.isDelete = false;
+//     } else {
+//       item.isDelete = true;
+//     }
+//   }
+//   if (fromSeaPricingFeeDTOs) {
+//     for (const id of fromSeaPricingFeeDTOs) {
+//       if (
+//         !resultArray.some(
+//           (item: ISeaQuotationFeeFormValue) => item.feeGroupID === id
+//         )
+//       ) {
+//         resultArray.push({
+//           feeGroupID: id,
+//           public: true,
+//           isDelete: false,
+//         });
+//       }
+//     }
+//   }
+//   return resultArray;
 // };
-export default function CreateSeaQuotation() {
-  const [form] = Form.useForm<{ name: string; company: string }>();
-  const { translate: translateCommon } = useI18n('common');
-  const { translate: translateSeaQuotation } = useI18n('seaQuotation');
 
-  return (
-    <ModalForm<{
-      name: string;
-      company: string;
-    }>
-      title={translateSeaQuotation('information_add_customer')}
-      trigger={
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          style={{
-            marginRight: '4px',
-            backgroundColor: COLORS.BRIGHT,
-            color: COLORS.GREEN,
-            borderColor: COLORS.GREEN,
-            fontWeight: '500',
-          }}
-        >
-          {translateCommon('button_add')}
-        </Button>
-      }
-      submitter={{
-        searchConfig: {
-          submitText: 'Add',
-          resetText: 'Cancel',
-        },
-      }}
-      form={form}
-      autoFocusFirstInput
-      modalProps={{
-        destroyOnClose: true,
-      }}
-      // submitTimeout={2000}
-      // onFinish={async (values) => {
-      //   await waitTime(2000);
-      //   message.success('提交成功');
-      //   return true;
-      // }}
-    >
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="Abbreviation"
-          label={translateSeaQuotation('abbreviation')}
-          placeholder={translateSeaQuotation('abbreviation_placeholder')}
-        />
+// export const returnQuotationDetails = (
+//   old?: SeaQuotationDetailDTOsFormValue[],
+//   newData?: ISeaQuotationDetailDTOsUpdate[]
+// ) => {
+//   if (!newData) {
+//     return [];
+//   }
+//   const mergedData = old?.map((oldItem) => {
+//     const newItem = newData.find(
+//       (newItem) =>
+//         newItem.seaQuotationDetailID === oldItem.seaQuotationDetailID &&
+//         newItem.containerTypeID === oldItem.containerTypeID
+//     );
 
-        <ProFormText
-          width="md"
-          name="NameCustomer"
-          label={translateSeaQuotation('name')}
-          placeholder={translateSeaQuotation('name_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="NumberCustomer"
-          label={translateSeaQuotation('number')}
-          placeholder={translateSeaQuotation('number_placeholder')}
-          rules={[
-            {
-              type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập số lượng giao dịch',
-            },
-          ]}
-        />
+//     if (newItem) {
+//       return {
+//         ...oldItem,
+//         ...newItem,
+//         isDelete: false,
+//       };
+//     }
 
-        <ProFormText
-          width="md"
-          name="Phone"
-          label={translateSeaQuotation('phone')}
-          placeholder={translateSeaQuotation('phone_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormSelect
-          request={async () => [
-            {
-              value: 'VietNam',
-              label: 'Việt Nam',
-            },
-            {
-              value: 'American',
-              label: 'Mỹ',
-            },
-          ]}
-          width="md"
-          name="CountryName"
-          label={translateSeaQuotation('country')}
-          placeholder={translateSeaQuotation('country_placeholder')}
-        />
+//     return { ...oldItem, isDelete: true };
+//   });
 
-        <ProFormText
-          width="md"
-          name="Address"
-          label={translateSeaQuotation('address')}
-          placeholder={translateSeaQuotation('address_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="sm"
-          name="Email"
-          label={translateSeaQuotation('email')}
-          placeholder={translateSeaQuotation('email_placeholder')}
-        />
+//   const itemsInNewButNotInOld = newData
+//     .filter(
+//       (newItem) =>
+//         !old?.some(
+//           (oldItem) =>
+//             newItem.seaQuotationDetailID === oldItem.seaQuotationDetailID &&
+//             newItem.containerTypeID === oldItem.containerTypeID
+//         )
+//     )
+//     .map((newItem) => ({ ...newItem, isDelete: false }));
 
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Nguyễn Văn A',
-            },
-            {
-              value: '2',
-              label: 'Nguyễn Văn B',
-            },
-          ]}
-          width="sm"
-          name="Saleman"
-          label={translateSeaQuotation('saleman')}
-          placeholder={translateSeaQuotation('saleman_placeholder')}
-        />
+//   const result = [...(mergedData ?? []), ...(itemsInNewButNotInOld ?? [])].map(
+//     ({ ...rest }) => rest
+//   );
 
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Tạm ngừng',
-            },
-          ]}
-          width="sm"
-          name="Status"
-          label={translateSeaQuotation('status')}
-          placeholder={translateSeaQuotation('status_placeholder')}
-        />
-      </ProForm.Group>
-    </ModalForm>
-  );
-}
+//   return result;
+// };
+
+// const CreateSeaQuotation = () => {
+//   const queryClient = useQueryClient();
+
+//   const createMutation = useMutation({
+//     mutationFn: (body: ISeaQuotationCreate) => {
+//       return createSeaQuotation(body);
+//     },
+//   });
+
+//   const updateMutation = useMutation({
+//     mutationFn: (body: ISeaQuotationEdit) => {
+//       return editSeaQuotation(body);
+//     },
+//   });
+
+//   const handleSubmit = (
+//     formValues: IFormValues,
+//     id?: string,
+//     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
+//     seaQuotationDetail?: SeaQuotationDetailDTOsFormValue[]
+//   ) => {
+//     const seaQuotationDetailRegisterRequests =
+//       formValues.seaQuotationDetailDTOs.map((data) => {
+//         return {
+//           containerTypeID: data.containerTypeID,
+//           currencyID: data.currencyID,
+//           priceQuotationDetail: data.price,
+//         };
+//       });
+//     // const returnFeeDTO = returnFeeDTOs(
+//     //   seaPricingFeeDTOs,
+//     //   formValues.seaPricingFeeDTOs
+//     // );
+
+//     const returnQuotationDetail = returnQuotationDetails(
+//       seaQuotationDetail,
+//       formValues.seaQuotationDetailDTOs
+//     );
+
+//     if (id) {
+//       const _requestData: ISeaQuotationEdit = {
+//         seaQuotationID: id || '',
+//         podid: formValues.podid || '',
+//         polid: formValues.polid || '',
+//         commodityID: formValues.commodityID || '',
+//         note: formValues.note || '',
+//         dateEffect: formValues.dateEffect?.valueOf(),
+//         validityDate: formValues.validityDate?.valueOf(),
+//         freqDate: formValues.freqDate || '',
+//         demSeaQuotation: formValues.demSeaQuotation || '',
+//         detSeaQuotation: formValues.detSeaQuotation || '',
+//         stoSeaQuotation: formValues.stoSeaQuotation || '',
+//         lclSeaQuotation: formValues.lclSeaQuotation || '',
+//         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '',
+//         currencyID: formValues.currencyID || '',
+//         public: formValues.public || true,
+//         seaQuotationDetailUpdateRequests: returnQuotationDetail || [],
+//         // seaPricingFeeGroupUpdateRequests: returnFeeDTO,
+//         statusSeaQuotation: STATUS_ALL_LABELS.REQUEST,
+//       };
+
+//       // updateMutation.mutate(_requestData, {
+//       //   onSuccess: (data) => {
+//       //     data.status
+//       //       ? (successToast(data.message), router.push(ROUTERS.SEA_PRICING))
+//       //       : errorToast(data.message);
+//       //   },
+//       //   onError() {
+//       //     errorToast(API_MESSAGE.ERROR);
+//       //   },
+//       // });
+//     } else {
+//       const _requestData: ISeaQuotationCreate = {
+//         podid: formValues.podid || '',
+//         polid: formValues.polid || '',
+//         commodityID: formValues.commodityID || '',
+//         note: formValues.note || '',
+//         dateEffect: formValues.dateEffect?.valueOf(),
+//         validityDate: formValues.validityDate?.valueOf(),
+//         freqDate: formValues.freqDate || '',
+//         demSeaQuotation: formValues.demSeaQuotation || '',
+//         detSeaQuotation: formValues.detSeaQuotation || '',
+//         stoSeaQuotation: formValues.stoSeaQuotation || '',
+//         lclSeaQuotation: formValues.lclSeaQuotation || '',
+//         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '',
+//         currencyID: formValues.currencyID || '',
+//         public: formValues.public || true,
+//         seaQuotationDetailRegisterRequests:
+//           seaQuotationDetailRegisterRequests || [],
+//         // seaPricingFeeGroupRegisterRequests: returnFeeDTO,
+//         statusSeaQuotation: STATUS_ALL_LABELS.REQUEST,
+//       };
+//       console.log(_requestData);
+
+//       // createMutation.mutate(_requestData, {
+//       //   onSuccess: (data) => {
+//       //     data.status
+//       //       ? (successToast(data.message), router.push(ROUTERS.SEA_PRICING))
+//       //       : errorToast(data.message);
+//       //   },
+//       //   onError() {
+//       //     errorToast(API_MESSAGE.ERROR);
+//       //   },
+//       // });
+//     }
+//   };
+
+//   const handleSaveDraft = (
+//     formValues: IFormValues,
+//     id?: string,
+//     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
+//     seaQuotationDetail?: SeaQuotationDetailDTOsFormValue[]
+//   ) => {
+//     const seaQuotationDetailRegisterRequests =
+//       formValues.seaQuotationDetailDTOs.map((data) => {
+//         return {
+//           containerTypeID: data.containerTypeID,
+//           currencyID: data.currencyID,
+//           priceQuotationDetail: data.price,
+//         };
+//       });
+//     // const returnFeeDTO = returnFeeDTOs(
+//     //   seaPricingFeeDTOs,
+//     //   formValues.seaPricingFeeDTOs
+//     // );
+//     const returnQuotationDetail = returnQuotationDetails(
+//       seaQuotationDetail,
+//       formValues.seaQuotationDetailDTOs
+//     );
+//     if (id) {
+//       const _requestData: ISeaQuotationEdit = {
+//         seaQuotationID: id,
+//         podid: formValues.podid || '',
+//         polid: formValues.polid || '',
+//         commodityID: formValues.commodityID || '',
+//         note: formValues.note || '',
+//         dateEffect: formValues.dateEffect?.valueOf(),
+//         validityDate: formValues.validityDate?.valueOf(),
+//         freqDate: formValues.freqDate || '',
+//         demSeaQuotation: formValues.demSeaQuotation || '',
+//         detSeaQuotation: formValues.detSeaQuotation || '',
+//         stoSeaQuotation: formValues.stoSeaQuotation || '',
+//         lclSeaQuotation: formValues.lclSeaQuotation || '',
+//         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '',
+//         currencyID: formValues.currencyID || '',
+//         public: formValues.public || true,
+//         seaQuotationDetailUpdateRequests: returnQuotationDetail || [],
+//         // seaPricingFeeGroupUpdateRequests: returnFeeDTO,
+//         statusSeaQuotation: STATUS_ALL_LABELS.DRAFT,
+//       };
+//       console.log(_requestData);
+
+//       // updateMutation.mutate(_requestData, {
+//       //   onSuccess: (data) => {
+//       //     data.status
+//       //       ? (successToast(data.message),
+//       //         queryClient.invalidateQueries({
+//       //           queryKey: [API_SEA_QUOTATION.GET_SEARCH],
+//       //         }))
+//       //       : errorToast(data.message);
+//       //   },
+//       //   onError() {
+//       //     errorToast(API_MESSAGE.ERROR);
+//       //   },
+//       // });
+//     } else {
+//       const _requestData: ISeaQuotationCreate = {
+//         podid: formValues.podid || '',
+//         polid: formValues.polid || '',
+//         commodityID: formValues.commodityID || '',
+//         note: formValues.note || '',
+//         dateEffect: formValues.dateEffect?.valueOf(),
+//         validityDate: formValues.validityDate?.valueOf(),
+//         freqDate: formValues.freqDate || '',
+//         demSeaQuotation: formValues.demSeaQuotation || '',
+//         detSeaQuotation: formValues.detSeaQuotation || '',
+//         stoSeaQuotation: formValues.stoSeaQuotation || '',
+//         lclSeaQuotation: formValues.lclSeaQuotation || '',
+//         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '',
+//         currencyID: formValues.currencyID || '',
+//         public: formValues.public || true,
+//         seaQuotationDetailRegisterRequests:
+//           seaQuotationDetailRegisterRequests || [],
+//         // seaPricingFeeGroupRegisterRequests: returnFeeDTO,
+//         statusSeaQuotation: STATUS_ALL_LABELS.DRAFT,
+//       };
+//       console.log(_requestData);
+
+//       // createMutation.mutate(_requestData, {
+//       //   onSuccess: (data) => {
+//       //     data.status
+//       //       ? (successToast(data.message),
+//       //         queryClient.invalidateQueries({
+//       //           queryKey: [API_SEA_QUOTATION.GET_SEARCH],
+//       //         }))
+//       //       : errorToast(data.message);
+//       //   },
+//       //   onError() {
+//       //     errorToast(API_MESSAGE.ERROR);
+//       //   },
+//       // });
+//     }
+//   };
+
+//   return (
+//     <SeaQuotation
+//       create
+//       handleSubmit={handleSubmit}
+//       handleSaveDraft={handleSaveDraft}
+//       loadingSubmit={createMutation.isLoading || updateMutation.isLoading}
+//       checkRow={false}
+//       useDraft
+//     />
+//   );
+// };
+
+// export default CreateSeaQuotation;

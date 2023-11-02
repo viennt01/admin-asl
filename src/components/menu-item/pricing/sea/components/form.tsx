@@ -73,7 +73,7 @@ const SeaPricing = ({
   >([]);
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
 
-  const listIdFeeGroup = Form.useWatch('seaPricingFeeDTOs', form);
+  const listIdFeeGroup = Form.useWatch('seaPricingFeeGroupDTOs', form);
 
   useEffect(() => {
     if (!id) return;
@@ -187,11 +187,11 @@ const SeaPricing = ({
           public: data.data.public,
           statusSeaPricing: data.data.statusSeaPricing,
           seaPricingDetailDTOs: data.data.seaPricingDetailDTOs,
-          seaPricingFeeDTOs: data.data.seaPricingFeeDTOs.map(
+          seaPricingFeeGroupDTOs: data.data.seaPricingFeeGroupDTOs?.map(
             (fee) => fee.feeGroupID
           ),
         });
-        setSeaPricingFeeDTOs(data.data.seaPricingFeeDTOs);
+        setSeaPricingFeeDTOs(data.data.seaPricingFeeGroupDTOs);
       } else {
         router.push(ROUTERS.SEA_PRICING);
       }
@@ -248,7 +248,7 @@ const SeaPricing = ({
       public: form.getFieldValue('public'),
       statusSeaPricing: form.getFieldValue('statusSeaPricing'),
       seaPricingDetailDTOs: form.getFieldValue('seaPricingDetailDTOs'),
-      seaPricingFeeDTOs: form.getFieldValue('seaPricingFeeDTOs'),
+      seaPricingFeeGroupDTOs: form.getFieldValue('seaPricingFeeGroupDTOs'),
     };
     router.push({
       pathname: ROUTERS.SEA_PRICING_CREATE,
