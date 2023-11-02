@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditSeaQuotation from '@/components/menu-item/quotation/sea/edit';
+// import EditSeaQuotation from '@/components/menu-item/quotation/sea/edit';
 
 function SeaQuotationEditPage() {
   return (
@@ -8,7 +8,7 @@ function SeaQuotationEditPage() {
       <Head>
         <title>ASL | SEA QUOTATION EDIT</title>
       </Head>
-      <EditSeaQuotation />
+      {/* <EditSeaQuotation /> */}
     </>
   );
 }

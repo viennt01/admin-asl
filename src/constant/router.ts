@@ -13,8 +13,8 @@ export const ROUTERS = {
 
   SEA_QUOTATION: '/quotation/sea-quotation',
   SEA_QUOTATION_CREATE: '/quotation/sea-quotation/create',
-  SEA_QUOTATION_EDIT: (seaQuotationId: string) =>
-    `/quotation/sea-quotation/edit/${seaQuotationId}`,
+  SEA_QUOTATION_EDIT: (seaQuotationId: string, checkRow = false) =>
+    `/quotation/sea-quotation/edit/${seaQuotationId}?checkRow=${checkRow}`,
   SEA_QUOTATION_MANAGER: (seaQuotationId: string) =>
     `/quotation/sea-quotation/manager-admin/${seaQuotationId}`,
 

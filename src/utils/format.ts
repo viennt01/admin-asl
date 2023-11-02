@@ -34,6 +34,9 @@ export function formatCurrency(amount: number) {
 }
 
 export function formatCurrencyHasCurrency(input: string): string {
+  if (!input) {
+    return '-';
+  }
   const parts = input.split(' ');
   if (parts.length !== 2) {
     return '-';

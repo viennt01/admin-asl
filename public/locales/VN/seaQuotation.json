@@ -5,7 +5,6 @@
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
-    "venderID": "Vender ID",
     "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
@@ -68,12 +67,6 @@
         "title": "Country",
         "placeholder": "Nhập country",
         "error_required": "Vui lòng nhập country"
-    },
-
-    "venderID_form": {
-        "title": "Vender ID",
-        "placeholder": "Nhập Vender ID",
-        "error_required": "Vui lòng nhập Vender ID"
     },
 
     "customerID_form": {
@@ -242,6 +235,12 @@
         "title": "STO",
         "placeholder": "Nhập STO",
         "error_required": "Vui lòng nhập STO"
+    },
+
+    "Fee_Group_form": {
+        "title": "Loại nhóm phí",
+        "placeholder": "Nhập loại nhóm phí",
+        "error_required": "Vui lòng chọn loại nhóm phí"
     },
 
     "modify_date_placeholder": "Please input modify date",

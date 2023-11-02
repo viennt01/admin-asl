@@ -21,6 +21,7 @@ import {
   RequireCurrency,
   RequireTypeContainer,
   RequireFeeGroup,
+  RequireCreateQuotationWithPricing,
 } from './interface';
 import {
   API_COMMODITY,
@@ -29,6 +30,7 @@ import {
   API_FEE_GROUP,
   API_LOCATION,
   API_SEA_PRICING,
+  API_SEA_QUOTATION,
 } from '@/fetcherAxios/endpoint';
 
 export const getSeaPricingSearch = (data: RequestSeaPricing) => {
@@ -118,4 +120,16 @@ export const getAllContainerType = () => {
 
 export const getAllFeeGroup = () => {
   return get<ResponseWithPayload<RequireFeeGroup[]>>({})(API_FEE_GROUP.GET_ALL);
+};
+//----------------------------------------------------------------
+// create quotation with pricing
+export const createQuotationWithPricing = (
+  data: RequireCreateQuotationWithPricing
+) => {
+  return post<
+    RequireCreateQuotationWithPricing,
+    ResponseWithPayload<RequireCreateQuotationWithPricing>
+  >({
+    data,
+  })(API_SEA_QUOTATION.CREATE_WITH_PRICING);
 };

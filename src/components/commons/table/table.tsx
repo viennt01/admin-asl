@@ -38,6 +38,7 @@ interface Props<T extends Record<string, any>> {
     record: T
   ) => void;
   handleCreate?: () => void;
+  handleCreateQuotation?: () => void;
   showPropsConfirmDelete?: () => void;
   refreshingQuery?: () => void;
   refreshingLoading?: boolean;
@@ -66,6 +67,7 @@ const Table = <T extends Record<string, any>>({
   valueSearchAll,
   handleOnDoubleClick,
   handleCreate,
+  handleCreateQuotation,
   showPropsConfirmDelete,
   refreshingQuery,
   refreshingLoading,
@@ -140,6 +142,21 @@ const Table = <T extends Record<string, any>>({
                   display: handleChangeInputSearchAll ? '' : 'none',
                 }}
               />,
+              <Button
+                key={'createQuotation'}
+                icon={<PlusOutlined />}
+                style={{
+                  marginRight: '4px',
+                  backgroundColor: COLORS.BRIGHT,
+                  color: COLORS.GREEN,
+                  borderColor: COLORS.GREEN,
+                  fontWeight: '500',
+                  display: handleCreateQuotation ? '' : 'none',
+                }}
+                onClick={handleCreateQuotation}
+              >
+                {translateCommon('button_create_quotation')}
+              </Button>,
               <Button
                 key={'create'}
                 icon={<PlusOutlined />}

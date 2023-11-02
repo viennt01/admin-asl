@@ -5,7 +5,6 @@
     "POD": "POD",
     "destination": "Destination",
     "country": "Country",
-    "venderID": "Vender ID",
     "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
@@ -68,12 +67,6 @@
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
-    },
-
-    "venderID_form": {
-        "title": "Vender ID",
-        "placeholder": "Enter Vender ID",
-        "error_required": "Please enter Vender ID"
     },
 
     "customerID_form": {
@@ -243,6 +236,13 @@
         "placeholder": "Enter STO",
         "error_required": "Please enter STO"
     },
+
+    "Fee_Group_form": {
+        "title": "Fee group",
+        "placeholder": "Enter fee group",
+        "error_required": "Please enter fee group"
+    },
+    
 
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",

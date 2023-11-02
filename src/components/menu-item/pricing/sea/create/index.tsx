@@ -9,6 +9,7 @@ import {
   SeaPricingCreate,
   SeaPricingEdit,
   SeaPricingFeeFormValue,
+  SeaPricingFeeUpdate,
 } from '../interface';
 import { createSeaPricing, editSeaPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
@@ -18,15 +19,13 @@ export const returnFeeDTOs = (
   seaPricingFeeDTOs?: SeaPricingFeeFormValue[],
   fromSeaPricingFeeDTOs?: string[]
 ) => {
-  const resultArray = JSON.parse(
-    JSON.stringify(
-      seaPricingFeeDTOs?.map((item) => ({
-        seaPricingFeeGroupID: item.seaPricingFeeGroupID,
-        feeGroupID: item.feeGroupID,
-        public: item.public,
-      }))
-    )
-  );
+  const resultArray: Array<SeaPricingFeeUpdate> =
+    seaPricingFeeDTOs?.map((item) => ({
+      seaPricingFeeGroupID: item.seaPricingFeeGroupID,
+      feeGroupID: item.feeGroupID,
+      public: item.public,
+      isDelete: false,
+    })) || [];
 
   for (const item of resultArray) {
     if (
@@ -40,11 +39,7 @@ export const returnFeeDTOs = (
   }
   if (fromSeaPricingFeeDTOs) {
     for (const id of fromSeaPricingFeeDTOs) {
-      if (
-        !resultArray.some(
-          (item: SeaPricingFeeFormValue) => item.feeGroupID === id
-        )
-      ) {
+      if (!resultArray.some((item) => item.feeGroupID === id)) {
         resultArray.push({
           feeGroupID: id,
           public: true,
@@ -86,7 +81,7 @@ const CreateSeaPricing = () => {
       });
     const returnFeeDTO = returnFeeDTOs(
       seaPricingFeeDTOs,
-      formValues.seaPricingFeeDTOs
+      formValues.seaPricingFeeGroupDTOs
     );
     if (id) {
       const _requestData: SeaPricingEdit = {
@@ -168,7 +163,7 @@ const CreateSeaPricing = () => {
       });
     const returnFeeDTO = returnFeeDTOs(
       seaPricingFeeDTOs,
-      formValues.seaPricingFeeDTOs
+      formValues.seaPricingFeeGroupDTOs
     );
 
     if (id) {

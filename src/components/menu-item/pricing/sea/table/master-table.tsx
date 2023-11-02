@@ -51,6 +51,7 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
+import CreateQuotationModal from '../components/create-quotation/modal';
 
 const { confirm } = Modal;
 
@@ -77,6 +78,8 @@ export default function MasterDataTable() {
   const [refreshingLoading, setRefreshingLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
+  const [openCreateQuotationModal, setOpenCreateQuotationModal] =
+    useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
@@ -491,8 +494,22 @@ export default function MasterDataTable() {
     router.push(ROUTERS.SEA_PRICING_EDIT(id));
   };
 
-  const handleSelectionChange = (selectedRowKeys: Key[]) => {
-    setSelectedRowKeys(selectedRowKeys);
+  const handleSelectionChange = (selectedRowKey: Key[]) => {
+    const keyData = dataTable.map((item) => item.key);
+    const uniqueDataAndSelectedRowKeys = selectedRowKeys.filter((item: any) =>
+      keyData.includes(item)
+    );
+    const unique1AndSelectedRowKey = uniqueDataAndSelectedRowKeys.filter(
+      (item) => !selectedRowKey.includes(item)
+    );
+    const uniqueSelection = selectedRowKey.filter(
+      (item) => !selectedRowKeys.includes(item)
+    );
+    const result = selectedRowKeys
+      .concat(uniqueSelection)
+      .filter((item) => !unique1AndSelectedRowKey.includes(item));
+
+    setSelectedRowKeys(result);
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
@@ -595,6 +612,21 @@ export default function MasterDataTable() {
       setIsLoadingDownload(false);
     },
   });
+
+  //handle create quotation
+  const cancelCreateQuotation = () => {
+    setOpenCreateQuotationModal(false);
+  };
+
+  const handleOpenCreateQuotation = () => {
+    setOpenCreateQuotationModal(true);
+  };
+
+  const handleCreateQuotation = () => {
+    setOpenCreateQuotationModal(false);
+  };
+  // console.log(selectedRowKeys);
+
   return (
     <div style={{ marginTop: -18 }}>
       {locationsQuerySearch.isLoading ? (
@@ -608,6 +640,13 @@ export default function MasterDataTable() {
             handleCancel={cancelImportTableData}
             isLoadingDownload={isLoadingDownload}
             downloadFile={downloadFile}
+          />
+
+          <CreateQuotationModal
+            itemData={selectedRowKeys}
+            open={openCreateQuotationModal}
+            handleOk={handleCreateQuotation}
+            handleCancel={cancelCreateQuotation}
           />
           <Table
             dataTable={dataTable}
@@ -631,6 +670,7 @@ export default function MasterDataTable() {
             checkTableMaster={true}
             importTableData={importTableData}
             exportTableData={exportTableData}
+            handleCreateQuotation={handleOpenCreateQuotation}
           />
         </>
       )}

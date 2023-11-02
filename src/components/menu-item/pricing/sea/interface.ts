@@ -87,16 +87,16 @@ export interface FormValues {
   public: boolean;
   statusSeaPricing: string;
   seaPricingDetailDTOs: SeaPricingDetailDTOsFormValue[];
-  seaPricingFeeDTOs: string[];
+  seaPricingFeeGroupDTOs: string[];
 }
 
 export interface SeaPricingDetailType
-  extends Omit<FormValues, 'seaPricingFeeDTOs'> {
+  extends Omit<FormValues, 'seaPricingFeeGroupDTOs'> {
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  seaPricingFeeDTOs: SeaPricingFeeFormValue[];
+  seaPricingFeeGroupDTOs: SeaPricingFeeFormValue[];
 }
 
 export interface SeaPricingDetailDTOsFormValue {
@@ -126,7 +126,7 @@ export type SeaPricingDetailDTOsUpdate = Omit<
 >;
 
 export interface SeaPricingFeeFormValue {
-  seaPricingFeeGroupID: string;
+  seaPricingFeeGroupID?: string;
   feeGroupID: string;
   public: boolean;
   insertedByUser: string;
@@ -157,7 +157,7 @@ export type SeaPricingCreate = Omit<
   | 'dateEffect'
   | 'validityDate'
   | 'seaPricingDetailDTOs'
-  | 'seaPricingFeeDTOs'
+  | 'seaPricingFeeGroupDTOs'
 > & {
   dateEffect: number;
   validityDate: number;
@@ -167,7 +167,10 @@ export type SeaPricingCreate = Omit<
 
 export type SeaPricingEdit = Omit<
   FormValues,
-  'dateEffect' | 'validityDate' | 'seaPricingDetailDTOs' | 'seaPricingFeeDTOs'
+  | 'dateEffect'
+  | 'validityDate'
+  | 'seaPricingDetailDTOs'
+  | 'seaPricingFeeGroupDTOs'
 > & {
   dateEffect: number;
   validityDate: number;
@@ -232,9 +235,21 @@ export interface RequireCurrency {
 export interface RequireTypeContainer {
   containerTypeID: string;
   name: string;
+  code: string;
 }
 // get all fee group
 export interface RequireFeeGroup {
   feeGroupID: string;
   feeGroupName: string;
+}
+//----------------------------------------------------------------
+// create quotation with pricing
+export interface RequireCreateQuotationWithPricing {
+  seaPricingID: React.Key[];
+  effectDated: number;
+  validityDate: number;
+  profitRateOfPricing: string;
+  profitRateOfContainerType: { [key: string]: string };
+  profitRateOfFee: string;
+  status: string;
 }
