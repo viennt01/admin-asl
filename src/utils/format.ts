@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 
 export const formatDateTime = (date: Date) => {
-  return dayjs(date).format('HH:mm DD/MM/YYYY');
+  return dayjs(date).format('YYYY-MM-DD');
 };
 
 export function formatDate(
   value: dayjs.ConfigType,
-  formatString = 'HH:mm - DD/MM/YYYY'
+  formatString = 'YYYY-MM-DD'
 ) {
   if (value) {
     return dayjs(value).format(formatString);

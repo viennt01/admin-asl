@@ -250,6 +250,40 @@ export interface RequireCreateQuotationWithPricing {
   validityDate: number;
   profitRateOfPricing: string;
   profitRateOfContainerType: { [key: string]: string };
+  profitRateOfUnitforFee: { [key: string]: string };
   profitRateOfFee: string;
+  salesLeadsQuotationRegisters: { partnerID: string }[];
+  seaQuotationGroupPartnerRegisterRequests: {
+    groupPartnerID: string;
+  }[];
   status: string;
+}
+export interface RequireCreateQuotationWithPricingFormValue
+  extends Omit<
+    RequireCreateQuotationWithPricing,
+    'salesLeadsQuotationRegisters' | 'seaQuotationGroupPartnerRegisterRequests'
+  > {
+  salesLeadsQuotationRegisters: string[];
+  seaQuotationGroupPartnerRegisterRequests: string[];
+}
+export interface RequirePartnerGroup {
+  groupPartnerID: string;
+  abbreviations: string;
+}
+
+//table partner
+export interface RequirePartner {
+  partnerID: string;
+  name: string;
+}
+export interface RequestPartnerTable {
+  id: string[];
+}
+export interface Partner {
+  partnerID: string;
+  email: string;
+  fullName: string;
+}
+export interface TablePartner extends Omit<Partner, 'partnerID'> {
+  key: React.Key;
 }

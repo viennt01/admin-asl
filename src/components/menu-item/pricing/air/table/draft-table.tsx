@@ -1,8 +1,15 @@
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
-import { useState, MouseEvent } from 'react';
-import { AirPricingTable } from '../interface';
+import {
+  Button,
+  Tag,
+  PaginationProps,
+  Popover,
+  Popconfirm,
+  Checkbox,
+} from 'antd';
+import { useState, MouseEvent, useMemo } from 'react';
+import { AirPricingDetailDTOs, AirPricingTable } from '../interface';
 import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
 import { deleteAirPricing, getDartTable } from '../fetcher';
 import {
@@ -17,7 +24,7 @@ import {
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatDate } from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -47,7 +54,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_AIR_PRICING.GET_SEARCH, pagination],
+    queryKey: [API_AIR_PRICING.GET_DRAFT, pagination],
     queryFn: () =>
       getDartTable({
         ...initalValueQueryInputParamsDraft,
@@ -72,14 +79,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             currencyID: data.currencyID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
-            dateEffect: data.dateEffect,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            demAirPricing: data.demAirPricing,
-            detAirPricing: data.detAirPricing,
-            stoAirPricing: data.stoAirPricing,
-            lclMinAirPricing: data.lclMinAirPricing,
-            lclAirPricing: data.lclAirPricing,
             public: data.public,
             statusAirPricing: data.statusAirPricing,
             confirmDated: data.confirmDated,
@@ -89,10 +90,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
             vendor: data.vendor,
+            gw: data.gw,
             searchAll: '',
           }))
         );
@@ -111,7 +110,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_AIR_PRICING.GET_SEARCH],
+          queryKey: [API_AIR_PRICING.GET_DRAFT],
         });
       } else {
         errorToast(data.message);
@@ -153,6 +152,22 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   //   }));
   //   clearFilters();
   // };
+  const columnDTOs = useMemo(() => {
+    const result = [{}];
+    for (const key in dataTable[0]?.airPricingDetailDTOs) {
+      if (dataTable[0].airPricingDetailDTOs.hasOwnProperty(key)) {
+        const obj = {
+          title: key,
+          width: 200,
+          dataIndex: 'airPricingDetailDTOs',
+          render: (value: AirPricingDetailDTOs) =>
+            formatCurrencyHasCurrency(value[key]),
+        };
+        result.push(obj);
+      }
+    }
+    return result;
+  }, [dataTable]);
 
   // Handle data show table
   const columns: ProColumns<AirPricingTable>[] = [
@@ -197,18 +212,14 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       align: 'center',
     },
     {
-      title: 'LCLMin',
-      width: 200,
-      dataIndex: 'lclMinAirPricing',
-      key: 'lclMinAirPricing',
+      title: 'GW',
+      dataIndex: 'gw',
+      width: 50,
+      key: 'gw',
       align: 'center',
-    },
-    {
-      title: translatePricingAir('LCL'),
-      width: 200,
-      dataIndex: 'lclAirPricing',
-      key: 'lclAirPricing',
-      align: 'center',
+      render: (value) => {
+        return <Checkbox checked={value as boolean} />;
+      },
     },
     {
       title: (
@@ -270,6 +281,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         </div>
       ),
     },
+    ...columnDTOs,
   ];
 
   // Handle logic table

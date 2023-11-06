@@ -10,14 +10,10 @@ import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps } from 'antd';
+import { Button, Checkbox, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent, useMemo } from 'react';
-import {
-  formatCurrencyHasCurrency,
-  formatDate,
-  formatNumber,
-} from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -68,14 +64,8 @@ const RequestTable = () => {
             currencyID: data.currencyID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
-            dateEffect: data.dateEffect,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            demAirPricing: data.demAirPricing,
-            detAirPricing: data.detAirPricing,
-            stoAirPricing: data.stoAirPricing,
-            lclMinAirPricing: data.lclMinAirPricing,
-            lclAirPricing: data.lclAirPricing,
             public: data.public,
             statusAirPricing: data.statusAirPricing,
             confirmDated: data.confirmDated,
@@ -85,10 +75,8 @@ const RequestTable = () => {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
             vendor: data.vendor,
+            gw: data.gw,
             searchAll: '',
           }))
         );
@@ -235,23 +223,13 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: 'LCLMin',
-      width: 200,
-      dataIndex: 'lclMinAirPricing',
-      key: 'lclMinAirPricing',
+      title: 'GW',
+      dataIndex: 'gw',
+      width: 50,
+      key: 'gw',
       align: 'center',
       render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
-      },
-    },
-    {
-      title: 'LCL',
-      width: 200,
-      dataIndex: 'lclAirPricing',
-      key: 'lclAirPricing',
-      align: 'center',
-      render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
+        return <Checkbox checked={value as boolean} />;
       },
     },
     {

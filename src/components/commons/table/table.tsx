@@ -54,6 +54,7 @@ interface Props<T extends Record<string, any>> {
   exportLoading?: boolean;
   exportTableData?: () => void;
   handleApproveAndReject?: (status: string) => void;
+  itemDataQuotation?: React.Key[];
 }
 const Table = <T extends Record<string, any>>({
   dataTable,
@@ -80,6 +81,7 @@ const Table = <T extends Record<string, any>>({
   exportLoading,
   exportTableData,
   handleApproveAndReject,
+  itemDataQuotation,
 }: Props<T>) => {
   const { translate: translateCommon } = useI18n('common');
   const dataSourceUnknown = dataTable as unknown;
@@ -154,6 +156,7 @@ const Table = <T extends Record<string, any>>({
                   display: handleCreateQuotation ? '' : 'none',
                 }}
                 onClick={handleCreateQuotation}
+                disabled={itemDataQuotation?.length === 0}
               >
                 {translateCommon('button_create_quotation')}
               </Button>,

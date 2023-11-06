@@ -1,21 +1,29 @@
-import { Form, Table, InputRef, InputNumber } from 'antd';
 import React, { Ref, useContext, useEffect, useRef, useState } from 'react';
-import type { FormInstance } from 'antd/es/form';
+import { Form, Table, InputNumber, InputRef, FormInstance } from 'antd';
 import { formatNumber } from '@/utils/format';
-import { ISeaQuotationFeeDTOs } from '../../interface';
+import { DataTypeProfit } from './modal';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/router';
+import { API_MESSAGE } from '@/constant/message';
+import { errorToast } from '@/hook/toast';
+import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
+import { API_UNIT } from '@/fetcherAxios/endpoint';
+export interface ImportFormValues {
+  file: FileList;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ImportModalProps {
-  dataTable: ISeaQuotationFeeDTOs[];
+  dataSourceProfit: DataTypeProfit[];
+  setDataSourceProfit: any;
 }
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
-  key: string;
-  feeName: string;
-  unitInternationalCode: string;
-  priceFee: string;
-  currencyName: string;
-  vatFee: string;
+  key: React.Key;
+  type: string;
+  profitRate: string;
 }
 
 interface EditableRowProps {
@@ -118,90 +126,71 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  feeName: string;
-  unitInternationalCode: string;
-  priceFee: string;
-  currencyName: string;
-  vatFee: string;
+  type: string;
+  profitRate: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
-const TableFeeGroup: React.FC<ImportModalProps> = ({ dataTable }) => {
-  const [form] = Form.useForm();
-
-  const [dataSource, setDataSource] = useState<DataType[]>([
-    {
-      key: '0',
-      feeName: 'Edward King 0',
-      unitInternationalCode: '32',
-      priceFee: '1000',
-      currencyName: 'London, Park Lane no. 0',
-      vatFee: '1000',
+const UnitProfit: React.FC<ImportModalProps> = ({
+  dataSourceProfit,
+  setDataSourceProfit,
+}) => {
+  const router = useRouter();
+  // get container type
+  useQuery({
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        const newData = data.data.map((unit) => ({
+          key: unit.unitID,
+          unitName: unit.internationalCode,
+          profitRate: '',
+        }));
+        setDataSourceProfit((prevData: any) => [...newData, ...prevData]);
+      }
     },
-    {
-      key: '1',
-      feeName: 'Edward King 0',
-      unitInternationalCode: '32',
-      priceFee: '1000',
-      currencyName: 'London, Park Lane no. 0',
-      vatFee: '1000',
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
     },
-  ]);
+  });
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
     dataIndex: string;
   })[] = [
     {
-      title: 'Name',
-      dataIndex: 'feeName',
-      key: 'feeName',
+      title: 'Profit Other Charges',
+      dataIndex: 'unitName',
+      key: 'unitName',
       fixed: 'left',
     },
     {
-      title: 'Unit',
-      dataIndex: 'unitInternationalCode',
-      key: 'unitInternationalCode',
-      fixed: 'left',
-    },
-    {
-      title: 'Price',
-      dataIndex: 'priceFee',
-      key: 'priceFee',
+      title: '%',
+      dataIndex: 'profitRate',
+      key: 'profitRate',
       fixed: 'right',
       render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
-      },
-      editable: true,
-    },
-    {
-      title: 'Currency',
-      dataIndex: 'currencyName',
-      key: 'currencyName',
-      fixed: 'left',
-    },
-    {
-      title: 'VAT',
-      dataIndex: 'vatFee',
-      key: 'vatFee',
-      fixed: 'right',
-      render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
+        return formatNumber(Number(value) || 0);
       },
       editable: true,
     },
   ];
 
   const handleSave = (row: DataType) => {
-    const newData = [...dataSource];
+    const newData = [...dataSourceProfit];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
     newData.splice(index, 1, {
       ...item,
       ...row,
     });
-    setDataSource(newData);
+    setDataSourceProfit(newData);
   };
 
   const components = {
@@ -227,34 +216,15 @@ const TableFeeGroup: React.FC<ImportModalProps> = ({ dataTable }) => {
     };
   });
 
-  useEffect(() => {
-    setDataSource(
-      dataTable?.map((item) => {
-        return {
-          key: item.feeGroupDetailID,
-          feeName: item.feeName,
-          unitInternationalCode: item.unitInternationalCode,
-          priceFee: item.priceFee,
-          currencyName: item.currencyName,
-          vatFee: item.vatFee,
-        };
-      })
-    );
-  }, [dataTable]);
-
   return (
-    <>
-      <Form form={form} component={false}>
-        <Table
-          components={components}
-          rowClassName={() => 'editable-row'}
-          bordered
-          dataSource={dataSource}
-          columns={columns as ColumnTypes}
-        />
-      </Form>
-    </>
+    <Table
+      components={components}
+      rowClassName={() => 'editable-row'}
+      bordered
+      dataSource={dataSourceProfit}
+      columns={columns as ColumnTypes}
+    />
   );
 };
 
-export default TableFeeGroup;
+export default UnitProfit;

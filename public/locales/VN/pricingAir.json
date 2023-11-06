@@ -9,20 +9,10 @@
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
-    "LCL": "LCL",
-    "DC20": "DC20",
-    "DC40": "DC40",
-    "HC40": "HC40",
-    "HC45": "HC45",
-    "RF20": "RF20",
-    "RF40": "RF40",
-    "DB20": "DB20",
     "others": "Others",
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
     "validity": "Validity",
     "freq": "Freq",
     "Cutoff": "Cut Off",
@@ -30,9 +20,6 @@
     "inl_addon": "InlAddon",
     "empty_return": "Empty Return",
     "amend": "Amend",
-    "DEM": "DEM",
-    "DET": "DET",
-    "STO": "STO",
     "modify_date": "Ngày cập nhật",
     "status": "Trạng thái",
     "note": "Ghi chú",
@@ -87,63 +74,9 @@
     },
 
     "commodity_form": {
-        "title": "commodity",
+        "title": "Commodity",
         "placeholder": "Nhập commodity",
         "error_required": "Vui lòng nhập commodity"
-    },
-
-    "LCLMin_form": {
-        "title": "LCLMin",
-        "placeholder": "Nhập LCLMin",
-        "error_required": "Vui lòng nhập LCLMin"
-    },
-
-    "LCL_form": {
-        "title": "LCL",
-        "placeholder": "Nhập LCL",
-        "error_required": "Vui lòng nhập LCL"
-    },
-
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Nhập DC20",
-        "error_required": "Vui lòng nhập DC20"
-    },
-
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Nhập DC40",
-        "error_required": "Vui lòng nhập DC40"
-    },
-
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Nhập HC40",
-        "error_required": "Vui lòng nhập HC40"
-    },
-
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Nhập HC45",
-        "error_required": "Vui lòng nhập HC45"
-    },
-
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Nhập RF20",
-        "error_required": "Vui lòng nhập RF20"
-    },
-
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Nhập RF40",
-        "error_required": "Vui lòng nhập RF40"
-    },
-
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Nhập DB20",
-        "error_required": "Vui lòng nhập DB20"
     },
 
     "others_form": {
@@ -241,7 +174,7 @@
         "placeholder": "Nhập loại nhóm phí",
         "error_required": "Vui lòng chọn loại nhóm phí"
     },
-
+    
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

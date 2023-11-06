@@ -9,20 +9,10 @@
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
-    "LCL": "LCL",
-    "DC20": "DC20",
-    "DC40": "DC40",
-    "HC40": "HC40",
-    "HC45": "HC45",
-    "RF20": "RF20",
-    "RF40": "RF40",
-    "DB20": "DB20",
     "others": "Others",
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
     "validity": "Validity",
     "freq": "Freq",
     "Cutoff": "Cut Off",
@@ -30,9 +20,6 @@
     "inl_addon": "InlAddon",
     "empty_return": "Empty Return",
     "amend": "Amend",
-    "DEM": "DEM",
-    "DET": "DET",
-    "STO": "STO",
     "modify_date": "Modify Date",
     "status": "Status",
     "note": "Note",
@@ -90,60 +77,6 @@
         "title": "commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
-    },
-
-    "LCLMin_form": {
-        "title": "LCLMin",
-        "placeholder": "Enter LCLMin",
-        "error_required": "Please enter LCLMin"
-    },
-
-    "LCL_form": {
-        "title": "LCL",
-        "placeholder": "Enter LCL",
-        "error_required": "Please enter LCL"
-    },
-
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Enter DC20",
-        "error_required": "Please enter DC20"
-    },
-
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Enter DC40",
-        "error_required": "Please enter DC40"
-    },
-
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Enter HC40",
-        "error_required": "Please enter HC40"
-    },
-
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Enter HC45",
-        "error_required": "Please enter HC45"
-    },
-
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Enter RF20",
-        "error_required": "Please enter RF20"
-    },
-
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Enter RF40",
-        "error_required": "Please enter RF40"
-    },
-
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Enter DB20",
-        "error_required": "Please enter DB20"
     },
 
     "others_form": {

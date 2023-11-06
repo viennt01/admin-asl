@@ -671,6 +671,7 @@ export default function MasterDataTable() {
             importTableData={importTableData}
             exportTableData={exportTableData}
             handleCreateQuotation={handleOpenCreateQuotation}
+            itemDataQuotation={selectedRowKeys}
           />
         </>
       )}

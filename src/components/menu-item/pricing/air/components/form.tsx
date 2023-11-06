@@ -5,14 +5,14 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { AirPricingFeeFormValue, FormValues, UpdateStatus } from '../interface';
 import {
-  API_CONTAINER_TYPE,
   API_CURRENCY,
   API_FEE_GROUP,
   API_AIR_PRICING,
+  API_LOAD_CAPACITY,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import {
-  getAllContainerType,
+  getAllTypeLoadCapacity,
   getAllCurrency,
   getAirPricingDetail,
   updateStatus,
@@ -46,6 +46,10 @@ interface PortFormProps {
   useDraft?: boolean;
 }
 
+const initialValues = {
+  gw: false,
+};
+
 const AirPricing = ({
   create,
   manager,
@@ -65,7 +69,7 @@ const AirPricing = ({
   const [optionCurrency, setOptionCurrency] = useState<
     { value: string; label: string }[]
   >([]);
-  const [optionTypeContainer, setOptionTypeContainer] = useState<
+  const [optionTypeLoadCapacity, setOptionTypeLoadCapacity] = useState<
     { value: string; label: string }[]
   >([]);
   const [airPricingFeeDTOs, setAirPricingFeeDTOs] = useState<
@@ -105,17 +109,17 @@ const AirPricing = ({
   });
   // get container type
   useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_ALL],
-    queryFn: () => getAllContainerType(),
+    queryKey: [API_LOAD_CAPACITY.GET_ALL],
+    queryFn: () => getAllTypeLoadCapacity(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
         errorToast(API_MESSAGE.ERROR);
       } else {
-        setOptionTypeContainer(
+        setOptionTypeLoadCapacity(
           data.data.map((currency) => {
             return {
-              value: currency.containerTypeID,
+              value: currency.loadCapacityID,
               label: currency.name,
             };
           })
@@ -175,14 +179,8 @@ const AirPricing = ({
           aolid: data.data.aolid,
           commodityID: data.data.commodityID,
           note: data.data.note,
-          dateEffect: dayjs(Number(data.data.dateEffect)),
           validityDate: dayjs(Number(data.data.validityDate)),
           freqDate: data.data.freqDate,
-          demAirPricing: data.data.demAirPricing,
-          detAirPricing: data.data.detAirPricing,
-          stoAirPricing: data.data.stoAirPricing,
-          lclMinAirPricing: data.data.lclMinAirPricing,
-          lclAirPricing: data.data.lclAirPricing,
           currencyID: data.data.currencyID,
           public: data.data.public,
           statusAirPricing: data.data.statusAirPricing,
@@ -236,14 +234,8 @@ const AirPricing = ({
       aolid: form.getFieldValue('aolid'),
       commodityID: form.getFieldValue('commodityID'),
       note: form.getFieldValue('note'),
-      dateEffect: form.getFieldValue('dateEffect'),
       validityDate: form.getFieldValue('validityDate'),
       freqDate: form.getFieldValue('freqDate'),
-      demAirPricing: form.getFieldValue('demAirPricing'),
-      detAirPricing: form.getFieldValue('detAirPricing'),
-      stoAirPricing: form.getFieldValue('stoAirPricing'),
-      lclMinAirPricing: form.getFieldValue('lclMinAirPricing'),
-      lclAirPricing: form.getFieldValue('lclAirPricing'),
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
       statusAirPricing: form.getFieldValue('statusAirPricing'),
@@ -261,6 +253,7 @@ const AirPricing = ({
       <Form
         form={form}
         onFinish={onFinish}
+        initialValues={initialValues}
         autoComplete="off"
         layout="vertical"
       >
@@ -289,7 +282,7 @@ const AirPricing = ({
           <AirPricingDetailDTO
             form={form}
             optionCurrency={optionCurrency}
-            optionTypeContainer={optionTypeContainer}
+            optionTypeLoadCapacity={optionTypeLoadCapacity}
             isCheckPermissionEdit={isCheckPermissionEdit}
           />
         </CollapseCard>

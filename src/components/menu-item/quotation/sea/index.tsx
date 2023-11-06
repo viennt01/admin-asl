@@ -3,14 +3,22 @@ import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
 import MasterDataTable from './table/master-table';
+import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
 
 export default function SeaQuotationPage() {
   const queryClient = useQueryClient();
 
   const onChange = (key: string) => {
-    queryClient.invalidateQueries({
-      queryKey: [key],
-    });
+    if (key === 'API_SEA_QUOTATION.GET_SEARCH') {
+      queryClient.invalidateQueries({
+        queryKey: [API_SEA_QUOTATION.GET_SEARCH],
+      });
+    }
+    if (key === 'API_SEA_QUOTATION.GET_REQUEST') {
+      queryClient.invalidateQueries({
+        queryKey: [API_SEA_QUOTATION.GET_REQUEST],
+      });
+    }
   };
   return (
     <Tabs

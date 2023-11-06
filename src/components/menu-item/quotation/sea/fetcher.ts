@@ -23,6 +23,7 @@ import {
   RequireTypeContainer,
   RequireFeeGroup,
   RequestExportData,
+  RequirePartnerRole,
 } from './interface';
 import {
   API_COMMODITY,
@@ -30,6 +31,7 @@ import {
   API_CURRENCY,
   API_FEE_GROUP,
   API_LOCATION,
+  API_PARTNER_ROLE,
   API_SEA_QUOTATION,
 } from '@/fetcherAxios/endpoint';
 
@@ -124,4 +126,10 @@ export const getAllContainerType = () => {
 
 export const getAllFeeGroup = () => {
   return get<ResponseWithPayload<RequireFeeGroup[]>>({})(API_FEE_GROUP.GET_ALL);
+};
+
+export const getAllPartnerRole = () => {
+  return get<ResponseWithPayload<RequirePartnerRole[]>>({})(
+    API_PARTNER_ROLE.GET_ALL
+  );
 };

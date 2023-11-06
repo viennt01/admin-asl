@@ -266,3 +266,12 @@ export const API_FEE_GROUP = {
   UPDATE_FEE_WITH_FEE_GROUP: '/update-fee-in-fee-group',
   DELETE_FEE_WITH_FEE_GROUP: '/delete-fee-in-fee-group',
 };
+
+export const API_PARTNER = {
+  GET_ALL_PARTNER_GROUP: '/get-all-group-partner',
+  GET_ALL_PARTNER: '/get-all-partner',
+  GET_ALL_PARTNER_BY_IDS: '/get-partner-by-list-id',
+};
+export const API_PARTNER_ROLE = {
+  GET_ALL: '/get-all-partner-role',
+};

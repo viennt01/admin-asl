@@ -21,8 +21,8 @@ const EditableContext = React.createContext<FormInstance<any> | null>(null);
 interface Item {
   key: string;
   containerTypeCode: string;
-  containerTypeID: string;
-  containerTypeName: string;
+  loadCapacityID: string;
+  loadCapacityName: string;
   currencyID: string;
   currencyName: string;
   price: string;
@@ -80,7 +80,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   useEffect(() => {
     if (optionTypeContainer) {
       const itemActive = optionTypeContainer.find(
-        (item) => item.value === record.containerTypeID
+        (item) => item.value === record.loadCapacityID
       );
       setOptionTypeContainerSelect(
         itemActive
@@ -88,7 +88,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
           : optionTypeContainerActive
       );
     }
-  }, [optionTypeContainer, optionTypeContainerActive, record?.containerTypeID]);
+  }, [optionTypeContainer, optionTypeContainerActive, record?.loadCapacityID]);
 
   useEffect(() => {
     if (editing) {
@@ -179,8 +179,8 @@ type EditableTableProps = Parameters<typeof Table>[0];
 interface DataType {
   key: React.Key;
   containerTypeCode: string;
-  containerTypeID: string;
-  containerTypeName: string;
+  loadCapacityID: string;
+  loadCapacityName: string;
   currencyID: string;
   currencyName: string;
   price: string;
@@ -192,14 +192,14 @@ interface Props {
   form: FormInstance<FormValues>;
   isCheckPermissionEdit: boolean;
   optionCurrency: { value: string; label: string }[];
-  optionTypeContainer: { value: string; label: string }[];
+  optionTypeLoadCapacity: { value: string; label: string }[];
 }
 
 const AirPricingDetailDTO = ({
   form,
   isCheckPermissionEdit,
   optionCurrency,
-  optionTypeContainer,
+  optionTypeLoadCapacity,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
   const [dataSource, setDataSource] = useState<DataType[]>([]);
@@ -211,6 +211,7 @@ const AirPricingDetailDTO = ({
     { idAirPricingDetailID: Key; idContainerType: string }[]
   >([]);
   const [countLoadData, setCountLoadData] = useState(0);
+  const valueCurrencyID = Form.useWatch('currencyID', form);
 
   // Lấy data từ API và chỉ lấy lần đầu (setDataRequire)
   useEffect(() => {
@@ -222,11 +223,8 @@ const AirPricingDetailDTO = ({
           .map((item: AirPricingDetailDTOsFormValue) => {
             return {
               key: item.airPricingDetailID || '',
-              containerTypeCode: item.containerTypeCode || '',
-              containerTypeID: item.containerTypeID || '',
-              containerTypeName: item.containerTypeName || '',
-              currencyID: item.currencyID || '',
-              currencyName: item.currencyName || '',
+              loadCapacityName: item.loadCapacityName || '',
+              loadCapacityID: item.loadCapacityID || '',
               price: item.price || '',
             };
           })
@@ -235,14 +233,26 @@ const AirPricingDetailDTO = ({
     }
   }, [form.getFieldValue('airPricingDetailDTOs')]);
 
+  useEffect(() => {
+    if (valueCurrencyID) {
+      setDataSource(
+        dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
+      );
+      form.setFieldValue(
+        'airPricingDetailDTOs',
+        dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
+      );
+    }
+  }, [valueCurrencyID]);
+
   // setOptionTypeContainerActive, setIdKeyAndContainerType
   useEffect(() => {
     setOptionTypeContainerActive(
-      optionTypeContainer.filter(
+      optionTypeLoadCapacity?.filter(
         (itemB) =>
           !dataSource.some(
             (itemA) =>
-              itemA.containerTypeID === itemB.value && itemA.currencyID !== ''
+              itemA.loadCapacityID === itemB.value && itemA.price !== ''
           )
       )
     );
@@ -250,11 +260,11 @@ const AirPricingDetailDTO = ({
       dataRequire.map((item) => {
         return {
           idAirPricingDetailID: item.key,
-          idContainerType: item.containerTypeID,
+          idContainerType: item.loadCapacityID,
         };
       })
     );
-  }, [optionCurrency, dataRequire, optionTypeContainer, dataSource]);
+  }, [optionCurrency, dataRequire, optionTypeLoadCapacity, dataSource]);
 
   // setFieldValue airPricingDetailDTOs
   useEffect(() => {
@@ -264,7 +274,7 @@ const AirPricingDetailDTO = ({
         dataSource.map((item) => {
           return {
             airPricingDetailID: item.key,
-            containerTypeID: item.containerTypeID,
+            loadCapacityID: item.loadCapacityID,
             currencyID: item.currencyID,
             price: item.price,
           };
@@ -276,7 +286,11 @@ const AirPricingDetailDTO = ({
 
   //setDataSource
   useEffect(() => {
-    setDataSource(dataRequire.filter((itemA) => itemA.currencyID !== ''));
+    setDataSource(
+      dataRequire
+        .filter((itemA) => itemA.price !== '')
+        .map((item) => ({ ...item, currencyID: valueCurrencyID }))
+    );
   }, [dataRequire]);
 
   const handleDelete = (key: React.Key) => {
@@ -284,8 +298,8 @@ const AirPricingDetailDTO = ({
     const itemDelete = dataSource.filter((item) => item.key == key);
     setOptionTypeContainerActive([
       {
-        value: itemDelete[0].containerTypeID,
-        label: itemDelete[0].containerTypeName,
+        value: itemDelete[0].loadCapacityID,
+        label: itemDelete[0].loadCapacityName,
       },
       ...optionTypeContainerActive,
     ]);
@@ -295,7 +309,7 @@ const AirPricingDetailDTO = ({
       newData.map((item) => {
         return {
           airPricingDetailID: item.key,
-          containerTypeID: item.containerTypeID,
+          loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
         };
@@ -308,13 +322,14 @@ const AirPricingDetailDTO = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type container',
-      dataIndex: 'containerTypeID',
+      title: 'Type Load Capacity',
+      dataIndex: 'loadCapacityID',
       width: '30%',
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return optionTypeContainer.find((item) => item.value === value)?.label;
+        return optionTypeLoadCapacity?.find((item) => item.value === value)
+          ?.label;
       },
     },
     {
@@ -330,7 +345,6 @@ const AirPricingDetailDTO = ({
       title: 'Currency',
       dataIndex: 'currencyID',
       align: 'center',
-      editable: !isCheckPermissionEdit,
       render: (value) => {
         return optionCurrency.find((item) => item.value === value)?.label;
       },
@@ -366,9 +380,9 @@ const AirPricingDetailDTO = ({
           (item) => item.idContainerType === optionTypeContainerActive[0]?.value
         )?.idAirPricingDetailID || count,
       containerTypeCode: '',
-      containerTypeID: optionTypeContainerActive[0]?.value || '',
-      containerTypeName: optionTypeContainerActive[0].label || '',
-      currencyID: optionCurrency[0].value || '',
+      loadCapacityID: optionTypeContainerActive[0]?.value || '',
+      loadCapacityName: optionTypeContainerActive[0].label || '',
+      currencyID: valueCurrencyID || optionCurrency[0].value || '',
       currencyName: optionCurrency[0].label || '',
       price: '1000000',
     };
@@ -383,7 +397,7 @@ const AirPricingDetailDTO = ({
       newDataSource.map((item) => {
         return {
           airPricingDetailID: item.key,
-          containerTypeID: item.containerTypeID,
+          loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
         };
@@ -400,11 +414,11 @@ const AirPricingDetailDTO = ({
       ...row,
     });
     setOptionTypeContainerActive(
-      optionTypeContainer.filter(
+      optionTypeLoadCapacity.filter(
         (itemB) =>
           !newData.some(
             (itemA) =>
-              itemA.containerTypeID === itemB.value && itemA.currencyID !== ''
+              itemA.loadCapacityID === itemB.value && itemA.currencyID !== ''
           )
       )
     );
@@ -415,7 +429,7 @@ const AirPricingDetailDTO = ({
       dataSource.map((item) => {
         return {
           airPricingDetailID: item.key,
-          containerTypeID: item.containerTypeID,
+          loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
         };
@@ -447,7 +461,7 @@ const AirPricingDetailDTO = ({
             : 'selectContainerType',
         optionCurrency: optionCurrency,
         optionTypeContainerActive: optionTypeContainerActive,
-        optionTypeContainer: optionTypeContainer,
+        optionTypeContainer: optionTypeLoadCapacity,
         dataIndex: col.dataIndex,
         title: col.title,
         handleSave,
@@ -460,7 +474,7 @@ const AirPricingDetailDTO = ({
       <Button
         icon={<PlusOutlined />}
         style={{
-          display: optionTypeContainerActive.length === 0 ? 'none' : '',
+          display: optionTypeContainerActive?.length === 0 ? 'none' : '',
           backgroundColor: COLORS.BRIGHT,
           color: COLORS.GREEN,
           borderColor: COLORS.GREEN,

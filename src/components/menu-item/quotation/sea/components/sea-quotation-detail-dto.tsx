@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { Button, Form, InputNumber, Popconfirm, Select, Table } from 'antd';
 import type { FormInstance } from 'antd/es/form';
-import { IFormValues, SeaQuotationDetailDTOsFormValue } from '../interface';
+import { IFormValues, ISeaQuotationDetailDTOsFormValue } from '../interface';
 import type { BaseSelectRef } from 'rc-select';
 import COLORS from '@/constant/color';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
@@ -221,7 +221,7 @@ const SeaPricingDetailDTO = ({
       setDataRequire(
         form
           .getFieldValue('seaQuotationDetailDTOs')
-          .map((item: SeaQuotationDetailDTOsFormValue) => {
+          .map((item: ISeaQuotationDetailDTOsFormValue) => {
             return {
               key: item.seaQuotationDetailID || '',
               containerTypeCode: item.containerTypeCode || '',

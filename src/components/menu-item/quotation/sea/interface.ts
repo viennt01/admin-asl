@@ -86,12 +86,17 @@ export interface IFormValues {
   currencyID: string;
   public: boolean;
   statusSeaQuotation: string;
-  seaQuotationDetailDTOs: SeaQuotationDetailDTOsFormValue[];
+  seaQuotationDetailDTOs: ISeaQuotationDetailDTOsFormValue[];
   seaQuotaionFeeGroupDTOs: ISeaQuotationFeeFormValue[];
+  salesLeadsSeaQuotationDTOs: string[];
+  seaQuotationPartnerRoleRegisters: string[];
 }
 
 export interface ISeaPricingDetailType
-  extends Omit<IFormValues, 'seaQuotaionFeeGroupDTOs'> {
+  extends Omit<
+    IFormValues,
+    'seaQuotaionFeeGroupDTOs' | 'salesLeadsSeaQuotationDTOs'
+  > {
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
@@ -99,9 +104,13 @@ export interface ISeaPricingDetailType
   confirmDated: string;
   confirmByUser: string;
   seaQuotaionFeeGroupDTOs: ISeaQuotationFeeFormValue[];
+  salesLeadsSeaQuotationDTOs: {
+    salesLeadsSeaQuotationID: string;
+    partnerID: string;
+  }[];
 }
 
-export interface SeaQuotationDetailDTOsFormValue {
+export interface ISeaQuotationDetailDTOsFormValue {
   seaQuotationDetailID: string;
   containerTypeID: string;
   containerTypeCode: string;
@@ -112,10 +121,11 @@ export interface SeaQuotationDetailDTOsFormValue {
 }
 
 export type ISeaQuotationDetailDTOsCreate = Omit<
-  SeaQuotationDetailDTOsFormValue,
+  ISeaQuotationDetailDTOsFormValue,
   | 'seaQuotationDetailID'
   | 'containerTypeCode'
   | 'containerTypeName'
+  | 'currencyID'
   | 'currencyName'
   | 'price'
 > & {
@@ -123,8 +133,8 @@ export type ISeaQuotationDetailDTOsCreate = Omit<
 };
 
 export type ISeaQuotationDetailDTOsUpdate = Omit<
-  SeaQuotationDetailDTOsFormValue,
-  'containerTypeCode' | 'containerTypeName' | 'currencyName'
+  ISeaQuotationDetailDTOsFormValue,
+  'containerTypeCode' | 'containerTypeName' | 'currencyName' | 'currencyID'
 > & {
   isDelete?: boolean;
 };
@@ -178,29 +188,36 @@ export type SeaPricingFeeUpdate = Omit<
 
 export type ISeaQuotationCreate = Omit<
   IFormValues,
+  | 'seaQuotationID'
   | 'seaPricingID'
   | 'dateEffect'
   | 'validityDate'
-  | 'seaQuotationDetailRegisterRequests'
-  | 'seaPricingFeeDTOs'
+  | 'seaQuotationDetailDTOs'
+  | 'seaQuotaionFeeGroupDTOs'
+  | 'salesLeadsSeaQuotationDTOs'
+  | 'seaQuotationPartnerRoleRegisters'
 > & {
   dateEffect: number;
   validityDate: number;
   seaQuotationDetailRegisterRequests: ISeaQuotationDetailDTOsCreate[];
-  seaQuotationFeeGroupRegisterRequests: SeaPricingFeeDTOsCreate[];
+  // seaQuotationFeeGroupRegisterRequests: SeaPricingFeeDTOsCreate[];
+  salesLeadsQuotationRegisters: { partnerID: string }[];
+  seaQuotationPartnerRoleRegisters: { partnerRoleID: string }[];
 };
 
 export type ISeaQuotationEdit = Omit<
   IFormValues,
   | 'dateEffect'
   | 'validityDate'
-  | 'seaQuotationDetailRegisterRequests'
-  | 'seaPricingFeeDTOs'
+  | 'seaQuotationDetailDTOs'
+  | 'seaQuotaionFeeGroupDTOs'
+  | 'salesLeadsSeaQuotationDTOs'
+  | 'seaQuotationPartnerRoleRegisters'
 > & {
   dateEffect: number;
   validityDate: number;
   seaQuotationDetailUpdateRequests: ISeaQuotationDetailDTOsUpdate[];
-  seaQuotationFeeGroupUpdateRequests: SeaPricingFeeUpdate[];
+  // seaQuotationFeeGroupUpdateRequests: SeaPricingFeeUpdate[];
 };
 export type SeaPricingDelete = {
   ids: React.Key[];
@@ -272,4 +289,10 @@ export interface RequireTypeContainer {
 export interface RequireFeeGroup {
   feeGroupID: string;
   feeGroupName: string;
+}
+// get all partner role
+export interface RequirePartnerRole {
+  partnerRoleID: string;
+  abbreviations: string;
+  name: string;
 }

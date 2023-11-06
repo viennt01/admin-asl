@@ -79,8 +79,7 @@ const CreateAirPricing = () => {
     const airPricingDetailRegisterRequests =
       formValues.airPricingDetailDTOs.map((data) => {
         return {
-          containerTypeID: data.containerTypeID,
-          currencyID: data.currencyID,
+          loadCapacityID: data.loadCapacityID,
           pricePricingDetail: data.price,
         };
       });
@@ -95,15 +94,10 @@ const CreateAirPricing = () => {
         aolid: formValues.aolid || '',
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
-        dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        demAirPricing: formValues.demAirPricing || '',
-        detAirPricing: formValues.detAirPricing || '',
-        stoAirPricing: formValues.stoAirPricing || '',
-        lclMinAirPricing: formValues.lclMinAirPricing || '',
-        lclAirPricing: formValues.lclAirPricing || '',
         currencyID: formValues.currencyID || '',
+        gw: formValues.gw,
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
         airPricingFeeGroupUpdateRequests: returnFeeDTO,
@@ -125,14 +119,9 @@ const CreateAirPricing = () => {
         aolid: formValues.aolid || '',
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
-        dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        demAirPricing: formValues.demAirPricing || '',
-        detAirPricing: formValues.detAirPricing || '',
-        stoAirPricing: formValues.stoAirPricing || '',
-        lclMinAirPricing: formValues.lclMinAirPricing || '',
-        lclAirPricing: formValues.lclAirPricing || '',
+        gw: formValues.gw,
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailRegisterRequests:
@@ -161,8 +150,7 @@ const CreateAirPricing = () => {
     const airPricingDetailRegisterRequests =
       formValues.airPricingDetailDTOs.map((data) => {
         return {
-          containerTypeID: data.containerTypeID,
-          currencyID: data.currencyID,
+          loadCapacityID: data.loadCapacityID,
           pricePricingDetail: data.price,
         };
       });
@@ -177,14 +165,9 @@ const CreateAirPricing = () => {
         aolid: formValues.aolid || '',
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
-        dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        demAirPricing: formValues.demAirPricing || '',
-        detAirPricing: formValues.detAirPricing || '',
-        stoAirPricing: formValues.stoAirPricing || '',
-        lclMinAirPricing: formValues.lclMinAirPricing || '',
-        lclAirPricing: formValues.lclAirPricing || '',
+        gw: formValues.gw,
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
@@ -196,7 +179,7 @@ const CreateAirPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_AIR_PRICING.GET_SEARCH],
+                queryKey: [API_AIR_PRICING.GET_DRAFT],
               }))
             : errorToast(data.message);
         },
@@ -210,14 +193,9 @@ const CreateAirPricing = () => {
         aolid: formValues.aolid || '',
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
-        dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        demAirPricing: formValues.demAirPricing || '',
-        detAirPricing: formValues.detAirPricing || '',
-        stoAirPricing: formValues.stoAirPricing || '',
-        lclMinAirPricing: formValues.lclMinAirPricing || '',
-        lclAirPricing: formValues.lclAirPricing || '',
+        gw: formValues.gw,
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailRegisterRequests:
@@ -230,7 +208,7 @@ const CreateAirPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_AIR_PRICING.GET_SEARCH],
+                queryKey: [API_AIR_PRICING.GET_DRAFT],
               }))
             : errorToast(data.message);
         },

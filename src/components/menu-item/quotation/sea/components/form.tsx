@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import {
   IFormValues,
   ISeaQuotationFeeFormValue,
-  SeaQuotationDetailDTOsFormValue,
+  ISeaQuotationDetailDTOsFormValue,
   UpdateStatus,
 } from '../interface';
 import {
@@ -38,13 +38,13 @@ interface PortFormProps {
     formValues: IFormValues,
     id?: string,
     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
-    seaQuotationDetail?: SeaQuotationDetailDTOsFormValue[]
+    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[]
   ) => void;
   handleSaveDraft?: (
     formValues: IFormValues,
     id?: string,
     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
-    seaQuotationDetail?: SeaQuotationDetailDTOsFormValue[]
+    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[]
   ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
@@ -77,7 +77,7 @@ const SeaQuotation = ({
     ISeaQuotationFeeFormValue[]
   >([]);
   const [seaQuotationDetail, setSeaQuotationDetail] = useState<
-    SeaQuotationDetailDTOsFormValue[]
+    ISeaQuotationDetailDTOsFormValue[]
   >([]);
 
   useEffect(() => {

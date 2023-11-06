@@ -4,7 +4,14 @@ import {
   FilterFilled,
   DeleteOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
+import {
+  Button,
+  Modal,
+  PaginationProps,
+  Tag,
+  Popconfirm,
+  Checkbox,
+} from 'antd';
 import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -14,11 +21,7 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
-import {
-  formatCurrencyHasCurrency,
-  formatDate,
-  formatNumber,
-} from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -117,14 +120,8 @@ export default function MasterDataTable() {
             currencyID: data.currencyID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
-            dateEffect: data.dateEffect,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            demAirPricing: data.demAirPricing,
-            detAirPricing: data.detAirPricing,
-            stoAirPricing: data.stoAirPricing,
-            lclMinAirPricing: data.lclMinAirPricing,
-            lclAirPricing: data.lclAirPricing,
             public: data.public,
             statusAirPricing: data.statusAirPricing,
             confirmDated: data.confirmDated,
@@ -134,10 +131,8 @@ export default function MasterDataTable() {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
             vendor: data.vendor,
+            gw: data.gw,
             searchAll: '',
           }))
         );
@@ -336,39 +331,11 @@ export default function MasterDataTable() {
       align: 'center',
     },
     {
-      title: 'LCLMin',
-      width: 200,
-      dataIndex: 'lclMinAirPricing',
-      key: 'lclMinAirPricing',
-      align: 'center',
-      render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
-      },
-    },
-    {
-      title: 'LCL',
-      width: 200,
-      dataIndex: 'lclAirPricing',
-      key: 'lclAirPricing',
-      align: 'center',
-      render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
-      },
-    },
-    {
       title: 'Currency',
       width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'center',
-    },
-    {
-      title: translatePricingAir('effect_date'),
-      width: 200,
-      dataIndex: 'dateEffect',
-      key: 'dateEffect',
-      align: 'center',
-      render: (value) => formatDate(Number(value)),
     },
     {
       title: translatePricingAir('validity'),
@@ -379,42 +346,22 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
+      title: 'GW',
+      dataIndex: 'gw',
+      width: 50,
+      key: 'gw',
+      align: 'center',
+      render: (value) => {
+        return <Checkbox checked={value as boolean} />;
+      },
+    },
+    {
       title: translatePricingAir('freq'),
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
       align: 'center',
       render: (value) => formatDate(Number(value)),
-    },
-    {
-      title: translatePricingAir('DEM'),
-      width: 200,
-      dataIndex: 'demAirPricing',
-      key: 'demAirPricing',
-      align: 'center',
-      render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
-      },
-    },
-    {
-      title: translatePricingAir('STO'),
-      width: 200,
-      dataIndex: 'stoAirPricing',
-      key: 'stoAirPricing',
-      align: 'center',
-      render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
-      },
-    },
-    {
-      title: translatePricingAir('DET'),
-      width: 200,
-      dataIndex: 'detAirPricing',
-      key: 'detAirPricing',
-      align: 'center',
-      render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
-      },
     },
     {
       title: translatePricingAir('note'),

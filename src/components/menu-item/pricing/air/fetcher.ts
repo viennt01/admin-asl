@@ -19,14 +19,14 @@ import {
   RequireLocation,
   RequireCommodity,
   RequireCurrency,
-  RequireTypeContainer,
+  RequireTypeLoadCapacity,
 } from './interface';
 import {
   API_COMMODITY,
-  API_CONTAINER_TYPE,
   API_CURRENCY,
   API_LOCATION,
   API_AIR_PRICING,
+  API_LOAD_CAPACITY,
 } from '@/fetcherAxios/endpoint';
 
 export const getAirPricingSearch = (data: RequestAirPricing) => {
@@ -108,8 +108,8 @@ export const getAllCurrency = () => {
   return get<ResponseWithPayload<RequireCurrency[]>>({})(API_CURRENCY.GET_ALL);
 };
 
-export const getAllContainerType = () => {
-  return get<ResponseWithPayload<RequireTypeContainer[]>>({})(
-    API_CONTAINER_TYPE.GET_ALL
+export const getAllTypeLoadCapacity = () => {
+  return get<ResponseWithPayload<RequireTypeLoadCapacity[]>>({})(
+    API_LOAD_CAPACITY.GET_ALL
   );
 };

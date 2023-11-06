@@ -12,14 +12,8 @@ export interface AirPricing {
   currencyID: string;
   currencyAbbreviations: string;
   note: string;
-  dateEffect: string;
   validityDate: string;
   freqDate: string;
-  demAirPricing: string;
-  detAirPricing: string;
-  stoAirPricing: string;
-  lclMinAirPricing: string;
-  lclAirPricing: string;
   public: boolean;
   statusAirPricing: string;
   confirmDated: string;
@@ -28,11 +22,9 @@ export interface AirPricing {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  isDelete: boolean;
-  dateDeleted: string;
-  deleteByUser: string;
   airPricingDetailDTOs: { [key: string]: string };
   vendor: string;
+  gw: boolean;
 }
 
 export interface AirPricingDetailDTOs {
@@ -78,17 +70,12 @@ export interface FormValues {
   aolid: string;
   commodityID: string;
   note: string;
-  dateEffect: Dayjs;
   validityDate: Dayjs;
   freqDate: string;
-  demAirPricing: string;
-  detAirPricing: string;
-  stoAirPricing: string;
-  lclMinAirPricing: string;
   currencyID: string;
-  lclAirPricing: string;
   public: boolean;
   statusAirPricing: string;
+  gw: boolean;
   airPricingDetailDTOs: AirPricingDetailDTOsFormValue[];
   airPricingFeeDTOs: string[];
 }
@@ -104,28 +91,21 @@ export interface AirPricingDetailType
 
 export interface AirPricingDetailDTOsFormValue {
   airPricingDetailID: string;
-  containerTypeID: string;
-  containerTypeCode: string;
-  containerTypeName: string;
-  currencyID: string;
-  currencyName: string;
+  loadCapacityID: string;
+  loadCapacityName: string;
   price: string;
 }
 
 export type AirPricingDetailDTOsCreate = Omit<
   AirPricingDetailDTOsFormValue,
-  | 'airPricingDetailID'
-  | 'containerTypeCode'
-  | 'containerTypeName'
-  | 'currencyName'
-  | 'price'
+  'airPricingDetailID' | 'price' | 'loadCapacityName'
 > & {
   pricePricingDetail: string;
 };
 
 export type AirPricingDetailDTOsUpdate = Omit<
   AirPricingDetailDTOsFormValue,
-  'containerTypeCode' | 'containerTypeName' | 'currencyName'
+  'loadCapacityID' | 'loadCapacityName'
 >;
 
 export interface AirPricingFeeFormValue {
@@ -145,24 +125,22 @@ export type AirPricingFeeDTOsCreate = Omit<
   | 'dateInserted'
   | 'dateUpdated'
   | 'updatedByUser'
->;
+> & {
+  public: boolean;
+};
 
 export type AirPricingFeeUpdate = Omit<
   AirPricingFeeFormValue,
   'insertedByUser' | 'dateInserted' | 'dateUpdated' | 'updatedByUser'
 > & {
   isDelete: boolean;
+  public: boolean;
 };
 
 export type AirPricingCreate = Omit<
   FormValues,
-  | 'airPricingID'
-  | 'dateEffect'
-  | 'validityDate'
-  | 'airPricingDetailDTOs'
-  | 'airPricingFeeDTOs'
+  'airPricingID' | 'validityDate' | 'airPricingDetailDTOs' | 'airPricingFeeDTOs'
 > & {
-  dateEffect: number;
   validityDate: number;
   airPricingDetailRegisterRequests: AirPricingDetailDTOsCreate[];
   airPricingFeeGroupRegisterRequests: AirPricingFeeDTOsCreate[];
@@ -170,9 +148,8 @@ export type AirPricingCreate = Omit<
 
 export type AirPricingEdit = Omit<
   FormValues,
-  'dateEffect' | 'validityDate' | 'airPricingDetailDTOs' | 'airPricingFeeDTOs'
+  'validityDate' | 'airPricingDetailDTOs' | 'airPricingFeeDTOs'
 > & {
-  dateEffect: number;
   validityDate: number;
   airPricingDetailUpdateRequests: AirPricingDetailDTOsUpdate[];
   airPricingFeeGroupUpdateRequests: AirPricingFeeUpdate[];
@@ -232,7 +209,7 @@ export interface RequireCurrency {
   abbreviations: string;
 }
 // get all type container
-export interface RequireTypeContainer {
-  containerTypeID: string;
+export interface RequireTypeLoadCapacity {
+  loadCapacityID: string;
   name: string;
 }

@@ -1,25 +1,32 @@
-import React, { Ref, useContext, useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Modal,
   Form,
   Row,
-  Table,
-  InputNumber,
-  InputRef,
-  FormInstance,
   Col,
   DatePicker,
+  Select,
+  Checkbox,
 } from 'antd';
-import { formatNumber } from '@/utils/format';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
-import { createQuotationWithPricing, getAllContainerType } from '../../fetcher';
+import { API_PARTNER } from '@/fetcherAxios/endpoint';
+import {
+  createQuotationWithPricing,
+  getAllPartner,
+  getAllPartnerGroup,
+} from '../../fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { useRouter } from 'next/router';
 import { errorToast, successToast } from '@/hook/toast';
-import { RequireCreateQuotationWithPricing } from '../../interface';
+import {
+  RequireCreateQuotationWithPricing,
+  RequireCreateQuotationWithPricingFormValue,
+} from '../../interface';
 import { STATUS_ALL_LABELS } from '@/constant/form';
+import ContainerType from './table-container';
+import UnitProfit from './table-unit-profit';
+import TableSaleLead from './table-sale-lead';
 export interface ImportFormValues {
   file: FileList;
 }
@@ -32,128 +39,17 @@ interface ImportModalProps {
 }
 const dateFormat = 'YYYY/MM/DD';
 
-const EditableContext = React.createContext<FormInstance<any> | null>(null);
-
-interface Item {
-  key: string;
-  feeName: string;
-  unitInternationalCode: string;
-  priceFee: string;
-  currencyName: string;
-  vatFee: string;
-}
-
-interface EditableRowProps {
-  index: number;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
-  const [form] = Form.useForm();
-  return (
-    <Form form={form} component={false}>
-      <EditableContext.Provider value={form}>
-        <tr {...props} />
-      </EditableContext.Provider>
-    </Form>
-  );
-};
-
-interface EditableCellProps {
-  title: React.ReactNode;
-  editable: boolean;
-  children: React.ReactNode;
-  dataIndex: keyof Item;
-  record: Item;
-  handleSave: (record: Item) => void;
-}
-
-const EditableCell: React.FC<EditableCellProps> = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
-  const [editing, setEditing] = useState(false);
-  const inputRef = useRef<InputRef>(null);
-  const form = useContext(EditableContext)!;
-
-  useEffect(() => {
-    if (editing) {
-      inputRef.current!.focus();
-    }
-  }, [editing]);
-
-  const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({ [dataIndex]: record[dataIndex] });
-  };
-
-  const save = async () => {
-    try {
-      const values = await form.validateFields();
-
-      toggleEdit();
-      handleSave({ ...record, ...values });
-    } catch (errInfo) {
-      console.log('Save failed:', errInfo);
-    }
-  };
-
-  let childNode = children;
-
-  if (editable) {
-    childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
-      >
-        <InputNumber
-          ref={inputRef as unknown as Ref<HTMLInputElement>}
-          onPressEnter={save}
-          onBlur={save}
-          style={{ width: '100%' }}
-          formatter={(value) => formatNumber(Number(value) || 0)}
-        />
-      </Form.Item>
-    ) : (
-      <div
-        className="editable-cell-value-wrap"
-        style={{ paddingRight: 24 }}
-        onClick={toggleEdit}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  return <td {...restProps}>{childNode}</td>;
-};
-
-type EditableTableProps = Parameters<typeof Table>[0];
-
-interface DataType {
+export interface DataType {
   key: React.Key;
   containerName: string;
   profitRate: string;
 }
 
-interface DataTypeProfit {
+export interface DataTypeProfit {
   key: React.Key;
-  type: string;
+  unitName: string;
   profitRate: string;
 }
-
-type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
 const CreateQuotationModal: React.FC<ImportModalProps> = ({
   open,
@@ -165,26 +61,24 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const [form] = Form.useForm();
   const onOke = () => form.submit();
   const onCancel = () => handleCancel();
+  const checkObject = Form.useWatch('checkbox-group', form);
+  const idPartners = Form.useWatch('salesLeadsQuotationRegisters', form);
+  console.log(idPartners);
 
-  const [dataSource, setDataSource] = useState<DataType[]>([]);
-  // get container type
-  useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_ALL],
-    queryFn: () => getAllContainerType(),
+  const [dataSource, setDataSource] = useState<DataType[]>([
+    { key: 'Other', containerName: 'Other', profitRate: '0' },
+  ]);
+  const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
+    { key: 'Other', unitName: 'Other', profitRate: '0' },
+  ]);
+
+  const getPartner = useQuery({
+    queryKey: [API_PARTNER.GET_ALL_PARTNER],
+    queryFn: () => getAllPartner(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
         errorToast(API_MESSAGE.ERROR);
-      } else {
-        setDataSource(
-          data.data.map((currency) => {
-            return {
-              key: currency.containerTypeID,
-              containerName: currency.code,
-              profitRate: '',
-            };
-          })
-        );
       }
     },
     onError: () => {
@@ -192,134 +86,32 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       errorToast(API_MESSAGE.ERROR);
     },
   });
-
+  const getPartnerGroup = useQuery({
+    queryKey: [API_PARTNER.GET_ALL_PARTNER_GROUP],
+    queryFn: () => getAllPartnerGroup(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
   const createMutation = useMutation({
     mutationFn: (body: RequireCreateQuotationWithPricing) => {
       return createQuotationWithPricing(body);
     },
   });
 
-  const defaultColumns: (ColumnTypes[number] & {
-    editable?: boolean;
-    dataIndex: string;
-  })[] = [
-    {
-      title: 'Name',
-      dataIndex: 'containerName',
-      key: 'containerName',
-      fixed: 'left',
-    },
-    {
-      title: 'Profit Rate',
-      dataIndex: 'profitRate',
-      key: 'profitRate',
-      fixed: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-      editable: true,
-    },
-  ];
-
-  const handleSave = (row: DataType) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    setDataSource(newData);
-  };
-
-  const components = {
-    body: {
-      row: EditableRow,
-      cell: EditableCell,
-    },
-  };
-
-  const columns = defaultColumns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record: DataType) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        handleSave,
-      }),
-    };
-  });
-
-  //----------------------------------------------------------------
-  const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
-    { key: 'profitRateOfPricing', type: 'Freight Profit', profitRate: '0' },
-    { key: 'profitRateOfFee', type: 'Other Fee Profit', profitRate: '0' },
-  ]);
-
-  const defaultColumnsProfit: (ColumnTypes[number] & {
-    editable?: boolean;
-    dataIndex: string;
-  })[] = [
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-      fixed: 'left',
-    },
-    {
-      title: '%',
-      dataIndex: 'profitRate',
-      key: 'profitRate',
-      fixed: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-      editable: true,
-    },
-  ];
-
-  const handleSaveProfit = (row: DataTypeProfit) => {
-    const newData = [...dataSourceProfit];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    setDataSourceProfit(newData);
-  };
-
-  const componentsProfit = {
-    body: {
-      row: EditableRow,
-      cell: EditableCell,
-    },
-  };
-
-  const columnsProfit = defaultColumnsProfit.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record: DataType) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        handleSaveProfit,
-      }),
-    };
-  });
-
-  const onSubmit = (value: RequireCreateQuotationWithPricing) => {
+  const onSubmit = (value: RequireCreateQuotationWithPricingFormValue) => {
     const profitRateOfContainerTypeFilter = dataSource.filter(
-      (item) => item.profitRate !== '' && item.profitRate !== '0'
+      (item) =>
+        item.profitRate !== '' &&
+        item.profitRate !== '0' &&
+        item.key !== 'Other'
     );
     const profitRateOfContainerType = profitRateOfContainerTypeFilter.reduce(
       (result: any, item) => {
@@ -329,13 +121,43 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       {}
     );
 
+    const profitRateOfUnitforFeeFilter = dataSourceProfit.filter(
+      (item) =>
+        item.profitRate !== '' &&
+        item.profitRate !== '0' &&
+        item.key !== 'Other'
+    );
+    const profitRateOfUnitforFee = profitRateOfUnitforFeeFilter.reduce(
+      (result: any, item) => {
+        result[item.key] = item.profitRate;
+        return result;
+      },
+      {}
+    );
+    // Biến đổi dữ liệu salesLeadsQuotationRegisters
+    const salesLeadsQuotationRegisters =
+      value?.salesLeadsQuotationRegisters?.map((id) => ({ partnerID: id })) ||
+      [];
+    // Biến đổi dữ liệu seaQuotationGroupPartnerRegisterRequests
+    const seaQuotationGroupPartnerRegisterRequests =
+      value?.seaQuotationGroupPartnerRegisterRequests?.map((id) => ({
+        groupPartnerID: id,
+      })) || [];
+
     const _requestData = {
       seaPricingID: itemData,
       effectDated: value.effectDated.valueOf(),
       validityDate: value.validityDate.valueOf(),
-      profitRateOfPricing: dataSourceProfit[0].profitRate,
+      salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
+      seaQuotationGroupPartnerRegisterRequests:
+        seaQuotationGroupPartnerRegisterRequests,
+      profitRateOfPricing:
+        dataSource.find((item) => item.key === 'Other')?.profitRate || '0',
+      profitRateOfFee:
+        dataSourceProfit.find((item) => item.key === 'Other')?.profitRate ||
+        '0',
       profitRateOfContainerType: profitRateOfContainerType,
-      profitRateOfFee: dataSourceProfit[1].profitRate,
+      profitRateOfUnitforFee: profitRateOfUnitforFee,
       status: STATUS_ALL_LABELS.REQUEST,
     };
 
@@ -357,7 +179,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       open={open}
       onOk={onOke}
       onCancel={onCancel}
-      width={700}
+      width={900}
       footer={[
         <Row key="back">
           <Button onClick={onCancel} loading={createMutation.isLoading}>
@@ -414,25 +236,127 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                   />
                 </Form.Item>
               </Col>
+
+              <Col span={24}>
+                <Form.Item
+                  name="checkbox-group"
+                  label="Object"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please choose an object',
+                    },
+                  ]}
+                >
+                  <Checkbox.Group>
+                    <Row>
+                      <Col span={14}>
+                        <Checkbox
+                          value="Customer"
+                          style={{ lineHeight: '32px' }}
+                        >
+                          Customer
+                        </Checkbox>
+                      </Col>
+                      <Col span={10}>
+                        <Checkbox value="Group" style={{ lineHeight: '32px' }}>
+                          Group
+                        </Checkbox>
+                      </Col>
+                    </Row>
+                  </Checkbox.Group>
+                </Form.Item>
+              </Col>
+
+              <Col span={checkObject?.includes('Group') ? 24 : 0}>
+                <Form.Item
+                  label={'Group'}
+                  name="seaQuotationGroupPartnerRegisterRequests"
+                  rules={[
+                    {
+                      required: checkObject?.includes('Group'),
+                      message: 'Please select group',
+                    },
+                  ]}
+                >
+                  <Select
+                    disabled={!checkObject?.includes('Group')}
+                    showSearch
+                    mode="multiple"
+                    placeholder="Select group"
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? '').includes(input)
+                    }
+                    filterSort={(optionA, optionB) =>
+                      (optionA?.label ?? '')
+                        .toLowerCase()
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
+                    }
+                    options={
+                      getPartnerGroup.data?.data.map((item) => {
+                        return {
+                          value: item.groupPartnerID,
+                          label: item.abbreviations,
+                        };
+                      }) || []
+                    }
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={checkObject?.includes('Customer') ? 24 : 0}>
+                <Form.Item
+                  label={'Customer'}
+                  name="salesLeadsQuotationRegisters"
+                  rules={[
+                    {
+                      required: checkObject?.includes('Customer'),
+                      message: 'Please select customer',
+                    },
+                  ]}
+                >
+                  <Select
+                    disabled={!checkObject?.includes('Customer')}
+                    showSearch
+                    mode="multiple"
+                    placeholder="Select customer"
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? '').includes(input)
+                    }
+                    filterSort={(optionA, optionB) =>
+                      (optionA?.label ?? '')
+                        .toLowerCase()
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
+                    }
+                    options={
+                      getPartner.data?.data.map((item) => {
+                        return {
+                          value: item.partnerID,
+                          label: item.name,
+                        };
+                      }) || []
+                    }
+                  />
+                </Form.Item>
+              </Col>
+
+              <Col span={checkObject?.includes('Customer') ? 24 : 0}>
+                <TableSaleLead idPartners={idPartners} />
+              </Col>
             </Row>
           </Col>
           <Col span={8}>
-            <Table
-              components={components}
-              rowClassName={() => 'editable-row'}
-              bordered
+            <ContainerType
               dataSource={dataSource}
-              columns={columns as ColumnTypes}
+              setDataSource={setDataSource}
             />
           </Col>
           <Col span={8}>
-            <Table
-              components={componentsProfit}
-              rowClassName={() => 'editable-row'}
-              bordered
-              dataSource={dataSourceProfit}
-              columns={columnsProfit as ColumnTypes}
-              pagination={false}
+            <UnitProfit
+              dataSourceProfit={dataSourceProfit}
+              setDataSourceProfit={setDataSourceProfit}
             />
           </Col>
         </Row>

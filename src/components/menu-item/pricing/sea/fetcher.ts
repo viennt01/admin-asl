@@ -22,6 +22,10 @@ import {
   RequireTypeContainer,
   RequireFeeGroup,
   RequireCreateQuotationWithPricing,
+  RequirePartnerGroup,
+  RequirePartner,
+  RequestPartnerTable,
+  TablePartner,
 } from './interface';
 import {
   API_COMMODITY,
@@ -29,6 +33,7 @@ import {
   API_CURRENCY,
   API_FEE_GROUP,
   API_LOCATION,
+  API_PARTNER,
   API_SEA_PRICING,
   API_SEA_QUOTATION,
 } from '@/fetcherAxios/endpoint';
@@ -132,4 +137,17 @@ export const createQuotationWithPricing = (
   >({
     data,
   })(API_SEA_QUOTATION.CREATE_WITH_PRICING);
+};
+export const getAllPartnerGroup = () => {
+  return get<ResponseWithPayload<RequirePartnerGroup[]>>({})(
+    API_PARTNER.GET_ALL_PARTNER_GROUP
+  );
+};
+export const getAllPartner = () =>
+  get<ResponseWithPayload<RequirePartner[]>>({})(API_PARTNER.GET_ALL_PARTNER);
+// Get table partner
+export const getTablePartner = (data: RequestPartnerTable) => {
+  return post<RequestPartnerTable, ResponseWithPayload<TablePartner[]>>({
+    data,
+  })(API_PARTNER.GET_ALL_PARTNER_BY_IDS);
 };

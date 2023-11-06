@@ -12,15 +12,11 @@ import {
   Switch,
   InputNumber,
   FormInstance,
+  Checkbox,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import {
-  FormValues,
-  AirPricingDetailDTOs,
-  // AirPricingFeeDTOs,
-  UpdateStatus,
-} from '../interface';
+import { FormValues, AirPricingDetailDTOs, UpdateStatus } from '../interface';
 import {
   API_COMMODITY,
   API_FEE_GROUP,
@@ -69,6 +65,7 @@ const CardMain = ({
   const { translate: translatePricingAir } = useI18n('pricingAir');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
 
   const propCopyAndCreate = router.query;
   const dateFormat = 'YYYY/MM/DD';
@@ -134,14 +131,8 @@ const CardMain = ({
         aolid: propCopyAndCreate.aolid as string,
         commodityID: propCopyAndCreate.commodityID as string,
         note: propCopyAndCreate.note as string,
-        dateEffect: propCopyAndCreate.dateEffect as string,
         validityDate: propCopyAndCreate.validityDate as string,
         freqDate: propCopyAndCreate.freqDate as string,
-        demAirPricing: propCopyAndCreate.demAirPricing as string,
-        detAirPricing: propCopyAndCreate.detAirPricing as string,
-        stoAirPricing: propCopyAndCreate.stoAirPricing as string,
-        lclMinAirPricing: propCopyAndCreate.lclMinAirPricing as string,
-        lclAirPricing: propCopyAndCreate.lclAirPricing as string,
         currencyID: propCopyAndCreate.currencyID as string,
         public: propCopyAndCreate.public as unknown as boolean,
         statusAirPricing: propCopyAndCreate.statusAirPricing as string,
@@ -165,48 +156,6 @@ const CardMain = ({
       return updateStatus(body);
     },
   });
-
-  const suffixSelectorCurrencyLCLMin = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translatePricingAir('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
-
-  const suffixSelectorCurrencyLCL = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translatePricingAir('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
   return (
     <Card
       style={{ marginBottom: 24 }}
@@ -363,24 +312,6 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('effect_date_form.title')}
-            name="dateEffect"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('effect_date_form.error_required'),
-              },
-            ]}
-          >
-            <DatePicker
-              disabled={checkRow && isCheckPermissionEdit}
-              format={dateFormat}
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
             label={translatePricingAir('freq_form.title')}
             name="freqDate"
             rules={[
@@ -396,67 +327,6 @@ const CardMain = ({
               formatter={(value) => formatNumber(value)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
-            />
-          </Form.Item>
-        </Col>
-
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingAir('STO_form.title')}
-            name="stoAirPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('STO_form.error_required'),
-              },
-            ]}
-          >
-            <InputNumber
-              disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingAir('STO_form.placeholder')}
-              formatter={(value) => formatNumber(value)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingAir('DEM_form.title')}
-            name="demAirPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('DEM_form.error_required'),
-              },
-            ]}
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translatePricingAir('DEM_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(value)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingAir('DET_form.title')}
-            name="detAirPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('DET_form.error_required'),
-              },
-            ]}
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translatePricingAir('DET_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(value)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
         </Col>
@@ -496,48 +366,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingAir('LCL_form.title')}
-            name="lclAirPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('LCL_form.error_required'),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorCurrencyLCL}
-              placeholder={translatePricingAir('LCL_form.placeholder')}
-              formatter={(value) => formatNumber(value)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingAir('LCLMin_form.title')}
-            name="LCLMin_form.error_required"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('LCLMin_form.error_required'),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorCurrencyLCLMin}
-              placeholder={translatePricingAir('LCLMin_form.placeholder')}
-              formatter={(value) => formatNumber(value)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
 
         <Col lg={8} span={24}>
           <Form.Item
@@ -550,7 +378,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingAir('Fee_Group_form.title')}
@@ -584,6 +411,37 @@ const CardMain = ({
                   };
                 }) || []
               }
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={4} span={12}>
+          <Form.Item
+            label={translatePricingAir('currency')}
+            name="currencyID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('currency_form.placeholder'),
+              },
+            ]}
+          >
+            <Select
+              placeholder={'$'}
+              disabled={checkRow && isCheckPermissionEdit}
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label={'GW'} name="gw" valuePropName="gw">
+            <Checkbox
+              checked={componentDisabled}
+              onChange={(e) => (
+                setComponentDisabled(e.target.checked),
+                form.setFieldValue('gw', e.target.checked)
+              )}
             />
           </Form.Item>
         </Col>
