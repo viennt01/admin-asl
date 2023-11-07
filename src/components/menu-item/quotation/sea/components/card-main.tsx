@@ -24,16 +24,10 @@ import {
 } from '../interface';
 import {
   API_COMMODITY,
-  API_FEE_GROUP,
   API_LOCATION,
   API_PARTNER,
 } from '@/fetcherAxios/endpoint';
-import {
-  getAllCommodity,
-  getAllFeeGroup,
-  getAllLocation,
-  updateStatus,
-} from '../fetcher';
+import { getAllCommodity, getAllLocation, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
@@ -62,6 +56,7 @@ interface Props {
 }
 
 const { Title } = Typography;
+const dateFormat = 'YYYY/MM/DD';
 
 const CardMain = ({
   create,
@@ -80,9 +75,13 @@ const CardMain = ({
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const checkObject = Form.useWatch('checkbox-group', form);
+  const valuePartnerId = Form.useWatch('salesLeadsSeaQuotationDTOs', form);
+  const valueGroupPartnerId = Form.useWatch(
+    'seaQuotaionGroupPartnerDTOs',
+    form
+  );
 
   const propCopyAndCreate = router.query;
-  const dateFormat = 'YYYY/MM/DD';
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
@@ -113,20 +112,7 @@ const CardMain = ({
       errorToast(API_MESSAGE.ERROR);
     },
   });
-  const getFeeGroup = useQuery({
-    queryKey: [API_FEE_GROUP.GET_ALL],
-    queryFn: () => getAllFeeGroup(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-        errorToast(API_MESSAGE.ERROR);
-      }
-    },
-    onError: () => {
-      router.back();
-      errorToast(API_MESSAGE.ERROR);
-    },
-  });
+
   const getPartner = useQuery({
     queryKey: [API_PARTNER.GET_ALL_PARTNER],
     queryFn: () => getAllPartner(),
@@ -187,6 +173,10 @@ const CardMain = ({
           propCopyAndCreate.seaQuotationDetailDTOs as unknown as ISeaQuotationDetailDTOs[],
         // seaPricingFeeDTOs:
         //   propCopyAndCreate.seaPricingFeeDTOs as unknown as SeaPricingFeeDTOs[],
+        salesLeadsSeaQuotationDTOs:
+          propCopyAndCreate.salesLeadsSeaQuotationDTOs as unknown as string[],
+        seaQuotaionGroupPartnerDTOs:
+          propCopyAndCreate.seaQuotaionGroupPartnerDTOs as unknown as string[],
       });
     }
   }, [
@@ -197,6 +187,23 @@ const CardMain = ({
     propCopyAndCreate,
     form.getFieldValue('statusSeaQuotation'),
   ]);
+
+  useEffect(() => {
+    if (valuePartnerId && valuePartnerId.length !== 0) {
+      form.setFieldValue('checkbox-group', ['Customer']);
+    }
+    if (valueGroupPartnerId && valueGroupPartnerId.length !== 0) {
+      form.setFieldValue('checkbox-group', ['Group']);
+    }
+    if (
+      valuePartnerId &&
+      valuePartnerId.length !== 0 &&
+      valueGroupPartnerId &&
+      valueGroupPartnerId.length !== 0
+    ) {
+      form.setFieldValue('checkbox-group', ['Customer', 'Group']);
+    }
+  }, [valuePartnerId, valueGroupPartnerId]);
 
   const updateStatusMutation = useMutation({
     mutationFn: (body: UpdateStatus) => {
@@ -577,43 +584,6 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('Fee_Group_form.title')}
-            name="seaQuotaionFeeGroupDTOs"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('Fee_Group_form.error_required'),
-              },
-            ]}
-          >
-            <Select
-              showSearch
-              mode="multiple"
-              placeholder={translateQuotationSea('Fee_Group_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                getFeeGroup.data?.data.map((item) => {
-                  return {
-                    value: item.feeGroupID,
-                    label: item.feeGroupName,
-                  };
-                }) || []
-              }
-            />
-          </Form.Item>
-        </Col>
-
         <Col span={24}>
           <Form.Item
             name="checkbox-group"
@@ -730,6 +700,9 @@ const CardMain = ({
         </Col>
         <Col span={0}>
           <Form.Item name="seaQuotationDetailDTOs"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="seaQuotaionFeeGroupDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

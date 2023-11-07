@@ -1,6 +1,7 @@
 {
     "title": "Danh sách báo giá đường biển",
     "no" : "No",
+    "code": "Mã",
     "POL": "POL",
     "POD": "POD",
     "destination": "Destination",

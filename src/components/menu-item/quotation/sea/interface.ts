@@ -3,6 +3,7 @@ import { IPagination } from '../../../commons/table/table-default';
 
 export interface ISeaQuotation {
   seaQuotationID: string;
+  seaQuotationNo: string;
   podid: string; //
   podName: string; //
   polid: string; //
@@ -89,13 +90,15 @@ export interface IFormValues {
   seaQuotationDetailDTOs: ISeaQuotationDetailDTOsFormValue[];
   seaQuotaionFeeGroupDTOs: ISeaQuotationFeeFormValue[];
   salesLeadsSeaQuotationDTOs: string[];
-  seaQuotationPartnerRoleRegisters: string[];
+  seaQuotaionGroupPartnerDTOs: string[];
 }
 
 export interface ISeaPricingDetailType
   extends Omit<
     IFormValues,
-    'seaQuotaionFeeGroupDTOs' | 'salesLeadsSeaQuotationDTOs'
+    | 'seaQuotaionFeeGroupDTOs'
+    | 'salesLeadsSeaQuotationDTOs'
+    | 'seaQuotaionGroupPartnerDTOs'
   > {
   dateInserted: string;
   insertedByUser: string;
@@ -104,10 +107,21 @@ export interface ISeaPricingDetailType
   confirmDated: string;
   confirmByUser: string;
   seaQuotaionFeeGroupDTOs: ISeaQuotationFeeFormValue[];
-  salesLeadsSeaQuotationDTOs: {
-    salesLeadsSeaQuotationID: string;
-    partnerID: string;
-  }[];
+  salesLeadsSeaQuotationDTOs: ISalesLeadsSeaQuotationDTOs[];
+  seaQuotaionGroupPartnerDTOs: ISeaQuotaionGroupPartnerDTOs[];
+}
+
+export interface ISalesLeadsSeaQuotationDTOs {
+  salesLeadsSeaQuotationID?: string;
+  partnerID: string;
+}
+export interface IEditSalesLeadsSeaQuotationDTOs
+  extends ISalesLeadsSeaQuotationDTOs {
+  isDelete: boolean;
+}
+export interface ISeaQuotaionGroupPartnerDTOs {
+  seaQuotationGroupPartnerID: string;
+  groupPartnerID: string;
 }
 
 export interface ISeaQuotationDetailDTOsFormValue {
@@ -140,10 +154,8 @@ export type ISeaQuotationDetailDTOsUpdate = Omit<
 };
 
 export interface ISeaQuotationFeeFormValue {
-  seaQuotationID: string;
   feeGroupID: string;
   feeGroupName: string;
-  seaQuotationFeeDTOs: ISeaQuotationFeeDTOs[];
 }
 
 export interface ISeaQuotationFeeDTOs {
@@ -162,30 +174,6 @@ export interface ISeaQuotationFeeDTOs {
   updatedByUser: string;
 }
 
-export type SeaPricingFeeDTOsCreate = Omit<
-  ISeaQuotationFeeFormValue,
-  'seaQuotationFeeDTOs' | 'seaQuotationID'
-> & {
-  seaQuotationFeeDTOs: {
-    feeGroupDetailID: string;
-    priceFee: string;
-    vatFee: string;
-  }[];
-};
-
-export type SeaPricingFeeUpdate = Omit<
-  ISeaQuotationFeeFormValue,
-  'seaQuotationFeeDTOs'
-> & {
-  seaQuotationFeeDTOs: {
-    seaQuotationFeeID: string;
-    feeGroupDetailID: string;
-    priceFee: string;
-    vatFee: string;
-  }[];
-  isDelete: boolean;
-};
-
 export type ISeaQuotationCreate = Omit<
   IFormValues,
   | 'seaQuotationID'
@@ -195,14 +183,14 @@ export type ISeaQuotationCreate = Omit<
   | 'seaQuotationDetailDTOs'
   | 'seaQuotaionFeeGroupDTOs'
   | 'salesLeadsSeaQuotationDTOs'
-  | 'seaQuotationPartnerRoleRegisters'
+  | 'seaQuotaionGroupPartnerDTOs'
 > & {
   dateEffect: number;
   validityDate: number;
   seaQuotationDetailRegisterRequests: ISeaQuotationDetailDTOsCreate[];
-  // seaQuotationFeeGroupRegisterRequests: SeaPricingFeeDTOsCreate[];
+  seaQuotationFeeGroupRegisterRequests: { feeGroupID: string }[];
   salesLeadsQuotationRegisters: { partnerID: string }[];
-  seaQuotationPartnerRoleRegisters: { partnerRoleID: string }[];
+  seaQuotationGroupPartnerRegisterRequests: { groupPartnerID: string }[];
 };
 
 export type ISeaQuotationEdit = Omit<
@@ -212,12 +200,12 @@ export type ISeaQuotationEdit = Omit<
   | 'seaQuotationDetailDTOs'
   | 'seaQuotaionFeeGroupDTOs'
   | 'salesLeadsSeaQuotationDTOs'
-  | 'seaQuotationPartnerRoleRegisters'
+  | 'seaQuotaionGroupPartnerDTOs'
 > & {
   dateEffect: number;
   validityDate: number;
   seaQuotationDetailUpdateRequests: ISeaQuotationDetailDTOsUpdate[];
-  // seaQuotationFeeGroupUpdateRequests: SeaPricingFeeUpdate[];
+  salesLeadsSeaQuotationUpdateRequests: IEditSalesLeadsSeaQuotationDTOs[];
 };
 export type SeaPricingDelete = {
   ids: React.Key[];

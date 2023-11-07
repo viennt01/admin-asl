@@ -60,6 +60,7 @@ const RequestTable = () => {
           data.data.data.map((data) => ({
             key: data.seaQuotationID,
             seaQuotationID: data.seaQuotationID,
+            seaQuotationNo: data.seaQuotationNo,
             podid: data.podid,
             podName: data.podName,
             polid: data.polid,
@@ -165,6 +166,14 @@ const RequestTable = () => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
       },
+    },
+    {
+      title: translateQuotationSea('code'),
+      width: 200,
+      dataIndex: 'seaQuotationNo',
+      key: 'seaQuotationNo',
+      align: 'left',
+      render: (value) => value,
     },
     {
       key: 'operation',

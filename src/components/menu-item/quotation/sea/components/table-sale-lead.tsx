@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useQuery } from '@tanstack/react-query';
-import { getTablePartner } from '../../fetcher';
 import { API_PARTNER } from '@/fetcherAxios/endpoint';
-import { TablePartner } from '../../interface';
+import { TablePartner } from '@/components/menu-item/pricing/sea/interface';
+import { getTablePartner } from '@/components/menu-item/pricing/sea/fetcher';
 
 interface Props {
   idPartners: string[];
@@ -12,20 +12,26 @@ interface Props {
 
 const columns: ColumnsType<TablePartner> = [
   {
-    title: 'No',
-    dataIndex: 'index',
-    width: 50,
-    align: 'right',
-    render: (_, record, index) => {
-      return index + 1;
-    },
-  },
-  {
     title: 'Name',
     dataIndex: 'fullName',
   },
+  {
+    title: 'Email',
+    dataIndex: 'email',
+  },
+  {
+    title: 'Company Name',
+    dataIndex: 'companyName',
+  },
+  {
+    title: 'City Name',
+    dataIndex: 'cityName',
+  },
+  {
+    title: 'Nationality',
+    dataIndex: 'nationality',
+  },
 ];
-
 const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
   const [dataTable, setDataTable] = useState<TablePartner[]>([]);
 
@@ -45,13 +51,7 @@ const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
 
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={dataTable}
-        pagination={{
-          pageSize: 15,
-        }}
-      />
+      <Table columns={columns} dataSource={dataTable} />
     </div>
   );
 };

@@ -8,6 +8,8 @@ import {
   ISeaQuotationFeeFormValue,
   ISeaQuotationDetailDTOsFormValue,
   UpdateStatus,
+  ISalesLeadsSeaQuotationDTOs,
+  ISeaQuotaionGroupPartnerDTOs,
 } from '../interface';
 import {
   API_CONTAINER_TYPE,
@@ -29,6 +31,7 @@ import CollapseCard from '@/components/commons/collapse-card';
 import SeaPricingDetailDTO from './sea-quotation-detail-dto';
 
 import ListFee from './list-fee';
+import TableSaleLead from './table-sale-lead';
 
 interface PortFormProps {
   create?: boolean;
@@ -38,13 +41,17 @@ interface PortFormProps {
     formValues: IFormValues,
     id?: string,
     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
-    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[]
+    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[],
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[],
+    seaQuotaionGroupPartner?: ISeaQuotaionGroupPartnerDTOs[]
   ) => void;
   handleSaveDraft?: (
     formValues: IFormValues,
     id?: string,
     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
-    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[]
+    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[],
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[],
+    seaQuotaionGroupPartner?: ISeaQuotaionGroupPartnerDTOs[]
   ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
@@ -79,6 +86,13 @@ const SeaQuotation = ({
   const [seaQuotationDetail, setSeaQuotationDetail] = useState<
     ISeaQuotationDetailDTOsFormValue[]
   >([]);
+  const [salesLeads, setSalesLeads] = useState<ISalesLeadsSeaQuotationDTOs[]>(
+    []
+  );
+  const [seaQuotaionGroupPartner, setSeaQuotaionGroupPartner] = useState<
+    ISeaQuotaionGroupPartnerDTOs[]
+  >([]);
+  const idPartners = Form.useWatch('salesLeadsSeaQuotationDTOs', form);
 
   useEffect(() => {
     if (!id) return;
@@ -140,11 +154,20 @@ const SeaQuotation = ({
           formValues,
           idQuery,
           seaPricingFeeDTOs,
-          seaQuotationDetail
+          seaQuotationDetail,
+          salesLeads,
+          seaQuotaionGroupPartner
         );
     } else {
       handleSubmit &&
-        handleSubmit(formValues, '', seaPricingFeeDTOs, seaQuotationDetail);
+        handleSubmit(
+          formValues,
+          '',
+          seaPricingFeeDTOs,
+          seaQuotationDetail,
+          salesLeads,
+          seaQuotaionGroupPartner
+        );
     }
   };
 
@@ -155,7 +178,9 @@ const SeaQuotation = ({
           form.getFieldsValue(),
           idQuery,
           seaPricingFeeDTOs,
-          seaQuotationDetail
+          seaQuotationDetail,
+          salesLeads,
+          seaQuotaionGroupPartner
         );
     } else {
       handleSaveDraft &&
@@ -163,7 +188,9 @@ const SeaQuotation = ({
           form.getFieldsValue(),
           '',
           seaPricingFeeDTOs,
-          seaQuotationDetail
+          seaQuotationDetail,
+          salesLeads,
+          seaQuotaionGroupPartner
         );
     }
   };
@@ -196,11 +223,20 @@ const SeaQuotation = ({
           statusSeaQuotation: data.data.statusSeaQuotation,
           seaQuotationDetailDTOs: data.data.seaQuotationDetailDTOs,
           seaQuotaionFeeGroupDTOs: data.data.seaQuotaionFeeGroupDTOs,
+          salesLeadsSeaQuotationDTOs: data.data.salesLeadsSeaQuotationDTOs?.map(
+            (partner) => partner.partnerID
+          ),
+          seaQuotaionGroupPartnerDTOs:
+            data.data.seaQuotaionGroupPartnerDTOs?.map(
+              (partnerGroup) => partnerGroup.groupPartnerID
+            ),
         });
         setSeaQuotationDetail(data.data.seaQuotationDetailDTOs);
         setSeaPricingFeeDTOs(data.data.seaQuotaionFeeGroupDTOs);
+        setSalesLeads(data.data.salesLeadsSeaQuotationDTOs);
+        setSeaQuotaionGroupPartner(data.data.seaQuotaionGroupPartnerDTOs);
       } else {
-        // router.push(ROUTERS.SEA_QUOTATION);
+        router.push(ROUTERS.SEA_QUOTATION);
       }
     },
   });
@@ -256,6 +292,12 @@ const SeaQuotation = ({
       statusSeaQuotation: form.getFieldValue('statusSeaQuotation'),
       seaQuotationDetailDTOs: form.getFieldValue('seaQuotationDetailDTOs'),
       seaPricingFeeDTOs: form.getFieldValue('seaPricingFeeDTOs'),
+      salesLeadsSeaQuotationDTOs: form.getFieldValue(
+        'salesLeadsSeaQuotationDTOs'
+      ),
+      seaQuotaionGroupPartnerDTOs: form.getFieldValue(
+        'seaQuotaionGroupPartnerDTOs'
+      ),
     };
     router.push({
       pathname: ROUTERS.SEA_QUOTATION_CREATE,
@@ -306,7 +348,15 @@ const SeaQuotation = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <ListFee form={form} />
+          <ListFee form={form} create={create} />
+        </CollapseCard>
+
+        <CollapseCard
+          title="Customer"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <TableSaleLead idPartners={idPartners} />
         </CollapseCard>
 
         <BottomCreateEdit

@@ -65,7 +65,6 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const onCancel = () => handleCancel();
   const checkObject = Form.useWatch('checkbox-group', form);
   const idPartners = Form.useWatch('salesLeadsQuotationRegisters', form);
-  console.log(idPartners);
 
   const [dataSource, setDataSource] = useState<DataType[]>([
     { key: 'Other', containerName: 'Other', profitRate: '0' },

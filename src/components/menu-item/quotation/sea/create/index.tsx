@@ -11,51 +11,12 @@ import {
   ISeaQuotationEdit,
   ISeaQuotationFeeFormValue,
   ISeaQuotationDetailDTOsFormValue,
+  ISalesLeadsSeaQuotationDTOs,
+  IEditSalesLeadsSeaQuotationDTOs,
 } from '../interface';
 import { createSeaQuotation, editSeaQuotation } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
-
-export const returnFeeDTOs = (
-  seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
-  fromSeaPricingFeeDTOs?: string[]
-) => {
-  const resultArray = JSON.parse(
-    JSON.stringify(
-      seaPricingFeeDTOs?.map((item) => ({
-        seaQuotationID: item.seaQuotationID,
-        feeGroupID: item.feeGroupID,
-      }))
-    )
-  );
-
-  for (const item of resultArray) {
-    if (
-      fromSeaPricingFeeDTOs &&
-      fromSeaPricingFeeDTOs.includes(item.feeGroupID)
-    ) {
-      item.isDelete = false;
-    } else {
-      item.isDelete = true;
-    }
-  }
-  if (fromSeaPricingFeeDTOs) {
-    for (const id of fromSeaPricingFeeDTOs) {
-      if (
-        !resultArray.some(
-          (item: ISeaQuotationFeeFormValue) => item.feeGroupID === id
-        )
-      ) {
-        resultArray.push({
-          feeGroupID: id,
-          public: true,
-          isDelete: false,
-        });
-      }
-    }
-  }
-  return resultArray;
-};
 
 export const returnQuotationDetails = (
   old?: ISeaQuotationDetailDTOsFormValue[],
@@ -100,6 +61,40 @@ export const returnQuotationDetails = (
   return result;
 };
 
+export const returnSaleLeads = (
+  seaPricingFeeDTOs?: ISalesLeadsSeaQuotationDTOs[],
+  fromSeaPricingFeeDTOs?: string[]
+) => {
+  const resultArray: Array<IEditSalesLeadsSeaQuotationDTOs> =
+    seaPricingFeeDTOs?.map((item) => ({
+      salesLeadsSeaQuotationID: item.salesLeadsSeaQuotationID,
+      partnerID: item.partnerID,
+      isDelete: false,
+    })) || [];
+
+  for (const item of resultArray) {
+    if (
+      fromSeaPricingFeeDTOs &&
+      fromSeaPricingFeeDTOs.includes(item.partnerID)
+    ) {
+      item.isDelete = false;
+    } else {
+      item.isDelete = true;
+    }
+  }
+  if (fromSeaPricingFeeDTOs) {
+    for (const id of fromSeaPricingFeeDTOs) {
+      if (!resultArray.some((item) => item.partnerID === id)) {
+        resultArray.push({
+          partnerID: id,
+          isDelete: false,
+        });
+      }
+    }
+  }
+  return resultArray;
+};
+
 const CreateSeaQuotation = () => {
   const queryClient = useQueryClient();
 
@@ -119,7 +114,8 @@ const CreateSeaQuotation = () => {
     formValues: IFormValues,
     id?: string,
     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
-    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[]
+    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[],
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
   ) => {
     const seaQuotationDetailRegisterRequests =
       formValues.seaQuotationDetailDTOs.map((data) => {
@@ -128,10 +124,6 @@ const CreateSeaQuotation = () => {
           priceQuotationDetail: data.price,
         };
       });
-    // const returnFeeDTO = returnFeeDTOs(
-    //   seaPricingFeeDTOs,
-    //   formValues.seaPricingFeeDTOs
-    // );
 
     const returnQuotationDetail = returnQuotationDetails(
       seaQuotationDetail,
@@ -139,6 +131,10 @@ const CreateSeaQuotation = () => {
     );
 
     if (id) {
+      const returnSaleLead = returnSaleLeads(
+        salesLeads,
+        formValues.salesLeadsSeaQuotationDTOs
+      );
       const _requestData: ISeaQuotationEdit = {
         seaQuotationID: id || '',
         podid: formValues.podid || '',
@@ -159,9 +155,9 @@ const CreateSeaQuotation = () => {
           (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
           [],
         // seaPricingFeeGroupUpdateRequests: returnFeeDTO,
+        salesLeadsSeaQuotationUpdateRequests: returnSaleLead || [],
         statusSeaQuotation: STATUS_ALL_LABELS.REQUEST,
       };
-
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
@@ -174,13 +170,18 @@ const CreateSeaQuotation = () => {
       });
     } else {
       const salesLeadsQuotationRegisters =
-        formValues.salesLeadsSeaQuotationDTOs.map((id) => ({
+        formValues.salesLeadsSeaQuotationDTOs?.map((id) => ({
           partnerID: id,
-        }));
+        })) || [];
       const seaQuotationPartnerRoleRegisters =
-        formValues.seaQuotationPartnerRoleRegisters.map((id) => ({
-          partnerRoleID: id,
-        }));
+        formValues.seaQuotaionGroupPartnerDTOs?.map((id) => ({
+          groupPartnerID: id,
+        })) || [];
+
+      const seaQuotationFeeGroupRegisterRequests =
+        formValues.seaQuotaionGroupPartnerDTOs?.map((id) => ({
+          feeGroupID: id,
+        })) || [];
 
       const _requestData: ISeaQuotationCreate = {
         podid: formValues.podid || '',
@@ -199,9 +200,11 @@ const CreateSeaQuotation = () => {
         public: formValues.public || true,
         seaQuotationDetailRegisterRequests:
           seaQuotationDetailRegisterRequests || [],
-        // seaPricingFeeGroupRegisterRequests: returnFeeDTO,
+        seaQuotationFeeGroupRegisterRequests:
+          seaQuotationFeeGroupRegisterRequests || [],
         salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
-        seaQuotationPartnerRoleRegisters: seaQuotationPartnerRoleRegisters,
+        seaQuotationGroupPartnerRegisterRequests:
+          seaQuotationPartnerRoleRegisters,
         statusSeaQuotation: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -221,7 +224,8 @@ const CreateSeaQuotation = () => {
     formValues: IFormValues,
     id?: string,
     seaPricingFeeDTOs?: ISeaQuotationFeeFormValue[],
-    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[]
+    seaQuotationDetail?: ISeaQuotationDetailDTOsFormValue[],
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
   ) => {
     const seaQuotationDetailRegisterRequests =
       formValues.seaQuotationDetailDTOs.map((data) => {
@@ -231,15 +235,16 @@ const CreateSeaQuotation = () => {
           priceQuotationDetail: data.price,
         };
       });
-    // const returnFeeDTO = returnFeeDTOs(
-    //   seaPricingFeeDTOs,
-    //   formValues.seaPricingFeeDTOs
-    // );
+
     const returnQuotationDetail = returnQuotationDetails(
       seaQuotationDetail,
       formValues.seaQuotationDetailDTOs
     );
     if (id) {
+      const returnSaleLead = returnSaleLeads(
+        salesLeads,
+        formValues.salesLeadsSeaQuotationDTOs
+      );
       const _requestData: ISeaQuotationEdit = {
         seaQuotationID: id,
         podid: formValues.podid || '',
@@ -259,7 +264,7 @@ const CreateSeaQuotation = () => {
         seaQuotationDetailUpdateRequests:
           (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
           [],
-        // seaPricingFeeGroupUpdateRequests: returnFeeDTO,
+        salesLeadsSeaQuotationUpdateRequests: returnSaleLead || [],
         statusSeaQuotation: STATUS_ALL_LABELS.DRAFT,
       };
 
@@ -278,13 +283,17 @@ const CreateSeaQuotation = () => {
       });
     } else {
       const salesLeadsQuotationRegisters =
-        formValues.salesLeadsSeaQuotationDTOs.map((id) => ({
+        formValues.salesLeadsSeaQuotationDTOs?.map((id) => ({
           partnerID: id,
-        }));
+        })) || [];
       const seaQuotationPartnerRoleRegisters =
-        formValues.seaQuotationPartnerRoleRegisters.map((id) => ({
-          partnerRoleID: id,
-        }));
+        formValues.seaQuotaionGroupPartnerDTOs?.map((id) => ({
+          groupPartnerID: id,
+        })) || [];
+      const seaQuotationFeeGroupRegisterRequests =
+        formValues.seaQuotaionGroupPartnerDTOs?.map((id) => ({
+          feeGroupID: id,
+        })) || [];
 
       const _requestData: ISeaQuotationCreate = {
         podid: formValues.podid || '',
@@ -303,9 +312,11 @@ const CreateSeaQuotation = () => {
         public: formValues.public || true,
         seaQuotationDetailRegisterRequests:
           seaQuotationDetailRegisterRequests || [],
-        // seaPricingFeeGroupRegisterRequests: returnFeeDTO,
+        seaQuotationFeeGroupRegisterRequests:
+          seaQuotationFeeGroupRegisterRequests || [],
         salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
-        seaQuotationPartnerRoleRegisters: seaQuotationPartnerRoleRegisters,
+        seaQuotationGroupPartnerRegisterRequests:
+          seaQuotationPartnerRoleRegisters,
         statusSeaQuotation: STATUS_ALL_LABELS.DRAFT,
       };
 
