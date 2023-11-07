@@ -277,7 +277,7 @@ export interface RequirePartner {
   name: string;
 }
 export interface RequestPartnerTable {
-  id: string[];
+  ids: string[];
 }
 export interface Partner {
   partnerID: string;

@@ -218,6 +218,9 @@ const ContainerType: React.FC<ImportModalProps> = ({
       bordered
       dataSource={dataSource}
       columns={columns as ColumnTypes}
+      pagination={{
+        pageSize: 15,
+      }}
     />
   );
 };

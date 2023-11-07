@@ -27,6 +27,8 @@ import { STATUS_ALL_LABELS } from '@/constant/form';
 import ContainerType from './table-container';
 import UnitProfit from './table-unit-profit';
 import TableSaleLead from './table-sale-lead';
+import style from './index.module.scss';
+
 export interface ImportFormValues {
   file: FileList;
 }
@@ -176,10 +178,11 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   return (
     <Modal
       title="Create quotation"
+      className={style.modal_container}
       open={open}
       onOk={onOke}
       onCancel={onCancel}
-      width={900}
+      width={1300}
       footer={[
         <Row key="back">
           <Button onClick={onCancel} loading={createMutation.isLoading}>
@@ -197,7 +200,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         layout="vertical"
         autoComplete="off"
       >
-        <Row gutter={24}>
+        <Row gutter={24} style={{ margin: 0 }}>
           <Col span={8}>
             <Row>
               <Col span={24}>

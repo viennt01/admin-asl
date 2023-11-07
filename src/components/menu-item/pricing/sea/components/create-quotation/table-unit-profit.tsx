@@ -223,6 +223,9 @@ const UnitProfit: React.FC<ImportModalProps> = ({
       bordered
       dataSource={dataSourceProfit}
       columns={columns as ColumnTypes}
+      pagination={{
+        pageSize: 15,
+      }}
     />
   );
 };

@@ -284,6 +284,7 @@ export interface RequireCurrency {
 export interface RequireTypeContainer {
   containerTypeID: string;
   name: string;
+  code: string;
 }
 // get all fee group
 export interface RequireFeeGroup {

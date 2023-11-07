@@ -12,13 +12,17 @@ interface Props {
 
 const columns: ColumnsType<TablePartner> = [
   {
-    title: 'Name',
-    dataIndex: 'fullName',
-    render: (text: string) => <a>{text}</a>,
+    title: 'No',
+    dataIndex: 'index',
+    width: 50,
+    align: 'right',
+    render: (_, record, index) => {
+      return index + 1;
+    },
   },
   {
-    title: 'Email',
-    dataIndex: 'email',
+    title: 'Name',
+    dataIndex: 'fullName',
   },
 ];
 
@@ -28,7 +32,7 @@ const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
 
   useQuery({
     queryKey: [API_PARTNER.GET_ALL_PARTNER_BY_IDS, idPartners],
-    queryFn: () => getTablePartner({ id: idPartners }),
+    queryFn: () => getTablePartner({ ids: idPartners }),
     enabled: idPartners !== undefined,
     onSuccess(data) {
       setDataTable([]);
@@ -42,7 +46,13 @@ const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
 
   return (
     <div>
-      <Table columns={columns} dataSource={dataTable} pagination={false} />
+      <Table
+        columns={columns}
+        dataSource={dataTable}
+        pagination={{
+          pageSize: 15,
+        }}
+      />
     </div>
   );
 };
