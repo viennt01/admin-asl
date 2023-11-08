@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import UnitPage from '@/components/menu-item/master-data/unit';
+import CreateUnit from '@/components/menu-item/master-data/unit-catalog/unit/create';
 
-function Unit() {
+function CreateUnitPage() {
   return (
     <>
       <Head>
-        <title>ASL | UNIT</title>
+        <title>ASL | CREATE UNIT</title>
       </Head>
-      <UnitPage />
+      <CreateUnit />
     </>
   );
 }
 
-export default withAuthentication(Unit);
+export default withAuthentication(CreateUnitPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'unit']);

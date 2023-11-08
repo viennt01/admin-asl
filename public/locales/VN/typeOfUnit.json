@@ -1,0 +1,38 @@
+{
+    "title": "Danh sách đơn lợi vị tính",
+    "code": "Stt",
+    "name": "Tên",
+    "description": "Mô tả",
+    "type_unit": "Loại đơn vị tính",
+    "status": "Trạng thái",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
+
+    "information_add_unit": "Thêm mới loại đơn vị tính",
+    "information_edit_unit": "Chỉnh sửa loại đơn vị tính",
+    
+    "name_form": {
+        "title_EN": "Tên(EN)",
+        "title_VN": "Tên(VN)",
+        "placeholder": "Nhập tên",
+        "error_required": "Vui lòng nhập tên"
+    },
+    
+    "status_form": {
+        "title": "Trạng thái",
+        "placeholder": "Chọn trạng thái",
+        "error_required": "Vui lòng chọn trạng thái"
+    },
+
+    "description_vn_form": {
+        "title": "Mô tả bằng tiếng Việt",
+        "placeholder": "Nhập mô tả bằng tiếng Việt",
+        "error_required": "Vui lòng nhập mô tả bằng tiếng Việt"
+    },
+    
+    "description_en_form": {
+        "title": "Mô tả bằng tiếng Anh",
+        "placeholder": "Nhập mô tả bằng tiếng Anh",
+        "error_required": "Vui lòng nhập mô tả bằng tiếng Anh"
+    }
+}

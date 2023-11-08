@@ -4,46 +4,57 @@ import {
   IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
-import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
+import {
+  ITypeUnitTable,
+  ITypeQueryInputParamType,
+  ISelectSearch,
+  IUpdateStatusUnit,
+} from '../interface';
 import { ROUTERS } from '@/constant/router';
-import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
+import { API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, Checkbox, PaginationProps } from 'antd';
+import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
-import { useState, MouseEvent, useMemo } from 'react';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import { useState, MouseEvent } from 'react';
+import { FilterConfirmProps } from 'antd/lib/table/interface';
+import { ColumnSearchTableProps } from '@/components/commons/search-table';
+import { formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
-import { initalValueQueryInputParamsRequest } from '../constant';
 import {
-  AirPricingDetailDTOs,
-  AirPricingTable,
-  UpdateStatus,
-} from '../interface';
+  initalSelectSearchRequest,
+  initalValueQueryInputParamsRequest,
+} from '../constant';
+
+type DataIndex = keyof ITypeQueryInputParamType;
 
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translatePricingAir } = useI18n('pricingAir');
+  const { translate: translateTypeUnit } = useI18n('typeOfUnit');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-
-  const [dataTable, setDataTable] = useState<AirPricingTable[]>([]);
+  const [queryInputParams, setQueryInputParams] =
+    useState<ITypeQueryInputParamType>(initalValueQueryInputParamsRequest);
+  const [dataTable, setDataTable] = useState<ITypeUnitTable[]>([]);
+  const [selectedKeyShow, setSelectedKeyShow] = useState<ISelectSearch>(
+    initalSelectSearchRequest
+  );
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   // Handle data
   useQuery({
-    queryKey: [API_AIR_PRICING.GET_REQUEST, pagination],
+    queryKey: [API_TYPE_UNIT.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
-        ...initalValueQueryInputParamsRequest,
+        ...queryInputParams,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -54,29 +65,17 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.airPricingID,
-            aodid: data.aodid,
-            aodName: data.aodName,
-            aolid: data.aolid,
-            aolName: data.aolName,
-            commodityID: data.commodityID,
-            commodityName: data.commodityName,
-            currencyID: data.currencyID,
-            currencyAbbreviations: data.currencyAbbreviations,
-            note: data.note,
-            validityDate: data.validityDate,
-            freqDate: data.freqDate,
+            key: data.typeUnitID,
+            typeUnitName: data.typeUnitName,
+            description: data.description,
+            statusTypeUnit: data.statusTypeUnit,
             public: data.public,
-            statusAirPricing: data.statusAirPricing,
-            confirmDated: data.confirmDated,
-            confirmByUser: data.confirmByUser,
-            airPricingDetailDTOs: data.airPricingDetailDTOs,
-            dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            vendor: data.vendor,
-            gw: data.gw,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );
@@ -90,66 +89,50 @@ const RequestTable = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusUnit) => {
+    mutationFn: (body: IUpdateStatusUnit) => {
       return updateStatus(body);
     },
   });
 
   // Handle search
-  // const handleSearchInput = (
-  //   selectedKeys: string,
-  //   confirm: (param?: FilterConfirmProps) => void,
-  //   dataIndex: DataIndex
-  // ) => {
-  //   setSelectedKeyShow((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: {
-  //       label: dataIndex,
-  //       value: selectedKeys,
-  //     },
-  //   }));
-  //   const newQueryParams = { ...queryInputParams };
-  //   newQueryParams[dataIndex] = selectedKeys;
-  //   setQueryInputParams(newQueryParams);
-  //   confirm();
-  // };
+  const handleSearchInput = (
+    selectedKeys: string,
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex
+  ) => {
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: {
+        label: dataIndex,
+        value: selectedKeys,
+      },
+    }));
+    const newQueryParams = { ...queryInputParams };
+    newQueryParams[dataIndex] = selectedKeys;
+    setQueryInputParams(newQueryParams);
+    confirm();
+  };
 
-  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-  //   setQueryInputParams((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: '',
-  //   }));
+  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+    setQueryInputParams((prevData) => ({
+      ...prevData,
+      [dataIndex]: '',
+    }));
 
-  //   setSelectedKeyShow((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: { label: dataIndex, value: '' },
-  //   }));
-  //   clearFilters();
-  // };
+    setSelectedKeyShow((prevData) => ({
+      ...prevData,
+      [dataIndex]: { label: dataIndex, value: '' },
+    }));
+    clearFilters();
+  };
 
   // Handle data show table
-  const columnDTOs = useMemo(() => {
-    const result = [{}];
-    for (const key in dataTable[0]?.airPricingDetailDTOs) {
-      if (dataTable[0].airPricingDetailDTOs.hasOwnProperty(key)) {
-        const obj = {
-          title: key,
-          width: 200,
-          dataIndex: 'airPricingDetailDTOs',
-          render: (value: AirPricingDetailDTOs) =>
-            formatCurrencyHasCurrency(value[key]),
-        };
-        result.push(obj);
-      }
-    }
-    return result;
-  }, [dataTable]);
-  const columns: ProColumns<AirPricingTable>[] = [
+  const columns: ProColumns<ITypeUnitTable>[] = [
     {
-      title: <div className={style.title}>{translatePricingAir('code')}</div>,
+      title: <div className={style.title}>{translateTypeUnit('code')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'center',
+      align: 'right',
       fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
@@ -195,41 +178,49 @@ const RequestTable = () => {
       ),
     },
     {
-      title: 'AOL',
-      width: 200,
-      dataIndex: 'aolName',
-      key: 'aolName',
+      title: <div className={style.title}>{translateTypeUnit('name')}</div>,
+      dataIndex: 'typeUnitName',
+      key: 'typeUnitName',
+      width: 150,
       align: 'center',
+      ...ColumnSearchTableProps<ITypeQueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'typeUnitName',
+        },
+      }),
     },
     {
-      title: 'AOD',
-      width: 200,
-      dataIndex: 'aodName',
-      key: 'aodName',
-      align: 'center',
+      title: (
+        <div className={style.title}>{translateTypeUnit('description')}</div>
+      ),
+      dataIndex: 'description',
+      key: 'description',
+      width: 250,
+      align: 'left',
+      ...ColumnSearchTableProps<ITypeQueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'description',
+        },
+      }),
     },
     {
-      title: translatePricingAir('vendor'),
-      width: 200,
-      dataIndex: 'partnerName',
-      key: 'partnerName',
-      align: 'center',
-    },
-    {
-      title: translatePricingAir('commodity'),
-      width: 300,
-      dataIndex: 'commodityName',
-      key: 'commodityName',
-      align: 'center',
-    },
-    {
-      title: 'GW',
-      dataIndex: 'gw',
-      width: 50,
-      key: 'gw',
-      align: 'center',
-      render: (value) => {
-        return <Checkbox checked={value as boolean} />;
+      title: translateTypeUnit('type_unit'),
+      width: 150,
+      dataIndex: 'typeFeeID',
+      key: 'typeFeeID',
+      align: 'left',
+      render: (_, value) => {
+        return <div>{value.typeUnitName}</div>;
       },
     },
     {
@@ -249,16 +240,15 @@ const RequestTable = () => {
       key: 'insertedByUser',
       align: 'center',
     },
-    ...columnDTOs,
   ];
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.AIR_PRICING_MANAGER(id));
+    router.push(ROUTERS.TYPE_UNIT_MANAGER(id));
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
-    const _requestData: UpdateStatus = {
+    const _requestData: IUpdateStatusUnit = {
       id: id || selectedRowKeys,
       status,
     };
@@ -268,7 +258,11 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [API_AIR_PRICING.GET_REQUEST, pagination],
+              queryKey: [
+                API_TYPE_UNIT.GET_REQUEST,
+                pagination,
+                queryInputParams,
+              ],
             }))
           : errorToast(data.message);
       },
@@ -292,11 +286,11 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: AirPricingTable
+    record: ITypeUnitTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.AIR_PRICING_MANAGER(record.key));
+      router.push(ROUTERS.TYPE_UNIT_MANAGER(record.key));
     }
   };
 

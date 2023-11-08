@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerUnit from '@/components/menu-item/master-data/unit/manager';
+import EditUnit from '@/components/menu-item/master-data/unit-catalog/unit/edit';
 
-function UnitManagerPage() {
+function UnitEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | UNIT MANAGER</title>
+        <title>ASL | UNIT EDIT</title>
       </Head>
-      <ManagerUnit />
+      <EditUnit />
     </>
   );
 }
 
-export default withAuthentication(UnitManagerPage);
+export default withAuthentication(UnitEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'unit']);
 export const getStaticPaths = () => {

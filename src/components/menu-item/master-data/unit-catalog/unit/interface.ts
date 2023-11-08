@@ -1,4 +1,4 @@
-import { IPagination } from '../../../commons/table/table-default';
+import { IPagination } from '../../../../commons/table/table-default';
 
 export interface Unit {
   unitID: string;

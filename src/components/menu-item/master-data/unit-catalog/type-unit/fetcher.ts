@@ -7,17 +7,17 @@ import {
   uploadFile,
 } from '@/fetcherAxios';
 import {
-  UnitsRequire,
-  RequestUnitType,
-  RequestUnitTableDraft,
-  UnitCreate,
-  UnitDelete,
-  UnitDetailDataBody,
-  UnitDetailType,
-  UnitEdit,
-  UpdateStatusUnit,
-  RequestUnitTableRequest,
-  RequestExportData,
+  ITypeUnitsRequire,
+  IRequestTypeUnitType,
+  IRequestUnitTableDraft,
+  ITypeUnitCreate,
+  ITypeUnitDelete,
+  ITypeUnitDetailDataBody,
+  ITypeUnitDetailType,
+  ITypeUnitEdit,
+  IUpdateStatusUnit,
+  IRequestUnitTableRequest,
+  IRequestExportData,
   ITypeUnit,
 } from './interface';
 import { API_COLUMN, API_TYPE_UNIT, API_UNIT } from '@/fetcherAxios/endpoint';
@@ -26,58 +26,63 @@ import {
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
 
-export const getUnitSearch = (data: RequestUnitType) => {
-  return post<RequestUnitType, ResponseWithPayload<UnitsRequire>>({
+export const getUnitSearch = (data: IRequestTypeUnitType) => {
+  return post<IRequestTypeUnitType, ResponseWithPayload<ITypeUnitsRequire>>({
     data,
   })(API_UNIT.GET_SEARCH);
 };
 
 export const getUnitDetail = (id: string) => {
-  return post<UnitDetailDataBody, ResponseWithPayload<UnitDetailType>>({
+  return post<
+    ITypeUnitDetailDataBody,
+    ResponseWithPayload<ITypeUnitDetailType>
+  >({
     data: {
       id,
     },
   })(API_UNIT.GET_DETAIL);
 };
 
-export const createUnit = (data: UnitCreate) => {
-  return post<UnitCreate, ResponseWithPayload<UnitCreate>>({
+export const createUnit = (data: ITypeUnitCreate) => {
+  return post<ITypeUnitCreate, ResponseWithPayload<ITypeUnitCreate>>({
     data,
   })(API_UNIT.CREATE);
 };
 
-export const editUnit = (data: UnitEdit) => {
-  return post<UnitEdit, ResponseWithPayload<UnitEdit>>({
+export const editUnit = (data: ITypeUnitEdit) => {
+  return post<ITypeUnitEdit, ResponseWithPayload<ITypeUnitEdit>>({
     data,
   })(API_UNIT.EDIT);
 };
 
 export const deleteUnit = (data: React.Key[]) => {
-  return post<UnitDelete, ResponseWithPayload<UnitDelete>>({
+  return post<ITypeUnitDelete, ResponseWithPayload<ITypeUnitDelete>>({
     data: {
       ids: data,
     },
   })(API_UNIT.DELETE);
 };
 
-export const getDartTable = (data: RequestUnitTableDraft) => {
-  return post<RequestUnitTableDraft, ResponseWithPayload<UnitsRequire>>({
+export const getDartTable = (data: IRequestUnitTableDraft) => {
+  return post<IRequestUnitTableDraft, ResponseWithPayload<ITypeUnitsRequire>>({
     data,
   })(API_UNIT.GET_DRAFT);
 };
 
 //----------------------------------------------------------------
 
-export const updateStatus = (data: UpdateStatusUnit) => {
-  return post<UpdateStatusUnit, ResponseWithPayload<UpdateStatusUnit>>({
+export const updateStatus = (data: IUpdateStatusUnit) => {
+  return post<IUpdateStatusUnit, ResponseWithPayload<IUpdateStatusUnit>>({
     data,
   })(API_UNIT.UPDATE_STATUS);
 };
 
-export const getTable = (data: RequestUnitTableRequest) => {
-  return post<RequestUnitTableRequest, ResponseWithPayload<UnitsRequire>>({
-    data,
-  })(API_UNIT.GET_REQUEST);
+export const getTable = (data: IRequestUnitTableRequest) => {
+  return post<IRequestUnitTableRequest, ResponseWithPayload<ITypeUnitsRequire>>(
+    {
+      data,
+    }
+  )(API_UNIT.GET_REQUEST);
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
@@ -86,8 +91,8 @@ export const importDataTable = (data: FormData) => {
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_UNIT.DOWNLOAD_EXAMPLE_FILE);
 };
-export const exportTableFile = (data: RequestExportData) => {
-  return exportFile<RequestExportData, BlobPart>({ data })(API_UNIT.EXPORT);
+export const exportTableFile = (data: IRequestExportData) => {
+  return exportFile<IRequestExportData, BlobPart>({ data })(API_UNIT.EXPORT);
 };
 //----------------------------------------------------------------
 //Get format column

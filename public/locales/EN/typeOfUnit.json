@@ -1,0 +1,44 @@
+{
+    "title": "List of Type Unit",
+    "code": "No",
+    "name": "Name",
+    "description": "Description",
+    "type_unit": "Type Unit",
+    "status":"Status",
+    "date_created": "Date Created",
+    "creator": "Creator",
+    
+    "information_add_unit": "Add New Type Unit",
+    "information_edit_unit": "Edit Type Unit",
+
+    "name_form": {
+        "title_EN": "Name(EN)",
+        "title_VN": "Name(VN)",
+        "placeholder": "Enter name",
+        "error_required": "Please enter name"
+    },
+
+    "status_form": {
+        "title": "Status",
+        "placeholder": "Select status",
+        "error_required": "Please select status"
+    },
+
+    "description_vn_form": {
+        "title": "Description (VN)",
+        "placeholder": "Enter description (VN)",
+        "error_required": "Please enter description (VN)"
+    },
+    
+    "description_en_form": {
+        "title": "Description (EN)",
+        "placeholder": "Enter description (EN)",
+        "error_required": "Please enter description (EN)"
+    },
+
+    "unit_type_form": {
+        "title": "Type",
+        "placeholder": "Select type unit",
+        "error_required": "Please select type unit"
+    }
+}

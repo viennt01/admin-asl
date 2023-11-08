@@ -101,6 +101,8 @@ const AppSider = ({ collapsed }: Props) => {
   const refCurrency = useRef(null);
   const refBank = useRef(null);
   const refUnit = useRef(null);
+  const refUnitCatalog = useRef(null);
+  const refTypeUnit = useRef(null);
   const refUser = useRef(null);
   const refStaff = useRef(null);
   const refPermission = useRef(null);
@@ -340,16 +342,28 @@ const AppSider = ({ collapsed }: Props) => {
         ),
 
         getItem(
-          <Badge
-            count={2}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('unit')}`}
-          </Badge>,
-          ROUTERS.UNIT,
-          <CalculatorOutlined ref={refUnit} />
+          `${translateCommon('unit_catalog')}`,
+          'unit_catalog',
+          <DollarOutlined ref={refUnitCatalog} />,
+          [
+            getItem(
+              <Badge
+                count={2}
+                style={{
+                  marginRight: '-12px',
+                }}
+              >
+                {`${translateCommon('unit')}`}
+              </Badge>,
+              ROUTERS.UNIT,
+              <CalculatorOutlined ref={refUnit} />
+            ),
+            getItem(
+              `${translateCommon('type_unit')}`,
+              ROUTERS.TYPE_UNIT,
+              <CalculatorOutlined ref={refTypeUnit} />
+            ),
+          ]
         ),
       ]
     ),

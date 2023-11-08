@@ -4,7 +4,7 @@ import {
   IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
-import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit/interface';
+import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
 import { ROUTERS } from '@/constant/router';
 import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';

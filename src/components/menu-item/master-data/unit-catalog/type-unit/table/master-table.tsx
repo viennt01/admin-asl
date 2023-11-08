@@ -17,15 +17,15 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_TYPE_UNIT, API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
-  QueryInputParamType,
-  QuerySelectParamType,
-  SelectSearch,
-  UnitTable,
+  ITypeQueryInputParamType,
+  ITypeQuerySelectParamType,
+  ISelectSearch,
+  ITypeUnitTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -39,13 +39,12 @@ import {
   downloadExampleFile,
   exportTableFile,
   getColumnTable,
-  getListTyeUnit,
   getUnitSearch,
   importDataTable,
   updateColumnTable,
 } from '../fetcher';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
-import Table from '../../../../commons/table/table';
+import Table from '../../../../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import {
@@ -61,23 +60,22 @@ import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
 
-type DataIndex = keyof QueryInputParamType;
+type DataIndex = keyof ITypeQueryInputParamType;
 
 export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateUnit } = useI18n('unit');
+  const { translate: translateTypeUnit } = useI18n('typeOfUnit');
   const { translate: translateCommon } = useI18n('common');
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParamsMaster
-  );
+  const [queryInputParams, setQueryInputParams] =
+    useState<ITypeQueryInputParamType>(initalValueQueryInputParamsMaster);
   const [querySelectParams, setQuerySelectParams] =
-    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
-  const [dataTable, setDataTable] = useState<UnitTable[]>([]);
-  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    useState<ITypeQuerySelectParamType>(initalValueQuerySelectParamsMaster);
+  const [dataTable, setDataTable] = useState<ITypeUnitTable[]>([]);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<ISelectSearch>(
     initalSelectSearchMaster
   );
   const [columnsStateMap, setColumnsStateMap] = useState<
@@ -89,7 +87,6 @@ export default function MasterDataTable() {
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
-  const typeUnit = useQuery([API_TYPE_UNIT.GET_ALL], getListTyeUnit);
 
   useQuery({
     queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
@@ -104,10 +101,10 @@ export default function MasterDataTable() {
   });
 
   const dataSelectSearch =
-    querySelectParams.statusUnit.length === 0
+    querySelectParams.statusTypeUnit.length === 0
       ? {
           ...querySelectParams,
-          statusUnit: [
+          statusTypeUnit: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -115,7 +112,7 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [API_UNIT.GET_SEARCH, queryInputParams, querySelectParams],
+    queryKey: [API_TYPE_UNIT.GET_SEARCH, queryInputParams, querySelectParams],
     queryFn: () =>
       getUnitSearch({
         ...queryInputParams,
@@ -130,19 +127,17 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.unitID,
-            internationalCode: data.internationalCode,
-            description: data.description,
-            typeUnitID: data.typeUnitID,
+            key: data.typeUnitID,
             typeUnitName: data.typeUnitName,
-            statusUnit: data.statusUnit,
-            dateInserted: data.dateInserted,
+            description: data.description,
+            statusTypeUnit: data.statusTypeUnit,
+            public: data.public,
             insertedByUser: data.insertedByUser,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            isDelete: data.isDelete,
-            dateDeleted: data.dateDeleted,
-            deleteByUser: data.deleteByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
             searchAll: '',
           }))
         );
@@ -163,7 +158,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_UNIT.GET_SEARCH],
+          queryKey: [API_TYPE_UNIT.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -250,9 +245,9 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusUnit:
-        filters.statusUnit?.length !== 0 && filters.statusUnit
-          ? (filters.statusUnit as string[])
+      statusTypeUnit:
+        filters.statusTypeUnit?.length !== 0 && filters.statusTypeUnit
+          ? (filters.statusTypeUnit as string[])
           : [],
       typeUnitID:
         filters.typeUnitID?.length !== 0 && filters.typeUnitID
@@ -276,9 +271,9 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<UnitTable>[] = [
+  const columns: ProColumns<ITypeUnitTable>[] = [
     {
-      title: <div className={style.title}>{translateUnit('code')}</div>,
+      title: <div className={style.title}>{translateTypeUnit('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'right',
@@ -288,31 +283,31 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: (
-        <div className={style.title}>{translateUnit('international_code')}</div>
-      ),
-      dataIndex: 'internationalCode',
-      key: 'internationalCode',
+      title: <div className={style.title}>{translateTypeUnit('name')}</div>,
+      dataIndex: 'typeUnitName',
+      key: 'typeUnitName',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<ITypeQueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'internationalCode',
+          dataIndex: 'typeUnitName',
         },
       }),
     },
     {
-      title: <div className={style.title}>{translateUnit('description')}</div>,
+      title: (
+        <div className={style.title}>{translateTypeUnit('description')}</div>
+      ),
       dataIndex: 'description',
       key: 'description',
       width: 250,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<ITypeQueryInputParamType>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
@@ -324,53 +319,23 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: translateUnit('type_unit'),
-      width: 150,
-      dataIndex: 'typeFeeID',
-      key: 'typeFeeID',
-      align: 'left',
-      filteredValue: [querySelectParams.typeUnitID] || null,
-      filters:
-        typeUnit.data?.data.map((item) => ({
-          text: item.typeUnitName,
-          value: item.typeUnitID,
-        })) || [],
-      filterSearch: true,
-      filterIcon: () => {
-        return (
-          <FilterFilled
-            style={{
-              color:
-                querySelectParams.typeUnitID?.length !== 0
-                  ? COLORS.SEARCH.FILTER_ACTIVE
-                  : COLORS.SEARCH.FILTER_DEFAULT,
-            }}
-          />
-        );
-      },
-      filterMultiple: false,
-      render: (_, value) => {
-        return <div>{value.typeUnitName}</div>;
-      },
-    },
-    {
-      title: <div className={style.title}>{translateUnit('status')}</div>,
+      title: <div className={style.title}>{translateTypeUnit('status')}</div>,
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusTypeUnit',
+      key: 'statusTypeUnit',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusUnit || null,
+      filteredValue: querySelectParams.statusTypeUnit || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusUnit.length !== 0
+                querySelectParams.statusTypeUnit.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -462,7 +427,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_EDIT(id));
+    router.push(ROUTERS.TYPE_UNIT_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -505,16 +470,16 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: UnitTable
+    record: ITypeUnitTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_EDIT(record.key, true));
+      router.push(ROUTERS.TYPE_UNIT_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.UNIT_CREATE);
+    router.push(ROUTERS.TYPE_UNIT_CREATE);
   };
 
   // export table data
@@ -522,13 +487,13 @@ export default function MasterDataTable() {
     mutationFn: () =>
       exportTableFile({
         ids: selectedRowKeys,
-        status: querySelectParams.statusUnit,
+        status: querySelectParams.statusTypeUnit,
       }),
     onSuccess: (data) => {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `ASL_UNIT${getSystemDate()}.xlsx`);
+      link.setAttribute('download', `ASL_TYPE_UNIT${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -547,7 +512,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_UNIT.GET_REQUEST],
+          queryKey: [API_TYPE_UNIT.GET_REQUEST],
         });
         setLoadingImport(false);
         setOpenImportModal(false);
@@ -581,7 +546,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `ASL_UNIT${getSystemDate()}.xlsx`);
+      link.setAttribute('download', `ASL_TYPE_UNIT${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -605,7 +570,7 @@ export default function MasterDataTable() {
           <Table
             dataTable={dataTable}
             columns={columns}
-            headerTitle={translateUnit('title')}
+            headerTitle={translateTypeUnit('title')}
             selectedRowKeys={selectedRowKeys}
             handleSelectionChange={handleSelectionChange}
             handlePaginationChange={handlePaginationChange}

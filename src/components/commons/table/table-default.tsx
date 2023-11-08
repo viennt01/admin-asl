@@ -39,6 +39,7 @@ export enum TABLE_NAME {
   BANK = 'Bank',
   COMMODITY = 'Commodity',
   TYPE_OF_CONTAINER = 'Type of Container',
+  UNIT = 'Unit',
   TYPE_OF_UNIT = 'Type of Unit',
   TYPE_OF_FEE_GROUP = 'Type of Fee Group',
   USER = 'User',

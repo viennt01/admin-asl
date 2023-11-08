@@ -555,23 +555,63 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
-    '/master-data/unit': [
+    '/master-data/unit-catalog/unit': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
       { title: `${translateCommon('unit')}` },
     ],
-    '/master-data/unit/create': [
+    '/master-data/unit-catalog/unit/create': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('create')}` },
     ],
-    '/master-data/unit/edit/[id]': [
+    '/master-data/unit-catalog/unit/edit/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/unit/manager-admin/[id]': [
+    '/master-data/unit-catalog/unit/manager-admin/[id]': [
       { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+
+    '/master-data/unit-catalog/type-unit': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
+      { title: `${translateCommon('type_unit')}` },
+    ],
+    '/master-data/unit-catalog/type-unit/create': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_UNIT}>{translateCommon('type_unit')}</Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/master-data/unit-catalog/type-unit/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_UNIT}>{translateCommon('type_unit')}</Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/unit-catalog/type-unit/manager-admin/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('unit_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_UNIT}>{translateCommon('type_unit')}</Link>
+        ),
+      },
       { title: `${translateCommon('request_for_approval')}` },
     ],
 

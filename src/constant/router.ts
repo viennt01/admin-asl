@@ -165,11 +165,19 @@ export const ROUTERS = {
   TYPES_OF_CONTAINER_MANAGER: (typeOfContainerId: string) =>
     `/master-data/type-of-container/manager-admin/${typeOfContainerId}`,
 
-  UNIT: '/master-data/unit',
-  UNIT_CREATE: '/master-data/unit/create',
+  UNIT: '/master-data/unit-catalog/unit',
+  UNIT_CREATE: '/master-data/unit-catalog/unit/create',
   UNIT_EDIT: (unitId: string, checkRow = false) =>
-    `/master-data/unit/edit/${unitId}?checkRow=${checkRow}`,
-  UNIT_MANAGER: (unitId: string) => `/master-data/unit/manager-admin/${unitId}`,
+    `/master-data/unit-catalog/unit/edit/${unitId}?checkRow=${checkRow}`,
+  UNIT_MANAGER: (unitId: string) =>
+    `/master-data/unit-catalog/unit/manager-admin/${unitId}`,
+
+  TYPE_UNIT: '/master-data/unit-catalog/type-unit',
+  TYPE_UNIT_CREATE: '/master-data/unit-catalog/type-unit/create',
+  TYPE_UNIT_EDIT: (typeUnitId: string, checkRow = false) =>
+    `/master-data/unit-catalog/type-unit/edit/${typeUnitId}?checkRow=${checkRow}`,
+  TYPE_UNIT_MANAGER: (typeUnitId: string) =>
+    `/master-data/unit-catalog/type-unit/manager-admin/${typeUnitId}`,
 
   USER: '/system/user',
   USER_DETAIL: (id: string) => `/system/user/detail/${id}`,
