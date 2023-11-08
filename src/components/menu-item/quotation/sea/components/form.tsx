@@ -335,7 +335,7 @@ const SeaQuotation = ({
         />
 
         <CollapseCard
-          title="Sea Pricing Detail"
+          title="Sea Quotation Detail"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >

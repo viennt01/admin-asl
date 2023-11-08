@@ -116,7 +116,7 @@ const SeaPricing = ({
           data.data.map((currency) => {
             return {
               value: currency.containerTypeID,
-              label: currency.name,
+              label: currency.code,
             };
           })
         );

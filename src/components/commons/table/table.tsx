@@ -149,9 +149,11 @@ const Table = <T extends Record<string, any>>({
                 icon={<PlusOutlined />}
                 style={{
                   marginRight: '4px',
-                  backgroundColor: COLORS.BRIGHT,
-                  color: COLORS.GREEN,
-                  borderColor: COLORS.GREEN,
+                  backgroundColor:
+                    selectedRowKeys?.length === 0 ? '' : COLORS.BRIGHT,
+                  color: selectedRowKeys?.length === 0 ? '' : COLORS.GREEN,
+                  borderColor:
+                    selectedRowKeys?.length === 0 ? '' : COLORS.GREEN,
                   fontWeight: '500',
                   display: handleCreateQuotation ? '' : 'none',
                 }}
