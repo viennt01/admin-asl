@@ -29,6 +29,7 @@ const CreateUnit = () => {
       const _requestData: UnitEdit = {
         unitID: id,
         internationalCode: formValues.internationalCode || '',
+        typeUnitID: formValues.typeUnitID || '',
         descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.REQUEST,
@@ -46,6 +47,7 @@ const CreateUnit = () => {
     } else {
       const _requestData: UnitCreate = {
         internationalCode: formValues.internationalCode || '',
+        typeUnitID: formValues.typeUnitID || '',
         descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.REQUEST,
@@ -68,6 +70,7 @@ const CreateUnit = () => {
       const _requestData: UnitEdit = {
         unitID: id,
         internationalCode: formValues.internationalCode || '',
+        typeUnitID: formValues.typeUnitID || '',
         descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.DRAFT,
@@ -88,6 +91,7 @@ const CreateUnit = () => {
     } else {
       const _requestData: UnitCreate = {
         internationalCode: formValues.internationalCode || '',
+        typeUnitID: formValues.typeUnitID || '',
         descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.DRAFT,

@@ -2,6 +2,7 @@ import {
   ResponseWithPayload,
   downloadFile,
   exportFile,
+  get,
   post,
   uploadFile,
 } from '@/fetcherAxios';
@@ -17,8 +18,9 @@ import {
   UpdateStatusUnit,
   RequestUnitTableRequest,
   RequestExportData,
+  ITypeUnit,
 } from './interface';
-import { API_COLUMN, API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_TYPE_UNIT, API_UNIT } from '@/fetcherAxios/endpoint';
 import {
   ColumnTable,
   TABLE_NAME,
@@ -100,4 +102,9 @@ export const updateColumnTable = (data: ColumnTable) => {
   return post<ColumnTable, ResponseWithPayload<ColumnTable>>({
     data,
   })(API_COLUMN.UPDATE_COLUMN_TABLE_NAME);
+};
+//----------------------------------------------------------------
+//Get type unit
+export const getListTyeUnit = () => {
+  return get<ResponseWithPayload<ITypeUnit[]>>({})(API_TYPE_UNIT.GET_ALL);
 };

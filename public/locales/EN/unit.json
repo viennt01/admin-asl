@@ -3,6 +3,7 @@
     "code": "No",
     "international_code": "Code",
     "description": "Description",
+    "type_unit": "Type Unit",
     "status":"Status",
     "date_created": "Date Created",
     "creator": "Creator",
@@ -32,5 +33,11 @@
         "title": "Description (EN)",
         "placeholder": "Enter description (EN)",
         "error_required": "Please enter description (EN)"
+    },
+
+    "unit_type_form": {
+        "title": "Type",
+        "placeholder": "Select type unit",
+        "error_required": "Please select type unit"
     }
 }

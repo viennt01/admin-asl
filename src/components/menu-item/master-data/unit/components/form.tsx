@@ -1,13 +1,13 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
+import { Form, Input, Typography, Card, Row, Col, Switch, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormValues, UpdateStatusUnit } from '../interface';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_TYPE_UNIT, API_UNIT } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getUnitDetail, updateStatus } from '../fetcher';
+import { getListTyeUnit, getUnitDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { UpdateStatusLocationType } from '@/components/menu-item/master-data/location-catalog/type-of-location/interface';
@@ -51,6 +51,7 @@ const UnitForm = ({
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query;
+  const typeUnit = useQuery([API_TYPE_UNIT.GET_ALL], getListTyeUnit);
 
   useEffect(() => {
     if (!id) return;
@@ -85,6 +86,7 @@ const UnitForm = ({
       if (data.status) {
         form.setFieldsValue({
           internationalCode: data.data.internationalCode,
+          typeUnitID: data.data.typeUnitID,
           descriptionVN: data.data.descriptionVN,
           descriptionEN: data.data.descriptionEN,
           statusUnit: data.data.statusUnit,
@@ -130,6 +132,7 @@ const UnitForm = ({
     const props = {
       checkCopyAndCreate: true,
       internationalCode: form.getFieldValue('internationalCode'),
+      typeUnitID: form.getFieldValue('typeUnitID'),
       descriptionVN: form.getFieldValue('descriptionVN'),
       descriptionEN: form.getFieldValue('descriptionEN'),
     };
@@ -151,6 +154,7 @@ const UnitForm = ({
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         internationalCode: propCopyAndCreate.internationalCode as string,
+        typeUnitID: propCopyAndCreate.typeUnitID as string,
         descriptionVN: propCopyAndCreate.descriptionVN as string,
         descriptionEN: propCopyAndCreate.descriptionEN as string,
       });
@@ -237,7 +241,7 @@ const UnitForm = ({
           }
         >
           <Row gutter={16}>
-            <Col span={24}>
+            <Col lg={12} span={24}>
               <Form.Item
                 label={translateUnit('international_code_form.title')}
                 name="internationalCode"
@@ -255,6 +259,30 @@ const UnitForm = ({
                     'international_code_form.placeholder'
                   )}
                   size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateUnit('unit_type_form.title')}
+                name="typeUnitID"
+                rules={[
+                  {
+                    required: true,
+                    message: translateUnit('unit_type_form.error_required'),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={translateUnit('unit_type_form.placeholder')}
+                  size="large"
+                  options={
+                    typeUnit.data?.data.map((type) => ({
+                      label: type.typeUnitName,
+                      value: type.typeUnitID,
+                    })) || []
+                  }
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>

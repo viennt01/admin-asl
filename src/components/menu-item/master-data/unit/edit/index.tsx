@@ -22,6 +22,7 @@ const EditUnit = () => {
       const _requestData: UnitEdit = {
         unitID: idQuery,
         internationalCode: formValues.internationalCode || '',
+        typeUnitID: formValues.typeUnitID || '',
         descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
         statusUnit: formValues.statusUnit || STATUS_ALL_LABELS.ACTIVE,

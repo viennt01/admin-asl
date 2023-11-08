@@ -70,6 +70,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             key: data.unitID,
             internationalCode: data.internationalCode,
             description: data.description,
+            typeUnitID: data.typeUnitID,
+            typeUnitName: data.typeUnitName,
             statusUnit: data.statusUnit,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
@@ -187,6 +189,16 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           dataIndex: 'description',
         },
       }),
+    },
+    {
+      title: translateUnit('type_unit'),
+      width: 150,
+      dataIndex: 'typeFeeID',
+      key: 'typeFeeID',
+      align: 'left',
+      render: (_, value) => {
+        return <div>{value.typeUnitName}</div>;
+      },
     },
     {
       title: (

@@ -17,7 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_TYPE_UNIT, API_UNIT } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -39,6 +39,7 @@ import {
   downloadExampleFile,
   exportTableFile,
   getColumnTable,
+  getListTyeUnit,
   getUnitSearch,
   importDataTable,
   updateColumnTable,
@@ -88,6 +89,8 @@ export default function MasterDataTable() {
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
+  const typeUnit = useQuery([API_TYPE_UNIT.GET_ALL], getListTyeUnit);
+
   useQuery({
     queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
     queryFn: () => getColumnTable(),
@@ -103,6 +106,7 @@ export default function MasterDataTable() {
   const dataSelectSearch =
     querySelectParams.statusUnit.length === 0
       ? {
+          ...querySelectParams,
           statusUnit: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
@@ -129,6 +133,8 @@ export default function MasterDataTable() {
             key: data.unitID,
             internationalCode: data.internationalCode,
             description: data.description,
+            typeUnitID: data.typeUnitID,
+            typeUnitName: data.typeUnitName,
             statusUnit: data.statusUnit,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
@@ -248,6 +254,10 @@ export default function MasterDataTable() {
         filters.statusUnit?.length !== 0 && filters.statusUnit
           ? (filters.statusUnit as string[])
           : [],
+      typeUnitID:
+        filters.typeUnitID?.length !== 0 && filters.typeUnitID
+          ? (filters.typeUnitID[0] as string)
+          : '',
     };
     setQuerySelectParams(newQueryParams);
   };
@@ -312,6 +322,36 @@ export default function MasterDataTable() {
           dataIndex: 'description',
         },
       }),
+    },
+    {
+      title: translateUnit('type_unit'),
+      width: 150,
+      dataIndex: 'typeFeeID',
+      key: 'typeFeeID',
+      align: 'left',
+      filteredValue: [querySelectParams.typeUnitID] || null,
+      filters:
+        typeUnit.data?.data.map((item) => ({
+          text: item.typeUnitName,
+          value: item.typeUnitID,
+        })) || [],
+      filterSearch: true,
+      filterIcon: () => {
+        return (
+          <FilterFilled
+            style={{
+              color:
+                querySelectParams.typeUnitID?.length !== 0
+                  ? COLORS.SEARCH.FILTER_ACTIVE
+                  : COLORS.SEARCH.FILTER_DEFAULT,
+            }}
+          />
+        );
+      },
+      filterMultiple: false,
+      render: (_, value) => {
+        return <div>{value.typeUnitName}</div>;
+      },
     },
     {
       title: <div className={style.title}>{translateUnit('status')}</div>,

@@ -8,6 +8,7 @@ export const initalValueQueryInputParamsMaster = {
 
 export const initalValueQuerySelectParamsMaster = {
   statusUnit: [],
+  typeUnitID: '',
 };
 
 export const initalValueDisplayColumnMaster = {
@@ -34,6 +35,10 @@ export const initalSelectSearchMaster = {
     label: '',
     value: '',
   },
+  typeUnitID: {
+    label: '',
+    value: '',
+  },
   statusUnit: {
     label: '',
     value: [],
@@ -48,6 +53,7 @@ export const initalValueQueryInputParamsDraft = {
 
 export const initalValueQuerySelectParamsDraft = {
   status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
+  typeUnitID: '',
 };
 
 export const initalSelectSearchDraft = {
@@ -63,6 +69,10 @@ export const initalSelectSearchDraft = {
     label: '',
     value: '',
   },
+  typeUnitID: {
+    label: '',
+    value: '',
+  },
   statusUnit: {
     label: '',
     value: '',
@@ -75,7 +85,9 @@ export const initalValueQueryInputParamsRequest = {
   internationalCode: '',
   description: '',
 };
-
+export const initalValueQuerySelectParamsRequest = {
+  typeUnitID: '',
+};
 export const initalSelectSearchRequest = {
   searchAll: {
     label: '',
@@ -86,6 +98,10 @@ export const initalSelectSearchRequest = {
     value: '',
   },
   description: {
+    label: '',
+    value: '',
+  },
+  typeUnitID: {
     label: '',
     value: '',
   },

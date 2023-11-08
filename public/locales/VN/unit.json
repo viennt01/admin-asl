@@ -3,6 +3,7 @@
     "code": "Stt",
     "international_code": "Mã quốc tế",
     "description": "Mô tả",
+    "type_unit": "Loại đơn vị tính",
     "status": "Trạng thái",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
@@ -32,5 +33,11 @@
         "title": "Mô tả bằng tiếng Anh",
         "placeholder": "Nhập mô tả bằng tiếng Anh",
         "error_required": "Vui lòng nhập mô tả bằng tiếng Anh"
+    },
+
+    "unit_type_form": {
+        "title": "Loại",
+        "placeholder": "Chọn loại đơn vị tính",
+        "error_required": "Vui lòng chọn loại đơn vị tínht"
     }
 }

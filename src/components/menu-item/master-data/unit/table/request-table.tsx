@@ -30,6 +30,7 @@ import style from '@/components/commons/table/index.module.scss';
 import {
   initalSelectSearchRequest,
   initalValueQueryInputParamsRequest,
+  initalValueQuerySelectParamsRequest,
 } from '../constant';
 
 type DataIndex = keyof QueryInputParamType;
@@ -55,6 +56,7 @@ const RequestTable = () => {
     queryKey: [API_UNIT.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
+        ...initalValueQuerySelectParamsRequest,
         ...queryInputParams,
         paginateRequest: {
           currentPage: pagination.current,
@@ -69,6 +71,8 @@ const RequestTable = () => {
             key: data.unitID,
             internationalCode: data.internationalCode,
             description: data.description,
+            typeUnitID: data.typeUnitID,
+            typeUnitName: data.typeUnitName,
             statusUnit: data.statusUnit,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
@@ -213,6 +217,16 @@ const RequestTable = () => {
           dataIndex: 'description',
         },
       }),
+    },
+    {
+      title: translateUnit('type_unit'),
+      width: 150,
+      dataIndex: 'typeFeeID',
+      key: 'typeFeeID',
+      align: 'left',
+      render: (_, value) => {
+        return <div>{value.typeUnitName}</div>;
+      },
     },
     {
       title: (

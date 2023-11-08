@@ -3,6 +3,8 @@ import { IPagination } from '../../../commons/table/table-default';
 export interface Unit {
   unitID: string;
   internationalCode: string;
+  typeUnitID: string;
+  typeUnitName: string;
   description: string;
   statusUnit: string;
   dateInserted: string;
@@ -29,6 +31,7 @@ export interface QueryInputParamType {
   description: string;
 }
 export interface QuerySelectParamType {
+  typeUnitID: string;
   statusUnit: string[];
 }
 
@@ -52,6 +55,7 @@ export interface UnitDetailDataBody {
 export interface FormValues {
   unitID: string;
   internationalCode: string;
+  typeUnitID: string;
   descriptionVN: string;
   descriptionEN: string;
   statusUnit: string;
@@ -79,6 +83,7 @@ export interface QueryInputDraft {
 }
 export interface QuerySelectDraft {
   status: string[];
+  typeUnitID: string;
 }
 export interface RequestUnitTableDraft
   extends QueryInputDraft,
@@ -104,11 +109,20 @@ export interface QueryInputRequest {
   internationalCode: string;
   description: string;
 }
-export interface RequestUnitTableRequest extends QueryInputRequest {
+export interface QuerySelectRequest {
+  typeUnitID: string;
+}
+export interface RequestUnitTableRequest
+  extends QueryInputRequest,
+    QuerySelectRequest {
   paginateRequest: IPagination;
 }
 // export table
 export interface RequestExportData {
   ids: React.Key[];
   status: string[];
+}
+export interface ITypeUnit {
+  typeUnitID: string;
+  typeUnitName: string;
 }

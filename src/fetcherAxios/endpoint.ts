@@ -34,6 +34,21 @@ export const API_UNIT = {
   GET_ALL: '/get-all-unit',
 };
 
+export const API_TYPE_UNIT = {
+  GET_SEARCH: '/search-type-unit',
+  GET_DETAIL: '/get-type-unit',
+  CREATE: '/add-type-unit',
+  EDIT: '/update-type-unit',
+  DELETE: '/delete-type-unit',
+  UPDATE_STATUS: '/update-status-type-unit',
+  GET_DRAFT: '/get-type-unit-with-status-and-id-User',
+  GET_REQUEST: '/get-type-unit-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-type-unit-excel',
+  IMPORT: '/import-type-unit-with-excel',
+  EXPORT: '/export-type-unit-with-excel',
+  GET_ALL: '/get-all-type-unit',
+};
+
 export const API_SEA_QUOTATION = {
   GET_SEARCH: '/search-sea-quotation',
   GET_DETAIL: '/get-sea-quotation-by-id',
