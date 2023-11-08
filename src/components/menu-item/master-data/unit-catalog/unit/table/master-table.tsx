@@ -247,6 +247,8 @@ export default function MasterDataTable() {
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>
   ) => {
+    console.log(filters);
+
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
@@ -326,8 +328,8 @@ export default function MasterDataTable() {
     {
       title: translateUnit('type_unit'),
       width: 150,
-      dataIndex: 'typeFeeID',
-      key: 'typeFeeID',
+      dataIndex: 'typeUnitID',
+      key: 'typeUnitID',
       align: 'left',
       filteredValue: [querySelectParams.typeUnitID] || null,
       filters:

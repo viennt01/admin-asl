@@ -20,7 +20,7 @@ import {
   IRequestExportData,
   ITypeUnit,
 } from './interface';
-import { API_COLUMN, API_TYPE_UNIT, API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
 import {
   ColumnTable,
   TABLE_NAME,
@@ -29,7 +29,7 @@ import {
 export const getUnitSearch = (data: IRequestTypeUnitType) => {
   return post<IRequestTypeUnitType, ResponseWithPayload<ITypeUnitsRequire>>({
     data,
-  })(API_UNIT.GET_SEARCH);
+  })(API_TYPE_UNIT.GET_SEARCH);
 };
 
 export const getUnitDetail = (id: string) => {
@@ -40,19 +40,19 @@ export const getUnitDetail = (id: string) => {
     data: {
       id,
     },
-  })(API_UNIT.GET_DETAIL);
+  })(API_TYPE_UNIT.GET_DETAIL);
 };
 
 export const createUnit = (data: ITypeUnitCreate) => {
   return post<ITypeUnitCreate, ResponseWithPayload<ITypeUnitCreate>>({
     data,
-  })(API_UNIT.CREATE);
+  })(API_TYPE_UNIT.CREATE);
 };
 
 export const editUnit = (data: ITypeUnitEdit) => {
   return post<ITypeUnitEdit, ResponseWithPayload<ITypeUnitEdit>>({
     data,
-  })(API_UNIT.EDIT);
+  })(API_TYPE_UNIT.EDIT);
 };
 
 export const deleteUnit = (data: React.Key[]) => {
@@ -60,13 +60,13 @@ export const deleteUnit = (data: React.Key[]) => {
     data: {
       ids: data,
     },
-  })(API_UNIT.DELETE);
+  })(API_TYPE_UNIT.DELETE);
 };
 
 export const getDartTable = (data: IRequestUnitTableDraft) => {
   return post<IRequestUnitTableDraft, ResponseWithPayload<ITypeUnitsRequire>>({
     data,
-  })(API_UNIT.GET_DRAFT);
+  })(API_TYPE_UNIT.GET_DRAFT);
 };
 
 //----------------------------------------------------------------
@@ -74,7 +74,7 @@ export const getDartTable = (data: IRequestUnitTableDraft) => {
 export const updateStatus = (data: IUpdateStatusUnit) => {
   return post<IUpdateStatusUnit, ResponseWithPayload<IUpdateStatusUnit>>({
     data,
-  })(API_UNIT.UPDATE_STATUS);
+  })(API_TYPE_UNIT.UPDATE_STATUS);
 };
 
 export const getTable = (data: IRequestUnitTableRequest) => {
@@ -82,17 +82,19 @@ export const getTable = (data: IRequestUnitTableRequest) => {
     {
       data,
     }
-  )(API_UNIT.GET_REQUEST);
+  )(API_TYPE_UNIT.GET_REQUEST);
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_UNIT.IMPORT);
+  return uploadFile({ data, timeout: 10000 })(API_TYPE_UNIT.IMPORT);
 };
 export const downloadExampleFile = () => {
-  return downloadFile<BlobPart>({})(API_UNIT.DOWNLOAD_EXAMPLE_FILE);
+  return downloadFile<BlobPart>({})(API_TYPE_UNIT.DOWNLOAD_EXAMPLE_FILE);
 };
 export const exportTableFile = (data: IRequestExportData) => {
-  return exportFile<IRequestExportData, BlobPart>({ data })(API_UNIT.EXPORT);
+  return exportFile<IRequestExportData, BlobPart>({ data })(
+    API_TYPE_UNIT.EXPORT
+  );
 };
 //----------------------------------------------------------------
 //Get format column
