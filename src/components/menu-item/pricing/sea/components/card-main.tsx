@@ -37,6 +37,7 @@ import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { formatNumber } from '@/utils/format';
+import dayjs from 'dayjs';
 
 interface Props {
   create?: boolean;
@@ -137,8 +138,8 @@ const CardMain = ({
         polid: propCopyAndCreate.polid as string,
         commodityID: propCopyAndCreate.commodityID as string,
         note: propCopyAndCreate.note as string,
-        dateEffect: propCopyAndCreate.dateEffect as string,
-        validityDate: propCopyAndCreate.validityDate as string,
+        dateEffect: dayjs(Number(propCopyAndCreate.dateEffect as string)),
+        validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
         demSeaPricing: propCopyAndCreate.demSeaPricing as string,
         detSeaPricing: propCopyAndCreate.detSeaPricing as string,
@@ -148,10 +149,13 @@ const CardMain = ({
         currencyID: propCopyAndCreate.currencyID as string,
         public: propCopyAndCreate.public as unknown as boolean,
         statusSeaPricing: propCopyAndCreate.statusSeaPricing as string,
-        seaPricingDetailDTOs:
-          propCopyAndCreate.seaPricingDetailDTOs as unknown as SeaPricingDetailDTOs[],
-        // seaPricingFeeDTOs:
-        //   propCopyAndCreate.seaPricingFeeDTOs as unknown as SeaPricingFeeDTOs[],
+        seaPricingDetailDTOs: JSON.parse(
+          propCopyAndCreate.seaPricingDetailDTOs as string
+        ) as unknown as SeaPricingDetailDTOs[],
+        seaPricingFeeGroupDTOs:
+          typeof propCopyAndCreate.seaPricingFeeGroupDTOs === 'string'
+            ? [propCopyAndCreate.seaPricingFeeGroupDTOs as unknown as string]
+            : (propCopyAndCreate.seaPricingFeeGroupDTOs as unknown as string[]),
       });
     }
   }, [

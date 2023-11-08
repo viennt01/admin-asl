@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react';
 import {
   IFormValues,
   ISeaQuotationDetailDTOs,
+  ISeaQuotationFeeFormValue,
   // SeaPricingFeeDTOs,
   UpdateStatus,
 } from '../interface';
@@ -37,6 +38,7 @@ import {
   getAllPartner,
   getAllPartnerGroup,
 } from '@/components/menu-item/pricing/sea/fetcher';
+import dayjs from 'dayjs';
 
 interface Props {
   create?: boolean;
@@ -158,8 +160,8 @@ const CardMain = ({
         polid: propCopyAndCreate.polid as string,
         commodityID: propCopyAndCreate.commodityID as string,
         note: propCopyAndCreate.note as string,
-        dateEffect: propCopyAndCreate.dateEffect as string,
-        validityDate: propCopyAndCreate.validityDate as string,
+        dateEffect: dayjs(Number(propCopyAndCreate.dateEffect as string)),
+        validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
         demSeaQuotation: propCopyAndCreate.demSeaQuotation as string,
         detSeaQuotation: propCopyAndCreate.detSeaQuotation as string,
@@ -169,14 +171,18 @@ const CardMain = ({
         currencyID: propCopyAndCreate.currencyID as string,
         public: propCopyAndCreate.public as unknown as boolean,
         statusSeaQuotation: propCopyAndCreate.statusSeaQuotation as string,
-        seaQuotationDetailDTOs:
-          propCopyAndCreate.seaQuotationDetailDTOs as unknown as ISeaQuotationDetailDTOs[],
-        // seaPricingFeeDTOs:
-        //   propCopyAndCreate.seaPricingFeeDTOs as unknown as SeaPricingFeeDTOs[],
-        salesLeadsSeaQuotationDTOs:
-          propCopyAndCreate.salesLeadsSeaQuotationDTOs as unknown as string[],
-        seaQuotaionGroupPartnerDTOs:
-          propCopyAndCreate.seaQuotaionGroupPartnerDTOs as unknown as string[],
+        seaQuotationDetailDTOs: JSON.parse(
+          propCopyAndCreate.seaQuotationDetailDTOs as string
+        ) as unknown as ISeaQuotationDetailDTOs[],
+        seaQuotaionFeeGroupDTOs: JSON.parse(
+          propCopyAndCreate.seaQuotaionFeeGroupDTOs as string
+        ) as unknown as ISeaQuotationFeeFormValue[],
+        salesLeadsSeaQuotationDTOs: JSON.parse(
+          propCopyAndCreate.salesLeadsSeaQuotationDTOs as string
+        ) as unknown as string[],
+        seaQuotaionGroupPartnerDTOs: JSON.parse(
+          propCopyAndCreate.seaQuotaionGroupPartnerDTOs as string
+        ) as unknown as string[],
       });
     }
   }, [

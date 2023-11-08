@@ -279,8 +279,8 @@ const SeaQuotation = ({
       polid: form.getFieldValue('polid'),
       commodityID: form.getFieldValue('commodityID'),
       note: form.getFieldValue('note'),
-      dateEffect: form.getFieldValue('dateEffect'),
-      validityDate: form.getFieldValue('validityDate'),
+      dateEffect: form.getFieldValue('dateEffect')?.valueOf(),
+      validityDate: form.getFieldValue('validityDate')?.valueOf(),
       freqDate: form.getFieldValue('freqDate'),
       demSeaQuotation: form.getFieldValue('demSeaQuotation'),
       detSeaQuotation: form.getFieldValue('detSeaQuotation'),
@@ -290,13 +290,17 @@ const SeaQuotation = ({
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
       statusSeaQuotation: form.getFieldValue('statusSeaQuotation'),
-      seaQuotationDetailDTOs: form.getFieldValue('seaQuotationDetailDTOs'),
-      seaPricingFeeDTOs: form.getFieldValue('seaPricingFeeDTOs'),
-      salesLeadsSeaQuotationDTOs: form.getFieldValue(
-        'salesLeadsSeaQuotationDTOs'
+      seaQuotationDetailDTOs: JSON.stringify(
+        form.getFieldValue('seaQuotationDetailDTOs')
       ),
-      seaQuotaionGroupPartnerDTOs: form.getFieldValue(
-        'seaQuotaionGroupPartnerDTOs'
+      seaQuotaionFeeGroupDTOs: JSON.stringify(
+        form.getFieldValue('seaQuotaionFeeGroupDTOs')
+      ),
+      salesLeadsSeaQuotationDTOs: JSON.stringify(
+        form.getFieldValue('salesLeadsSeaQuotationDTOs')
+      ),
+      seaQuotaionGroupPartnerDTOs: JSON.stringify(
+        form.getFieldValue('seaQuotaionGroupPartnerDTOs')
       ),
     };
     router.push({

@@ -236,8 +236,8 @@ const SeaPricing = ({
       polid: form.getFieldValue('polid'),
       commodityID: form.getFieldValue('commodityID'),
       note: form.getFieldValue('note'),
-      dateEffect: form.getFieldValue('dateEffect'),
-      validityDate: form.getFieldValue('validityDate'),
+      dateEffect: form.getFieldValue('dateEffect')?.valueOf(),
+      validityDate: form.getFieldValue('validityDate')?.valueOf(),
       freqDate: form.getFieldValue('freqDate'),
       demSeaPricing: form.getFieldValue('demSeaPricing'),
       detSeaPricing: form.getFieldValue('detSeaPricing'),
@@ -247,7 +247,9 @@ const SeaPricing = ({
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
       statusSeaPricing: form.getFieldValue('statusSeaPricing'),
-      seaPricingDetailDTOs: form.getFieldValue('seaPricingDetailDTOs'),
+      seaPricingDetailDTOs: JSON.stringify(
+        form.getFieldValue('seaPricingDetailDTOs')
+      ),
       seaPricingFeeGroupDTOs: form.getFieldValue('seaPricingFeeGroupDTOs'),
     };
     router.push({
