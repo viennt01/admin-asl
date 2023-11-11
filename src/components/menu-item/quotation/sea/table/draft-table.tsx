@@ -222,8 +222,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: <div className={style.title}>{translateCommon('status')}</div>,
       width: 120,
-      dataIndex: 'statusSeaPricing',
-      key: 'statusSeaPricing',
+      dataIndex: 'statusSeaQuotation',
+      key: 'statusSeaQuotation',
       align: 'center',
       fixed: 'right',
       render: (value) => (

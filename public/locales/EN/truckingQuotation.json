@@ -1,11 +1,12 @@
 {
     "title": "List of Trucking Quotation",
     "no" : "No",
-    "POL": "POL",
-    "POD": "POD",
+    "code": "Code",
+    "pickup": "Pickup",
+    "delivery": "Delivery",
+    "emtyPickup": "Emty Pickup",
     "destination": "Destination",
     "country": "Country",
-    "venderID": "Vender ID",
     "customerID": "Customer ID",
     "carrier": "Carrier",
     "service": "Service",
@@ -31,9 +32,6 @@
     "inl_addon": "InlAddon",
     "empty_return": "Empty Return",
     "amend": "Amend",
-    "DEM": "DEM",
-    "DET": "DET",
-    "STO": "STO",
     "modify_date": "Modify Date",
     "status": "Status",
     "note": "Note",
@@ -43,18 +41,25 @@
     "title_list_of_customer": "List of Customer",
     "title_trucking_freight": "Trucking Freight",
     "title_local_chart": "Local Chart",
-    "information_edit_trucking_pricing": "Edit Trucking Pricing",
+    "information_add_trucking_quotation": "Add New Trucking Quotation",
+    "information_edit_trucking_quotation": "Edit Trucking Quotation",
     
-    "POL_form": {
+    "pickup_form": {
         "title": "POL",
         "placeholder": "Enter POL",
         "error_required": "Please enter POL"
     },
 
-    "POD_form": {
+    "delivery_form": {
         "title": "POD",
         "placeholder": "Enter POD",
         "error_required": "Please enter POD"
+    },
+
+    "emtyPickup_form": {
+        "title": "Emty Pickup",
+        "placeholder": "Enter emty pickup",
+        "error_required": "Please enter emty pickup"
     },
 
     "destination_form": {
@@ -67,12 +72,6 @@
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
-    },
-
-    "venderID_form": {
-        "title": "Vender ID",
-        "placeholder": "Enter Vender ID",
-        "error_required": "Please enter Vender ID"
     },
 
     "customerID_form": {
@@ -109,42 +108,6 @@
         "title": "LCL",
         "placeholder": "Enter LCL",
         "error_required": "Please enter LCL"
-    },
-
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Enter DC20",
-        "error_required": "Please enter DC20"
-    },
-
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Enter DC40",
-        "error_required": "Please enter DC40"
-    },
-
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Enter HC40",
-        "error_required": "Please enter HC40"
-    },
-
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Enter HC45",
-        "error_required": "Please enter HC45"
-    },
-
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Enter RF20",
-        "error_required": "Please enter RF20"
-    },
-
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Enter RF40",
-        "error_required": "Please enter RF40"
     },
 
     "DB20_form": {
@@ -225,23 +188,12 @@
         "error_required": "Please enter Amend"
     },
 
-    "DEM_form": {
-        "title": "DEM",
-        "placeholder": "Enter DEM",
-        "error_required": "Please enter DEM"
+    "Fee_Group_form": {
+        "title": "Fee group",
+        "placeholder": "Enter fee group",
+        "error_required": "Please enter fee group"
     },
-
-    "DET_form": {
-        "title": "DET",
-        "placeholder": "Enter DET",
-        "error_required": "Please enter DET"
-    },
-
-    "STO_form": {
-        "title": "STO",
-        "placeholder": "Enter STO",
-        "error_required": "Please enter STO"
-    },
+    
 
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",

@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import TruckingQuotationPage from '@/components/menu-item/quotation/trucking';
+import TruckingQuotation from '@/components/menu-item/quotation/trucking';
 
-function TruckingQuotation() {
+function TruckingQuotationPage() {
   return (
     <>
       <Head>
         <title>ASL | TRUCKING QUOTATION</title>
       </Head>
-      <TruckingQuotationPage />
+      <TruckingQuotation />
     </>
   );
 }
 
-export default withAuthentication(TruckingQuotation);
+export default withAuthentication(TruckingQuotationPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'truckingQuotation']);

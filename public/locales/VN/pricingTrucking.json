@@ -31,9 +31,6 @@
     "inl_addon": "InlAddon",
     "empty_return": "Empty Return",
     "amend": "Amend",
-    "DEM": "DEM",
-    "DET": "DET",
-    "STO": "STO",
     "modify_date": "Ngày cập nhật",
     "status": "Trạng thái",
     "note": "Ghi chú",
@@ -111,48 +108,6 @@
         "error_required": "Vui lòng nhập LCL"
     },
 
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Nhập DC20",
-        "error_required": "Vui lòng nhập DC20"
-    },
-
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Nhập DC40",
-        "error_required": "Vui lòng nhập DC40"
-    },
-
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Nhập HC40",
-        "error_required": "Vui lòng nhập HC40"
-    },
-
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Nhập HC45",
-        "error_required": "Vui lòng nhập HC45"
-    },
-
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Nhập RF20",
-        "error_required": "Vui lòng nhập RF20"
-    },
-
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Nhập RF40",
-        "error_required": "Vui lòng nhập RF40"
-    },
-
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Nhập DB20",
-        "error_required": "Vui lòng nhập DB20"
-    },
-
     "others_form": {
         "title": "Others",
         "placeholder": "Nhập others",
@@ -223,24 +178,6 @@
         "title": "Amend",
         "placeholder": "Nhập Amend",
         "error_required": "Vui lòng nhập Amend"
-    },
-
-    "DEM_form": {
-        "title": "DEM",
-        "placeholder": "Nhập DEM",
-        "error_required": "Vui lòng nhập DEM"
-    },
-
-    "DET_form": {
-        "title": "DET",
-        "placeholder": "Nhập DET",
-        "error_required": "Vui lòng nhập DET"
-    },
-
-    "STO_form": {
-        "title": "STO",
-        "placeholder": "Nhập STO",
-        "error_required": "Vui lòng nhập STO"
     },
 
     "Fee_Group_form": {

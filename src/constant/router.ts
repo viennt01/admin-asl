@@ -34,8 +34,8 @@ export const ROUTERS = {
 
   TRUCKING_QUOTATION: '/quotation/trucking-quotation',
   TRUCKING_QUOTATION_CREATE: '/quotation/trucking-quotation/create',
-  TRUCKING_QUOTATION_EDIT: (truckingQuotationId: string) =>
-    `/quotation/trucking-quotation/edit/${truckingQuotationId}`,
+  TRUCKING_QUOTATION_EDIT: (truckingQuotationId: string, checkRow = false) =>
+    `/quotation/trucking-quotation/edit/${truckingQuotationId}?checkRow=${checkRow}`,
   TRUCKING_QUOTATION_MANAGER: (truckingQuotationId: string) =>
     `/quotation/trucking-quotation/manager-admin/${truckingQuotationId}`,
 

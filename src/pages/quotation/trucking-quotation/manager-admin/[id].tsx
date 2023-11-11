@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerTruckingQuotation from '@/components/menu-item/pricing/sea/manager';
+import ManagerTruckQuotation from '@/components/menu-item/quotation/trucking/manager';
 
 function TruckingQuotationManagerPage() {
   return (
@@ -8,7 +8,7 @@ function TruckingQuotationManagerPage() {
       <Head>
         <title>ASL | TRUCKING QUOTATION MANAGER</title>
       </Head>
-      <ManagerTruckingQuotation />
+      <ManagerTruckQuotation />
     </>
   );
 }

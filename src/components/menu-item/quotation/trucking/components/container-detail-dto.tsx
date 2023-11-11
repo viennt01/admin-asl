@@ -9,10 +9,7 @@ import React, {
 } from 'react';
 import { Button, Form, InputNumber, Popconfirm, Select, Table } from 'antd';
 import type { FormInstance } from 'antd/es/form';
-import {
-  IFormValues,
-  ITruckingPricingDetailLoadCapacityDTOsFormValue,
-} from '../interface';
+import { IFormValues, IContainerDTOFormValue } from '../interface';
 import type { BaseSelectRef } from 'rc-select';
 import COLORS from '@/constant/color';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
@@ -23,9 +20,9 @@ const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
   key: string;
-  loadCapacityName: string;
-  loadCapacityID: string;
-  loadCapacityCode: string;
+  containerTypeCode: string;
+  containerTypeID: string;
+  containerTypeName: string;
   currencyID: string;
   currencyName: string;
   price: string;
@@ -50,10 +47,10 @@ const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
 interface EditableCellProps {
   title: React.ReactNode;
   editable: boolean;
-  inputType: 'number' | 'selectCurrency' | 'selectLoadCapacityType';
+  inputType: 'number' | 'selectCurrency' | 'selectContainerType';
   optionCurrency: { value: string; label: string }[];
-  optionTypeLoadCapacityActive: { value: string; label: string }[];
-  optionTypeLoadCapacity: { value: string; label: string }[];
+  optionTypeContainerActive: { value: string; label: string }[];
+  optionTypeContainer: { value: string; label: string }[];
   children: React.ReactNode;
   dataIndex: keyof Item;
   record: Item;
@@ -66,8 +63,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
   inputType,
   children,
   optionCurrency,
-  optionTypeLoadCapacityActive,
-  optionTypeLoadCapacity,
+  optionTypeContainerActive,
+  optionTypeContainer,
   dataIndex,
   record,
   handleSave,
@@ -76,25 +73,22 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const [editing, setEditing] = useState(false);
   const inputRef = useRef() as MutableRefObject<BaseSelectRef>;
   const form = useContext(EditableContext)!;
-  const [optionTypeLoadCapacitySelected, setOptionTypeLoadCapacitySelect] =
-    useState<{ value: string; label: string }[]>([]);
+  const [optionTypeContainerSelected, setOptionTypeContainerSelect] = useState<
+    { value: string; label: string }[]
+  >([]);
 
   useEffect(() => {
-    if (optionTypeLoadCapacity) {
-      const itemActive = optionTypeLoadCapacity.find(
-        (item) => item.value === record.loadCapacityID
+    if (optionTypeContainer) {
+      const itemActive = optionTypeContainer.find(
+        (item) => item.value === record.containerTypeID
       );
-      setOptionTypeLoadCapacitySelect(
+      setOptionTypeContainerSelect(
         itemActive
-          ? [itemActive, ...optionTypeLoadCapacityActive]
-          : optionTypeLoadCapacityActive
+          ? [itemActive, ...optionTypeContainerActive]
+          : optionTypeContainerActive
       );
     }
-  }, [
-    optionTypeLoadCapacity,
-    optionTypeLoadCapacityActive,
-    record?.loadCapacityID,
-  ]);
+  }, [optionTypeContainer, optionTypeContainerActive, record?.containerTypeID]);
 
   useEffect(() => {
     if (editing) {
@@ -147,7 +141,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         }}
         style={{ width: '100%' }}
         onBlur={save}
-        options={optionTypeLoadCapacitySelected}
+        options={optionTypeContainerSelected}
       />
     );
   let childNode = children;
@@ -184,9 +178,9 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  loadCapacityID: string;
-  loadCapacityCode: string;
-  loadCapacityName: string;
+  containerTypeCode: string;
+  containerTypeID: string;
+  containerTypeName: string;
   currencyID: string;
   currencyName: string;
   price: string;
@@ -198,22 +192,23 @@ interface Props {
   form: FormInstance<IFormValues>;
   isCheckPermissionEdit: boolean;
   optionCurrency: { value: string; label: string }[];
-  optionTypeLoadCapacity: { value: string; label: string }[];
+  optionTypeContainer: { value: string; label: string }[];
 }
 
-const TruckingPricingLoadCapacity = ({
+const ContainerDetailDTO = ({
   form,
   isCheckPermissionEdit,
   optionCurrency,
-  optionTypeLoadCapacity,
+  optionTypeContainer,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
   const [dataSource, setDataSource] = useState<DataType[]>([]);
   const [dataRequire, setDataRequire] = useState<DataType[]>([]);
-  const [optionTypeLoadCapacityActive, setOptionTypeLoadCapacityActive] =
-    useState<{ value: string; label: string }[]>([]);
-  const [idKeyAndLoadCapacityType, setIdKeyAndLoadCapacityType] = useState<
-    { idTruckingPricingDetailID: Key; idLoadCapacityType: string }[]
+  const [optionTypeContainerActive, setOptionTypeContainerActive] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [idKeyAndContainerType, setIdKeyAndContainerType] = useState<
+    { idSeaQuotationDetailID: Key; idContainerType: string }[]
   >([]);
   const [countLoadData, setCountLoadData] = useState(0);
 
@@ -223,18 +218,18 @@ const TruckingPricingLoadCapacity = ({
   useEffect(() => {
     // Chỉ lấy data từ API khi lần đầu vào form
     if (
-      form.getFieldValue('truckingPricingDetailByLoadCapacityDTOs') &&
+      form.getFieldValue('truckingQuotationDetailByContainerTypeDTOs') &&
       countLoadData === 0
     ) {
       setDataRequire(
         form
-          .getFieldValue('truckingPricingDetailByLoadCapacityDTOs')
-          .map((item: ITruckingPricingDetailLoadCapacityDTOsFormValue) => {
+          .getFieldValue('truckingQuotationDetailByContainerTypeDTOs')
+          .map((item: IContainerDTOFormValue) => {
             return {
-              key: item.truckingPricingDetailID || '',
-              loadCapacityCode: item.loadCapacityCode || '',
-              loadCapacityID: item.loadCapacityID || '',
-              loadCapacityName: item.loadCapacityName || '',
+              key: item.truckingQuotationDetailByContainerTypeID || '',
+              containerTypeCode: item.containerTypeCode || '',
+              containerTypeID: item.containerTypeID || '',
+              containerTypeName: item.containerTypeName || '',
               currencyID: item.currencyID || '',
               currencyName: item.currencyName || '',
               price: item.price || '',
@@ -243,7 +238,7 @@ const TruckingPricingLoadCapacity = ({
       );
       setCountLoadData(1);
     }
-  }, [form.getFieldValue('truckingPricingDetailByLoadCapacityDTOs')]);
+  }, [form.getFieldValue('truckingQuotationDetailByContainerTypeDTOs')]);
 
   useEffect(() => {
     if (valueCurrencyID) {
@@ -251,42 +246,43 @@ const TruckingPricingLoadCapacity = ({
         dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
       );
       form.setFieldValue(
-        'truckingPricingDetailByLoadCapacityDTOs',
+        'truckingQuotationDetailByContainerTypeDTOs',
         dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
       );
     }
   }, [valueCurrencyID]);
 
-  // setOptionTypeLoadCapacityActive, setIdKeyAndLoadCapacityType
+  // setOptionTypeContainerActive, setIdKeyAndContainerType
+  // setOptionTypeContainerActive, setIdKeyAndContainerType
   useEffect(() => {
-    setOptionTypeLoadCapacityActive(
-      optionTypeLoadCapacity.filter(
+    setOptionTypeContainerActive(
+      optionTypeContainer.filter(
         (itemB) =>
           !dataSource.some(
             (itemA) =>
-              itemA.loadCapacityID === itemB.value && itemA.price !== ''
+              itemA.containerTypeID === itemB.value && itemA.price !== ''
           )
       )
     );
-    setIdKeyAndLoadCapacityType(
+    setIdKeyAndContainerType(
       dataRequire.map((item) => {
         return {
-          idTruckingPricingDetailID: item.key,
-          idLoadCapacityType: item.loadCapacityID,
+          idSeaQuotationDetailID: item.key,
+          idContainerType: item.containerTypeID,
         };
       })
     );
-  }, [optionCurrency, dataRequire, optionTypeLoadCapacity, dataSource]);
+  }, [optionCurrency, dataRequire, optionTypeContainer, dataSource]);
 
-  // setFieldValue truckingPricingDetailByLoadCapacityDTOs
+  // setFieldValue truckingQuotationDetailByContainerTypeDTOs
   useEffect(() => {
     if (countLoadData === 1 && dataSource.length !== 0) {
       form.setFieldValue(
-        'truckingPricingDetailByLoadCapacityDTOs',
+        'truckingQuotationDetailByContainerTypeDTOs',
         dataSource.map((item) => {
           return {
-            truckingPricingDetailID: item.key,
-            loadCapacityID: item.loadCapacityID,
+            seaQuotationDetailID: item.key,
+            containerTypeID: item.containerTypeID,
             currencyID: item.currencyID,
             price: item.price,
           };
@@ -304,24 +300,23 @@ const TruckingPricingLoadCapacity = ({
         .map((item) => ({ ...item, currencyID: valueCurrencyID }))
     );
   }, [dataRequire]);
-
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
     const itemDelete = dataSource.filter((item) => item.key == key);
-    setOptionTypeLoadCapacityActive([
+    setOptionTypeContainerActive([
       {
-        value: itemDelete[0].loadCapacityID,
-        label: itemDelete[0].loadCapacityCode,
+        value: itemDelete[0].containerTypeID,
+        label: itemDelete[0].containerTypeName,
       },
-      ...optionTypeLoadCapacityActive,
+      ...optionTypeContainerActive,
     ]);
     setDataSource(newData);
     form.setFieldValue(
-      'truckingPricingDetailByLoadCapacityDTOs',
+      'truckingQuotationDetailByContainerTypeDTOs',
       newData.map((item) => {
         return {
-          truckingPricingDetailID: item.key,
-          loadCapacityID: item.loadCapacityID,
+          seaQuotationDetailID: item.key,
+          containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
         };
@@ -334,14 +329,13 @@ const TruckingPricingLoadCapacity = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type Load Capacity',
-      dataIndex: 'loadCapacityID',
+      title: 'Type container',
+      dataIndex: 'containerTypeID',
       width: '30%',
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return optionTypeLoadCapacity.find((item) => item.value === value)
-          ?.label;
+        return optionTypeContainer.find((item) => item.value === value)?.label;
       },
     },
     {
@@ -388,29 +382,28 @@ const TruckingPricingLoadCapacity = ({
   const handleAdd = () => {
     const newData: DataType = {
       key:
-        idKeyAndLoadCapacityType.find(
-          (item) =>
-            item.idLoadCapacityType === optionTypeLoadCapacityActive[0]?.value
-        )?.idTruckingPricingDetailID || count,
-      loadCapacityCode: '',
-      loadCapacityID: optionTypeLoadCapacityActive[0]?.value || '',
-      loadCapacityName: optionTypeLoadCapacityActive[0].label || '',
+        idKeyAndContainerType.find(
+          (item) => item.idContainerType === optionTypeContainerActive[0]?.value
+        )?.idSeaQuotationDetailID || count,
+      containerTypeCode: '',
+      containerTypeID: optionTypeContainerActive[0]?.value || '',
+      containerTypeName: optionTypeContainerActive[0].label || '',
       currencyID: valueCurrencyID || optionCurrency[0].value || '',
       currencyName: optionCurrency[0].label || '',
       price: '1000000',
     };
     const newDataSource = [newData, ...dataSource];
     setDataSource(newDataSource);
-    if (optionTypeLoadCapacityActive.length > 0) {
-      setOptionTypeLoadCapacityActive(optionTypeLoadCapacityActive.slice(1));
+    if (optionTypeContainerActive.length > 0) {
+      setOptionTypeContainerActive(optionTypeContainerActive.slice(1));
     }
     setCount(count + 1);
     form.setFieldValue(
-      'truckingPricingDetailByLoadCapacityDTOs',
+      'truckingQuotationDetailByContainerTypeDTOs',
       newDataSource.map((item) => {
         return {
-          truckingPricingDetailID: item.key,
-          loadCapacityID: item.loadCapacityID,
+          seaQuotationDetailID: item.key,
+          containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
         };
@@ -426,23 +419,23 @@ const TruckingPricingLoadCapacity = ({
       ...item,
       ...row,
     });
-    setOptionTypeLoadCapacityActive(
-      optionTypeLoadCapacity.filter(
+    setOptionTypeContainerActive(
+      optionTypeContainer.filter(
         (itemB) =>
           !newData.some(
             (itemA) =>
-              itemA.loadCapacityID === itemB.value && itemA.currencyID !== ''
+              itemA.containerTypeID === itemB.value && itemA.currencyID !== ''
           )
       )
     );
     setDataSource(newData);
 
     form.setFieldValue(
-      'truckingPricingDetailByLoadCapacityDTOs',
+      'truckingQuotationDetailByContainerTypeDTOs',
       dataSource.map((item) => {
         return {
-          truckingPricingDetailID: item.key, //1
-          loadCapacityID: item.loadCapacityID,
+          seaQuotationDetailID: item.key,
+          containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
         };
@@ -471,10 +464,10 @@ const TruckingPricingLoadCapacity = ({
             ? 'number'
             : col.dataIndex === 'currencyID'
             ? 'selectCurrency'
-            : 'selectLoadCapacityType',
+            : 'selectContainerType',
         optionCurrency: optionCurrency,
-        optionTypeLoadCapacityActive: optionTypeLoadCapacityActive,
-        optionTypeLoadCapacity: optionTypeLoadCapacity,
+        optionTypeContainerActive: optionTypeContainerActive,
+        optionTypeContainer: optionTypeContainer,
         dataIndex: col.dataIndex,
         title: col.title,
         handleSave,
@@ -487,7 +480,7 @@ const TruckingPricingLoadCapacity = ({
       <Button
         icon={<PlusOutlined />}
         style={{
-          display: optionTypeLoadCapacityActive.length === 0 ? 'none' : '',
+          display: optionTypeContainerActive.length === 0 ? 'none' : '',
           backgroundColor: COLORS.BRIGHT,
           color: COLORS.GREEN,
           borderColor: COLORS.GREEN,
@@ -511,4 +504,4 @@ const TruckingPricingLoadCapacity = ({
   );
 };
 
-export default TruckingPricingLoadCapacity;
+export default ContainerDetailDTO;

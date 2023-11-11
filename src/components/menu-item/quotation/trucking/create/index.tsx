@@ -1,170 +1,374 @@
-import COLORS from '@/constant/color';
-import { PlusOutlined } from '@ant-design/icons';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ROUTERS } from '@/constant/router';
+import { errorToast, successToast } from '@/hook/toast';
+import router from 'next/router';
+import { API_MESSAGE } from '@/constant/message';
+import TruckQuotation from '../components/form';
 import {
-  ModalForm,
-  ProForm,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-components';
-import { Button, Form } from 'antd';
-import useI18n from '@/i18n/useI18N';
+  IFormValues,
+  ITruckQuotationCreate,
+  ISeaQuotationDetailDTOsUpdate,
+  ITruckQuotationEdit,
+  ITruckQuotationFeeFormValue,
+  IContainerDTOFormValue,
+  ISalesLeadsSeaQuotationDTOs,
+  IEditSalesLeadsSeaQuotationDTOs,
+  ILoadCapacityDTOFormValue,
+} from '../interface';
+import { createSeaQuotation, editSeaQuotation } from '../fetcher';
+import { STATUS_ALL_LABELS } from '@/constant/form';
+import { API_TRUCKING_QUOTATION } from '@/fetcherAxios/endpoint';
 
-// const waitTime = (time = 100) => {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve(true);
-//     }, time);
-//   });
-// };
-export default function CreateTruckingQuotation() {
-  const [form] = Form.useForm<{ name: string; company: string }>();
-  const { translate: translateCommon } = useI18n('common');
-  const { translate: translateTruckingQuotation } =
-    useI18n('truckingQuotation');
+export const returnQuotationDetails = (
+  old?: IContainerDTOFormValue[],
+  newData?: ISeaQuotationDetailDTOsUpdate[]
+) => {
+  if (!newData) {
+    return [];
+  }
+  const mergedData = old?.map((oldItem) => {
+    const newItem = newData.find(
+      (newItem) =>
+        newItem.truckingQuotationDetailByContainerTypeID ===
+          oldItem.truckingQuotationDetailByContainerTypeID &&
+        newItem.containerTypeID === oldItem.containerTypeID
+    );
+
+    if (newItem) {
+      return {
+        ...oldItem,
+        ...newItem,
+        isDelete: false,
+      };
+    }
+
+    return { ...oldItem, isDelete: true };
+  });
+
+  const itemsInNewButNotInOld = newData
+    .filter(
+      (newItem) =>
+        !old?.some(
+          (oldItem) =>
+            newItem.truckingQuotationDetailByContainerTypeID ===
+              oldItem.truckingQuotationDetailByContainerTypeID &&
+            newItem.containerTypeID === oldItem.containerTypeID
+        )
+    )
+    .map((newItem) => ({ ...newItem, isDelete: false }));
+
+  const result = [...(mergedData ?? []), ...(itemsInNewButNotInOld ?? [])].map(
+    ({ ...rest }) => rest
+  );
+
+  return result;
+};
+
+export const returnSaleLeads = (
+  seaPricingFeeDTOs?: ISalesLeadsSeaQuotationDTOs[],
+  fromSeaPricingFeeDTOs?: string[]
+) => {
+  const resultArray: Array<IEditSalesLeadsSeaQuotationDTOs> =
+    seaPricingFeeDTOs?.map((item) => ({
+      salesLeadsSeaQuotationID: item.salesLeadsTruckingQuotationID,
+      partnerID: item.partnerID,
+      isDelete: false,
+    })) || [];
+
+  for (const item of resultArray) {
+    if (
+      fromSeaPricingFeeDTOs &&
+      fromSeaPricingFeeDTOs.includes(item.partnerID)
+    ) {
+      item.isDelete = false;
+    } else {
+      item.isDelete = true;
+    }
+  }
+  if (fromSeaPricingFeeDTOs) {
+    for (const id of fromSeaPricingFeeDTOs) {
+      if (!resultArray.some((item) => item.partnerID === id)) {
+        resultArray.push({
+          partnerID: id,
+          isDelete: false,
+        });
+      }
+    }
+  }
+  return resultArray;
+};
+
+const CreateSeaQuotation = () => {
+  const queryClient = useQueryClient();
+
+  const createMutation = useMutation({
+    mutationFn: (body: ITruckQuotationCreate) => {
+      return createSeaQuotation(body);
+    },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (body: ITruckQuotationEdit) => {
+      return editSeaQuotation(body);
+    },
+  });
+
+  const handleSubmit = (
+    formValues: IFormValues,
+    id?: string,
+    feeDTOs?: ITruckQuotationFeeFormValue[],
+    containerDetail?: IContainerDTOFormValue[],
+    loadCapacityDetail?: ILoadCapacityDTOFormValue[],
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
+  ) => {
+    const containerDetailRegisterRequests =
+      formValues.truckingQuotationDetailByContainerTypeDTOs.map((data) => {
+        return {
+          containerTypeID: data.containerTypeID,
+          priceQuotationDetail: data.price,
+        };
+      });
+
+    const loadCapacityDetailRegisterRequests =
+      formValues.truckingQuotationDetailByLoadCapacityDTOs.map((data) => {
+        return {
+          loadCapacityID: data.loadCapacityID,
+          pricePricingDetail: data.price,
+        };
+      });
+
+    const returnQuotationDetail = returnQuotationDetails(
+      containerDetail,
+      formValues.truckingQuotationDetailByContainerTypeDTOs
+    );
+
+    if (id) {
+      const returnSaleLead = returnSaleLeads(
+        salesLeads,
+        formValues.salesLeadsTruckingQuotationDTOs
+      );
+      const _requestData: ITruckQuotationEdit = {
+        truckingQuotationID: id || '',
+        pickupID: formValues.pickupID || '',
+        deliveryID: formValues.deliveryID || '',
+        emtyPickupID: formValues.emtyPickupID || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        vendor: formValues.vendor || '',
+        note: formValues.note || '',
+        effectDated: formValues.dateEffect?.valueOf(),
+        validityDate: formValues.validityDate?.valueOf(),
+        freqDate: formValues.freqDate || '',
+        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
+        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
+        public: formValues.public || true,
+        seaQuotationDetailUpdateRequests:
+          (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
+          [],
+        // seaPricingFeeGroupUpdateRequests: returnFeeDTO,
+        salesLeadsSeaQuotationUpdateRequests: returnSaleLead || [],
+        statusTruckingQuotation: STATUS_ALL_LABELS.REQUEST,
+      };
+      updateMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              router.push(ROUTERS.TRUCKING_PRICING))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      const salesLeadsQuotationRegisters =
+        formValues.salesLeadsTruckingQuotationDTOs?.map((id) => ({
+          partnerID: id,
+        })) || [];
+      const truckQuotationPartnerRoleRegisters =
+        formValues.truckingQuotaionGroupPartnerDTOs?.map((id) => ({
+          groupPartnerID: id,
+        })) || [];
+
+      const truckQuotationFeeGroupRegisterRequests =
+        formValues.truckingQuotaionGroupPartnerDTOs?.map((id) => ({
+          feeGroupID: id,
+        })) || [];
+
+      const _requestData: ITruckQuotationCreate = {
+        pickupID: formValues.pickupID || '',
+        deliveryID: formValues.deliveryID || '',
+        emtyPickupID: formValues.emtyPickupID || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        vendor: formValues.vendor || '',
+        note: formValues.note || '',
+        effectDated: formValues.dateEffect?.valueOf(),
+        validityDate: formValues.validityDate?.valueOf(),
+        freqDate: formValues.freqDate || '',
+        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
+        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
+        public: formValues.public || true,
+        truckingQuotationDetailRegisterRequests:
+          containerDetailRegisterRequests || [],
+        truckingLoadCapacityDetailRegisterRequests:
+          loadCapacityDetailRegisterRequests || [],
+        truckingQuotationFeeGroupRegisterRequests:
+          truckQuotationFeeGroupRegisterRequests || [],
+        salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
+        truckingQuotationGroupPartnerRegisterRequests:
+          truckQuotationPartnerRoleRegisters,
+        statusTruckingQuotation: STATUS_ALL_LABELS.REQUEST,
+      };
+      createMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              router.push(ROUTERS.TRUCKING_PRICING))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
+  };
+
+  const handleSaveDraft = (
+    formValues: IFormValues,
+    id?: string,
+    feeDTOs?: ITruckQuotationFeeFormValue[],
+    containerDetail?: IContainerDTOFormValue[],
+    loadCapacityDetail?: ILoadCapacityDTOFormValue[],
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
+  ) => {
+    const truckQuotationDetailRegisterRequests =
+      formValues.truckingQuotationDetailByContainerTypeDTOs.map((data) => {
+        return {
+          containerTypeID: data.containerTypeID,
+          currencyID: data.currencyID,
+          priceQuotationDetail: data.price,
+        };
+      });
+
+    const loadCapacityDetailRegisterRequests =
+      formValues.truckingQuotationDetailByLoadCapacityDTOs.map((data) => {
+        return {
+          loadCapacityID: data.loadCapacityID,
+          pricePricingDetail: data.price,
+        };
+      });
+
+    const returnQuotationDetail = returnQuotationDetails(
+      containerDetail,
+      formValues.truckingQuotationDetailByContainerTypeDTOs
+    );
+    if (id) {
+      const returnSaleLead = returnSaleLeads(
+        salesLeads,
+        formValues.salesLeadsTruckingQuotationDTOs
+      );
+      const _requestData: ITruckQuotationEdit = {
+        truckingQuotationID: id,
+        pickupID: formValues.pickupID || '',
+        deliveryID: formValues.deliveryID || '',
+        emtyPickupID: formValues.emtyPickupID || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        vendor: formValues.vendor || '',
+        note: formValues.note || '',
+        effectDated: formValues.dateEffect?.valueOf(),
+        validityDate: formValues.validityDate?.valueOf(),
+        freqDate: formValues.freqDate || '',
+        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
+        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
+        public: formValues.public || true,
+        seaQuotationDetailUpdateRequests:
+          (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
+          [],
+        salesLeadsSeaQuotationUpdateRequests: returnSaleLead || [],
+        statusTruckingQuotation: STATUS_ALL_LABELS.DRAFT,
+      };
+
+      updateMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_TRUCKING_QUOTATION.GET_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    } else {
+      const salesLeadsQuotationRegisters =
+        formValues.salesLeadsTruckingQuotationDTOs?.map((id) => ({
+          partnerID: id,
+        })) || [];
+      const truckQuotationPartnerRoleRegisters =
+        formValues.truckingQuotaionGroupPartnerDTOs?.map((id) => ({
+          groupPartnerID: id,
+        })) || [];
+      const truckQuotationFeeGroupRegisterRequests =
+        formValues.truckingQuotaionGroupPartnerDTOs?.map((id) => ({
+          feeGroupID: id,
+        })) || [];
+
+      const _requestData: ITruckQuotationCreate = {
+        pickupID: formValues.pickupID || '',
+        deliveryID: formValues.deliveryID || '',
+        emtyPickupID: formValues.emtyPickupID || '',
+        commodityID: formValues.commodityID || '',
+        currencyID: formValues.currencyID || '',
+        vendor: formValues.vendor || '',
+        note: formValues.note || '',
+        effectDated: formValues.dateEffect?.valueOf(),
+        validityDate: formValues.validityDate?.valueOf(),
+        freqDate: formValues.freqDate || '',
+        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
+        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
+        public: formValues.public || true,
+        truckingQuotationDetailRegisterRequests:
+          truckQuotationDetailRegisterRequests || [],
+        truckingLoadCapacityDetailRegisterRequests:
+          loadCapacityDetailRegisterRequests || [],
+        truckingQuotationFeeGroupRegisterRequests:
+          truckQuotationFeeGroupRegisterRequests || [],
+        salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
+        truckingQuotationGroupPartnerRegisterRequests:
+          truckQuotationPartnerRoleRegisters,
+        statusTruckingQuotation: STATUS_ALL_LABELS.DRAFT,
+      };
+
+      createMutation.mutate(_requestData, {
+        onSuccess: (data) => {
+          data.status
+            ? (successToast(data.message),
+              queryClient.invalidateQueries({
+                queryKey: [API_TRUCKING_QUOTATION.GET_SEARCH],
+              }))
+            : errorToast(data.message);
+        },
+        onError() {
+          errorToast(API_MESSAGE.ERROR);
+        },
+      });
+    }
+  };
 
   return (
-    <ModalForm<{
-      name: string;
-      company: string;
-    }>
-      title={translateTruckingQuotation('information_add_customer')}
-      trigger={
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          style={{
-            marginRight: '4px',
-            backgroundColor: COLORS.BRIGHT,
-            color: COLORS.GREEN,
-            borderColor: COLORS.GREEN,
-            fontWeight: '500',
-          }}
-        >
-          {translateCommon('button_add')}
-        </Button>
-      }
-      submitter={{
-        searchConfig: {
-          submitText: 'Add',
-          resetText: 'Cancel',
-        },
-      }}
-      form={form}
-      autoFocusFirstInput
-      modalProps={{
-        destroyOnClose: true,
-      }}
-      // submitTimeout={2000}
-      // onFinish={async (values) => {
-      //   await waitTime(2000);
-      //   message.success('提交成功');
-      //   return true;
-      // }}
-    >
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="Abbreviation"
-          label={translateTruckingQuotation('abbreviation')}
-          placeholder={translateTruckingQuotation('abbreviation_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="NameCustomer"
-          label={translateTruckingQuotation('name')}
-          placeholder={translateTruckingQuotation('name_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="md"
-          name="NumberCustomer"
-          label={translateTruckingQuotation('number')}
-          placeholder={translateTruckingQuotation('number_placeholder')}
-          rules={[
-            {
-              type: 'number',
-              min: 0,
-              message: 'Vui lòng nhập số lượng giao dịch',
-            },
-          ]}
-        />
-
-        <ProFormText
-          width="md"
-          name="Phone"
-          label={translateTruckingQuotation('phone')}
-          placeholder={translateTruckingQuotation('phone_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormSelect
-          request={async () => [
-            {
-              value: 'VietNam',
-              label: 'Việt Nam',
-            },
-            {
-              value: 'American',
-              label: 'Mỹ',
-            },
-          ]}
-          width="md"
-          name="CountryName"
-          label={translateTruckingQuotation('country')}
-          placeholder={translateTruckingQuotation('country_placeholder')}
-        />
-
-        <ProFormText
-          width="md"
-          name="Address"
-          label={translateTruckingQuotation('address')}
-          placeholder={translateTruckingQuotation('address_placeholder')}
-        />
-      </ProForm.Group>
-      <ProForm.Group>
-        <ProFormText
-          width="sm"
-          name="Email"
-          label={translateTruckingQuotation('email')}
-          placeholder={translateTruckingQuotation('email_placeholder')}
-        />
-
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Nguyễn Văn A',
-            },
-            {
-              value: '2',
-              label: 'Nguyễn Văn B',
-            },
-          ]}
-          width="sm"
-          name="Saleman"
-          label={translateTruckingQuotation('saleman')}
-          placeholder={translateTruckingQuotation('saleman_placeholder')}
-        />
-
-        <ProFormSelect
-          request={async () => [
-            {
-              value: '1',
-              label: 'Active',
-            },
-            {
-              value: '2',
-              label: 'Tạm ngừng',
-            },
-          ]}
-          width="sm"
-          name="Status"
-          label={translateTruckingQuotation('status')}
-          placeholder={translateTruckingQuotation('status_placeholder')}
-        />
-      </ProForm.Group>
-    </ModalForm>
+    <TruckQuotation
+      create
+      handleSubmit={handleSubmit}
+      handleSaveDraft={handleSaveDraft}
+      loadingSubmit={createMutation.isLoading || updateMutation.isLoading}
+      checkRow={false}
+      useDraft
+    />
   );
-}
+};
+
+export default CreateSeaQuotation;

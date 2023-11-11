@@ -64,6 +64,21 @@ export const API_SEA_QUOTATION = {
   EXPORT: '/export-sea-quotation-with-excel',
 };
 
+export const API_TRUCKING_QUOTATION = {
+  GET_SEARCH: '/search-truck-quotation',
+  GET_DETAIL: '/get-truck-quotation-by-id',
+  CREATE: '/add-truck-quotation',
+  CREATE_WITH_PRICING: '/add-truck-quotation-by-pricing',
+  EDIT: '/update-truck-quotation',
+  DELETE: '/delete-truck-quotation',
+  UPDATE_STATUS: '/update-status-truck-quotation',
+  GET_DRAFT: '/search-truck-quotation-by-user',
+  GET_REQUEST: '/search-truck-quotation',
+  DOWNLOAD_EXAMPLE_FILE: '/download-truck-quotation-excel',
+  IMPORT: '/import-truck-quotation-with-excel',
+  EXPORT: '/export-truck-quotation-with-excel',
+};
+
 export const API_SEA_PRICING = {
   GET_SEARCH: '/search-sea-pricing',
   GET_DETAIL: '/get-sea-pricing-by-id',

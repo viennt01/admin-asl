@@ -9,10 +9,7 @@ import React, {
 } from 'react';
 import { Button, Form, InputNumber, Popconfirm, Select, Table } from 'antd';
 import type { FormInstance } from 'antd/es/form';
-import {
-  IFormValues,
-  ITruckingPricingDetailLoadCapacityDTOsFormValue,
-} from '../interface';
+import { IFormValues, ILoadCapacityDTOFormValue } from '../interface';
 import type { BaseSelectRef } from 'rc-select';
 import COLORS from '@/constant/color';
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
@@ -23,9 +20,9 @@ const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
   key: string;
-  loadCapacityName: string;
-  loadCapacityID: string;
   loadCapacityCode: string;
+  loadCapacityID: string;
+  loadCapacityName: string;
   currencyID: string;
   currencyName: string;
   price: string;
@@ -184,8 +181,8 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  loadCapacityID: string;
   loadCapacityCode: string;
+  loadCapacityID: string;
   loadCapacityName: string;
   currencyID: string;
   currencyName: string;
@@ -201,7 +198,7 @@ interface Props {
   optionTypeLoadCapacity: { value: string; label: string }[];
 }
 
-const TruckingPricingLoadCapacity = ({
+const LoadCapacityDetailDTO = ({
   form,
   isCheckPermissionEdit,
   optionCurrency,
@@ -213,7 +210,10 @@ const TruckingPricingLoadCapacity = ({
   const [optionTypeLoadCapacityActive, setOptionTypeLoadCapacityActive] =
     useState<{ value: string; label: string }[]>([]);
   const [idKeyAndLoadCapacityType, setIdKeyAndLoadCapacityType] = useState<
-    { idTruckingPricingDetailID: Key; idLoadCapacityType: string }[]
+    {
+      idTruckingQuotationDetailByLoadCapacityID: Key;
+      idLoadCapacityType: string;
+    }[]
   >([]);
   const [countLoadData, setCountLoadData] = useState(0);
 
@@ -223,15 +223,15 @@ const TruckingPricingLoadCapacity = ({
   useEffect(() => {
     // Chỉ lấy data từ API khi lần đầu vào form
     if (
-      form.getFieldValue('truckingPricingDetailByLoadCapacityDTOs') &&
+      form.getFieldValue('truckingQuotationDetailByLoadCapacityDTOs') &&
       countLoadData === 0
     ) {
       setDataRequire(
         form
-          .getFieldValue('truckingPricingDetailByLoadCapacityDTOs')
-          .map((item: ITruckingPricingDetailLoadCapacityDTOsFormValue) => {
+          .getFieldValue('truckingQuotationDetailByLoadCapacityDTOs')
+          .map((item: ILoadCapacityDTOFormValue) => {
             return {
-              key: item.truckingPricingDetailID || '',
+              key: item.truckingQuotationDetailByLoadCapacityID || '',
               loadCapacityCode: item.loadCapacityCode || '',
               loadCapacityID: item.loadCapacityID || '',
               loadCapacityName: item.loadCapacityName || '',
@@ -243,7 +243,7 @@ const TruckingPricingLoadCapacity = ({
       );
       setCountLoadData(1);
     }
-  }, [form.getFieldValue('truckingPricingDetailByLoadCapacityDTOs')]);
+  }, [form.getFieldValue('truckingQuotationDetailByLoadCapacityDTOs')]);
 
   useEffect(() => {
     if (valueCurrencyID) {
@@ -251,12 +251,13 @@ const TruckingPricingLoadCapacity = ({
         dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
       );
       form.setFieldValue(
-        'truckingPricingDetailByLoadCapacityDTOs',
+        'truckingQuotationDetailByLoadCapacityDTOs',
         dataSource.map((item) => ({ ...item, currencyID: valueCurrencyID }))
       );
     }
   }, [valueCurrencyID]);
 
+  // setOptionTypeLoadCapacityActive, setIdKeyAndLoadCapacityType
   // setOptionTypeLoadCapacityActive, setIdKeyAndLoadCapacityType
   useEffect(() => {
     setOptionTypeLoadCapacityActive(
@@ -271,21 +272,21 @@ const TruckingPricingLoadCapacity = ({
     setIdKeyAndLoadCapacityType(
       dataRequire.map((item) => {
         return {
-          idTruckingPricingDetailID: item.key,
+          idTruckingQuotationDetailByLoadCapacityID: item.key,
           idLoadCapacityType: item.loadCapacityID,
         };
       })
     );
   }, [optionCurrency, dataRequire, optionTypeLoadCapacity, dataSource]);
 
-  // setFieldValue truckingPricingDetailByLoadCapacityDTOs
+  // setFieldValue truckingQuotationDetailByLoadCapacityDTOs
   useEffect(() => {
     if (countLoadData === 1 && dataSource.length !== 0) {
       form.setFieldValue(
-        'truckingPricingDetailByLoadCapacityDTOs',
+        'truckingQuotationDetailByLoadCapacityDTOs',
         dataSource.map((item) => {
           return {
-            truckingPricingDetailID: item.key,
+            truckingQuotationDetailByLoadCapacityID: item.key,
             loadCapacityID: item.loadCapacityID,
             currencyID: item.currencyID,
             price: item.price,
@@ -304,23 +305,22 @@ const TruckingPricingLoadCapacity = ({
         .map((item) => ({ ...item, currencyID: valueCurrencyID }))
     );
   }, [dataRequire]);
-
   const handleDelete = (key: React.Key) => {
     const newData = dataSource.filter((item) => item.key !== key);
     const itemDelete = dataSource.filter((item) => item.key == key);
     setOptionTypeLoadCapacityActive([
       {
         value: itemDelete[0].loadCapacityID,
-        label: itemDelete[0].loadCapacityCode,
+        label: itemDelete[0].loadCapacityName,
       },
       ...optionTypeLoadCapacityActive,
     ]);
     setDataSource(newData);
     form.setFieldValue(
-      'truckingPricingDetailByLoadCapacityDTOs',
+      'truckingQuotationDetailByLoadCapacityDTOs',
       newData.map((item) => {
         return {
-          truckingPricingDetailID: item.key,
+          truckingQuotationDetailByLoadCapacityID: item.key,
           loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
@@ -391,7 +391,7 @@ const TruckingPricingLoadCapacity = ({
         idKeyAndLoadCapacityType.find(
           (item) =>
             item.idLoadCapacityType === optionTypeLoadCapacityActive[0]?.value
-        )?.idTruckingPricingDetailID || count,
+        )?.idTruckingQuotationDetailByLoadCapacityID || count,
       loadCapacityCode: '',
       loadCapacityID: optionTypeLoadCapacityActive[0]?.value || '',
       loadCapacityName: optionTypeLoadCapacityActive[0].label || '',
@@ -406,10 +406,10 @@ const TruckingPricingLoadCapacity = ({
     }
     setCount(count + 1);
     form.setFieldValue(
-      'truckingPricingDetailByLoadCapacityDTOs',
+      'truckingQuotationDetailByLoadCapacityDTOs',
       newDataSource.map((item) => {
         return {
-          truckingPricingDetailID: item.key,
+          truckingQuotationDetailByLoadCapacityID: item.key,
           loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
@@ -438,10 +438,10 @@ const TruckingPricingLoadCapacity = ({
     setDataSource(newData);
 
     form.setFieldValue(
-      'truckingPricingDetailByLoadCapacityDTOs',
+      'truckingQuotationDetailByLoadCapacityDTOs',
       dataSource.map((item) => {
         return {
-          truckingPricingDetailID: item.key, //1
+          truckingQuotationDetailByLoadCapacityID: item.key,
           loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
@@ -511,4 +511,4 @@ const TruckingPricingLoadCapacity = ({
   );
 };
 
-export default TruckingPricingLoadCapacity;
+export default LoadCapacityDetailDTO;
