@@ -45,6 +45,10 @@ export enum TABLE_NAME {
   USER = 'User',
   LOAD_CAPACITY = 'Load Capacity',
   TYPE_OF_LOAD_CAPACITY = 'Type of Load Capacity',
+  TRUCKING_PRICING = 'Trucing Pricing',
+  SEA_PRICING = 'Sea Pricing',
+  AIR_PRICING = 'Air Pricing',
+  CUSTOM_PRICING = 'Custom Pricing',
 }
 
 export interface ColumnTable {

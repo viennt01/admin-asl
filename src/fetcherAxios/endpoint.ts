@@ -78,6 +78,20 @@ export const API_SEA_PRICING = {
   EXPORT: '/export-sea-pricing-with-excel',
 };
 
+export const API_TRUCKING_PRICING = {
+  GET_SEARCH: '/search-trucking-pricing',
+  GET_DETAIL: '/get-trucking-pricing-by-id',
+  CREATE: '/add-trucking-pricing',
+  EDIT: '/update-trucking-pricing',
+  DELETE: '/delete-trucking-pricing',
+  UPDATE_STATUS: '/update-status-trucking-pricing',
+  GET_DRAFT: '/search-trucking-pricing-with-status',
+  GET_REQUEST: '/search-trucking-pricing-with-status',
+  DOWNLOAD_EXAMPLE_FILE: '/download-trucking-pricing-excel',
+  IMPORT: '/import-trucking-pricing-with-excel',
+  EXPORT: '/export-trucking-pricing-with-excel',
+};
+
 export const API_AIR_PRICING = {
   GET_SEARCH: '/search-air-pricing',
   GET_DETAIL: '/get-air-pricing-by-id',

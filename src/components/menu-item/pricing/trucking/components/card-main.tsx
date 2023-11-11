@@ -16,10 +16,10 @@ import {
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
-  FormValues,
-  SeaPricingDetailDTOs,
+  IFormValues,
+  ITypeDTOs,
   // SeaPricingFeeDTOs,
-  UpdateStatus,
+  IUpdateStatus,
 } from '../interface';
 import {
   API_COMMODITY,
@@ -43,13 +43,13 @@ interface Props {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
-  handleSubmit?: (formValues: FormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: FormValues, id?: string) => void;
+  handleSubmit?: (formValues: IFormValues, id?: string) => void;
+  handleSaveDraft?: (formValues: IFormValues, id?: string) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
   optionCurrency: { value: string; label: string }[];
-  form: FormInstance<FormValues>;
+  form: FormInstance<IFormValues>;
   idQuery?: string;
   handleIdQuery: (id: string) => void;
   handleCheckEdit: (data: boolean) => void;
@@ -71,7 +71,7 @@ const CardMain = ({
   handleCheckEdit,
   isCheckPermissionEdit,
 }: Props) => {
-  const { translate: translatePricingSea } = useI18n('pricingSea');
+  const { translate: translatePricingTrucking } = useI18n('pricingTrucking');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
@@ -123,8 +123,8 @@ const CardMain = ({
   });
 
   useEffect(() => {
-    if (form.getFieldValue('statusSeaPricing')) {
-      form.getFieldValue('statusSeaPricing') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusTruckingPricing')) {
+      form.getFieldValue('statusTruckingPricing') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -134,28 +134,31 @@ const CardMain = ({
 
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
-        podid: propCopyAndCreate.podid as string,
-        polid: propCopyAndCreate.polid as string,
+        pickupID: propCopyAndCreate.pickupID as string,
+        deliveryID: propCopyAndCreate.deliveryID as string,
+        emtyPickupID: propCopyAndCreate.emtyPickupID as string,
         commodityID: propCopyAndCreate.commodityID as string,
-        note: propCopyAndCreate.note as string,
-        dateEffect: dayjs(Number(propCopyAndCreate.dateEffect as string)),
-        validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
-        freqDate: propCopyAndCreate.freqDate as string,
-        demSeaPricing: propCopyAndCreate.demSeaPricing as string,
-        detSeaPricing: propCopyAndCreate.detSeaPricing as string,
-        stoSeaPricing: propCopyAndCreate.stoSeaPricing as string,
-        lclMinSeaPricing: propCopyAndCreate.lclMinSeaPricing as string,
-        lclSeaPricing: propCopyAndCreate.lclSeaPricing as string,
         currencyID: propCopyAndCreate.currencyID as string,
         public: propCopyAndCreate.public as unknown as boolean,
-        statusSeaPricing: propCopyAndCreate.statusSeaPricing as string,
-        seaPricingDetailDTOs: JSON.parse(
-          propCopyAndCreate.seaPricingDetailDTOs as string
-        ) as unknown as SeaPricingDetailDTOs[],
-        seaPricingFeeGroupDTOs:
-          typeof propCopyAndCreate.seaPricingFeeGroupDTOs === 'string'
-            ? [propCopyAndCreate.seaPricingFeeGroupDTOs as unknown as string]
-            : (propCopyAndCreate.seaPricingFeeGroupDTOs as unknown as string[]),
+        note: propCopyAndCreate.note as string,
+        effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
+        validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
+        freqDate: propCopyAndCreate.freqDate as string,
+        lclMinTruckingPricing:
+          propCopyAndCreate.lclMinTruckingPricing as string,
+        lclTruckingPricing: propCopyAndCreate.lclTruckingPricing as string,
+        statusTruckingPricing:
+          propCopyAndCreate.statusTruckingPricing as string,
+
+        truckingPricingDetailByContainerTypeDTOs: JSON.parse(
+          propCopyAndCreate.truckingPricingDetailByContainerTypeDTOs as string
+        ) as unknown as ITypeDTOs[],
+        truckingPricingFeeGroupDTOs:
+          typeof propCopyAndCreate.truckingPricingFeeGroupDTOs === 'string'
+            ? [
+                propCopyAndCreate.truckingPricingFeeGroupDTOs as unknown as string,
+              ]
+            : (propCopyAndCreate.truckingPricingFeeGroupDTOs as unknown as string[]),
       });
     }
   }, [
@@ -164,11 +167,11 @@ const CardMain = ({
     checkRow,
     manager,
     propCopyAndCreate,
-    form.getFieldValue('statusSeaPricing'),
+    form.getFieldValue('statusTruckingPricing'),
   ]);
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatus) => {
+    mutationFn: (body: IUpdateStatus) => {
       return updateStatus(body);
     },
   });
@@ -180,7 +183,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: translatePricingSea('currency_form.placeholder'),
+          message: translatePricingTrucking('currency_form.placeholder'),
         },
       ]}
     >
@@ -201,7 +204,7 @@ const CardMain = ({
       rules={[
         {
           required: true,
-          message: translatePricingSea('currency_form.placeholder'),
+          message: translatePricingTrucking('currency_form.placeholder'),
         },
       ]}
     >
@@ -221,17 +224,20 @@ const CardMain = ({
         <Row justify={'center'}>
           <Col>
             <Title level={3} style={{ margin: '-4px 0' }}>
-              {create && translatePricingSea('information_add_sea_pricing')}
+              {create &&
+                translatePricingTrucking('information_add_trucking_pricing')}
               {manager && 'Approval needed requests'}
               {edit &&
                 (checkRow ? (
                   <>
                     {isCheckPermissionEdit && 'View'}
                     {!isCheckPermissionEdit &&
-                      translatePricingSea('information_edit_sea_pricing')}
+                      translatePricingTrucking(
+                        'information_edit_trucking_pricing'
+                      )}
                   </>
                 ) : (
-                  translatePricingSea('information_edit_sea_pricing')
+                  translatePricingTrucking('information_edit_trucking_pricing')
                 ))}
             </Title>
           </Col>
@@ -251,7 +257,7 @@ const CardMain = ({
                   : STATUS_MASTER_COLORS.DEACTIVE,
               }}
               onChange={(value) => {
-                const _requestData: UpdateStatus = {
+                const _requestData: IUpdateStatus = {
                   id: [idQuery],
                   status: value
                     ? STATUS_ALL_LABELS.ACTIVE
@@ -277,21 +283,21 @@ const CardMain = ({
       }
     >
       <Row gutter={16}>
-        <Col lg={12} span={24}>
+        <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('POL')}
-            tooltip={translatePricingSea('POL')}
-            name="polid"
+            label={translatePricingTrucking('pickup')}
+            tooltip={translatePricingTrucking('pickup')}
+            name="pickupID"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('POL_form.placeholder'),
+                message: translatePricingTrucking('pickup_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('POL_form.placeholder')}
+              placeholder={translatePricingTrucking('pickup_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -313,21 +319,65 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={12} span={24}>
+        <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('POD')}
-            tooltip={translatePricingSea('POD')}
-            name="podid"
+            label={translatePricingTrucking('delivery_form.title')}
+            tooltip={translatePricingTrucking('delivery_form.title')}
+            name="deliveryID"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('POD_form.placeholder'),
+                message: translatePricingTrucking(
+                  'delivery_form.error_required'
+                ),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('POD_form.placeholder')}
+              placeholder={translatePricingTrucking(
+                'delivery_form.placeholder'
+              )}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getLocation.data?.data.map((item) => {
+                  return {
+                    value: item.locationID,
+                    label: item.locationName,
+                  };
+                }) || []
+              }
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingTrucking('emtyPickup_form.title')}
+            tooltip={translatePricingTrucking('emtyPickup_form.title')}
+            name="emtyPickupID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingTrucking(
+                  'emtyPickup_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translatePricingTrucking(
+                'emtyPickup_form.placeholder'
+              )}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -352,12 +402,12 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('validity')}
+            label={translatePricingTrucking('validity')}
             name="validityDate"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('validity_form.placeholder'),
+                message: translatePricingTrucking('validity_form.placeholder'),
               },
             ]}
           >
@@ -370,12 +420,14 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('effect_date')}
-            name="dateEffect"
+            label={translatePricingTrucking('effect_date')}
+            name="effectDated"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('effect_date_form.placeholder'),
+                message: translatePricingTrucking(
+                  'effect_date_form.placeholder'
+                ),
               },
             ]}
           >
@@ -388,18 +440,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('freq')}
+            label={translatePricingTrucking('freq')}
             name="freqDate"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('freq_form.placeholder'),
+                message: translatePricingTrucking('freq_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingSea('freq_form.placeholder')}
+              placeholder={translatePricingTrucking('freq_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
@@ -409,79 +461,20 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('STO')}
-            name="stoSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('STO_form.placeholder'),
-              },
-            ]}
-          >
-            <InputNumber
-              disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translatePricingSea('STO_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingSea('DEM')}
-            name="demSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('DEM_form.placeholder'),
-              },
-            ]}
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translatePricingSea('DEM_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingSea('DET')}
-            name="detSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('DET_form.placeholder'),
-              },
-            ]}
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translatePricingSea('DET_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingSea('commodity')}
+            label={translatePricingTrucking('commodity')}
             name="commodityID"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('commodity_form.placeholder'),
+                message: translatePricingTrucking('commodity_form.placeholder'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('commodity_form.placeholder')}
+              placeholder={translatePricingTrucking(
+                'commodity_form.placeholder'
+              )}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -505,18 +498,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('LCL')}
-            name="lclSeaPricing"
+            label={translatePricingTrucking('LCL')}
+            name="lclTruckingPricing"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('LCL_form.placeholder'),
+                message: translatePricingTrucking('LCL_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCL}
-              placeholder={translatePricingSea('LCL_form.placeholder')}
+              placeholder={translatePricingTrucking('LCL_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
@@ -526,18 +519,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('LCLMin')}
-            name="lclMinSeaPricing"
+            label={translatePricingTrucking('LCLMin')}
+            name="lclMinTruckingPricing"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('LCLMin_form.placeholder'),
+                message: translatePricingTrucking('LCLMin_form.placeholder'),
               },
             ]}
           >
             <InputNumber
               addonAfter={suffixSelectorCurrencyLCLMin}
-              placeholder={translatePricingSea('LCLMin_form.placeholder')}
+              placeholder={translatePricingTrucking('LCLMin_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
@@ -547,29 +540,32 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item label={translatePricingSea('vendor')} name="vendor">
+          <Form.Item label={translatePricingTrucking('vendor')} name="vendor">
             <Input
-              placeholder={translatePricingSea('vendor_form.placeholder')}
+              placeholder={translatePricingTrucking('vendor_form.placeholder')}
               disabled
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('Fee_Group_form.title')}
-            name="seaPricingFeeGroupDTOs"
+            label={translatePricingTrucking('Fee_Group_form.title')}
+            name="truckingPricingFeeGroupDTOs"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('Fee_Group_form.error_required'),
+                message: translatePricingTrucking(
+                  'Fee_Group_form.error_required'
+                ),
               },
             ]}
           >
             <Select
               showSearch
               mode="multiple"
-              placeholder={translatePricingSea('Fee_Group_form.placeholder')}
+              placeholder={translatePricingTrucking(
+                'Fee_Group_form.placeholder'
+              )}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -602,10 +598,13 @@ const CardMain = ({
           </Form.Item>
         </Col>
         <Col span={0}>
-          <Form.Item name="statusSeaPricing"></Form.Item>
+          <Form.Item name="statusTruckingPricing"></Form.Item>
         </Col>
         <Col span={0}>
-          <Form.Item name="seaPricingDetailDTOs"></Form.Item>
+          <Form.Item name="truckingPricingDetailByContainerTypeDTOs"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="truckingPricingDetailByLoadCapacityDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>
