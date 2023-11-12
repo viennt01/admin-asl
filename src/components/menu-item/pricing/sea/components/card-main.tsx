@@ -25,11 +25,13 @@ import {
   API_COMMODITY,
   API_FEE_GROUP,
   API_LOCATION,
+  API_PARTNER,
 } from '@/fetcherAxios/endpoint';
 import {
   getAllCommodity,
   getAllFeeGroup,
   getAllLocation,
+  getAllPartner,
   updateStatus,
 } from '../fetcher';
 import DraftTable from '../table/draft-table';
@@ -110,6 +112,21 @@ const CardMain = ({
   const getFeeGroup = useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL],
     queryFn: () => getAllFeeGroup(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  const getPartner = useQuery({
+    queryKey: [API_PARTNER.GET_ALL_PARTNER],
+    queryFn: () => getAllPartner(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -545,12 +562,38 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
-          <Form.Item label={translatePricingSea('vendor')} name="vendor">
-            <Input
+          <Form.Item
+            label={translatePricingSea('vendor_form.title')}
+            name="vendor"
+            rules={[
+              {
+                required: true,
+                message: translatePricingSea('vendor_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
               placeholder={translatePricingSea('vendor_form.placeholder')}
-              disabled
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getPartner.data?.data.map((item) => {
+                  return {
+                    value: item.partnerID,
+                    label: item.name,
+                  };
+                }) || []
+              }
             />
           </Form.Item>
         </Col>

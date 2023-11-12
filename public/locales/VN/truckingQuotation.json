@@ -138,6 +138,12 @@
         "error_required": "Vui lòng nhập freq"
     },
 
+    "vendor_form": {
+        "title": "Vendor",
+        "placeholder": "Nhập vendor",
+        "error_required": "Vui lòng nhập vendor"
+    },
+
     "cut_off_form": {
         "title": "Cut Off",
         "placeholder": "Nhập Cut Off",

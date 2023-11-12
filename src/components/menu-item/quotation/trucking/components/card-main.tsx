@@ -585,7 +585,43 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
-        <Col span={24}>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translateQuotationTruck('vendor_form.title')}
+            name="vendor"
+            rules={[
+              {
+                required: true,
+                message: translateQuotationTruck('vendor_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translateQuotationTruck('vendor_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getPartner.data?.data.map((item) => {
+                  return {
+                    value: item.partnerID,
+                    label: item.name,
+                  };
+                }) || []
+              }
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
           <Form.Item
             name="checkbox-group"
             label="Object"

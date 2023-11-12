@@ -15,6 +15,7 @@ import {
 import {
   API_CONTAINER_TYPE,
   API_CURRENCY,
+  API_LOAD_CAPACITY,
   API_SEA_QUOTATION,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
@@ -34,6 +35,7 @@ import ContainerDetailDTO from './container-detail-dto';
 import ListFee from './list-fee';
 import TableSaleLead from './table-sale-lead';
 import LoadCapacityDetailDTO from './load-capacity-detail-dto';
+import { getAllLoadCapacity } from '@/components/menu-item/pricing/trucking/fetcher';
 
 interface FormProps {
   create?: boolean;
@@ -82,6 +84,9 @@ const TruckQuotation = ({
     { value: string; label: string }[]
   >([]);
   const [optionTypeContainer, setOptionTypeContainer] = useState<
+    { value: string; label: string }[]
+  >([]);
+  const [optionLoadCapacity, setOptionLoadCapacity] = useState<
     { value: string; label: string }[]
   >([]);
   const [feeDTOs, setFeeDTOs] = useState<ITruckQuotationFeeFormValue[]>([]);
@@ -141,6 +146,31 @@ const TruckQuotation = ({
             return {
               value: currency.containerTypeID,
               label: currency.code,
+            };
+          })
+        );
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  // get load capacity
+  useQuery({
+    queryKey: [API_LOAD_CAPACITY.GET_ALL],
+    queryFn: () => getAllLoadCapacity(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        setOptionLoadCapacity(
+          data.data.map((loadCapacity) => {
+            return {
+              value: loadCapacity.loadCapacityID,
+              label: loadCapacity.name,
             };
           })
         );
@@ -380,7 +410,7 @@ const TruckQuotation = ({
           <LoadCapacityDetailDTO
             form={form}
             optionCurrency={optionCurrency}
-            optionTypeLoadCapacity={optionTypeContainer}
+            optionTypeLoadCapacity={optionLoadCapacity}
             isCheckPermissionEdit={isCheckPermissionEdit}
           />
         </CollapseCard>

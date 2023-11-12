@@ -158,6 +158,12 @@
         "error_required": "Please enter freq"
     },
 
+    "vendor_form": {
+        "title": "Vendor",
+        "placeholder": "Enter vendor",
+        "error_required": "Please enter vendor"
+    },
+
     "cut_off_form": {
         "title": "Cut Off",
         "placeholder": "Enter Cut Off",

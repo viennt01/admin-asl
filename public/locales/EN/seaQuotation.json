@@ -12,14 +12,6 @@
     "commodity": "Commodity",
     "LCLMin": "LCLMin",
     "LCL": "LCL",
-    "DC20": "DC20",
-    "DC40": "DC40",
-    "HC40": "HC40",
-    "HC45": "HC45",
-    "RF20": "RF20",
-    "RF40": "RF40",
-    "DB20": "DB20",
-    "others": "Others",
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
@@ -106,54 +98,6 @@
         "error_required": "Please enter LCL"
     },
 
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Enter DC20",
-        "error_required": "Please enter DC20"
-    },
-
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Enter DC40",
-        "error_required": "Please enter DC40"
-    },
-
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Enter HC40",
-        "error_required": "Please enter HC40"
-    },
-
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Enter HC45",
-        "error_required": "Please enter HC45"
-    },
-
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Enter RF20",
-        "error_required": "Please enter RF20"
-    },
-
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Enter RF40",
-        "error_required": "Please enter RF40"
-    },
-
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Enter DB20",
-        "error_required": "Please enter DB20"
-    },
-
-    "others_form": {
-        "title": "Others",
-        "placeholder": "Enter others",
-        "error_required": "Please enter others"
-    },
-
     "type_form": {
         "title": "Type",
         "placeholder": "Enter type",
@@ -190,34 +134,11 @@
         "error_required": "Please enter freq"
     },
 
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Enter Cut Off",
-        "error_required": "Please enter Cut Off"
-    },
-
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Enter TT",
-        "error_required": "Please enter TT"
-    },
-
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Enter InlAddon",
-        "error_required": "Please enter InlAddon"
-    },
 
     "empty_return_form": {
         "title": "empty_return",
         "placeholder": "Enter empty_return",
         "error_required": "Please enter empty_return"
-    },
-
-    "amend_form": {
-        "title": "Amend",
-        "placeholder": "Enter Amend",
-        "error_required": "Please enter Amend"
     },
 
     "DEM_form": {
@@ -244,6 +165,11 @@
         "error_required": "Please enter fee group"
     },
     
+    "vendor_form": {
+        "title": "Vendor",
+        "placeholder": "Enter vendor",
+        "error_required": "Please enter vendor"
+    },
 
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",

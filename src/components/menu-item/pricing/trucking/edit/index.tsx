@@ -38,6 +38,7 @@ const EditTruckingPricing = () => {
         emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
+        partnerID: formValues.vendor || '',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),

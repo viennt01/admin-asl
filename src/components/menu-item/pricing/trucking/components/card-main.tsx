@@ -25,11 +25,13 @@ import {
   API_COMMODITY,
   API_FEE_GROUP,
   API_LOCATION,
+  API_PARTNER,
 } from '@/fetcherAxios/endpoint';
 import {
   getAllCommodity,
   getAllFeeGroup,
   getAllLocation,
+  getAllPartner,
   updateStatus,
 } from '../fetcher';
 import DraftTable from '../table/draft-table';
@@ -122,6 +124,21 @@ const CardMain = ({
     },
   });
 
+  const getPartner = useQuery({
+    queryKey: [API_PARTNER.GET_ALL_PARTNER],
+    queryFn: () => getAllPartner(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
   useEffect(() => {
     if (form.getFieldValue('statusTruckingPricing')) {
       form.getFieldValue('statusTruckingPricing') === STATUS_ALL_LABELS.ACTIVE
@@ -139,6 +156,7 @@ const CardMain = ({
         emtyPickupID: propCopyAndCreate.emtyPickupID as string,
         commodityID: propCopyAndCreate.commodityID as string,
         currencyID: propCopyAndCreate.currencyID as string,
+        vendor: propCopyAndCreate.vendor as string,
         public: propCopyAndCreate.public as unknown as boolean,
         note: propCopyAndCreate.note as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
@@ -540,10 +558,37 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item label={translatePricingTrucking('vendor')} name="vendor">
-            <Input
+          <Form.Item
+            label={translatePricingTrucking('vendor_form.title')}
+            name="vendor"
+            rules={[
+              {
+                required: true,
+                message: translatePricingTrucking('vendor_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
               placeholder={translatePricingTrucking('vendor_form.placeholder')}
-              disabled
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getPartner.data?.data.map((item) => {
+                  return {
+                    value: item.partnerID,
+                    label: item.name,
+                  };
+                }) || []
+              }
             />
           </Form.Item>
         </Col>

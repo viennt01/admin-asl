@@ -215,6 +215,7 @@ export type ITruckQuotationCreate = Omit<
   | 'truckingQuotationNo'
   | 'dateEffect'
   | 'validityDate'
+  | 'vendor'
   | 'truckingQuotationDetailByContainerTypeDTOs'
   | 'truckingQuotationDetailByLoadCapacityDTOs'
   | 'truckingQuotaionFeeGroupDTOs'
@@ -223,6 +224,7 @@ export type ITruckQuotationCreate = Omit<
 > & {
   effectDated: number;
   validityDate: number;
+  partnerID: string;
   truckingQuotationDetailRegisterRequests: ISeaQuotationDetailDTOsCreate[];
   truckingLoadCapacityDetailRegisterRequests: ILoadCapacityDetailDTOsCreate[];
   truckingQuotationFeeGroupRegisterRequests: { feeGroupID: string }[];
@@ -236,6 +238,7 @@ export type ITruckQuotationEdit = Omit<
   | 'truckingQuotationNo'
   | 'dateEffect'
   | 'validityDate'
+  | 'vendor'
   | 'truckingQuotationDetailByContainerTypeDTOs'
   | 'truckingQuotationDetailByLoadCapacityDTOs'
   | 'truckingQuotaionFeeGroupDTOs'
@@ -244,6 +247,7 @@ export type ITruckQuotationEdit = Omit<
 > & {
   effectDated: number;
   validityDate: number;
+  partnerID: string;
   seaQuotationDetailUpdateRequests: ISeaQuotationDetailDTOsUpdate[];
   salesLeadsSeaQuotationUpdateRequests: IEditSalesLeadsSeaQuotationDTOs[];
 };

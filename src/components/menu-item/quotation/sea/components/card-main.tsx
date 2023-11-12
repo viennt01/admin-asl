@@ -163,6 +163,7 @@ const CardMain = ({
         dateEffect: dayjs(Number(propCopyAndCreate.dateEffect as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
+        vendor: propCopyAndCreate.vendor as string,
         demSeaQuotation: propCopyAndCreate.demSeaQuotation as string,
         detSeaQuotation: propCopyAndCreate.detSeaQuotation as string,
         stoSeaQuotation: propCopyAndCreate.stoSeaQuotation as string,
@@ -590,7 +591,43 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
-        <Col span={24}>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translateQuotationSea('vendor_form.title')}
+            name="vendor"
+            rules={[
+              {
+                required: true,
+                message: translateQuotationSea('vendor_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translateQuotationSea('vendor_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getPartner.data?.data.map((item) => {
+                  return {
+                    value: item.partnerID,
+                    label: item.name,
+                  };
+                }) || []
+              }
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
           <Form.Item
             name="checkbox-group"
             label="Object"
