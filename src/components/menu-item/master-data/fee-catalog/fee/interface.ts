@@ -2,11 +2,11 @@ import { Key } from 'react';
 import { IPagination } from '../../../../commons/table/table-default';
 
 export enum TYPE_UNIT {
-  'SEA' = 'SEA',
-  'TRUCKING' = 'TRUCKING',
-  'AIR' = 'AIR',
-  'CUSTOM' = 'CUSTOM',
-  'ALL' = '',
+  'SEA' = 'Sea',
+  'TRUCKING' = 'Truck',
+  'AIR' = 'Air',
+  'ALL' = 'All',
+  'TOTAL' = '',
 }
 
 export interface Fee {

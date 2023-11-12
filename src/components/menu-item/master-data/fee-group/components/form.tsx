@@ -102,7 +102,7 @@ const FeeGroupForm = ({
 
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.ALL }),
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.TOTAL }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
