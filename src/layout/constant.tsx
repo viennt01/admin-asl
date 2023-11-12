@@ -470,6 +470,48 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
 
+    '/master-data/declaration-catalog/type-of-declaration': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('declaration_catalog')}` },
+      { title: `${translateCommon('type_declaration')}` },
+    ],
+    '/master-data/declaration-catalog/type-of-declaration/create': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('declaration_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_DECLARATION}>
+            {translateCommon('type_declaration')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/master-data/declaration-catalog/type-of-declaration/edit/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('declaration_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_DECLARATION}>
+            {translateCommon('type_declaration')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/declaration-catalog/type-of-declaration/manager-admin/[id]': [
+      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('declaration_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_DECLARATION}>
+            {translateCommon('type_declaration')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+
     '/master-data/load-capacity-catalog/type-of-load-capacity': [
       { title: `${translateCommon('master_data')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },

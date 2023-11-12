@@ -21,6 +21,7 @@ import {
   FolderOpenOutlined,
   ShoppingOutlined,
   AuditOutlined,
+  FileTextOutlined,
 } from '@ant-design/icons';
 import { Button, MenuProps, Image, Badge } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
@@ -103,6 +104,8 @@ const AppSider = ({ collapsed }: Props) => {
   const refUnit = useRef(null);
   const refUnitCatalog = useRef(null);
   const refTypeUnit = useRef(null);
+  const refDeclarationCatalog = useRef(null);
+  const refTypeDeclaration = useRef(null);
   const refUser = useRef(null);
   const refStaff = useRef(null);
   const refPermission = useRef(null);
@@ -362,6 +365,19 @@ const AppSider = ({ collapsed }: Props) => {
               `${translateCommon('type_unit')}`,
               ROUTERS.TYPE_UNIT,
               <CalculatorOutlined ref={refTypeUnit} />
+            ),
+          ]
+        ),
+
+        getItem(
+          `${translateCommon('declaration_catalog')}`,
+          'declaration_catalog',
+          <FileTextOutlined ref={refDeclarationCatalog} />,
+          [
+            getItem(
+              `${translateCommon('type_declaration')}`,
+              ROUTERS.TYPE_DECLARATION,
+              <FileTextOutlined ref={refTypeDeclaration} />
             ),
           ]
         ),

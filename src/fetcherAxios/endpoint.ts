@@ -49,6 +49,21 @@ export const API_TYPE_UNIT = {
   GET_ALL: '/get-all-type-unit',
 };
 
+export const API_TYPE_DECLARATION = {
+  GET_SEARCH: '/search-type-delaracrion',
+  GET_DETAIL: '/get-type-delaracrion',
+  CREATE: '/add-type-delaracrion',
+  EDIT: '/update-type-delaracrion',
+  DELETE: '/delete-type-delaracrion',
+  UPDATE_STATUS: '/update-status-type-delaracrion',
+  GET_DRAFT: '/get-type-delaracrion-with-status-and-id-User',
+  GET_REQUEST: '/get-type-delaracrion-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-type-delaracrion-excel',
+  IMPORT: '/import-type-delaracrion-with-excel',
+  EXPORT: '/export-type-delaracrion-with-excel',
+  GET_ALL: '/get-all-type-delaracrion',
+};
+
 export const API_SEA_QUOTATION = {
   GET_SEARCH: '/search-sea-quotation',
   GET_DETAIL: '/get-sea-quotation-by-id',

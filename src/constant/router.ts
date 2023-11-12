@@ -175,6 +175,14 @@ export const ROUTERS = {
   UNIT_MANAGER: (unitId: string) =>
     `/master-data/unit-catalog/unit/manager-admin/${unitId}`,
 
+  TYPE_DECLARATION: '/master-data/declaration-catalog/type-of-declaration',
+  TYPE_DECLARATION_CREATE:
+    '/master-data/declaration-catalog/type-of-declaration/create',
+  TYPE_DECLARATION_EDIT: (typeOfDeclarationId: string, checkRow = false) =>
+    `/master-data/declaration-catalog/type-of-declaration/edit/${typeOfDeclarationId}?checkRow=${checkRow}`,
+  TYPE_DECLARATION_MANAGER: (typeOfDeclarationId: string) =>
+    `/master-data/declaration-catalog/type-of-declaration/manager-admin/${typeOfDeclarationId}`,
+
   TYPE_UNIT: '/master-data/unit-catalog/type-unit',
   TYPE_UNIT_CREATE: '/master-data/unit-catalog/type-unit/create',
   TYPE_UNIT_EDIT: (typeUnitId: string, checkRow = false) =>
