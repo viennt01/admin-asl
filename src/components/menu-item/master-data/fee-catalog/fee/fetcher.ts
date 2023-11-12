@@ -21,6 +21,7 @@ import {
   TypeFeeData,
   TypeCurrencyData,
   TypeUnitData,
+  IRequireTypeUnit,
 } from './interface';
 import {
   API_COLUMN,
@@ -121,6 +122,8 @@ export const getListTypeCurrency = () => {
   return get<ResponseWithPayload<TypeCurrencyData[]>>({})(API_CURRENCY.GET_ALL);
 };
 //Get type unit
-export const getListTypeUnit = () => {
-  return get<ResponseWithPayload<TypeUnitData[]>>({})(API_UNIT.GET_ALL);
+export const getListTypeUnit = (data: IRequireTypeUnit) => {
+  return post<IRequireTypeUnit, ResponseWithPayload<TypeUnitData[]>>({ data })(
+    API_UNIT.GET_ALL
+  );
 };

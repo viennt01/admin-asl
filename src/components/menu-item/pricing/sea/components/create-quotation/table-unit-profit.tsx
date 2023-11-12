@@ -8,6 +8,7 @@ import { API_MESSAGE } from '@/constant/message';
 import { errorToast } from '@/hook/toast';
 import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
 export interface ImportFormValues {
   file: FileList;
 }
@@ -140,7 +141,7 @@ const UnitProfit: React.FC<ImportModalProps> = ({
   // get container type
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit(),
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

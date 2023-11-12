@@ -33,6 +33,7 @@ import {
   QuerySelectParamType,
   SelectSearch,
   FeeTable,
+  TYPE_UNIT,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -99,7 +100,12 @@ export default function MasterDataTable() {
   // Handle data
   const typeFee = useQuery([API_TYPE_FEE.GET_ALL], getListTypeFee);
   const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
-  const typeUnit = useQuery([API_UNIT.GET_ALL], getListTypeUnit);
+  const [dataUnit, setDataUnit] = useState<
+    {
+      text: string;
+      value: string;
+    }[]
+  >([]);
 
   useQuery({
     queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
@@ -110,6 +116,27 @@ export default function MasterDataTable() {
           ? setColumnsStateMap(initalValueDisplayColumnMaster)
           : setColumnsStateMap(data.data.columnFixed)
         : setColumnsStateMap(initalValueDisplayColumnMaster);
+    },
+  });
+
+  useQuery({
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.ALL }),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        const newData = data.data.map((unit) => ({
+          text: unit.internationalCode,
+          value: unit.unitID,
+        }));
+        setDataUnit(newData);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
     },
   });
 
@@ -431,11 +458,7 @@ export default function MasterDataTable() {
       key: 'unitID',
       align: 'left',
       filteredValue: [querySelectParams.unitID] || null,
-      filters:
-        typeUnit.data?.data.map((item) => ({
-          text: item.internationalCode,
-          value: item.unitID,
-        })) || [],
+      filters: dataUnit || [],
       filterSearch: true,
       filterIcon: () => {
         return (

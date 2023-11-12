@@ -46,6 +46,7 @@ import {
   getListTypeCurrency,
   getListTypeUnit,
 } from '../../fee-catalog/fee/fetcher';
+import { TYPE_UNIT } from '../../fee-catalog/fee/interface';
 
 const initialValue = {
   description: '',
@@ -91,9 +92,34 @@ const FeeGroupForm = ({
   const [optionFee, setOptionFee] = useState<FeeDataOption[]>([]);
   const [dataSource, setDataSource] = useState<FeeTable[]>([]);
   const [listFeeData, setListFeeData] = useState<Fee[]>([]);
-
-  const typeUnit = useQuery([API_UNIT.GET_ALL], getListTypeUnit);
+  const [dataUnit, setDataUnit] = useState<
+    {
+      label: string;
+      value: string;
+    }[]
+  >([]);
   const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
+
+  useQuery({
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.ALL }),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        const newData = data.data.map((unit) => ({
+          label: unit.internationalCode,
+          value: unit.unitID,
+        }));
+        setDataUnit(newData);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
 
   useEffect(() => {
     if (!id) return;
@@ -480,12 +506,7 @@ const FeeGroupForm = ({
         >
           <FeeList
             optionFee={optionFee}
-            optionUnit={
-              typeUnit.data?.data.map((type) => ({
-                label: type.internationalCode,
-                value: type.unitID,
-              })) || []
-            }
+            optionUnit={dataUnit || []}
             optionCurrency={
               typeCurrency.data?.data.map((type) => ({
                 label: type.abbreviations,

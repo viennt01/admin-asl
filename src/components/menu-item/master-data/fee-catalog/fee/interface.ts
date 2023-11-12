@@ -1,6 +1,14 @@
 import { Key } from 'react';
 import { IPagination } from '../../../../commons/table/table-default';
 
+export enum TYPE_UNIT {
+  'SEA' = 'SEA',
+  'TRUCKING' = 'TRUCKING',
+  'AIR' = 'AIR',
+  'CUSTOM' = 'CUSTOM',
+  'ALL' = '',
+}
+
 export interface Fee {
   feeID: string;
   feeNo: string;
@@ -157,4 +165,8 @@ export interface TypeCurrencyData {
 export interface TypeUnitData {
   unitID: string;
   internationalCode: string;
+}
+
+export interface IRequireTypeUnit {
+  typeUnit: TYPE_UNIT;
 }

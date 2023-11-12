@@ -4,7 +4,13 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form, Input, Typography, Card, Row, Col, Switch, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { FeeDetailType, FormValues, UpdateStatusFee } from '../interface';
+import {
+  FeeDetailType,
+  FormValues,
+  TYPE_UNIT,
+  TypeUnitData,
+  UpdateStatusFee,
+} from '../interface';
 import {
   API_CURRENCY,
   API_FEE,
@@ -59,6 +65,8 @@ const FeeForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const [dataUnit, setDataUnit] = useState<TypeUnitData[]>([]);
+
   const propCopyAndCreate = router.query;
 
   useEffect(() => {
@@ -88,7 +96,27 @@ const FeeForm = ({
 
   const typeFee = useQuery([API_TYPE_FEE.GET_ALL], getListTypeFee);
   const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
-  const typeUnit = useQuery([API_UNIT.GET_ALL], getListTypeUnit);
+
+  useQuery({
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.ALL }),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        const newData = data.data.map((unit) => ({
+          unitName: unit.internationalCode,
+          profitRate: '',
+        }));
+        setDataUnit((prevData: any) => [...newData, ...prevData]);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
 
   const detailQuery = useQuery({
     queryKey: [API_FEE.GET_DETAIL, idQuery],
@@ -407,12 +435,7 @@ const FeeForm = ({
                 <Select
                   placeholder={translateFee('unit_form.placeholder')}
                   size="large"
-                  options={
-                    typeUnit.data?.data.map((type) => ({
-                      label: type.internationalCode,
-                      value: type.unitID,
-                    })) || []
-                  }
+                  options={dataUnit || []}
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
