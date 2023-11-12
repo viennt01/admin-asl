@@ -67,6 +67,8 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const idPartners = Form.useWatch('salesLeadsQuotationRegisters', form);
 
   const [dataSource, setDataSource] = useState<DataType[]>([
+    { key: 'profitRateOfLCL', containerName: 'LCL', profitRate: '0' },
+    { key: 'profitRateOfLCLMin', containerName: 'LCL Min', profitRate: '0' },
     { key: 'Other', containerName: 'Other', profitRate: '0' },
   ]);
   const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
@@ -112,8 +114,12 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       (item) =>
         item.profitRate !== '' &&
         item.profitRate !== '0' &&
-        item.key !== 'Other'
+        item.key !== 'Other' &&
+        item.key !== 'profitRateOfLCL' &&
+        item.key !== 'profitRateOfLCLMin'
     );
+    console.log(profitRateOfContainerTypeFilter);
+
     const profitRateOfContainerType = profitRateOfContainerTypeFilter.reduce(
       (result: any, item) => {
         result[item.key] = item.profitRate;
@@ -154,6 +160,12 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         seaQuotationGroupPartnerRegisterRequests,
       profitRateOfPricing:
         dataSource.find((item) => item.key === 'Other')?.profitRate || '0',
+      profitRateOfLCL:
+        dataSource.find((item) => item.key === 'profitRateOfLCL')?.profitRate ||
+        '0',
+      profitRateOfLCLMin:
+        dataSource.find((item) => item.key === 'profitRateOfLCLMin')
+          ?.profitRate || '0',
       profitRateOfFee:
         dataSourceProfit.find((item) => item.key === 'Other')?.profitRate ||
         '0',

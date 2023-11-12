@@ -146,7 +146,7 @@ const ContainerType: React.FC<ImportModalProps> = ({
           containerName: currency.code,
           profitRate: '',
         }));
-        setDataSource((prevData: any) => [...newData, ...prevData]);
+        setDataSource((prevData: any) => [...prevData, ...newData]);
       }
     },
     onError: () => {

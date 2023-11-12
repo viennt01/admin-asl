@@ -152,7 +152,7 @@ const UnitProfit: React.FC<ImportModalProps> = ({
           unitName: unit.internationalCode,
           profitRate: '',
         }));
-        setDataSourceProfit((prevData: any) => [...newData, ...prevData]);
+        setDataSourceProfit((prevData: any) => [...prevData, ...newData]);
       }
     },
     onError: () => {

@@ -257,6 +257,8 @@ export interface RequireCreateQuotationWithPricing {
   profitRateOfContainerType: { [key: string]: string };
   profitRateOfUnitforFee: { [key: string]: string };
   profitRateOfFee: string;
+  profitRateOfLCLMin: string;
+  profitRateOfLCL: string;
   salesLeadsQuotationRegisters: { partnerID: string }[];
   seaQuotationGroupPartnerRegisterRequests: {
     groupPartnerID: string;
