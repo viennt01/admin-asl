@@ -287,13 +287,17 @@ export interface RequireLoadCapacity {
 //----------------------------------------------------------------
 // create quotation with pricing
 export interface RequireCreateQuotationWithPricing {
-  seaPricingID: React.Key[];
+  truckingPricingID: React.Key[];
   effectDated: number;
   validityDate: number;
   profitRateOfPricing: string;
   profitRateOfContainerType: { [key: string]: string };
+  profitRateOfLoadCapacity: { [key: string]: string };
   profitRateOfUnitforFee: { [key: string]: string };
   profitRateOfFee: string;
+  profitRateOfLCLMin: string;
+  profitRateOfLCL: string;
+  profitRateOfAllLoadCapacity: string;
   salesLeadsQuotationRegisters: { partnerID: string }[];
   seaQuotationGroupPartnerRegisterRequests: {
     groupPartnerID: string;

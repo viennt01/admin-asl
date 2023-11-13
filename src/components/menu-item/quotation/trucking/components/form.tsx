@@ -36,6 +36,7 @@ import ListFee from './list-fee';
 import TableSaleLead from './table-sale-lead';
 import LoadCapacityDetailDTO from './load-capacity-detail-dto';
 import { getAllLoadCapacity } from '@/components/menu-item/pricing/trucking/fetcher';
+import { TYPE_LOAD_CAPACITY } from '@/components/menu-item/pricing/air/interface';
 
 interface FormProps {
   create?: boolean;
@@ -160,7 +161,7 @@ const TruckQuotation = ({
   // get load capacity
   useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () => getAllLoadCapacity(),
+    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TOTAL }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

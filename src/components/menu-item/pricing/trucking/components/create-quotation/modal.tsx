@@ -25,9 +25,10 @@ import {
 } from '../../interface';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import ContainerType from './table-container';
-import UnitProfit from './table-unit-profit';
+import UnitProfit from './table-unit';
 import TableSaleLead from './table-sale-lead';
 import style from './index.module.scss';
+import LoadCapacityProfit from './table-load-capacity';
 
 export interface ImportFormValues {
   file: FileList;
@@ -53,6 +54,12 @@ export interface DataTypeProfit {
   profitRate: string;
 }
 
+export interface DataTypeLoadCapacity {
+  key: React.Key;
+  loadCapacityName: string;
+  profitRate: string;
+}
+
 const CreateQuotationModal: React.FC<ImportModalProps> = ({
   open,
   handleOk,
@@ -67,11 +74,16 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const idPartners = Form.useWatch('salesLeadsQuotationRegisters', form);
 
   const [dataSource, setDataSource] = useState<DataType[]>([
+    { key: 'profitRateOfLCL', containerName: 'LCL', profitRate: '0' },
+    { key: 'profitRateOfLCLMin', containerName: 'LCL Min', profitRate: '0' },
     { key: 'Other', containerName: 'Other', profitRate: '0' },
   ]);
   const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
     { key: 'Other', unitName: 'Other', profitRate: '0' },
   ]);
+  const [dataSourceLoadCapacity, setDataSourceLoadCapacity] = useState<
+    DataTypeLoadCapacity[]
+  >([{ key: 'Other', loadCapacityName: 'Other', profitRate: '0' }]);
 
   const getPartner = useQuery({
     queryKey: [API_PARTNER.GET_ALL_PARTNER],
@@ -112,9 +124,25 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       (item) =>
         item.profitRate !== '' &&
         item.profitRate !== '0' &&
-        item.key !== 'Other'
+        item.key !== 'Other' &&
+        item.key !== 'profitRateOfLCL' &&
+        item.key !== 'profitRateOfLCLMin'
     );
     const profitRateOfContainerType = profitRateOfContainerTypeFilter.reduce(
+      (result: any, item) => {
+        result[item.key] = item.profitRate;
+        return result;
+      },
+      {}
+    );
+
+    const profitRateOfLoadCapacityFilter = dataSourceLoadCapacity.filter(
+      (item) =>
+        item.profitRate !== '' &&
+        item.profitRate !== '0' &&
+        item.key !== 'Other'
+    );
+    const profitRateOfLoadCapacity = profitRateOfLoadCapacityFilter.reduce(
       (result: any, item) => {
         result[item.key] = item.profitRate;
         return result;
@@ -146,7 +174,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       })) || [];
 
     const _requestData = {
-      seaPricingID: itemData,
+      truckingPricingID: itemData,
       effectDated: value.effectDated.valueOf(),
       validityDate: value.validityDate.valueOf(),
       salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
@@ -154,10 +182,20 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         seaQuotationGroupPartnerRegisterRequests,
       profitRateOfPricing:
         dataSource.find((item) => item.key === 'Other')?.profitRate || '0',
+      profitRateOfLCL:
+        dataSource.find((item) => item.key === 'profitRateOfLCL')?.profitRate ||
+        '0',
+      profitRateOfLCLMin:
+        dataSource.find((item) => item.key === 'profitRateOfLCLMin')
+          ?.profitRate || '0',
       profitRateOfFee:
         dataSourceProfit.find((item) => item.key === 'Other')?.profitRate ||
         '0',
+      profitRateOfAllLoadCapacity:
+        dataSourceLoadCapacity.find((item) => item.key === 'Other')
+          ?.profitRate || '0',
       profitRateOfContainerType: profitRateOfContainerType,
+      profitRateOfLoadCapacity: profitRateOfLoadCapacity,
       profitRateOfUnitforFee: profitRateOfUnitforFee,
       status: STATUS_ALL_LABELS.REQUEST,
     };
@@ -200,7 +238,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         autoComplete="off"
       >
         <Row gutter={24} style={{ margin: 0 }}>
-          <Col span={8}>
+          <Col span={6}>
             <Row>
               <Col span={24}>
                 <Form.Item
@@ -349,16 +387,22 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
               </Col>
             </Row>
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <ContainerType
               dataSource={dataSource}
               setDataSource={setDataSource}
             />
           </Col>
-          <Col span={8}>
+          <Col span={6}>
             <UnitProfit
               dataSourceProfit={dataSourceProfit}
               setDataSourceProfit={setDataSourceProfit}
+            />
+          </Col>
+          <Col span={6}>
+            <LoadCapacityProfit
+              dataSourceProfit={dataSourceLoadCapacity}
+              setDataSourceProfit={setDataSourceLoadCapacity}
             />
           </Col>
         </Row>

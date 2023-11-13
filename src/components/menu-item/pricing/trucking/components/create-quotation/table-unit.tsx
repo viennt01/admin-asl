@@ -1,28 +1,29 @@
 import React, { Ref, useContext, useEffect, useRef, useState } from 'react';
 import { Form, Table, InputNumber, InputRef, FormInstance } from 'antd';
 import { formatNumber } from '@/utils/format';
+import { DataTypeProfit } from './modal';
 import { useQuery } from '@tanstack/react-query';
-import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
-import { getAllContainerType } from '../../fetcher';
-import { API_MESSAGE } from '@/constant/message';
 import { useRouter } from 'next/router';
+import { API_MESSAGE } from '@/constant/message';
 import { errorToast } from '@/hook/toast';
-import { DataType } from './modal';
+import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
+import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
 export interface ImportFormValues {
   file: FileList;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ImportModalProps {
-  dataSource: DataType[];
-  setDataSource: any;
+  dataSourceProfit: DataTypeProfit[];
+  setDataSourceProfit: any;
 }
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
   key: React.Key;
-  containerName: string;
+  type: string;
   profitRate: string;
 }
 
@@ -124,29 +125,34 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
 type EditableTableProps = Parameters<typeof Table>[0];
 
+interface DataType {
+  key: React.Key;
+  type: string;
+  profitRate: string;
+}
+
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
-const ContainerType: React.FC<ImportModalProps> = ({
-  dataSource,
-  setDataSource,
+const UnitProfit: React.FC<ImportModalProps> = ({
+  dataSourceProfit,
+  setDataSourceProfit,
 }) => {
   const router = useRouter();
-
   // get container type
   useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_ALL],
-    queryFn: () => getAllContainerType(),
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.TRUCKING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
         errorToast(API_MESSAGE.ERROR);
       } else {
-        const newData = data.data.map((currency) => ({
-          key: currency.containerTypeID,
-          containerName: currency.code,
+        const newData = data.data.map((unit) => ({
+          key: unit.unitID,
+          unitName: unit.internationalCode,
           profitRate: '',
         }));
-        setDataSource((prevData: any) => [...prevData, ...newData]);
+        setDataSourceProfit((prevData: any) => [...prevData, ...newData]);
       }
     },
     onError: () => {
@@ -160,9 +166,9 @@ const ContainerType: React.FC<ImportModalProps> = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Profit Freight',
-      dataIndex: 'containerName',
-      key: 'containerName',
+      title: 'Profit Other Charges',
+      dataIndex: 'unitName',
+      key: 'unitName',
       fixed: 'left',
     },
     {
@@ -178,14 +184,14 @@ const ContainerType: React.FC<ImportModalProps> = ({
   ];
 
   const handleSave = (row: DataType) => {
-    const newData = [...dataSource];
+    const newData = [...dataSourceProfit];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
     newData.splice(index, 1, {
       ...item,
       ...row,
     });
-    setDataSource(newData);
+    setDataSourceProfit(newData);
   };
 
   const components = {
@@ -216,7 +222,7 @@ const ContainerType: React.FC<ImportModalProps> = ({
       components={components}
       rowClassName={() => 'editable-row'}
       bordered
-      dataSource={dataSource}
+      dataSource={dataSourceProfit}
       columns={columns as ColumnTypes}
       pagination={{
         pageSize: 15,
@@ -225,4 +231,4 @@ const ContainerType: React.FC<ImportModalProps> = ({
   );
 };
 
-export default ContainerType;
+export default UnitProfit;

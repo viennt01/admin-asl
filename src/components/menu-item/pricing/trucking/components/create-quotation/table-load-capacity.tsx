@@ -1,21 +1,21 @@
 import React, { Ref, useContext, useEffect, useRef, useState } from 'react';
 import { Form, Table, InputNumber, InputRef, FormInstance } from 'antd';
 import { formatNumber } from '@/utils/format';
-import { DataTypeProfit } from './modal';
+import { DataTypeLoadCapacity } from './modal';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import { errorToast } from '@/hook/toast';
-import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
-import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
+import { API_LOAD_CAPACITY } from '@/fetcherAxios/endpoint';
+import { getAllTypeLoadCapacity } from '../../../air/fetcher';
+import { TYPE_LOAD_CAPACITY } from '../../../air/interface';
 export interface ImportFormValues {
   file: FileList;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ImportModalProps {
-  dataSourceProfit: DataTypeProfit[];
+  dataSourceProfit: DataTypeLoadCapacity[];
   setDataSourceProfit: any;
 }
 
@@ -133,26 +133,26 @@ interface DataType {
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
-const UnitProfit: React.FC<ImportModalProps> = ({
+const LoadCapacityProfit: React.FC<ImportModalProps> = ({
   dataSourceProfit,
   setDataSourceProfit,
 }) => {
   const router = useRouter();
-  // get container type
+  // get loadCapacity
   useQuery({
-    queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.TRUCKING }),
+    queryKey: [API_LOAD_CAPACITY.GET_ALL],
+    queryFn: () => getAllTypeLoadCapacity({ type: TYPE_LOAD_CAPACITY.TOTAL }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
         errorToast(API_MESSAGE.ERROR);
       } else {
         const newData = data.data.map((unit) => ({
-          key: unit.unitID,
-          unitName: unit.internationalCode,
+          key: unit.loadCapacityID,
+          loadCapacityName: unit.name,
           profitRate: '',
         }));
-        setDataSourceProfit((prevData: any) => [...newData, ...prevData]);
+        setDataSourceProfit((prevData: any) => [...prevData, ...newData]);
       }
     },
     onError: () => {
@@ -166,9 +166,9 @@ const UnitProfit: React.FC<ImportModalProps> = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Profit Other Charges',
-      dataIndex: 'unitName',
-      key: 'unitName',
+      title: 'Profit Load Capacity',
+      dataIndex: 'loadCapacityName',
+      key: 'loadCapacityName',
       fixed: 'left',
     },
     {
@@ -231,4 +231,4 @@ const UnitProfit: React.FC<ImportModalProps> = ({
   );
 };
 
-export default UnitProfit;
+export default LoadCapacityProfit;

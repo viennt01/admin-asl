@@ -1,6 +1,12 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_LOAD_CAPACITY {
+  'TRUCKING' = 'Truck',
+  'AIR' = 'Air',
+  'TOTAL' = '',
+}
+
 export interface AirPricing {
   airPricingID: string;
   aodid: string;
@@ -212,4 +218,7 @@ export interface RequireCurrency {
 export interface RequireTypeLoadCapacity {
   loadCapacityID: string;
   name: string;
+}
+export interface IRequireTypeLoadCapacity {
+  type: TYPE_LOAD_CAPACITY;
 }

@@ -20,6 +20,7 @@ import {
   RequireCommodity,
   RequireCurrency,
   RequireTypeLoadCapacity,
+  IRequireTypeLoadCapacity,
 } from './interface';
 import {
   API_COMMODITY,
@@ -108,8 +109,9 @@ export const getAllCurrency = () => {
   return get<ResponseWithPayload<RequireCurrency[]>>({})(API_CURRENCY.GET_ALL);
 };
 
-export const getAllTypeLoadCapacity = () => {
-  return get<ResponseWithPayload<RequireTypeLoadCapacity[]>>({})(
-    API_LOAD_CAPACITY.GET_ALL
-  );
+export const getAllTypeLoadCapacity = (data: IRequireTypeLoadCapacity) => {
+  return post<
+    IRequireTypeLoadCapacity,
+    ResponseWithPayload<RequireTypeLoadCapacity[]>
+  >({ data })(API_LOAD_CAPACITY.GET_ALL);
 };

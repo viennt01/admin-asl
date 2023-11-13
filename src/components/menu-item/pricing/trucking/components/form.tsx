@@ -33,6 +33,7 @@ import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-group
 import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
 import ListFee from './list-fee';
 import TruckingPricingLoadCapacity from './load-capacity-pricing-detail-dto';
+import { TYPE_LOAD_CAPACITY } from '../../air/interface';
 
 interface PortFormProps {
   create?: boolean;
@@ -140,7 +141,7 @@ const TruckingPricingForm = ({
   // get load capacity
   useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () => getAllLoadCapacity(),
+    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TOTAL }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

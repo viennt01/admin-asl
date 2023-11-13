@@ -26,7 +26,6 @@ import {
   RequirePartner,
   RequestPartnerTable,
   TablePartner,
-  RequireLoadCapacity,
 } from './interface';
 import {
   API_COMMODITY,
@@ -36,7 +35,7 @@ import {
   API_LOCATION,
   API_PARTNER,
   API_TRUCKING_PRICING,
-  API_SEA_QUOTATION,
+  API_TRUCKING_QUOTATION,
   API_COLUMN,
   API_LOAD_CAPACITY,
 } from '@/fetcherAxios/endpoint';
@@ -44,6 +43,10 @@ import {
   ColumnTable,
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
+import {
+  IRequireTypeLoadCapacity,
+  RequireTypeLoadCapacity,
+} from '../air/interface';
 
 export const getTruckPricingSearch = (data: IRequestTruckingPricing) => {
   return post<IRequestTruckingPricing, ResponseWithPayload<ITruckingRequire>>({
@@ -133,10 +136,11 @@ export const getAllContainerType = () => {
   );
 };
 
-export const getAllLoadCapacity = () => {
-  return get<ResponseWithPayload<RequireLoadCapacity[]>>({})(
-    API_LOAD_CAPACITY.GET_ALL
-  );
+export const getAllLoadCapacity = (data: IRequireTypeLoadCapacity) => {
+  return post<
+    IRequireTypeLoadCapacity,
+    ResponseWithPayload<RequireTypeLoadCapacity[]>
+  >({ data })(API_LOAD_CAPACITY.GET_ALL);
 };
 
 export const getAllFeeGroup = () => {
@@ -152,7 +156,7 @@ export const createQuotationWithPricing = (
     ResponseWithPayload<RequireCreateQuotationWithPricing>
   >({
     data,
-  })(API_SEA_QUOTATION.CREATE_WITH_PRICING);
+  })(API_TRUCKING_QUOTATION.CREATE_WITH_PRICING);
 };
 export const getAllPartnerGroup = () => {
   return get<ResponseWithPayload<RequirePartnerGroup[]>>({})(

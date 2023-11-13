@@ -3,7 +3,12 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { AirPricingFeeFormValue, FormValues, UpdateStatus } from '../interface';
+import {
+  AirPricingFeeFormValue,
+  FormValues,
+  TYPE_LOAD_CAPACITY,
+  UpdateStatus,
+} from '../interface';
 import {
   API_CURRENCY,
   API_FEE_GROUP,
@@ -107,10 +112,10 @@ const AirPricing = ({
       errorToast(API_MESSAGE.ERROR);
     },
   });
-  // get container type
+  // get load capacity type
   useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () => getAllTypeLoadCapacity(),
+    queryFn: () => getAllTypeLoadCapacity({ type: TYPE_LOAD_CAPACITY.TOTAL }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
