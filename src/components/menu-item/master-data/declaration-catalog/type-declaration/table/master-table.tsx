@@ -17,7 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_TYPE_DECLARATION } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -25,7 +25,7 @@ import {
   ITypeQueryInputParamType,
   ITypeQuerySelectParamType,
   ISelectSearch,
-  ITypeUnitTable,
+  ITypeDeclarationTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -35,11 +35,11 @@ import {
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
 import {
-  deleteUnit,
+  deleteDeclaration,
   downloadExampleFile,
   exportTableFile,
   getColumnTable,
-  getUnitSearch,
+  getDeclarationSearch,
   importDataTable,
   updateColumnTable,
 } from '../fetcher';
@@ -65,7 +65,7 @@ type DataIndex = keyof ITypeQueryInputParamType;
 export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { translate: translateTypeUnit } = useI18n('typeOfDeclaration');
+  const { translate: translateTypeDeclaration } = useI18n('typeOfDeclaration');
   const { translate: translateCommon } = useI18n('common');
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [pagination, setPagination] =
@@ -74,7 +74,7 @@ export default function MasterDataTable() {
     useState<ITypeQueryInputParamType>(initalValueQueryInputParamsMaster);
   const [querySelectParams, setQuerySelectParams] =
     useState<ITypeQuerySelectParamType>(initalValueQuerySelectParamsMaster);
-  const [dataTable, setDataTable] = useState<ITypeUnitTable[]>([]);
+  const [dataTable, setDataTable] = useState<ITypeDeclarationTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<ISelectSearch>(
     initalSelectSearchMaster
   );
@@ -101,10 +101,10 @@ export default function MasterDataTable() {
   });
 
   const dataSelectSearch =
-    querySelectParams.statusTypeUnit.length === 0
+    querySelectParams.statusTypeDelaracrion.length === 0
       ? {
           ...querySelectParams,
-          statusTypeUnit: [
+          statusTypeDelaracrion: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -112,9 +112,13 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [API_TYPE_UNIT.GET_SEARCH, queryInputParams, querySelectParams],
+    queryKey: [
+      API_TYPE_DECLARATION.GET_SEARCH,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
-      getUnitSearch({
+      getDeclarationSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -127,10 +131,13 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.typeUnitID,
-            typeUnitName: data.typeUnitName,
+            key: data.typeDelaracrionID,
+            transactionTypeID: data.transactionTypeID,
+            transactionTypeName: data.transactionTypeName,
+            typeDelaracrionCode: data.typeDelaracrionCode,
+            typeDelaracrionName: data.typeDelaracrionName,
             description: data.description,
-            statusTypeUnit: data.statusTypeUnit,
+            statusTypeDelaracrion: data.statusTypeDelaracrion,
             public: data.public,
             insertedByUser: data.insertedByUser,
             dateInserted: data.dateInserted,
@@ -153,12 +160,12 @@ export default function MasterDataTable() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: () => deleteUnit(selectedRowKeys),
+    mutationFn: () => deleteDeclaration(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_TYPE_UNIT.GET_SEARCH],
+          queryKey: [API_TYPE_DECLARATION.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -173,7 +180,7 @@ export default function MasterDataTable() {
   const updateColumnMutation = useMutation({
     mutationFn: () =>
       updateColumnTable({
-        tableName: TABLE_NAME.TYPE_OF_UNIT,
+        tableName: TABLE_NAME.TYPE_OF_DECLARATION,
         density: DENSITY.Middle,
         columnFixed: columnsStateMap,
       }),
@@ -245,9 +252,10 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusTypeUnit:
-        filters.statusTypeUnit?.length !== 0 && filters.statusTypeUnit
-          ? (filters.statusTypeUnit as string[])
+      statusTypeDelaracrion:
+        filters.statusTypeDelaracrion?.length !== 0 &&
+        filters.statusTypeDelaracrion
+          ? (filters.statusTypeDelaracrion as string[])
           : [],
       typeUnitID:
         filters.typeUnitID?.length !== 0 && filters.typeUnitID
@@ -271,9 +279,11 @@ export default function MasterDataTable() {
   };
 
   // Handle data show table
-  const columns: ProColumns<ITypeUnitTable>[] = [
+  const columns: ProColumns<ITypeDeclarationTable>[] = [
     {
-      title: <div className={style.title}>{translateTypeUnit('code')}</div>,
+      title: (
+        <div className={style.title}>{translateTypeDeclaration('no')}</div>
+      ),
       dataIndex: 'index',
       width: 50,
       align: 'right',
@@ -283,9 +293,11 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: <div className={style.title}>{translateTypeUnit('name')}</div>,
-      dataIndex: 'typeUnitName',
-      key: 'typeUnitName',
+      title: (
+        <div className={style.title}>{translateTypeDeclaration('name')}</div>
+      ),
+      dataIndex: 'typeDelaracrionName',
+      key: 'typeDelaracrionName',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<ITypeQueryInputParamType>({
@@ -295,13 +307,45 @@ export default function MasterDataTable() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'typeUnitName',
+          dataIndex: 'typeDelaracrionName',
         },
       }),
     },
     {
       title: (
-        <div className={style.title}>{translateTypeUnit('description')}</div>
+        <div className={style.title}>{translateTypeDeclaration('code')}</div>
+      ),
+      dataIndex: 'typeDelaracrionCode',
+      key: 'typeDelaracrionCode',
+      width: 150,
+      align: 'center',
+      ...ColumnSearchTableProps<ITypeQueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedActiveKey,
+          setSelectedKeyShow: setSelectedActiveKey,
+          dataIndex: 'typeDelaracrionCode',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translateTypeDeclaration('transaction_name')}
+        </div>
+      ),
+      dataIndex: 'transactionTypeName',
+      key: 'transactionTypeName',
+      width: 150,
+      align: 'center',
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translateTypeDeclaration('description')}
+        </div>
       ),
       dataIndex: 'description',
       key: 'description',
@@ -319,23 +363,25 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: <div className={style.title}>{translateTypeUnit('status')}</div>,
+      title: (
+        <div className={style.title}>{translateTypeDeclaration('status')}</div>
+      ),
       width: 120,
-      dataIndex: 'statusTypeUnit',
-      key: 'statusTypeUnit',
+      dataIndex: 'statusTypeDelaracrion',
+      key: 'statusTypeDelaracrion',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusTypeUnit || null,
+      filteredValue: querySelectParams.statusTypeDelaracrion || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusTypeUnit.length !== 0
+                querySelectParams.statusTypeDelaracrion.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -427,7 +473,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPE_UNIT_EDIT(id));
+    router.push(ROUTERS.TYPE_DECLARATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -470,16 +516,16 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: ITypeUnitTable
+    record: ITypeDeclarationTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.TYPE_UNIT_EDIT(record.key, true));
+      router.push(ROUTERS.TYPE_DECLARATION_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.TYPE_UNIT_CREATE);
+    router.push(ROUTERS.TYPE_DECLARATION_CREATE);
   };
 
   // export table data
@@ -487,7 +533,7 @@ export default function MasterDataTable() {
     mutationFn: () =>
       exportTableFile({
         ids: selectedRowKeys,
-        status: querySelectParams.statusTypeUnit,
+        status: querySelectParams.statusTypeDelaracrion,
       }),
     onSuccess: (data) => {
       const url = window.URL.createObjectURL(new Blob([data]));
@@ -512,7 +558,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_TYPE_UNIT.GET_REQUEST],
+          queryKey: [API_TYPE_DECLARATION.GET_REQUEST],
         });
         setLoadingImport(false);
         setOpenImportModal(false);
@@ -570,7 +616,7 @@ export default function MasterDataTable() {
           <Table
             dataTable={dataTable}
             columns={columns}
-            headerTitle={translateTypeUnit('title')}
+            headerTitle={translateTypeDeclaration('title')}
             selectedRowKeys={selectedRowKeys}
             handleSelectionChange={handleSelectionChange}
             handlePaginationChange={handlePaginationChange}

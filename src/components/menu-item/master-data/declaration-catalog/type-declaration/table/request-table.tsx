@@ -5,13 +5,14 @@ import {
 } from '@/components/commons/table/table-default';
 import Table from '@/components/commons/table/table';
 import {
-  ITypeUnitTable,
+  ITypeDeclarationTable,
   ITypeQueryInputParamType,
   ISelectSearch,
-  IUpdateStatusUnit,
+  IUpdateStatusDeclaration,
+  IQueryInputRequest,
 } from '../interface';
 import { ROUTERS } from '@/constant/router';
-import { API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
+import { API_TYPE_DECLARATION } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -41,9 +42,10 @@ const RequestTable = () => {
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] =
-    useState<ITypeQueryInputParamType>(initalValueQueryInputParamsRequest);
-  const [dataTable, setDataTable] = useState<ITypeUnitTable[]>([]);
+  const [queryInputParams, setQueryInputParams] = useState<IQueryInputRequest>(
+    initalValueQueryInputParamsRequest
+  );
+  const [dataTable, setDataTable] = useState<ITypeDeclarationTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] = useState<ISelectSearch>(
     initalSelectSearchRequest
   );
@@ -51,7 +53,7 @@ const RequestTable = () => {
 
   // Handle data
   useQuery({
-    queryKey: [API_TYPE_UNIT.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_TYPE_DECLARATION.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
         ...queryInputParams,
@@ -65,10 +67,13 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.typeUnitID,
-            typeUnitName: data.typeUnitName,
+            key: data.typeDelaracrionID,
+            transactionTypeID: data.transactionTypeID,
+            transactionTypeName: data.transactionTypeName,
+            typeDelaracrionCode: data.typeDelaracrionCode,
+            typeDelaracrionName: data.typeDelaracrionName,
             description: data.description,
-            statusTypeUnit: data.statusTypeUnit,
+            statusTypeDelaracrion: data.statusTypeDelaracrion,
             public: data.public,
             insertedByUser: data.insertedByUser,
             dateInserted: data.dateInserted,
@@ -89,7 +94,7 @@ const RequestTable = () => {
   });
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: IUpdateStatusUnit) => {
+    mutationFn: (body: IUpdateStatusDeclaration) => {
       return updateStatus(body);
     },
   });
@@ -127,7 +132,7 @@ const RequestTable = () => {
   };
 
   // Handle data show table
-  const columns: ProColumns<ITypeUnitTable>[] = [
+  const columns: ProColumns<ITypeDeclarationTable>[] = [
     {
       title: <div className={style.title}>{translateDeclaration('code')}</div>,
       dataIndex: 'index',
@@ -179,8 +184,8 @@ const RequestTable = () => {
     },
     {
       title: <div className={style.title}>{translateDeclaration('name')}</div>,
-      dataIndex: 'typeUnitName',
-      key: 'typeUnitName',
+      dataIndex: 'typeDelaracrionName',
+      key: 'typeDelaracrionName',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<ITypeQueryInputParamType>({
@@ -190,9 +195,37 @@ const RequestTable = () => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'typeUnitName',
+          dataIndex: 'typeDelaracrionName',
         },
       }),
+    },
+    {
+      title: <div className={style.title}>{translateDeclaration('code')}</div>,
+      dataIndex: 'typeDelaracrionCode',
+      key: 'typeDelaracrionCode',
+      width: 150,
+      align: 'center',
+      ...ColumnSearchTableProps<ITypeQueryInputParamType>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'typeDelaracrionCode',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translateDeclaration('transaction_name')}
+        </div>
+      ),
+      dataIndex: 'transactionTypeName',
+      key: 'transactionTypeName',
+      width: 150,
+      align: 'center',
     },
     {
       title: (
@@ -212,16 +245,6 @@ const RequestTable = () => {
           dataIndex: 'description',
         },
       }),
-    },
-    {
-      title: translateDeclaration('type_unit'),
-      width: 150,
-      dataIndex: 'typeFeeID',
-      key: 'typeFeeID',
-      align: 'left',
-      render: (_, value) => {
-        return <div>{value.typeUnitName}</div>;
-      },
     },
     {
       title: (
@@ -244,11 +267,11 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPE_UNIT_MANAGER(id));
+    router.push(ROUTERS.TYPE_DECLARATION_MANAGER(id));
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
-    const _requestData: IUpdateStatusUnit = {
+    const _requestData: IUpdateStatusDeclaration = {
       id: id || selectedRowKeys,
       status,
     };
@@ -259,7 +282,7 @@ const RequestTable = () => {
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [
-                API_TYPE_UNIT.GET_REQUEST,
+                API_TYPE_DECLARATION.GET_REQUEST,
                 pagination,
                 queryInputParams,
               ],
@@ -286,11 +309,11 @@ const RequestTable = () => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: ITypeUnitTable
+    record: ITypeDeclarationTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.TYPE_UNIT_MANAGER(record.key));
+      router.push(ROUTERS.TYPE_DECLARATION_MANAGER(record.key));
     }
   };
 

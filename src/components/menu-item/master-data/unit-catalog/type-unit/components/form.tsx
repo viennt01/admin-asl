@@ -5,7 +5,7 @@ import { Form, Input, Typography, Card, Row, Col, Switch, Tabs } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IFormValues, IUpdateStatusUnit } from '../interface';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import { getUnitDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
@@ -77,7 +77,7 @@ const UnitForm = ({
   };
 
   const detailQuery = useQuery({
-    queryKey: [API_UNIT.GET_DETAIL, idQuery],
+    queryKey: [API_TYPE_UNIT.GET_DETAIL, idQuery],
     queryFn: () => getUnitDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {

@@ -334,3 +334,6 @@ export const API_PARTNER = {
 export const API_PARTNER_ROLE = {
   GET_ALL: '/get-all-partner-role',
 };
+export const API_TRANSACTION_TYPE = {
+  GET_ALL: '/get-all-transaction-type',
+};

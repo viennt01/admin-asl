@@ -117,7 +117,3 @@ export interface IRequestExportData {
   ids: React.Key[];
   status: string[];
 }
-export interface ITypeUnit {
-  typeUnitID: string;
-  typeUnitName: string;
-}

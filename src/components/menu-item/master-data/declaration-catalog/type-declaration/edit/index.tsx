@@ -1,6 +1,6 @@
 import router from 'next/router';
-import { IFormValues, ITypeUnitEdit } from '../interface';
-import { editUnit } from '../fetcher';
+import { IFormValues, ITypeDeclarationEdit } from '../interface';
+import { editDeclaration } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -10,24 +10,27 @@ import { STATUS_ALL_LABELS } from '@/constant/form';
 const EditTypeDeclaration = () => {
   const checkRow = router.query.checkRow as string;
   const updateMutation = useMutation({
-    mutationFn: (body: ITypeUnitEdit) => {
-      return editUnit(body);
+    mutationFn: (body: ITypeDeclarationEdit) => {
+      return editDeclaration(body);
     },
   });
 
   const handleSubmit = (formValues: IFormValues, idQuery?: string) => {
-    console.log(formValues);
-
     if (idQuery) {
-      const _requestData: ITypeUnitEdit = {
-        typeUnitID: idQuery,
-        typeUnitNameEN: formValues.typeUnitNameEN || '',
-        typeUnitNameVN:
-          formValues.typeUnitNameVN || formValues.typeUnitNameEN || '',
+      const _requestData: ITypeDeclarationEdit = {
+        typeDelaracrionID: idQuery,
+        transactionTypeID: formValues.transactionTypeID || '',
+        typeDelaracrionCode: formValues.typeDelaracrionCode || '',
+        typeDelaracrionNameEN: formValues.typeDelaracrionNameEN || '',
+        typeDelaracrionNameVN:
+          formValues.typeDelaracrionNameVN ||
+          formValues.typeDelaracrionNameEN ||
+          '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
-        statusTypeUnit: formValues.statusTypeUnit || STATUS_ALL_LABELS.ACTIVE,
+        statusTypeDelaracrion:
+          formValues.statusTypeDelaracrion || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

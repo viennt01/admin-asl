@@ -42,6 +42,8 @@ export enum TABLE_NAME {
   UNIT = 'Unit',
   TYPE_OF_UNIT = 'Type of Unit',
   TYPE_OF_FEE_GROUP = 'Type of Fee Group',
+  DECLARATION = 'Declaration',
+  TYPE_OF_DECLARATION = 'Type of Declaration',
   USER = 'User',
   LOAD_CAPACITY = 'Load Capacity',
   TYPE_OF_LOAD_CAPACITY = 'Type of Load Capacity',

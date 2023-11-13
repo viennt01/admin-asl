@@ -3,12 +3,12 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
 import {
-  ITypeUnitTable,
+  ITypeDeclarationTable,
   IQueryInputDraft,
   ISelectDratSearch,
 } from '../interface';
-import { API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
-import { deleteUnit, getDartTable } from '../fetcher';
+import { API_TYPE_DECLARATION } from '@/fetcherAxios/endpoint';
+import { deleteDeclaration, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -49,14 +49,14 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const [queryInputParams, setQueryInputParams] = useState<IQueryInputDraft>(
     initalValueQueryInputParamsDraft
   );
-  const [dataTable, setDataTable] = useState<ITypeUnitTable[]>([]);
+  const [dataTable, setDataTable] = useState<ITypeDeclarationTable[]>([]);
   const [selectedKeyShow, setSelectedKeyShow] = useState<ISelectDratSearch>(
     initalSelectSearchDraft
   );
 
   // Handle data
   useQuery({
-    queryKey: [API_TYPE_UNIT.GET_SEARCH, pagination, queryInputParams],
+    queryKey: [API_TYPE_DECLARATION.GET_SEARCH, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -71,10 +71,13 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.typeUnitID,
-            typeUnitName: data.typeUnitName,
+            key: data.typeDelaracrionID,
+            transactionTypeID: data.transactionTypeID,
+            transactionTypeName: data.transactionTypeName,
+            typeDelaracrionCode: data.typeDelaracrionCode,
+            typeDelaracrionName: data.typeDelaracrionName,
             description: data.description,
-            statusTypeUnit: data.statusTypeUnit,
+            statusTypeDelaracrion: data.statusTypeDelaracrion,
             public: data.public,
             insertedByUser: data.insertedByUser,
             dateInserted: data.dateInserted,
@@ -95,12 +98,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   const deleteItemDraftMutation = useMutation({
-    mutationFn: (id: string[]) => deleteUnit(id),
+    mutationFn: (id: string[]) => deleteDeclaration(id),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_TYPE_UNIT.GET_SEARCH],
+          queryKey: [API_TYPE_DECLARATION.GET_SEARCH],
         });
       } else {
         errorToast(data.message);
@@ -144,7 +147,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   };
 
   // Handle data show table
-  const columns: ProColumns<ITypeUnitTable>[] = [
+  const columns: ProColumns<ITypeDeclarationTable>[] = [
     {
       title: <div className={style.title}>{translateDeclaration('code')}</div>,
       dataIndex: 'index',
@@ -158,8 +161,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     },
     {
       title: <div className={style.title}>{translateDeclaration('name')}</div>,
-      dataIndex: 'typeUnitName',
-      key: 'typeUnitName',
+      dataIndex: 'typeDelaracrionName',
+      key: 'typeDelaracrionName',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<IQueryInputDraft>({
@@ -169,9 +172,37 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           queryParams: queryInputParams,
           selectedKeyShow: selectedKeyShow,
           setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'typeUnitName',
+          dataIndex: 'typeDelaracrionName',
         },
       }),
+    },
+    {
+      title: <div className={style.title}>{translateDeclaration('code')}</div>,
+      dataIndex: 'typeDelaracrionCode',
+      key: 'typeDelaracrionCode',
+      width: 150,
+      align: 'center',
+      ...ColumnSearchTableProps<IQueryInputDraft>({
+        props: {
+          handleSearch: handleSearchInput,
+          handleReset: handleReset,
+          queryParams: queryInputParams,
+          selectedKeyShow: selectedKeyShow,
+          setSelectedKeyShow: setSelectedKeyShow,
+          dataIndex: 'typeDelaracrionCode',
+        },
+      }),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translateDeclaration('transaction_name')}
+        </div>
+      ),
+      dataIndex: 'transactionTypeName',
+      key: 'transactionTypeName',
+      width: 150,
+      align: 'center',
     },
     {
       title: (
@@ -193,16 +224,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       }),
     },
     {
-      title: translateDeclaration('type_unit'),
-      width: 150,
-      dataIndex: 'typeFeeID',
-      key: 'typeFeeID',
-      align: 'left',
-      render: (_, value) => {
-        return <div>{value.typeUnitName}</div>;
-      },
-    },
-    {
       title: (
         <div className={style.title}>{translateCommon('date_created')}</div>
       ),
@@ -217,8 +238,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         <div className={style.title}>{translateDeclaration('status')}</div>
       ),
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusTypeDelaracrion',
+      key: 'statusTypeDelaracrion',
       align: 'center',
       fixed: 'right',
       render: (value) => (
@@ -277,7 +298,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: ITypeUnitTable
+    record: ITypeDeclarationTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {

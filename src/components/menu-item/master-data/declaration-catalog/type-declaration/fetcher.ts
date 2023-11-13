@@ -7,93 +7,114 @@ import {
   uploadFile,
 } from '@/fetcherAxios';
 import {
-  ITypeUnitsRequire,
-  IRequestTypeUnitType,
-  IRequestUnitTableDraft,
-  ITypeUnitCreate,
-  ITypeUnitDelete,
-  ITypeUnitDetailDataBody,
-  ITypeUnitDetailType,
-  ITypeUnitEdit,
-  IUpdateStatusUnit,
-  IRequestUnitTableRequest,
+  ITypeDeclarationRequire,
+  IRequestTypeDeclarationType,
+  IRequestDeclarationTableDraft,
+  ITypeDeclarationCreate,
+  ITypeDeclarationDelete,
+  ITypeDeclarationDetailDataBody,
+  ITypeDeclarationDetailType,
+  ITypeDeclarationEdit,
+  IUpdateStatusDeclaration,
+  IRequestDeclarationTableRequest,
   IRequestExportData,
-  ITypeUnit,
+  ITypeDeclaration,
+  ITypeTransaction,
 } from './interface';
-import { API_COLUMN, API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
+import {
+  API_COLUMN,
+  API_TRANSACTION_TYPE,
+  API_TYPE_DECLARATION,
+} from '@/fetcherAxios/endpoint';
 import {
   ColumnTable,
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
 
-export const getUnitSearch = (data: IRequestTypeUnitType) => {
-  return post<IRequestTypeUnitType, ResponseWithPayload<ITypeUnitsRequire>>({
+export const getDeclarationSearch = (data: IRequestTypeDeclarationType) => {
+  return post<
+    IRequestTypeDeclarationType,
+    ResponseWithPayload<ITypeDeclarationRequire>
+  >({
     data,
-  })(API_TYPE_UNIT.GET_SEARCH);
+  })(API_TYPE_DECLARATION.GET_SEARCH);
 };
 
-export const getUnitDetail = (id: string) => {
+export const getDeclarationDetail = (id: string) => {
   return post<
-    ITypeUnitDetailDataBody,
-    ResponseWithPayload<ITypeUnitDetailType>
+    ITypeDeclarationDetailDataBody,
+    ResponseWithPayload<ITypeDeclarationDetailType>
   >({
     data: {
       id,
     },
-  })(API_TYPE_UNIT.GET_DETAIL);
+  })(API_TYPE_DECLARATION.GET_DETAIL);
 };
 
-export const createUnit = (data: ITypeUnitCreate) => {
-  return post<ITypeUnitCreate, ResponseWithPayload<ITypeUnitCreate>>({
+export const createDeclaration = (data: ITypeDeclarationCreate) => {
+  return post<
+    ITypeDeclarationCreate,
+    ResponseWithPayload<ITypeDeclarationCreate>
+  >({
     data,
-  })(API_TYPE_UNIT.CREATE);
+  })(API_TYPE_DECLARATION.CREATE);
 };
 
-export const editUnit = (data: ITypeUnitEdit) => {
-  return post<ITypeUnitEdit, ResponseWithPayload<ITypeUnitEdit>>({
+export const editDeclaration = (data: ITypeDeclarationEdit) => {
+  return post<ITypeDeclarationEdit, ResponseWithPayload<ITypeDeclarationEdit>>({
     data,
-  })(API_TYPE_UNIT.EDIT);
+  })(API_TYPE_DECLARATION.EDIT);
 };
 
-export const deleteUnit = (data: React.Key[]) => {
-  return post<ITypeUnitDelete, ResponseWithPayload<ITypeUnitDelete>>({
+export const deleteDeclaration = (data: React.Key[]) => {
+  return post<
+    ITypeDeclarationDelete,
+    ResponseWithPayload<ITypeDeclarationDelete>
+  >({
     data: {
       ids: data,
     },
-  })(API_TYPE_UNIT.DELETE);
+  })(API_TYPE_DECLARATION.DELETE);
 };
 
-export const getDartTable = (data: IRequestUnitTableDraft) => {
-  return post<IRequestUnitTableDraft, ResponseWithPayload<ITypeUnitsRequire>>({
+export const getDartTable = (data: IRequestDeclarationTableDraft) => {
+  return post<
+    IRequestDeclarationTableDraft,
+    ResponseWithPayload<ITypeDeclarationRequire>
+  >({
     data,
-  })(API_TYPE_UNIT.GET_DRAFT);
+  })(API_TYPE_DECLARATION.GET_DRAFT);
 };
 
 //----------------------------------------------------------------
 
-export const updateStatus = (data: IUpdateStatusUnit) => {
-  return post<IUpdateStatusUnit, ResponseWithPayload<IUpdateStatusUnit>>({
+export const updateStatus = (data: IUpdateStatusDeclaration) => {
+  return post<
+    IUpdateStatusDeclaration,
+    ResponseWithPayload<IUpdateStatusDeclaration>
+  >({
     data,
-  })(API_TYPE_UNIT.UPDATE_STATUS);
+  })(API_TYPE_DECLARATION.UPDATE_STATUS);
 };
 
-export const getTable = (data: IRequestUnitTableRequest) => {
-  return post<IRequestUnitTableRequest, ResponseWithPayload<ITypeUnitsRequire>>(
-    {
-      data,
-    }
-  )(API_TYPE_UNIT.GET_REQUEST);
+export const getTable = (data: IRequestDeclarationTableRequest) => {
+  return post<
+    IRequestDeclarationTableRequest,
+    ResponseWithPayload<ITypeDeclarationRequire>
+  >({
+    data,
+  })(API_TYPE_DECLARATION.GET_REQUEST);
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_TYPE_UNIT.IMPORT);
+  return uploadFile({ data, timeout: 10000 })(API_TYPE_DECLARATION.IMPORT);
 };
 export const downloadExampleFile = () => {
-  return downloadFile<BlobPart>({})(API_TYPE_UNIT.DOWNLOAD_EXAMPLE_FILE);
+  return downloadFile<BlobPart>({})(API_TYPE_DECLARATION.DOWNLOAD_EXAMPLE_FILE);
 };
 export const exportTableFile = (data: IRequestExportData) => {
   return exportFile<IRequestExportData, BlobPart>({ data })(
-    API_TYPE_UNIT.EXPORT
+    API_TYPE_DECLARATION.EXPORT
   );
 };
 //----------------------------------------------------------------
@@ -101,7 +122,7 @@ export const exportTableFile = (data: IRequestExportData) => {
 export const getColumnTable = () => {
   return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
     data: {
-      tableName: TABLE_NAME.TYPE_OF_UNIT,
+      tableName: TABLE_NAME.TYPE_OF_DECLARATION,
     },
   })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };
@@ -111,7 +132,16 @@ export const updateColumnTable = (data: ColumnTable) => {
   })(API_COLUMN.UPDATE_COLUMN_TABLE_NAME);
 };
 //----------------------------------------------------------------
-//Get type unit
-export const getListTyeUnit = () => {
-  return get<ResponseWithPayload<ITypeUnit[]>>({})(API_TYPE_UNIT.GET_ALL);
+//Get type Declaration
+export const getListTypeDeclaration = () => {
+  return get<ResponseWithPayload<ITypeDeclaration[]>>({})(
+    API_TYPE_DECLARATION.GET_ALL
+  );
+};
+//----------------------------------------------------------------
+//Get type Transaction
+export const getListTypeTransaction = () => {
+  return get<ResponseWithPayload<ITypeTransaction[]>>({})(
+    API_TRANSACTION_TYPE.GET_ALL
+  );
 };

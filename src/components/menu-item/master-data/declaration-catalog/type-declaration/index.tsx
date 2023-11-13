@@ -3,7 +3,7 @@ import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
+import { API_TYPE_DECLARATION } from '@/fetcherAxios/endpoint';
 
 export default function TypeDeclaration() {
   const queryClient = useQueryClient();
@@ -21,7 +21,7 @@ export default function TypeDeclaration() {
       items={[
         {
           label: 'Master Data',
-          key: API_TYPE_UNIT.GET_SEARCH,
+          key: API_TYPE_DECLARATION.GET_SEARCH,
           children: <MasterDataTable />,
         },
         {
@@ -41,7 +41,7 @@ export default function TypeDeclaration() {
               </div>
             </Badge>
           ),
-          key: API_TYPE_UNIT.GET_REQUEST,
+          key: API_TYPE_DECLARATION.GET_REQUEST,
           children: <RequestTable />,
         },
       ]}

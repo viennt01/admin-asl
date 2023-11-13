@@ -2,12 +2,14 @@ import { STATUS_ALL_LABELS } from '@/constant/form';
 
 export const initalValueQueryInputParamsMaster = {
   searchAll: '',
-  typeUnitName: '',
+  typeDelaracrionCode: '',
+  typeDelaracrionName: '',
   description: '',
 };
 
 export const initalValueQuerySelectParamsMaster = {
-  statusTypeUnit: [],
+  transactionTypeID: '',
+  statusTypeDelaracrion: [],
 };
 
 export const initalValueDisplayColumnMaster = {
@@ -26,7 +28,15 @@ export const initalSelectSearchMaster = {
     label: '',
     value: '',
   },
-  typeUnitName: {
+  typeDelaracrionCode: {
+    label: '',
+    value: '',
+  },
+  typeDelaracrionName: {
+    label: '',
+    value: '',
+  },
+  transactionTypeID: {
     label: '',
     value: '',
   },
@@ -34,7 +44,7 @@ export const initalSelectSearchMaster = {
     label: '',
     value: '',
   },
-  statusTypeUnit: {
+  statusTypeDelaracrion: {
     label: '',
     value: [],
   },
@@ -42,16 +52,30 @@ export const initalSelectSearchMaster = {
 
 //draft
 export const initalValueQueryInputParamsDraft = {
-  typeUnitName: '',
+  typeDelaracrionCode: '',
+  typeDelaracrionName: '',
   description: '',
 };
 
 export const initalValueQuerySelectParamsDraft = {
+  transactionTypeID: '',
   status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
 };
 
 export const initalSelectSearchDraft = {
-  typeUnitName: {
+  searchAll: {
+    label: '',
+    value: '',
+  },
+  typeDelaracrionCode: {
+    label: '',
+    value: '',
+  },
+  typeDelaracrionName: {
+    label: '',
+    value: '',
+  },
+  transactionTypeID: {
     label: '',
     value: '',
   },
@@ -59,7 +83,7 @@ export const initalSelectSearchDraft = {
     label: '',
     value: '',
   },
-  status: {
+  statusTypeDelaracrion: {
     label: '',
     value: [],
   },
@@ -68,7 +92,9 @@ export const initalSelectSearchDraft = {
 //request
 export const initalValueQueryInputParamsRequest = {
   searchAll: '',
-  typeUnitName: '',
+  transactionTypeID: '',
+  typeDelaracrionCode: '',
+  typeDelaracrionName: '',
   description: '',
 };
 
@@ -77,7 +103,15 @@ export const initalSelectSearchRequest = {
     label: '',
     value: '',
   },
-  typeUnitName: {
+  typeDelaracrionCode: {
+    label: '',
+    value: '',
+  },
+  typeDelaracrionName: {
+    label: '',
+    value: '',
+  },
+  transactionTypeID: {
     label: '',
     value: '',
   },

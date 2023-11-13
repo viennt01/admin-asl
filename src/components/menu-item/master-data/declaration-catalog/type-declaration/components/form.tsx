@@ -1,13 +1,30 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Switch, Tabs } from 'antd';
+import {
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  Switch,
+  Tabs,
+  Select,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IFormValues, IUpdateStatusUnit } from '../interface';
-import { API_UNIT } from '@/fetcherAxios/endpoint';
+import { IFormValues, IUpdateStatusDeclaration } from '../interface';
+import {
+  API_TRANSACTION_TYPE,
+  API_TYPE_DECLARATION,
+} from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getUnitDetail, updateStatus } from '../fetcher';
+import {
+  getDeclarationDetail,
+  getListTypeTransaction,
+  updateStatus,
+} from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { UpdateStatusLocationType } from '@/components/menu-item/master-data/location-catalog/type-of-location/interface';
@@ -50,6 +67,10 @@ const TypeDeclarationForm = ({
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query;
+  const typeTransaction = useQuery(
+    [API_TRANSACTION_TYPE.GET_ALL],
+    getListTypeTransaction
+  );
 
   useEffect(() => {
     if (!id) return;
@@ -77,20 +98,22 @@ const TypeDeclarationForm = ({
   };
 
   const detailQuery = useQuery({
-    queryKey: [API_UNIT.GET_DETAIL, idQuery],
-    queryFn: () => getUnitDetail(idQuery as string),
+    queryKey: [API_TYPE_DECLARATION.GET_DETAIL, idQuery],
+    queryFn: () => getDeclarationDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          typeUnitNameEN: data.data.typeUnitNameEN,
-          typeUnitNameVN: data.data.typeUnitNameVN,
+          transactionTypeID: data.data.transactionTypeID,
+          typeDelaracrionCode: data.data.typeDelaracrionCode,
+          typeDelaracrionNameEN: data.data.typeDelaracrionNameEN,
+          typeDelaracrionNameVN: data.data.typeDelaracrionNameVN,
           descriptionVN: data.data.descriptionVN,
           descriptionEN: data.data.descriptionEN,
-          statusTypeUnit: data.data.statusTypeUnit,
+          statusTypeDelaracrion: data.data.statusTypeDelaracrion,
         });
       } else {
-        router.push(ROUTERS.TYPE_UNIT);
+        router.push(ROUTERS.TYPE_DECLARATION);
       }
     },
   });
@@ -108,7 +131,8 @@ const TypeDeclarationForm = ({
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.TYPE_UNIT))
+            ? (successToast(data.message),
+              router.push(ROUTERS.TYPE_DECLARATION))
             : errorToast(data.message);
         },
         onError() {
@@ -121,7 +145,7 @@ const TypeDeclarationForm = ({
   };
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: IUpdateStatusUnit) => {
+    mutationFn: (body: IUpdateStatusDeclaration) => {
       return updateStatus(body);
     },
   });
@@ -129,20 +153,21 @@ const TypeDeclarationForm = ({
   const handleCopyAndCreate = () => {
     const props = {
       checkCopyAndCreate: true,
-      internationalCode: form.getFieldValue('internationalCode'),
-      typeUnitID: form.getFieldValue('typeUnitID'),
+      transactionTypeID: form.getFieldValue('transactionTypeID'),
+      typeDelaracrionCode: form.getFieldValue('typeDelaracrionCode'),
+      typeDelaracrionNameEN: form.getFieldValue('typeDelaracrionNameEN'),
+      typeDelaracrionNameVN: form.getFieldValue('typeDelaracrionNameVN'),
       descriptionVN: form.getFieldValue('descriptionVN'),
       descriptionEN: form.getFieldValue('descriptionEN'),
     };
     router.push({
-      pathname: ROUTERS.TYPE_UNIT_CREATE,
+      pathname: ROUTERS.TYPE_DECLARATION_CREATE,
       query: props,
     });
   };
-
   useEffect(() => {
-    if (form.getFieldValue('statusTypeUnit')) {
-      form.getFieldValue('statusTypeUnit') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusTypeDelaracrion')) {
+      form.getFieldValue('statusTypeDelaracrion') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -151,10 +176,16 @@ const TypeDeclarationForm = ({
     }
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
-        typeUnitNameEN: propCopyAndCreate.typeUnitNameEN as string,
-        typeUnitNameVN: propCopyAndCreate.typeUnitNameVN as string,
+        transactionTypeID: propCopyAndCreate.transactionTypeID as string,
+        typeDelaracrionCode: propCopyAndCreate.typeDelaracrionCode as string,
+        typeDelaracrionNameEN:
+          propCopyAndCreate.typeDelaracrionNameEN as string,
+        typeDelaracrionNameVN:
+          propCopyAndCreate.typeDelaracrionNameVN as string,
         descriptionVN: propCopyAndCreate.descriptionVN as string,
         descriptionEN: propCopyAndCreate.descriptionEN as string,
+        statusTypeDelaracrion:
+          propCopyAndCreate.statusTypeDelaracrion as string,
       });
     }
   }, [
@@ -163,7 +194,7 @@ const TypeDeclarationForm = ({
     checkRow,
     manager,
     propCopyAndCreate,
-    form.getFieldValue('statusTypeUnit'),
+    form.getFieldValue('statusTypeDelaracrion'),
   ]);
 
   const contentEN = () => {
@@ -171,17 +202,21 @@ const TypeDeclarationForm = ({
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            label={translateDeclaration('name_form.title_EN')}
-            name="typeUnitNameEN"
+            label={translateDeclaration('name_type_declaration_form.titleEn')}
+            name="typeDelaracrionNameEN"
             rules={[
               {
                 required: true,
-                message: translateDeclaration('name_form.error_required'),
+                message: translateDeclaration(
+                  'name_type_declaration_form.error_required'
+                ),
               },
             ]}
           >
             <Input
-              placeholder={translateDeclaration('name_form.placeholder')}
+              placeholder={translateDeclaration(
+                'name_type_declaration_form.placeholder'
+              )}
               size="large"
               disabled={checkRow && isCheckPermissionEdit}
             />
@@ -190,13 +225,15 @@ const TypeDeclarationForm = ({
 
         <Col span={24}>
           <Form.Item
-            label={translateDeclaration('description_en_form.title')}
+            label={translateDeclaration(
+              'description_type_declaration_form.titleEn'
+            )}
             name="descriptionEN"
             rules={[
               {
                 required: true,
                 message: translateDeclaration(
-                  'description_en_form.error_required'
+                  'description_type_declaration_form.error_required'
                 ),
               },
             ]}
@@ -204,7 +241,7 @@ const TypeDeclarationForm = ({
             <Input.TextArea
               size="large"
               placeholder={translateDeclaration(
-                'description_en_form.placeholder'
+                'description_type_declaration_form.placeholder'
               )}
               allowClear
               disabled={checkRow && isCheckPermissionEdit}
@@ -220,12 +257,12 @@ const TypeDeclarationForm = ({
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            label={translateDeclaration('name_form.title_VN')}
-            name="typeUnitNameVN"
+            label={translateDeclaration('name_type_declaration_form.titleVn')}
+            name="typeDelaracrionNameVN"
           >
             <Input
               placeholder={translateDeclaration(
-                'name_type_location_form.placeholder'
+                'name_type_declaration_form.placeholder'
               )}
               size="large"
               disabled={checkRow && isCheckPermissionEdit}
@@ -235,13 +272,15 @@ const TypeDeclarationForm = ({
 
         <Col span={24}>
           <Form.Item
-            label={translateDeclaration('description_vn_form.title')}
+            label={translateDeclaration(
+              'description_type_declaration_form.title'
+            )}
             name="descriptionVN"
           >
             <Input.TextArea
               size="large"
               placeholder={translateDeclaration(
-                'description_vn_form.placeholder'
+                'description_type_declaration_form.placeholder'
               )}
               allowClear
               disabled={checkRow && isCheckPermissionEdit}
@@ -282,17 +321,22 @@ const TypeDeclarationForm = ({
             <Row justify={'center'}>
               <Col>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  {create && translateDeclaration('information_add_unit')}
+                  {create &&
+                    translateDeclaration('information_add_type_of_declaration')}
                   {manager && 'Approval needed requests'}
                   {edit &&
                     (checkRow ? (
                       <>
                         {isCheckPermissionEdit && 'View'}
                         {!isCheckPermissionEdit &&
-                          translateDeclaration('information_edit_unit')}
+                          translateDeclaration(
+                            'information_edit_type_of_declaration"'
+                          )}
                       </>
                     ) : (
-                      translateDeclaration('information_edit_unit')
+                      translateDeclaration(
+                        'information_edit_type_of_declaration"'
+                      )
                     ))}
                 </Title>
               </Col>
@@ -340,11 +384,65 @@ const TypeDeclarationForm = ({
           }
         >
           <Row gutter={16}>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateDeclaration('code_declaration_form.title')}
+                name="typeDelaracrionCode"
+                rules={[
+                  {
+                    required: true,
+                    message: translateDeclaration(
+                      'code_declaration_form.error_required'
+                    ),
+                  },
+                ]}
+              >
+                <Input
+                  size="large"
+                  placeholder={translateDeclaration(
+                    'code_declaration_form.placeholder'
+                  )}
+                  allowClear
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateDeclaration(
+                  'transaction_name_declaration_form.title'
+                )}
+                name="transactionTypeID"
+                rules={[
+                  {
+                    required: true,
+                    message: translateDeclaration(
+                      'transaction_name_declaration_form.error_required'
+                    ),
+                  },
+                ]}
+              >
+                <Select
+                  placeholder={translateDeclaration(
+                    'transaction_name_declaration_form.placeholder'
+                  )}
+                  size="large"
+                  options={
+                    typeTransaction.data?.data.map((type) => ({
+                      label: type.transactionTypeName,
+                      value: type.transactionTypeID,
+                    })) || []
+                  }
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
             <Col span={24}>
               <Tabs items={items} />
             </Col>
             <Col span={0}>
-              <Form.Item name="statusTypeUnit"></Form.Item>
+              <Form.Item name="statusTypeDelaracrion"></Form.Item>
             </Col>
           </Row>
         </Card>

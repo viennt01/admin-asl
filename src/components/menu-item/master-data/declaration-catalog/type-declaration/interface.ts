@@ -1,10 +1,13 @@
 import { IPagination } from '../../../../commons/table/table-default';
 
-export interface ITypeUnit {
-  typeUnitID: string;
-  typeUnitName: string;
+export interface ITypeDeclaration {
+  typeDelaracrionID: string;
+  transactionTypeID: string;
+  transactionTypeName: string;
+  typeDelaracrionCode: string;
+  typeDelaracrionName: string;
   description: string;
-  statusTypeUnit: string;
+  statusTypeDelaracrion: string;
   public: boolean;
   insertedByUser: string;
   dateInserted: string;
@@ -14,25 +17,28 @@ export interface ITypeUnit {
   confirmByUser: string;
 }
 
-export interface ITypeUnitTable extends Omit<ITypeUnit, 'typeUnitID'> {
+export interface ITypeDeclarationTable
+  extends Omit<ITypeDeclaration, 'typeDelaracrionID'> {
   key: string;
   searchAll: string;
 }
 
-export interface ITypeUnitsRequire extends IPagination {
-  data: ITypeUnit[];
+export interface ITypeDeclarationRequire extends IPagination {
+  data: ITypeDeclaration[];
 }
 //
 export interface ITypeQueryInputParamType {
   searchAll: string;
-  typeUnitName: string;
+  typeDelaracrionCode: string;
+  typeDelaracrionName: string;
   description: string;
 }
 export interface ITypeQuerySelectParamType {
-  statusTypeUnit: string[];
+  transactionTypeID: string;
+  statusTypeDelaracrion: string[];
 }
 
-export interface IRequestTypeUnitType
+export interface IRequestTypeDeclarationType
   extends ITypeQueryInputParamType,
     ITypeQuerySelectParamType {
   paginateRequest: IPagination;
@@ -45,20 +51,22 @@ export type ISelectSearch = {
   };
 };
 
-export interface ITypeUnitDetailDataBody {
+export interface ITypeDeclarationDetailDataBody {
   id: string;
 }
 
 export interface IFormValues {
-  typeUnitID: string;
-  typeUnitNameEN: string;
-  typeUnitNameVN: string;
+  typeDelaracrionID: string;
+  transactionTypeID: string;
+  typeDelaracrionCode: string;
+  typeDelaracrionNameEN: string;
+  typeDelaracrionNameVN: string;
   descriptionEN: string;
   descriptionVN: string;
-  statusTypeUnit: string;
+  statusTypeDelaracrion: string;
 }
 
-export interface ITypeUnitDetailType extends IFormValues {
+export interface ITypeDeclarationDetailType extends IFormValues {
   public: true;
   dateInserted: string;
   insertedByUser: string;
@@ -68,23 +76,25 @@ export interface ITypeUnitDetailType extends IFormValues {
   confirmByUser: string;
 }
 
-export type ITypeUnitCreate = Omit<IFormValues, 'typeUnitID'>;
+export type ITypeDeclarationCreate = Omit<IFormValues, 'typeDelaracrionID'>;
 
-export type ITypeUnitEdit = IFormValues;
+export type ITypeDeclarationEdit = IFormValues;
 
-export type ITypeUnitDelete = {
+export type ITypeDeclarationDelete = {
   ids: React.Key[];
 };
 
 //----------------------------------------------------------------
 export interface IQueryInputDraft {
-  typeUnitName: string;
+  typeDelaracrionCode: string;
+  typeDelaracrionName: string;
   description: string;
 }
 export interface IQuerySelectDraft {
+  transactionTypeID: string;
   status: string[];
 }
-export interface IRequestUnitTableDraft
+export interface IRequestDeclarationTableDraft
   extends IQueryInputDraft,
     IQuerySelectDraft {
   paginateRequest: IPagination;
@@ -99,17 +109,20 @@ export type ISelectDratSearch = {
 
 //----------------------------------------------------------------
 
-export interface IUpdateStatusUnit {
+export interface IUpdateStatusDeclaration {
   id: React.Key[];
   status: string;
 }
 
 export interface IQueryInputRequest {
-  typeUnitName: string;
+  searchAll: string;
+  transactionTypeID: string;
+  typeDelaracrionCode: string;
+  typeDelaracrionName: string;
   description: string;
 }
 
-export interface IRequestUnitTableRequest extends IQueryInputRequest {
+export interface IRequestDeclarationTableRequest extends IQueryInputRequest {
   paginateRequest: IPagination;
 }
 // export table
@@ -117,7 +130,7 @@ export interface IRequestExportData {
   ids: React.Key[];
   status: string[];
 }
-export interface ITypeUnit {
-  typeUnitID: string;
-  typeUnitName: string;
+export interface ITypeTransaction {
+  transactionTypeID: string;
+  transactionTypeName: string;
 }

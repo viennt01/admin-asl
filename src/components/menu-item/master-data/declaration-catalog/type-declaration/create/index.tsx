@@ -4,42 +4,50 @@ import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import TypeDeclarationForm from '../components/form';
-import { IFormValues, ITypeUnitCreate, ITypeUnitEdit } from '../interface';
-import { createUnit, editUnit } from '../fetcher';
+import {
+  IFormValues,
+  ITypeDeclarationCreate,
+  ITypeDeclarationEdit,
+} from '../interface';
+import { createDeclaration, editDeclaration } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_TYPE_UNIT } from '@/fetcherAxios/endpoint';
+import { API_TYPE_DECLARATION } from '@/fetcherAxios/endpoint';
 
 const CreateTypeDeclaration = () => {
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
-    mutationFn: (body: ITypeUnitCreate) => {
-      return createUnit(body);
+    mutationFn: (body: ITypeDeclarationCreate) => {
+      return createDeclaration(body);
     },
   });
 
   const updateMutation = useMutation({
-    mutationFn: (body: ITypeUnitEdit) => {
-      return editUnit(body);
+    mutationFn: (body: ITypeDeclarationEdit) => {
+      return editDeclaration(body);
     },
   });
-
   const handleSubmit = (formValues: IFormValues, id?: string) => {
     if (id) {
-      const _requestData: ITypeUnitEdit = {
-        typeUnitID: id,
-        typeUnitNameEN: formValues.typeUnitNameEN || '',
-        typeUnitNameVN:
-          formValues.typeUnitNameVN || formValues.typeUnitNameEN || '',
+      const _requestData: ITypeDeclarationEdit = {
+        typeDelaracrionID: id,
+        transactionTypeID: formValues.transactionTypeID || '',
+        typeDelaracrionCode: formValues.typeDelaracrionCode || '',
+        typeDelaracrionNameEN: formValues.typeDelaracrionNameEN || '',
+        typeDelaracrionNameVN:
+          formValues.typeDelaracrionNameVN ||
+          formValues.typeDelaracrionNameEN ||
+          '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
-        statusTypeUnit: STATUS_ALL_LABELS.REQUEST,
+        statusTypeDelaracrion: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.TYPE_UNIT))
+            ? (successToast(data.message),
+              router.push(ROUTERS.TYPE_DECLARATION))
             : errorToast(data.message);
         },
         onError() {
@@ -47,19 +55,24 @@ const CreateTypeDeclaration = () => {
         },
       });
     } else {
-      const _requestData: ITypeUnitCreate = {
-        typeUnitNameEN: formValues.typeUnitNameEN || '',
-        typeUnitNameVN:
-          formValues.typeUnitNameVN || formValues.typeUnitNameEN || '',
+      const _requestData: ITypeDeclarationCreate = {
+        transactionTypeID: formValues.transactionTypeID || '',
+        typeDelaracrionCode: formValues.typeDelaracrionCode || '',
+        typeDelaracrionNameEN: formValues.typeDelaracrionNameEN || '',
+        typeDelaracrionNameVN:
+          formValues.typeDelaracrionNameVN ||
+          formValues.typeDelaracrionNameEN ||
+          '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
-        statusTypeUnit: STATUS_ALL_LABELS.REQUEST,
+        statusTypeDelaracrion: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.TYPE_UNIT))
+            ? (successToast(data.message),
+              router.push(ROUTERS.TYPE_DECLARATION))
             : errorToast(data.message);
         },
         onError() {
@@ -71,22 +84,26 @@ const CreateTypeDeclaration = () => {
 
   const handleSaveDraft = (formValues: IFormValues, id?: string) => {
     if (id) {
-      const _requestData: ITypeUnitEdit = {
-        typeUnitID: id,
-        typeUnitNameEN: formValues.typeUnitNameEN || '',
-        typeUnitNameVN:
-          formValues.typeUnitNameVN || formValues.typeUnitNameEN || '',
+      const _requestData: ITypeDeclarationEdit = {
+        typeDelaracrionID: id,
+        transactionTypeID: formValues.transactionTypeID || '',
+        typeDelaracrionCode: formValues.typeDelaracrionCode || '',
+        typeDelaracrionNameEN: formValues.typeDelaracrionNameEN || '',
+        typeDelaracrionNameVN:
+          formValues.typeDelaracrionNameVN ||
+          formValues.typeDelaracrionNameEN ||
+          '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
-        statusTypeUnit: STATUS_ALL_LABELS.DRAFT,
+        statusTypeDelaracrion: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_TYPE_UNIT.GET_SEARCH],
+                queryKey: [API_TYPE_DECLARATION.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -95,21 +112,25 @@ const CreateTypeDeclaration = () => {
         },
       });
     } else {
-      const _requestData: ITypeUnitCreate = {
-        typeUnitNameEN: formValues.typeUnitNameEN || '',
-        typeUnitNameVN:
-          formValues.typeUnitNameVN || formValues.typeUnitNameEN || '',
+      const _requestData: ITypeDeclarationCreate = {
+        transactionTypeID: formValues.transactionTypeID || '',
+        typeDelaracrionCode: formValues.typeDelaracrionCode || '',
+        typeDelaracrionNameEN: formValues.typeDelaracrionNameEN || '',
+        typeDelaracrionNameVN:
+          formValues.typeDelaracrionNameVN ||
+          formValues.typeDelaracrionNameEN ||
+          '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
-        statusTypeUnit: STATUS_ALL_LABELS.DRAFT,
+        statusTypeDelaracrion: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_TYPE_UNIT.GET_SEARCH],
+                queryKey: [API_TYPE_DECLARATION.GET_SEARCH],
               }))
             : errorToast(data.message);
         },

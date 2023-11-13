@@ -1,7 +1,9 @@
 {
-    "title": "List type of Location",
+    "title": "List type of declaration",
     "no": "No",
     "name": "Name",
+    "code": "Code",
+    "transaction_name": "Transaction",
     "description": "Description",
     "status":"Status",
     "date_created": "Date Created",
@@ -9,26 +11,36 @@
     "updater": "Updater",
     "creator": "Creator",
     
-    "information_add_type_of_location": "Add new type of location",
-    "information_edit_type_of_location": "Edit type of location",
+    "information_add_type_of_declaration": "Add new type of declaration",
+    "information_edit_type_of_declaration": "Edit type of declaration",
 
-    "name_type_location_form": {
+    "name_type_declaration_form": {
         "title": "Name",
-        "titleEn": "Name of the location type (EN)",
-        "titleVn": "Name of the location type (VN)",
-        "placeholder": "Please enter the name of the location type",
-        "error_required": "Please enter the name of the location type"
+        "titleEn": "Name (EN)",
+        "titleVn": "Name (VN)",
+        "placeholder": "Please enter the name of the declaration type",
+        "error_required": "Please enter the name of the declaration type"
     },
-    "description_type_location_form": {
+    "description_type_declaration_form": {
         "title": "Description",
-        "titleEn": "Description by English",
-        "titleVn": "Description by Vietnamese",
+        "titleEn": "Description (EN)",
+        "titleVn": "Description (VN)",
         "placeholder": "Please enter description"
     }, 
-    "status_type_location_form": {
+    "status_type_declaration_form": {
         "title": "Status",
         "placeholder": "Select status",
         "error_required": "Please select status"
+    },
+    "transaction_name_declaration_form": {
+        "title": "Transaction transaction",
+        "placeholder": "Select ",
+        "error_required": "Please select transaction"
+    },
+    "code_declaration_form": {
+        "title": "Code",
+        "placeholder": "Enter code",
+        "error_required": "Please enter code"
     },
 
     "name_placeholder": "Please input name!",

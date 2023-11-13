@@ -215,8 +215,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: <div className={style.title}>{translateTypeUnit('status')}</div>,
       width: 120,
-      dataIndex: 'statusUnit',
-      key: 'statusUnit',
+      dataIndex: 'statusTypeUnit',
+      key: 'statusTypeUnit',
       align: 'center',
       fixed: 'right',
       render: (value) => (
