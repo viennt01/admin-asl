@@ -274,11 +274,6 @@ export interface RequireTypeContainer {
   name: string;
   code: string;
 }
-// get all fee group
-export interface RequireFeeGroup {
-  feeGroupID: string;
-  feeGroupName: string;
-}
 // get all load capacity
 export interface RequireLoadCapacity {
   loadCapacityID: string;

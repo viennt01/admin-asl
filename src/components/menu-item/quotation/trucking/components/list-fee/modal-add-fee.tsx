@@ -12,10 +12,13 @@ import {
 } from 'antd';
 import React, { useRef, useState } from 'react';
 import { formatNumber } from '@/utils/format';
-import { UseQueryResult, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
-import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
+import {
+  FeeTable,
+  IDataFeeGroup,
+} from '@/components/menu-item/master-data/fee-group/interface';
 import { SearchOutlined } from '@ant-design/icons';
 import {
   ColumnType,
@@ -23,12 +26,11 @@ import {
   FilterConfirmProps,
 } from 'antd/lib/table/interface';
 import Highlighter from 'react-highlight-words';
-import { RequireFeeGroup } from '../../interface';
-import { ResponseWithPayload } from '@/fetcherAxios';
+
 interface ImportModalProps {
   idActive: string[];
   form: FormInstance<{ feeGroupID: string }>;
-  getFeeGroup: UseQueryResult<ResponseWithPayload<RequireFeeGroup[]>, unknown>;
+  getFeeGroup: IDataFeeGroup[];
 }
 
 type DataIndex = keyof FeeTable;
@@ -251,7 +253,7 @@ const AddFeeModal: React.FC<ImportModalProps> = ({
                   .localeCompare((optionB?.label ?? '').toLowerCase())
               }
               options={
-                getFeeGroup?.data?.data
+                getFeeGroup
                   .map((item) => {
                     return {
                       value: item.feeGroupID,

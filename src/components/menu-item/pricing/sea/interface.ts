@@ -242,11 +242,6 @@ export interface RequireTypeContainer {
   name: string;
   code: string;
 }
-// get all fee group
-export interface RequireFeeGroup {
-  feeGroupID: string;
-  feeGroupName: string;
-}
 //----------------------------------------------------------------
 // create quotation with pricing
 export interface RequireCreateQuotationWithPricing {

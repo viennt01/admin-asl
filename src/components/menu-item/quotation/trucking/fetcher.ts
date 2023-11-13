@@ -21,7 +21,6 @@ import {
   RequireCommodity,
   RequireCurrency,
   RequireTypeContainer,
-  RequireFeeGroup,
   IRequestExportData,
   RequirePartnerRole,
 } from './interface';
@@ -136,10 +135,6 @@ export const getAllContainerType = () => {
   return get<ResponseWithPayload<RequireTypeContainer[]>>({})(
     API_CONTAINER_TYPE.GET_ALL
   );
-};
-
-export const getAllFeeGroup = () => {
-  return get<ResponseWithPayload<RequireFeeGroup[]>>({})(API_FEE_GROUP.GET_ALL);
 };
 
 export const getAllPartnerRole = () => {

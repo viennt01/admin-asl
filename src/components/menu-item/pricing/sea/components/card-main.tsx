@@ -29,7 +29,6 @@ import {
 } from '@/fetcherAxios/endpoint';
 import {
   getAllCommodity,
-  getAllFeeGroup,
   getAllLocation,
   getAllPartner,
   updateStatus,
@@ -40,6 +39,8 @@ import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { formatNumber } from '@/utils/format';
 import dayjs from 'dayjs';
+import { TYPE_FEE_GROUP } from '@/components/menu-item/master-data/fee-group/interface';
+import { getAllFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
 
 interface Props {
   create?: boolean;
@@ -111,7 +112,7 @@ const CardMain = ({
   });
   const getFeeGroup = useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL],
-    queryFn: () => getAllFeeGroup(),
+    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.SEA_PRICING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

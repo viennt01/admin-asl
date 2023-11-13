@@ -1,5 +1,14 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
+export enum TYPE_FEE_GROUP {
+  'TRUCKING_QUOTATION' = 'Trucking Quotation',
+  'SEA_QUOTATION' = 'Sea Quotation',
+  'AIR_QUOTATION' = 'Air Quotation',
+  'TRUCKING_PRICING' = 'Trucking Pricing',
+  'SEA_PRICING' = 'Sea Pricing',
+  'AIR_PRICING' = 'Air Pricing',
+  'TOTAL' = '',
+}
 
 export interface FeeGroup {
   feeGroupID: string;
@@ -188,4 +197,11 @@ export interface RequestUpdateFeeOfFeeGroup {
 export interface RequestDeleteFeeOfFeeGroup {
   feeGroupID: string;
   ids: React.Key[];
+}
+export interface IDataFeeGroup {
+  feeGroupID: string;
+  feeGroupName: string;
+}
+export interface IRequestFeeGroup {
+  type: TYPE_FEE_GROUP;
 }

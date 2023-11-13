@@ -5,8 +5,15 @@ import AddFeeModal from './modal-add-fee';
 import { IFormValues, ITruckQuotationFeeFormValue } from '../../interface';
 import TableFeeGroup from './table-fee-group';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import { getAllFeeGroup } from '../../fetcher';
 import { useQuery } from '@tanstack/react-query';
+import { getAllFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import {
+  IDataFeeGroup,
+  TYPE_FEE_GROUP,
+} from '@/components/menu-item/master-data/fee-group/interface';
+import router from 'next/router';
+import { API_MESSAGE } from '@/constant/message';
+import { errorToast } from '@/hook/toast';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
@@ -22,8 +29,24 @@ const ListFee = ({ form, create }: Props) => {
   const listIdFeeGroup = Form.useWatch('seaQuotaionFeeGroupDTOs', form);
   const [activeKey, setActiveKey] = useState('1');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const getFeeGroup = useQuery([API_FEE_GROUP.GET_ALL], getAllFeeGroup);
+  const [feeGroupData, setFeeGroupData] = useState<IDataFeeGroup[]>([]);
 
+  useQuery({
+    queryKey: [API_FEE_GROUP.GET_ALL],
+    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.TRUCKING_QUOTATION }),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        setFeeGroupData(data.data);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
   const defaultPanes =
     dataFee?.map((value) => {
       return {
@@ -60,7 +83,7 @@ const ListFee = ({ form, create }: Props) => {
   const handleOk = () => {
     if (Array.isArray(items)) {
       const newData =
-        getFeeGroup?.data?.data
+        feeGroupData
           .map((item) => {
             return {
               value: item.feeGroupID,
@@ -151,7 +174,7 @@ const ListFee = ({ form, create }: Props) => {
           <AddFeeModal
             form={formModalAdd}
             idActive={idActive}
-            getFeeGroup={getFeeGroup}
+            getFeeGroup={feeGroupData}
           />
         </Form>
       </Modal>

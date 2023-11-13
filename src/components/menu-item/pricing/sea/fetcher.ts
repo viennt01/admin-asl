@@ -20,7 +20,6 @@ import {
   RequireCommodity,
   RequireCurrency,
   RequireTypeContainer,
-  RequireFeeGroup,
   RequireCreateQuotationWithPricing,
   RequirePartnerGroup,
   RequirePartner,
@@ -31,7 +30,6 @@ import {
   API_COMMODITY,
   API_CONTAINER_TYPE,
   API_CURRENCY,
-  API_FEE_GROUP,
   API_LOCATION,
   API_PARTNER,
   API_SEA_PRICING,
@@ -123,9 +121,6 @@ export const getAllContainerType = () => {
   );
 };
 
-export const getAllFeeGroup = () => {
-  return get<ResponseWithPayload<RequireFeeGroup[]>>({})(API_FEE_GROUP.GET_ALL);
-};
 //----------------------------------------------------------------
 // create quotation with pricing
 export const createQuotationWithPricing = (

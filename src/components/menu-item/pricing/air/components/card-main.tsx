@@ -27,8 +27,9 @@ import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getAllFeeGroup } from '@/components/menu-item/pricing/sea/fetcher';
 import { formatNumber } from '@/utils/format';
+import { getAllFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import { TYPE_FEE_GROUP } from '@/components/menu-item/master-data/fee-group/interface';
 
 interface Props {
   create?: boolean;
@@ -102,7 +103,7 @@ const CardMain = ({
 
   const getFeeGroup = useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL],
-    queryFn: () => getAllFeeGroup(),
+    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.AIR_PRICING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
