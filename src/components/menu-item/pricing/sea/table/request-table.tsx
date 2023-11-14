@@ -143,7 +143,7 @@ const RequestTable = () => {
     for (const key in dataTable[0]?.seaPricingDetailDTOs) {
       if (dataTable[0].seaPricingDetailDTOs.hasOwnProperty(key)) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'seaPricingDetailDTOs',
           render: (value: SeaPricingDetailDTOs) =>
@@ -206,7 +206,7 @@ const RequestTable = () => {
       ),
     },
     {
-      title: translatePricingSea('POL'),
+      title: <div className={style.title}>{translatePricingSea('POL')}</div>,
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
@@ -214,21 +214,23 @@ const RequestTable = () => {
       render: (value) => value,
     },
     {
-      title: translatePricingSea('POD'),
+      title: <div className={style.title}>{translatePricingSea('POD')}</div>,
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
       align: 'left',
     },
     {
-      title: translatePricingSea('vendor'),
+      title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'left',
     },
     {
-      title: translatePricingSea('commodity'),
+      title: (
+        <div className={style.title}>{translatePricingSea('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
@@ -252,7 +254,7 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: translatePricingSea('LCLMin'),
+      title: <div className={style.title}>{translatePricingSea('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
@@ -262,7 +264,7 @@ const RequestTable = () => {
       },
     },
     {
-      title: translatePricingSea('LCL'),
+      title: <div className={style.title}>{translatePricingSea('LCL')}</div>,
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',

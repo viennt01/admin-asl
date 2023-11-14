@@ -251,7 +251,7 @@ export default function MasterDataTable() {
         )
       ) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'truckingPricingDetailByContainerTypeDTOs',
           render: (value: IDetailDTOs) => formatCurrencyHasCurrency(value[key]),
@@ -268,7 +268,7 @@ export default function MasterDataTable() {
         dataTable[0].truckingPricingDetailByLoadCapacityDTOs.hasOwnProperty(key)
       ) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'truckingPricingDetailByLoadCapacityDTOs',
           render: (value: IDetailDTOs) => formatCurrencyHasCurrency(value[key]),
@@ -291,7 +291,9 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateQuotationTruck('code'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('code')}</div>
+      ),
       width: 200,
       dataIndex: 'truckQuotationNo',
       key: 'truckQuotationNo',
@@ -299,14 +301,18 @@ export default function MasterDataTable() {
       render: (value) => value,
     },
     {
-      title: translateQuotationTruck('pickup'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('pickup')}</div>
+      ),
       width: 200,
       dataIndex: 'pickupName',
       key: 'pickupName',
       align: 'left',
     },
     {
-      title: translateQuotationTruck('delivery'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('delivery')}</div>
+      ),
       width: 200,
       dataIndex: 'deliveryName',
       key: 'deliveryName',
@@ -314,7 +320,11 @@ export default function MasterDataTable() {
       render: (value) => value,
     },
     {
-      title: translateQuotationTruck('emtyPickup'),
+      title: (
+        <div className={style.title}>
+          {translateQuotationTruck('emtyPickup')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'emtyPickupName',
       key: 'emtyPickupName',
@@ -361,21 +371,31 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translateQuotationTruck('commodity'),
+      title: (
+        <div className={style.title}>
+          {translateQuotationTruck('commodity')}
+        </div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translateQuotationTruck('currency'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('currency')}</div>
+      ),
       width: 100,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'left',
     },
     {
-      title: translateQuotationTruck('effect_date'),
+      title: (
+        <div className={style.title}>
+          {translateQuotationTruck('effect_date')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'effectDated',
       key: 'effectDated',
@@ -383,7 +403,9 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateQuotationTruck('validity'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('validity')}</div>
+      ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
@@ -391,7 +413,9 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateQuotationTruck('freq'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('freq')}</div>
+      ),
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
@@ -399,7 +423,9 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateQuotationTruck('note'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('note')}</div>
+      ),
       width: 200,
       dataIndex: 'note',
       key: 'note',
@@ -474,7 +500,9 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translateQuotationTruck('LCLMin'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('LCLMin')}</div>
+      ),
       width: 200,
       dataIndex: 'lclMinTruckingPricing',
       key: 'lclMinTruckingPricing',
@@ -484,7 +512,9 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateQuotationTruck('LCL'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('LCL')}</div>
+      ),
       width: 200,
       dataIndex: 'lclTruckingPricing',
       key: 'lclTruckingPricing',

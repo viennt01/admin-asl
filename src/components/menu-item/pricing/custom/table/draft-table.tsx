@@ -162,7 +162,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingCustom('typeDelaracrionID_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('typeDelaracrionID_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'typeDelaracrionName',
       key: 'typeDelaracrionName',
@@ -170,7 +174,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: translatePricingCustom('transactionTypeID_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('transactionTypeID_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'transactionTypeName',
       key: 'transactionTypeName',
@@ -178,7 +186,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: translatePricingCustom('customRedPrice_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('customRedPrice_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'customRedPrice',
       key: 'customRedPrice',
@@ -188,7 +200,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingCustom('customYellowPrice_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('customYellowPrice_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'customYellowPrice',
       key: 'customYellowPrice',
@@ -198,7 +214,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingCustom('customGreenPrice_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('customGreenPrice_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'customGreenPrice',
       key: 'customGreenPrice',
@@ -208,28 +228,44 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingCustom('currency_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('currency_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'right',
     },
     {
-      title: translatePricingCustom('vendor_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('vendor_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'left',
     },
     {
-      title: translatePricingCustom('commodity_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('commodity_form.title')}
+        </div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translatePricingCustom('effect_date_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('effect_date_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'effectDated',
       key: 'effectDated',
@@ -237,7 +273,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingCustom('validity_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('validity_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
@@ -245,7 +285,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingCustom('note_form.title'),
+      title: (
+        <div className={style.title}>
+          {translatePricingCustom('note_form.title')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'note',
       key: 'note',
@@ -264,8 +308,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: <div className={style.title}>{translateCommon('status')}</div>,
       width: 120,
-      dataIndex: 'statusSeaPricing',
-      key: 'statusSeaPricing',
+      dataIndex: 'statusCustomPricing',
+      key: 'statusCustomPricing',
       align: 'center',
       fixed: 'right',
       render: (value) => (

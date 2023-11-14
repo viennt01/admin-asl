@@ -244,7 +244,7 @@ export default function MasterDataTable() {
     for (const key in dataTable[0]?.seaQuotationDetailDTOs) {
       if (dataTable[0].seaQuotationDetailDTOs.hasOwnProperty(key)) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'seaQuotationDetailDTOs',
           render: (value: ISeaQuotationDetailDTOs) =>
@@ -268,7 +268,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateQuotationSea('code'),
+      title: <div className={style.title}>{translateQuotationSea('code')}</div>,
       width: 200,
       dataIndex: 'seaQuotationNo',
       key: 'seaQuotationNo',
@@ -276,7 +276,7 @@ export default function MasterDataTable() {
       render: (value) => value,
     },
     {
-      title: translateQuotationSea('POL'),
+      title: <div className={style.title}>{translateQuotationSea('POL')}</div>,
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
@@ -284,7 +284,7 @@ export default function MasterDataTable() {
       render: (value) => value,
     },
     {
-      title: translateQuotationSea('POD'),
+      title: <div className={style.title}>{translateQuotationSea('POD')}</div>,
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
@@ -330,21 +330,29 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translateQuotationSea('commodity'),
+      title: (
+        <div className={style.title}>{translateQuotationSea('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translateQuotationSea('currency'),
+      title: (
+        <div className={style.title}>{translateQuotationSea('currency')}</div>
+      ),
       width: 100,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'left',
     },
     {
-      title: translateQuotationSea('effect_date'),
+      title: (
+        <div className={style.title}>
+          {translateQuotationSea('effect_date')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'effectDated',
       key: 'effectDated',
@@ -352,7 +360,9 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateQuotationSea('validity'),
+      title: (
+        <div className={style.title}>{translateQuotationSea('validity')}</div>
+      ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
@@ -360,7 +370,7 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateQuotationSea('freq'),
+      title: <div className={style.title}>{translateQuotationSea('freq')}</div>,
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
@@ -368,7 +378,7 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translateQuotationSea('DEM'),
+      title: <div className={style.title}>{translateQuotationSea('DEM')}</div>,
       width: 200,
       dataIndex: 'demSeaQuotation',
       key: 'demSeaQuotation',
@@ -378,7 +388,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateQuotationSea('STO'),
+      title: <div className={style.title}>{translateQuotationSea('STO')}</div>,
       width: 200,
       dataIndex: 'stoSeaQuotation',
       key: 'stoSeaQuotation',
@@ -388,7 +398,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateQuotationSea('DET'),
+      title: <div className={style.title}>{translateQuotationSea('DET')}</div>,
       width: 200,
       dataIndex: 'detSeaQuotation',
       key: 'detSeaQuotation',
@@ -398,7 +408,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateQuotationSea('note'),
+      title: <div className={style.title}>{translateQuotationSea('note')}</div>,
       width: 200,
       dataIndex: 'note',
       key: 'note',
@@ -473,7 +483,7 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translateQuotationSea('LCLMin'),
+      title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinSeaQuotation',
       key: 'lclMinSeaQuotation',
@@ -483,7 +493,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translateQuotationSea('LCL'),
+      title: <div className={style.title}>{translateCommon('LCL')}</div>,
       width: 200,
       dataIndex: 'lclSeaQuotation',
       key: 'lclSeaQuotation',

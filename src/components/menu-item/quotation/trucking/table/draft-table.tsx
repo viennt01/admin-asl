@@ -206,14 +206,18 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       align: 'left',
     },
     {
-      title: translateQuotationTruck('LCLMin'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('LCLMin')}</div>
+      ),
       width: 200,
       dataIndex: 'lclMinTruckingPricing',
       key: 'lclMinTruckingPricing',
       align: 'right',
     },
     {
-      title: translateQuotationTruck('LCL'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('LCL')}</div>
+      ),
       width: 200,
       dataIndex: 'lclTruckingPricing',
       key: 'lclTruckingPricing',

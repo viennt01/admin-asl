@@ -166,7 +166,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translateQuotationSea('code'),
+      title: <div className={style.title}>{translateQuotationSea('code')}</div>,
       width: 200,
       dataIndex: 'seaQuotationNo',
       key: 'seaQuotationNo',
@@ -174,7 +174,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: translateQuotationSea('POL'),
+      title: <div className={style.title}>{translateQuotationSea('POL')}</div>,
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
@@ -182,28 +182,30 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: translateQuotationSea('POD'),
+      title: <div className={style.title}>{translateQuotationSea('POD')}</div>,
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
       align: 'left',
     },
     {
-      title: translateQuotationSea('commodity'),
+      title: (
+        <div className={style.title}>{translateQuotationSea('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translateQuotationSea('LCLMin'),
+      title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
       align: 'right',
     },
     {
-      title: translateQuotationSea('LCL'),
+      title: <div className={style.title}>{translateCommon('LCL')}</div>,
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',

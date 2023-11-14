@@ -143,7 +143,7 @@ const RequestTable = () => {
     for (const key in dataTable[0]?.seaQuotationDetailDTOs) {
       if (dataTable[0].seaQuotationDetailDTOs.hasOwnProperty(key)) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'seaQuotationDetailDTOs',
           render: (value: ISeaQuotationDetailDTOs) =>
@@ -168,7 +168,7 @@ const RequestTable = () => {
       },
     },
     {
-      title: translateQuotationSea('code'),
+      title: <div className={style.title}>{translateQuotationSea('code')}</div>,
       width: 200,
       dataIndex: 'seaQuotationNo',
       key: 'seaQuotationNo',
@@ -214,7 +214,7 @@ const RequestTable = () => {
       ),
     },
     {
-      title: translateQuotationSea('POL'),
+      title: <div className={style.title}>{translateQuotationSea('POL')}</div>,
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
@@ -222,14 +222,16 @@ const RequestTable = () => {
       render: (value) => value,
     },
     {
-      title: translateQuotationSea('POD'),
+      title: <div className={style.title}>{translateQuotationSea('POD')}</div>,
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
       align: 'left',
     },
     {
-      title: translateQuotationSea('commodity'),
+      title: (
+        <div className={style.title}>{translateQuotationSea('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
@@ -253,7 +255,7 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: translateQuotationSea('LCLMin'),
+      title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
@@ -263,7 +265,7 @@ const RequestTable = () => {
       },
     },
     {
-      title: translateQuotationSea('LCL'),
+      title: <div className={style.title}>{translateCommon('LCL')}</div>,
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',

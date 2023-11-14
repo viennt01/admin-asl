@@ -17,7 +17,7 @@ import {
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatDate } from '@/utils/format';
+import { formatDate, formatNumber } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -166,7 +166,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingSea('POL'),
+      title: <div className={style.title}>{translatePricingSea('POL')}</div>,
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
@@ -174,39 +174,47 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: translatePricingSea('POD'),
+      title: <div className={style.title}>{translatePricingSea('POD')}</div>,
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
       align: 'left',
     },
     {
-      title: translatePricingSea('vendor'),
+      title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'left',
     },
     {
-      title: translatePricingSea('commodity'),
+      title: (
+        <div className={style.title}>{translatePricingSea('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translatePricingSea('LCLMin'),
+      title: <div className={style.title}>{translatePricingSea('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
       align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
     },
     {
-      title: translatePricingSea('LCL'),
+      title: <div className={style.title}>{translatePricingSea('LCL')}</div>,
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',
       align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
     },
     {
       title: (

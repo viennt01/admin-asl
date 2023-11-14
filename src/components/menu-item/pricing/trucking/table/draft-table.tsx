@@ -169,7 +169,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingTrucking('pickupName'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('pickup')}</div>
+      ),
       width: 200,
       dataIndex: 'pickupName',
       key: 'pickupName',
@@ -177,42 +179,64 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: translatePricingTrucking('deliveryName'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('delivery')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'deliveryName',
       key: 'deliveryName',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('emtyPickupName'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('emtyPickup')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'emtyPickupName',
       key: 'emtyPickupName',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('vendor'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('vendor')}</div>
+      ),
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('commodity'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('commodity')}
+        </div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('currency'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('currency')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'right',
     },
     {
-      title: translatePricingTrucking('effect_date'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('effect_date')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'effectDated',
       key: 'effectDated',
@@ -220,7 +244,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingTrucking('validity'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('validity')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
@@ -228,7 +256,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingTrucking('freq'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('freq')}</div>
+      ),
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
@@ -236,7 +266,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingTrucking('note'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('note')}</div>
+      ),
       width: 200,
       dataIndex: 'note',
       key: 'note',
@@ -278,7 +310,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     },
 
     {
-      title: translatePricingTrucking('LCLMin'),
+      title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinTruckingPricing',
       key: 'lclMinTruckingPricing',
@@ -288,7 +320,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: translatePricingTrucking('LCL'),
+      title: <div className={style.title}>{translateCommon('LCL')}</div>,
       width: 200,
       dataIndex: 'lclTruckingPricing',
       key: 'lclTruckingPricing',

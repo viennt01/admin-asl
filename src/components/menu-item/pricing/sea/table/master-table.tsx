@@ -242,7 +242,7 @@ export default function MasterDataTable() {
     for (const key in dataTable[0]?.seaPricingDetailDTOs) {
       if (dataTable[0].seaPricingDetailDTOs.hasOwnProperty(key)) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'seaPricingDetailDTOs',
           render: (value: SeaPricingDetailDTOs) =>
@@ -266,7 +266,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translatePricingSea('POL'),
+      title: <div className={style.title}>{translatePricingSea('POL')}</div>,
       width: 200,
       dataIndex: 'polName',
       key: 'polName',
@@ -274,7 +274,7 @@ export default function MasterDataTable() {
       render: (value) => value,
     },
     {
-      title: translatePricingSea('POD'),
+      title: <div className={style.title}>{translatePricingSea('POD')}</div>,
       width: 200,
       dataIndex: 'podName',
       key: 'podName',
@@ -318,28 +318,34 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translatePricingSea('vendor'),
+      title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'left',
     },
     {
-      title: translatePricingSea('commodity'),
+      title: (
+        <div className={style.title}>{translatePricingSea('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translatePricingSea('currency'),
+      title: (
+        <div className={style.title}>{translatePricingSea('currency')}</div>
+      ),
       width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'right',
     },
     {
-      title: translatePricingSea('effect_date'),
+      title: (
+        <div className={style.title}>{translatePricingSea('effect_date')}</div>
+      ),
       width: 200,
       dataIndex: 'dateEffect',
       key: 'dateEffect',
@@ -347,7 +353,9 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingSea('validity'),
+      title: (
+        <div className={style.title}>{translatePricingSea('validity')}</div>
+      ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
@@ -355,7 +363,7 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingSea('freq'),
+      title: <div className={style.title}>{translatePricingSea('freq')}</div>,
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
@@ -363,7 +371,7 @@ export default function MasterDataTable() {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingSea('DEM'),
+      title: <div className={style.title}>{translatePricingSea('DEM')}</div>,
       width: 200,
       dataIndex: 'demSeaPricing',
       key: 'demSeaPricing',
@@ -373,7 +381,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translatePricingSea('STO'),
+      title: <div className={style.title}>{translatePricingSea('STO')}</div>,
       width: 200,
       dataIndex: 'stoSeaPricing',
       key: 'stoSeaPricing',
@@ -383,7 +391,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translatePricingSea('DET'),
+      title: <div className={style.title}>{translatePricingSea('DET')}</div>,
       width: 200,
       dataIndex: 'detSeaPricing',
       key: 'detSeaPricing',
@@ -393,7 +401,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translatePricingSea('note'),
+      title: <div className={style.title}>{translatePricingSea('note')}</div>,
       width: 200,
       dataIndex: 'note',
       key: 'note',
@@ -468,7 +476,7 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translatePricingSea('LCLMin'),
+      title: <div className={style.title}>{translatePricingSea('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinSeaPricing',
       key: 'lclMinSeaPricing',
@@ -478,7 +486,7 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: translatePricingSea('LCL'),
+      title: <div className={style.title}>{translatePricingSea('LCL')}</div>,
       width: 200,
       dataIndex: 'lclSeaPricing',
       key: 'lclSeaPricing',

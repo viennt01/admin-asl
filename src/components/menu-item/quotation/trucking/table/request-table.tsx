@@ -186,7 +186,7 @@ const RequestTable = () => {
       },
     },
     {
-      title: translateQuotationTruck('code'),
+      title: <div className={style.title}>{translateQuotationTruck('no')}</div>,
       width: 200,
       dataIndex: 'seaQuotationNo',
       key: 'seaQuotationNo',
@@ -232,7 +232,9 @@ const RequestTable = () => {
       ),
     },
     {
-      title: translateQuotationTruck('code'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('code')}</div>
+      ),
       width: 200,
       dataIndex: 'truckQuotationNo',
       key: 'truckQuotationNo',
@@ -240,14 +242,18 @@ const RequestTable = () => {
       render: (value) => value,
     },
     {
-      title: translateQuotationTruck('pickup'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('pickup')}</div>
+      ),
       width: 200,
       dataIndex: 'pickupName',
       key: 'pickupName',
       align: 'left',
     },
     {
-      title: translateQuotationTruck('delivery'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('delivery')}</div>
+      ),
       width: 200,
       dataIndex: 'deliveryName',
       key: 'deliveryName',
@@ -255,7 +261,11 @@ const RequestTable = () => {
       render: (value) => value,
     },
     {
-      title: translateQuotationTruck('emtyPickup'),
+      title: (
+        <div className={style.title}>
+          {translateQuotationTruck('emtyPickup')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'emtyPickupName',
       key: 'emtyPickupName',
@@ -263,7 +273,11 @@ const RequestTable = () => {
       render: (value) => value,
     },
     {
-      title: translateQuotationTruck('commodity'),
+      title: (
+        <div className={style.title}>
+          {translateQuotationTruck('commodity')}
+        </div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
@@ -287,7 +301,9 @@ const RequestTable = () => {
       align: 'center',
     },
     {
-      title: translateQuotationTruck('LCLMin'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('LCLMin')}</div>
+      ),
       width: 200,
       dataIndex: 'lclMinTruckingPricing',
       key: 'lclMinTruckingPricing',
@@ -297,7 +313,9 @@ const RequestTable = () => {
       },
     },
     {
-      title: translateQuotationTruck('LCL'),
+      title: (
+        <div className={style.title}>{translateQuotationTruck('LCL')}</div>
+      ),
       width: 200,
       dataIndex: 'lclTruckingPricing',
       key: 'lclTruckingPricing',

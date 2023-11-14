@@ -144,7 +144,7 @@ const RequestTable = () => {
         )
       ) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'truckingPricingDetailByContainerTypeDTOs',
           render: (value: ITypeDTOs) => formatCurrencyHasCurrency(value[key]),
@@ -162,7 +162,7 @@ const RequestTable = () => {
         dataTable[0].truckingPricingDetailByLoadCapacityDTOs.hasOwnProperty(key)
       ) {
         const obj = {
-          title: key,
+          title: <div className={style.title}>{key}</div>,
           width: 200,
           dataIndex: 'truckingPricingDetailByLoadCapacityDTOs',
           render: (value: ITypeDTOs) => formatCurrencyHasCurrency(value[key]),
@@ -225,7 +225,9 @@ const RequestTable = () => {
       ),
     },
     {
-      title: translatePricingTrucking('pickup'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('pickup')}</div>
+      ),
       width: 200,
       dataIndex: 'pickupName',
       key: 'pickupName',
@@ -233,42 +235,64 @@ const RequestTable = () => {
       render: (value) => value,
     },
     {
-      title: translatePricingTrucking('delivery'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('delivery')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'deliveryName',
       key: 'deliveryName',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('emtyPickup'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('emtyPickup')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'emtyPickupName',
       key: 'emtyPickupName',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('vendor'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('vendor')}</div>
+      ),
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('commodity'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('commodity')}
+        </div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
     },
     {
-      title: translatePricingTrucking('currency'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('currency')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'right',
     },
     {
-      title: translatePricingTrucking('effect_date'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('effect_date')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'effectDated',
       key: 'effectDated',
@@ -276,7 +300,11 @@ const RequestTable = () => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingTrucking('validity'),
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('validity')}
+        </div>
+      ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
@@ -284,7 +312,9 @@ const RequestTable = () => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingTrucking('freq'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('freq')}</div>
+      ),
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
@@ -292,7 +322,9 @@ const RequestTable = () => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingTrucking('note'),
+      title: (
+        <div className={style.title}>{translatePricingTrucking('note')}</div>
+      ),
       width: 200,
       dataIndex: 'note',
       key: 'note',
@@ -334,7 +366,7 @@ const RequestTable = () => {
     },
 
     {
-      title: translatePricingTrucking('LCLMin'),
+      title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
       width: 200,
       dataIndex: 'lclMinTruckingPricing',
       key: 'lclMinTruckingPricing',
@@ -344,7 +376,7 @@ const RequestTable = () => {
       },
     },
     {
-      title: translatePricingTrucking('LCL'),
+      title: <div className={style.title}>{translateCommon('LCL')}</div>,
       width: 200,
       dataIndex: 'lclTruckingPricing',
       key: 'lclTruckingPricing',
