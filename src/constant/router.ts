@@ -19,11 +19,11 @@ export const ROUTERS = {
     `/quotation/sea-quotation/manager-admin/${seaQuotationId}`,
 
   AIR_QUOTATION: '/quotation/air-quotation',
-  //AIR_QUOTATION_CREATE: '/quotation/air-quotation/create',
-  AIR_QUOTATION_EDIT: (airQuotationId: string) =>
-    `/quotation/air-quotation/edit/${airQuotationId}`,
-  // AIR_QUOTATION_MANAGER: (airQuotationId: string) =>
-  //   `/quotation/air-quotation/manager-admin/${airQuotationId}`,
+  AIR_QUOTATION_CREATE: '/quotation/air-quotation/create',
+  AIR_QUOTATION_EDIT: (airQuotationId: string, checkRow = false) =>
+    `/quotation/air-quotation/edit/${airQuotationId}?checkRow=${checkRow}`,
+  AIR_QUOTATION_MANAGER: (airQuotationId: string) =>
+    `/quotation/air-quotation/manager-admin/${airQuotationId}`,
 
   CUSTOMS_QUOTATION: '/quotation/customs-quotation',
   CUSTOMS_QUOTATION_CREATE: '/quotation/customs-quotation/create',
@@ -38,13 +38,6 @@ export const ROUTERS = {
     `/quotation/trucking-quotation/edit/${truckingQuotationId}?checkRow=${checkRow}`,
   TRUCKING_QUOTATION_MANAGER: (truckingQuotationId: string) =>
     `/quotation/trucking-quotation/manager-admin/${truckingQuotationId}`,
-
-  QUOTATION_ALL_IN: '/quotation/quotation-all-in',
-  //QUOTATION_ALL_IN_CREATE: '/quotation/quotation-all-in/create',
-  QUOTATION_ALL_IN_EDIT: (quotationAllInId: string) =>
-    `/quotation/quotation-all-in/edit/${quotationAllInId}`,
-  // QUOTATION_ALL_IN_MANAGER: (quotationAllInId: string) =>
-  //   `/quotation/quotation-all-in/manager-admin/${quotationAllInId}`,
 
   SEA_PRICING: '/pricing/pricing-sea',
   SEA_PRICING_CREATE: '/pricing/pricing-sea/create',

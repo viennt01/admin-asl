@@ -160,44 +160,6 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
-    '/quotation/quotation-all-in': [
-      { title: `${translateCommon('quotation')}` },
-      { title: `${translateCommon('quotation_all_in')}` },
-    ],
-    '/quotation/quotation-all-in/create': [
-      { title: `${translateCommon('quotation')}` },
-      {
-        title: (
-          <Link href={ROUTERS.QUOTATION_ALL_IN}>
-            {translateCommon('quotation_all_in')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('create')}` },
-    ],
-    '/quotation/quotation-all-in/edit/[id]': [
-      { title: `${translateCommon('quotation')}` },
-      {
-        title: (
-          <Link href={ROUTERS.QUOTATION_ALL_IN}>
-            {translateCommon('quotation_all_in')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('detail')}` },
-    ],
-    '/quotation/quotation-all-in/manager-admin/[id]': [
-      { title: `${translateCommon('quotation')}` },
-      {
-        title: (
-          <Link href={ROUTERS.QUOTATION_ALL_IN}>
-            {translateCommon('quotation_all_in')}
-          </Link>
-        ),
-      },
-      { title: `${translateCommon('request_for_approval')}` },
-    ],
-
     '/booking': [{ title: `${translateCommon('booking')}` }],
     '/booking/create': [
       {

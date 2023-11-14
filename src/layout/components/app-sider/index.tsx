@@ -75,7 +75,6 @@ const AppSider = ({ collapsed }: Props) => {
   const refAirQuotation = useRef(null);
   const refCustomsQuotation = useRef(null);
   const refTruckingQuotation = useRef(null);
-  const refQuotationAllIn = useRef(null);
   const refBooking = useRef(null);
   const refPricing = useRef(null);
   const refSeaPricing = useRef(null);
@@ -187,11 +186,6 @@ const AppSider = ({ collapsed }: Props) => {
           `${translateCommon('trucking_quotation')}`,
           ROUTERS.TRUCKING_QUOTATION,
           <ContainerOutlined ref={refTruckingQuotation} />
-        ),
-        getItem(
-          `${translateCommon('quotation_all_in')}`,
-          ROUTERS.QUOTATION_ALL_IN,
-          <ContainerOutlined ref={refQuotationAllIn} />
         ),
       ]
     ),
