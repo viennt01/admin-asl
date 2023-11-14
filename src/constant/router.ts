@@ -75,7 +75,10 @@ export const ROUTERS = {
     `/pricing/pricing-trucking/manager-admin/${truckingPricingId}`,
 
   PARTNER: '/partner',
-  PARTNER_EDIT: (partnerId: string) => `/partner/edit/${partnerId}`,
+  PARTNER_CREATE: '/partner/create',
+  PARTNER_EDIT: (partnerId: string, checkRow = false) =>
+    `/partner/edit/${partnerId}?checkRow=${checkRow}`,
+  PARTNER_MANAGER: (partnerId: string) => `/partner/manager-admin/${partnerId}`,
 
   TYPE_OF_LOCATION: '/master-data/location-catalog/type-of-location',
   TYPE_OF_LOCATION_EDIT: (typeOfLocationId: string, checkRow = false) =>

@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditPartner from '@/components/menu-item/partner/edit';
+import ManagerPartner from '@/components/menu-item/partner/manager';
 
-function EditPartnerPage() {
+function ManagerPartnerPage() {
   return (
     <>
       <Head>
-        <title>ASL | EDIT PARTNER</title>
+        <title>ASL | MANAGER PARTNER</title>
       </Head>
-      <EditPartner />
+      <ManagerPartner />
     </>
   );
 }
 
-export default withAuthentication(EditPartnerPage);
+export default withAuthentication(ManagerPartnerPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'partner']);
 export const getStaticPaths = () => {

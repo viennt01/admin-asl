@@ -330,10 +330,25 @@ export const API_PARTNER = {
   GET_ALL_PARTNER_GROUP: '/get-all-group-partner',
   GET_ALL_PARTNER: '/get-all-partner',
   GET_ALL_PARTNER_BY_IDS: '/get-partner-by-list-id',
+  GET_SEARCH: '/search-partner',
+  GET_DETAIL: '/get-partner',
+  CREATE: '/add-partner',
+  EDIT: '/update-partner',
+  DELETE: '/delete-partner',
+  UPDATE_STATUS: '/update-status-partner',
+  GET_DRAFT: '/get-partner-with-status-and-id-User',
+  GET_REQUEST: '/get-partner-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-partner-excel',
+  IMPORT: '/import-partner-with-excel',
+  EXPORT: '/export-partner-with-excel',
+  GET_ALL: '/get-all-partner',
 };
 export const API_PARTNER_ROLE = {
   GET_ALL: '/get-all-partner-role',
 };
 export const API_TRANSACTION_TYPE = {
   GET_ALL: '/get-all-transaction-type',
+};
+export const API_GENDER = {
+  GET_ALL: '/get-all-gender',
 };

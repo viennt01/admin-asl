@@ -1,46 +1,109 @@
 {
-    "title": "Danh sách các đối tượng",
-    "no": "STT",
-    "code": "Mã",
-    "abbreviation": "Tên viết tắt",
-    "name": "Tên đối tượng",
-    "type_of_partner": "Loại đối tượng",
-    "phone": "Số điện thoại",
-    "zone": "Khu Vực",
-    "country": "Quốc gia",
-    "address": "Địa chỉ",
-    "email": "Email",
-    "saleman": "Saleman",
-    "status":"Trạng thái",
-    "potential_analysis": "Phân tích tiềm năng",
-    "date_created": "Ngày tạo",
-    "date_update": "Ngày cập nhật",
-    "updater": "Người cập nhật",
-    "creator": "Người tạo",
-   
-    "customer": "Khách hàng",
-    "potential_customer": "Khách hàng tiềm năng",
-    "official_customer": "Khách hàng chính thức",
-    "customers_on_sales": "Khách hàng đang sales",
-    "customers_at_risk_of_losing_accounts": "Khách hàng có nguy cơ mất tài khoản",
-    "supplier": "Nhà cung cấp",
-    
-    "information_add_partner": "Thêm mới nhà cung cấp",
-    "information_edit_partner": "Chỉnh sửa nhà cung cấp",
-    "code_placeholder": "Please enter code partner",
-    "abbreviation_placeholder": "Please enter abbreviation of partner",
-    "name_placeholder": "Please enter name of partner",
-    "type_of_partner_placeholder": "Please choose  type of partner",
-    "zone_placeholder": "Please choose zone of partner",
-    "country_placeholder": "Please choose country",
-    "address_placeholder": "Please enter address",
-    "phone_placeholder": "Please enter phone number",  
-    "email_placeholder": "Please enter email",
-    "saleman_placeholder": "Please enter saleman",
-    "status_placeholder":"Please choose status",
-    "potential_analysis_placeholder":"Please choose potential analysis",
-    "date_created_placeholder": "Please choose date created",
-    "date_update_placeholder": "Please choose date update",
-    "updater_placeholder": "Please enter updater",
-    "creator_placeholder": "Please enter creator"
+    "title": "Danh sách đối tượng",
+    "title_requests": "Danh sách các yêu cầu cần phê duyệt",
+    "code": "Stt",
+    "information_add_partner": "Tạo mới đối tượng",
+    "information_edit_partner": "Sửa đối tượng",
+    "firstName_form": {
+        "title": "Tên",
+        "placeholder": "Nhập tên",
+        "error_required": "Vui lòng nhập tên"
+    },
+    "lastName_form": {
+        "title": "Họ",
+        "placeholder": "Nhập họ",
+        "error_required": "Vui lòng nhập họ"
+    },
+    "fullName_form": {
+        "title": "Họ và Tên",
+        "placeholder": "Nhập họ và tên",
+        "error_required": "Vui lòng nhập họ và tên"
+    },
+    "email_form": {
+        "title": "Email",
+        "placeholder": "Nhập email",
+        "error_required": "Vui lòng nhập email"
+    },
+    "phone_number_form": {
+        "title": "Số điện thoại",
+        "placeholder": "Nhập số điện thoại",
+        "error_required": "Vui lòng nhập số điện thoại"
+    },
+    "birthday_form": {
+        "title": "Ngày sinh",
+        "placeholder": "Nhập ngày sinh",
+        "error_required": "Vui lòng nhập ngày sinh"
+    },
+    "role_form": {
+        "title": "Vai trò",
+        "placeholder": "Chọn vai trò",
+        "error_required": "Vui lòng chọn vai trò"
+    },
+    "city_form": {
+        "title": "Thành phố",
+        "placeholder": "Chọn thành phố",
+        "error_required": "Vui lòng chọn thành phố"
+    },
+    "gender_form": {
+        "title": "Giới tính",
+        "placeholder": "Chọn giới tính",
+        "error_required": "Vui lòng chọn giới tính"
+    },
+    "visa_form": {
+        "title": "Visa",
+        "placeholder": "Nhập visa",
+        "error_required": "Vui lòng nhập visa"
+    },
+    "citizenIdentification_form": {
+        "title": "Căn cước công dân",
+        "placeholder": "Nhập căn cước công dân",
+        "error_required": "Vui lòng nhập căn cước công dân"
+    },
+    "nationality_form": {
+        "title": "Quốc tịch",
+        "placeholder": "Nhập quốc tịch",
+        "error_required": "Vui lòng nhập quốc tịch"
+    },
+    "workingBranch_form": {
+        "title": "Chi nhánh làm việc",
+        "placeholder": "Nhập chi nhánh làm việc",
+        "error_required": "Vui lòng nhập chi nhánh làm việc"
+    },
+    "taxCode_form": {
+        "title": "Mã số thuế",
+        "placeholder": "Nhập mã số thuế",
+        "error_required": "Vui lòng nhập mã số thuế"
+    },
+    "emailCompany_form": {
+        "title": "Email công ty",
+        "placeholder": "Nhập email công ty",
+        "error_required": "Vui lòng nhập email công ty"
+    },
+    "companyName_form": {
+        "titleEN": "Tên công ty (EN)",
+        "titleVN": "Tên công ty (VN)",
+        "placeholder": "Nhập tên công ty",
+        "error_required": "Vui lòng nhập tên công ty"
+    },
+    "abbreviations_form": {
+        "title": "Tên viết tắt",
+        "placeholder": "Nhập tên viết tắt",
+        "error_required": "Vui lòng nhập tên viết tắt"
+    },
+    "website_form": {
+        "title": "Website công ty",
+        "placeholder": "Nhập website công ty",
+        "error_required": "Vui lòng nhập website công ty"
+    },
+    "address_form": {
+        "titleEN": "Địa chỉ công ty (EN)",
+        "titleVN": "Địa chỉ công ty (VN)",
+        "placeholder": "Nhập địa chỉ công ty",
+        "error_required": "Vui lòng nhập địa chỉ công ty"
+    },
+    "note_form": {
+        "title": "Ghi chú",
+        "placeholder": "Nhập ghi chú",
+        "error_required": "Vui lòng nhập ghi chú"
+    }
 }

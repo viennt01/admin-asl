@@ -1,46 +1,108 @@
 {
     "title": "List of Partner",
-    "no": "No",
-    "code": "Code",
-    "abbreviation": "Abbreviation",
-    "name": "Name",
-    "type_of_partner": "Type of partner",
-    "phone": "Phone Number",
-    "zone": "Zone",
-    "country": "Country",
-    "address": "Address",
-    "email": "Email",
-    "saleman": "Saleman",
-    "status":"Status",
-    "potential_analysis": "Potential analysis",
-    "date_created": "Date Created",
-    "date_update": "Date Update",
-    "updater": "Updater",
-    "creator": "Creator",
-
-    "customer": "Customer",
-    "potential_customer": "Potential Customer",
-    "official_customer": "Official Customer",
-    "customers_on_sales": "Customer (on sales)",
-    "customers_at_risk_of_losing_accounts": "Customers at risk of losing accounts",
-    "supplier": "Liner/Vendor/Supplier",
-
-    "information_add_partner": "Add new partner",
-    "information_edit_partner": "Edit partner",
-    "code_placeholder": "Please enter code partner",
-    "abbreviation_placeholder": "Please enter abbreviation of partner",
-    "name_placeholder": "Please enter name of partner",
-    "type_of_partner_placeholder": "Please choose  type of partner",
-    "zone_placeholder": "Please choose zone of partner",
-    "country_placeholder": "Please choose country",
-    "address_placeholder": "Please enter address",
-    "phone_placeholder": "Please enter phone number",
-    "email_placeholder": "Please enter email",
-    "saleman_placeholder": "Please enter saleman",
-    "status_placeholder":"Please choose status",
-    "potential_analysis_placeholder":"Please choose potential analysis",
-    "date_created_placeholder": "Please choose date created",
-    "date_update_placeholder": "Please choose date update",
-    "updater_placeholder": "Please enter updater",
-    "creator_placeholder": "Please enter creator"
+    "code": "No",
+    "information_add_partner": "Create a new partner",
+    "information_edit_partner": "Edit a partner",
+    "firstName_form": {
+        "title": "First Name",
+        "placeholder": "Enter first name",
+        "error_required": "Please enter first name"
+    },
+    "lastName_form": {
+        "title": "Last Name",
+        "placeholder": "Enter last name",
+        "error_required": "Please enter last name"
+    },
+    "fullName_form": {
+        "title": "Full Name",
+        "placeholder": "Enter full name",
+        "error_required": "Please enter full name"
+    },
+    "email_form": {
+        "title": "Email",
+        "placeholder": "Enter email",
+        "error_required": "Please enter email"
+    },
+    "phone_number_form": {
+        "title": "Phone Number",
+        "placeholder": "Enter phone number",
+        "error_required": "Please enter phone number"
+    },
+    "birthday_form": {
+        "title": "Birthday",
+        "placeholder": "Enter birthday",
+        "error_required": "Please enter birthday"
+    },
+    "role_form": {
+        "title": "Role",
+        "placeholder": "Enter role",
+        "error_required": "Please enter role"
+    },
+    "city_form": {
+        "title": "City",
+        "placeholder": "Select city",
+        "error_required": "Please select city"
+    },
+    "gender_form": {
+        "title": "Gender",
+        "placeholder": "Select gender",
+        "error_required": "Please select gender"
+    },
+    "visa_form": {
+        "title": "Visa",
+        "placeholder": "Enter visa",
+        "error_required": "Please enter visa"
+    },
+    "citizenIdentification_form": {
+        "title": "Citizen identification",
+        "placeholder": "Enter citizen identification",
+        "error_required": "Please enter citizen identification"
+    },
+    "nationality_form": {
+        "title": "Nationality",
+        "placeholder": "Enter nationality",
+        "error_required": "Please enter nationality"
+    },
+    "workingBranch_form": {
+        "title": "Working branch",
+        "placeholder": "Enter working branch",
+        "error_required": "Please enter working branch"
+    },
+    "taxCode_form": {
+        "title": "Tax code",
+        "placeholder": "Enter tax code",
+        "error_required": "Please enter tax code"
+    },
+    "emailCompany_form": {
+        "title": "Email company",
+        "placeholder": "Enter email company",
+        "error_required": "Please enter email company"
+    },
+    "companyName_form": {
+        "titleEN": "Company name (EN)",
+        "titleVN": "Company name (VN)",
+        "placeholder": "Enter company name",
+        "error_required": "Please enter company name"
+    },
+    "abbreviations_form": {
+        "title": "Abbreviations",
+        "placeholder": "Enter abbreviations",
+        "error_required": "Please enter abbreviations"
+    },
+    "website_form": {
+        "title": "Website",
+        "placeholder": "Enter website",
+        "error_required": "Please enter website"
+    },
+    "address_form": {
+        "titleEN": "Address (EN)",
+        "titleVN": "Address (VN)",
+        "placeholder": "Enter address",
+        "error_required": "Please enter address"
+    },
+    "note_form": {
+        "title": "Note",
+        "placeholder": "Enter note",
+        "error_required": "Please enter note"
+    }
 }
