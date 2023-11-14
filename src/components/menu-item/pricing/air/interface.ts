@@ -197,12 +197,6 @@ export interface RequestTableRequest extends QueryInputRequest {
   paginateRequest: IPagination;
 }
 
-// get all location
-export interface RequireLocation {
-  locationID: string;
-  locationName: string;
-}
-
 // get all commodity
 export interface RequireCommodity {
   commodityID: string;

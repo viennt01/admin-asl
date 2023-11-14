@@ -17,7 +17,6 @@ import {
   ITruckQuotationEdit,
   IUpdateStatus,
   RequestTableRequest,
-  RequireLocation,
   RequireCommodity,
   RequireCurrency,
   RequireTypeContainer,
@@ -29,7 +28,6 @@ import {
   API_CONTAINER_TYPE,
   API_CURRENCY,
   API_FEE_GROUP,
-  API_LOCATION,
   API_PARTNER_ROLE,
   API_TRUCKING_QUOTATION,
 } from '@/fetcherAxios/endpoint';
@@ -115,10 +113,6 @@ export const exportTableFile = (data: IRequestExportData) => {
   return exportFile<IRequestExportData, BlobPart>({ data })(
     API_FEE_GROUP.EXPORT
   );
-};
-// Get all location
-export const getAllLocation = () => {
-  return get<ResponseWithPayload<RequireLocation[]>>({})(API_LOCATION.GET_ALL);
 };
 
 export const getAllCommodity = () => {

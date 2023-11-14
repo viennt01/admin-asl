@@ -16,7 +16,6 @@ import {
   AirPricingEdit,
   UpdateStatus,
   RequestTableRequest,
-  RequireLocation,
   RequireCommodity,
   RequireCurrency,
   RequireTypeLoadCapacity,
@@ -25,7 +24,6 @@ import {
 import {
   API_COMMODITY,
   API_CURRENCY,
-  API_LOCATION,
   API_AIR_PRICING,
   API_LOAD_CAPACITY,
 } from '@/fetcherAxios/endpoint';
@@ -92,11 +90,6 @@ export const importDataTable = (data: FormData) => {
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_AIR_PRICING.DOWNLOAD_EXAMPLE_FILE);
-};
-
-// Get all location
-export const getAllLocation = () => {
-  return get<ResponseWithPayload<RequireLocation[]>>({})(API_LOCATION.GET_ALL);
 };
 
 export const getAllCommodity = () => {

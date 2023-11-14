@@ -16,7 +16,7 @@ import {
   SeaPricingEdit,
   UpdateStatus,
   RequestTableRequest,
-  RequireLocation,
+  IDataLocation,
   RequireCommodity,
   RequireCurrency,
   RequireTypeContainer,
@@ -25,6 +25,7 @@ import {
   RequirePartner,
   RequestPartnerTable,
   TablePartner,
+  IRequireLocation,
 } from './interface';
 import {
   API_COMMODITY,
@@ -101,8 +102,10 @@ export const downloadExampleFile = () => {
 };
 
 // Get all location
-export const getAllLocation = () => {
-  return get<ResponseWithPayload<RequireLocation[]>>({})(API_LOCATION.GET_ALL);
+export const getAllLocation = (data: IRequireLocation) => {
+  return post<IRequireLocation, ResponseWithPayload<IDataLocation[]>>({ data })(
+    API_LOCATION.GET_ALL
+  );
 };
 
 export const getAllCommodity = () => {

@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import {
   FormValues,
   SeaPricingDetailDTOs,
+  TYPE_LOCATION,
   // SeaPricingFeeDTOs,
   UpdateStatus,
 } from '../interface';
@@ -83,7 +84,7 @@ const CardMain = ({
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
-    queryFn: () => getAllLocation(),
+    queryFn: () => getAllLocation({ type: TYPE_LOCATION.SEA }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

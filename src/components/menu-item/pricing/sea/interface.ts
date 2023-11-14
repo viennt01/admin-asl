@@ -1,6 +1,14 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_LOCATION {
+  'SEA' = 'Sea',
+  'TRUCKING' = 'Truck',
+  'AIR' = 'Air',
+  'ALL' = 'All',
+  'TOTAL' = '',
+}
+
 export interface SeaPricing {
   seaPricingID: string;
   podid: string;
@@ -220,9 +228,12 @@ export interface RequestTableRequest extends QueryInputRequest {
 }
 
 // get all location
-export interface RequireLocation {
+export interface IDataLocation {
   locationID: string;
   locationName: string;
+}
+export interface IRequireLocation {
+  type: TYPE_LOCATION;
 }
 
 // get all commodity

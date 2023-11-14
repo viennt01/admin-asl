@@ -16,7 +16,6 @@ import {
   SeaPricingEdit,
   IUpdateStatus,
   IRequestTableRequest,
-  RequireLocation,
   RequireCommodity,
   RequireCurrency,
   RequireTypeContainer,
@@ -30,7 +29,6 @@ import {
   API_COMMODITY,
   API_CONTAINER_TYPE,
   API_CURRENCY,
-  API_LOCATION,
   API_PARTNER,
   API_TRUCKING_PRICING,
   API_TRUCKING_QUOTATION,
@@ -111,11 +109,6 @@ export const importDataTable = (data: FormData) => {
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_TRUCKING_PRICING.DOWNLOAD_EXAMPLE_FILE);
-};
-
-// Get all location
-export const getAllLocation = () => {
-  return get<ResponseWithPayload<RequireLocation[]>>({})(API_LOCATION.GET_ALL);
 };
 
 export const getAllCommodity = () => {

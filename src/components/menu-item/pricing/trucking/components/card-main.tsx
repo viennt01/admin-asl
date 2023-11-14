@@ -27,12 +27,7 @@ import {
   API_LOCATION,
   API_PARTNER,
 } from '@/fetcherAxios/endpoint';
-import {
-  getAllCommodity,
-  getAllLocation,
-  getAllPartner,
-  updateStatus,
-} from '../fetcher';
+import { getAllCommodity, getAllPartner, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
@@ -41,6 +36,8 @@ import { formatNumber } from '@/utils/format';
 import dayjs from 'dayjs';
 import { getAllFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
 import { TYPE_FEE_GROUP } from '@/components/menu-item/master-data/fee-group/interface';
+import { getAllLocation } from '../../sea/fetcher';
+import { TYPE_LOCATION } from '../../sea/interface';
 
 interface Props {
   create?: boolean;
@@ -83,7 +80,7 @@ const CardMain = ({
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
-    queryFn: () => getAllLocation(),
+    queryFn: () => getAllLocation({ type: TYPE_LOCATION.TRUCKING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
