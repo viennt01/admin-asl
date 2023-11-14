@@ -136,6 +136,20 @@ export const API_AIR_PRICING = {
   EXPORT: '/export-air-pricing-with-excel',
 };
 
+export const API_CUSTOM_PRICING = {
+  GET_SEARCH: '/search-custom-pricing',
+  GET_DETAIL: '/get-custom-pricing-by-id',
+  CREATE: '/add-custom-pricing',
+  EDIT: '/update-custom-pricing',
+  DELETE: '/delete-custom-pricing',
+  UPDATE_STATUS: '/update-status-custom-pricing',
+  GET_DRAFT: '/search-custom-pricing-with-status',
+  GET_REQUEST: '/search-custom-pricing-with-status',
+  DOWNLOAD_EXAMPLE_FILE: '/download-custom-pricing-excel',
+  IMPORT: '/import-custom-pricing-with-excel',
+  EXPORT: '/export-custom-pricing-with-excel',
+};
+
 export const API_CONTAINER_TYPE = {
   GET_SEARCH: '/search-container-type',
   GET_DETAIL: '/get-container-type',

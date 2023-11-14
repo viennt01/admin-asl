@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerCustomPricing from '@/components/menu-item/pricing/sea/manager';
+import ManagerCustomPricing from '@/components/menu-item/pricing/custom/manager';
 
 function CustomPricingManagerPage() {
   return (
     <>
       <Head>
-        <title>ASL | SEA PRICING MANAGER</title>
+        <title>ASL | MANAGER CUSTOM PRICING</title>
       </Head>
       <ManagerCustomPricing />
     </>
@@ -15,7 +15,7 @@ function CustomPricingManagerPage() {
 
 export default withAuthentication(CustomPricingManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'pricingCustom']);
+export const getStaticProps = getStatic(['common', 'pricingCustoms']);
 export const getStaticPaths = () => {
   return {
     paths: [],

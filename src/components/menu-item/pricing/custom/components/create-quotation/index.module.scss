@@ -1,0 +1,18 @@
+.modal_container {
+  :global {
+    .ant-modal-content {
+      position: absolute;
+      top: -40px;
+      .ant-modal-body {
+        overflow-y: scroll;
+        // min-height: 500px;
+        max-height: 75vh;
+        .ant-form .ant-form-vertical {
+          .ant-row .css-dev-only-do-not-override-18gamct {
+            margin: 0px;
+          }
+        }
+      }
+    }
+  }
+}

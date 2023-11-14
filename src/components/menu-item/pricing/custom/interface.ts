@@ -1,142 +1,110 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
-export enum TYPE_LOCATION {
-  'SEA' = 'Sea',
-  'TRUCKING' = 'Truck',
-  'AIR' = 'Air',
-  'CUSTOM' = 'Custom',
-  'ALL' = 'All',
-  'TOTAL' = '',
-}
-
-export interface SeaPricing {
-  seaPricingID: string;
-  podid: string;
-  podName: string;
-  polid: string;
-  polName: string;
+export interface ICustomPricing {
+  customPricingID: string;
+  typeDelaracrionID: string;
+  typeDelaracrionName: string;
+  partnerID: string;
+  vendor: string;
   commodityID: string;
   commodityName: string;
   currencyID: string;
   currencyAbbreviations: string;
+  transactionTypeID: string;
+  transactionTypeName: string;
   note: string;
-  dateEffect: string;
+  customRedPrice: string;
+  customYellowPrice: string;
+  customGreenPrice: string;
+  effectDated: string;
   validityDate: string;
-  freqDate: string;
-  demSeaPricing: string;
-  detSeaPricing: string;
-  stoSeaPricing: string;
-  lclMinSeaPricing: string;
-  lclSeaPricing: string;
   public: boolean;
-  statusSeaPricing: string;
-  confirmDated: string;
-  confirmByUser: string;
-  dateInserted: string;
+  statusCustomPricing: string;
   insertedByUser: string;
+  dateInserted: string;
   dateUpdated: string;
   updatedByUser: string;
-  seaPricingDetailDTOs: { [key: string]: string };
-  vendor: string;
+  confirmDated: string;
+  confirmByUser: string;
 }
 
 export interface SeaPricingDetailDTOs {
   [key: string]: string;
 }
 
-export interface SeaPricingTable extends Omit<SeaPricing, 'seaPricingID'> {
+export interface ICustomPricingTable
+  extends Omit<ICustomPricing, 'customPricingID'> {
   key: string;
   searchAll: string;
 }
 
-export interface SeaPricingRequire extends IPagination {
-  data: SeaPricing[];
+export interface ICustomPricingRequire extends IPagination {
+  data: ICustomPricing[];
 }
 //
-export interface QueryInputParamType {
+export interface IQueryInputParamType {
   searchAll: string;
 }
-export interface QuerySelectParamType {
-  statusSeaPricing: string[];
+export interface IQuerySelectParamType {
+  statusCustomPricing: string[];
 }
 
 export interface RequestSeaPricing
-  extends QueryInputParamType,
-    QuerySelectParamType {
+  extends IQueryInputParamType,
+    IQuerySelectParamType {
   paginateRequest: IPagination;
 }
 
 export type SelectSearch = {
-  [key in keyof QueryInputParamType]: {
+  [key in keyof IQueryInputParamType]: {
     label: string;
     value: string;
   };
 };
 
-export interface SeaPricingDetailDataBody {
+export interface ICustomPricingDetailDataBody {
   id: string;
 }
 
-export interface FormValues {
-  seaPricingID: string;
-  podid: string;
-  polid: string;
+export interface IFormValues {
+  customPricingID: string;
+  typeDelaracrionID: string;
+  partnerID: string;
   commodityID: string;
-  note: string;
-  dateEffect: Dayjs;
-  validityDate: Dayjs;
-  vendor: string;
-  freqDate: string;
-  demSeaPricing: string;
-  detSeaPricing: string;
-  stoSeaPricing: string;
-  lclMinSeaPricing: string;
   currencyID: string;
-  lclSeaPricing: string;
+  transactionTypeID: string;
+  note: string;
+  customRedPrice: string;
+  customYellowPrice: string;
+  customGreenPrice: string;
+  effectDated: Dayjs;
+  validityDate: Dayjs;
   public: boolean;
-  statusSeaPricing: string;
-  seaPricingDetailDTOs: SeaPricingDetailDTOsFormValue[];
-  seaPricingFeeGroupDTOs: string[];
+  statusCustomPricing: string;
+  customPricingFeeGroupDTOs: string[];
 }
 
-export interface SeaPricingDetailType
-  extends Omit<FormValues, 'seaPricingFeeGroupDTOs'> {
+export interface ICustomPricingDetailType
+  extends Omit<IFormValues, 'customPricingFeeGroupDTOs'> {
+  vendor: string;
+  typeDelaracrionName: string;
+  typeDelaracrionCode: string;
+  typeDelaracrionDesctipton: string;
+  commodityName: string;
+  transactionTypeName: string;
+  currencyAbbreviations: string;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  seaPricingFeeGroupDTOs: SeaPricingFeeFormValue[];
+  confirmDated: string;
+  confirmByUser: string;
+  customPricingFeeGroupDTOs: ICustomPricingFeeFormValue[];
 }
 
-export interface SeaPricingDetailDTOsFormValue {
-  seaPricingDetailID: string;
-  containerTypeID: string;
-  containerTypeCode: string;
-  containerTypeName: string;
-  currencyID: string;
-  currencyName: string;
-  price: string;
-}
-
-export type SeaPricingDetailDTOsCreate = Omit<
-  SeaPricingDetailDTOsFormValue,
-  | 'seaPricingDetailID'
-  | 'containerTypeCode'
-  | 'containerTypeName'
-  | 'currencyName'
-  | 'price'
-> & {
-  pricePricingDetail: string;
-};
-
-export type SeaPricingDetailDTOsUpdate = Omit<
-  SeaPricingDetailDTOsFormValue,
-  'containerTypeCode' | 'containerTypeName' | 'currencyName'
->;
-
-export interface SeaPricingFeeFormValue {
-  seaPricingFeeGroupID?: string;
+export interface ICustomPricingFeeFormValue {
+  customPricingFeeGroupID?: string;
   feeGroupID: string;
   public: boolean;
   insertedByUser: string;
@@ -145,51 +113,40 @@ export interface SeaPricingFeeFormValue {
   updatedByUser: string;
 }
 
-export type SeaPricingFeeDTOsCreate = Omit<
-  SeaPricingFeeFormValue,
-  | 'seaPricingFeeGroupID'
+export type ICustomPricingFeeDTOsCreate = Omit<
+  ICustomPricingFeeFormValue,
+  | 'customPricingFeeGroupID'
   | 'insertedByUser'
   | 'dateInserted'
   | 'dateUpdated'
   | 'updatedByUser'
 >;
 
-export type SeaPricingFeeUpdate = Omit<
-  SeaPricingFeeFormValue,
+export type ICustomPricingFeeUpdate = Omit<
+  ICustomPricingFeeFormValue,
   'insertedByUser' | 'dateInserted' | 'dateUpdated' | 'updatedByUser'
 > & {
   isDelete: boolean;
 };
 
-export type SeaPricingCreate = Omit<
-  FormValues,
-  | 'seaPricingID'
-  | 'dateEffect'
-  | 'vendor'
+export type ICustomPricingCreate = Omit<
+  IFormValues,
+  | 'customPricingID'
+  | 'effectDated'
   | 'validityDate'
-  | 'seaPricingDetailDTOs'
-  | 'seaPricingFeeGroupDTOs'
+  | 'customPricingFeeGroupDTOs'
 > & {
-  dateEffect: number;
+  effectDated: number;
   validityDate: number;
-  partnerId: string;
-  seaPricingDetailRegisterRequests: SeaPricingDetailDTOsCreate[];
-  seaPricingFeeGroupRegisterRequests: SeaPricingFeeDTOsCreate[];
+  customPricingFeeGroupRegisterRequests: ICustomPricingFeeDTOsCreate[];
 };
 
-export type SeaPricingEdit = Omit<
-  FormValues,
-  | 'dateEffect'
-  | 'validityDate'
-  | 'vendor'
-  | 'seaPricingDetailDTOs'
-  | 'seaPricingFeeGroupDTOs'
+export type ICustomPricingEdit = Omit<
+  IFormValues,
+  'effectDated' | 'validityDate' | 'customPricingFeeGroupDTOs'
 > & {
-  dateEffect: number;
+  effectDated: number;
   validityDate: number;
-  partnerId: string;
-  seaPricingDetailUpdateRequests: SeaPricingDetailDTOsUpdate[];
-  seaPricingFeeGroupUpdateRequests: SeaPricingFeeUpdate[];
 };
 export type SeaPricingDelete = {
   ids: React.Key[];
@@ -232,9 +189,6 @@ export interface RequestTableRequest extends QueryInputRequest {
 export interface IDataLocation {
   locationID: string;
   locationName: string;
-}
-export interface IRequireLocation {
-  type: TYPE_LOCATION;
 }
 
 // get all commodity

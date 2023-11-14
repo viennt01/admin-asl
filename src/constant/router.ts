@@ -62,8 +62,8 @@ export const ROUTERS = {
 
   CUSTOMS_PRICING: '/pricing/pricing-customs',
   CUSTOMS_PRICING_CREATE: '/pricing/pricing-customs/create',
-  CUSTOMS_PRICING_EDIT: (customsPricingId: string) =>
-    `/pricing/pricing-customs/edit/${customsPricingId}`,
+  CUSTOMS_PRICING_EDIT: (customsPricingId: string, checkRow = false) =>
+    `/pricing/pricing-customs/edit/${customsPricingId}?checkRow=${checkRow}`,
   CUSTOMS_PRICING_MANAGER: (customsPricingId: string) =>
     `/pricing/pricing-customs/manager-admin/${customsPricingId}`,
 

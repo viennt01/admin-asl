@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditCustomPricing from '@/components/menu-item/pricing/customs/edit';
+import EditCustomPricing from '@/components/menu-item/pricing/custom/edit';
 
 function PricingCustomEditPage() {
   return (
@@ -15,7 +15,7 @@ function PricingCustomEditPage() {
 
 export default withAuthentication(PricingCustomEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'pricingCustoms', 'fee']);
+export const getStaticProps = getStatic(['common', 'pricingCustoms']);
 export const getStaticPaths = () => {
   return {
     paths: [],
