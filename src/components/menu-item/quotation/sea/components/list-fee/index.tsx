@@ -113,7 +113,7 @@ const ListFee = ({ form, create }: Props) => {
         ...listIdFeeGroup,
         {
           feeGroupName: newData[0]?.label || 'New Group',
-          feeGroupID: <TableFeeGroup dataTable={newData[0]?.value || '1'} />,
+          feeGroupID: newData[0]?.value,
         },
       ]);
     } else {
@@ -137,6 +137,15 @@ const ListFee = ({ form, create }: Props) => {
       setActiveKey(key);
     }
     setItems(newPanes);
+    form.setFieldValue(
+      'seaQuotaionFeeGroupDTOs',
+      newPanes.map((pane) => {
+        return {
+          feeGroupName: pane.label,
+          feeGroupID: pane.key,
+        };
+      })
+    );
   };
 
   const onEdit = (targetKey: TargetKey, action: 'add' | 'remove') => {

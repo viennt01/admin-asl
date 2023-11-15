@@ -65,6 +65,10 @@ interface FormProps {
   useDraft?: boolean;
 }
 
+const initalValues = {
+  truckingQuotaionFeeGroupDTOs: [],
+};
+
 const TruckQuotation = ({
   create,
   manager,
@@ -370,6 +374,7 @@ const TruckQuotation = ({
       <Form
         form={form}
         onFinish={onFinish}
+        initialValues={initalValues}
         autoComplete="off"
         layout="vertical"
       >

@@ -191,9 +191,11 @@ const CreateSeaQuotation = () => {
         })) || [];
 
       const truckQuotationFeeGroupRegisterRequests =
-        formValues.truckingQuotaionGroupPartnerDTOs?.map((id) => ({
-          feeGroupID: id,
-        })) || [];
+        formValues.truckingQuotaionFeeGroupDTOs?.map((id) => {
+          return {
+            feeGroupID: id.feeGroupID,
+          };
+        });
 
       const _requestData: ITruckQuotationCreate = {
         pickupID: formValues.pickupID || '',
@@ -313,10 +315,11 @@ const CreateSeaQuotation = () => {
           groupPartnerID: id,
         })) || [];
       const truckQuotationFeeGroupRegisterRequests =
-        formValues.truckingQuotaionGroupPartnerDTOs?.map((id) => ({
-          feeGroupID: id,
-        })) || [];
-
+        formValues.truckingQuotaionFeeGroupDTOs?.map((id) => {
+          return {
+            feeGroupID: id.feeGroupID,
+          };
+        });
       const _requestData: ITruckQuotationCreate = {
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',

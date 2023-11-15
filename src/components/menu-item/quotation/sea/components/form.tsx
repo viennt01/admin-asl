@@ -58,6 +58,10 @@ interface PortFormProps {
   useDraft?: boolean;
 }
 
+const initialValue = {
+  seaQuotaionFeeGroupDTOs: [],
+};
+
 const SeaQuotation = ({
   create,
   manager,
@@ -255,7 +259,7 @@ const SeaQuotation = ({
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.SEA_PRICING))
+            ? (successToast(data.message), router.push(ROUTERS.SEA_QUOTATION))
             : errorToast(data.message);
         },
         onError() {
@@ -316,6 +320,7 @@ const SeaQuotation = ({
       <Form
         form={form}
         onFinish={onFinish}
+        initialValues={initialValue}
         autoComplete="off"
         layout="vertical"
       >

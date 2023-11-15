@@ -162,7 +162,7 @@ const CreateSeaQuotation = () => {
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.SEA_PRICING))
+            ? (successToast(data.message), router.push(ROUTERS.SEA_QUOTATION))
             : errorToast(data.message);
         },
         onError() {
@@ -180,9 +180,11 @@ const CreateSeaQuotation = () => {
         })) || [];
 
       const seaQuotationFeeGroupRegisterRequests =
-        formValues.seaQuotaionGroupPartnerDTOs?.map((id) => ({
-          feeGroupID: id,
-        })) || [];
+        formValues.seaQuotaionFeeGroupDTOs?.map((id) => {
+          return {
+            feeGroupID: id.feeGroupID,
+          };
+        });
 
       const _requestData: ISeaQuotationCreate = {
         podid: formValues.podid || '',
@@ -212,7 +214,7 @@ const CreateSeaQuotation = () => {
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.SEA_PRICING))
+            ? (successToast(data.message), router.push(ROUTERS.SEA_QUOTATION))
             : errorToast(data.message);
         },
         onError() {
@@ -294,9 +296,11 @@ const CreateSeaQuotation = () => {
           groupPartnerID: id,
         })) || [];
       const seaQuotationFeeGroupRegisterRequests =
-        formValues.seaQuotaionGroupPartnerDTOs?.map((id) => ({
-          feeGroupID: id,
-        })) || [];
+        formValues.seaQuotaionFeeGroupDTOs?.map((id) => {
+          return {
+            feeGroupID: id.feeGroupID,
+          };
+        });
 
       const _requestData: ISeaQuotationCreate = {
         podid: formValues.podid || '',
