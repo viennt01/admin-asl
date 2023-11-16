@@ -102,6 +102,16 @@
         "placeholder": "Enter address",
         "error_required": "Please enter address"
     },
+    "languageID_form": {
+        "title": "Language",
+        "placeholder": "Enter language",
+        "error_required": "Please enter language"
+    },
+    "aslPersonalContactID_form": {
+        "title": "Personal Contact (ASL)",
+        "placeholder": "Enter personal contact (ASL)",
+        "error_required": "Please enter personal contact (ASL)"
+    },
     "note_form": {
         "title": "Note",
         "placeholder": "Enter note",
