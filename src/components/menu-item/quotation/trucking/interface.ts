@@ -312,9 +312,3 @@ export interface RequireTypeContainer {
   name: string;
   code: string;
 }
-// get all partner role
-export interface RequirePartnerRole {
-  partnerRoleID: string;
-  abbreviations: string;
-  name: string;
-}

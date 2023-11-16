@@ -896,7 +896,7 @@ const SHOW_ROUTER_HEADER = () => {
           </Link>
         ),
       },
-      { title: `${translateCommon('request_for_approval1')}` },
+      { title: `${translateCommon('request_for_approval')}` },
     ],
 
     '/system/user': [
@@ -918,7 +918,7 @@ const SHOW_ROUTER_HEADER = () => {
     '/system/user/manager-admin/[id]': [
       { title: `${translateCommon('system')}` },
       { title: <Link href={ROUTERS.USER}>{translateCommon('user')}</Link> },
-      { title: `${translateCommon('request_for_approval1')}` },
+      { title: `${translateCommon('request_for_approval')}` },
     ],
 
     '/system/staff': [
@@ -938,7 +938,7 @@ const SHOW_ROUTER_HEADER = () => {
     '/system/staff/manager-admin/[id]': [
       { title: `${translateCommon('system')}` },
       { title: <Link href={ROUTERS.STAFF}>{translateCommon('staff')}</Link> },
-      { title: `${translateCommon('request_for_approval1')}` },
+      { title: `${translateCommon('request_for_approval')}` },
     ],
 
     '/system/permission': [
@@ -970,7 +970,7 @@ const SHOW_ROUTER_HEADER = () => {
           <Link href={ROUTERS.PERMISSION}>{translateCommon('permission')}</Link>
         ),
       },
-      { title: `${translateCommon('request_for_approval1')}` },
+      { title: `${translateCommon('request_for_approval')}` },
     ],
 
     '/404': [{ title: `${translateCommon('error')}` }],

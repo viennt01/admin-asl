@@ -52,6 +52,7 @@ export enum TABLE_NAME {
   AIR_PRICING = 'Air Pricing',
   CUSTOM_PRICING = 'Custom Pricing',
   PARTNER = 'Partner',
+  STAFF = 'Staff',
 }
 
 export interface ColumnTable {

@@ -188,8 +188,13 @@ export const ROUTERS = {
 
   USER: '/system/user',
   USER_DETAIL: (id: string) => `/system/user/detail/${id}`,
+
   STAFF: '/system/staff',
-  STAFF_EDIT: (staffId: string) => `/system/staff/edit/${staffId}`,
+  STAFF_CREATE: '/system/staff/create',
+  STAFF_EDIT: (staffId: string, checkRow = false) =>
+    `/system/staff/edit/${staffId}?checkRow=${checkRow}`,
+  STAFF_MANAGER: (staffId: string) => `/system/staff/manager-admin/${staffId}`,
+
   PERMISSION: '/system/permission',
   PERMISSION_EDIT: (permissionId: string) =>
     `/system/permission/edit/${permissionId}`,

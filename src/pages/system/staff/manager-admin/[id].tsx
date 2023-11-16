@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditStaff from '@/components/menu-item/system/staff/edit';
+import ManagerStaff from '@/components/menu-item/system/staff/manager';
 
-function EditStaffPage() {
+function ManagerStaffPage() {
   return (
     <>
       <Head>
-        <title>ASL | EDIT STAFF</title>
+        <title>ASL | MANAGER STAFF</title>
       </Head>
-      <EditStaff />
+      <ManagerStaff />
     </>
   );
 }
 
-export default withAuthentication(EditStaffPage);
+export default withAuthentication(ManagerStaffPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'staff']);
 export const getStaticPaths = () => {

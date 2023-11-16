@@ -5,22 +5,22 @@ import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import UnitForm from '../components/form';
 import { IFormValues, IPartnerCreate, IPartnerEdit } from '../interface';
-import { createUnit, editUnit } from '../fetcher';
+import { createStaff, editStaff } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_PARTNER } from '@/fetcherAxios/endpoint';
+import { API_STAFF } from '@/fetcherAxios/endpoint';
 
-const CreatePartner = () => {
+const CreateStaff = () => {
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
     mutationFn: (body: IPartnerCreate) => {
-      return createUnit(body);
+      return createStaff(body);
     },
   });
 
   const updateMutation = useMutation({
     mutationFn: (body: IPartnerEdit) => {
-      return editUnit(body);
+      return editStaff(body);
     },
   });
 
@@ -31,27 +31,20 @@ const CreatePartner = () => {
         languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
         roleID: formValues.roleID || '',
-        cityID: formValues.cityID || '',
-        aslPersonalContactID: formValues.aslPersonalContactID || '',
+        aslRoleID: formValues.aslRoleID || '',
+        ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
         firstName: formValues.firstName || '',
         lastName: formValues.lastName || '',
         fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
-        abbreviations: formValues.abbreviations || '',
-        emailCompany: formValues.emailCompany || '',
+        address: formValues.address || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
+        birthday: formValues.userBirthday?.valueOf(),
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
         citizenIdentification: formValues.citizenIdentification || '',
-        website: formValues.website || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.REQUEST,
@@ -59,7 +52,7 @@ const CreatePartner = () => {
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.PARTNER))
+            ? (successToast(data.message), router.push(ROUTERS.UNIT))
             : errorToast(data.message);
         },
         onError() {
@@ -71,27 +64,20 @@ const CreatePartner = () => {
         languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
         roleID: formValues.roleID || '',
-        cityID: formValues.cityID || '',
-        aslPersonalContactID: formValues.aslPersonalContactID || '',
+        aslRoleID: formValues.aslRoleID || '',
+        ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
         firstName: formValues.firstName || '',
         lastName: formValues.lastName || '',
         fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
-        abbreviations: formValues.abbreviations || '',
-        emailCompany: formValues.emailCompany || '',
+        address: formValues.address || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
+        birthday: formValues.userBirthday?.valueOf(),
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
         citizenIdentification: formValues.citizenIdentification || '',
-        website: formValues.website || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.REQUEST,
@@ -99,7 +85,7 @@ const CreatePartner = () => {
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.PARTNER))
+            ? (successToast(data.message), router.push(ROUTERS.UNIT))
             : errorToast(data.message);
         },
         onError() {
@@ -116,27 +102,20 @@ const CreatePartner = () => {
         languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
         roleID: formValues.roleID || '',
-        cityID: formValues.cityID || '',
-        aslPersonalContactID: formValues.aslPersonalContactID || '',
+        aslRoleID: formValues.aslRoleID || '',
+        ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
         firstName: formValues.firstName || '',
         lastName: formValues.lastName || '',
         fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
-        abbreviations: formValues.abbreviations || '',
-        emailCompany: formValues.emailCompany || '',
+        address: formValues.address || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
+        birthday: formValues.userBirthday?.valueOf(),
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
         citizenIdentification: formValues.citizenIdentification || '',
-        website: formValues.website || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.DRAFT,
@@ -146,7 +125,7 @@ const CreatePartner = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_PARTNER.GET_SEARCH],
+                queryKey: [API_STAFF.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -159,27 +138,20 @@ const CreatePartner = () => {
         languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
         roleID: formValues.roleID || '',
-        cityID: formValues.cityID || '',
-        aslPersonalContactID: formValues.aslPersonalContactID || '',
+        aslRoleID: formValues.aslRoleID || '',
+        ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
         firstName: formValues.firstName || '',
         lastName: formValues.lastName || '',
         fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
-        abbreviations: formValues.abbreviations || '',
-        emailCompany: formValues.emailCompany || '',
+        address: formValues.address || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
+        birthday: formValues.userBirthday?.valueOf(),
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
         citizenIdentification: formValues.citizenIdentification || '',
-        website: formValues.website || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.DRAFT,
@@ -189,7 +161,7 @@ const CreatePartner = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_PARTNER.GET_SEARCH],
+                queryKey: [API_STAFF.GET_SEARCH],
               }))
             : errorToast(data.message);
         },
@@ -212,4 +184,4 @@ const CreatePartner = () => {
   );
 };
 
-export default CreatePartner;
+export default CreateStaff;

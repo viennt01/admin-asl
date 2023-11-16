@@ -1,39 +1,96 @@
 {
     "title": "Danh sách nhân viên",
-    "code": "Mã nhân viên",
-    "image": "Hình ảnh",
-    "account":"Tài khoản",
-    "full_name": "Họ và tên",
-    "gender": "Giới tính",
-    "dob": "Ngày sinh",
-    "phone": "Số điện thoại",
-    "address": "Địa chỉ",
-    "email": "Email",
-    "CCCD_Visa":"CCCD/Visa",
-    "nationality": "Quốc Tịch",
-    "working_branch":"Chi nhánh làm việc",
-    "position":"Chức vụ",
-    "department": "Phòng ban",
-    "manager": "Trưởng phòng",
-    "status":"Trạng thái",
-    "note": "Ghi chú",
-    "date_created": "Ngày tạo",
-    "creator": "Người tạo",
-
-    "information_add_staff": "Thêm mới nhân viên",
-    "information_edit_staff": "Chỉnh sửa nhân viên",
-    "full_name_placeholder": "Nhập họ và tên",
-    "gender_placeholder": "Chọn giới tính",
-    "dob_placeholder": "Chọn ngày sinh",
-    "nationality_placeholder": "Chọn quốc tịch",
-    "CCCD_Visa_placeholder":"Nhập CCCD/Visa",
-    "phone_placeholder": "Nhập số điện thoại",
-    "email_placeholder": "Nhập email",
-    "address_placeholder": "Nhập địa chỉ",
-    "working_branch_placeholder":"Nhập chi nhánh làm việc",
-    "position_placeholder":"Chọn chức vụ",
-    "department_placeholder": "Nhập phòng ban",
-    "manager_placeholder": "Nhập trưởng phòng",
-    "note_placeholder": "Nhập ghi chú",
-    "status_placeholder":"Chọn trạng thái"
+    "code": "Stt",
+    "information_add_staff": "Tạo mới nhân viên",
+    "information_edit_staff": "Sửa nhân viên",
+    "employeeCode_form": {
+        "title": "Mã nhân viên",
+        "placeholder": "Nhập mã nhân viên",
+        "error_required": "Vui lòng nhập mã nhân viên"
+    },
+    "firstName_form": {
+        "title": "Tên",
+        "placeholder": "Nhập tên",
+        "error_required": "Vui lòng nhập tên"
+    },
+    "lastName_form": {
+        "title": "Họ",
+        "placeholder": "Nhập họ",
+        "error_required": "Vui lòng nhập họ"
+    },
+    "fullName_form": {
+        "title": "Họ và Tên",
+        "placeholder": "Nhập họ và tên",
+        "error_required": "Vui lòng nhập họ và tên"
+    },
+    "email_form": {
+        "title": "Email",
+        "placeholder": "Nhập email",
+        "error_required": "Vui lòng nhập email"
+    },
+    "phone_number_form": {
+        "title": "Số điện thoại",
+        "placeholder": "Nhập số điện thoại",
+        "error_required": "Vui lòng nhập số điện thoại"
+    },
+    "birthday_form": {
+        "title": "Ngày sinh",
+        "placeholder": "Nhập ngày sinh",
+        "error_required": "Vui lòng nhập ngày sinh"
+    },
+    "role_form": {
+        "title": "Vai trò",
+        "placeholder": "Chọn vai trò",
+        "error_required": "Vui lòng chọn vai trò"
+    },
+    "aslRoleID_form": {
+        "title": "Vai trò (ASL)",
+        "placeholder": "Chọn vai trò (ASL)",
+        "error_required": "Vui lòng chọn vai trò (ASL)"
+    },
+    "gender_form": {
+        "title": "Giới tính",
+        "placeholder": "Chọn giới tính",
+        "error_required": "Vui lòng chọn giới tính"
+    },
+    "visa_form": {
+        "title": "Visa",
+        "placeholder": "Nhập visa",
+        "error_required": "Vui lòng nhập visa"
+    },
+    "citizenIdentification_form": {
+        "title": "Căn cước công dân",
+        "placeholder": "Nhập căn cước công dân",
+        "error_required": "Vui lòng nhập căn cước công dân"
+    },
+    "nationality_form": {
+        "title": "Quốc tịch",
+        "placeholder": "Nhập quốc tịch",
+        "error_required": "Vui lòng nhập quốc tịch"
+    },
+    "workingBranch_form": {
+        "title": "Chi nhánh làm việc",
+        "placeholder": "Nhập chi nhánh làm việc",
+        "error_required": "Vui lòng nhập chi nhánh làm việc"
+    },
+    "taxCode_form": {
+        "title": "Mã số thuế",
+        "placeholder": "Nhập mã số thuế",
+        "error_required": "Vui lòng nhập mã số thuế"
+    },
+    "ipAddress_form": {
+        "title": "Địa chỉ IP",
+        "placeholder": "Enter địa chỉ IP",
+        "error_required": "Please enter địa chỉ IP"
+    },
+    "languageID_form": {
+        "title": "Ngôn ngữ",
+        "placeholder": "Enter ngôn ngữ",
+        "error_required": "Please enter ngôn ngữ"
+    },
+    "note_form": {
+        "title": "Ghi chú",
+        "placeholder": "Nhập ghi chú",
+        "error_required": "Vui lòng nhập ghi chú"
+    }
 }

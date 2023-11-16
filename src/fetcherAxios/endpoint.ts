@@ -366,3 +366,23 @@ export const API_TRANSACTION_TYPE = {
 export const API_GENDER = {
   GET_ALL: '/get-all-gender',
 };
+export const API_LANGUAGE = {
+  GET_ALL: '/get-all-language',
+};
+export const API_ROLE = {
+  GET_ALL_ROLE_STAFF: '/get-role-staff',
+};
+export const API_STAFF = {
+  GET_SEARCH: '/search-staff',
+  GET_DETAIL: '/get-staff',
+  CREATE: '/add-staff',
+  EDIT: '/update-staff',
+  DELETE: '/delete-staff',
+  UPDATE_STATUS: '/update-status-staff',
+  GET_DRAFT: '/get-staff-with-status-and-id-User',
+  GET_REQUEST: '/get-staff-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-staff-excel',
+  IMPORT: '/import-staff-with-excel',
+  EXPORT: '/export-staff-with-excel',
+  GET_ALL: '/get-all-staff',
+};

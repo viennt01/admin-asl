@@ -21,14 +21,12 @@ import {
   RequireCurrency,
   RequireTypeContainer,
   IRequestExportData,
-  RequirePartnerRole,
 } from './interface';
 import {
   API_COMMODITY,
   API_CONTAINER_TYPE,
   API_CURRENCY,
   API_FEE_GROUP,
-  API_PARTNER_ROLE,
   API_TRUCKING_QUOTATION,
 } from '@/fetcherAxios/endpoint';
 
@@ -128,11 +126,5 @@ export const getAllCurrency = () => {
 export const getAllContainerType = () => {
   return get<ResponseWithPayload<RequireTypeContainer[]>>({})(
     API_CONTAINER_TYPE.GET_ALL
-  );
-};
-
-export const getAllPartnerRole = () => {
-  return get<ResponseWithPayload<RequirePartnerRole[]>>({})(
-    API_PARTNER_ROLE.GET_ALL
   );
 };

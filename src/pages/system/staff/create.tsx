@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import Staff from '@/components/menu-item/system/staff';
+import CreateStaff from '@/components/menu-item/system/staff/create';
 
-function StaffPage() {
+function CreateStaffPage() {
   return (
     <>
       <Head>
-        <title>ASL | STAFF</title>
+        <title>ASL | CREATE STAFF</title>
       </Head>
-      <Staff />
+      <CreateStaff />
     </>
   );
 }
 
-export default withAuthentication(StaffPage);
+export default withAuthentication(CreateStaffPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'staff']);
