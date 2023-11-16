@@ -82,14 +82,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             firstName: data.firstName,
             lastName: data.lastName,
             fullName: data.fullName,
-            companyNameEN: data.companyNameEN,
-            companyNameVN: data.companyNameVN,
+            companyName: data.companyName,
             abbreviations: data.abbreviations,
             emailCompany: data.emailCompany,
             phoneNumber: data.phoneNumber,
             taxCode: data.taxCode,
-            addressEN: data.addressEN,
-            addressVN: data.addressVN,
+            address: data.address,
             birthdated: data.birthdated,
             workingBranch: data.workingBranch,
             nationality: data.nationality,
@@ -246,11 +244,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: (
         <div className={style.title}>
-          {translatePartner('companyName_form.titleEN')}
+          {translatePartner('companyName_form.title')}
         </div>
       ),
-      dataIndex: 'companyNameEN',
-      key: 'companyNameEN',
+      dataIndex: 'companyName',
+      key: 'companyName',
       width: 250,
       align: 'left',
     },
@@ -268,7 +266,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: (
         <div className={style.title}>
-          {translatePartner('companyName_form.title')}
+          {translatePartner('emailCompany_form.title')}
         </div>
       ),
       dataIndex: 'emailCompany',
@@ -301,11 +299,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: (
         <div className={style.title}>
-          {translatePartner('address_form.titleEN')}
+          {translatePartner('address_form.title')}
         </div>
       ),
-      dataIndex: 'addressEN',
-      key: 'addressEN',
+      dataIndex: 'address',
+      key: 'address',
       width: 250,
       align: 'left',
     },

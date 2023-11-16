@@ -54,6 +54,7 @@ import ImportCSVModal, {
 } from '@/components/commons/import-data';
 import { getSystemDate } from '@/utils/common';
 import Table from '@/components/commons/table/table';
+import { STATUS_MATER_LABELS } from '@/constant/form';
 
 const { confirm } = Modal;
 
@@ -96,12 +97,19 @@ export default function MasterDataTable() {
         : setColumnsStateMap(initalValueDisplayColumnMaster);
     },
   });
-
+  const dataSelectSearch =
+    querySelectParams.status.length === 0
+      ? {
+          ...querySelectParams,
+          status: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
+        }
+      : querySelectParams;
   const locationsQuerySearch = useQuery({
     queryKey: [API_PARTNER.GET_SEARCH, queryInputParams, querySelectParams],
     queryFn: () =>
       getUnitSearch({
         ...queryInputParams,
+        ...dataSelectSearch,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -127,14 +135,12 @@ export default function MasterDataTable() {
             firstName: data.firstName,
             lastName: data.lastName,
             fullName: data.fullName,
-            companyNameEN: data.companyNameEN,
-            companyNameVN: data.companyNameVN,
+            companyName: data.companyName,
             abbreviations: data.abbreviations,
             emailCompany: data.emailCompany,
             phoneNumber: data.phoneNumber,
             taxCode: data.taxCode,
-            addressEN: data.addressEN,
-            addressVN: data.addressVN,
+            address: data.address,
             birthdated: data.birthdated,
             workingBranch: data.workingBranch,
             nationality: data.nationality,
@@ -353,11 +359,11 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePartner('companyName_form.titleEN')}
+          {translatePartner('companyName_form.title')}
         </div>
       ),
-      dataIndex: 'companyNameEN',
-      key: 'companyNameEN',
+      dataIndex: 'companyName',
+      key: 'companyName',
       width: 250,
       align: 'left',
     },
@@ -375,7 +381,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePartner('companyName_form.title')}
+          {translatePartner('emailCompany_form.title')}
         </div>
       ),
       dataIndex: 'emailCompany',
@@ -408,11 +414,11 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePartner('address_form.titleEN')}
+          {translatePartner('address_form.title')}
         </div>
       ),
-      dataIndex: 'addressEN',
-      key: 'addressEN',
+      dataIndex: 'address',
+      key: 'address',
       width: 250,
       align: 'left',
     },

@@ -79,6 +79,7 @@
         "error_required": "Please enter email company"
     },
     "companyName_form": {
+        "title": "Company name",
         "titleEN": "Company name (EN)",
         "titleVN": "Company name (VN)",
         "placeholder": "Enter company name",
@@ -95,6 +96,7 @@
         "error_required": "Please enter website"
     },
     "address_form": {
+        "title": "Address",
         "titleEN": "Address (EN)",
         "titleVN": "Address (VN)",
         "placeholder": "Enter address",

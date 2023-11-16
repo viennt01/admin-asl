@@ -80,6 +80,7 @@
         "error_required": "Vui lòng nhập email công ty"
     },
     "companyName_form": {
+        "title": "Tên công ty",
         "titleEN": "Tên công ty (EN)",
         "titleVN": "Tên công ty (VN)",
         "placeholder": "Nhập tên công ty",
@@ -96,6 +97,7 @@
         "error_required": "Vui lòng nhập website công ty"
     },
     "address_form": {
+        "title": "Địa chỉ công ty",
         "titleEN": "Địa chỉ công ty (EN)",
         "titleVN": "Địa chỉ công ty (VN)",
         "placeholder": "Nhập địa chỉ công ty",

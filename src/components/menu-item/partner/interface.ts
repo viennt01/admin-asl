@@ -17,14 +17,12 @@ export interface IPartner {
   firstName: string;
   lastName: string;
   fullName: string;
-  companyNameEN: string;
-  companyNameVN: string;
+  companyName: string;
   abbreviations: string;
   emailCompany: string;
   phoneNumber: string;
   taxCode: string;
-  addressEN: string;
-  addressVN: string;
+  address: string;
   birthdated: string;
   workingBranch: string;
   nationality: string;
@@ -58,9 +56,8 @@ export interface IPartnerRequire extends IPagination {
 export interface IQueryInputParamType {
   searchAll: string;
 }
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IQuerySelectParamType {
-  // statusUser: string[];
+  status: string[];
 }
 
 export interface IRequestPartnerType
