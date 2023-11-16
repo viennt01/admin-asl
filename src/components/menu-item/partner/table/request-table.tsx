@@ -29,7 +29,6 @@ import style from '@/components/commons/table/index.module.scss';
 import {
   initalSelectSearchRequest,
   initalValueQueryInputParamsRequest,
-  initalValueQuerySelectParamsRequest,
 } from '../constant';
 
 type DataIndex = keyof IQueryInputParamType;
@@ -55,7 +54,6 @@ const RequestTable = () => {
     queryKey: [API_PARTNER.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
-        ...initalValueQuerySelectParamsRequest,
         ...queryInputParams,
         paginateRequest: {
           currentPage: pagination.current,

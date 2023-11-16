@@ -17,9 +17,11 @@ import { useEffect, useState } from 'react';
 import { IFormValues, UpdateStatusUnit } from '../interface';
 import {
   API_GENDER,
+  API_LANGUAGE,
   API_MASTER_DATA,
   API_PARTNER,
   API_PARTNER_ROLE,
+  API_STAFF,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import { getListGender, getUnitDetail, updateStatus } from '../fetcher';
@@ -31,6 +33,7 @@ import { API_MESSAGE } from '@/constant/message';
 import dayjs from 'dayjs';
 import { getAllPartnerRole } from '../../quotation/sea/fetcher';
 import { getListCity } from '@/layout/fetcher';
+import { getListLanguage, getListStaff } from '../../system/staff/fetcher';
 
 const initialValue = {
   description: '',
@@ -89,6 +92,36 @@ const UnitForm = ({
   const getGender = useQuery({
     queryKey: [API_GENDER.GET_ALL],
     queryFn: () => getListGender(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  const getLanguage = useQuery({
+    queryKey: [API_LANGUAGE.GET_ALL],
+    queryFn: () => getListLanguage(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  const getAllStaff = useQuery({
+    queryKey: [API_STAFF.GET_ALL],
+    queryFn: () => getListStaff(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -714,14 +747,6 @@ const UnitForm = ({
               <Form.Item
                 label={translatePartner('companyName_form.titleVN')}
                 name="companyNameVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'companyName_form.error_required'
-                    ),
-                  },
-                ]}
               >
                 <Input
                   placeholder={translatePartner('companyName_form.placeholder')}
@@ -793,12 +818,6 @@ const UnitForm = ({
               <Form.Item
                 label={translatePartner('address_form.titleVN')}
                 name="addressVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('address_form.error_required'),
-                  },
-                ]}
               >
                 <Input
                   placeholder={translatePartner('address_form.placeholder')}
@@ -808,16 +827,87 @@ const UnitForm = ({
               </Form.Item>
             </Col>
 
+            <Col lg={8} span={24}>
+              <Form.Item
+                label={translatePartner('languageID_form.title')}
+                name="languageID"
+                rules={[
+                  {
+                    required: true,
+                    message: translatePartner('languageID_form.error_required'),
+                  },
+                ]}
+              >
+                <Select
+                  showSearch
+                  placeholder={translatePartner('languageID_form.placeholder')}
+                  disabled={checkRow && isCheckPermissionEdit}
+                  optionFilterProp="children"
+                  size="large"
+                  filterOption={(input, option) =>
+                    (option?.label ?? '').includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? '')
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? '').toLowerCase())
+                  }
+                  options={
+                    getLanguage.data?.data.map((item) => {
+                      return {
+                        value: item.languageID,
+                        label: item.name,
+                      };
+                    }) || []
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={8} span={24}>
+              <Form.Item
+                label={translatePartner('aslPersonalContactID_form.title')}
+                name="aslPersonalContactID"
+                rules={[
+                  {
+                    required: true,
+                    message: translatePartner(
+                      'aslPersonalContactID_form.error_required'
+                    ),
+                  },
+                ]}
+              >
+                <Select
+                  showSearch
+                  placeholder={translatePartner(
+                    'aslPersonalContactID_form.placeholder'
+                  )}
+                  disabled={checkRow && isCheckPermissionEdit}
+                  optionFilterProp="children"
+                  size="large"
+                  filterOption={(input, option) =>
+                    (option?.label ?? '').includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? '')
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? '').toLowerCase())
+                  }
+                  options={
+                    getAllStaff.data?.data.map((item) => {
+                      return {
+                        value: item.aslPersonalContactID,
+                        label: item.fullName,
+                      };
+                    }) || []
+                  }
+                />
+              </Form.Item>
+            </Col>
+
             <Col span={24}>
               <Form.Item
                 label={translatePartner('note_form.title')}
                 name="note"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('note_form.error_required'),
-                  },
-                ]}
               >
                 <TextArea
                   size="large"
@@ -829,6 +919,9 @@ const UnitForm = ({
             </Col>
             <Col span={0}>
               <Form.Item name="statusUser"></Form.Item>
+            </Col>
+            <Col span={0}>
+              <Form.Item name="avatar"></Form.Item>
             </Col>
           </Row>
         </Card>

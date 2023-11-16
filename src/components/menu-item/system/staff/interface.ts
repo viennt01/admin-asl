@@ -180,3 +180,8 @@ export interface IRoleStaff {
   abbreviations: string;
   name: string;
 }
+//get all role partner
+export interface IAllPartner {
+  aslPersonalContactID: string;
+  fullName: string;
+}

@@ -103,6 +103,16 @@
         "placeholder": "Nhập địa chỉ công ty",
         "error_required": "Vui lòng nhập địa chỉ công ty"
     },
+    "languageID_form": {
+        "title": "Ngôn ngữ",
+        "placeholder": "Nhập ngôn ngữ",
+        "error_required": "Vui lòng nhập ngôn ngữ"
+    },
+    "aslPersonalContactID_form": {
+        "title": "Personal Contact (ASL)",
+        "placeholder": "Nhập personal contact (ASL)",
+        "error_required": "Vui lòng nhập personal contact (ASL)"
+    },
     "note_form": {
         "title": "Ghi chú",
         "placeholder": "Nhập ghi chú",

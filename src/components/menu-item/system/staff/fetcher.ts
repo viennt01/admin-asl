@@ -21,6 +21,7 @@ import {
   IGenderPartner,
   ILanguage,
   IRoleStaff,
+  IAllPartner,
 } from './interface';
 import {
   API_COLUMN,
@@ -127,4 +128,9 @@ export const getListRoleStaff = () => {
   return get<ResponseWithPayload<IRoleStaff[]>>({})(
     API_ROLE.GET_ALL_ROLE_STAFF
   );
+};
+//----------------------------------------------------------------
+//Get list staff
+export const getListStaff = () => {
+  return get<ResponseWithPayload<IAllPartner[]>>({})(API_STAFF.GET_ALL);
 };

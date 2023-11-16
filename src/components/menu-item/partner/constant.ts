@@ -54,9 +54,7 @@ export const initalSelectSearchDraft = {
 export const initalValueQueryInputParamsRequest = {
   searchAll: '',
 };
-export const initalValueQuerySelectParamsRequest = {
-  typeUnitID: '',
-};
+
 export const initalSelectSearchRequest = {
   searchAll: {
     label: '',

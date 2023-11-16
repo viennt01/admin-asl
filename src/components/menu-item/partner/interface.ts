@@ -167,12 +167,7 @@ export interface UpdateStatusUnit {
 export interface QueryInputRequest {
   searchAll: string;
 }
-export interface QuerySelectRequest {
-  typeUnitID: string;
-}
-export interface RequestUnitTableRequest
-  extends QueryInputRequest,
-    QuerySelectRequest {
+export interface RequestUnitTableRequest extends QueryInputRequest {
   paginateRequest: IPagination;
 }
 // export table

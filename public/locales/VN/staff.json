@@ -85,8 +85,8 @@
     },
     "languageID_form": {
         "title": "Ngôn ngữ",
-        "placeholder": "Enter ngôn ngữ",
-        "error_required": "Please enter ngôn ngữ"
+        "placeholder": "Nhập ngôn ngữ",
+        "error_required": "Vui lòng nhập ngôn ngữ"
     },
     "note_form": {
         "title": "Ghi chú",
