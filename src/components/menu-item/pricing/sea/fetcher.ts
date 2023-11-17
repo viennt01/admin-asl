@@ -144,8 +144,13 @@ export const getAllPartnerGroup = () => {
 export const getAllPartner = () =>
   get<ResponseWithPayload<RequirePartner[]>>({})(API_PARTNER.GET_ALL_PARTNER);
 // Get table partner
-export const getTablePartner = (data: RequestPartnerTable) => {
+export const getTablePartnerId = (data: RequestPartnerTable) => {
   return post<RequestPartnerTable, ResponseWithPayload<TablePartner[]>>({
     data,
   })(API_PARTNER.GET_ALL_PARTNER_BY_IDS);
+};
+export const getTablePartnerByGroup = (data: RequestPartnerTable) => {
+  return post<RequestPartnerTable, ResponseWithPayload<TablePartner[]>>({
+    data,
+  })(API_PARTNER.GET_ALL_PARTNER_BY_GROUPS_ID);
 };

@@ -165,6 +165,21 @@ export const API_CONTAINER_TYPE = {
   GET_ALL: '/get-all-container-type',
 };
 
+export const API_CUSTOMS_QUOTATION = {
+  GET_SEARCH: '/search-custom-quotation',
+  GET_DETAIL: '/get-custom-quotation-by-id',
+  CREATE: '/add-custom-quotation',
+  CREATE_WITH_PRICING: '/add-custom-quotation-by-pricing',
+  EDIT: '/update-custom-quotation',
+  DELETE: '/delete-custom-quotation',
+  UPDATE_STATUS: '/update-status-custom-quotation',
+  GET_DRAFT: '/search-custom-quotation-by-user',
+  GET_REQUEST: '/search-custom-quotation',
+  DOWNLOAD_EXAMPLE_FILE: '/download-custom-quotation-excel',
+  IMPORT: '/import-custom-quotation-with-excel',
+  EXPORT: '/export-custom-quotation-with-excel',
+};
+
 export const API_CURRENCY = {
   GET_SEARCH: '/search-currency',
   GET_DETAIL: '/get-currency',
@@ -344,6 +359,7 @@ export const API_PARTNER = {
   GET_ALL_PARTNER_GROUP: '/get-all-group-partner',
   GET_ALL_PARTNER: '/get-all-partner',
   GET_ALL_PARTNER_BY_IDS: '/get-partner-by-list-id',
+  GET_ALL_PARTNER_BY_GROUPS_ID: '/get-partner-by-list-id',
   GET_SEARCH: '/search-partner',
   GET_DETAIL: '/get-partner',
   CREATE: '/add-partner',

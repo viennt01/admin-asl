@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import EditCustomsQuotation from '@/components/menu-item/quotation/customs/edit';
+import EditCustomQuotation from '@/components/menu-item/quotation/custom/edit';
 
 function CustomsQuotationEditPage() {
   return (
@@ -8,14 +8,14 @@ function CustomsQuotationEditPage() {
       <Head>
         <title>ASL | CUSTOM QUOTATION EDIT</title>
       </Head>
-      <EditCustomsQuotation />
+      <EditCustomQuotation />
     </>
   );
 }
 
 export default withAuthentication(CustomsQuotationEditPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'customsQuotation', 'fee']);
+export const getStaticProps = getStatic(['common', 'customsQuotation']);
 export const getStaticPaths = () => {
   return {
     paths: [],

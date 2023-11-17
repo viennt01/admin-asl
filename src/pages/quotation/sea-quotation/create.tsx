@@ -6,7 +6,7 @@ function CreateSeaQuotationPage() {
   return (
     <>
       <Head>
-        <title>ASL | CREATE SEA QUOTATION</title>
+        <title>ASL | SEA QUOTATION CREATE</title>
       </Head>
       <CreateSeaQuotation />
     </>

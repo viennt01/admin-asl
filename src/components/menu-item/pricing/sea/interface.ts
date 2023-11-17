@@ -297,7 +297,10 @@ export interface Partner {
   partnerID: string;
   email: string;
   fullName: string;
+  companyName: string;
+  cityName: string;
+  nationality: string;
 }
-export interface TablePartner extends Omit<Partner, 'partnerID'> {
+export interface TablePartner extends Partner {
   key: React.Key;
 }

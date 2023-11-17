@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerCustomQuotation from '@/components/menu-item/pricing/sea/manager';
+import ManagerCustomsQuotation from '@/components/menu-item/quotation/custom/manager';
 
 function CustomQuotationManagerPage() {
   return (
@@ -8,14 +8,14 @@ function CustomQuotationManagerPage() {
       <Head>
         <title>ASL | CUSTOM QUOTATION MANAGER</title>
       </Head>
-      <ManagerCustomQuotation />
+      <ManagerCustomsQuotation />
     </>
   );
 }
 
 export default withAuthentication(CustomQuotationManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'customQuotation']);
+export const getStaticProps = getStatic(['common', 'customsQuotation']);
 export const getStaticPaths = () => {
   return {
     paths: [],

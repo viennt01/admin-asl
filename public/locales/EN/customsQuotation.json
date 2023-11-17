@@ -1,57 +1,81 @@
 {
     "title": "List of Customs Quotation",
-    "no" : "No",
-    "commodity": "Commodity",
-    "customs_office": "Customs Office",
-    "router": "Router",
-    "customs_type": "Customs Type",
-    "quantity": "Quantity",
-    "service_type": "Service Type",
-    "modify_date": "Modify Date",
+    "no" : "NO",
     "status": "Status",
-    "note": "Note",
-    "date_created": "Date created",
-    "creator": "Creator",
 
-    "title_customs_service": "Customs Service",
-    "title_customs_other_fee": "Other Fee",
-    "information_add_customs_quotation": "Add new Customs Quotation",
+    "information_add_customs_quotation": "Add New Customs Quotation",
     "information_edit_customs_quotation": "Edit Customs Quotation",
 
-    "commodity_form": {
-        "title": "Customs Office",
-        "placeholder": "Enter Customs Office",
-        "error_required": "Please enter Customs Office"
+    "typeDelaracrionID_form": {
+        "title": "Declaration",
+        "placeholder": "Enter declaration",
+        "error_required": "Please enter declaration"
     },
 
-    "customs_office_form": {
+    "vendor_form": {
+        "title": "Vendor",
+        "placeholder": "Enter vendor",
+        "error_required": "Please enter vendor"
+    },
+
+    "transactionTypeID_form": {
+        "title": "Transaction",
+        "placeholder": "Select transaction",
+        "error_required": "Please select transaction"
+    },
+
+    "effect_date_form": {
+        "title": "Effect Date",
+        "placeholder": "Enter effect date",
+        "error_required": "Please enter effect date"
+    },
+
+    "validity_form": {
+        "title": "Validity Date",
+        "placeholder": "Enter validity date",
+        "error_required": "Please enter validity date"
+    },
+
+    "commodity_form": {
         "title": "Commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
 
-    "router_form": {
-        "title": "Router",
-        "placeholder": "Select Router",
-        "error_required": "Please select Router"
-    },
-    
-    "customs_type_form": {
-        "title": "Customs Type",
-        "placeholder": "Select Customs Type",
-        "error_required": "Please select Customs Type"
+    "customRedPrice_form": {
+        "title": "Red Price",
+        "placeholder": "Enter Red price",
+        "error_required": "Please enter Red price"
     },
 
-    "quantity_form": {
-        "title": "Quantity",
-        "placeholder": "Enter Quantity",
-        "error_required": "Please enter Quantity"
+    "customYellowPrice_form": {
+        "title": "Yellow Price",
+        "placeholder": "Enter yellow price",
+        "error_required": "Please enter yellow price"
     },
 
-    "service_type_form": {
-        "title": "Service Type",
-        "placeholder": "Enter Service Type",
-        "error_required": "Please enter Service Type"
+    "customGreenPrice_form": {
+        "title": "Green Price",
+        "placeholder": "Enter green price",
+        "error_required": "Please enter green price"
+    },
+
+    "currency_form": {
+        "title": "Currency",
+        "placeholder": "Enter currency",
+        "error_required": "Please enter currency"
+    },
+
+    "fee_group_form": {
+        "title": "Fee group",
+        "placeholder": "Select fee group",
+        "error_required": "Please select fee group"
+    },
+
+    "note_form": {
+        "title": "Note",
+        "placeholder": "Enter note",
+        "error_required": "Please enter note"
     }
 
 }

@@ -1,59 +1,80 @@
 {
     "title": "Danh sách báo giá hải quan",
     "no" : "STT",
-    "commodity": "Hàng hóa",
-    "customs_office": "Chi cục mở tờ khai",
-    "router": "Luồng",
-    "customs_type": "Loại tờ khai",
-    "quantity": "Số lượng",
-    "service_type": "Loại hình dịch vụ",
-    "modify_date": "Ngày cập nhật",
-    "modify_date": "Ngày cập nhật",
-    "updater": "Người cập nhật",
     "status": "Trạng thái",
-    "note": "Ghi chú",
-    "date_created": "Ngày tạo",
-    "creator": "Người tạo",
-
-    "title_customs_service": "Phí dịch vụ hải quam",
-    "title_customs_other_fee": "Chi phí khác",
-    "title_customs_condition": "Điều kiện",
+    
     "information_add_customs_quotation": "Thêm mới báo giá hải quan",
     "information_edit_customs_quotation": "Chỉnh sửa báo giá hải quan",
 
+    "typeDelaracrionID_form": {
+        "title": "Declaration",
+        "placeholder": "Nhập declaration",
+        "error_required": "Vui lòng nhập declaration"
+    },
+
+    "vendor_form": {
+        "title": "Vendor",
+        "placeholder": "Nhập vendor",
+        "error_required": "Vui lòng nhập vendor"
+    },
+
+    "transactionTypeID_form": {
+        "title": "Giao dịch",
+        "placeholder": "Chọn giao dịch",
+        "error_required": "Vui lòng chọn giao dịch"
+    },
+
+    "effect_date_form": {
+        "title": "Effect Date",
+        "placeholder": "Nhập effect date",
+        "error_required": "Vui lòng nhập effect date"
+    },
+
+    "validity_form": {
+        "title": "Validity",
+        "placeholder": "Nhập validity date",
+        "error_required": "Vui lòng nhập validity date"
+    },
+
     "commodity_form": {
-        "title": "Hàng hóa",
-        "placeholder": "Nhập Hàng hóa",
-        "error_required": "Vui lòng nhập Hàng hóa"
-    },
-    
-    "customs_office_form": {
-        "title": "Chi cục mở tờ khai",
-        "placeholder": "Nhập Chi cục mở tờ khai",
-        "error_required": "Vui lòng nhập Chi cục mở tờ khai"
+        "title": "commodity",
+        "placeholder": "Nhập commodity",
+        "error_required": "Vui lòng nhập commodity"
     },
 
-    "router_form": {
-        "title": "Luồng",
-        "placeholder": "Chọn Luồng",
-        "error_required": "Vui lòng chọn Luồng"
-    },
-    
-    "customs_type_form": {
-        "title": "Loại tờ khai",
-        "placeholder": "Chọn Loại tờ khai",
-        "error_required": "Vui lòng chọn Loại tờ khai"
+    "customRedPrice_form": {
+        "title": "Giá đỏ",
+        "placeholder": "Nhập giá đỏ",
+        "error_required": "Vui lòng nhập giá đỏ"
     },
 
-    "quantity_form": {
-        "title": "Số lượng",
-        "placeholder": "Nhập Số lượng",
-        "error_required": "Vui lòng nhập Số lượng"
+    "customYellowPrice_form": {
+        "title": "Giá vàng",
+        "placeholder": "Nhập giá vàng",
+        "error_required": "Vui lòng nhập giá vàng"
     },
 
-    "service_type_form": {
-        "title": "Loại hình dịch vụ",
-        "placeholder": "Nhập Loại hình dịch vụ",
-        "error_required": "Vui lòng nhập Loại hình dịch vụ"
+    "customGreenPrice_form": {
+        "title": "Giá xanh",
+        "placeholder": "Nhập giá xanh",
+        "error_required": "Vui lòng nhập giá xanh"
+    },
+
+    "currency_form": {
+        "title": "Currency",
+        "placeholder": "Nhập currency",
+        "error_required": "Vui lòng nhập currency"
+    },
+
+    "fee_group_form": {
+        "title": "Loại nhóm phí",
+        "placeholder": "Chọn loại nhóm phí",
+        "error_required": "Vui lòng chọn loại nhóm phí"
+    },
+
+    "note_form": {
+        "title": "Ghi chú",
+        "placeholder": "Nhập ghi chú",
+        "error_required": "Vui lòng nhập ghi chú"
     }
 }

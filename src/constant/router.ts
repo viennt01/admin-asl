@@ -27,8 +27,8 @@ export const ROUTERS = {
 
   CUSTOMS_QUOTATION: '/quotation/customs-quotation',
   CUSTOMS_QUOTATION_CREATE: '/quotation/customs-quotation/create',
-  CUSTOMS_QUOTATION_EDIT: (customsQuotationId: string) =>
-    `/quotation/customs-quotation/edit/${customsQuotationId}`,
+  CUSTOMS_QUOTATION_EDIT: (customsQuotationId: string, checkRow = false) =>
+    `/quotation/customs-quotation/edit/${customsQuotationId}?checkRow=${checkRow}`,
   CUSTOMS_QUOTATION_MANAGER: (customsQuotationId: string) =>
     `/quotation/customs-quotation/manager-admin/${customsQuotationId}`,
 

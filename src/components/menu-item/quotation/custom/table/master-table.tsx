@@ -13,7 +13,7 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_CUSTOM_PRICING } from '@/fetcherAxios/endpoint';
+import { API_CUSTOMS_QUOTATION } from '@/fetcherAxios/endpoint';
 import { formatDate, formatNumber } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -21,7 +21,7 @@ import {
   IQueryInputParamType,
   IQuerySelectParamType,
   SelectSearch,
-  ICustomPricingTable,
+  ICustomQuotationTable,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -29,9 +29,9 @@ import {
   SkeletonTable,
 } from '@/components/commons/table/table-default';
 import {
-  deleteCustomPricing,
+  deleteCustomQuotation,
   downloadExampleFile,
-  getCustomPricingSearch,
+  getCustomQuotationSearch,
   importDataTable,
 } from '../fetcher';
 import Table from '../../../../commons/table/table';
@@ -46,7 +46,6 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
-import CreateQuotationModal from '../components/create-quotation/modal';
 
 const { confirm } = Modal;
 
@@ -54,7 +53,7 @@ export default function MasterDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePricingCustom } = useI18n('pricingCustoms');
+  const { translate: translateQuotationCustom } = useI18n('customsQuotation');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
@@ -62,7 +61,7 @@ export default function MasterDataTable() {
     useState<IQueryInputParamType>(initalValueQueryInputParamsMaster);
   const [querySelectParams, setQuerySelectParams] =
     useState<IQuerySelectParamType>(initalValueQuerySelectParamsMaster);
-  const [dataTable, setDataTable] = useState<ICustomPricingTable[]>([]);
+  const [dataTable, setDataTable] = useState<ICustomQuotationTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -72,15 +71,13 @@ export default function MasterDataTable() {
   const [refreshingLoading, setRefreshingLoading] = useState(false);
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
-  const [openCreateQuotationModal, setOpenCreateQuotationModal] =
-    useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
   const dataSelectSearch =
-    querySelectParams.statusCustomPricing.length === 0
+    querySelectParams.statusCustomQuotation.length === 0
       ? {
-          statusCustomPricing: [
+          statusCustomQuotation: [
             STATUS_MATER_LABELS.ACTIVE,
             STATUS_MATER_LABELS.DEACTIVE,
           ],
@@ -89,12 +86,12 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_CUSTOM_PRICING.GET_SEARCH,
+      API_CUSTOMS_QUOTATION.GET_SEARCH,
       queryInputParams,
       querySelectParams,
     ],
     queryFn: () =>
-      getCustomPricingSearch({
+      getCustomQuotationSearch({
         ...queryInputParams,
         ...dataSelectSearch,
         paginateRequest: {
@@ -108,9 +105,11 @@ export default function MasterDataTable() {
 
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.customPricingID,
+            key: data.customQuotationID,
             typeDelaracrionID: data.typeDelaracrionID,
             typeDelaracrionName: data.typeDelaracrionName,
+            typeDelaracrionDesctipton: data.typeDelaracrionDesctipton,
+            typeDelaracrionCode: data.typeDelaracrionCode,
             partnerID: data.partnerID,
             vendor: data.vendor,
             commodityID: data.commodityID,
@@ -125,7 +124,7 @@ export default function MasterDataTable() {
             customGreenPrice: data.customGreenPrice,
             effectDated: data.effectDated,
             validityDate: data.validityDate,
-            statusCustomPricing: data.statusCustomPricing,
+            statusCustomQuotation: data.statusCustomQuotation,
             insertedByUser: data.insertedByUser,
             dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
@@ -148,12 +147,12 @@ export default function MasterDataTable() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: () => deleteCustomPricing(selectedRowKeys),
+    mutationFn: () => deleteCustomQuotation(selectedRowKeys),
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_CUSTOM_PRICING.GET_SEARCH],
+          queryKey: [API_CUSTOMS_QUOTATION.GET_SEARCH],
         });
         setSelectedRowKeys([]);
       } else {
@@ -224,17 +223,20 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusCustomPricing:
-        filters.statusCustomPricing?.length !== 0 && filters.statusCustomPricing
-          ? (filters.statusCustomPricing as string[])
+      statusCustomQuotation:
+        filters.statusCustomQuotation?.length !== 0 &&
+        filters.statusCustomQuotation
+          ? (filters.statusCustomQuotation as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);
   };
 
-  const columns: ProColumns<ICustomPricingTable>[] = [
+  const columns: ProColumns<ICustomQuotationTable>[] = [
     {
-      title: <div className={style.title}>{translatePricingCustom('no')}</div>,
+      title: (
+        <div className={style.title}>{translateQuotationCustom('no')}</div>
+      ),
       dataIndex: 'index',
       width: 50,
       align: 'right',
@@ -246,7 +248,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('typeDelaracrionID_form.title')}
+          {translateQuotationCustom('typeDelaracrionID_form.title')}
         </div>
       ),
       width: 200,
@@ -258,7 +260,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('transactionTypeID_form.title')}
+          {translateQuotationCustom('transactionTypeID_form.title')}
         </div>
       ),
       width: 200,
@@ -270,7 +272,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('customRedPrice_form.title')}
+          {translateQuotationCustom('customRedPrice_form.title')}
         </div>
       ),
       width: 200,
@@ -284,7 +286,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('customYellowPrice_form.title')}
+          {translateQuotationCustom('customYellowPrice_form.title')}
         </div>
       ),
       width: 200,
@@ -298,7 +300,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('customGreenPrice_form.title')}
+          {translateQuotationCustom('customGreenPrice_form.title')}
         </div>
       ),
       width: 200,
@@ -312,7 +314,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('currency_form.title')}
+          {translateQuotationCustom('currency_form.title')}
         </div>
       ),
       width: 200,
@@ -323,7 +325,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('vendor_form.title')}
+          {translateQuotationCustom('vendor_form.title')}
         </div>
       ),
       width: 200,
@@ -333,24 +335,24 @@ export default function MasterDataTable() {
     },
     {
       title: (
-        <div className={style.title}>{translatePricingCustom('status')}</div>
+        <div className={style.title}>{translateQuotationCustom('status')}</div>
       ),
       width: 120,
-      dataIndex: 'statusCustomPricing',
-      key: 'statusCustomPricing',
+      dataIndex: 'statusCustomQuotation',
+      key: 'statusCustomQuotation',
       align: 'center',
       filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusCustomPricing || null,
+      filteredValue: querySelectParams.statusCustomQuotation || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusCustomPricing.length !== 0
+                querySelectParams.statusCustomQuotation.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -373,7 +375,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('commodity_form.title')}
+          {translateQuotationCustom('commodity_form.title')}
         </div>
       ),
       width: 300,
@@ -384,7 +386,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('effect_date_form.title')}
+          {translateQuotationCustom('effect_date_form.title')}
         </div>
       ),
       width: 200,
@@ -396,7 +398,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('validity_form.title')}
+          {translateQuotationCustom('validity_form.title')}
         </div>
       ),
       width: 200,
@@ -408,7 +410,7 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('note_form.title')}
+          {translateQuotationCustom('note_form.title')}
         </div>
       ),
       width: 200,
@@ -487,7 +489,7 @@ export default function MasterDataTable() {
   ];
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.CUSTOMS_PRICING_EDIT(id));
+    router.push(ROUTERS.CUSTOMS_QUOTATION_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKey: Key[]) => {
@@ -544,16 +546,16 @@ export default function MasterDataTable() {
 
   const handleOnDoubleClick = (
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: ICustomPricingTable
+    record: ICustomQuotationTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.CUSTOMS_PRICING_EDIT(record.key, true));
+      router.push(ROUTERS.CUSTOMS_QUOTATION_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.CUSTOMS_PRICING_CREATE);
+    router.push(ROUTERS.CUSTOMS_QUOTATION_CREATE);
   };
   // export table data to csv
   const exportTableData = () => {
@@ -567,7 +569,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_CUSTOM_PRICING.GET_REQUEST],
+          queryKey: [API_CUSTOMS_QUOTATION.GET_REQUEST],
         });
         setLoadingImport(false);
         setOpenImportModal(false);
@@ -601,27 +603,13 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_CUSTOMS_PRICING.xlsx');
+      link.setAttribute('download', 'ASL_CUSTOMS_QUOTATION.xlsx');
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
       setIsLoadingDownload(false);
     },
   });
-
-  //handle create quotation
-  const cancelCreateQuotation = () => {
-    setOpenCreateQuotationModal(false);
-  };
-
-  const handleOpenCreateQuotation = () => {
-    setOpenCreateQuotationModal(true);
-  };
-
-  const handleCreateQuotation = () => {
-    setOpenCreateQuotationModal(false);
-  };
-  // console.log(selectedRowKeys);
 
   return (
     <div style={{ marginTop: -18 }}>
@@ -638,16 +626,10 @@ export default function MasterDataTable() {
             downloadFile={downloadFile}
           />
 
-          <CreateQuotationModal
-            itemData={selectedRowKeys}
-            open={openCreateQuotationModal}
-            handleOk={handleCreateQuotation}
-            handleCancel={cancelCreateQuotation}
-          />
           <Table
             dataTable={dataTable}
             columns={columns}
-            headerTitle={translatePricingCustom('title')}
+            headerTitle={translateQuotationCustom('title')}
             selectedRowKeys={selectedRowKeys}
             handleSelectionChange={handleSelectionChange}
             handlePaginationChange={handlePaginationChange}
@@ -666,7 +648,6 @@ export default function MasterDataTable() {
             checkTableMaster={true}
             importTableData={importTableData}
             exportTableData={exportTableData}
-            handleCreateQuotation={handleOpenCreateQuotation}
             itemDataQuotation={selectedRowKeys}
           />
         </>

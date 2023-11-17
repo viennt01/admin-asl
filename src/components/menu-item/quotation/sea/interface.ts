@@ -97,9 +97,7 @@ export interface IFormValues {
 export interface ISeaPricingDetailType
   extends Omit<
     IFormValues,
-    | 'seaQuotaionFeeGroupDTOs'
-    | 'salesLeadsSeaQuotationDTOs'
-    | 'seaQuotaionGroupPartnerDTOs'
+    'salesLeadsSeaQuotationDTOs' | 'seaQuotaionGroupPartnerDTOs'
   > {
   dateInserted: string;
   insertedByUser: string;
@@ -107,7 +105,6 @@ export interface ISeaPricingDetailType
   updatedByUser: string;
   confirmDated: string;
   confirmByUser: string;
-  seaQuotaionFeeGroupDTOs: ISeaQuotationFeeFormValue[];
   salesLeadsSeaQuotationDTOs: ISalesLeadsSeaQuotationDTOs[];
   seaQuotaionGroupPartnerDTOs: ISeaQuotaionGroupPartnerDTOs[];
 }

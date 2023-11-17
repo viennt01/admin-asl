@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import CreateCustomsQuotation from '@/components/menu-item/quotation/customs/create';
+import CreateCustomQuotation from '@/components/menu-item/quotation/custom/create';
 
 function CreateCustomsQuotationPage() {
   return (
     <>
       <Head>
-        <title>ASL | CREATE CUSTOM QUOTATION</title>
+        <title>ASL | CREATE CUSTOMS QUOTATION</title>
       </Head>
-      <CreateCustomsQuotation />
+      <CreateCustomQuotation />
     </>
   );
 }

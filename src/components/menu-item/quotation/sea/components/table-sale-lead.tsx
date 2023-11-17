@@ -4,7 +4,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { useQuery } from '@tanstack/react-query';
 import { API_PARTNER } from '@/fetcherAxios/endpoint';
 import { TablePartner } from '@/components/menu-item/pricing/sea/interface';
-import { getTablePartner } from '@/components/menu-item/pricing/sea/fetcher';
+import { getTablePartnerId } from '@/components/menu-item/pricing/sea/fetcher';
 
 interface Props {
   idPartners: string[];
@@ -37,7 +37,7 @@ const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
 
   useQuery({
     queryKey: [API_PARTNER.GET_ALL_PARTNER_BY_IDS, idPartners],
-    queryFn: () => getTablePartner({ ids: idPartners }),
+    queryFn: () => getTablePartnerId({ ids: idPartners }),
     enabled: idPartners !== undefined,
     onSuccess(data) {
       setDataTable([]);
