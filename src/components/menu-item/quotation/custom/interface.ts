@@ -8,7 +8,6 @@ export interface ICustomQuotation {
   typeDelaracrionDesctipton: string;
   typeDelaracrionCode: string;
   partnerID: string;
-  vendor: string;
   commodityID: string;
   commodityName: string;
   currencyID: string;

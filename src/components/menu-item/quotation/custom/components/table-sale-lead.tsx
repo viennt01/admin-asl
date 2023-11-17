@@ -64,8 +64,8 @@ const TableSaleLead: React.FC<Props> = ({
         if (data.data) {
           const newData =
             data.data.map((item) => ({
-              key: item.partnerID,
-              partnerID: item.partnerID,
+              key: item.userID,
+              userID: item.userID,
               email: item.email,
               fullName: item.fullName,
               companyName: item.companyName,
@@ -74,7 +74,7 @@ const TableSaleLead: React.FC<Props> = ({
             })) || [];
 
           setDataTableId(newData);
-          const newDataSelect = data.data.map((item) => item.partnerID);
+          const newDataSelect = data.data.map((item) => item.userID);
           setSelectedRowKeys([...selectedRowKeys, ...newDataSelect]);
         }
       }
@@ -89,8 +89,8 @@ const TableSaleLead: React.FC<Props> = ({
       if (data.status) {
         if (data.data) {
           const newData = data.data.map((item) => ({
-            key: item.partnerID,
-            partnerID: item.partnerID,
+            key: item.userID,
+            userID: item.userID,
             email: item.email,
             fullName: item.fullName,
             companyName: item.companyName,
@@ -98,7 +98,7 @@ const TableSaleLead: React.FC<Props> = ({
             nationality: item.nationality,
           }));
           setDataTableGroup((prevData) => [...newData, ...prevData]);
-          const newDataSelect = data.data.map((item) => item.partnerID);
+          const newDataSelect = data.data.map((item) => item.userID);
           setSelectedRowKeys([...selectedRowKeys, ...newDataSelect]);
         }
       }

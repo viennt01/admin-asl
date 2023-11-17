@@ -111,7 +111,6 @@ export default function MasterDataTable() {
             typeDelaracrionDesctipton: data.typeDelaracrionDesctipton,
             typeDelaracrionCode: data.typeDelaracrionCode,
             partnerID: data.partnerID,
-            vendor: data.vendor,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
@@ -321,17 +320,6 @@ export default function MasterDataTable() {
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'right',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateQuotationCustom('vendor_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'vendor',
-      key: 'vendor',
-      align: 'left',
     },
     {
       title: (

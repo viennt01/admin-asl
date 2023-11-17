@@ -211,28 +211,23 @@ export interface RequireTypeContainer {
 //----------------------------------------------------------------
 // create quotation with pricing
 export interface RequireCreateQuotationWithPricing {
-  seaPricingID: React.Key[];
+  customPricingID: React.Key[];
   effectDated: number;
   validityDate: number;
-  profitRateOfPricing: string;
-  profitRateOfContainerType: { [key: string]: string };
+  profitRateOfGreenPrice: string;
+  profitRateOfRedPrice: string;
+  profitRateOfYellowPrice: string;
+  salesLeadsQuotationRegisters: { partnerID: string }[];
   profitRateOfUnitforFee: { [key: string]: string };
   profitRateOfFee: string;
-  profitRateOfLCLMin: string;
-  profitRateOfLCL: string;
-  salesLeadsQuotationRegisters: { partnerID: string }[];
-  seaQuotationGroupPartnerRegisterRequests: {
-    groupPartnerID: string;
-  }[];
   status: string;
 }
 export interface RequireCreateQuotationWithPricingFormValue
   extends Omit<
     RequireCreateQuotationWithPricing,
-    'salesLeadsQuotationRegisters' | 'seaQuotationGroupPartnerRegisterRequests'
+    'salesLeadsQuotationRegisters'
   > {
   salesLeadsQuotationRegisters: string[];
-  seaQuotationGroupPartnerRegisterRequests: string[];
 }
 export interface RequirePartnerGroup {
   groupPartnerID: string;

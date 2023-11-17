@@ -72,7 +72,7 @@ const CustomsQuotation = ({
   >([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const idPartners = Form.useWatch('Customer', form);
-  const idGroupPartner = Form.useWatch('groupPartner', form);
+  const idGroupPartner = Form.useWatch('Group', form);
 
   useEffect(() => {
     if (!id) return;

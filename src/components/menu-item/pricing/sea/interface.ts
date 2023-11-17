@@ -294,7 +294,7 @@ export interface RequestPartnerTable {
   ids: string[];
 }
 export interface Partner {
-  partnerID: string;
+  userID: string;
   email: string;
   fullName: string;
   companyName: string;

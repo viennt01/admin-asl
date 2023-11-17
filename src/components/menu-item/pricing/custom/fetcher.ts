@@ -31,7 +31,7 @@ import {
   API_CURRENCY,
   API_PARTNER,
   API_CUSTOM_PRICING,
-  API_SEA_QUOTATION,
+  API_CUSTOMS_QUOTATION,
 } from '@/fetcherAxios/endpoint';
 
 export const getCustomPricingSearch = (data: RequestSeaPricing) => {
@@ -124,7 +124,7 @@ export const createQuotationWithPricing = (
     ResponseWithPayload<RequireCreateQuotationWithPricing>
   >({
     data,
-  })(API_SEA_QUOTATION.CREATE_WITH_PRICING);
+  })(API_CUSTOMS_QUOTATION.CREATE_WITH_PRICING);
 };
 export const getAllPartnerGroup = () => {
   return get<ResponseWithPayload<RequirePartnerGroup[]>>({})(
