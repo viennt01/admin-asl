@@ -276,6 +276,45 @@ const CardMain = ({
       <Row gutter={16}>
         <Col lg={8} span={24}>
           <Form.Item
+            label={translatePricingCustom('transactionTypeID_form.title')}
+            name="transactionTypeID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingCustom(
+                  'transactionTypeID_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translatePricingCustom(
+                'transactionTypeID_form.placeholder'
+              )}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                typeTransaction.data?.data.map((item) => {
+                  return {
+                    value: item.transactionTypeID,
+                    label: item.transactionTypeName,
+                  };
+                }) || []
+              }
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
             label={translatePricingCustom('typeDelaracrionID_form.title')}
             name="typeDelaracrionID"
             rules={[
@@ -342,45 +381,6 @@ const CardMain = ({
                   return {
                     value: item.partnerID,
                     label: item.name,
-                  };
-                }) || []
-              }
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingCustom('transactionTypeID_form.title')}
-            name="transactionTypeID"
-            rules={[
-              {
-                required: true,
-                message: translatePricingCustom(
-                  'transactionTypeID_form.error_required'
-                ),
-              },
-            ]}
-          >
-            <Select
-              showSearch
-              placeholder={translatePricingCustom(
-                'transactionTypeID_form.placeholder'
-              )}
-              disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                typeTransaction.data?.data.map((item) => {
-                  return {
-                    value: item.transactionTypeID,
-                    label: item.transactionTypeName,
                   };
                 }) || []
               }
