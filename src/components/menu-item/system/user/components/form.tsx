@@ -36,7 +36,7 @@ export default function UserForm() {
   const { id } = router.query;
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
-  const dateFormat = 'YYYY/MM/DD';
+  const dateFormat = 'YYYY-MM-DD HH:MM';
   const { translate: translateUser } = useI18n('user');
   const { translate: translateCommon } = useI18n('common');
   useEffect(() => {

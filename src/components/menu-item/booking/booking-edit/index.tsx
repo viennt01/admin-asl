@@ -51,7 +51,7 @@ export default function EditBooking() {
   const router = useRouter();
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
-  const dateFormat = 'YYYY/MM/DD';
+  const dateFormat = 'YYYY-MM-DD HH:MM';
   const { translate: translateBooking } = useI18n('booking');
   const { translate: translateContainer } = useI18n('container');
   const { translate: translateLocation } = useI18n('location');

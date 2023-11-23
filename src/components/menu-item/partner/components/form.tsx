@@ -38,7 +38,7 @@ import { getListLanguage, getListStaff } from '../../system/staff/fetcher';
 const initialValue = {
   description: '',
 };
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = 'YYYY-MM-DD HH:MM';
 
 interface PortFormProps {
   create?: boolean;

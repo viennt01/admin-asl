@@ -76,7 +76,7 @@ const CardMain = ({
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
 
   const propCopyAndCreate = router.query;
-  const dateFormat = 'YYYY/MM/DD';
+  const dateFormat = 'YYYY-MM-DD HH:MM';
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
