@@ -8,7 +8,6 @@ import {
   FeeDetailType,
   FormValues,
   TYPE_UNIT,
-  TypeUnitData,
   UpdateStatusFee,
 } from '../interface';
 import {
@@ -65,7 +64,9 @@ const FeeForm = ({
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
-  const [dataUnit, setDataUnit] = useState<TypeUnitData[]>([]);
+  const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
+    []
+  );
 
   const propCopyAndCreate = router.query;
 
@@ -106,10 +107,10 @@ const FeeForm = ({
         errorToast(API_MESSAGE.ERROR);
       } else {
         const newData = data.data.map((unit) => ({
-          unitName: unit.internationalCode,
-          profitRate: '',
+          label: unit.internationalCode,
+          value: unit.unitID,
         }));
-        setDataUnit((prevData: any) => [...newData, ...prevData]);
+        setDataUnit(newData);
       }
     },
     onError: () => {
@@ -353,12 +354,6 @@ const FeeForm = ({
               <Form.Item
                 label={translateFee('vat_fee_form.title')}
                 name="vatFee"
-                rules={[
-                  {
-                    required: true,
-                    message: translateFee('vat_fee_form.error_required'),
-                  },
-                ]}
               >
                 <Input
                   type="number"
@@ -422,16 +417,7 @@ const FeeForm = ({
             </Col>
 
             <Col lg={12} span={24}>
-              <Form.Item
-                label={translateFee('unit_form.title')}
-                name="unitID"
-                rules={[
-                  {
-                    required: true,
-                    message: translateFee('unit_form.error_required'),
-                  },
-                ]}
-              >
+              <Form.Item label={translateFee('unit_form.title')} name="unitID">
                 <Select
                   placeholder={translateFee('unit_form.placeholder')}
                   size="large"
