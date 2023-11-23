@@ -1,61 +1,62 @@
-import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import useI18n from '@/i18n/useI18N';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
+import { useState, MouseEvent } from 'react';
+import { FeeGroupTable, QueryInputDraft, SelectDratSearch } from '../interface';
+import { API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
+import { deleteFeeGroup, getDartTable } from '../fetcher';
 import {
-  DEFAULT_PAGINATION,
+  DiffOutlined,
+  DownloadOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
+import Table from '../../../../commons/table/table';
+import {
+  DEFAULT_PAGINATION_5,
   IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
-import Table from '@/components/commons/table/table';
-import {
-  FeeGroupTable,
-  QueryInputParamType,
-  SelectSearch,
-  UpdateStatusFeeGroup,
-} from '../interface';
-import { ROUTERS } from '@/constant/router';
-import { API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import useI18n from '@/i18n/useI18N';
-import { ProColumns } from '@ant-design/pro-components';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps } from 'antd';
-import { useRouter } from 'next/router';
-import { useState, MouseEvent } from 'react';
+import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
+import { ProColumns } from '@ant-design/pro-components';
 import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
-import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 import {
-  initalSelectSearchRequest,
-  initalValueQueryInputParamsRequest,
+  initalSelectSearchDraft,
+  initalValueQueryInputParamsDraft,
+  initalValueQuerySelectParamsDraft,
 } from '../constant';
 
-type DataIndex = keyof QueryInputParamType;
+type DataIndex = keyof QueryInputDraft;
 
-const RequestTable = () => {
-  const router = useRouter();
+interface PortFormProps {
+  handleIdQuery: (id: string) => void;
+}
+
+const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const queryClient = useQueryClient();
   const { translate: translateFeeGroup } = useI18n('feeGroup');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
-    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
-    initalValueQueryInputParamsRequest
+    useState<IPaginationOfAntd>(DEFAULT_PAGINATION_5);
+  const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
+    initalValueQueryInputParamsDraft
   );
   const [dataTable, setDataTable] = useState<FeeGroupTable[]>([]);
-  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
-    initalSelectSearchRequest
+  const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
+    initalSelectSearchDraft
   );
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
   // Handle data
   useQuery({
-    queryKey: [API_TYPE_FEE_GROUP.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [API_TYPE_FEE_GROUP.GET_SEARCH, pagination, queryInputParams],
     queryFn: () =>
-      getTable({
+      getDartTable({
         ...queryInputParams,
+        ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -96,9 +97,20 @@ const RequestTable = () => {
     },
   });
 
-  const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusFeeGroup) => {
-      return updateStatus(body);
+  const deleteItemDraftMutation = useMutation({
+    mutationFn: (id: string[]) => deleteFeeGroup(id),
+    onSuccess: (data) => {
+      if (data.status) {
+        successToast(data.message);
+        queryClient.invalidateQueries({
+          queryKey: [API_TYPE_FEE_GROUP.GET_SEARCH],
+        });
+      } else {
+        errorToast(data.message);
+      }
+    },
+    onError: () => {
+      errorToast(API_MESSAGE.ERROR);
     },
   });
 
@@ -148,44 +160,6 @@ const RequestTable = () => {
       },
     },
     {
-      key: 'operation',
-      width: 50,
-      align: 'center',
-      dataIndex: 'key',
-      fixed: 'left',
-      render: (value) => (
-        <div style={{ display: 'flex' }}>
-          <Button
-            onClick={() => handleEditCustomer(value as string)}
-            icon={<EyeOutlined />}
-            style={{ marginRight: '10px' }}
-          />
-          <Button
-            onClick={() => {
-              handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE, [
-                value as React.Key,
-              ]);
-            }}
-            icon={<CheckOutlined />}
-            style={{
-              marginRight: '10px',
-              color: COLORS.SUCCESS,
-              borderColor: COLORS.SUCCESS,
-            }}
-          />
-          <Button
-            onClick={() => {
-              handleApproveAndReject(STATUS_ALL_LABELS.REJECT, [
-                value as React.Key,
-              ]);
-            }}
-            icon={<CloseOutlined />}
-            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
-          />
-        </div>
-      ),
-    },
-    {
       title: (
         <div className={style.title}>{translateFeeGroup('fee_group_code')}</div>
       ),
@@ -193,7 +167,7 @@ const RequestTable = () => {
       key: 'feeGroupNo',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
@@ -212,7 +186,7 @@ const RequestTable = () => {
       key: 'feeGroupName',
       width: 250,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
+      ...ColumnSearchTableProps<QueryInputDraft>({
         props: {
           handleSearch: handleSearchInput,
           handleReset: handleReset,
@@ -234,48 +208,58 @@ const RequestTable = () => {
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: <div className={style.title}>{translateCommon('creator')}</div>,
-      width: 200,
-      dataIndex: 'insertedByUser',
-      key: 'insertedByUser',
+      title: <div className={style.title}>{translateFeeGroup('status')}</div>,
+      width: 120,
+      dataIndex: 'statusFeeGroup',
+      key: 'statusFeeGroup',
       align: 'center',
+      fixed: 'right',
+      render: (value) => (
+        <Tag
+          color={STATUS_ALL_COLORS[value as keyof typeof STATUS_ALL_COLORS]}
+          style={{
+            margin: 0,
+          }}
+        >
+          {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
+        </Tag>
+      ),
+    },
+    {
+      key: 'operation',
+      width: 50,
+      align: 'center',
+      dataIndex: 'key',
+      fixed: 'right',
+      render: (value) => (
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => handleIdQuery(value as string)}
+            icon={<DownloadOutlined />}
+            style={{ marginRight: '10px' }}
+          />
+          <Popconfirm
+            title={translateCommon('modal_delete.title')}
+            okText={translateCommon('modal_delete.button_ok')}
+            cancelText={translateCommon('modal_delete.button_cancel')}
+            onConfirm={() => {
+              deleteItemDraftMutation.mutate([value as string]);
+            }}
+          >
+            <Button
+              icon={<DeleteOutlined />}
+              style={{
+                color: COLORS.ERROR,
+                borderColor: COLORS.ERROR,
+              }}
+            />
+          </Popconfirm>
+        </div>
+      ),
     },
   ];
 
   // Handle logic table
-  const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.FEE_GROUP_MANAGER(id));
-  };
-
-  const handleApproveAndReject = (status: string, id?: React.Key[]) => {
-    const _requestData: UpdateStatusFeeGroup = {
-      id: id || selectedRowKeys,
-      status,
-    };
-    updateStatusMutation.mutate(_requestData, {
-      onSuccess: (data) => {
-        data.status
-          ? (successToast(data.message),
-            setSelectedRowKeys([]),
-            queryClient.invalidateQueries({
-              queryKey: [
-                API_TYPE_FEE_GROUP.GET_REQUEST,
-                pagination,
-                queryInputParams,
-              ],
-            }))
-          : errorToast(data.message);
-      },
-      onError() {
-        errorToast(API_MESSAGE.ERROR);
-      },
-    });
-  };
-
-  const handleSelectionChange = (selectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(selectedRowKeys);
-  };
-
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     setPagination((state) => ({
       ...state,
@@ -290,27 +274,30 @@ const RequestTable = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.FEE_GROUP_MANAGER(record.key));
+      handleIdQuery(record.key);
     }
   };
 
   return (
-    <>
-      <div style={{ marginTop: -18 }}>
-        <Table
-          headerTitle="List of approval-needed requests"
-          dataTable={dataTable}
-          columns={columns}
-          handlePaginationChange={handlePaginationChange}
-          handleOnDoubleClick={handleOnDoubleClick}
-          pagination={pagination}
-          checkTableMaster={true}
-          handleSelectionChange={handleSelectionChange}
-          handleApproveAndReject={handleApproveAndReject}
-        />
-      </div>
-    </>
+    <Popover
+      content={
+        <div style={{ maxWidth: '700px' }}>
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            handlePaginationChange={handlePaginationChange}
+            handleOnDoubleClick={handleOnDoubleClick}
+            pagination={pagination}
+            checkTableMaster={false}
+          />
+        </div>
+      }
+    >
+      <Button icon={<DiffOutlined />} type="dashed" danger>
+        Draft
+      </Button>
+    </Popover>
   );
 };
 
-export default RequestTable;
+export default DraftTable;

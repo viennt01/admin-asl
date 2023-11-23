@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { formatNumber } from '@/utils/format';
 import { useQuery } from '@tanstack/react-query';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import Highlighter from 'react-highlight-words';
 import { SearchOutlined } from '@ant-design/icons';
 import {
@@ -11,7 +11,7 @@ import {
   ColumnsType,
   FilterConfirmProps,
 } from 'antd/lib/table/interface';
-import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
+import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 
 interface ImportModalProps {
   dataTable: string;

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import FeeGroupManger from '@/components/menu-item/master-data/fee-group/manager';
+import FeeGroupManger from '@/components/menu-item/quotation/fee-group/manager';
 
 function FeeManagerPage() {
   return (

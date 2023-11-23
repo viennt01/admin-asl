@@ -1,4 +1,4 @@
-import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
+import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import { Button, Input, InputRef, Space, Table } from 'antd';
 import {
   ColumnType,

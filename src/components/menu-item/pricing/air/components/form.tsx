@@ -28,9 +28,9 @@ import dayjs from 'dayjs';
 import CardMain from './card-main';
 import CollapseCard from '@/components/commons/collapse-card';
 import AirPricingDetailDTO from './air-pricing-detail-dto';
-import { FeeTable } from '@/components/menu-item/master-data/fee-group/interface';
+import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import ListFee from './list-fee';
-import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 
 interface PortFormProps {
   create?: boolean;

@@ -28,10 +28,10 @@ import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { formatNumber } from '@/utils/format';
-import { getAllFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
-import { TYPE_FEE_GROUP } from '@/components/menu-item/master-data/fee-group/interface';
 import { getAllLocation } from '../../sea/fetcher';
 import { TYPE_LOCATION } from '../../sea/interface';
+import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
+import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
 
 interface Props {
   create?: boolean;

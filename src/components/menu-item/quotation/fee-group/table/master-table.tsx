@@ -488,7 +488,7 @@ export default function MasterDataTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.FEE_GROUP_EDIT(id));
+    router.push(ROUTERS.QUOTATION_FEE_GROUP_EDIT(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -535,12 +535,12 @@ export default function MasterDataTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.FEE_GROUP_EDIT(record.key, true));
+      router.push(ROUTERS.QUOTATION_FEE_GROUP_EDIT(record.key, true));
     }
   };
 
   const handleCreate = () => {
-    router.push(ROUTERS.FEE_GROUP_CREATE);
+    router.push(ROUTERS.QUOTATION_FEE_GROUP_CREATE);
   };
 
   // export table data

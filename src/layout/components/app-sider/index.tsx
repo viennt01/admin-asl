@@ -95,7 +95,8 @@ const AppSider = ({ collapsed }: Props) => {
   const refTypeLoadCapacity = useRef(null);
   const refFee = useRef(null);
   const refTypeFee = useRef(null);
-  const refFeeGroup = useRef(null);
+  const refFeeGroupQuotation = useRef(null);
+  const refFeeGroupPricing = useRef(null);
   const refTypeFeeGroup = useRef(null);
   const refAccountant = useRef(null);
   const refCurrency = useRef(null);
@@ -187,6 +188,11 @@ const AppSider = ({ collapsed }: Props) => {
           ROUTERS.TRUCKING_QUOTATION,
           <ContainerOutlined ref={refTruckingQuotation} />
         ),
+        getItem(
+          `${translateCommon('fee_group')}`,
+          ROUTERS.QUOTATION_FEE_GROUP,
+          <ContainerOutlined ref={refFeeGroupQuotation} />
+        ),
       ]
     ),
 
@@ -220,6 +226,11 @@ const AppSider = ({ collapsed }: Props) => {
           `${translateCommon('trucking_pricing')}`,
           ROUTERS.TRUCKING_PRICING,
           <AuditOutlined ref={refTruckingPricing} />
+        ),
+        getItem(
+          `${translateCommon('fee_group')}`,
+          ROUTERS.PRICING_FEE_GROUP,
+          <AuditOutlined ref={refFeeGroupPricing} />
         ),
       ]
     ),
@@ -300,12 +311,6 @@ const AppSider = ({ collapsed }: Props) => {
               <ProfileOutlined ref={refTypeFeeGroup} />
             ),
           ]
-        ),
-
-        getItem(
-          `${translateCommon('fee_group')}`,
-          ROUTERS.FEE_GROUP,
-          <ProfileOutlined ref={refFeeGroup} />
         ),
 
         getItem(

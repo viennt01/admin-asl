@@ -14,11 +14,11 @@ import React, { useRef, useState } from 'react';
 import { formatNumber } from '@/utils/format';
 import { useQuery } from '@tanstack/react-query';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import { getFeeWithFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import {
   FeeTable,
   IDataFeeGroup,
-} from '@/components/menu-item/master-data/fee-group/interface';
+} from '@/components/menu-item/quotation/fee-group/interface';
 import { SearchOutlined } from '@ant-design/icons';
 import {
   ColumnType,

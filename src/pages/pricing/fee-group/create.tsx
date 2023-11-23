@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
+import CreateFeeGroup from '@/components/menu-item/pricing/fee-group/create';
 
 function CreateFeeGroupPage() {
   return (
@@ -14,5 +15,4 @@ function CreateFeeGroupPage() {
 
 export default withAuthentication(CreateFeeGroupPage);
 import { getStatic } from '@/lib/getStaticProps';
-import CreateFeeGroup from '@/components/menu-item/master-data/fee-group/create';
 export const getStaticProps = getStatic(['common', 'feeGroup']);

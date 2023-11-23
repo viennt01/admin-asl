@@ -42,7 +42,8 @@ const CreateFeeGroup = () => {
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.FEE_GROUP))
+            ? (successToast(data.message),
+              router.push(ROUTERS.QUOTATION_FEE_GROUP))
             : errorToast(data.message);
         },
         onError() {
@@ -62,7 +63,8 @@ const CreateFeeGroup = () => {
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.FEE_GROUP))
+            ? (successToast(data.message),
+              router.push(ROUTERS.QUOTATION_FEE_GROUP))
             : errorToast(data.message);
         },
         onError() {

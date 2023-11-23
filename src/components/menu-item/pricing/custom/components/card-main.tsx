@@ -34,8 +34,8 @@ import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { formatNumber } from '@/utils/format';
 import dayjs from 'dayjs';
-import { TYPE_FEE_GROUP } from '@/components/menu-item/master-data/fee-group/interface';
-import { getAllFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
+import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import {
   getListTypeDeclaration,
   getListTypeTransaction,

@@ -8,6 +8,44 @@ const SHOW_ROUTER_HEADER = () => {
   return {
     '/home': [{ title: `${translateCommon('home')}` }],
 
+    '/quotation/fee-group': [
+      { title: `${translateCommon('quotation')}` },
+      { title: `${translateCommon('fee_group')}` },
+    ],
+    '/quotation/fee-group/create': [
+      { title: `${translateCommon('quotation')}` },
+      {
+        title: (
+          <Link href={ROUTERS.QUOTATION_FEE_GROUP}>
+            {translateCommon('fee_group')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/quotation/fee-group/edit/[id]': [
+      { title: `${translateCommon('quotation')}` },
+      {
+        title: (
+          <Link href={ROUTERS.QUOTATION_FEE_GROUP}>
+            {translateCommon('fee_group')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/quotation/fee-group/manager-admin/[id]': [
+      { title: `${translateCommon('quotation')}` },
+      {
+        title: (
+          <Link href={ROUTERS.QUOTATION_FEE_GROUP}>
+            {translateCommon('fee_group')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+
     '/quotation/sea-quotation': [
       { title: `${translateCommon('quotation')}` },
       { title: `${translateCommon('sea_quotation')}` },
@@ -176,6 +214,44 @@ const SHOW_ROUTER_HEADER = () => {
     '/booking/manager-admin/[id]': [
       {
         title: <Link href={ROUTERS.BOOKING}>{translateCommon('booking')}</Link>,
+      },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+
+    '/pricing/fee-group': [
+      { title: `${translateCommon('pricing')}` },
+      { title: `${translateCommon('fee_group')}` },
+    ],
+    '/pricing/fee-group/create': [
+      { title: `${translateCommon('pricing')}` },
+      {
+        title: (
+          <Link href={ROUTERS.PRICING_FEE_GROUP}>
+            {translateCommon('fee_group')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/pricing/fee-group/edit/[id]': [
+      { title: `${translateCommon('pricing')}` },
+      {
+        title: (
+          <Link href={ROUTERS.PRICING_FEE_GROUP}>
+            {translateCommon('fee_group')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/pricing/fee-group/manager-admin/[id]': [
+      { title: `${translateCommon('pricing')}` },
+      {
+        title: (
+          <Link href={ROUTERS.PRICING_FEE_GROUP}>
+            {translateCommon('fee_group')}
+          </Link>
+        ),
       },
       { title: `${translateCommon('request_for_approval')}` },
     ],

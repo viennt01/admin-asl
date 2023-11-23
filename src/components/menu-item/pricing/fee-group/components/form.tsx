@@ -45,8 +45,8 @@ import FeeList from './fee-list';
 import {
   getListTypeCurrency,
   getListTypeUnit,
-} from '../../fee-catalog/fee/fetcher';
-import { TYPE_UNIT } from '../../fee-catalog/fee/interface';
+} from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
+import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
 
 const initialValue = {
   description: '',
@@ -215,7 +215,7 @@ const FeeGroupForm = ({
           dateExpiration: dayjs(Number(data.data.dateExpiration)),
         });
       } else {
-        router.push(ROUTERS.FEE_GROUP);
+        router.push(ROUTERS.PRICING_FEE_GROUP);
       }
     },
   });
@@ -233,7 +233,8 @@ const FeeGroupForm = ({
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.FEE_GROUP))
+            ? (successToast(data.message),
+              router.push(ROUTERS.PRICING_FEE_GROUP))
             : errorToast(data.message);
         },
         onError() {
@@ -261,7 +262,7 @@ const FeeGroupForm = ({
       listFee: dataSource,
     });
     router.push({
-      pathname: ROUTERS.FEE_GROUP_CREATE,
+      pathname: ROUTERS.PRICING_FEE_GROUP_CREATE,
       query: { props: props },
     });
   };

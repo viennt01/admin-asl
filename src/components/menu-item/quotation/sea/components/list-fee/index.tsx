@@ -6,11 +6,11 @@ import { IFormValues, ISeaQuotationFeeFormValue } from '../../interface';
 import TableFeeGroup from './table-fee-group';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { useQuery } from '@tanstack/react-query';
-import { getAllFeeGroup } from '@/components/menu-item/master-data/fee-group/fetcher';
+import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import {
   IDataFeeGroup,
   TYPE_FEE_GROUP,
-} from '@/components/menu-item/master-data/fee-group/interface';
+} from '@/components/menu-item/quotation/fee-group/interface';
 import { errorToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';

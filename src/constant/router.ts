@@ -11,6 +11,13 @@ export const ROUTERS = {
   BOOKING: '/booking',
   BOOKING_EDIT: (bookingId: string) => `/booking/edit/${bookingId}`,
 
+  QUOTATION_FEE_GROUP: '/quotation/fee-group',
+  QUOTATION_FEE_GROUP_CREATE: '/quotation/fee-group/create',
+  QUOTATION_FEE_GROUP_EDIT: (feeGroupId: string, checkRow = false) =>
+    `/quotation/fee-group/edit/${feeGroupId}?checkRow=${checkRow}`,
+  QUOTATION_FEE_GROUP_MANAGER: (feeGroupId: string) =>
+    `/quotation/fee-group/manager-admin/${feeGroupId}`,
+
   SEA_QUOTATION: '/quotation/sea-quotation',
   SEA_QUOTATION_CREATE: '/quotation/sea-quotation/create',
   SEA_QUOTATION_EDIT: (seaQuotationId: string, checkRow = false) =>
@@ -38,6 +45,13 @@ export const ROUTERS = {
     `/quotation/trucking-quotation/edit/${truckingQuotationId}?checkRow=${checkRow}`,
   TRUCKING_QUOTATION_MANAGER: (truckingQuotationId: string) =>
     `/quotation/trucking-quotation/manager-admin/${truckingQuotationId}`,
+
+  PRICING_FEE_GROUP: '/pricing/fee-group',
+  PRICING_FEE_GROUP_CREATE: '/pricing/fee-group/create',
+  PRICING_FEE_GROUP_EDIT: (feeGroupId: string, checkRow = false) =>
+    `/pricing/fee-group/edit/${feeGroupId}?checkRow=${checkRow}`,
+  PRICING_FEE_GROUP_MANAGER: (feeGroupId: string) =>
+    `/pricing/fee-group/manager-admin/${feeGroupId}`,
 
   SEA_PRICING: '/pricing/pricing-sea',
   SEA_PRICING_CREATE: '/pricing/pricing-sea/create',
