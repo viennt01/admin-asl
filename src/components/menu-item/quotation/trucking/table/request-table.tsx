@@ -13,11 +13,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent, useMemo } from 'react';
-import {
-  formatCurrencyHasCurrency,
-  formatDate,
-  formatNumber,
-} from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -59,8 +55,6 @@ const RequestTable = () => {
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
             deliveryName: data.deliveryName,
-            emtyPickupID: data.emtyPickupID,
-            emtyPickupName: data.emtyPickupName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
@@ -71,8 +65,6 @@ const RequestTable = () => {
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            lclMinTruckingPricing: data.lclMinTruckingPricing,
-            lclTruckingPricing: data.lclTruckingPricing,
             public: data.public,
             statusTruckingPricing: data.statusTruckingPricing,
             insertedByUser: data.insertedByUser,
@@ -263,18 +255,6 @@ const RequestTable = () => {
     {
       title: (
         <div className={style.title}>
-          {translateQuotationTruck('emtyPickup')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'emtyPickupName',
-      key: 'emtyPickupName',
-      align: 'left',
-      render: (value) => value,
-    },
-    {
-      title: (
-        <div className={style.title}>
           {translateQuotationTruck('commodity')}
         </div>
       ),
@@ -299,30 +279,6 @@ const RequestTable = () => {
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
       align: 'center',
-    },
-    {
-      title: (
-        <div className={style.title}>{translateQuotationTruck('LCLMin')}</div>
-      ),
-      width: 200,
-      dataIndex: 'lclMinTruckingPricing',
-      key: 'lclMinTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>{translateQuotationTruck('LCL')}</div>
-      ),
-      width: 200,
-      dataIndex: 'lclTruckingPricing',
-      key: 'lclTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     ...columnContainerDTOs,
     ...columnLoadCapacityDTOs,

@@ -14,11 +14,7 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_COLUMN, API_TRUCKING_PRICING } from '@/fetcherAxios/endpoint';
-import {
-  formatCurrencyHasCurrency,
-  formatDate,
-  formatNumber,
-} from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -134,8 +130,6 @@ export default function MasterDataTable() {
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
             deliveryName: data.deliveryName,
-            emtyPickupID: data.emtyPickupID,
-            emtyPickupName: data.emtyPickupName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
@@ -145,8 +139,6 @@ export default function MasterDataTable() {
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            lclMinTruckingPricing: data.lclMinTruckingPricing,
-            lclTruckingPricing: data.lclTruckingPricing,
             public: data.public,
             statusTruckingPricing: data.statusTruckingPricing,
             truckingPricingDetailByContainerTypeDTOs:
@@ -348,17 +340,6 @@ export default function MasterDataTable() {
     },
     {
       title: (
-        <div className={style.title}>
-          {translatePricingTrucking('emtyPickup')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'emtyPickupName',
-      key: 'emtyPickupName',
-      align: 'left',
-    },
-    {
-      title: (
         <div className={style.title}>{translatePricingTrucking('status')}</div>
       ),
       width: 120,
@@ -537,26 +518,6 @@ export default function MasterDataTable() {
           </Popconfirm>
         </div>
       ),
-    },
-    {
-      title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
-      width: 200,
-      dataIndex: 'lclMinTruckingPricing',
-      key: 'lclMinTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <div className={style.title}>{translateCommon('LCL')}</div>,
-      width: 200,
-      dataIndex: 'lclTruckingPricing',
-      key: 'lclTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     ...columnContainerDTOs,
     ...columnLoadCapacityDTOs,

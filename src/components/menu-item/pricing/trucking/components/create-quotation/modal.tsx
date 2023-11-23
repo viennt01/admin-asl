@@ -74,8 +74,6 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const idPartners = Form.useWatch('salesLeadsQuotationRegisters', form);
 
   const [dataSource, setDataSource] = useState<DataType[]>([
-    { key: 'profitRateOfLCL', containerName: 'LCL', profitRate: '0' },
-    { key: 'profitRateOfLCLMin', containerName: 'LCL Min', profitRate: '0' },
     { key: 'Other', containerName: 'Other', profitRate: '0' },
   ]);
   const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
@@ -371,7 +369,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     options={
-                      getPartner.data?.data.map((item) => {
+                      getPartner.data?.data?.map((item) => {
                         return {
                           value: item.partnerID,
                           label: item.name,
@@ -394,15 +392,15 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
             />
           </Col>
           <Col span={6}>
-            <UnitProfit
-              dataSourceProfit={dataSourceProfit}
-              setDataSourceProfit={setDataSourceProfit}
-            />
-          </Col>
-          <Col span={6}>
             <LoadCapacityProfit
               dataSourceProfit={dataSourceLoadCapacity}
               setDataSourceProfit={setDataSourceLoadCapacity}
+            />
+          </Col>
+          <Col span={6}>
+            <UnitProfit
+              dataSourceProfit={dataSourceProfit}
+              setDataSourceProfit={setDataSourceProfit}
             />
           </Col>
         </Row>

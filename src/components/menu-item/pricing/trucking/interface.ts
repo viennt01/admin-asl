@@ -7,8 +7,6 @@ export interface ITruckingPricing {
   pickupName: string;
   deliveryID: string;
   deliveryName: string;
-  emtyPickupID: string;
-  emtyPickupName: string;
   commodityID: string;
   commodityName: string;
   currencyID: string;
@@ -18,8 +16,6 @@ export interface ITruckingPricing {
   effectDated: string;
   validityDate: string;
   freqDate: string;
-  lclMinTruckingPricing: string;
-  lclTruckingPricing: string;
   public: boolean;
   statusTruckingPricing: string;
   truckingPricingDetailByContainerTypeDTOs: { [key: string]: string };
@@ -74,7 +70,6 @@ export interface IFormValues {
   truckingPricingID: string;
   pickupID: string;
   deliveryID: string;
-  emtyPickupID: string;
   commodityID: string;
   currencyID: string;
   public: boolean;
@@ -83,8 +78,6 @@ export interface IFormValues {
   effectDated: Dayjs;
   validityDate: Dayjs;
   freqDate: string;
-  lclMinTruckingPricing: string;
-  lclTruckingPricing: string;
   statusTruckingPricing: string;
   truckingPricingDetailByContainerTypeDTOs: ITruckingPricingDetailDTOsFormValue[];
   truckingPricingDetailByLoadCapacityDTOs: ITruckingPricingDetailLoadCapacityDTOsFormValue[];
@@ -95,7 +88,6 @@ export interface ITruckingDetailType
   extends Omit<IFormValues, 'truckingPricingFeeGroupDTOs'> {
   pickupName: string;
   deliveryName: string;
-  emtyPickupName: string;
   commodityName: string;
   currencyAbbreviations: string;
   vendor: string;
@@ -116,6 +108,7 @@ export interface ITruckingPricingDetailDTOsFormValue {
   currencyID: string;
   currencyName: string;
   price: string;
+  vat: string;
 }
 
 export type ITruckingDetailDTOsCreate = Omit<
@@ -142,6 +135,7 @@ export interface ITruckingPricingDetailLoadCapacityDTOsFormValue {
   currencyID: string;
   currencyName: string;
   price: string;
+  vat: string;
 }
 
 export type ITruckingDetailLoadCapacityDTOsCreate = Omit<
@@ -284,8 +278,6 @@ export interface RequireCreateQuotationWithPricing {
   profitRateOfLoadCapacity: { [key: string]: string };
   profitRateOfUnitforFee: { [key: string]: string };
   profitRateOfFee: string;
-  profitRateOfLCLMin: string;
-  profitRateOfLCL: string;
   profitRateOfAllLoadCapacity: string;
   salesLeadsQuotationRegisters: { partnerID: string }[];
   seaQuotationGroupPartnerRegisterRequests: {

@@ -14,11 +14,7 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
-import {
-  formatCurrencyHasCurrency,
-  formatDate,
-  formatNumber,
-} from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -117,8 +113,6 @@ export default function MasterDataTable() {
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
             deliveryName: data.deliveryName,
-            emtyPickupID: data.emtyPickupID,
-            emtyPickupName: data.emtyPickupName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
@@ -129,8 +123,6 @@ export default function MasterDataTable() {
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            lclMinTruckingPricing: data.lclMinTruckingPricing,
-            lclTruckingPricing: data.lclTruckingPricing,
             public: data.public,
             statusTruckingPricing: data.statusTruckingPricing,
             insertedByUser: data.insertedByUser,
@@ -321,18 +313,6 @@ export default function MasterDataTable() {
     },
     {
       title: (
-        <div className={style.title}>
-          {translateQuotationTruck('emtyPickup')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'emtyPickupName',
-      key: 'emtyPickupName',
-      align: 'left',
-      render: (value) => value,
-    },
-    {
-      title: (
         <div className={style.title}>{translateQuotationTruck('status')}</div>
       ),
       width: 120,
@@ -498,30 +478,6 @@ export default function MasterDataTable() {
           </Popconfirm>
         </div>
       ),
-    },
-    {
-      title: (
-        <div className={style.title}>{translateQuotationTruck('LCLMin')}</div>
-      ),
-      width: 200,
-      dataIndex: 'lclMinTruckingPricing',
-      key: 'lclMinTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>{translateQuotationTruck('LCL')}</div>
-      ),
-      width: 200,
-      dataIndex: 'lclTruckingPricing',
-      key: 'lclTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     ...columnContainerDTOs,
     ...columnLoadCapacityDTOs,

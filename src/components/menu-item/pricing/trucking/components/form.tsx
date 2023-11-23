@@ -208,7 +208,6 @@ const TruckingPricingForm = ({
           truckingPricingID: data.data.truckingPricingID,
           pickupID: data.data.pickupID,
           deliveryID: data.data.deliveryID,
-          emtyPickupID: data.data.emtyPickupID,
           commodityID: data.data.commodityID,
           vendor: data.data.vendor,
           currencyID: data.data.currencyID,
@@ -217,8 +216,6 @@ const TruckingPricingForm = ({
           effectDated: dayjs(Number(data.data.effectDated)),
           validityDate: dayjs(Number(data.data.validityDate)),
           freqDate: data.data.freqDate,
-          lclMinTruckingPricing: data.data.lclMinTruckingPricing,
-          lclTruckingPricing: data.data.lclTruckingPricing,
           statusTruckingPricing: data.data.statusTruckingPricing,
           truckingPricingDetailByContainerTypeDTOs:
             data.data.truckingPricingDetailByContainerTypeDTOs,
@@ -319,15 +316,7 @@ const TruckingPricingForm = ({
         />
 
         <CollapseCard
-          title="Other Charges"
-          style={{ marginBottom: '24px' }}
-          defaultActive={true}
-        >
-          <ListFee FeeDataTable={dataFeeTable} />
-        </CollapseCard>
-
-        <CollapseCard
-          title="Trucking Pricing Detail"
+          title="LCL"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
@@ -340,7 +329,7 @@ const TruckingPricingForm = ({
         </CollapseCard>
 
         <CollapseCard
-          title="Load Capacity Detail"
+          title="FCL"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
@@ -350,6 +339,14 @@ const TruckingPricingForm = ({
             optionTypeLoadCapacity={optionLoadCapacity}
             isCheckPermissionEdit={isCheckPermissionEdit}
           />
+        </CollapseCard>
+
+        <CollapseCard
+          title="Other Charges"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <ListFee FeeDataTable={dataFeeTable} />
         </CollapseCard>
 
         <BottomCreateEdit

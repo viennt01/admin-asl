@@ -160,7 +160,7 @@ const ContainerType: React.FC<ImportModalProps> = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Profit Freight',
+      title: 'LCL',
       dataIndex: 'containerName',
       key: 'containerName',
       fixed: 'left',

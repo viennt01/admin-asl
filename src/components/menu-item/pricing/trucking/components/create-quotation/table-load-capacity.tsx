@@ -166,7 +166,7 @@ const LoadCapacityProfit: React.FC<ImportModalProps> = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Profit Load Capacity',
+      title: 'FCL',
       dataIndex: 'loadCapacityName',
       key: 'loadCapacityName',
       fixed: 'left',

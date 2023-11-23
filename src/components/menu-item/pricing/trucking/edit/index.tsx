@@ -35,7 +35,6 @@ const EditTruckingPricing = () => {
         truckingPricingID: idQuery,
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -44,8 +43,6 @@ const EditTruckingPricing = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '',
-        lclTruckingPricing: formValues.lclTruckingPricing || '',
         seaPricingDetailUpdateRequests:
           formValues.truckingPricingDetailByContainerTypeDTOs || [],
         seaPricingFeeGroupUpdateRequests: returnFeeDTO,

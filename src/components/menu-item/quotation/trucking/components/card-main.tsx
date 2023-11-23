@@ -162,7 +162,6 @@ const CardMain = ({
         truckingQuotationNo: propCopyAndCreate.truckingQuotationNo as string,
         pickupID: propCopyAndCreate.pickupID as string,
         deliveryID: propCopyAndCreate.deliveryID as string,
-        emtyPickupID: propCopyAndCreate.emtyPickupID as string,
         commodityID: propCopyAndCreate.commodityID as string,
         currencyID: propCopyAndCreate.currencyID as string,
         vendor: propCopyAndCreate.vendor as string,
@@ -170,9 +169,6 @@ const CardMain = ({
         dateEffect: dayjs(Number(propCopyAndCreate.dateEffect as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
-        lclMinTruckingQuotation:
-          propCopyAndCreate.lclMinTruckingQuotation as string,
-        lclTruckingQuotation: propCopyAndCreate.lclTruckingQuotation as string,
         public: propCopyAndCreate.public as unknown as boolean,
         statusTruckingQuotation:
           propCopyAndCreate.statusTruckingQuotation as string,
@@ -226,47 +222,6 @@ const CardMain = ({
     },
   });
 
-  const suffixSelectorCurrencyLCLMin = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translateQuotationTruck('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
-
-  const suffixSelectorCurrencyLCL = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translateQuotationTruck('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
   return (
     <Card
       style={{ marginBottom: 24 }}
@@ -333,7 +288,7 @@ const CardMain = ({
       }
     >
       <Row gutter={16}>
-        <Col lg={8} span={24}>
+        <Col lg={12} span={24}>
           <Form.Item
             label={translateQuotationTruck('pickup_form.title')}
             tooltip={translateQuotationTruck('pickup_form.title')}
@@ -369,7 +324,7 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24}>
+        <Col lg={12} span={24}>
           <Form.Item
             label={translateQuotationTruck('delivery_form.title')}
             tooltip={translateQuotationTruck('delivery_form.title')}
@@ -407,55 +362,17 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
+
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationTruck('emtyPickup_form.title')}
-            tooltip={translateQuotationTruck('emtyPickup_form.title')}
-            name="emtyPickupID"
+            label={translateQuotationTruck('effect_date')}
+            name="dateEffect"
             rules={[
               {
                 required: true,
                 message: translateQuotationTruck(
-                  'emtyPickup_form.error_required'
+                  'effect_date_form.placeholder'
                 ),
-              },
-            ]}
-          >
-            <Select
-              showSearch
-              placeholder={translateQuotationTruck(
-                'emtyPickup_form.placeholder'
-              )}
-              disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                getLocation.data?.data.map((item) => {
-                  return {
-                    value: item.locationID,
-                    label: item.locationName,
-                  };
-                }) || []
-              }
-            />
-          </Form.Item>
-        </Col>
-
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationTruck('validity')}
-            name="validityDate"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationTruck('validity_form.placeholder'),
               },
             ]}
           >
@@ -468,14 +385,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationTruck('effect_date')}
-            name="dateEffect"
+            label={translateQuotationTruck('validity')}
+            name="validityDate"
             rules={[
               {
                 required: true,
-                message: translateQuotationTruck(
-                  'effect_date_form.placeholder'
-                ),
+                message: translateQuotationTruck('validity_form.placeholder'),
               },
             ]}
           >
@@ -544,48 +459,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationTruck('LCL')}
-            name="lclTruckingQuotation"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationTruck('LCL_form.placeholder'),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorCurrencyLCL}
-              placeholder={translateQuotationTruck('LCL_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationTruck('LCLMin')}
-            name="lclMinTruckingQuotation"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationTruck('LCLMin_form.placeholder'),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorCurrencyLCLMin}
-              placeholder={translateQuotationTruck('LCLMin_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
 
         <Col lg={8} span={24}>
           <Form.Item
@@ -619,6 +492,29 @@ const CardMain = ({
                   };
                 }) || []
               }
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={8}>
+          <Form.Item
+            label="Currency"
+            name="currencyID"
+            rules={[
+              {
+                required: true,
+                message: translateQuotationTruck(
+                  'currency_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <Select
+              placeholder={translateQuotationTruck('currency_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
             />
           </Form.Item>
         </Col>

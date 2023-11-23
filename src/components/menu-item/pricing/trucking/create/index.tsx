@@ -77,6 +77,7 @@ const CreateTruckingPricing = () => {
           containerTypeID: data.containerTypeID,
           currencyID: data.currencyID,
           pricePricingDetail: data.price,
+          vat: data.vat,
         };
       });
     const truckingPricingDetailLoadCapacityRegisterRequests =
@@ -85,6 +86,7 @@ const CreateTruckingPricing = () => {
           loadCapacityID: data.loadCapacityID,
           currencyID: data.currencyID,
           pricePricingDetail: data.price,
+          vat: data.vat,
         };
       });
     const returnFeeDTO = returnFeeDTOs(
@@ -96,7 +98,6 @@ const CreateTruckingPricing = () => {
         truckingPricingID: id || '',
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -105,8 +106,6 @@ const CreateTruckingPricing = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '',
-        lclTruckingPricing: formValues.lclTruckingPricing || '',
         seaPricingDetailUpdateRequests:
           formValues.truckingPricingDetailByContainerTypeDTOs || [],
         seaPricingFeeGroupUpdateRequests: returnFeeDTO,
@@ -127,7 +126,6 @@ const CreateTruckingPricing = () => {
       const _requestData: ITruckingPricingCreate = {
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -136,8 +134,6 @@ const CreateTruckingPricing = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '',
-        lclTruckingPricing: formValues.lclTruckingPricing || '',
         truckingPricingDetailRegisterRequests:
           truckingPricingDetailRegisterRequests || [],
         truckingLoadCapacityDetailRegisterRequests:
@@ -170,6 +166,7 @@ const CreateTruckingPricing = () => {
           containerTypeID: data.containerTypeID,
           currencyID: data.currencyID,
           pricePricingDetail: data.price,
+          vat: data.vat,
         };
       });
     const truckingPricingDetailLoadCapacityRegisterRequests =
@@ -178,6 +175,7 @@ const CreateTruckingPricing = () => {
           loadCapacityID: data.loadCapacityID,
           currencyID: data.currencyID,
           pricePricingDetail: data.price,
+          vat: data.vat,
         };
       });
     const returnFeeDTO = returnFeeDTOs(
@@ -190,7 +188,6 @@ const CreateTruckingPricing = () => {
         truckingPricingID: id,
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -199,8 +196,6 @@ const CreateTruckingPricing = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '',
-        lclTruckingPricing: formValues.lclTruckingPricing || '',
         seaPricingDetailUpdateRequests:
           formValues.truckingPricingDetailByContainerTypeDTOs || [],
         seaPricingFeeGroupUpdateRequests: returnFeeDTO,
@@ -223,7 +218,6 @@ const CreateTruckingPricing = () => {
       const _requestData: ITruckingPricingCreate = {
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -232,8 +226,6 @@ const CreateTruckingPricing = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '',
-        lclTruckingPricing: formValues.lclTruckingPricing || '',
         truckingPricingDetailRegisterRequests:
           truckingPricingDetailRegisterRequests || [],
         truckingLoadCapacityDetailRegisterRequests:

@@ -184,6 +184,7 @@ interface DataType {
   currencyID: string;
   currencyName: string;
   price: string;
+  vat: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
@@ -233,6 +234,7 @@ const SeaPricingDetailDTO = ({
               currencyID: item.currencyID || '',
               currencyName: item.currencyName || '',
               price: item.price || '',
+              vat: item.vat || '',
             };
           })
       );
@@ -284,6 +286,7 @@ const SeaPricingDetailDTO = ({
             containerTypeID: item.containerTypeID,
             currencyID: item.currencyID,
             price: item.price,
+            vat: item.vat,
           };
         })
       );
@@ -319,6 +322,7 @@ const SeaPricingDetailDTO = ({
           containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
+          vat: item.vat,
         };
       })
     );
@@ -329,7 +333,7 @@ const SeaPricingDetailDTO = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type container',
+      title: 'Type LCL',
       dataIndex: 'containerTypeID',
       width: '30%',
       align: 'center',
@@ -353,6 +357,15 @@ const SeaPricingDetailDTO = ({
       align: 'center',
       render: (value) => {
         return optionCurrency.find((item) => item.value === value)?.label;
+      },
+    },
+    {
+      title: 'VAT',
+      dataIndex: 'vat',
+      align: 'center',
+      editable: !isCheckPermissionEdit,
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -391,6 +404,7 @@ const SeaPricingDetailDTO = ({
       currencyID: valueCurrencyID || optionCurrency[0].value || '',
       currencyName: optionCurrency[0].label || '',
       price: '1000000',
+      vat: '0',
     };
     const newDataSource = [newData, ...dataSource];
     setDataSource(newDataSource);
@@ -406,6 +420,7 @@ const SeaPricingDetailDTO = ({
           containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
+          vat: item.vat,
         };
       })
     );
@@ -438,6 +453,7 @@ const SeaPricingDetailDTO = ({
           containerTypeID: item.containerTypeID,
           currencyID: item.currencyID,
           price: item.price,
+          vat: item.vat,
         };
       })
     );
@@ -460,7 +476,7 @@ const SeaPricingDetailDTO = ({
         record,
         editable: col.editable,
         inputType:
-          col.dataIndex === 'price'
+          col.dataIndex === 'price' || col.dataIndex === 'vat'
             ? 'number'
             : col.dataIndex === 'currencyID'
             ? 'selectCurrency'

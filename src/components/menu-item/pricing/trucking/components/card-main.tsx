@@ -151,7 +151,6 @@ const CardMain = ({
       form.setFieldsValue({
         pickupID: propCopyAndCreate.pickupID as string,
         deliveryID: propCopyAndCreate.deliveryID as string,
-        emtyPickupID: propCopyAndCreate.emtyPickupID as string,
         commodityID: propCopyAndCreate.commodityID as string,
         currencyID: propCopyAndCreate.currencyID as string,
         vendor: propCopyAndCreate.vendor as string,
@@ -160,9 +159,6 @@ const CardMain = ({
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
-        lclMinTruckingPricing:
-          propCopyAndCreate.lclMinTruckingPricing as string,
-        lclTruckingPricing: propCopyAndCreate.lclTruckingPricing as string,
         statusTruckingPricing:
           propCopyAndCreate.statusTruckingPricing as string,
 
@@ -192,47 +188,6 @@ const CardMain = ({
     },
   });
 
-  const suffixSelectorCurrencyLCLMin = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translatePricingTrucking('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
-
-  const suffixSelectorCurrencyLCL = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translatePricingTrucking('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
   return (
     <Card
       style={{ marginBottom: 24 }}
@@ -299,7 +254,7 @@ const CardMain = ({
       }
     >
       <Row gutter={16}>
-        <Col lg={8} span={24}>
+        <Col lg={12} span={24}>
           <Form.Item
             label={translatePricingTrucking('pickup')}
             tooltip={translatePricingTrucking('pickup')}
@@ -335,7 +290,7 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24}>
+        <Col lg={12} span={24}>
           <Form.Item
             label={translatePricingTrucking('delivery_form.title')}
             tooltip={translatePricingTrucking('delivery_form.title')}
@@ -375,55 +330,17 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
+
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingTrucking('emtyPickup_form.title')}
-            tooltip={translatePricingTrucking('emtyPickup_form.title')}
-            name="emtyPickupID"
+            label={translatePricingTrucking('effect_date')}
+            name="effectDated"
             rules={[
               {
                 required: true,
                 message: translatePricingTrucking(
-                  'emtyPickup_form.error_required'
+                  'effect_date_form.placeholder'
                 ),
-              },
-            ]}
-          >
-            <Select
-              showSearch
-              placeholder={translatePricingTrucking(
-                'emtyPickup_form.placeholder'
-              )}
-              disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                getLocation.data?.data.map((item) => {
-                  return {
-                    value: item.locationID,
-                    label: item.locationName,
-                  };
-                }) || []
-              }
-            />
-          </Form.Item>
-        </Col>
-
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingTrucking('validity')}
-            name="validityDate"
-            rules={[
-              {
-                required: true,
-                message: translatePricingTrucking('validity_form.placeholder'),
               },
             ]}
           >
@@ -436,14 +353,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingTrucking('effect_date')}
-            name="effectDated"
+            label={translatePricingTrucking('validity')}
+            name="validityDate"
             rules={[
               {
                 required: true,
-                message: translatePricingTrucking(
-                  'effect_date_form.placeholder'
-                ),
+                message: translatePricingTrucking('validity_form.placeholder'),
               },
             ]}
           >
@@ -512,48 +427,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingTrucking('LCL')}
-            name="lclTruckingPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingTrucking('LCL_form.placeholder'),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorCurrencyLCL}
-              placeholder={translatePricingTrucking('LCL_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingTrucking('LCLMin')}
-            name="lclMinTruckingPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingTrucking('LCLMin_form.placeholder'),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorCurrencyLCLMin}
-              placeholder={translatePricingTrucking('LCLMin_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
 
         <Col lg={8} span={24}>
           <Form.Item
@@ -580,7 +453,7 @@ const CardMain = ({
                   .localeCompare((optionB?.label ?? '').toLowerCase())
               }
               options={
-                getPartner.data?.data.map((item) => {
+                getPartner.data?.data?.map((item) => {
                   return {
                     value: item.partnerID,
                     label: item.name,
@@ -627,6 +500,31 @@ const CardMain = ({
                   };
                 }) || []
               }
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={8}>
+          <Form.Item
+            label="Currency"
+            name="currencyID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingTrucking(
+                  'currency_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <Select
+              placeholder={translatePricingTrucking(
+                'currency_form.placeholder'
+              )}
+              disabled={checkRow && isCheckPermissionEdit}
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
             />
           </Form.Item>
         </Col>

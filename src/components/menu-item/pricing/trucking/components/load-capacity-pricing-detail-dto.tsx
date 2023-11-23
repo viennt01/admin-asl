@@ -29,6 +29,7 @@ interface Item {
   currencyID: string;
   currencyName: string;
   price: string;
+  vat: string;
 }
 
 interface EditableRowProps {
@@ -190,6 +191,7 @@ interface DataType {
   currencyID: string;
   currencyName: string;
   price: string;
+  vat: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
@@ -238,6 +240,7 @@ const TruckingPricingLoadCapacity = ({
               currencyID: item.currencyID || '',
               currencyName: item.currencyName || '',
               price: item.price || '',
+              vat: item.vat || '',
             };
           })
       );
@@ -289,6 +292,7 @@ const TruckingPricingLoadCapacity = ({
             loadCapacityID: item.loadCapacityID,
             currencyID: item.currencyID,
             price: item.price,
+            vat: item.vat,
           };
         })
       );
@@ -324,6 +328,7 @@ const TruckingPricingLoadCapacity = ({
           loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
+          vat: item.vat,
         };
       })
     );
@@ -334,7 +339,7 @@ const TruckingPricingLoadCapacity = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type Load Capacity',
+      title: 'Type FCL',
       dataIndex: 'loadCapacityID',
       width: '30%',
       align: 'center',
@@ -359,6 +364,15 @@ const TruckingPricingLoadCapacity = ({
       align: 'center',
       render: (value) => {
         return optionCurrency.find((item) => item.value === value)?.label;
+      },
+    },
+    {
+      title: 'VAT',
+      dataIndex: 'vat',
+      align: 'center',
+      editable: !isCheckPermissionEdit,
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
       },
     },
     {
@@ -398,6 +412,7 @@ const TruckingPricingLoadCapacity = ({
       currencyID: valueCurrencyID || optionCurrency[0].value || '',
       currencyName: optionCurrency[0].label || '',
       price: '1000000',
+      vat: '0',
     };
     const newDataSource = [newData, ...dataSource];
     setDataSource(newDataSource);
@@ -413,6 +428,7 @@ const TruckingPricingLoadCapacity = ({
           loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
+          vat: item.vat,
         };
       })
     );
@@ -445,6 +461,7 @@ const TruckingPricingLoadCapacity = ({
           loadCapacityID: item.loadCapacityID,
           currencyID: item.currencyID,
           price: item.price,
+          vat: item.vat,
         };
       })
     );
@@ -467,7 +484,7 @@ const TruckingPricingLoadCapacity = ({
         record,
         editable: col.editable,
         inputType:
-          col.dataIndex === 'price'
+          col.dataIndex === 'price' || col.dataIndex === 'vat'
             ? 'number'
             : col.dataIndex === 'currencyID'
             ? 'selectCurrency'

@@ -126,6 +126,7 @@ const CreateSeaQuotation = () => {
         return {
           containerTypeID: data.containerTypeID,
           priceQuotationDetail: data.price,
+          vat: data.vat,
         };
       });
 
@@ -134,6 +135,7 @@ const CreateSeaQuotation = () => {
         return {
           loadCapacityID: data.loadCapacityID,
           pricePricingDetail: data.price,
+          vat: data.vat,
         };
       });
 
@@ -151,7 +153,6 @@ const CreateSeaQuotation = () => {
         truckingQuotationID: id || '',
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -159,8 +160,6 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
-        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
           (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
@@ -200,7 +199,6 @@ const CreateSeaQuotation = () => {
       const _requestData: ITruckQuotationCreate = {
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -208,8 +206,6 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
-        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
         public: formValues.public || true,
         truckingQuotationDetailRegisterRequests:
           containerDetailRegisterRequests || [],
@@ -250,6 +246,7 @@ const CreateSeaQuotation = () => {
           containerTypeID: data.containerTypeID,
           currencyID: data.currencyID,
           priceQuotationDetail: data.price,
+          vat: data.vat,
         };
       });
 
@@ -258,6 +255,7 @@ const CreateSeaQuotation = () => {
         return {
           loadCapacityID: data.loadCapacityID,
           pricePricingDetail: data.price,
+          vat: data.vat,
         };
       });
 
@@ -274,7 +272,6 @@ const CreateSeaQuotation = () => {
         truckingQuotationID: id,
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -282,8 +279,6 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
-        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
           (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
@@ -323,7 +318,6 @@ const CreateSeaQuotation = () => {
       const _requestData: ITruckQuotationCreate = {
         pickupID: formValues.pickupID || '',
         deliveryID: formValues.deliveryID || '',
-        emtyPickupID: formValues.emtyPickupID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         partnerID: formValues.vendor || '',
@@ -331,8 +325,6 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        lclMinTruckingQuotation: formValues.lclMinTruckingQuotation || '',
-        lclTruckingQuotation: formValues.lclTruckingQuotation || '',
         public: formValues.public || true,
         truckingQuotationDetailRegisterRequests:
           truckQuotationDetailRegisterRequests || [],

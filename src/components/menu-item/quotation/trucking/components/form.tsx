@@ -254,7 +254,6 @@ const TruckQuotation = ({
           truckingQuotationNo: data.data.truckingQuotationNo,
           pickupID: data.data.pickupID,
           deliveryID: data.data.deliveryID,
-          emtyPickupID: data.data.emtyPickupID,
           commodityID: data.data.commodityID,
           currencyID: data.data.currencyID,
           vendor: data.data.vendor,
@@ -262,8 +261,6 @@ const TruckQuotation = ({
           dateEffect: dayjs(Number(data.data.dateEffect)),
           validityDate: dayjs(Number(data.data.validityDate)),
           freqDate: data.data.freqDate,
-          lclMinTruckingQuotation: data.data.lclMinTruckingQuotation,
-          lclTruckingQuotation: data.data.lclTruckingQuotation,
           public: data.data.public,
           statusTruckingQuotation: data.data.statusTruckingQuotation,
           truckingQuotationDetailByContainerTypeDTOs:
@@ -396,7 +393,7 @@ const TruckQuotation = ({
         />
 
         <CollapseCard
-          title="Container Detail"
+          title="LCL"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
@@ -409,7 +406,7 @@ const TruckQuotation = ({
         </CollapseCard>
 
         <CollapseCard
-          title="Load Capacity Detail"
+          title="FCL"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >

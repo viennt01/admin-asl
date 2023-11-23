@@ -7,8 +7,6 @@ export interface ITruckingQuotation {
   pickupName: string;
   deliveryID: string;
   deliveryName: string;
-  emtyPickupID: string;
-  emtyPickupName: string;
   commodityID: string;
   commodityName: string;
   currencyID: string;
@@ -19,8 +17,6 @@ export interface ITruckingQuotation {
   effectDated: string;
   validityDate: string;
   freqDate: string;
-  lclMinTruckingPricing: string;
-  lclTruckingPricing: string;
   public: boolean;
   statusTruckingPricing: string;
   insertedByUser: string;
@@ -77,7 +73,6 @@ export interface IFormValues {
   truckingQuotationNo: string;
   pickupID: string;
   deliveryID: string;
-  emtyPickupID: string;
   commodityID: string;
   currencyID: string;
   vendor: string;
@@ -85,8 +80,6 @@ export interface IFormValues {
   dateEffect: Dayjs;
   validityDate: Dayjs;
   freqDate: string;
-  lclMinTruckingQuotation: string;
-  lclTruckingQuotation: string;
   public: boolean;
   statusTruckingQuotation: string;
   truckingQuotationDetailByContainerTypeDTOs: IContainerDTOFormValue[];
@@ -103,7 +96,6 @@ export interface ITruckingPricingDetailType
   > {
   pickupName: string;
   deliveryName: string;
-  emtyPickupName: string;
   commodityName: string;
   currencyAbbreviations: string;
   dateInserted: string;
@@ -137,6 +129,7 @@ export interface IContainerDTOFormValue {
   currencyID: string;
   currencyName: string;
   price: string;
+  vat: string;
 }
 
 export type ISeaQuotationDetailDTOsCreate = Omit<
@@ -166,6 +159,7 @@ export interface ILoadCapacityDTOFormValue {
   currencyID: string;
   currencyName: string;
   price: string;
+  vat: string;
 }
 
 export type ILoadCapacityDetailDTOsCreate = Omit<

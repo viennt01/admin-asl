@@ -17,7 +17,7 @@ import {
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatDate, formatNumber } from '@/utils/format';
+import { formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -67,8 +67,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
             deliveryName: data.deliveryName,
-            emtyPickupID: data.emtyPickupID,
-            emtyPickupName: data.emtyPickupName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
@@ -78,8 +76,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            lclMinTruckingPricing: data.lclMinTruckingPricing,
-            lclTruckingPricing: data.lclTruckingPricing,
             public: data.public,
             statusTruckingPricing: data.statusTruckingPricing,
             truckingPricingDetailByContainerTypeDTOs:
@@ -191,17 +187,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     },
     {
       title: (
-        <div className={style.title}>
-          {translatePricingTrucking('emtyPickup')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'emtyPickupName',
-      key: 'emtyPickupName',
-      align: 'left',
-    },
-    {
-      title: (
         <div className={style.title}>{translatePricingTrucking('vendor')}</div>
       ),
       width: 200,
@@ -307,27 +292,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'updatedByUser',
       key: 'updatedByUser',
       align: 'center',
-    },
-
-    {
-      title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
-      width: 200,
-      dataIndex: 'lclMinTruckingPricing',
-      key: 'lclMinTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <div className={style.title}>{translateCommon('LCL')}</div>,
-      width: 200,
-      dataIndex: 'lclTruckingPricing',
-      key: 'lclTruckingPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     {
       title: <div className={style.title}>{translateCommon('status')}</div>,

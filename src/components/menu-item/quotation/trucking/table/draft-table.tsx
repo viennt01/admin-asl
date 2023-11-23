@@ -67,8 +67,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
             deliveryName: data.deliveryName,
-            emtyPickupID: data.emtyPickupID,
-            emtyPickupName: data.emtyPickupName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
@@ -79,8 +77,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
-            lclMinTruckingPricing: data.lclMinTruckingPricing,
-            lclTruckingPricing: data.lclTruckingPricing,
             public: data.public,
             statusTruckingPricing: data.statusTruckingPricing,
             insertedByUser: data.insertedByUser,
@@ -191,37 +187,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: translateQuotationTruck('emtyPickup'),
-      width: 200,
-      dataIndex: 'emtyPickupName',
-      key: 'emtyPickupName',
-      align: 'left',
-      render: (value) => value,
-    },
-    {
       title: translateQuotationTruck('commodity'),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
       align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>{translateQuotationTruck('LCLMin')}</div>
-      ),
-      width: 200,
-      dataIndex: 'lclMinTruckingPricing',
-      key: 'lclMinTruckingPricing',
-      align: 'right',
-    },
-    {
-      title: (
-        <div className={style.title}>{translateQuotationTruck('LCL')}</div>
-      ),
-      width: 200,
-      dataIndex: 'lclTruckingPricing',
-      key: 'lclTruckingPricing',
-      align: 'right',
     },
     {
       title: (

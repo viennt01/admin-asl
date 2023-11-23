@@ -175,20 +175,6 @@ const TableFeeGroup: React.FC<ImportModalProps> = ({ dataTable }) => {
         return value ? formatNumber(Number(value) || 0) : '-';
       },
     },
-    {
-      title: 'Type fee',
-      dataIndex: 'typeFeeName',
-      key: 'typeFeeName',
-      fixed: 'left',
-      ...getColumnSearchProps('typeFeeName'),
-    },
-    {
-      title: 'NO',
-      dataIndex: 'feeNo',
-      key: 'feeNo',
-      fixed: 'left',
-      ...getColumnSearchProps('feeNo'),
-    },
   ];
   useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, dataTable],
