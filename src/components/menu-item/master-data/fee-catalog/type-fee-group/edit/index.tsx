@@ -21,7 +21,8 @@ const EditTypeFeeGroup = () => {
         typeFeeGroupID: idQuery,
         typeFeeGroupNo: formValues.typeFeeGroupNo || '',
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
-        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        typeFeeGroupNameVN:
+          formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
         statusTypeFeeGroup:
           formValues.statusTypeFeeGroup || STATUS_ALL_LABELS.ACTIVE,
       };

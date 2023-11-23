@@ -192,14 +192,6 @@ const UnitForm = ({
           <Form.Item
             label={translateTypeUnit('description_en_form.title')}
             name="descriptionEN"
-            rules={[
-              {
-                required: true,
-                message: translateTypeUnit(
-                  'description_en_form.error_required'
-                ),
-              },
-            ]}
           >
             <Input.TextArea
               size="large"

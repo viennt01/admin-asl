@@ -446,14 +446,6 @@ const FeeGroupForm = ({
               <Form.Item
                 label={translateFeeGroup('fee_group_name_form.titleVn')}
                 name="feeGroupNameVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateFeeGroup(
-                      'fee_group_name_form.error_required'
-                    ),
-                  },
-                ]}
               >
                 <Input
                   placeholder={translateFeeGroup(

@@ -30,7 +30,8 @@ const CreateTypeFee = () => {
         typeFeeID: id,
         typeFeeNo: formValues.typeFeeNo || '',
         typeFeeNameEN: formValues.typeFeeNameEN || '',
-        typeFeeNameVN: formValues.typeFeeNameVN || '',
+        typeFeeNameVN:
+          formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
         statusTypeFee: STATUS_ALL_LABELS.REQUEST,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -47,7 +48,8 @@ const CreateTypeFee = () => {
       const _requestData: TypeFeeCreate = {
         typeFeeNo: formValues.typeFeeNo || '',
         typeFeeNameEN: formValues.typeFeeNameEN || '',
-        typeFeeNameVN: formValues.typeFeeNameVN || '',
+        typeFeeNameVN:
+          formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
         statusTypeFee: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -69,7 +71,8 @@ const CreateTypeFee = () => {
         typeFeeID: id,
         typeFeeNo: formValues.typeFeeNo || '',
         typeFeeNameEN: formValues.typeFeeNameEN || '',
-        typeFeeNameVN: formValues.typeFeeNameVN || '',
+        typeFeeNameVN:
+          formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
         statusTypeFee: STATUS_ALL_LABELS.DRAFT,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -89,7 +92,8 @@ const CreateTypeFee = () => {
       const _requestData: TypeFeeCreate = {
         typeFeeNo: formValues.typeFeeNo || '',
         typeFeeNameEN: formValues.typeFeeNameEN || '',
-        typeFeeNameVN: formValues.typeFeeNameVN || '',
+        typeFeeNameVN:
+          formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
         statusTypeFee: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

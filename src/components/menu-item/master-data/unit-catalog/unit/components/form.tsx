@@ -290,28 +290,6 @@ const UnitForm = ({
 
             <Col span={24}>
               <Form.Item
-                label={translateUnit('description_vn_form.title')}
-                name="descriptionVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateUnit(
-                      'description_vn_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <TextArea
-                  size="large"
-                  placeholder={translateUnit('description_vn_form.placeholder')}
-                  allowClear
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col span={24}>
-              <Form.Item
                 label={translateUnit('description_en_form.title')}
                 name="descriptionEN"
                 rules={[
@@ -331,6 +309,20 @@ const UnitForm = ({
                 />
               </Form.Item>
             </Col>
+            <Col span={24}>
+              <Form.Item
+                label={translateUnit('description_vn_form.title')}
+                name="descriptionVN"
+              >
+                <TextArea
+                  size="large"
+                  placeholder={translateUnit('description_vn_form.placeholder')}
+                  allowClear
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+
             <Col span={0}>
               <Form.Item name="statusUnit"></Form.Item>
             </Col>

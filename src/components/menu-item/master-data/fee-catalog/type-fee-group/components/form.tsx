@@ -292,14 +292,6 @@ const TypeFeeGroupForm = ({
                   'type_fee_group_name_form.titleVn'
                 )}
                 name="typeFeeGroupNameVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateTypeFeeGroup(
-                      'type_fee_group_name_form.error_required'
-                    ),
-                  },
-                ]}
               >
                 <Input
                   placeholder={translateTypeFeeGroup(

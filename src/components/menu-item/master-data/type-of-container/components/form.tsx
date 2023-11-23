@@ -347,14 +347,6 @@ const TypeOfContainerTypeForm = ({
               <Form.Item
                 label={translateContainerType('description_vn_form.title')}
                 name="detailsVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateContainerType(
-                      'description_vn_form.error_required'
-                    ),
-                  },
-                ]}
               >
                 <TextArea
                   size="large"

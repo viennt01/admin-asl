@@ -200,14 +200,6 @@ const LoadCapacityForm = ({
               'description_load_capacity_form.titleEn'
             )}
             name="descriptionEN"
-            rules={[
-              {
-                required: true,
-                message: translateLoadCapacity(
-                  'description_load_capacity_form.error_required'
-                ),
-              },
-            ]}
           >
             <Input.TextArea
               size="large"

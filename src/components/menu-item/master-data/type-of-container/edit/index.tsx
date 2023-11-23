@@ -21,7 +21,7 @@ const EditTypeOfContainer = () => {
         containerTypeCode: formValues.containerTypeCode,
         name: formValues.name,
         detailsEN: formValues.detailsEN,
-        detailsVN: formValues.detailsVN,
+        detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
         statusContainerType: formValues.statusContainerType,
       };

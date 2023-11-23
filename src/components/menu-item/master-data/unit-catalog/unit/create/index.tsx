@@ -30,8 +30,9 @@ const CreateUnit = () => {
         unitID: id,
         internationalCode: formValues.internationalCode || '',
         typeUnitID: formValues.typeUnitID || '',
-        descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -48,8 +49,9 @@ const CreateUnit = () => {
       const _requestData: UnitCreate = {
         internationalCode: formValues.internationalCode || '',
         typeUnitID: formValues.typeUnitID || '',
-        descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -71,8 +73,9 @@ const CreateUnit = () => {
         unitID: id,
         internationalCode: formValues.internationalCode || '',
         typeUnitID: formValues.typeUnitID || '',
-        descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -92,8 +95,9 @@ const CreateUnit = () => {
       const _requestData: UnitCreate = {
         internationalCode: formValues.internationalCode || '',
         typeUnitID: formValues.typeUnitID || '',
-        descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
         statusUnit: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

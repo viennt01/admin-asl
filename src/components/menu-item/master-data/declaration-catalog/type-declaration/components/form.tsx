@@ -229,14 +229,6 @@ const TypeDeclarationForm = ({
               'description_type_declaration_form.titleEn'
             )}
             name="descriptionEN"
-            rules={[
-              {
-                required: true,
-                message: translateDeclaration(
-                  'description_type_declaration_form.error_required'
-                ),
-              },
-            ]}
           >
             <Input.TextArea
               size="large"

@@ -35,7 +35,7 @@ const CreateTypeOfContainer = () => {
         containerTypeCode: formValues.containerTypeCode,
         name: formValues.name,
         detailsEN: formValues.detailsEN,
-        detailsVN: formValues.detailsVN,
+        detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
         statusContainerType: STATUS_ALL_LABELS.REQUEST,
       };
@@ -55,7 +55,7 @@ const CreateTypeOfContainer = () => {
         containerTypeCode: formValues.containerTypeCode,
         name: formValues.name,
         detailsEN: formValues.detailsEN,
-        detailsVN: formValues.detailsVN,
+        detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
         statusContainerType: STATUS_ALL_LABELS.REQUEST,
       };
@@ -80,7 +80,7 @@ const CreateTypeOfContainer = () => {
         containerTypeCode: formValues.containerTypeCode,
         name: formValues.name,
         detailsEN: formValues.detailsEN,
-        detailsVN: formValues.detailsVN,
+        detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
         statusContainerType: STATUS_ALL_LABELS.DRAFT,
       };
@@ -102,7 +102,7 @@ const CreateTypeOfContainer = () => {
         containerTypeCode: formValues.containerTypeCode || '',
         name: formValues.name || '',
         detailsEN: formValues.detailsEN || '',
-        detailsVN: formValues.detailsVN || '',
+        detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus || '',
         statusContainerType: STATUS_ALL_LABELS.DRAFT,
       };

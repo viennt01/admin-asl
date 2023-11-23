@@ -30,7 +30,8 @@ const CreateTypeFeeGroup = () => {
         typeFeeGroupID: id,
         typeFeeGroupNo: formValues.typeFeeGroupNo || '',
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
-        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        typeFeeGroupNameVN:
+          formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
         statusTypeFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -47,7 +48,8 @@ const CreateTypeFeeGroup = () => {
       const _requestData: TypeFeeGroupCreate = {
         typeFeeGroupNo: formValues.typeFeeGroupNo || '',
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
-        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        typeFeeGroupNameVN:
+          formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
         statusTypeFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -69,7 +71,8 @@ const CreateTypeFeeGroup = () => {
         typeFeeGroupID: id,
         typeFeeGroupNo: formValues.typeFeeGroupNo || '',
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
-        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        typeFeeGroupNameVN:
+          formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
         statusTypeFeeGroup: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -89,7 +92,8 @@ const CreateTypeFeeGroup = () => {
       const _requestData: TypeFeeGroupCreate = {
         typeFeeGroupNo: formValues.typeFeeGroupNo || '',
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
-        typeFeeGroupNameVN: formValues.typeFeeGroupNameVN || '',
+        typeFeeGroupNameVN:
+          formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
         statusTypeFeeGroup: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

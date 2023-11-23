@@ -287,14 +287,6 @@ const TypeFeeForm = ({
               <Form.Item
                 label={translateTypeFee('type_fee_name_form.title_VN')}
                 name="typeFeeNameVN"
-                rules={[
-                  {
-                    required: true,
-                    message: translateTypeFee(
-                      'type_fee_name_form.error_required'
-                    ),
-                  },
-                ]}
               >
                 <Input
                   placeholder={translateTypeFee(

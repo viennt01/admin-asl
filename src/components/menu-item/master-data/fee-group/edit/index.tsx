@@ -22,7 +22,8 @@ const EditFeeGroup = () => {
         typeFeeGroupID: formValues.typeFeeGroupID || '',
         feeGroupNo: formValues.feeGroupNo || '',
         feeGroupNameEN: formValues.feeGroupNameEN || '',
-        feeGroupNameVN: formValues.feeGroupNameVN || '',
+        feeGroupNameVN:
+          formValues.feeGroupNameVN || formValues.feeGroupNameEN || '',
         statusFeeGroup: formValues.statusFeeGroup || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {

@@ -23,8 +23,9 @@ const EditUnit = () => {
         unitID: idQuery,
         internationalCode: formValues.internationalCode || '',
         typeUnitID: formValues.typeUnitID || '',
-        descriptionVN: formValues.descriptionVN || '',
         descriptionEN: formValues.descriptionEN || '',
+        descriptionVN:
+          formValues.descriptionVN || formValues.descriptionEN || '',
         statusUnit: formValues.statusUnit || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {

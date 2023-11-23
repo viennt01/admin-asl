@@ -20,7 +20,8 @@ const EditTypeFee = () => {
         typeFeeID: idQuery,
         typeFeeNo: formValues.typeFeeNo || '',
         typeFeeNameEN: formValues.typeFeeNameEN || '',
-        typeFeeNameVN: formValues.typeFeeNameVN || '',
+        typeFeeNameVN:
+          formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
         statusTypeFee: formValues.statusTypeFee,
       };
       updateMutation.mutate(_requestData, {
