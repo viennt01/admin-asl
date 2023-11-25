@@ -1,5 +1,5 @@
 import { EyeOutlined, FilterFilled } from '@ant-design/icons';
-import { Button, PaginationProps, Tag } from 'antd';
+import { Button, PaginationProps, Popover, Tag } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -17,6 +17,7 @@ import { formatDate } from '@/utils/format';
 import {
   QueryInputParamType,
   QuerySelectParamType,
+  Role,
   SelectSearch,
   UserTable,
 } from './interface';
@@ -83,12 +84,9 @@ export default function CalculationUserPage() {
   });
 
   const dataSelectSearch =
-    querySelectParams.statusUser.length === 0
+    querySelectParams.status.length === 0
       ? {
-          statusUser: [
-            STATUS_MATER_LABELS.ACTIVE,
-            STATUS_MATER_LABELS.DEACTIVE,
-          ],
+          status: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
         }
       : querySelectParams;
 
@@ -109,17 +107,12 @@ export default function CalculationUserPage() {
         setDataTable(
           data.data.data.map((data) => ({
             key: data.userID,
-            roleID: data.roleID,
-            roleName: data.roleName,
             genderID: data.genderID,
             genderName: data.genderName,
-            emailAccount: data.emailAccount,
             firstName: data.firstName,
             lastName: data.lastName,
             fullName: data.fullName,
             companyName: data.companyName,
-            abbreviationsCompany: data.abbreviationsCompany,
-            emailCompany: data.emailCompany,
             birthday: data.birthday,
             employeeCode: data.employeeCode,
             taxCode: data.taxCode,
@@ -130,15 +123,25 @@ export default function CalculationUserPage() {
             nationality: data.nationality,
             workingBranch: data.workingBranch,
             note: data.note,
-            website: data.website,
             avatar: data.avatar,
             colorAvatar: data.colorAvatar,
             defaultAvatar: data.defaultAvatar,
             lastLoginUser: data.lastLoginUser,
             lastFailedLoginUser: data.lastFailedLoginUser,
             statusUser: data.statusUser,
-            createdDateUser: data.createdDateUser,
-            updatedDateUser: data.updatedDateUser,
+
+            languageID: data.languageID,
+            nameLanguage: data.nameLanguage,
+            imageLanguage: data.imageLanguage,
+            partnerID: data.partnerID,
+            email: data.email,
+            insertedByUser: data.insertedByUser,
+            dateInserted: data.dateInserted,
+            dateUpdated: data.dateUpdated,
+            updatedByUser: data.updatedByUser,
+            confirmDated: data.confirmDated,
+            confirmByUser: data.confirmByUser,
+            roleList: data.roleList,
             searchAll: '',
           }))
         );
@@ -228,9 +231,9 @@ export default function CalculationUserPage() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusUser:
-        filters.statusUser?.length !== 0 && filters.statusUser
-          ? (filters.statusUser as string[])
+      status:
+        filters.status?.length !== 0 && filters.status
+          ? (filters.status as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);
@@ -262,9 +265,11 @@ export default function CalculationUserPage() {
       },
     },
     {
-      title: <div className={style.title}>{translateUser('Account')}</div>,
-      dataIndex: 'emailAccount',
-      key: 'emailAccount',
+      title: (
+        <div className={style.title}>{translateUser('Employee Code')}</div>
+      ),
+      dataIndex: 'employeeCode',
+      key: 'employeeCode',
       width: 150,
       align: 'center',
       ...ColumnSearchTableProps<QueryInputParamType>({
@@ -274,7 +279,7 @@ export default function CalculationUserPage() {
           queryParams: queryInputParams,
           selectedKeyShow: selectedActiveKey,
           setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'emailAccount',
+          dataIndex: 'employeeCode',
         },
       }),
     },
@@ -309,6 +314,54 @@ export default function CalculationUserPage() {
       key: 'genderName',
       width: 250,
       align: 'left',
+    },
+    {
+      title: <div className={style.title}>{translateUser('Language')}</div>,
+      dataIndex: 'nameLanguage',
+      key: 'nameLanguage',
+      width: 250,
+      align: 'left',
+    },
+    {
+      title: <div className={style.title}>{translateUser('Email')}</div>,
+      dataIndex: 'email',
+      key: 'email',
+      width: 250,
+      align: 'left',
+    },
+    {
+      title: <div className={style.title}>{translateUser('role')}</div>,
+      dataIndex: 'roleList',
+      key: 'roleList',
+      width: 250,
+      align: 'center',
+      render: (_, value) => {
+        const content = (valueTypeLocations: Role[]) => {
+          return (
+            <div>
+              {valueTypeLocations.map((type) => {
+                return <Tag key={type.roleID}>{type.name}</Tag>;
+              })}
+            </div>
+          );
+        };
+        return (
+          <Popover content={content(value.roleList)}>
+            {value.roleList.length <= 2 ? (
+              value.roleList.map((type) => (
+                <Tag key={type.roleID}>{type.name}</Tag>
+              ))
+            ) : (
+              <>
+                {value.roleList.slice(0, 2).map((type) => (
+                  <Tag key={type.roleID}>{type.name}</Tag>
+                ))}
+                <Tag>...</Tag>
+              </>
+            )}
+          </Popover>
+        );
+      },
     },
     {
       title: <div className={style.title}>{translateUser('nationality')}</div>,
@@ -396,13 +449,6 @@ export default function CalculationUserPage() {
       }),
     },
     {
-      title: <div className={style.title}>{translateUser('role')}</div>,
-      dataIndex: 'roleName',
-      key: 'roleName',
-      width: 250,
-      align: 'left',
-    },
-    {
       title: (
         <div className={style.title}>{translateUser('working_branch')}</div>
       ),
@@ -440,13 +486,13 @@ export default function CalculationUserPage() {
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusUser || null,
+      filteredValue: querySelectParams.status || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusUser.length !== 0
+                querySelectParams.status.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -550,7 +596,7 @@ export default function CalculationUserPage() {
     mutationFn: () =>
       exportTableFile({
         ids: selectedRowKeys,
-        status: querySelectParams.statusUser,
+        status: querySelectParams.status,
       }),
     onSuccess: (data) => {
       const url = window.URL.createObjectURL(new Blob([data]));

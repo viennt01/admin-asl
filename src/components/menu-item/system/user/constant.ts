@@ -22,7 +22,7 @@ export const initalValueQueryInputParamsMaster = {
 };
 
 export const initalValueQuerySelectParamsMaster = {
-  statusUser: [],
+  status: [],
 };
 
 export const initalValueDisplayColumnMaster = {

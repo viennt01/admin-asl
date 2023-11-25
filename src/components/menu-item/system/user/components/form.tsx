@@ -340,7 +340,7 @@ export default function UserForm() {
                     alt="Avatar"
                     size={160}
                   >
-                    {dataDetail.data?.data.defaultAvatar || ''}
+                    {dataDetail.data?.data?.defaultAvatar || ''}
                   </Avatar>
                 </Space>
 
