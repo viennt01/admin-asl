@@ -103,6 +103,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const inputNode =
     inputType === 'feeID' ? (
       <Select
+        showSearch
         ref={inputRef}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
@@ -111,10 +112,20 @@ export const EditableCell: React.FC<EditableCellProps> = ({
         }}
         style={{ width: '100%' }}
         onBlur={save}
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          (option?.label ?? '').toUpperCase().includes(input.toUpperCase())
+        }
+        filterSort={(optionA, optionB) =>
+          (optionA?.label ?? '')
+            .toLowerCase()
+            .localeCompare((optionB?.label ?? '').toLowerCase())
+        }
         options={optionFeeSelected}
       />
     ) : inputType === 'currencyID' ? (
       <Select
+        showSearch
         ref={inputRef}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
@@ -123,10 +134,20 @@ export const EditableCell: React.FC<EditableCellProps> = ({
         }}
         style={{ width: '100%' }}
         onBlur={save}
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          (option?.label ?? '').toUpperCase().includes(input.toUpperCase())
+        }
+        filterSort={(optionA, optionB) =>
+          (optionA?.label ?? '')
+            .toLowerCase()
+            .localeCompare((optionB?.label ?? '').toLowerCase())
+        }
         options={optionCurrency}
       />
     ) : inputType === 'unitID' ? (
       <Select
+        showSearch
         ref={inputRef}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
@@ -135,6 +156,15 @@ export const EditableCell: React.FC<EditableCellProps> = ({
         }}
         style={{ width: '100%' }}
         onBlur={save}
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          (option?.label ?? '').toUpperCase().includes(input.toUpperCase())
+        }
+        filterSort={(optionA, optionB) =>
+          (optionA?.label ?? '')
+            .toLowerCase()
+            .localeCompare((optionB?.label ?? '').toLowerCase())
+        }
         options={optionUnit}
       />
     ) : (

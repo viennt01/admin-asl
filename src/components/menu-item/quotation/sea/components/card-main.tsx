@@ -618,7 +618,7 @@ const CardMain = ({
                   .localeCompare((optionB?.label ?? '').toLowerCase())
               }
               options={
-                getPartner.data?.data.map((item) => {
+                getPartner.data?.data?.map((item) => {
                   return {
                     value: item.partnerID,
                     label: item.name,
@@ -720,7 +720,7 @@ const CardMain = ({
                   .localeCompare((optionB?.label ?? '').toLowerCase())
               }
               options={
-                getPartner.data?.data.map((item) => {
+                getPartner.data?.data?.map((item) => {
                   return {
                     value: item.partnerID,
                     label: item.name,
