@@ -41,7 +41,7 @@ interface ImportModalProps {
   handleCancel: () => void;
   itemData: React.Key[];
 }
-const dateFormat = 'YYYY-MM-DD HH:MM';
+const dateFormat = 'YYYY-MM-DD';
 
 export interface DataType {
   key: React.Key;

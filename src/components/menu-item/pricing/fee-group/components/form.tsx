@@ -51,7 +51,7 @@ import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/in
 const initialValue = {
   description: '',
 };
-const dateFormat = 'YYYY-MM-DD HH:MM';
+const dateFormat = 'YYYY-MM-DD';
 
 interface PortFormProps {
   create?: boolean;

@@ -59,7 +59,7 @@ interface Props {
 }
 
 const { Title } = Typography;
-const dateFormat = 'YYYY-MM-DD HH:MM';
+const dateFormat = 'YYYY-MM-DD';
 
 const CardMain = ({
   create,
