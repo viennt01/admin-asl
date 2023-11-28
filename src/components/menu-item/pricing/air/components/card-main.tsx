@@ -75,7 +75,7 @@ const CardMain = ({
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
-    queryFn: () => getAllLocation({ type: TYPE_LOCATION.AIR }),
+    queryFn: () => getAllLocation({ type: [TYPE_LOCATION.AIR_PORT] }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

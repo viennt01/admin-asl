@@ -84,7 +84,7 @@ export interface FormValues {
   note: string;
   dateEffect: Dayjs;
   validityDate: Dayjs;
-  vendor: string;
+  vendorID: string;
   freqDate: string;
   demSeaPricing: string;
   detSeaPricing: string;
@@ -163,7 +163,7 @@ export type SeaPricingCreate = Omit<
   FormValues,
   | 'seaPricingID'
   | 'dateEffect'
-  | 'vendor'
+  | 'vendorID'
   | 'validityDate'
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'
@@ -179,7 +179,7 @@ export type SeaPricingEdit = Omit<
   FormValues,
   | 'dateEffect'
   | 'validityDate'
-  | 'vendor'
+  | 'vendorID'
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'
 > & {

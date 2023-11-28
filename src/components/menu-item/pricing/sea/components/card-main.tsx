@@ -567,7 +567,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingSea('vendor_form.title')}
-            name="vendor"
+            name="vendorID"
             rules={[
               {
                 required: true,
