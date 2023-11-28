@@ -2,12 +2,10 @@ import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
 export enum TYPE_LOCATION {
-  'SEA' = 'Sea',
-  'TRUCKING' = 'Truck',
-  'AIR' = 'Air',
-  'CUSTOM' = 'Custom',
-  'ALL' = 'All',
-  'TOTAL' = '',
+  'PORT' = 'Port',
+  'INDUSTRIAL_ZONE' = 'Industrial Zone',
+  'DEPOT' = 'Depot',
+  'AIR_PORT' = 'Airport',
 }
 
 export interface SeaPricing {
@@ -234,7 +232,7 @@ export interface IDataLocation {
   locationName: string;
 }
 export interface IRequireLocation {
-  type: TYPE_LOCATION;
+  type: TYPE_LOCATION[];
 }
 
 // get all commodity

@@ -84,7 +84,7 @@ const CardMain = ({
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
-    queryFn: () => getAllLocation({ type: TYPE_LOCATION.SEA }),
+    queryFn: () => getAllLocation({ type: [TYPE_LOCATION.PORT] }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
