@@ -160,6 +160,7 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
           (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
@@ -207,6 +208,7 @@ const CreateSeaQuotation = () => {
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
         public: formValues.public || true,
+        forNewUser: formValues.forNewUser || false,
         truckingQuotationDetailRegisterRequests:
           containerDetailRegisterRequests || [],
         truckingLoadCapacityDetailRegisterRequests:
@@ -279,6 +281,7 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
           (returnQuotationDetail as unknown as ISeaQuotationDetailDTOsUpdate[]) ||
@@ -325,6 +328,7 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         truckingQuotationDetailRegisterRequests:
           truckQuotationDetailRegisterRequests || [],

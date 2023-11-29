@@ -49,6 +49,7 @@ const CreateCustomQuotation = () => {
         customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         statusCustomQuotation: STATUS_ALL_LABELS.REQUEST,
       };
@@ -87,6 +88,7 @@ const CreateCustomQuotation = () => {
         customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         customQuotationFeeGroupRegisterRequests:
           seaQuotationFeeGroupRegisterRequests || [],
@@ -126,6 +128,7 @@ const CreateCustomQuotation = () => {
         customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         statusCustomQuotation: STATUS_ALL_LABELS.DRAFT,
       };
@@ -166,6 +169,7 @@ const CreateCustomQuotation = () => {
         customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         customQuotationFeeGroupRegisterRequests:
           seaQuotationFeeGroupRegisterRequests || [],

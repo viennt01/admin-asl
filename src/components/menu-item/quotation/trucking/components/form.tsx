@@ -262,6 +262,7 @@ const TruckQuotation = ({
           validityDate: dayjs(Number(data.data.validityDate)),
           freqDate: data.data.freqDate,
           public: data.data.public,
+          forNewUser: data.data.forNewUser,
           statusTruckingQuotation: data.data.statusTruckingQuotation,
           truckingQuotationDetailByContainerTypeDTOs:
             data.data.truckingQuotationDetailByContainerTypeDTOs,
@@ -337,6 +338,7 @@ const TruckQuotation = ({
       currencyID: form.getFieldValue('currencyID'),
       vendor: form.getFieldValue('vendor'),
       note: form.getFieldValue('note'),
+      forNewUser: form.getFieldValue('forNewUser'),
       dateEffect: form.getFieldValue('dateEffect')?.valueOf(),
       validityDate: form.getFieldValue('validityDate')?.valueOf(),
       freqDate: form.getFieldValue('freqDate'),

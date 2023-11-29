@@ -51,6 +51,7 @@ const EditTruckQuotation = () => {
         effectDated: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests: returnQuotationDetail || [],
         // seaPricingFeeGroupUpdateRequests: returnFeeDTO,

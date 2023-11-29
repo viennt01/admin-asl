@@ -29,6 +29,7 @@ const EditCustomQuotation = () => {
         customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
+        forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         statusCustomQuotation:
           formValues.statusCustomQuotation || STATUS_ALL_LABELS.ACTIVE,

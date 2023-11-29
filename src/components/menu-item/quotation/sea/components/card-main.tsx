@@ -84,6 +84,10 @@ const CardMain = ({
     'seaQuotaionGroupPartnerDTOs',
     form
   );
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  useEffect(() => {
+    form.setFieldValue('forNewUser', componentDisabled);
+  }, [componentDisabled]);
 
   const propCopyAndCreate = router.query;
 
@@ -166,6 +170,7 @@ const CardMain = ({
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
         vendor: propCopyAndCreate.vendor as string,
+        forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
         demSeaQuotation: propCopyAndCreate.demSeaQuotation as string,
         detSeaQuotation: propCopyAndCreate.detSeaQuotation as string,
         stoSeaQuotation: propCopyAndCreate.stoSeaQuotation as string,
@@ -654,6 +659,17 @@ const CardMain = ({
                 </Col>
               </Row>
             </Checkbox.Group>
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item name="forNewUser" label=" ">
+            <Checkbox
+              checked={componentDisabled}
+              onChange={(e) => setComponentDisabled(e.target.checked)}
+            >
+              For New User
+            </Checkbox>
           </Form.Item>
         </Col>
 

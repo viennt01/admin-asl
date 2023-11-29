@@ -80,6 +80,7 @@ export interface IFormValues {
   dateEffect: Dayjs;
   validityDate: Dayjs;
   freqDate: string;
+  forNewUser: boolean;
   public: boolean;
   statusTruckingQuotation: string;
   truckingQuotationDetailByContainerTypeDTOs: IContainerDTOFormValue[];

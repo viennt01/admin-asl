@@ -142,6 +142,7 @@ const CreateSeaQuotation = () => {
         commodityID: formValues.commodityID || '',
         partnerID: formValues.vendor || '',
         note: formValues.note || '',
+        forNewUser: formValues.forNewUser || false,
         dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
@@ -202,6 +203,7 @@ const CreateSeaQuotation = () => {
         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
+        forNewUser: formValues.forNewUser || false,
         seaQuotationDetailRegisterRequests:
           seaQuotationDetailRegisterRequests || [],
         seaQuotationFeeGroupRegisterRequests:
@@ -256,6 +258,7 @@ const CreateSeaQuotation = () => {
         commodityID: formValues.commodityID || '',
         partnerID: formValues.vendor || '',
         note: formValues.note || '',
+        forNewUser: formValues.forNewUser || false,
         dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
@@ -308,6 +311,7 @@ const CreateSeaQuotation = () => {
         commodityID: formValues.commodityID || '',
         partnerID: formValues.vendor || '',
         note: formValues.note || '',
+        forNewUser: formValues.forNewUser || false,
         dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',

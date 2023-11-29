@@ -85,6 +85,11 @@ const CardMain = ({
     form
   );
 
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  useEffect(() => {
+    form.setFieldValue('forNewUser', componentDisabled);
+  }, [componentDisabled]);
+
   const propCopyAndCreate = router.query;
 
   const getLocation = useQuery({
@@ -178,6 +183,7 @@ const CardMain = ({
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
         public: propCopyAndCreate.public as unknown as boolean,
+        forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
         statusTruckingQuotation:
           propCopyAndCreate.statusTruckingQuotation as string,
 
@@ -552,6 +558,17 @@ const CardMain = ({
                 </Col>
               </Row>
             </Checkbox.Group>
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item name="forNewUser" label=" ">
+            <Checkbox
+              checked={componentDisabled}
+              onChange={(e) => setComponentDisabled(e.target.checked)}
+            >
+              For New User
+            </Checkbox>
           </Form.Item>
         </Col>
 

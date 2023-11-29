@@ -81,6 +81,7 @@ export interface IFormValues {
   effectDated: Dayjs;
   validityDate: Dayjs;
   public: boolean;
+  forNewUser: boolean;
   statusCustomQuotation: string;
   customQuotationFeeGroupDTOs: ISeaQuotationFeeFormValue[];
   salesLeadsCustomQuotationDTOs: string[];

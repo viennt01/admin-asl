@@ -365,7 +365,9 @@ const SeaPricingDetailDTO = ({
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || 0) === '0'
+          ? '-'
+          : formatNumber(Number(value) || 0);
       },
     },
     {
@@ -404,7 +406,7 @@ const SeaPricingDetailDTO = ({
       currencyID: valueCurrencyID || optionCurrency[0].value || '',
       currencyName: optionCurrency[0].label || '',
       price: '1000000',
-      vat: '0',
+      vat: '',
     };
     const newDataSource = [newData, ...dataSource];
     setDataSource(newDataSource);

@@ -8,6 +8,6 @@ export const API_AUTHENTICATE = {
 };
 
 export const API_COMMON = {
-  GET_ROLE: '/get-role-sign-up',
+  GET_ROLE: '/get-role-partner',
   GET_GENDER: '/get-all-gender',
 };

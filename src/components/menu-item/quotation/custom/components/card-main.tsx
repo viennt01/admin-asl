@@ -81,6 +81,10 @@ const CardMain = ({
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const checkObject = Form.useWatch('checkbox-group', form);
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  useEffect(() => {
+    form.setFieldValue('forNewUser', componentDisabled);
+  }, [componentDisabled]);
 
   const propCopyAndCreate = router.query;
 
@@ -169,6 +173,7 @@ const CardMain = ({
         customGreenPrice: propCopyAndCreate.customGreenPrice as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
+        forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
         public: propCopyAndCreate.public as unknown as boolean,
         statusCustomQuotation:
           propCopyAndCreate.statusCustomQuotation as string,
@@ -543,6 +548,17 @@ const CardMain = ({
                 </Col>
               </Row>
             </Checkbox.Group>
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item name="forNewUser" label=" ">
+            <Checkbox
+              checked={componentDisabled}
+              onChange={(e) => setComponentDisabled(e.target.checked)}
+            >
+              For New User
+            </Checkbox>
           </Form.Item>
         </Col>
 

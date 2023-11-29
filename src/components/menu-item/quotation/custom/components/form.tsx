@@ -154,6 +154,7 @@ const CustomsQuotation = ({
           customGreenPrice: data.data.customGreenPrice,
           effectDated: dayjs(Number(data.data.effectDated)),
           validityDate: dayjs(Number(data.data.validityDate)),
+          forNewUser: data.data.forNewUser,
           public: data.data.public,
           statusCustomQuotation: data.data.statusCustomQuotation,
           customQuotationFeeGroupDTOs: data.data.customQuotationFeeGroupDTOs,
@@ -211,6 +212,7 @@ const CustomsQuotation = ({
       customGreenPrice: form.getFieldValue('customGreenPrice'),
       effectDated: form.getFieldValue('effectDated')?.valueOf(),
       validityDate: form.getFieldValue('validityDate')?.valueOf(),
+      forNewUser: form.getFieldValue('forNewUser'),
       public: form.getFieldValue('public'),
       statusCustomQuotation: form.getFieldValue('statusCustomQuotation'),
       customQuotationFeeGroupDTOs: JSON.stringify(

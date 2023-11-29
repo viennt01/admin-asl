@@ -87,6 +87,7 @@ export interface IFormValues {
   lclSeaQuotation: string;
   currencyID: string;
   public: boolean;
+  forNewUser: boolean;
   statusSeaQuotation: string;
   seaQuotationDetailDTOs: ISeaQuotationDetailDTOsFormValue[];
   seaQuotaionFeeGroupDTOs: ISeaQuotationFeeFormValue[];
