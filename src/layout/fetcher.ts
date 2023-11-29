@@ -9,8 +9,6 @@ import { IPagination } from '@/components/commons/table/table-default';
 
 export interface UserInfo {
   idUser: string;
-  idLanguage: string;
-  idGender: string;
   employeeCode: string;
   firstName: string;
   lastName: string;
@@ -28,11 +26,27 @@ export interface UserInfo {
   avatar: string;
   colorAvatar: string;
   defaultAvatar: string;
-  userName: string;
-  createdDate: string;
-  updatedDate: string;
   newUser: boolean;
   listRole: number[];
+  dateInserted: string;
+  dateUpdated: string;
+  insertedByUser: string;
+  languageID: string;
+  taxCode: string;
+  totalBank: string;
+  totalCommodity: string;
+  totalCurrency: string;
+  totalFee: string;
+  totalFeeGroup: '1';
+  totalLocation: string;
+  totalTypeContainer: string;
+  totalTypeFeeGroup: string;
+  totalTypeLocation: string;
+  totalUnit: string;
+  updatedByUser: string;
+  userID: string;
+  note: string;
+  partnerID: string;
 }
 
 export const getUserInfo = () => {

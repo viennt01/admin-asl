@@ -1,4 +1,4 @@
-import { Badge, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
@@ -26,20 +26,27 @@ export default function CommodityPage() {
         },
         {
           label: (
-            <Badge
-              count={2}
+            // <Badge
+            //   count={2}
+            //   style={{
+            //     marginRight: '-10px',
+            //   }}
+            // >
+            //   <div
+            //     style={{
+            //       color: COLORS.GREEN,
+            //     }}
+            //   >
+            //     Request
+            //   </div>
+            // </Badge>
+            <div
               style={{
-                marginRight: '-10px',
+                color: COLORS.GREEN,
               }}
             >
-              <div
-                style={{
-                  color: COLORS.GREEN,
-                }}
-              >
-                Request
-              </div>
-            </Badge>
+              Request
+            </div>
           ),
           key: API_COMMODITY.GET_REQUEST,
           children: <RequestTable />,

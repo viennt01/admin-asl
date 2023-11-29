@@ -1,5 +1,5 @@
 import COLORS from '@/constant/color';
-import { Tabs, Badge } from 'antd';
+import { Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import { useQueryClient } from '@tanstack/react-query';
@@ -27,20 +27,27 @@ export default function TypeOfContainerPage() {
         },
         {
           label: (
-            <Badge
-              count={2}
+            // <Badge
+            //   count={2}
+            //   style={{
+            //     marginRight: '-10px',
+            //   }}
+            // >
+            //   <div
+            //     style={{
+            //       color: COLORS.GREEN,
+            //     }}
+            //   >
+            //     Request
+            //   </div>
+            // </Badge>
+            <div
               style={{
-                marginRight: '-10px',
+                color: COLORS.GREEN,
               }}
             >
-              <div
-                style={{
-                  color: COLORS.GREEN,
-                }}
-              >
-                Request
-              </div>
-            </Badge>
+              Request
+            </div>
           ),
           key: API_CONTAINER_TYPE.GET_REQUEST,
           children: <RequestTable />,

@@ -23,7 +23,7 @@ import {
   AuditOutlined,
   FileTextOutlined,
 } from '@ant-design/icons';
-import { Button, MenuProps, Image, Badge } from 'antd';
+import { Button, MenuProps, Image } from 'antd';
 import { Layout, Menu, Row, Col } from 'antd';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -33,10 +33,9 @@ import type { TourProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import useI18n from '@/i18n/useI18N';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { LogoutData, logout } from './fetcher';
-import { UserInfo, checkNewUser } from '@/layout/fetcher';
-import { ResponseWithPayload } from '@/fetcherAxios';
+import { checkNewUser, getUserInfo } from '@/layout/fetcher';
 import { API_USER } from '@/fetcherAxios/endpoint';
 
 const { Text, Title } = Typography;
@@ -110,10 +109,11 @@ const AppSider = ({ collapsed }: Props) => {
   const refStaff = useRef(null);
   const refPermission = useRef(null);
   const [openTour, setOpenTour] = useState<boolean>(false);
-  const queryClient = useQueryClient();
-  const dataUser = queryClient.getQueryData<ResponseWithPayload<UserInfo>>([
-    API_USER.CHECK_USER,
-  ]);
+  // const queryClient = useQueryClient();
+  // const dataUser = queryClient.getQueryData<ResponseWithPayload<UserInfo>>([
+  //   API_USER.CHECK_USER,
+  // ]);
+  const dataUser = useQuery([API_USER.CHECK_USER], getUserInfo);
 
   const checkNewUserFirst = useMutation({
     mutationFn: () => checkNewUser(),
@@ -244,14 +244,15 @@ const AppSider = ({ collapsed }: Props) => {
     getItem(
       `${translateCommon('master_data')}`,
       '5',
-      <Badge
-        dot={collapsed}
-        style={{
-          marginTop: '10px',
-        }}
-      >
-        <AppstoreOutlined ref={refMasterData} />
-      </Badge>,
+      // <Badge
+      //   dot={collapsed}
+      //   style={{
+      //     marginTop: '10px',
+      //   }}
+      // >
+      //   <AppstoreOutlined ref={refMasterData} />
+      // </Badge>,
+      <AppstoreOutlined ref={refMasterData} />,
       [
         getItem(
           `${translateCommon('location_catalog')}`,
@@ -349,14 +350,15 @@ const AppSider = ({ collapsed }: Props) => {
           <DollarOutlined ref={refUnitCatalog} />,
           [
             getItem(
-              <Badge
-                count={2}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('unit')}`}
-              </Badge>,
+              // <Badge
+              //   count={2}
+              //   style={{
+              //     marginRight: '-12px',
+              //   }}
+              // >
+              //   {`${translateCommon('unit')}`}
+              // </Badge>,
+              `${translateCommon('unit')}`,
               ROUTERS.UNIT,
               <CalculatorOutlined ref={refUnit} />
             ),
@@ -448,7 +450,7 @@ const AppSider = ({ collapsed }: Props) => {
   useEffect(() => {
     setIpAddress(appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS));
     setDeviceName(appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME));
-    if (dataUser?.data?.newUser) {
+    if (dataUser.data?.data.newUser) {
       setOpenTour(true);
     }
   }, [dataUser]);

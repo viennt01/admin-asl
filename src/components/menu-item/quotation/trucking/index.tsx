@@ -1,4 +1,4 @@
-import { Badge, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
 import { API_TRUCKING_QUOTATION } from '@/fetcherAxios/endpoint';
@@ -33,20 +33,27 @@ export default function TruckingQuotation() {
         },
         {
           label: (
-            <Badge
-              count={2}
+            // <Badge
+            //   count={2}
+            //   style={{
+            //     marginRight: '-10px',
+            //   }}
+            // >
+            //   <div
+            //     style={{
+            //       color: COLORS.GREEN,
+            //     }}
+            //   >
+            //     Request
+            //   </div>
+            // </Badge>
+            <div
               style={{
-                marginRight: '-10px',
+                color: COLORS.GREEN,
               }}
             >
-              <div
-                style={{
-                  color: COLORS.GREEN,
-                }}
-              >
-                Request
-              </div>
-            </Badge>
+              Request
+            </div>
           ),
           key: 'API_TRUCKING_QUOTATION.GET_REQUEST',
           children: <RequestTable />,

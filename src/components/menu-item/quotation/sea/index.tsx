@@ -1,4 +1,4 @@
-import { Badge, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
@@ -33,20 +33,27 @@ export default function SeaQuotationPage() {
         },
         {
           label: (
-            <Badge
-              count={2}
+            // <Badge
+            //   count={2}
+            //   style={{
+            //     marginRight: '-10px',
+            //   }}
+            // >
+            //   <div
+            //     style={{
+            //       color: COLORS.GREEN,
+            //     }}
+            //   >
+            //     Request
+            //   </div>
+            // </Badge>
+            <div
               style={{
-                marginRight: '-10px',
+                color: COLORS.GREEN,
               }}
             >
-              <div
-                style={{
-                  color: COLORS.GREEN,
-                }}
-              >
-                Request
-              </div>
-            </Badge>
+              Request
+            </div>
           ),
           key: 'API_SEA_QUOTATION.GET_REQUEST',
           children: <RequestTable />,

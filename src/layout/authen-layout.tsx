@@ -228,7 +228,7 @@ export function AppLayout(props: Props) {
                 setLanguageSelectedName={setLanguageSelectedName}
                 router={router}
               />
-              <Space
+              {/* <Space
                 style={{
                   cursor: 'pointer',
                   margin: '0px 8px 0px 0px',
@@ -251,7 +251,7 @@ export function AppLayout(props: Props) {
                   </svg>
                   <span className={AuthenLayout.notificationNumber}></span>
                 </div>
-              </Space>
+              </Space> */}
               <div>
                 <div
                   onClick={onClickShowPopupAvatar}

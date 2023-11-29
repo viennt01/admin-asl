@@ -31,7 +31,7 @@
     "unit": "Đơn vị",
     "declaration_catalog": "Danh mục tờ khai",
     "declaration": "Tờ khai",
-    "": "Loại tờ khai",
+    "type_declaration": "Loại tờ khai",
     "type_unit": "Loại đơn vị",
     "accountant": "Kế toán",
     "currency": "Tiền tệ",
