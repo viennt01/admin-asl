@@ -7,10 +7,11 @@ import { API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { useContext } from 'react';
 import { AppContext } from '@/app-context';
 import { GetTitleNotificationTab } from '@/utils/common';
+import { ROLE } from '@/constant/permission';
 
 export default function TypeFeeGroupPage() {
   const queryClient = useQueryClient();
-  const { userInfo } = useContext(AppContext);
+  const { userInfo, role } = useContext(AppContext);
 
   const onChange = (key: string) => {
     queryClient.invalidateQueries({
@@ -18,37 +19,44 @@ export default function TypeFeeGroupPage() {
     });
   };
   return (
-    <Tabs
-      onChange={onChange}
-      type="card"
-      style={{ marginTop: 10 }}
-      items={[
-        {
-          label: 'Master Data',
-          key: API_TYPE_FEE_GROUP.GET_SEARCH,
-          children: <MasterDataTable />,
-        },
-        {
-          label: (
-            <Badge
-              count={GetTitleNotificationTab(userInfo?.totalTypeFeeGroup)}
-              style={{
-                marginRight: '-10px',
-              }}
-            >
-              <div
+    <>
+      <Tabs
+        onChange={onChange}
+        type="card"
+        style={{ marginTop: 10 }}
+        items={[
+          {
+            label: 'Master Data',
+            key: API_TYPE_FEE_GROUP.GET_SEARCH,
+            children: <MasterDataTable />,
+          },
+          {
+            label: (
+              <Badge
+                count={GetTitleNotificationTab(userInfo?.totalTypeFeeGroup)}
                 style={{
-                  color: COLORS.GREEN,
+                  marginRight: '-10px',
                 }}
               >
-                Request
-              </div>
-            </Badge>
-          ),
-          key: API_TYPE_FEE_GROUP.GET_REQUEST,
-          children: <RequestTable />,
-        },
-      ]}
-    />
+                <div
+                  style={{
+                    color: COLORS.GREEN,
+                  }}
+                >
+                  Request
+                </div>
+              </Badge>
+            ),
+            key: API_TYPE_FEE_GROUP.GET_REQUEST,
+            children: <RequestTable />,
+          },
+        ]}
+      />
+      <div
+        style={{ marginTop: 36, display: role !== ROLE.MANAGER ? '' : 'none' }}
+      >
+        <MasterDataTable />
+      </div>
+    </>
   );
 }

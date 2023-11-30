@@ -7,10 +7,11 @@ import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { useContext } from 'react';
 import { AppContext } from '@/app-context';
 import { GetTitleNotificationTab } from '@/utils/common';
+import { ROLE } from '@/constant/permission';
 
 export default function CalculationUnitPage() {
   const queryClient = useQueryClient();
-  const { userInfo } = useContext(AppContext);
+  const { userInfo, role } = useContext(AppContext);
 
   const onChange = (key: string) => {
     queryClient.invalidateQueries({
@@ -18,37 +19,44 @@ export default function CalculationUnitPage() {
     });
   };
   return (
-    <Tabs
-      onChange={onChange}
-      type="card"
-      style={{ marginTop: 10 }}
-      items={[
-        {
-          label: 'Master Data',
-          key: API_UNIT.GET_SEARCH,
-          children: <MasterDataTable />,
-        },
-        {
-          label: (
-            <Badge
-              count={GetTitleNotificationTab(userInfo?.totalUnit)}
-              style={{
-                marginRight: '-10px',
-              }}
-            >
-              <div
+    <>
+      <Tabs
+        onChange={onChange}
+        type="card"
+        style={{ marginTop: 10, display: role === ROLE.MANAGER ? '' : 'none' }}
+        items={[
+          {
+            label: 'Master Data',
+            key: API_UNIT.GET_SEARCH,
+            children: <MasterDataTable />,
+          },
+          {
+            label: (
+              <Badge
+                count={GetTitleNotificationTab(userInfo?.totalUnit)}
                 style={{
-                  color: COLORS.GREEN,
+                  marginRight: '-10px',
                 }}
               >
-                Request
-              </div>
-            </Badge>
-          ),
-          key: API_UNIT.GET_REQUEST,
-          children: <RequestTable />,
-        },
-      ]}
-    />
+                <div
+                  style={{
+                    color: COLORS.GREEN,
+                  }}
+                >
+                  Request
+                </div>
+              </Badge>
+            ),
+            key: API_UNIT.GET_REQUEST,
+            children: <RequestTable />,
+          },
+        ]}
+      />{' '}
+      <div
+        style={{ marginTop: 36, display: role !== ROLE.MANAGER ? '' : 'none' }}
+      >
+        <MasterDataTable />
+      </div>
+    </>
   );
 }

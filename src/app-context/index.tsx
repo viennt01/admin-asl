@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 interface AppContext {
   userInfo?: UserInfo;
   setUserInfo?: (userInfo: UserInfo) => void;
+  role: string;
+  setRole?: (role: string) => void;
 }
 
 export const INITIAL_VALUE_USER_INFO = {
@@ -50,6 +52,7 @@ export const INITIAL_VALUE_USER_INFO = {
 
 const INITIAL_VALUE_CONTEXT = {
   userInfo: INITIAL_VALUE_USER_INFO,
+  role: 'SALE',
 };
 
 export const AppContext = React.createContext<AppContext>(
@@ -66,10 +69,15 @@ export default function AppContextProvider({
   const setUserInfo = (userInfo: UserInfo) => {
     setValueContext((prev) => ({ ...prev, userInfo }));
   };
+
+  const setRole = (role: string) => {
+    setValueContext((prev) => ({ ...prev, role }));
+  };
   useEffect(() => {
     setValueContext((prev) => ({
       ...prev,
       setUserInfo,
+      setRole,
     }));
   }, []);
   return (

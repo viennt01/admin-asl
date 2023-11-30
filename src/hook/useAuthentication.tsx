@@ -8,12 +8,34 @@ import { useQuery } from '@tanstack/react-query';
 import { API_USER } from '@/fetcherAxios/endpoint';
 import { getUserInfo } from '@/layout/fetcher';
 import { AppContext } from '@/app-context';
+import {
+  PERMISSION_RULES,
+  IPermissionRules,
+  PERMISSION,
+} from '@/constant/permission';
+
+const getPriorityRole = (roles: string[]): string => {
+  const priorityRoles = ['MANAGER', 'SALE', 'LINER', 'AGENT'];
+  if (!roles) {
+    return 'AGENT';
+  }
+  for (const role of priorityRoles) {
+    if (roles.includes(role)) {
+      return role;
+    }
+  }
+  return 'AGENT';
+};
 
 export default function withAuthentication(ChildComponent: () => JSX.Element) {
   const Container = () => {
-    const { setUserInfo } = useContext(AppContext);
+    const { setUserInfo, role } = useContext(AppContext);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const roles = ['SALE'];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const roleTest = getPriorityRole(roles);
+    const permissionRules = PERMISSION_RULES() as IPermissionRules;
 
     useQuery({
       queryKey: [API_USER.CHECK_USER],
@@ -52,6 +74,17 @@ export default function withAuthentication(ChildComponent: () => JSX.Element) {
         }
       }
       setLoading(false);
+    }, [router.pathname]);
+    useEffect(() => {
+      const currentPermission =
+        permissionRules[role || 'LINER'][
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          router.pathname as keyof (typeof permissionRules)[typeof role]
+        ];
+      if (currentPermission === PERMISSION.NO_VIEW) {
+        router.push(ROUTERS.HOME);
+      }
     }, [router.pathname]);
     if (loading) return <></>;
     return <ChildComponent />;

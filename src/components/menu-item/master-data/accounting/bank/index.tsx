@@ -7,10 +7,11 @@ import { API_BANK } from '@/fetcherAxios/endpoint';
 import { useContext } from 'react';
 import { AppContext } from '@/app-context';
 import { GetTitleNotificationTab } from '@/utils/common';
+import { ROLE } from '@/constant/permission';
 
 export default function BankPage() {
   const queryClient = useQueryClient();
-  const { userInfo } = useContext(AppContext);
+  const { userInfo, role } = useContext(AppContext);
 
   const onChange = (key: string) => {
     queryClient.invalidateQueries({
@@ -19,37 +20,44 @@ export default function BankPage() {
   };
 
   return (
-    <Tabs
-      onChange={onChange}
-      type="card"
-      style={{ marginTop: 10 }}
-      items={[
-        {
-          label: 'Master Data',
-          key: API_BANK.GET_SEARCH,
-          children: <MasterDataTable />,
-        },
-        {
-          label: (
-            <Badge
-              count={GetTitleNotificationTab(userInfo?.totalBank)}
-              style={{
-                marginRight: '-10px',
-              }}
-            >
-              <div
+    <>
+      <Tabs
+        onChange={onChange}
+        type="card"
+        style={{ marginTop: 10, display: role === ROLE.MANAGER ? '' : 'none' }}
+        items={[
+          {
+            label: 'Master Data',
+            key: API_BANK.GET_SEARCH,
+            children: <MasterDataTable />,
+          },
+          {
+            label: (
+              <Badge
+                count={GetTitleNotificationTab(userInfo?.totalBank)}
                 style={{
-                  color: COLORS.GREEN,
+                  marginRight: '-10px',
                 }}
               >
-                Request
-              </div>
-            </Badge>
-          ),
-          key: API_BANK.GET_REQUEST,
-          children: <RequestTable />,
-        },
-      ]}
-    />
+                <div
+                  style={{
+                    color: COLORS.GREEN,
+                  }}
+                >
+                  Request
+                </div>
+              </Badge>
+            ),
+            key: API_BANK.GET_REQUEST,
+            children: <RequestTable />,
+          },
+        ]}
+      />
+      <div
+        style={{ marginTop: 36, display: role !== ROLE.MANAGER ? '' : 'none' }}
+      >
+        <MasterDataTable />
+      </div>
+    </>
   );
 }
