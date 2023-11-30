@@ -1,12 +1,16 @@
-import { Tabs } from 'antd';
+import { Badge, Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
 import { API_LOCATION_TYPE } from '@/fetcherAxios/endpoint';
+import { useContext } from 'react';
+import { AppContext } from '@/app-context';
+import { GetTitleNotificationTab } from '@/utils/common';
 
 export default function TypeOfLocationPage() {
   const queryClient = useQueryClient();
+  const { userInfo } = useContext(AppContext);
 
   const onChange = (key: string) => {
     queryClient.invalidateQueries({
@@ -27,27 +31,20 @@ export default function TypeOfLocationPage() {
         },
         {
           label: (
-            // <Badge
-            //   count={2}
-            //   style={{
-            //     marginRight: '-10px',
-            //   }}
-            // >
-            //   <div
-            //     style={{
-            //       color: COLORS.GREEN,
-            //     }}
-            //   >
-            //     Request
-            //   </div>
-            // </Badge>
-            <div
+            <Badge
+              count={GetTitleNotificationTab(userInfo?.totalTypeLocation)}
               style={{
-                color: COLORS.GREEN,
+                marginRight: '-10px',
               }}
             >
-              Request
-            </div>
+              <div
+                style={{
+                  color: COLORS.GREEN,
+                }}
+              >
+                Request
+              </div>
+            </Badge>
           ),
           key: API_LOCATION_TYPE.GET_REQUEST,
           children: <RequestTable />,

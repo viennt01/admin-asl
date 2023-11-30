@@ -87,3 +87,12 @@ export const exportExcel = (
     : getSystemDate() + '.xls';
   link.click();
 };
+
+// return number count
+export const GetTitleNotificationTab = (count?: string) => {
+  if (!count) {
+    return;
+  }
+  const returnCount = Number(count) > 5 ? '5+' : count;
+  return `${returnCount}`;
+};

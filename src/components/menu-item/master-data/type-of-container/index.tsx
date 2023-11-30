@@ -1,12 +1,16 @@
 import COLORS from '@/constant/color';
-import { Tabs } from 'antd';
+import { Badge, Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import { useQueryClient } from '@tanstack/react-query';
 import { API_CONTAINER_TYPE } from '@/fetcherAxios/endpoint';
+import { useContext } from 'react';
+import { AppContext } from '@/app-context';
+import { GetTitleNotificationTab } from '@/utils/common';
 
 export default function TypeOfContainerPage() {
   const queryClient = useQueryClient();
+  const { userInfo } = useContext(AppContext);
 
   const onChange = (key: string) => {
     queryClient.invalidateQueries({
@@ -27,27 +31,20 @@ export default function TypeOfContainerPage() {
         },
         {
           label: (
-            // <Badge
-            //   count={2}
-            //   style={{
-            //     marginRight: '-10px',
-            //   }}
-            // >
-            //   <div
-            //     style={{
-            //       color: COLORS.GREEN,
-            //     }}
-            //   >
-            //     Request
-            //   </div>
-            // </Badge>
-            <div
+            <Badge
+              count={GetTitleNotificationTab(userInfo?.totalTypeContainer)}
               style={{
-                color: COLORS.GREEN,
+                marginRight: '-10px',
               }}
             >
-              Request
-            </div>
+              <div
+                style={{
+                  color: COLORS.GREEN,
+                }}
+              >
+                Request
+              </div>
+            </Badge>
           ),
           key: API_CONTAINER_TYPE.GET_REQUEST,
           children: <RequestTable />,

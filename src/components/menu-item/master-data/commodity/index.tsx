@@ -1,12 +1,16 @@
-import { Tabs } from 'antd';
+import { Badge, Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
 import { API_COMMODITY } from '@/fetcherAxios/endpoint';
+import { useContext } from 'react';
+import { AppContext } from '@/app-context';
+import { GetTitleNotificationTab } from '@/utils/common';
 
 export default function CommodityPage() {
   const queryClient = useQueryClient();
+  const { userInfo } = useContext(AppContext);
 
   const onChange = (key: string) => {
     queryClient.invalidateQueries({
@@ -26,27 +30,20 @@ export default function CommodityPage() {
         },
         {
           label: (
-            // <Badge
-            //   count={2}
-            //   style={{
-            //     marginRight: '-10px',
-            //   }}
-            // >
-            //   <div
-            //     style={{
-            //       color: COLORS.GREEN,
-            //     }}
-            //   >
-            //     Request
-            //   </div>
-            // </Badge>
-            <div
+            <Badge
+              count={GetTitleNotificationTab(userInfo?.totalCommodity)}
               style={{
-                color: COLORS.GREEN,
+                marginRight: '-10px',
               }}
             >
-              Request
-            </div>
+              <div
+                style={{
+                  color: COLORS.GREEN,
+                }}
+              >
+                Request
+              </div>
+            </Badge>
           ),
           key: API_COMMODITY.GET_REQUEST,
           children: <RequestTable />,
