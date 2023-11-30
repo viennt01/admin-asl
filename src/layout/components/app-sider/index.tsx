@@ -1,5 +1,5 @@
 import style from './index.module.scss';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   LogoutOutlined,
   HomeOutlined,
@@ -33,10 +33,10 @@ import type { TourProps } from 'antd';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import useI18n from '@/i18n/useI18N';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { LogoutData, logout } from './fetcher';
-import { checkNewUser, getUserInfo } from '@/layout/fetcher';
-import { API_USER } from '@/fetcherAxios/endpoint';
+import { checkNewUser } from '@/layout/fetcher';
+import { AppContext, INITIAL_VALUE_USER_INFO } from '@/app-context';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -109,11 +109,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refStaff = useRef(null);
   const refPermission = useRef(null);
   const [openTour, setOpenTour] = useState<boolean>(false);
-  // const queryClient = useQueryClient();
-  // const dataUser = queryClient.getQueryData<ResponseWithPayload<UserInfo>>([
-  //   API_USER.CHECK_USER,
-  // ]);
-  const dataUser = useQuery([API_USER.CHECK_USER], getUserInfo);
+  const { userInfo, setUserInfo } = useContext(AppContext);
 
   const checkNewUserFirst = useMutation({
     mutationFn: () => checkNewUser(),
@@ -419,6 +415,7 @@ const AppSider = ({ collapsed }: Props) => {
     },
     onSuccess: async () => {
       appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      if (setUserInfo) setUserInfo(INITIAL_VALUE_USER_INFO);
       await router.push(ROUTERS.LOGIN);
     },
   });
@@ -450,10 +447,10 @@ const AppSider = ({ collapsed }: Props) => {
   useEffect(() => {
     setIpAddress(appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS));
     setDeviceName(appLocalStorage.get(LOCAL_STORAGE_KEYS.DEVICE_NAME));
-    if (dataUser.data?.data.newUser) {
+    if (userInfo?.newUser) {
       setOpenTour(true);
     }
-  }, [dataUser]);
+  }, [userInfo]);
   return (
     <>
       {contextHolder}

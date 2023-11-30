@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import AppSider from './components/app-sider';
@@ -25,7 +25,6 @@ import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { LANGUAGE, useLocale } from '@/constant';
 import { ROUTERS } from '@/constant/router';
 import {
-  UserInfo,
   getListCity,
   getListCountry,
   getListTypeLocations,
@@ -38,6 +37,7 @@ import {
   API_USER,
 } from '@/fetcherAxios/endpoint';
 import SHOW_ROUTER_HEADER from './constant';
+import { AppContext } from '@/app-context';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -135,8 +135,8 @@ export function AppLayout(props: Props) {
   const [classActiveDropdown, setClassActiveDropdown] = useState('');
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
-  const [informationUser, setInformationUser] = useState<UserInfo>();
   const locale = useLocale();
+  const { userInfo, setUserInfo } = useContext(AppContext);
 
   useQuery({
     queryKey: [API_MASTER_DATA.GET_COUNTRY],
@@ -168,7 +168,7 @@ export function AppLayout(props: Props) {
         appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
         router.replace(ROUTERS.LOGIN);
       }
-      setInformationUser(data.data);
+      if (setUserInfo) setUserInfo(data.data);
     },
     onError: () => {
       // remove token and redirect to home
@@ -261,13 +261,13 @@ export function AppLayout(props: Props) {
                     style={{
                       verticalAlign: 'middle',
                       marginRight: '10px',
-                      backgroundColor: informationUser?.colorAvatar,
+                      backgroundColor: userInfo?.colorAvatar,
                     }}
-                    src={informationUser?.avatar}
+                    src={userInfo?.avatar}
                   >
-                    {informationUser?.defaultAvatar || ''}
+                    {userInfo?.defaultAvatar || ''}
                   </Avatar>
-                  {informationUser?.fullName || ''}
+                  {userInfo?.fullName || ''}
                 </div>
                 <div
                   className={`${AuthenLayout.userMenu} ${

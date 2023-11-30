@@ -11,6 +11,7 @@ import COLORS from '@/constant/color';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useLocaleAnt } from '@/constant';
+import AppContextProvider from '@/app-context';
 
 const inter = Inter({ subsets: ['latin'] });
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<
@@ -51,14 +52,16 @@ function App({ Component, pageProps }: AppPropsWithLayout) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <QueryClientProvider client={queryClient}>
-        <L>
-          <div className={inter.className}>
-            <Component {...pageProps} />
-          </div>
-        </L>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <AppContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <L>
+            <div className={inter.className}>
+              <Component {...pageProps} />
+            </div>
+          </L>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </AppContextProvider>
     </ConfigProvider>
   );
 }

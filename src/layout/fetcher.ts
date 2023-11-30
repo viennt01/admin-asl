@@ -37,7 +37,7 @@ export interface UserInfo {
   totalCommodity: string;
   totalCurrency: string;
   totalFee: string;
-  totalFeeGroup: '1';
+  totalFeeGroup: string;
   totalLocation: string;
   totalTypeContainer: string;
   totalTypeFeeGroup: string;
