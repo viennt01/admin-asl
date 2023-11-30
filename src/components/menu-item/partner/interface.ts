@@ -17,12 +17,14 @@ export interface IPartner {
   firstName: string;
   lastName: string;
   fullName: string;
-  companyName: string;
+  companyNameEN: string;
+  companyNameVN: string;
   abbreviations: string;
   emailCompany: string;
   phoneNumber: string;
   taxCode: string;
-  address: string;
+  addressEN: string;
+  addressVN: string;
   birthdated: string;
   workingBranch: string;
   nationality: string;
@@ -105,6 +107,7 @@ export interface IFormValues {
   note: string;
   avatar: string;
   statusUser: string;
+  // typeIdentification: string;
 }
 
 export interface IPartnerDetailType extends IFormValues {

@@ -73,6 +73,7 @@ const UnitForm = ({
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query;
+  // const { Option } = Select;
 
   const getAllPartner = useQuery({
     queryKey: [API_PARTNER_ROLE.GET_ALL],
@@ -321,6 +322,15 @@ const UnitForm = ({
     form.getFieldValue('statusUser'),
   ]);
 
+  // const prefixSelector = (
+  //   <Form.Item name="typeIdentification" noStyle>
+  //     <Select style={{ width: 90 }} defaultValue={'visa'}>
+  //       <Option value="visa">Visa</Option>
+  //       <Option value="CCCD">CCCD</Option>
+  //     </Select>
+  //   </Form.Item>
+  // );
+
   return (
     <div style={{ padding: '24px 0' }}>
       <Form
@@ -519,7 +529,7 @@ const UnitForm = ({
                     getAllPartner.data?.data.map((item) => {
                       return {
                         value: item.partnerRoleID,
-                        label: item.abbreviations,
+                        label: item.name,
                       };
                     }) || []
                   }
@@ -598,6 +608,21 @@ const UnitForm = ({
                 />
               </Form.Item>
             </Col>
+            {/* 
+            <Col lg={8} span={24}>
+              <Form.Item
+                name="phone"
+                label="Phone Number"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input your phone number!',
+                  },
+                ]}
+              >
+                <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+              </Form.Item>
+            </Col> */}
 
             <Col lg={8} span={24}>
               <Form.Item

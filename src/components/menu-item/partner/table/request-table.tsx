@@ -80,12 +80,14 @@ const RequestTable = () => {
             firstName: data.firstName,
             lastName: data.lastName,
             fullName: data.fullName,
-            companyName: data.companyName,
+            companyNameEN: data.companyNameEN,
+            companyNameVN: data.companyNameEN,
             abbreviations: data.abbreviations,
             emailCompany: data.emailCompany,
             phoneNumber: data.phoneNumber,
             taxCode: data.taxCode,
-            address: data.address,
+            addressEN: data.addressEN,
+            addressVN: data.addressVN,
             birthdated: data.birthdated,
             workingBranch: data.workingBranch,
             nationality: data.nationality,
@@ -272,8 +274,8 @@ const RequestTable = () => {
           {translatePartner('companyName_form.title')}
         </div>
       ),
-      dataIndex: 'companyName',
-      key: 'companyName',
+      dataIndex: 'companyNameEN',
+      key: 'companyNameEN',
       width: 250,
       align: 'left',
     },
@@ -327,8 +329,8 @@ const RequestTable = () => {
           {translatePartner('address_form.title')}
         </div>
       ),
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'addressEN',
+      key: 'addressEN',
       width: 250,
       align: 'left',
     },
