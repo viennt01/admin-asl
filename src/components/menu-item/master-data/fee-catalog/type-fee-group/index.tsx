@@ -23,7 +23,7 @@ export default function TypeFeeGroupPage() {
       <Tabs
         onChange={onChange}
         type="card"
-        style={{ marginTop: 10 }}
+        style={{ marginTop: 10, display: role === ROLE.MANAGER ? '' : 'none' }}
         items={[
           {
             label: 'Master Data',

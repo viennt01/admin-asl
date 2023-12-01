@@ -52,7 +52,7 @@ export const INITIAL_VALUE_USER_INFO = {
 
 const INITIAL_VALUE_CONTEXT = {
   userInfo: INITIAL_VALUE_USER_INFO,
-  role: 'SALE',
+  role: 'MANAGER',
 };
 
 export const AppContext = React.createContext<AppContext>(
