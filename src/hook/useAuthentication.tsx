@@ -78,8 +78,6 @@ export default function withAuthentication(ChildComponent: () => JSX.Element) {
     useEffect(() => {
       const currentPermission =
         permissionRules[role || 'LINER'][
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           router.pathname as keyof (typeof permissionRules)[typeof role]
         ];
       if (currentPermission === PERMISSION.NO_VIEW) {

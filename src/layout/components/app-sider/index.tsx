@@ -38,6 +38,11 @@ import { LogoutData, logout } from './fetcher';
 import { checkNewUser } from '@/layout/fetcher';
 import { AppContext, INITIAL_VALUE_USER_INFO } from '@/app-context';
 import { GetTitleNotificationTab } from '@/utils/common';
+import {
+  IPermissionRules,
+  PERMISSION,
+  PERMISSION_RULES,
+} from '@/constant/permission';
 
 const { Text, Title } = Typography;
 const { Sider } = Layout;
@@ -110,7 +115,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refStaff = useRef(null);
   // const refPermission = useRef(null);
   const [openTour, setOpenTour] = useState<boolean>(false);
-  const { userInfo, setUserInfo } = useContext(AppContext);
+  const { userInfo, setUserInfo, role } = useContext(AppContext);
 
   const checkNewUserFirst = useMutation({
     mutationFn: () => checkNewUser(),
@@ -153,451 +158,615 @@ const AppSider = ({ collapsed }: Props) => {
     },
   ];
 
+  const permissionRules = PERMISSION_RULES() as IPermissionRules;
+
+  // const displayRouter = (url: string) => {
+  //   const currentPermission =
+  //     permissionRules[role || 'LINER'][
+  //       url as keyof (typeof permissionRules)[typeof role]
+  //     ];
+
+  //   if (currentPermission === PERMISSION.NO_VIEW) {
+  //     return false;
+  //   }
+  //   return true;
+  // };
+
+  const displayRouter = (urls: string[] | string) => {
+    if (Array.isArray(urls)) {
+      // If the input is an array of URLs, check each URL
+      for (const url of urls) {
+        const currentPermission =
+          permissionRules[role || 'LINER'][
+            url as keyof (typeof permissionRules)[typeof role]
+          ];
+
+        if (currentPermission !== PERMISSION.NO_VIEW) {
+          // Return true if at least one URL has the necessary permission
+          return true;
+        }
+      }
+      // If none of the URLs have the necessary permission, return false
+      return false;
+    } else {
+      // If the input is a single URL, check its permission
+      const currentPermission =
+        permissionRules[role || 'LINER'][
+          urls as keyof (typeof permissionRules)[typeof role]
+        ];
+
+      // Return true if the single URL has the necessary permission
+      return currentPermission !== PERMISSION.NO_VIEW;
+    }
+  };
+
   const items: MenuItem[] = [
-    getItem(
-      `${translateCommon('home')}`,
-      ROUTERS.HOME,
-      <HomeOutlined ref={refHome} />
-    ),
+    displayRouter(ROUTERS.HOME)
+      ? getItem(
+          <div>{translateCommon('home')}</div>,
+          ROUTERS.HOME,
+          <HomeOutlined ref={refHome} />
+        )
+      : null,
 
-    getItem(
-      `${translateCommon('quotation')}`,
-      '1',
-      <ContainerOutlined ref={refQuotation} />,
-      [
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('sea_quotation')}`}
-          </Badge>,
-          ROUTERS.SEA_QUOTATION,
-          <ContainerOutlined ref={refSeaQuotation} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('air_quotation')}`}
-          </Badge>,
-          ROUTERS.AIR_QUOTATION,
-          <ContainerOutlined ref={refAirQuotation} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('customs_quotation')}`}
-          </Badge>,
-          ROUTERS.CUSTOMS_QUOTATION,
-          <ContainerOutlined ref={refCustomsQuotation} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('trucking_quotation')}`}
-          </Badge>,
-          ROUTERS.TRUCKING_QUOTATION,
-          <ContainerOutlined ref={refTruckingQuotation} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('fee_group')}`}
-          </Badge>,
-          ROUTERS.QUOTATION_FEE_GROUP,
-          <ContainerOutlined ref={refFeeGroupQuotation} />
-        ),
-      ]
-    ),
-
-    getItem(
-      <Badge
-        count={GetTitleNotificationTab('0')}
-        style={{
-          marginRight: '-12px',
-        }}
-      >
-        {`${translateCommon('booking')}`}
-      </Badge>,
-      ROUTERS.BOOKING,
-      <SolutionOutlined ref={refBooking} />
-    ),
-
-    getItem(
-      `${translateCommon('pricing')}`,
-      '2',
-      <AuditOutlined ref={refPricing} />,
-      [
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('sea_pricing')}`}
-          </Badge>,
-          ROUTERS.SEA_PRICING,
-          <AuditOutlined ref={refSeaPricing} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('air_pricing')}`}
-          </Badge>,
-          ROUTERS.AIR_PRICING,
-          <AuditOutlined ref={refAirPricing} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('customs_pricing')}`}
-          </Badge>,
-          ROUTERS.CUSTOMS_PRICING,
-          <AuditOutlined ref={refCustomsPricing} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('trucking_pricing')}`}
-          </Badge>,
-          ROUTERS.TRUCKING_PRICING,
-          <AuditOutlined ref={refTruckingPricing} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('fee_group')}`}
-          </Badge>,
-          ROUTERS.PRICING_FEE_GROUP,
-          <AuditOutlined ref={refFeeGroupPricing} />
-        ),
-      ]
-    ),
-
-    getItem(
-      <Badge
-        count={GetTitleNotificationTab('0')}
-        style={{
-          marginRight: '-12px',
-        }}
-      >
-        {`${translateCommon('partner')}`}
-      </Badge>,
-      ROUTERS.PARTNER,
-      <TeamOutlined ref={refPartner} />
-    ),
-
-    getItem(
-      `${translateCommon('master_data')}`,
-      '5',
-      // <Badge
-      //   dot={true}
-      //   style={{
-      //     marginTop: '0px',
-      //   }}
-      // >
-      //   <AppstoreOutlined ref={refMasterData} />
-      // </Badge>,
-      <AppstoreOutlined ref={refMasterData} />,
-      [
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab(userInfo?.totalLocation)}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('location_catalog')}`}
-          </Badge>,
-          '6',
-          <FolderOpenOutlined ref={refLocationCatalog} />,
+    displayRouter([
+      ROUTERS.SEA_QUOTATION,
+      ROUTERS.AIR_QUOTATION,
+      ROUTERS.CUSTOMS_QUOTATION,
+      ROUTERS.TRUCKING_QUOTATION,
+      ROUTERS.QUOTATION_FEE_GROUP,
+    ])
+      ? getItem(
+          `${translateCommon('quotation')}`,
+          '1',
+          <ContainerOutlined ref={refQuotation} />,
           [
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab('0')}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('location')}`}
-              </Badge>,
-              ROUTERS.LOCATION,
-              <EnvironmentOutlined ref={refLocation} />
-            ),
-
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab(userInfo?.totalTypeLocation)}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('type_of_location')}`}
-              </Badge>,
-              ROUTERS.TYPE_OF_LOCATION,
-              <GlobalOutlined ref={refTypeOfLocation} />
-            ),
+            displayRouter(ROUTERS.SEA_QUOTATION)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('sea_quotation')}`}
+                  </Badge>,
+                  ROUTERS.SEA_QUOTATION,
+                  <ContainerOutlined ref={refSeaQuotation} />
+                )
+              : null,
+            displayRouter(ROUTERS.AIR_QUOTATION)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('air_quotation')}`}
+                  </Badge>,
+                  ROUTERS.AIR_QUOTATION,
+                  <ContainerOutlined ref={refAirQuotation} />
+                )
+              : null,
+            displayRouter(ROUTERS.CUSTOMS_QUOTATION)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('customs_quotation')}`}
+                  </Badge>,
+                  ROUTERS.CUSTOMS_QUOTATION,
+                  <ContainerOutlined ref={refCustomsQuotation} />
+                )
+              : null,
+            displayRouter(ROUTERS.TRUCKING_QUOTATION)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('trucking_quotation')}`}
+                  </Badge>,
+                  ROUTERS.TRUCKING_QUOTATION,
+                  <ContainerOutlined ref={refTruckingQuotation} />
+                )
+              : null,
+            displayRouter(ROUTERS.QUOTATION_FEE_GROUP)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('fee_group')}`}
+                  </Badge>,
+                  ROUTERS.QUOTATION_FEE_GROUP,
+                  <ContainerOutlined ref={refFeeGroupQuotation} />
+                )
+              : null,
           ]
-        ),
+        )
+      : null,
 
-        getItem(
-          `${translateCommon('load_capacity_catalog')}`,
-          'load_capacity_catalog',
-          <FolderOpenOutlined ref={refLoadCapacityCatalog} />,
+    displayRouter(ROUTERS.BOOKING)
+      ? getItem(
+          <Badge
+            count={GetTitleNotificationTab('0')}
+            style={{
+              marginRight: '-12px',
+            }}
+          >
+            {`${translateCommon('booking')}`}
+          </Badge>,
+          ROUTERS.BOOKING,
+          <SolutionOutlined ref={refBooking} />
+        )
+      : null,
+
+    displayRouter([
+      ROUTERS.SEA_PRICING,
+      ROUTERS.AIR_PRICING,
+      ROUTERS.CUSTOMS_PRICING,
+      ROUTERS.TRUCKING_PRICING,
+      ROUTERS.PRICING_FEE_GROUP,
+    ])
+      ? getItem(
+          `${translateCommon('pricing')}`,
+          '2',
+          <AuditOutlined ref={refPricing} />,
           [
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab('0')}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('load_capacity')}`}
-              </Badge>,
+            displayRouter(ROUTERS.SEA_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('sea_pricing')}`}
+                  </Badge>,
+                  ROUTERS.SEA_PRICING,
+                  <AuditOutlined ref={refSeaPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.AIR_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('air_pricing')}`}
+                  </Badge>,
+                  ROUTERS.AIR_PRICING,
+                  <AuditOutlined ref={refAirPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.CUSTOMS_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('customs_pricing')}`}
+                  </Badge>,
+                  ROUTERS.CUSTOMS_PRICING,
+                  <AuditOutlined ref={refCustomsPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.TRUCKING_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('trucking_pricing')}`}
+                  </Badge>,
+                  ROUTERS.TRUCKING_PRICING,
+                  <AuditOutlined ref={refTruckingPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.PRICING_FEE_GROUP)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('fee_group')}`}
+                  </Badge>,
+                  ROUTERS.PRICING_FEE_GROUP,
+                  <AuditOutlined ref={refFeeGroupPricing} />
+                )
+              : null,
+          ]
+        )
+      : null,
+
+    displayRouter(ROUTERS.PARTNER)
+      ? getItem(
+          <Badge
+            count={GetTitleNotificationTab('0')}
+            style={{
+              marginRight: '-12px',
+            }}
+          >
+            {`${translateCommon('partner')}`}
+          </Badge>,
+          ROUTERS.PARTNER,
+          <TeamOutlined ref={refPartner} />
+        )
+      : null,
+
+    displayRouter([
+      ROUTERS.LOCATION,
+      ROUTERS.TYPE_OF_LOCATION,
+      ROUTERS.LOAD_CAPACITY,
+      ROUTERS.TYPE_OF_LOAD_CAPACITY,
+      ROUTERS.FEE,
+      ROUTERS.TYPE_FEE,
+      ROUTERS.TYPE_FEE_GROUP,
+      ROUTERS.CURRENCY,
+      ROUTERS.BANK,
+      ROUTERS.COMMODITY,
+      ROUTERS.TYPES_OF_CONTAINER,
+      ROUTERS.UNIT,
+      ROUTERS.TYPE_UNIT,
+      ROUTERS.TYPE_DECLARATION,
+    ])
+      ? getItem(
+          `${translateCommon('master_data')}`,
+          '5',
+          // <Badge
+          //   dot={true}
+          //   style={{
+          //     marginTop: '0px',
+          //   }}
+          // >
+          //   <AppstoreOutlined ref={refMasterData} />
+          // </Badge>,
+          <AppstoreOutlined ref={refMasterData} />,
+          [
+            displayRouter([ROUTERS.LOCATION, ROUTERS.TYPE_OF_LOCATION])
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(userInfo?.totalLocation)}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('location_catalog')}`}
+                  </Badge>,
+                  '6',
+                  <FolderOpenOutlined ref={refLocationCatalog} />,
+                  [
+                    displayRouter(ROUTERS.LOCATION)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalLocation
+                            )}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('location')}`}
+                          </Badge>,
+                          ROUTERS.LOCATION,
+                          <EnvironmentOutlined ref={refLocation} />
+                        )
+                      : null,
+                    displayRouter(ROUTERS.TYPE_OF_LOCATION)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalTypeLocation
+                            )}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('type_of_location')}`}
+                          </Badge>,
+                          ROUTERS.TYPE_OF_LOCATION,
+                          <GlobalOutlined ref={refTypeOfLocation} />
+                        )
+                      : null,
+                  ]
+                )
+              : null,
+
+            displayRouter([
               ROUTERS.LOAD_CAPACITY,
-              <InboxOutlined ref={refLoadCapacity} />
-            ),
-            getItem(
-              `${translateCommon('type_load_capacity')}`,
               ROUTERS.TYPE_OF_LOAD_CAPACITY,
-              <GlobalOutlined ref={refTypeLoadCapacity} />
-            ),
-          ]
-        ),
+            ])
+              ? getItem(
+                  `${translateCommon('load_capacity_catalog')}`,
+                  'load_capacity_catalog',
+                  <FolderOpenOutlined ref={refLoadCapacityCatalog} />,
+                  [
+                    displayRouter(ROUTERS.LOAD_CAPACITY)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab('0')}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('load_capacity')}`}
+                          </Badge>,
+                          ROUTERS.LOAD_CAPACITY,
+                          <InboxOutlined ref={refLoadCapacity} />
+                        )
+                      : null,
+                    displayRouter(ROUTERS.TYPE_OF_LOAD_CAPACITY)
+                      ? getItem(
+                          `${translateCommon('type_load_capacity')}`,
+                          ROUTERS.TYPE_OF_LOAD_CAPACITY,
+                          <GlobalOutlined ref={refTypeLoadCapacity} />
+                        )
+                      : null,
+                  ]
+                )
+              : null,
 
-        getItem(
-          `${translateCommon('fee_catalog')}`,
-          'fee_catalog',
-          <FolderOpenOutlined ref={refFeeCatalog} />,
-          [
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab(userInfo?.totalFee)}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('fee')}`}
-              </Badge>,
+            displayRouter([
               ROUTERS.FEE,
-              <ProfileOutlined ref={refFee} />
-            ),
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab('0')}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('type_fee')}`}
-              </Badge>,
               ROUTERS.TYPE_FEE,
-              <ProfileOutlined ref={refTypeFee} />
-            ),
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab(userInfo?.totalTypeFeeGroup)}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('type_fee_group')}`}
-              </Badge>,
               ROUTERS.TYPE_FEE_GROUP,
-              <ProfileOutlined ref={refTypeFeeGroup} />
-            ),
-          ]
-        ),
+            ])
+              ? getItem(
+                  `${translateCommon('fee_catalog')}`,
+                  'fee_catalog',
+                  <FolderOpenOutlined ref={refFeeCatalog} />,
+                  [
+                    displayRouter(ROUTERS.FEE)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(userInfo?.totalFee)}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('fee')}`}
+                          </Badge>,
+                          ROUTERS.FEE,
+                          <ProfileOutlined ref={refFee} />
+                        )
+                      : null,
+                    displayRouter(ROUTERS.TYPE_FEE)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab('0')}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('type_fee')}`}
+                          </Badge>,
+                          ROUTERS.TYPE_FEE,
+                          <ProfileOutlined ref={refTypeFee} />
+                        )
+                      : null,
+                    displayRouter(ROUTERS.TYPE_FEE_GROUP)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalTypeFeeGroup
+                            )}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('type_fee_group')}`}
+                          </Badge>,
+                          ROUTERS.TYPE_FEE_GROUP,
+                          <ProfileOutlined ref={refTypeFeeGroup} />
+                        )
+                      : null,
+                  ]
+                )
+              : null,
 
-        getItem(
-          `${translateCommon('accountant')}`,
-          '8',
-          <DollarOutlined ref={refAccountant} />,
+            displayRouter([ROUTERS.CURRENCY, ROUTERS.BANK])
+              ? getItem(
+                  `${translateCommon('accountant')}`,
+                  '8',
+                  <DollarOutlined ref={refAccountant} />,
+                  [
+                    displayRouter(ROUTERS.CURRENCY)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalCurrency
+                            )}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('currency')}`}
+                          </Badge>,
+                          ROUTERS.CURRENCY,
+                          <DollarOutlined ref={refCurrency} />
+                        )
+                      : null,
+                    displayRouter(ROUTERS.BANK)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(userInfo?.totalBank)}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('bank')}`}
+                          </Badge>,
+                          ROUTERS.BANK,
+                          <BankOutlined ref={refBank} />
+                        )
+                      : null,
+                  ]
+                )
+              : null,
+
+            displayRouter(ROUTERS.COMMODITY)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(userInfo?.totalCommodity)}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('commodity')}`}
+                  </Badge>,
+                  ROUTERS.COMMODITY,
+                  <ShoppingOutlined ref={refCommodity} />
+                )
+              : null,
+
+            displayRouter(ROUTERS.TYPES_OF_CONTAINER)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalTypeContainer
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('type_of_container')}`}
+                  </Badge>,
+                  ROUTERS.TYPES_OF_CONTAINER,
+                  <InboxOutlined ref={refTypeOfContainer} />
+                )
+              : null,
+
+            displayRouter([ROUTERS.UNIT, ROUTERS.TYPE_UNIT])
+              ? getItem(
+                  `${translateCommon('unit_catalog')}`,
+                  'unit_catalog',
+                  <DollarOutlined ref={refUnitCatalog} />,
+                  [
+                    displayRouter(ROUTERS.UNIT)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(userInfo?.totalUnit)}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('unit')}`}
+                          </Badge>,
+                          ROUTERS.UNIT,
+                          <CalculatorOutlined ref={refUnit} />
+                        )
+                      : null,
+                    displayRouter(ROUTERS.TYPE_UNIT)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab('0')}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('type_unit')}`}
+                          </Badge>,
+                          ROUTERS.TYPE_UNIT,
+                          <CalculatorOutlined ref={refTypeUnit} />
+                        )
+                      : null,
+                  ]
+                )
+              : null,
+
+            displayRouter(ROUTERS.TYPE_DECLARATION)
+              ? getItem(
+                  `${translateCommon('declaration_catalog')}`,
+                  'declaration_catalog',
+                  <FileTextOutlined ref={refDeclarationCatalog} />,
+                  [
+                    displayRouter(ROUTERS.TYPE_DECLARATION)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab('0')}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('type_declaration')}`}
+                          </Badge>,
+                          ROUTERS.TYPE_DECLARATION,
+                          <FileTextOutlined ref={refTypeDeclaration} />
+                        )
+                      : null,
+                  ]
+                )
+              : null,
+          ]
+        )
+      : null,
+
+    displayRouter([ROUTERS.USER, ROUTERS.STAFF])
+      ? getItem(
+          `${translateCommon('system')}`,
+          '9',
+          <ClusterOutlined ref={refSystem} />,
           [
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab(userInfo?.totalCurrency)}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('currency')}`}
-              </Badge>,
-              ROUTERS.CURRENCY,
-              <DollarOutlined ref={refCurrency} />
-            ),
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab(userInfo?.totalBank)}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('bank')}`}
-              </Badge>,
-              ROUTERS.BANK,
-              <BankOutlined ref={refBank} />
-            ),
+            displayRouter(ROUTERS.USER)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('user')}`}
+                  </Badge>,
+                  ROUTERS.USER,
+                  <UserOutlined ref={refUser} />
+                )
+              : null,
+            displayRouter(ROUTERS.STAFF)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab('0')}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('staff')}`}
+                  </Badge>,
+                  ROUTERS.STAFF,
+                  <UsergroupAddOutlined ref={refStaff} />
+                )
+              : null,
+            // getItem(
+            //   <Badge
+            //     count={GetTitleNotificationTab('0')}
+            //     style={{
+            //       marginRight: '-12px',
+            //     }}
+            //   >
+            //     {`${translateCommon('permission')}`}
+            //   </Badge>,
+            //   ROUTERS.PERMISSION,
+            //   <ApartmentOutlined ref={refPermission} />
+            // ),
           ]
-        ),
-
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab(userInfo?.totalCommodity)}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('commodity')}`}
-          </Badge>,
-          ROUTERS.COMMODITY,
-          <ShoppingOutlined ref={refCommodity} />
-        ),
-
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab(userInfo?.totalTypeContainer)}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('type_of_container')}`}
-          </Badge>,
-          ROUTERS.TYPES_OF_CONTAINER,
-          <InboxOutlined ref={refTypeOfContainer} />
-        ),
-
-        getItem(
-          `${translateCommon('unit_catalog')}`,
-          'unit_catalog',
-          <DollarOutlined ref={refUnitCatalog} />,
-          [
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab(userInfo?.totalUnit)}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('unit')}`}
-              </Badge>,
-              ROUTERS.UNIT,
-              <CalculatorOutlined ref={refUnit} />
-            ),
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab('0')}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('type_unit')}`}
-              </Badge>,
-              ROUTERS.TYPE_UNIT,
-              <CalculatorOutlined ref={refTypeUnit} />
-            ),
-          ]
-        ),
-
-        getItem(
-          `${translateCommon('declaration_catalog')}`,
-          'declaration_catalog',
-          <FileTextOutlined ref={refDeclarationCatalog} />,
-          [
-            getItem(
-              <Badge
-                count={GetTitleNotificationTab('0')}
-                style={{
-                  marginRight: '-12px',
-                }}
-              >
-                {`${translateCommon('type_declaration')}`}
-              </Badge>,
-              ROUTERS.TYPE_DECLARATION,
-              <FileTextOutlined ref={refTypeDeclaration} />
-            ),
-          ]
-        ),
-      ]
-    ),
-    getItem(
-      `${translateCommon('system')}`,
-      '9',
-      <ClusterOutlined ref={refSystem} />,
-      [
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('user')}`}
-          </Badge>,
-          ROUTERS.USER,
-          <UserOutlined ref={refUser} />
-        ),
-        getItem(
-          <Badge
-            count={GetTitleNotificationTab('0')}
-            style={{
-              marginRight: '-12px',
-            }}
-          >
-            {`${translateCommon('staff')}`}
-          </Badge>,
-          ROUTERS.STAFF,
-          <UsergroupAddOutlined ref={refStaff} />
-        ),
-        // getItem(
-        //   <Badge
-        //     count={GetTitleNotificationTab('0')}
-        //     style={{
-        //       marginRight: '-12px',
-        //     }}
-        //   >
-        //     {`${translateCommon('permission')}`}
-        //   </Badge>,
-        //   ROUTERS.PERMISSION,
-        //   <ApartmentOutlined ref={refPermission} />
-        // ),
-      ]
-    ),
+        )
+      : null,
   ];
 
   const handleClickMenuItem = (path: MenuInfo) => {
