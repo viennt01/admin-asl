@@ -17,10 +17,12 @@ import {
 import { Button, Input, TablePaginationConfig, Tooltip } from 'antd';
 import style from './index.module.scss';
 import useI18n from '@/i18n/useI18N';
-import { ChangeEvent, MouseEvent } from 'react';
+import { ChangeEvent, MouseEvent, useContext } from 'react';
 import { IPaginationOfAntd } from '@/components/commons/table/table-default';
 import { FilterValue } from 'antd/lib/table/interface';
 import { STATUS_ALL_LABELS } from '@/constant/form';
+import { AppContext } from '@/app-context';
+import { ROLE } from '@/constant/permission';
 
 export const COUNT_DATA = 2147483640;
 interface Props<T extends Record<string, any>> {
@@ -85,6 +87,14 @@ const Table = <T extends Record<string, any>>({
 }: Props<T>) => {
   const { translate: translateCommon } = useI18n('common');
   const dataSourceUnknown = dataTable as unknown;
+  const { role } = useContext(AppContext);
+  // console.log(
+  //   handleCreateQuotation || !(role === ROLE.MANAGER || role === ROLE.SALE)
+  // );
+  console.log(
+    handleCreateQuotation !== undefined ||
+      !(role === ROLE.MANAGER || role === ROLE.SALE)
+  );
   return (
     <ProTable<T>
       headerTitle={headerTitle}
@@ -155,7 +165,11 @@ const Table = <T extends Record<string, any>>({
                   borderColor:
                     selectedRowKeys?.length === 0 ? '' : COLORS.GREEN,
                   fontWeight: '500',
-                  display: handleCreateQuotation ? '' : 'none',
+                  display:
+                    handleCreateQuotation === undefined ||
+                    !(role === ROLE.MANAGER || role === ROLE.SALE)
+                      ? 'none'
+                      : '',
                 }}
                 onClick={handleCreateQuotation}
                 disabled={itemDataQuotation?.length === 0}
