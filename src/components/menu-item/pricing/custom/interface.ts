@@ -253,6 +253,7 @@ export interface RequireCreateQuotationWithPricing {
   profitRateOfGreenPrice: string;
   profitRateOfRedPrice: string;
   profitRateOfYellowPrice: string;
+  forNewUser: boolean;
   salesLeadsQuotationRegisters: { partnerID: string }[];
   profitRateOfUnitforFee: { [key: string]: string };
   profitRateOfFee: string;

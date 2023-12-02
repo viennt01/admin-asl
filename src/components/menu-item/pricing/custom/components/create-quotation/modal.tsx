@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
@@ -73,6 +73,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
     { key: 'Other', unitName: 'Other', profitRate: '0' },
   ]);
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  useEffect(() => {
+    form.setFieldValue('forNewUser', componentDisabled);
+  }, [componentDisabled]);
 
   const getPartner = useQuery({
     queryKey: [API_PARTNER.GET_ALL_PARTNER],
@@ -131,6 +135,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       customPricingID: itemData,
       effectDated: value.effectDated.valueOf(),
       validityDate: value.validityDate.valueOf(),
+      forNewUser: value.forNewUser,
       salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
       profitRateOfFee:
         dataSourceProfit.find((item) => item.key === 'Other')?.profitRate ||
@@ -217,6 +222,17 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                         style={{ width: '100%' }}
                         placeholder="Select validity date"
                       />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span={24}>
+                    <Form.Item name="forNewUser">
+                      <Checkbox
+                        checked={componentDisabled}
+                        onChange={(e) => setComponentDisabled(e.target.checked)}
+                      >
+                        For New User
+                      </Checkbox>
                     </Form.Item>
                   </Col>
 

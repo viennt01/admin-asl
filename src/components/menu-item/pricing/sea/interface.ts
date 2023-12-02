@@ -264,6 +264,7 @@ export interface RequireCreateQuotationWithPricing {
   profitRateOfFee: string;
   profitRateOfLCLMin: string;
   profitRateOfLCL: string;
+  forNewUser: boolean;
   salesLeadsQuotationRegisters: { partnerID: string }[];
   seaQuotationGroupPartnerRegisterRequests: {
     groupPartnerID: string;

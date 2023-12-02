@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Modal,
@@ -65,6 +65,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const onCancel = () => handleCancel();
   const checkObject = Form.useWatch('checkbox-group', form);
   const idPartners = Form.useWatch('salesLeadsQuotationRegisters', form);
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  useEffect(() => {
+    form.setFieldValue('forNewUser', componentDisabled);
+  }, [componentDisabled]);
 
   const [dataSource, setDataSource] = useState<DataType[]>([
     { key: 'profitRateOfLCL', containerName: 'LCL', profitRate: '0' },
@@ -153,6 +157,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       seaPricingID: itemData,
       effectDated: value.effectDated.valueOf(),
       validityDate: value.validityDate.valueOf(),
+      forNewUser: value.forNewUser,
       salesLeadsQuotationRegisters: salesLeadsQuotationRegisters,
       seaQuotationGroupPartnerRegisterRequests:
         seaQuotationGroupPartnerRegisterRequests,
@@ -246,6 +251,17 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                     style={{ width: '100%' }}
                     placeholder="Select validity date"
                   />
+                </Form.Item>
+              </Col>
+
+              <Col span={24}>
+                <Form.Item name="forNewUser">
+                  <Checkbox
+                    checked={componentDisabled}
+                    onChange={(e) => setComponentDisabled(e.target.checked)}
+                  >
+                    For New User
+                  </Checkbox>
                 </Form.Item>
               </Col>
 
