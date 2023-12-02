@@ -429,12 +429,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/location-catalog/type-of-location': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       { title: `${translateCommon('type_of_location')}` },
     ],
     '/master-data/location-catalog/type-of-location/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       {
         title: (
@@ -446,7 +446,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/location-catalog/type-of-location/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       {
         title: (
@@ -458,7 +458,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/location-catalog/type-of-location/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       {
         title: (
@@ -471,12 +471,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/location-catalog/location': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       { title: `${translateCommon('location')}` },
     ],
     '/master-data/location-catalog/location/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       {
         title: (
@@ -486,7 +486,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/location-catalog/location/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       {
         title: (
@@ -496,7 +496,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/location-catalog/location/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('location_catalog')}` },
       {
         title: (
@@ -509,12 +509,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/declaration-catalog/type-of-declaration': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('declaration_catalog')}` },
       { title: `${translateCommon('type_declaration')}` },
     ],
     '/master-data/declaration-catalog/type-of-declaration/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('declaration_catalog')}` },
       {
         title: (
@@ -526,7 +526,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/declaration-catalog/type-of-declaration/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('declaration_catalog')}` },
       {
         title: (
@@ -538,7 +538,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/declaration-catalog/type-of-declaration/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('declaration_catalog')}` },
       {
         title: (
@@ -551,12 +551,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/load-capacity-catalog/type-of-load-capacity': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },
       { title: `${translateCommon('type_load_capacity')}` },
     ],
     '/master-data/load-capacity-catalog/type-of-load-capacity/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },
       {
         title: (
@@ -568,7 +568,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/load-capacity-catalog/type-of-load-capacity/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },
       {
         title: (
@@ -581,7 +581,7 @@ const SHOW_ROUTER_HEADER = () => {
     ],
     '/master-data/load-capacity-catalog/type-of-load-capacity/manager-admin/[id]':
       [
-        { title: `${translateCommon('master_data')}` },
+        { title: `${translateCommon('object_list')}` },
         { title: `${translateCommon('load_capacity_catalog')}` },
         {
           title: (
@@ -594,12 +594,12 @@ const SHOW_ROUTER_HEADER = () => {
       ],
 
     '/master-data/load-capacity-catalog/load-capacity': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },
       { title: `${translateCommon('load_capacity')}` },
     ],
     '/master-data/load-capacity-catalog/load-capacity/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },
       {
         title: (
@@ -611,7 +611,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/load-capacity-catalog/load-capacity/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },
       {
         title: (
@@ -623,7 +623,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/load-capacity-catalog/load-capacity/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },
       {
         title: (
@@ -636,36 +636,36 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/unit-catalog/unit': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       { title: `${translateCommon('unit')}` },
     ],
     '/master-data/unit-catalog/unit/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/unit-catalog/unit/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/unit-catalog/unit/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       { title: <Link href={ROUTERS.UNIT}>{translateCommon('unit')}</Link> },
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
     '/master-data/unit-catalog/type-unit': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       { title: `${translateCommon('type_unit')}` },
     ],
     '/master-data/unit-catalog/type-unit/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       {
         title: (
@@ -675,7 +675,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/unit-catalog/type-unit/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       {
         title: (
@@ -685,7 +685,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/unit-catalog/type-unit/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('unit_catalog')}` },
       {
         title: (
@@ -696,12 +696,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/accountant/currency': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       { title: `${translateCommon('currency')}` },
     ],
     '/master-data/accountant/currency/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       {
         title: (
@@ -711,7 +711,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/accountant/currency/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       {
         title: (
@@ -721,7 +721,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/accountant/currency/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       {
         title: (
@@ -732,12 +732,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/accountant/bank': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       { title: `${translateCommon('bank')}` },
     ],
     '/master-data/accountant/bank/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       {
         title: <Link href={ROUTERS.BANK}>{translateCommon('bank')}</Link>,
@@ -745,7 +745,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/accountant/bank/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       {
         title: <Link href={ROUTERS.BANK}>{translateCommon('bank')}</Link>,
@@ -753,7 +753,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/accountant/bank/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('accountant')}` },
       {
         title: <Link href={ROUTERS.BANK}>{translateCommon('bank')}</Link>,
@@ -762,12 +762,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/fee-catalog/fee': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       { title: `${translateCommon('fee')}` },
     ],
     '/master-data/fee-catalog/fee/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: <Link href={ROUTERS.FEE}>{translateCommon('fee')}</Link>,
@@ -775,7 +775,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/fee-catalog/fee/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: <Link href={ROUTERS.FEE}>{translateCommon('fee')}</Link>,
@@ -783,7 +783,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/fee-catalog/fee/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: <Link href={ROUTERS.FEE}>{translateCommon('fee')}</Link>,
@@ -792,12 +792,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/fee-catalog/type-fee': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       { title: `${translateCommon('type_fee')}` },
     ],
     '/master-data/fee-catalog/type-fee/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -807,7 +807,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/fee-catalog/type-fee/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -817,7 +817,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/fee-catalog/type-fee/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -828,12 +828,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/fee-group': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       { title: `${translateCommon('fee_group')}` },
     ],
     '/master-data/fee-group/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -843,7 +843,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/fee-group/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -853,7 +853,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/fee-group/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -864,12 +864,12 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/fee-catalog/type-fee-group': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       { title: `${translateCommon('type_fee_group')}` },
     ],
     '/master-data/fee-catalog/type-fee-group/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -881,7 +881,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/fee-catalog/type-fee-group/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -893,7 +893,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/fee-catalog/type-fee-group/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('fee_catalog')}` },
       {
         title: (
@@ -906,11 +906,11 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/commodity': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('commodity')}` },
     ],
     '/master-data/commodity/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       {
         title: (
           <Link href={ROUTERS.COMMODITY}>{translateCommon('commodity')}</Link>
@@ -919,7 +919,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/commodity/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       {
         title: (
           <Link href={ROUTERS.COMMODITY}>{translateCommon('commodity')}</Link>
@@ -928,7 +928,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/commodity/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       {
         title: (
           <Link href={ROUTERS.COMMODITY}>{translateCommon('commodity')}</Link>
@@ -938,7 +938,7 @@ const SHOW_ROUTER_HEADER = () => {
     ],
 
     '/master-data/type-of-container': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>
@@ -949,11 +949,11 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('type_of_container')}` },
     ],
     '/master-data/type-of-container/create': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('create')}` },
     ],
     '/master-data/type-of-container/edit/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>
@@ -964,7 +964,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('detail')}` },
     ],
     '/master-data/type-of-container/manager-admin/[id]': [
-      { title: `${translateCommon('master_data')}` },
+      { title: `${translateCommon('object_list')}` },
       {
         title: (
           <Link href={ROUTERS.TYPES_OF_CONTAINER}>

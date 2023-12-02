@@ -428,7 +428,7 @@ const AppSider = ({ collapsed }: Props) => {
       ROUTERS.TYPE_DECLARATION,
     ])
       ? getItem(
-          `${translateCommon('master_data')}`,
+          `${translateCommon('object_list')}`,
           '5',
           // <Badge
           //   dot={true}
