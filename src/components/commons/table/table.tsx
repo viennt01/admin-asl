@@ -88,13 +88,7 @@ const Table = <T extends Record<string, any>>({
   const { translate: translateCommon } = useI18n('common');
   const dataSourceUnknown = dataTable as unknown;
   const { role } = useContext(AppContext);
-  // console.log(
-  //   handleCreateQuotation || !(role === ROLE.MANAGER || role === ROLE.SALE)
-  // );
-  console.log(
-    handleCreateQuotation !== undefined ||
-      !(role === ROLE.MANAGER || role === ROLE.SALE)
-  );
+
   return (
     <ProTable<T>
       headerTitle={headerTitle}

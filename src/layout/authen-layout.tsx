@@ -38,6 +38,7 @@ import {
 } from '@/fetcherAxios/endpoint';
 import SHOW_ROUTER_HEADER from './constant';
 import { AppContext } from '@/app-context';
+import { getPriorityRole } from '@/hook/useAuthentication';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -136,7 +137,7 @@ export function AppLayout(props: Props) {
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
   const locale = useLocale();
-  const { userInfo, setUserInfo } = useContext(AppContext);
+  const { userInfo, setUserInfo, setRole } = useContext(AppContext);
 
   useQuery({
     queryKey: [API_MASTER_DATA.GET_COUNTRY],
@@ -167,8 +168,11 @@ export function AppLayout(props: Props) {
         // remove token and redirect to home
         appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
         router.replace(ROUTERS.LOGIN);
+      } else {
+        const dataRole = getPriorityRole(data?.data?.listRole || ['AGENT']);
+        if (setRole) setRole(dataRole);
+        if (setUserInfo) setUserInfo(data.data);
       }
-      if (setUserInfo) setUserInfo(data.data);
     },
     onError: () => {
       // remove token and redirect to home

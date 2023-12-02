@@ -28,7 +28,7 @@ export const INITIAL_VALUE_USER_INFO = {
   colorAvatar: '',
   defaultAvatar: '',
   newUser: false,
-  listRole: [0],
+  listRole: ['AGENT'],
   dateInserted: '',
   dateUpdated: '',
   insertedByUser: '',
@@ -52,7 +52,7 @@ export const INITIAL_VALUE_USER_INFO = {
 
 const INITIAL_VALUE_CONTEXT = {
   userInfo: INITIAL_VALUE_USER_INFO,
-  role: 'MANAGER',
+  role: 'AGENT',
 };
 
 export const AppContext = React.createContext<AppContext>(

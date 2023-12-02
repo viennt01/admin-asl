@@ -27,7 +27,7 @@ export interface UserInfo {
   colorAvatar: string;
   defaultAvatar: string;
   newUser: boolean;
-  listRole: number[];
+  listRole: string[];
   dateInserted: string;
   dateUpdated: string;
   insertedByUser: string;

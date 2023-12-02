@@ -14,7 +14,7 @@ import {
   PERMISSION,
 } from '@/constant/permission';
 
-const getPriorityRole = (roles: string[]): string => {
+export const getPriorityRole = (roles: string[]): string => {
   const priorityRoles = ['MANAGER', 'SALE', 'LINER', 'AGENT'];
   if (!roles) {
     return 'AGENT';
@@ -29,12 +29,9 @@ const getPriorityRole = (roles: string[]): string => {
 
 export default function withAuthentication(ChildComponent: () => JSX.Element) {
   const Container = () => {
-    const { setUserInfo, role } = useContext(AppContext);
+    const { setUserInfo, role, setRole } = useContext(AppContext);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
-    const roles = ['SALE'];
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const roleTest = getPriorityRole(roles);
     const permissionRules = PERMISSION_RULES() as IPermissionRules;
 
     useQuery({
@@ -46,6 +43,8 @@ export default function withAuthentication(ChildComponent: () => JSX.Element) {
           appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
           router.replace(ROUTERS.LOGIN);
         } else {
+          const dataRole = getPriorityRole(data?.data?.listRole || ['AGENT']);
+          if (setRole) setRole(dataRole);
           if (setUserInfo) setUserInfo(data.data);
         }
       },
@@ -77,13 +76,13 @@ export default function withAuthentication(ChildComponent: () => JSX.Element) {
     }, [router.pathname]);
     useEffect(() => {
       const currentPermission =
-        permissionRules[role || 'LINER'][
+        permissionRules[role || 'AGENT'][
           router.pathname as keyof (typeof permissionRules)[typeof role]
         ];
       if (currentPermission === PERMISSION.NO_VIEW) {
         router.push(ROUTERS.HOME);
       }
-    }, [router.pathname]);
+    }, [router.pathname, role]);
     if (loading) return <></>;
     return <ChildComponent />;
   };
