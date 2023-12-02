@@ -75,42 +75,39 @@ export interface IFormValues {
   currencyID: string;
   transactionTypeID: string;
   note: string;
-  customRedPrice: string;
-  customYellowPrice: string;
-  customGreenPrice: string;
   effectDated: Dayjs;
   validityDate: Dayjs;
   public: boolean;
   statusCustomPricing: string;
   customPricingFeeGroupDTOs: string[];
+  customPricingLCLDetailDTO: ICustomPricingLCLDetailDTO;
+  customPricingFCLDetailDTOs: ICustomPricingFCLDetailDTOs[];
+  customPricingAirDetailDTO: ICustomPricingAirDetailDTO;
+}
 
-  customPricingLCLDetailDTOs: [
-    {
-      customPricingLCLDetailID: string;
-      colorRouterID: string;
-      colorRouterName: string;
-      priceColorRouter: string;
-    }
-  ];
-  // customPricingFCLDetailDTOs: [
-  //   {
-  //     customPricingFCLDetailID: string;
-  //     colorRouterID: string;
-  //     colorRouterName: string;
-  //     unitID: string;
-  //     internationalCode: string;
-  //     basePriceColorRouter: string;
-  //     priceColorRouter: string;
-  //   }
-  // ];
-  // customPricingAirDetailDTOs: [
-  //   {
-  //     customPricingAirDetailID: string;
-  //     colorRouterID: string;
-  //     colorRouterName: string;
-  //     priceColorRouter: string;
-  //   }
-  // ];
+export interface ICustomPricingLCLDetailDTO {
+  customPricingLCLDetailID?: string;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
+}
+export interface ICustomPricingFCLDetailDTOs {
+  customPricingFCLDetailID?: string;
+  unitID: string;
+  internationalCode?: string;
+  basePriceRedLane: string;
+  basePriceGreenLane: string;
+  basePriceYellowLane: string;
+  priceRedLane: string;
+  priceGreenLane: string;
+  priceYellowLane: string;
+}
+
+export interface ICustomPricingAirDetailDTO {
+  customPricingAirDetailID?: string;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
 }
 
 export interface ICustomPricingDetailType
@@ -163,25 +160,26 @@ export type ICustomPricingCreate = Omit<
   | 'effectDated'
   | 'validityDate'
   | 'customPricingFeeGroupDTOs'
-  | 'customPricingLCLDetailDTOs'
+  | 'customPricingLCLDetailDTO'
+  | 'customPricingFCLDetailDTOs'
+  | 'customPricingAirDetailDTO'
 > & {
   effectDated: number;
   validityDate: number;
   customPricingFeeGroupRegisterRequests: ICustomPricingFeeDTOsCreate[];
-  customPricingLCLDetailRegisterRequests: ICustomPricingLCLAndAirDetailRegisterRequests[];
-  customPricingAirDetailRegisterRequests: ICustomPricingLCLAndAirDetailRegisterRequests[];
+  customPricingLCLDetailRegisterRequest: ICustomPricingLCLDetailDTO;
+  customPricingFCLDetailRegisterRequests: ICustomPricingFCLDetailDTOs[];
+  customPricingAirDetailRegisterRequest: ICustomPricingAirDetailDTO;
 };
-export interface ICustomPricingLCLAndAirDetailRegisterRequests {
-  colorRouterID: React.Key;
-  priceColorRouter: string;
-}
 
 export type ICustomPricingEdit = Omit<
   IFormValues,
   | 'effectDated'
   | 'validityDate'
   | 'customPricingFeeGroupDTOs'
-  | 'customPricingLCLDetailDTOs'
+  | 'customPricingLCLDetailDTO'
+  | 'customPricingFCLDetailDTOs'
+  | 'customPricingAirDetailDTO'
 > & {
   effectDated: number;
   validityDate: number;

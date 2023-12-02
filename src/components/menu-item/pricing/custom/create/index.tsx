@@ -10,7 +10,6 @@ import {
   ICustomPricingEdit,
   ICustomPricingFeeFormValue,
   ICustomPricingFeeUpdate,
-  ICustomPricingLCLAndAirDetailRegisterRequests,
 } from '../interface';
 import { createCustomPricing, editCustomPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
@@ -70,9 +69,7 @@ const CreateCustomPricing = () => {
   const handleSubmit = (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
-    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
-    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
   ) => {
     const returnFeeDTO = returnFeeDTOs(
       seaPricingFeeDTOs,
@@ -87,9 +84,6 @@ const CreateCustomPricing = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         public: formValues.public || true,
@@ -113,15 +107,16 @@ const CreateCustomPricing = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         public: formValues.public || true,
         customPricingFeeGroupRegisterRequests: returnFeeDTO,
-        customPricingLCLDetailRegisterRequests: dataLCLSea || [],
-        customPricingAirDetailRegisterRequests: dataAir || [],
+        customPricingLCLDetailRegisterRequest:
+          formValues.customPricingLCLDetailDTO,
+        customPricingFCLDetailRegisterRequests:
+          formValues.customPricingFCLDetailDTOs,
+        customPricingAirDetailRegisterRequest:
+          formValues.customPricingAirDetailDTO,
         statusCustomPricing: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -140,9 +135,7 @@ const CreateCustomPricing = () => {
   const handleSaveDraft = (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
-    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
-    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
   ) => {
     const returnFeeDTO = returnFeeDTOs(
       seaPricingFeeDTOs,
@@ -158,9 +151,6 @@ const CreateCustomPricing = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         public: formValues.public || true,
@@ -187,15 +177,16 @@ const CreateCustomPricing = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         public: formValues.public || true,
         customPricingFeeGroupRegisterRequests: returnFeeDTO,
-        customPricingLCLDetailRegisterRequests: dataLCLSea || [],
-        customPricingAirDetailRegisterRequests: dataAir || [],
+        customPricingLCLDetailRegisterRequest:
+          formValues.customPricingLCLDetailDTO,
+        customPricingFCLDetailRegisterRequests:
+          formValues.customPricingFCLDetailDTOs,
+        customPricingAirDetailRegisterRequest:
+          formValues.customPricingAirDetailDTO,
         statusCustomPricing: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

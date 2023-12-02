@@ -71,7 +71,6 @@ const ListFee = ({ form, create }: Props) => {
       setActiveKey(defaultPanes[0].key);
     }
   }, [dataFee]);
-  console.log(idActive);
 
   const onChange = (key: string) => {
     setActiveKey(key);

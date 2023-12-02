@@ -118,8 +118,6 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         item.key !== 'profitRateOfLCL' &&
         item.key !== 'profitRateOfLCLMin'
     );
-    console.log(profitRateOfContainerTypeFilter);
-
     const profitRateOfContainerType = profitRateOfContainerTypeFilter.reduce(
       (result: any, item) => {
         result[item.key] = item.profitRate;

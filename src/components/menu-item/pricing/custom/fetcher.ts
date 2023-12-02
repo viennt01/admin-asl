@@ -24,7 +24,6 @@ import {
   RequirePartner,
   RequestPartnerTable,
   TablePartner,
-  RequireColorRouter,
 } from './interface';
 import {
   API_COMMODITY,
@@ -33,7 +32,6 @@ import {
   API_PARTNER,
   API_CUSTOM_PRICING,
   API_CUSTOMS_QUOTATION,
-  API_COLOR_ROUTER,
 } from '@/fetcherAxios/endpoint';
 
 export const getCustomPricingSearch = (data: RequestSeaPricing) => {
@@ -141,6 +139,3 @@ export const getTablePartner = (data: RequestPartnerTable) => {
     data,
   })(API_PARTNER.GET_ALL_PARTNER_BY_IDS);
 };
-// Get all color router
-export const getAllColorRouter = () =>
-  get<ResponseWithPayload<RequireColorRouter[]>>({})(API_COLOR_ROUTER.GET_ALL);

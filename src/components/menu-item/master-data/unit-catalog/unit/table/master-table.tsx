@@ -247,8 +247,6 @@ export default function MasterDataTable() {
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>
   ) => {
-    console.log(filters);
-
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',

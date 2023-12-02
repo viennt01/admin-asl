@@ -576,7 +576,6 @@ export default function MasterDataTable() {
   const handleCreateQuotation = () => {
     setOpenCreateQuotationModal(false);
   };
-  // console.log(selectedRowKeys);
 
   return (
     <div style={{ marginTop: -18 }}>

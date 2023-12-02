@@ -16,8 +16,6 @@ const EditLoadCapacityType = () => {
   });
 
   const handleSubmit = (formValues: FormValues, idQuery?: string) => {
-    console.log(formValues);
-
     if (idQuery) {
       const _requestData: ILoadCapacityTypeEdit = {
         typeLoadCapacityID: idQuery,
@@ -34,8 +32,6 @@ const EditLoadCapacityType = () => {
         statusTypeLoadCapacity:
           formValues.statusTypeLoadCapacity || STATUS_ALL_LABELS.ACTIVE,
       };
-      console.log(_requestData);
-
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status ? successToast(data.message) : errorToast(data.message);

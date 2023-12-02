@@ -457,8 +457,6 @@ export default function MasterDataTable() {
   };
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
-    console.log(map);
-
     setColumnsStateMap(map);
   };
 

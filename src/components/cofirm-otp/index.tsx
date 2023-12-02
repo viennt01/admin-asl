@@ -24,7 +24,6 @@ export default function ConfirmOtp() {
   const [isLoadingConfirmOtp, setIsLoadingConfirmOtp] = useState(false);
   const router = useRouter();
   const { email, ipAddress, deviceName } = router.query;
-  console.log(email, ipAddress, deviceName);
 
   const handleSubmitVerifyOtp = (values: ConfirmOtpData) => {
     setIsLoadingConfirmOtp(true);

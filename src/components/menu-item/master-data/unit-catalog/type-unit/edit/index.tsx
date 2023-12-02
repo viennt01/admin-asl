@@ -16,8 +16,6 @@ const EditTypeUnit = () => {
   });
 
   const handleSubmit = (formValues: IFormValues, idQuery?: string) => {
-    console.log(formValues);
-
     if (idQuery) {
       const _requestData: ITypeUnitEdit = {
         typeUnitID: idQuery,

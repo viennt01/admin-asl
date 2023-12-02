@@ -10,14 +10,15 @@ import {
   Select,
   DatePicker,
   Switch,
-  InputNumber,
   FormInstance,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
+  ICustomPricingAirDetailDTO,
+  ICustomPricingFCLDetailDTOs,
+  ICustomPricingLCLDetailDTO,
   IFormValues,
-  // SeaPricingFeeDTOs,
   UpdateStatus,
 } from '../interface';
 import {
@@ -32,7 +33,6 @@ import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { formatNumber } from '@/utils/format';
 import dayjs from 'dayjs';
 import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
 import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
@@ -159,13 +159,16 @@ const CardMain = ({
         currencyID: propCopyAndCreate.currencyID as string,
         transactionTypeID: propCopyAndCreate.transactionTypeID as string,
         note: propCopyAndCreate.note as string,
-        customRedPrice: propCopyAndCreate.customRedPrice as string,
-        customYellowPrice: propCopyAndCreate.customYellowPrice as string,
-        customGreenPrice: propCopyAndCreate.customGreenPrice as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         public: propCopyAndCreate.public as unknown as boolean,
         statusCustomPricing: propCopyAndCreate.statusCustomPricing as string,
+        customPricingLCLDetailDTO:
+          propCopyAndCreate.customPricingLCLDetailDTO as unknown as ICustomPricingLCLDetailDTO,
+        customPricingFCLDetailDTOs:
+          propCopyAndCreate.customPricingFCLDetailDTOs as unknown as ICustomPricingFCLDetailDTOs[],
+        customPricingAirDetailDTO:
+          propCopyAndCreate.customPricingAirDetailDTO as unknown as ICustomPricingAirDetailDTO,
         customPricingFeeGroupDTOs:
           typeof propCopyAndCreate.customPricingFeeGroupDTOs === 'string'
             ? [propCopyAndCreate.customPricingFeeGroupDTOs as unknown as string]
@@ -186,27 +189,6 @@ const CardMain = ({
       return updateStatus(body);
     },
   });
-
-  const suffixSelectorPrice = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translatePricingCustom('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
 
   return (
     <Card
@@ -460,78 +442,23 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
-        <Col lg={8} span={24}>
+        <Col span={8}>
           <Form.Item
-            label={translatePricingCustom('customRedPrice_form.title')}
-            name="customRedPrice"
+            label="Currency"
+            name="currencyID"
             rules={[
               {
                 required: true,
-                message: translatePricingCustom(
-                  'customRedPrice_form.placeholder'
-                ),
+                message: translatePricingCustom('currency_form.error_required'),
               },
             ]}
           >
-            <InputNumber
-              addonAfter={suffixSelectorPrice}
-              placeholder={translatePricingCustom(
-                'customRedPrice_form.placeholder'
-              )}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
+            <Select
+              placeholder={translatePricingCustom('currency_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingCustom('customYellowPrice_form.title')}
-            name="customYellowPrice"
-            rules={[
-              {
-                required: true,
-                message: translatePricingCustom(
-                  'customYellowPrice_form.placeholder'
-                ),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorPrice}
-              placeholder={translatePricingCustom(
-                'customYellowPrice_form.placeholder'
-              )}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
+              showSearch
               style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingCustom('customGreenPrice_form.title')}
-            name="customGreenPrice"
-            rules={[
-              {
-                required: true,
-                message: translatePricingCustom(
-                  'customGreenPrice_form.placeholder'
-                ),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorPrice}
-              placeholder={translatePricingCustom(
-                'customGreenPrice_form.placeholder'
-              )}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
+              options={optionCurrency}
             />
           </Form.Item>
         </Col>
@@ -588,6 +515,15 @@ const CardMain = ({
         </Col>
         <Col span={0}>
           <Form.Item name="statusCustomPricing"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="customPricingLCLDetailDTO"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="customPricingAirDetailDTO"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="customPricingFCLDetailDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

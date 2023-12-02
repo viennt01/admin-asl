@@ -1,34 +1,20 @@
-import React, {
-  Dispatch,
-  Ref,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { Ref, useContext, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
 import { Form, InputNumber, Table, Tag } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { formatNumber } from '@/utils/format';
-import {
-  ICustomPricingLCLAndAirDetailRegisterRequests,
-  RequireColorRouter,
-} from '../../interface';
+import { IFormValues } from '../../interface';
 
 interface PropsLCL {
-  dataColorRouter: RequireColorRouter[];
-  setDataLCLSea: Dispatch<
-    SetStateAction<ICustomPricingLCLAndAirDetailRegisterRequests[]>
-  >;
+  form: FormInstance<IFormValues>;
 }
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
   key: string;
-  colorRouterID: string;
-  priceColorRouter: string;
+  priceName: string;
+  priceColor: string;
 }
 
 interface EditableRowProps {
@@ -131,31 +117,76 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  colorRouterID: string;
-  priceColorRouter: string;
+  priceName: string;
+  priceColor: string;
 }
 
-type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
+const initialValue = {
+  priceRedLane: '0',
+  priceYellowLane: '0',
+  priceGreenLane: '0',
+};
+type AccType = Record<string, string>;
 
-const LCL = ({ dataColorRouter, setDataLCLSea }: PropsLCL) => {
-  const [dataSource, setDataSource] = useState<DataType[]>([]);
-  console.log(dataSource);
+type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
+const LCL = ({ form }: PropsLCL) => {
+  const [isMounted, setIsMounted] = useState(false);
+  const [dataSource, setDataSource] = useState<DataType[]>([
+    {
+      key: 1,
+      priceName: 'Green',
+      priceColor: initialValue.priceGreenLane,
+    },
+    {
+      key: 2,
+      priceName: 'Yellow',
+      priceColor: initialValue.priceYellowLane,
+    },
+    {
+      key: 3,
+      priceName: 'Red',
+      priceColor: initialValue.priceRedLane,
+    },
+  ]);
+  const dataRequestPricingLCL = Form.useWatch(
+    'customPricingLCLDetailDTO',
+    form
+  );
 
   useEffect(() => {
-    setDataSource(
-      dataColorRouter.map((item) => ({
-        key: item.colorRouterID,
-        colorRouterID: item.colorRouterName,
-        priceColorRouter: '0',
-      }))
-    );
-    setDataLCLSea(
-      dataColorRouter.map((item) => ({
-        colorRouterID: item.colorRouterID,
-        priceColorRouter: '0',
-      }))
-    );
-  }, [dataColorRouter]);
+    if (dataRequestPricingLCL) {
+      setDataSource([
+        {
+          key: 1,
+          priceName: 'Green',
+          priceColor: dataRequestPricingLCL.priceGreenLane,
+        },
+        {
+          key: 2,
+          priceName: 'Yellow',
+          priceColor: dataRequestPricingLCL.priceYellowLane,
+        },
+        {
+          key: 3,
+          priceName: 'Red',
+          priceColor: dataRequestPricingLCL.priceRedLane,
+        },
+      ]);
+    }
+    if (!isMounted) {
+      setIsMounted(true);
+      const resultObject = dataSource.reduce<AccType>((acc, item) => {
+        const { priceName, priceColor } = item;
+        acc['price' + priceName + 'Lane'] = priceColor;
+        if (dataRequestPricingLCL?.customPricingLCLDetailID) {
+          acc['customPricingLCLDetailID'] =
+            dataRequestPricingLCL.customPricingLCLDetailID || '';
+        }
+        return acc;
+      }, {});
+      form.setFieldValue('customPricingLCLDetailDTO', resultObject);
+    }
+  }, [dataRequestPricingLCL]);
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
@@ -163,16 +194,16 @@ const LCL = ({ dataColorRouter, setDataLCLSea }: PropsLCL) => {
   })[] = [
     {
       title: 'Price Color',
-      dataIndex: 'colorRouterID',
+      dataIndex: 'priceName',
       width: '50%',
       align: 'center',
       render: (value) => {
-        return <Tag color={value?.split(' ')[0].toLowerCase()}>{value}</Tag>;
+        return <Tag color={value?.toLowerCase()}>{value}</Tag>;
       },
     },
     {
       title: 'Price',
-      dataIndex: 'priceColorRouter',
+      dataIndex: 'priceColor',
       width: '50%',
       editable: true,
       align: 'center',
@@ -190,13 +221,17 @@ const LCL = ({ dataColorRouter, setDataLCLSea }: PropsLCL) => {
       ...item,
       ...row,
     });
-    setDataSource(newData);
-    setDataLCLSea(
-      newData.map((item) => ({
-        colorRouterID: item.key,
-        priceColorRouter: item.priceColorRouter,
-      }))
-    );
+
+    const resultObject = newData.reduce<AccType>((acc, item) => {
+      const { priceName, priceColor } = item;
+      acc['price' + priceName + 'Lane'] = priceColor;
+      if (dataRequestPricingLCL.customPricingLCLDetailID) {
+        acc['customPricingLCLDetailID'] =
+          dataRequestPricingLCL?.customPricingLCLDetailID || '';
+      }
+      return acc;
+    }, {});
+    form.setFieldValue('customPricingLCLDetailDTO', resultObject);
   };
 
   const components = {

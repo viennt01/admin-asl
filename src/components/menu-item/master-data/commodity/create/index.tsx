@@ -25,8 +25,6 @@ const CommodityPage = () => {
   });
 
   const handleSubmit = (formValues: FormValues, id?: string) => {
-    console.log(formValues);
-
     if (id) {
       const _requestData: EditCommodity = {
         commodityID: id,

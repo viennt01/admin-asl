@@ -29,8 +29,6 @@ const EditSeaPricing = () => {
       seaPricingFeeDTOs,
       formValues.seaPricingFeeGroupDTOs
     );
-    console.log(seaPricingFeeDTOs);
-    console.log(formValues.seaPricingFeeGroupDTOs);
 
     if (idQuery) {
       const _requestData: SeaPricingEdit = {

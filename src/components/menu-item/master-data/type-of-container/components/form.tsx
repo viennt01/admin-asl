@@ -144,8 +144,6 @@ const TypeOfContainerTypeForm = ({
   };
 
   useEffect(() => {
-    console.log(form.getFieldValue('statusContainerType'));
-
     if (form.getFieldValue('statusContainerType')) {
       form.getFieldValue('statusContainerType') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
@@ -171,8 +169,6 @@ const TypeOfContainerTypeForm = ({
     propCopyAndCreate,
     form.getFieldValue('statusContainerType'),
   ]);
-
-  console.log('formall', form.getFieldsValue());
 
   return (
     <div style={{ padding: '24px 0' }}>

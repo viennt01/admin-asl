@@ -7,18 +7,15 @@ import {
   IFormValues,
   ICustomPricingFeeFormValue,
   UpdateStatus,
-  RequireColorRouter,
-  ICustomPricingLCLAndAirDetailRegisterRequests,
 } from '../interface';
 import {
   API_CURRENCY,
   API_FEE_GROUP,
   API_CUSTOM_PRICING,
-  API_COLOR_ROUTER,
+  API_UNIT,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import {
-  getAllColorRouter,
   getAllCurrency,
   getCustomPricingDetail,
   updateStatus,
@@ -32,7 +29,10 @@ import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/f
 import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import ListFee from './list-fee';
 import LCL from './lcl';
-import Air from './fcl';
+import Air from './air';
+import FCL from './fcl';
+import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
+import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
 
 interface FormProps {
   create?: boolean;
@@ -41,16 +41,12 @@ interface FormProps {
   handleSubmit?: (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
-    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
-    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
   ) => void;
   handleSaveDraft?: (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
-    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
-    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
   ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
@@ -76,19 +72,13 @@ const CustomPricing = ({
   const [optionCurrency, setOptionCurrency] = useState<
     { value: string; label: string }[]
   >([]);
+  const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
+    []
+  );
   const [seaPricingFeeDTOs, setSeaPricingFeeDTOs] = useState<
     ICustomPricingFeeFormValue[]
   >([]);
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
-  const [dataColorRouter, setDataColorRouter] = useState<RequireColorRouter[]>(
-    []
-  );
-  const [dataLCLSea, setDataLCLSea] = useState<
-    ICustomPricingLCLAndAirDetailRegisterRequests[]
-  >([]);
-  const [dataAir, setDataAir] = useState<
-    ICustomPricingLCLAndAirDetailRegisterRequests[]
-  >([]);
 
   const listIdFeeGroup = Form.useWatch('customPricingFeeGroupDTOs', form);
 
@@ -136,14 +126,18 @@ const CustomPricing = ({
   });
 
   useQuery({
-    queryKey: [API_COLOR_ROUTER.GET_ALL],
-    queryFn: () => getAllColorRouter(),
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
         errorToast(API_MESSAGE.ERROR);
       } else {
-        setDataColorRouter(data.data);
+        const newData = data.data.map((unit) => ({
+          label: unit.internationalCode,
+          value: unit.unitID,
+        }));
+        setDataUnit(newData);
       }
     },
     onError: () => {
@@ -154,39 +148,19 @@ const CustomPricing = ({
 
   const onFinish = (formValues: IFormValues) => {
     if (idQuery) {
-      handleSubmit &&
-        handleSubmit(
-          formValues,
-          idQuery,
-          seaPricingFeeDTOs,
-          dataLCLSea,
-          dataAir
-        );
+      handleSubmit && handleSubmit(formValues, idQuery, seaPricingFeeDTOs);
     } else {
-      handleSubmit &&
-        handleSubmit(formValues, '', seaPricingFeeDTOs, dataLCLSea, dataAir);
+      handleSubmit && handleSubmit(formValues, '', seaPricingFeeDTOs);
     }
   };
 
   const onSaveDraft = () => {
     if (idQuery) {
       handleSaveDraft &&
-        handleSaveDraft(
-          form.getFieldsValue(),
-          idQuery,
-          seaPricingFeeDTOs,
-          dataLCLSea,
-          dataAir
-        );
+        handleSaveDraft(form.getFieldsValue(), idQuery, seaPricingFeeDTOs);
     } else {
       handleSaveDraft &&
-        handleSaveDraft(
-          form.getFieldsValue(),
-          '',
-          seaPricingFeeDTOs,
-          dataLCLSea,
-          dataAir
-        );
+        handleSaveDraft(form.getFieldsValue(), '', seaPricingFeeDTOs);
     }
   };
 
@@ -207,13 +181,13 @@ const CustomPricing = ({
           currencyID: data.data.currencyID,
           transactionTypeID: data.data.transactionTypeID,
           note: data.data.note,
-          customRedPrice: data.data.customRedPrice,
-          customYellowPrice: data.data.customYellowPrice,
-          customGreenPrice: data.data.customGreenPrice,
           effectDated: dayjs(Number(data.data.effectDated)),
           validityDate: dayjs(Number(data.data.validityDate)),
           public: data.data.public,
           statusCustomPricing: data.data.statusCustomPricing,
+          customPricingLCLDetailDTO: data.data.customPricingLCLDetailDTO,
+          customPricingFCLDetailDTOs: data.data.customPricingFCLDetailDTOs,
+          customPricingAirDetailDTO: data.data.customPricingAirDetailDTO,
           customPricingFeeGroupDTOs: data.data.customPricingFeeGroupDTOs?.map(
             (fee) => fee.feeGroupID
           ),
@@ -265,13 +239,17 @@ const CustomPricing = ({
       currencyID: form.getFieldValue('currencyID'),
       transactionTypeID: form.getFieldValue('transactionTypeID'),
       note: form.getFieldValue('note'),
-      customRedPrice: form.getFieldValue('customRedPrice'),
-      customYellowPrice: form.getFieldValue('customYellowPrice'),
-      customGreenPrice: form.getFieldValue('customGreenPrice'),
       effectDated: form.getFieldValue('effectDated')?.valueOf(),
       validityDate: form.getFieldValue('validityDate')?.valueOf(),
       public: form.getFieldValue('public'),
       statusCustomPricing: form.getFieldValue('statusCustomPricing'),
+      customPricingLCLDetailDTO: form.getFieldValue('customPricingLCLDetail'),
+      customPricingFCLDetailDTOs: form.getFieldValue(
+        'customPricingFCLDetailDTOs'
+      ),
+      customPricingAirDetailDTO: form.getFieldValue(
+        'customPricingAirDetailDTO'
+      ),
       customPricingFeeGroupDTOs: form.getFieldValue(
         'customPricingFeeGroupDTOs'
       ),
@@ -320,9 +298,18 @@ const CustomPricing = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <LCL
-            dataColorRouter={dataColorRouter}
-            setDataLCLSea={setDataLCLSea}
+          <LCL form={form} />
+        </CollapseCard>
+
+        <CollapseCard
+          title="SEA FCL"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <FCL
+            form={form}
+            optionUnit={dataUnit}
+            isCheckPermissionEdit={isCheckPermissionEdit}
           />
         </CollapseCard>
 
@@ -331,7 +318,7 @@ const CustomPricing = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <Air dataColorRouter={dataColorRouter} setDataAir={setDataAir} />
+          <Air form={form} />
         </CollapseCard>
 
         <BottomCreateEdit

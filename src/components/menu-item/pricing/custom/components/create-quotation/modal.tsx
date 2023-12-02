@@ -127,8 +127,6 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
       value?.salesLeadsQuotationRegisters?.map((id) => ({ partnerID: id })) ||
       [];
 
-    console.log(value);
-
     const _requestData = {
       customPricingID: itemData,
       effectDated: value.effectDated.valueOf(),
