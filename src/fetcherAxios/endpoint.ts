@@ -402,3 +402,6 @@ export const API_STAFF = {
   EXPORT: '/export-staff-with-excel',
   GET_ALL: '/get-all-staff',
 };
+export const API_COLOR_ROUTER = {
+  GET_ALL: '/get-all-color-router',
+};

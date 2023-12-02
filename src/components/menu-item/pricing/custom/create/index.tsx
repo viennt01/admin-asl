@@ -10,6 +10,7 @@ import {
   ICustomPricingEdit,
   ICustomPricingFeeFormValue,
   ICustomPricingFeeUpdate,
+  ICustomPricingLCLAndAirDetailRegisterRequests,
 } from '../interface';
 import { createCustomPricing, editCustomPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
@@ -69,7 +70,9 @@ const CreateCustomPricing = () => {
   const handleSubmit = (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
+    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
+    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
   ) => {
     const returnFeeDTO = returnFeeDTOs(
       seaPricingFeeDTOs,
@@ -117,6 +120,8 @@ const CreateCustomPricing = () => {
         validityDate: formValues.validityDate?.valueOf(),
         public: formValues.public || true,
         customPricingFeeGroupRegisterRequests: returnFeeDTO,
+        customPricingLCLDetailRegisterRequests: dataLCLSea || [],
+        customPricingAirDetailRegisterRequests: dataAir || [],
         statusCustomPricing: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -135,7 +140,9 @@ const CreateCustomPricing = () => {
   const handleSaveDraft = (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
+    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
+    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
   ) => {
     const returnFeeDTO = returnFeeDTOs(
       seaPricingFeeDTOs,
@@ -187,6 +194,8 @@ const CreateCustomPricing = () => {
         validityDate: formValues.validityDate?.valueOf(),
         public: formValues.public || true,
         customPricingFeeGroupRegisterRequests: returnFeeDTO,
+        customPricingLCLDetailRegisterRequests: dataLCLSea || [],
+        customPricingAirDetailRegisterRequests: dataAir || [],
         statusCustomPricing: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

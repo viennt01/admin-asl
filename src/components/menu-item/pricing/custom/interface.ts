@@ -14,9 +14,9 @@ export interface ICustomPricing {
   transactionTypeID: string;
   transactionTypeName: string;
   note: string;
-  customRedPrice: string;
-  customYellowPrice: string;
-  customGreenPrice: string;
+  // customRedPrice: string;
+  // customYellowPrice: string;
+  // customGreenPrice: string;
   effectDated: string;
   validityDate: string;
   public: boolean;
@@ -83,6 +83,34 @@ export interface IFormValues {
   public: boolean;
   statusCustomPricing: string;
   customPricingFeeGroupDTOs: string[];
+
+  customPricingLCLDetailDTOs: [
+    {
+      customPricingLCLDetailID: string;
+      colorRouterID: string;
+      colorRouterName: string;
+      priceColorRouter: string;
+    }
+  ];
+  // customPricingFCLDetailDTOs: [
+  //   {
+  //     customPricingFCLDetailID: string;
+  //     colorRouterID: string;
+  //     colorRouterName: string;
+  //     unitID: string;
+  //     internationalCode: string;
+  //     basePriceColorRouter: string;
+  //     priceColorRouter: string;
+  //   }
+  // ];
+  // customPricingAirDetailDTOs: [
+  //   {
+  //     customPricingAirDetailID: string;
+  //     colorRouterID: string;
+  //     colorRouterName: string;
+  //     priceColorRouter: string;
+  //   }
+  // ];
 }
 
 export interface ICustomPricingDetailType
@@ -135,15 +163,25 @@ export type ICustomPricingCreate = Omit<
   | 'effectDated'
   | 'validityDate'
   | 'customPricingFeeGroupDTOs'
+  | 'customPricingLCLDetailDTOs'
 > & {
   effectDated: number;
   validityDate: number;
   customPricingFeeGroupRegisterRequests: ICustomPricingFeeDTOsCreate[];
+  customPricingLCLDetailRegisterRequests: ICustomPricingLCLAndAirDetailRegisterRequests[];
+  customPricingAirDetailRegisterRequests: ICustomPricingLCLAndAirDetailRegisterRequests[];
 };
+export interface ICustomPricingLCLAndAirDetailRegisterRequests {
+  colorRouterID: React.Key;
+  priceColorRouter: string;
+}
 
 export type ICustomPricingEdit = Omit<
   IFormValues,
-  'effectDated' | 'validityDate' | 'customPricingFeeGroupDTOs'
+  | 'effectDated'
+  | 'validityDate'
+  | 'customPricingFeeGroupDTOs'
+  | 'customPricingLCLDetailDTOs'
 > & {
   effectDated: number;
   validityDate: number;
@@ -249,4 +287,9 @@ export interface Partner {
 }
 export interface TablePartner extends Omit<Partner, 'partnerID'> {
   key: React.Key;
+}
+export interface RequireColorRouter {
+  colorRouterID: string;
+  colorRouterName: string;
+  colorRouterDescription: string;
 }

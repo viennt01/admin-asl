@@ -17,7 +17,7 @@ import {
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatDate, formatNumber } from '@/utils/format';
+import { formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -74,9 +74,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             transactionTypeID: data.transactionTypeID,
             transactionTypeName: data.transactionTypeName,
             note: data.note,
-            customRedPrice: data.customRedPrice,
-            customYellowPrice: data.customYellowPrice,
-            customGreenPrice: data.customGreenPrice,
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             statusCustomPricing: data.statusCustomPricing,
@@ -184,48 +181,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'transactionTypeName',
       align: 'left',
       render: (value) => value,
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePricingCustom('customRedPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customRedPrice',
-      key: 'customRedPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePricingCustom('customYellowPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customYellowPrice',
-      key: 'customYellowPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePricingCustom('customGreenPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customGreenPrice',
-      key: 'customGreenPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     {
       title: (

@@ -7,14 +7,18 @@ import {
   IFormValues,
   ICustomPricingFeeFormValue,
   UpdateStatus,
+  RequireColorRouter,
+  ICustomPricingLCLAndAirDetailRegisterRequests,
 } from '../interface';
 import {
   API_CURRENCY,
   API_FEE_GROUP,
   API_CUSTOM_PRICING,
+  API_COLOR_ROUTER,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import {
+  getAllColorRouter,
   getAllCurrency,
   getCustomPricingDetail,
   updateStatus,
@@ -27,6 +31,8 @@ import CollapseCard from '@/components/commons/collapse-card';
 import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import ListFee from './list-fee';
+import LCL from './lcl';
+import Air from './fcl';
 
 interface FormProps {
   create?: boolean;
@@ -35,12 +41,16 @@ interface FormProps {
   handleSubmit?: (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
+    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
+    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
   ) => void;
   handleSaveDraft?: (
     formValues: IFormValues,
     id?: string,
-    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[]
+    seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
+    dataLCLSea?: ICustomPricingLCLAndAirDetailRegisterRequests[],
+    dataAir?: ICustomPricingLCLAndAirDetailRegisterRequests[]
   ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
@@ -70,6 +80,15 @@ const CustomPricing = ({
     ICustomPricingFeeFormValue[]
   >([]);
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
+  const [dataColorRouter, setDataColorRouter] = useState<RequireColorRouter[]>(
+    []
+  );
+  const [dataLCLSea, setDataLCLSea] = useState<
+    ICustomPricingLCLAndAirDetailRegisterRequests[]
+  >([]);
+  const [dataAir, setDataAir] = useState<
+    ICustomPricingLCLAndAirDetailRegisterRequests[]
+  >([]);
 
   const listIdFeeGroup = Form.useWatch('customPricingFeeGroupDTOs', form);
 
@@ -116,21 +135,58 @@ const CustomPricing = ({
     },
   });
 
+  useQuery({
+    queryKey: [API_COLOR_ROUTER.GET_ALL],
+    queryFn: () => getAllColorRouter(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        setDataColorRouter(data.data);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
   const onFinish = (formValues: IFormValues) => {
     if (idQuery) {
-      handleSubmit && handleSubmit(formValues, idQuery, seaPricingFeeDTOs);
+      handleSubmit &&
+        handleSubmit(
+          formValues,
+          idQuery,
+          seaPricingFeeDTOs,
+          dataLCLSea,
+          dataAir
+        );
     } else {
-      handleSubmit && handleSubmit(formValues, '', seaPricingFeeDTOs);
+      handleSubmit &&
+        handleSubmit(formValues, '', seaPricingFeeDTOs, dataLCLSea, dataAir);
     }
   };
 
   const onSaveDraft = () => {
     if (idQuery) {
       handleSaveDraft &&
-        handleSaveDraft(form.getFieldsValue(), idQuery, seaPricingFeeDTOs);
+        handleSaveDraft(
+          form.getFieldsValue(),
+          idQuery,
+          seaPricingFeeDTOs,
+          dataLCLSea,
+          dataAir
+        );
     } else {
       handleSaveDraft &&
-        handleSaveDraft(form.getFieldsValue(), '', seaPricingFeeDTOs);
+        handleSaveDraft(
+          form.getFieldsValue(),
+          '',
+          seaPricingFeeDTOs,
+          dataLCLSea,
+          dataAir
+        );
     }
   };
 
@@ -257,6 +313,25 @@ const CustomPricing = ({
           defaultActive={true}
         >
           <ListFee FeeDataTable={dataFeeTable} />
+        </CollapseCard>
+
+        <CollapseCard
+          title="SEA LCL"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <LCL
+            dataColorRouter={dataColorRouter}
+            setDataLCLSea={setDataLCLSea}
+          />
+        </CollapseCard>
+
+        <CollapseCard
+          title="Air"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <Air dataColorRouter={dataColorRouter} setDataAir={setDataAir} />
         </CollapseCard>
 
         <BottomCreateEdit
