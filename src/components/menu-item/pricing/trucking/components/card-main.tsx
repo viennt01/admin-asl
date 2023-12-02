@@ -10,7 +10,6 @@ import {
   Select,
   DatePicker,
   Switch,
-  InputNumber,
   FormInstance,
 } from 'antd';
 import { useRouter } from 'next/router';
@@ -32,7 +31,6 @@ import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { formatNumber } from '@/utils/format';
 import dayjs from 'dayjs';
 import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
@@ -388,12 +386,49 @@ const CardMain = ({
               },
             ]}
           >
-            <InputNumber
-              disabled={checkRow && isCheckPermissionEdit}
+            <Select
+              showSearch
               placeholder={translatePricingTrucking('freq_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-              style={{ width: '100%' }}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={[
+                {
+                  value: '2',
+                  label: 'Monday',
+                },
+                {
+                  value: '3',
+                  label: 'Tuesday',
+                },
+                {
+                  value: '4',
+                  label: 'Wednesday',
+                },
+                {
+                  value: '5',
+                  label: 'Thursday',
+                },
+                {
+                  value: '6',
+                  label: 'Friday',
+                },
+                {
+                  value: '7',
+                  label: 'Saturday',
+                },
+                {
+                  value: '8',
+                  label: 'Sunday',
+                },
+              ]}
             />
           </Form.Item>
         </Col>
