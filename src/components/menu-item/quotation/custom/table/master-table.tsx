@@ -14,7 +14,7 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_CUSTOMS_QUOTATION } from '@/fetcherAxios/endpoint';
-import { formatDate, formatNumber } from '@/utils/format';
+import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -118,9 +118,6 @@ export default function MasterDataTable() {
             transactionTypeID: data.transactionTypeID,
             transactionTypeName: data.transactionTypeName,
             note: data.note,
-            customRedPrice: data.customRedPrice,
-            customYellowPrice: data.customYellowPrice,
-            customGreenPrice: data.customGreenPrice,
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             statusCustomQuotation: data.statusCustomQuotation,
@@ -267,48 +264,6 @@ export default function MasterDataTable() {
       key: 'transactionTypeName',
       align: 'left',
       render: (value) => value,
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateQuotationCustom('customRedPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customRedPrice',
-      key: 'customRedPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateQuotationCustom('customYellowPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customYellowPrice',
-      key: 'customYellowPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateQuotationCustom('customGreenPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customGreenPrice',
-      key: 'customGreenPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     {
       title: (

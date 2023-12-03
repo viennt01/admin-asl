@@ -8,7 +8,11 @@ import {
   ISeaQuotationFeeFormValue,
   UpdateStatus,
 } from '../interface';
-import { API_CURRENCY, API_CUSTOMS_QUOTATION } from '@/fetcherAxios/endpoint';
+import {
+  API_CURRENCY,
+  API_CUSTOMS_QUOTATION,
+  API_UNIT,
+} from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import {
   getAllCurrency,
@@ -22,6 +26,11 @@ import CardMain from './card-main';
 import CollapseCard from '@/components/commons/collapse-card';
 import ListFee from './list-fee';
 import TableSaleLead from './table-sale-lead';
+import LCL from './lcl';
+import FCL from './fcl';
+import Air from './air';
+import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
+import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
 
 interface FormProps {
   create?: boolean;
@@ -67,6 +76,9 @@ const CustomsQuotation = ({
   const [optionCurrency, setOptionCurrency] = useState<
     { value: string; label: string }[]
   >([]);
+  const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
+    []
+  );
   const [seaQuotationFeeDTOs, setSeaQuotationFeeDTOs] = useState<
     ISeaQuotationFeeFormValue[]
   >([]);
@@ -95,6 +107,27 @@ const CustomsQuotation = ({
             };
           })
         );
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  useQuery({
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      } else {
+        const newData = data.data.map((unit) => ({
+          label: unit.internationalCode,
+          value: unit.unitID,
+        }));
+        setDataUnit(newData);
       }
     },
     onError: () => {
@@ -149,14 +182,15 @@ const CustomsQuotation = ({
           currencyID: data.data.currencyID,
           transactionTypeID: data.data.transactionTypeID,
           note: data.data.note,
-          customRedPrice: data.data.customRedPrice,
-          customYellowPrice: data.data.customYellowPrice,
-          customGreenPrice: data.data.customGreenPrice,
+          vendor: data.data.vendor,
           effectDated: dayjs(Number(data.data.effectDated)),
           validityDate: dayjs(Number(data.data.validityDate)),
           forNewUser: data.data.forNewUser,
           public: data.data.public,
           statusCustomQuotation: data.data.statusCustomQuotation,
+          customQuotationLCLDetailDTO: data.data.customQuotationLCLDetailDTO,
+          customQuotationFCLDetailDTOs: data.data.customQuotationFCLDetailDTOs,
+          customQuotationAirDetailDTO: data.data.customQuotationAirDetailDTO,
           customQuotationFeeGroupDTOs: data.data.customQuotationFeeGroupDTOs,
         });
         setSeaQuotationFeeDTOs(data.data.customQuotationFeeGroupDTOs);
@@ -207,14 +241,21 @@ const CustomsQuotation = ({
       currencyID: form.getFieldValue('currencyID'),
       transactionTypeID: form.getFieldValue('transactionTypeID'),
       note: form.getFieldValue('note'),
-      customRedPrice: form.getFieldValue('customRedPrice'),
-      customYellowPrice: form.getFieldValue('customYellowPrice'),
-      customGreenPrice: form.getFieldValue('customGreenPrice'),
+      vendor: form.getFieldValue('vendor'),
       effectDated: form.getFieldValue('effectDated')?.valueOf(),
       validityDate: form.getFieldValue('validityDate')?.valueOf(),
       forNewUser: form.getFieldValue('forNewUser'),
       public: form.getFieldValue('public'),
       statusCustomQuotation: form.getFieldValue('statusCustomQuotation'),
+      customQuotationLCLDetailDTO: form.getFieldValue(
+        'customQuotationLCLDetailDTO'
+      ),
+      customQuotationFCLDetailDTOs: form.getFieldValue(
+        'customQuotationFCLDetailDTOs'
+      ),
+      customQuotationAirDetailDTO: form.getFieldValue(
+        'customQuotationAirDetailDTO'
+      ),
       customQuotationFeeGroupDTOs: JSON.stringify(
         form.getFieldValue('customQuotationFeeGroupDTOs')
       ),
@@ -257,6 +298,34 @@ const CustomsQuotation = ({
           defaultActive={true}
         >
           <ListFee form={form} create={create} />
+        </CollapseCard>
+
+        <CollapseCard
+          title="SEA LCL"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <LCL form={form} />
+        </CollapseCard>
+
+        <CollapseCard
+          title="SEA FCL"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <FCL
+            form={form}
+            optionUnit={dataUnit}
+            isCheckPermissionEdit={isCheckPermissionEdit}
+          />
+        </CollapseCard>
+
+        <CollapseCard
+          title="Air"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <Air form={form} />
         </CollapseCard>
 
         <CollapseCard

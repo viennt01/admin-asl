@@ -15,9 +15,6 @@ export interface ICustomQuotation {
   transactionTypeID: string;
   transactionTypeName: string;
   note: string;
-  customRedPrice: string;
-  customYellowPrice: string;
-  customGreenPrice: string;
   effectDated: string;
   validityDate: string;
   public: boolean;
@@ -75,16 +72,44 @@ export interface IFormValues {
   currencyID: string;
   transactionTypeID: string;
   note: string;
-  customRedPrice: string;
-  customYellowPrice: string;
-  customGreenPrice: string;
+  // customRedPrice: string;
+  // customYellowPrice: string;
+  // customGreenPrice: string;
   effectDated: Dayjs;
   validityDate: Dayjs;
   public: boolean;
   forNewUser: boolean;
+  vendor: string;
   statusCustomQuotation: string;
   customQuotationFeeGroupDTOs: ISeaQuotationFeeFormValue[];
   salesLeadsCustomQuotationDTOs: string[];
+  customQuotationLCLDetailDTO: ICustomQuotationLCLDetailDTO;
+  customQuotationFCLDetailDTOs: ICustomQuotationFCLDetailDTOs[];
+  customQuotationAirDetailDTO: ICustomQuotationAirDetailDTO;
+}
+export interface ICustomQuotationLCLDetailDTO {
+  customQuotationLCLDetailID?: string;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
+}
+export interface ICustomQuotationFCLDetailDTOs {
+  customQuotationFCLDetailID?: string;
+  unitID: string;
+  internationalCode?: string;
+  basePriceRedLane: string;
+  basePriceGreenLane: string;
+  basePriceYellowLane: string;
+  priceRedLane: string;
+  priceGreenLane: string;
+  priceYellowLane: string;
+}
+
+export interface ICustomQuotationAirDetailDTO {
+  customQuotationAirDetailID?: string;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
 }
 
 export interface ISeaQuotationFeeFormValue {
@@ -118,25 +143,34 @@ export type ICustomQuotationCreate = Omit<
   | 'customQuotationID'
   | 'effectDated'
   | 'validityDate'
+  | 'vendor'
   | 'customQuotationFeeGroupDTOs'
   | 'salesLeadsCustomQuotationDTOs'
+  | 'customQuotationLCLDetailDTO'
+  | 'customQuotationFCLDetailDTOs'
+  | 'customQuotationAirDetailDTO'
 > & {
   effectDated: number;
   validityDate: number;
+  partnerID: string;
   customQuotationFeeGroupRegisterRequests: { feeGroupID: string }[];
   salesLeadsQuotationRegisters: { partnerID: React.Key }[];
+  customQuotationLCLDetailRegisterRequest: ICustomQuotationLCLDetailDTO;
+  customQuotationFCLDetailRegisterRequests: ICustomQuotationFCLDetailDTOs[];
+  customQuotationAirDetailRegisterRequest: ICustomQuotationAirDetailDTO;
 };
 
 export type ICustomQuotationEdit = Omit<
   IFormValues,
   | 'effectDated'
   | 'validityDate'
+  | 'vendor'
   | 'customQuotationFeeGroupDTOs'
   | 'salesLeadsCustomQuotationDTOs'
-> & {
-  effectDated: number;
-  validityDate: number;
-};
+  | 'customQuotationLCLDetailDTO'
+  | 'customQuotationFCLDetailDTOs'
+  | 'customQuotationAirDetailDTO'
+> & { partnerID: string; effectDated: number; validityDate: number };
 export type SeaQuotationDelete = {
   ids: React.Key[];
 };

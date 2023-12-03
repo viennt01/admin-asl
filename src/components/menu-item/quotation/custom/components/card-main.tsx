@@ -10,13 +10,15 @@ import {
   Select,
   DatePicker,
   Switch,
-  InputNumber,
   FormInstance,
   Checkbox,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
+  ICustomQuotationAirDetailDTO,
+  ICustomQuotationFCLDetailDTOs,
+  ICustomQuotationLCLDetailDTO,
   IFormValues,
   ISeaQuotationFeeFormValue,
   UpdateStatus,
@@ -37,7 +39,6 @@ import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { formatNumber } from '@/utils/format';
 import dayjs from 'dayjs';
 import {
   getListTypeDeclaration,
@@ -168,15 +169,19 @@ const CardMain = ({
         currencyID: propCopyAndCreate.currencyID as string,
         transactionTypeID: propCopyAndCreate.transactionTypeID as string,
         note: propCopyAndCreate.note as string,
-        customRedPrice: propCopyAndCreate.customRedPrice as string,
-        customYellowPrice: propCopyAndCreate.customYellowPrice as string,
-        customGreenPrice: propCopyAndCreate.customGreenPrice as string,
+        vendor: propCopyAndCreate.vendor as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
         public: propCopyAndCreate.public as unknown as boolean,
         statusCustomQuotation:
           propCopyAndCreate.statusCustomQuotation as string,
+        customQuotationLCLDetailDTO:
+          propCopyAndCreate.customQuotationLCLDetailDTO as unknown as ICustomQuotationLCLDetailDTO,
+        customQuotationFCLDetailDTOs:
+          propCopyAndCreate.customQuotationFCLDetailDTOs as unknown as ICustomQuotationFCLDetailDTOs[],
+        customQuotationAirDetailDTO:
+          propCopyAndCreate.customQuotationAirDetailDTO as unknown as ICustomQuotationAirDetailDTO,
         customQuotationFeeGroupDTOs: JSON.parse(
           propCopyAndCreate.customQuotationFeeGroupDTOs as string
         ) as unknown as ISeaQuotationFeeFormValue[],
@@ -204,27 +209,6 @@ const CardMain = ({
       form.setFieldValue('Customer', []);
     }
   }, [checkObject]);
-
-  const suffixSelectorPrice = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translateQuotationCustom('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
 
   return (
     <Card
@@ -446,79 +430,63 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translateQuotationCustom('vendor_form.title')}
+            name="vendor"
+            rules={[
+              {
+                required: true,
+                message: translateQuotationCustom('vendor_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translateQuotationCustom('vendor_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getPartner.data?.data.map((item) => {
+                  return {
+                    value: item.partnerID,
+                    label: item.name,
+                  };
+                }) || []
+              }
+            />
+          </Form.Item>
+        </Col>
 
-        <Col lg={8} span={24}>
+        <Col span={8}>
           <Form.Item
-            label={translateQuotationCustom('customRedPrice_form.title')}
-            name="customRedPrice"
+            label="Currency"
+            name="currencyID"
             rules={[
               {
                 required: true,
                 message: translateQuotationCustom(
-                  'customRedPrice_form.placeholder'
+                  'currency_form.error_required'
                 ),
               },
             ]}
           >
-            <InputNumber
-              addonAfter={suffixSelectorPrice}
+            <Select
               placeholder={translateQuotationCustom(
-                'customRedPrice_form.placeholder'
+                'currency_form.placeholder'
               )}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationCustom('customYellowPrice_form.title')}
-            name="customYellowPrice"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationCustom(
-                  'customYellowPrice_form.placeholder'
-                ),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorPrice}
-              placeholder={translateQuotationCustom(
-                'customYellowPrice_form.placeholder'
-              )}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
+              showSearch
               style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationCustom('customGreenPrice_form.title')}
-            name="customGreenPrice"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationCustom(
-                  'customGreenPrice_form.placeholder'
-                ),
-              },
-            ]}
-          >
-            <InputNumber
-              addonAfter={suffixSelectorPrice}
-              placeholder={translateQuotationCustom(
-                'customGreenPrice_form.placeholder'
-              )}
-              formatter={(value) => formatNumber(Number(value) || 0)}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
+              options={optionCurrency}
             />
           </Form.Item>
         </Col>
@@ -552,7 +520,7 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item name="forNewUser" label=" ">
+          <Form.Item name="forNewUser">
             <Checkbox
               checked={componentDisabled}
               onChange={(e) => setComponentDisabled(e.target.checked)}
@@ -653,6 +621,15 @@ const CardMain = ({
         </Col>
         <Col span={0}>
           <Form.Item name="customQuotationFeeGroupDTOs"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="customQuotationLCLDetailDTO"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="customQuotationFCLDetailDTOs"></Form.Item>
+        </Col>
+        <Col span={0}>
+          <Form.Item name="customQuotationAirDetailDTO"></Form.Item>
         </Col>
       </Row>
     </Card>

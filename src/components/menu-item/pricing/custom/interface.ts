@@ -14,9 +14,6 @@ export interface ICustomPricing {
   transactionTypeID: string;
   transactionTypeName: string;
   note: string;
-  // customRedPrice: string;
-  // customYellowPrice: string;
-  // customGreenPrice: string;
   effectDated: string;
   validityDate: string;
   public: boolean;

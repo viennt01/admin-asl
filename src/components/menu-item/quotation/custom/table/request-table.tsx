@@ -13,7 +13,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
-import { formatDate, formatNumber } from '@/utils/format';
+import { formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -63,9 +63,6 @@ const RequestTable = () => {
             transactionTypeID: data.transactionTypeID,
             transactionTypeName: data.transactionTypeName,
             note: data.note,
-            customRedPrice: data.customRedPrice,
-            customYellowPrice: data.customYellowPrice,
-            customGreenPrice: data.customGreenPrice,
             effectDated: data.effectDated,
             validityDate: data.validityDate,
             statusCustomQuotation: data.statusCustomQuotation,
@@ -203,48 +200,6 @@ const RequestTable = () => {
       key: 'transactionTypeName',
       align: 'left',
       render: (value) => value,
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateQuotationCustom('customRedPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customRedPrice',
-      key: 'customRedPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateQuotationCustom('customYellowPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customYellowPrice',
-      key: 'customYellowPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateQuotationCustom('customGreenPrice_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'customGreenPrice',
-      key: 'customGreenPrice',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     {
       title: (

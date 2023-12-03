@@ -44,9 +44,7 @@ const CreateCustomQuotation = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
+        partnerID: formValues.vendor || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         forNewUser: formValues.forNewUser || false,
@@ -83,13 +81,17 @@ const CreateCustomQuotation = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
+        partnerID: formValues.vendor || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
+        customQuotationLCLDetailRegisterRequest:
+          formValues.customQuotationLCLDetailDTO,
+        customQuotationFCLDetailRegisterRequests:
+          formValues.customQuotationFCLDetailDTOs,
+        customQuotationAirDetailRegisterRequest:
+          formValues.customQuotationAirDetailDTO,
         customQuotationFeeGroupRegisterRequests:
           seaQuotationFeeGroupRegisterRequests || [],
         salesLeadsQuotationRegisters: salesLeadsQuotationRegisters || [],
@@ -123,9 +125,7 @@ const CreateCustomQuotation = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
+        partnerID: formValues.vendor || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         forNewUser: formValues.forNewUser || false,
@@ -164,13 +164,17 @@ const CreateCustomQuotation = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        customRedPrice: formValues.customRedPrice || '',
-        customYellowPrice: formValues.customYellowPrice || '',
-        customGreenPrice: formValues.customGreenPrice || '',
+        partnerID: formValues.vendor || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
+        customQuotationLCLDetailRegisterRequest:
+          formValues.customQuotationLCLDetailDTO,
+        customQuotationFCLDetailRegisterRequests:
+          formValues.customQuotationFCLDetailDTOs,
+        customQuotationAirDetailRegisterRequest:
+          formValues.customQuotationAirDetailDTO,
         customQuotationFeeGroupRegisterRequests:
           seaQuotationFeeGroupRegisterRequests || [],
         salesLeadsQuotationRegisters: salesLeadsQuotationRegisters || [],
