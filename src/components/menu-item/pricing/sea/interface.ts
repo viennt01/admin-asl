@@ -303,3 +303,8 @@ export interface Partner {
 export interface TablePartner extends Partner {
   key: React.Key;
 }
+// export table
+export interface RequestExportData {
+  ids: React.Key[];
+  status: string[];
+}

@@ -1,6 +1,7 @@
 import {
   ResponseWithPayload,
   downloadFile,
+  exportFile,
   get,
   post,
   uploadFile,
@@ -24,6 +25,7 @@ import {
   RequirePartner,
   RequestPartnerTable,
   TablePartner,
+  RequestExportData,
 } from './interface';
 import {
   API_COMMODITY,
@@ -97,7 +99,11 @@ export const importDataTable = (data: FormData) => {
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_CUSTOM_PRICING.DOWNLOAD_EXAMPLE_FILE);
 };
-
+export const exportTableFile = (data: RequestExportData) => {
+  return exportFile<RequestExportData, BlobPart>({ data })(
+    API_CUSTOM_PRICING.EXPORT
+  );
+};
 export const getAllCommodity = () => {
   return get<ResponseWithPayload<RequireCommodity[]>>({})(
     API_COMMODITY.GET_ALL

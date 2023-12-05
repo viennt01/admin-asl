@@ -26,7 +26,6 @@ import {
   API_COMMODITY,
   API_CONTAINER_TYPE,
   API_CURRENCY,
-  API_FEE_GROUP,
   API_TRUCKING_QUOTATION,
 } from '@/fetcherAxios/endpoint';
 
@@ -109,7 +108,7 @@ export const downloadExampleFile = () => {
 };
 export const exportTableFile = (data: IRequestExportData) => {
   return exportFile<IRequestExportData, BlobPart>({ data })(
-    API_FEE_GROUP.EXPORT
+    API_TRUCKING_QUOTATION.EXPORT
   );
 };
 

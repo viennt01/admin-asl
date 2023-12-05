@@ -289,3 +289,8 @@ export interface RequireColorRouter {
   colorRouterName: string;
   colorRouterDescription: string;
 }
+// export table
+export interface RequestExportData {
+  ids: React.Key[];
+  status: string[];
+}

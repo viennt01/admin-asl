@@ -1,6 +1,7 @@
 import {
   ResponseWithPayload,
   downloadFile,
+  exportFile,
   get,
   post,
   uploadFile,
@@ -23,6 +24,7 @@ import {
   RequirePartner,
   RequestPartnerTable,
   TablePartner,
+  RequestExportData,
 } from './interface';
 import {
   API_COMMODITY,
@@ -106,7 +108,12 @@ export const downloadExampleFile = () => {
     API_CUSTOMS_QUOTATION.DOWNLOAD_EXAMPLE_FILE
   );
 };
-
+export const exportTableFile = (data: RequestExportData) => {
+  return exportFile<RequestExportData, BlobPart>({ data })(
+    API_CUSTOMS_QUOTATION.EXPORT
+  );
+};
+//----------------------------------------------------------------
 export const getAllCommodity = () => {
   return get<ResponseWithPayload<RequireCommodity[]>>({})(
     API_COMMODITY.GET_ALL

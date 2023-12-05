@@ -315,3 +315,8 @@ export interface Partner {
 export interface TablePartner extends Omit<Partner, 'partnerID'> {
   key: React.Key;
 }
+// export table
+export interface RequestExportData {
+  ids: React.Key[];
+  status: string[];
+}

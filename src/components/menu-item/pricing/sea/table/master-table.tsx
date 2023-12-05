@@ -36,6 +36,7 @@ import {
 import {
   deleteSeaPricing,
   downloadExampleFile,
+  exportTableFile,
   getSeaPricingSearch,
   importDataTable,
 } from '../fetcher';
@@ -52,6 +53,7 @@ import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
 import CreateQuotationModal from '../components/create-quotation/modal';
+import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -567,9 +569,26 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.SEA_PRICING_CREATE);
   };
-  // export table data to csv
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusSeaPricing,
+      }),
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `ASL_SEA_PRICING${getSystemDate()}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
+    },
+  });
   const exportTableData = () => {
-    console.log('export');
+    exportData.mutate();
   };
 
   // import table data from excel file
@@ -613,7 +632,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_SEA_PRICING.xlsx');
+      link.setAttribute('download', `ASL_SEA_PRICING${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);

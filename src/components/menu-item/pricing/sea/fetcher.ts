@@ -1,6 +1,7 @@
 import {
   ResponseWithPayload,
   downloadFile,
+  exportFile,
   get,
   post,
   uploadFile,
@@ -26,6 +27,7 @@ import {
   RequestPartnerTable,
   TablePartner,
   IRequireLocation,
+  RequestExportData,
 } from './interface';
 import {
   API_COMMODITY,
@@ -100,7 +102,11 @@ export const importDataTable = (data: FormData) => {
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_SEA_PRICING.DOWNLOAD_EXAMPLE_FILE);
 };
-
+export const exportTableFile = (data: RequestExportData) => {
+  return exportFile<RequestExportData, BlobPart>({ data })(
+    API_SEA_PRICING.EXPORT
+  );
+};
 // Get all location
 export const getAllLocation = (data: IRequireLocation) => {
   return post<IRequireLocation, ResponseWithPayload<IDataLocation[]>>({ data })(
