@@ -18,7 +18,6 @@ import {
   UpdateStatusFeeGroup,
   RequestFeeGroupTableRequest,
   RequestExportData,
-  TypeFeeGroupData,
   FeeData,
   RequestFee,
   FeeTable,
@@ -27,12 +26,7 @@ import {
   IDataFeeGroup,
   IRequestFeeGroup,
 } from './interface';
-import {
-  API_COLUMN,
-  API_FEE,
-  API_FEE_GROUP,
-  API_TYPE_FEE_GROUP,
-} from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_FEE, API_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import {
   ColumnTable,
   TABLE_NAME,
@@ -123,12 +117,6 @@ export const updateColumnTable = (data: ColumnTable) => {
   })(API_COLUMN.UPDATE_COLUMN_TABLE_NAME);
 };
 //----------------------------------------------------------------
-//Get type fee group
-export const getListTypeFeeGroup = () => {
-  return get<ResponseWithPayload<TypeFeeGroupData[]>>({})(
-    API_TYPE_FEE_GROUP.GET_ALL
-  );
-};
 //Get fee
 export const getListFee = () => {
   return get<ResponseWithPayload<FeeData[]>>({})(API_FEE.GET_ALL);

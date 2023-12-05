@@ -1,14 +1,17 @@
 import { STATUS_ALL_LABELS } from '@/constant/form';
+import { TYPE_FEE_GROUP } from './interface';
 
 export const initalValueQueryInputParamsMaster = {
   searchAll: '',
-  feeGroupNo: '',
-  feeGroupName: '',
 };
 
 export const initalValueQuerySelectParamsMaster = {
-  statusFeeGroup: [],
-  typeFeeGroupID: '',
+  status: [],
+  typeFeeGroupName: [
+    TYPE_FEE_GROUP.SEA_QUOTATION,
+    TYPE_FEE_GROUP.CUSTOM_QUOTATION,
+    TYPE_FEE_GROUP.TRUCKING_QUOTATION,
+  ],
 };
 
 export const initalValueDisplayColumnMaster = {
@@ -46,14 +49,15 @@ export const initalSelectSearchMaster = {
 };
 
 //draft
-export const initalValueQueryInputParamsDraft = {
-  feeGroupNo: '',
-  feeGroupName: '',
-};
+export const initalValueQueryInputParamsDraft = {};
 
 export const initalValueQuerySelectParamsDraft = {
   status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
-  typeFeeGroupID: '',
+  typeFeeGroupName: [
+    TYPE_FEE_GROUP.SEA_QUOTATION,
+    TYPE_FEE_GROUP.CUSTOM_QUOTATION,
+    TYPE_FEE_GROUP.TRUCKING_QUOTATION,
+  ],
 };
 
 export const initalSelectSearchDraft = {
@@ -82,8 +86,11 @@ export const initalSelectSearchDraft = {
 //request
 export const initalValueQueryInputParamsRequest = {
   searchAll: '',
-  feeGroupNo: '',
-  feeGroupName: '',
+  typeFeeGroupName: [
+    TYPE_FEE_GROUP.SEA_QUOTATION,
+    TYPE_FEE_GROUP.CUSTOM_QUOTATION,
+    TYPE_FEE_GROUP.TRUCKING_QUOTATION,
+  ],
 };
 
 export const initalSelectSearchRequest = {

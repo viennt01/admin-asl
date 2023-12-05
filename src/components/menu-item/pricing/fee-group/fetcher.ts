@@ -18,7 +18,7 @@ import {
   UpdateStatusFeeGroup,
   RequestFeeGroupTableRequest,
   RequestExportData,
-  TypeFeeGroupData,
+  ITypeFeeGroupData,
   FeeData,
   RequestFee,
   FeeTable,
@@ -26,6 +26,7 @@ import {
   RequestDeleteFeeOfFeeGroup,
   IDataFeeGroup,
   IRequestFeeGroup,
+  ITypeFeeGroup,
 } from './interface';
 import {
   API_COLUMN,
@@ -124,10 +125,10 @@ export const updateColumnTable = (data: ColumnTable) => {
 };
 //----------------------------------------------------------------
 //Get type fee group
-export const getListTypeFeeGroup = () => {
-  return get<ResponseWithPayload<TypeFeeGroupData[]>>({})(
-    API_TYPE_FEE_GROUP.GET_ALL
-  );
+export const getListTypeFeeGroup = (data: ITypeFeeGroup) => {
+  return post<ITypeFeeGroup, ResponseWithPayload<ITypeFeeGroupData[]>>({
+    data,
+  })(API_TYPE_FEE_GROUP.GET_ALL);
 };
 //Get fee
 export const getListFee = () => {

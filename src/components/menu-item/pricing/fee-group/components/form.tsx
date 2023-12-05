@@ -19,6 +19,7 @@ import {
   FeeDataOption,
   FeeTable,
   FormValues,
+  TYPE_QUOTATION_PRICING,
   UpdateStatusFeeGroup,
 } from '../interface';
 import {
@@ -194,10 +195,11 @@ const FeeGroupForm = ({
     },
   });
 
-  const typeFeeGroup = useQuery(
-    [API_TYPE_FEE_GROUP.GET_ALL],
-    getListTypeFeeGroup
-  );
+  const typeFeeGroup = useQuery({
+    queryKey: [API_TYPE_FEE_GROUP.GET_ALL],
+    queryFn: () =>
+      getListTypeFeeGroup({ type: TYPE_QUOTATION_PRICING.PRICING }),
+  });
 
   const detailQuery = useQuery({
     queryKey: [API_FEE_GROUP.GET_DETAIL, idQuery],

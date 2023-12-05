@@ -4,10 +4,17 @@ export enum TYPE_FEE_GROUP {
   'TRUCKING_QUOTATION' = 'Trucking Quotation',
   'SEA_QUOTATION' = 'Sea Quotation',
   'AIR_QUOTATION' = 'Air Quotation',
+  'CUSTOM_QUOTATION' = 'Custom Quotation',
   'TRUCKING_PRICING' = 'Trucking Pricing',
   'SEA_PRICING' = 'Sea Pricing',
   'AIR_PRICING' = 'Air Pricing',
+  'CUSTOM_PRICING' = 'Custom Pricing',
   'TOTAL' = '',
+}
+
+export enum TYPE_QUOTATION_PRICING {
+  'QUOTATION' = 'Quotation',
+  'PRICING' = 'PRICING',
 }
 
 export interface FeeGroup {
@@ -42,12 +49,10 @@ export interface FeeGroupsRequire extends IPagination {
 //
 export interface QueryInputParamType {
   searchAll: string;
-  feeGroupNo: string;
-  feeGroupName: string;
 }
 export interface QuerySelectParamType {
-  statusFeeGroup: string[];
-  typeFeeGroupID: string;
+  status: string[];
+  typeFeeGroupName: string[];
 }
 
 export interface RequestFeeGroup
@@ -106,13 +111,14 @@ export type FeeGroupDelete = {
 };
 
 //----------------------------------------------------------------
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface QueryInputDraft {
-  feeGroupNo: string;
-  feeGroupName: string;
+  // feeGroupNo: string;
+  // feeGroupName: string;
 }
 export interface QuerySelectDraft {
   status: string[];
-  typeFeeGroupID: string;
+  typeFeeGroupName: string[];
 }
 export interface RequestFeeGroupTableDraft
   extends QueryInputDraft,
@@ -135,8 +141,8 @@ export interface UpdateStatusFeeGroup {
 }
 
 export interface QueryInputRequest {
-  feeGroupNo: string;
-  feeGroupName: string;
+  searchAll: string;
+  typeFeeGroupName: string[];
 }
 export interface RequestFeeGroupTableRequest extends QueryInputRequest {
   paginateRequest: IPagination;
@@ -147,9 +153,12 @@ export interface RequestExportData {
   status: string[];
 }
 //----------------------------------------------------------------
-export interface TypeFeeGroupData {
+export interface ITypeFeeGroupData {
   typeFeeGroupID: string;
   typeFeeGroupName: string;
+}
+export interface ITypeFeeGroup {
+  type: TYPE_QUOTATION_PRICING;
 }
 export interface FeeData {
   feeID: string;

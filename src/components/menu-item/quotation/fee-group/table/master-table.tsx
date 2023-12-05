@@ -11,11 +11,7 @@ import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
-import {
-  FilterConfirmProps,
-  FilterValue,
-  TablePaginationConfig,
-} from 'antd/es/table/interface';
+import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_COLUMN, API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
@@ -43,7 +39,6 @@ import {
   importDataTable,
   updateColumnTable,
 } from '../fetcher';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
@@ -59,8 +54,6 @@ import ImportCSVModal, {
 import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
-
-type DataIndex = keyof QueryInputParamType;
 
 export default function MasterDataTable() {
   const router = useRouter();
@@ -101,13 +94,10 @@ export default function MasterDataTable() {
   });
 
   const dataSelectSearch =
-    querySelectParams.statusFeeGroup.length === 0
+    querySelectParams.status.length === 0
       ? {
           ...querySelectParams,
-          statusFeeGroup: [
-            STATUS_MATER_LABELS.ACTIVE,
-            STATUS_MATER_LABELS.DEACTIVE,
-          ],
+          status: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
         }
       : querySelectParams;
 
@@ -226,28 +216,28 @@ export default function MasterDataTable() {
     });
   };
 
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedActiveKey((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-      searchAll: {
-        label: 'searchAll',
-        value: '',
-      },
-    }));
-    const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    newQueryParams.searchAll = '';
-    setQueryInputParams(newQueryParams);
-    confirm();
-  };
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedActiveKey((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //     searchAll: {
+  //       label: 'searchAll',
+  //       value: '',
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   newQueryParams.searchAll = '';
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
   const handleSearchSelect = (
     pagination: TablePaginationConfig,
@@ -264,18 +254,18 @@ export default function MasterDataTable() {
     setQuerySelectParams(newQueryParams);
   };
 
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryInputParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
+  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+  //   setQueryInputParams((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: '',
+  //   }));
 
-    setSelectedActiveKey((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
+  //   setSelectedActiveKey((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: { label: dataIndex, value: '' },
+  //   }));
+  //   clearFilters();
+  // };
 
   // Handle data show table
   const columns: ProColumns<FeeGroupTable>[] = [
@@ -297,16 +287,6 @@ export default function MasterDataTable() {
       key: 'feeGroupNo',
       width: 150,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'feeGroupNo',
-        },
-      }),
     },
     {
       title: (
@@ -316,16 +296,6 @@ export default function MasterDataTable() {
       key: 'feeGroupName',
       width: 250,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'feeGroupName',
-        },
-      }),
     },
     // {
     //   title: (
@@ -372,13 +342,13 @@ export default function MasterDataTable() {
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusFeeGroup || null,
+      filteredValue: querySelectParams.status || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusFeeGroup.length !== 0
+                querySelectParams.status.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -548,7 +518,7 @@ export default function MasterDataTable() {
     mutationFn: () =>
       exportTableFile({
         ids: selectedRowKeys,
-        status: querySelectParams.statusFeeGroup,
+        status: querySelectParams.status,
       }),
     onSuccess: (data) => {
       const url = window.URL.createObjectURL(new Blob([data]));

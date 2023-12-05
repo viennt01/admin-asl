@@ -16,9 +16,7 @@ import {
   IPaginationOfAntd,
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
-import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ProColumns } from '@ant-design/pro-components';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -30,8 +28,6 @@ import {
   initalValueQuerySelectParamsDraft,
 } from '../constant';
 
-type DataIndex = keyof QueryInputDraft;
-
 interface PortFormProps {
   handleIdQuery: (id: string) => void;
 }
@@ -42,10 +38,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION_5);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
     initalValueQueryInputParamsDraft
   );
   const [dataTable, setDataTable] = useState<FeeGroupTable[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
     initalSelectSearchDraft
   );
@@ -115,36 +113,36 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   });
 
   // Handle search
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-    }));
-    const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    setQueryInputParams(newQueryParams);
-    confirm();
-  };
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryInputParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
+  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+  //   setQueryInputParams((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: '',
+  //   }));
 
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: { label: dataIndex, value: '' },
+  //   }));
+  //   clearFilters();
+  // };
 
   // Handle data show table
   const columns: ProColumns<FeeGroupTable>[] = [
@@ -167,16 +165,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'feeGroupNo',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputDraft>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeGroupNo',
-        },
-      }),
     },
     {
       title: (
@@ -186,16 +174,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'feeGroupName',
       width: 250,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputDraft>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeGroupName',
-        },
-      }),
     },
     {
       title: (

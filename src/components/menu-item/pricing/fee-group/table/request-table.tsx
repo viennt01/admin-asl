@@ -19,7 +19,6 @@ import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
@@ -45,6 +44,7 @@ const RequestTable = () => {
     initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<FeeGroupTable[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
     initalSelectSearchRequest
   );
@@ -55,7 +55,7 @@ const RequestTable = () => {
     queryKey: [API_TYPE_FEE_GROUP.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
-        ...queryInputParams,
+        ...initalValueQueryInputParamsRequest,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -103,6 +103,7 @@ const RequestTable = () => {
   });
 
   // Handle search
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearchInput = (
     selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
@@ -121,6 +122,7 @@ const RequestTable = () => {
     confirm();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
     setQueryInputParams((prevData) => ({
       ...prevData,
@@ -193,16 +195,6 @@ const RequestTable = () => {
       key: 'feeGroupNo',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeGroupNo',
-        },
-      }),
     },
     {
       title: (
@@ -212,16 +204,6 @@ const RequestTable = () => {
       key: 'feeGroupName',
       width: 250,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeGroupName',
-        },
-      }),
     },
     {
       title: (

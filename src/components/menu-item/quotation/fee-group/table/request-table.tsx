@@ -18,8 +18,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
-import { FilterConfirmProps } from 'antd/lib/table/interface';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
@@ -32,8 +30,6 @@ import {
   initalValueQueryInputParamsRequest,
 } from '../constant';
 
-type DataIndex = keyof QueryInputParamType;
-
 const RequestTable = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -41,10 +37,12 @@ const RequestTable = () => {
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
     initalValueQueryInputParamsRequest
   );
   const [dataTable, setDataTable] = useState<FeeGroupTable[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
     initalSelectSearchRequest
   );
@@ -55,7 +53,7 @@ const RequestTable = () => {
     queryKey: [API_TYPE_FEE_GROUP.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getTable({
-        ...queryInputParams,
+        ...initalValueQueryInputParamsRequest,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -103,36 +101,36 @@ const RequestTable = () => {
   });
 
   // Handle search
-  const handleSearchInput = (
-    selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
-  ) => {
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
-    }));
-    const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
-    setQueryInputParams(newQueryParams);
-    confirm();
-  };
+  // const handleSearchInput = (
+  //   selectedKeys: string,
+  //   confirm: (param?: FilterConfirmProps) => void,
+  //   dataIndex: DataIndex
+  // ) => {
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: {
+  //       label: dataIndex,
+  //       value: selectedKeys,
+  //     },
+  //   }));
+  //   const newQueryParams = { ...queryInputParams };
+  //   newQueryParams[dataIndex] = selectedKeys;
+  //   setQueryInputParams(newQueryParams);
+  //   confirm();
+  // };
 
-  const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-    setQueryInputParams((prevData) => ({
-      ...prevData,
-      [dataIndex]: '',
-    }));
+  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
+  //   setQueryInputParams((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: '',
+  //   }));
 
-    setSelectedKeyShow((prevData) => ({
-      ...prevData,
-      [dataIndex]: { label: dataIndex, value: '' },
-    }));
-    clearFilters();
-  };
+  //   setSelectedKeyShow((prevData) => ({
+  //     ...prevData,
+  //     [dataIndex]: { label: dataIndex, value: '' },
+  //   }));
+  //   clearFilters();
+  // };
 
   // Handle data show table
   const columns: ProColumns<FeeGroupTable>[] = [
@@ -193,16 +191,6 @@ const RequestTable = () => {
       key: 'feeGroupNo',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeGroupNo',
-        },
-      }),
     },
     {
       title: (
@@ -212,16 +200,6 @@ const RequestTable = () => {
       key: 'feeGroupName',
       width: 250,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeGroupName',
-        },
-      }),
     },
     {
       title: (

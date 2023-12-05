@@ -29,12 +29,7 @@ import {
   API_UNIT,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import {
-  getFeeGroupDetail,
-  getListFee,
-  getListTypeFeeGroup,
-  updateStatus,
-} from '../fetcher';
+import { getFeeGroupDetail, getListFee, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
@@ -47,6 +42,8 @@ import {
   getListTypeCurrency,
   getListTypeUnit,
 } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
+import { getListTypeFeeGroup } from '@/components/menu-item/pricing/fee-group/fetcher';
+import { TYPE_QUOTATION_PRICING } from '@/components/menu-item/pricing/fee-group/interface';
 
 const initialValue = {
   description: '',
@@ -193,11 +190,11 @@ const FeeGroupForm = ({
       errorToast(API_MESSAGE.ERROR);
     },
   });
-
-  const typeFeeGroup = useQuery(
-    [API_TYPE_FEE_GROUP.GET_ALL],
-    getListTypeFeeGroup
-  );
+  const typeFeeGroup = useQuery({
+    queryKey: [API_TYPE_FEE_GROUP.GET_ALL],
+    queryFn: () =>
+      getListTypeFeeGroup({ type: TYPE_QUOTATION_PRICING.QUOTATION }),
+  });
 
   const detailQuery = useQuery({
     queryKey: [API_FEE_GROUP.GET_DETAIL, idQuery],
