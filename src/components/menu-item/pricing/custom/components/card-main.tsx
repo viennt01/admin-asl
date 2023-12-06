@@ -13,7 +13,7 @@ import {
   FormInstance,
 } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   ICustomPricingAirDetailDTO,
   ICustomPricingFCLDetailDTOs,
@@ -40,6 +40,8 @@ import {
   getListTypeDeclaration,
   getListTypeTransaction,
 } from '@/components/menu-item/master-data/declaration-catalog/type-declaration/fetcher';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 interface Props {
   create?: boolean;
@@ -77,6 +79,7 @@ const CardMain = ({
   const { translate: translatePricingCustom } = useI18n('pricingCustoms');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const { role } = useContext(AppContext);
 
   const propCopyAndCreate = router.query;
 
@@ -100,7 +103,7 @@ const CardMain = ({
   });
   const getFeeGroup = useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL],
-    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.SEA_PRICING }),
+    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.CUSTOM_PRICING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -334,13 +337,19 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24}>
+        <Col
+          lg={8}
+          span={24}
+          style={{
+            display: role === ROLE.MANAGER || role === ROLE.SALE ? '' : 'none',
+          }}
+        >
           <Form.Item
             label={translatePricingCustom('vendor_form.title')}
             name="vendorID"
             rules={[
               {
-                required: true,
+                required: role === ROLE.MANAGER || role === ROLE.SALE,
                 message: translatePricingCustom('vendor_form.error_required'),
               },
             ]}

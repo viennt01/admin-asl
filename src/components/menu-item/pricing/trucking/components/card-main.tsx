@@ -13,7 +13,7 @@ import {
   FormInstance,
 } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   IFormValues,
   ITypeDTOs,
@@ -36,6 +36,8 @@ import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetch
 import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
 import { getAllLocation } from '../../sea/fetcher';
 import { TYPE_LOCATION } from '../../sea/interface';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 interface Props {
   create?: boolean;
@@ -72,6 +74,7 @@ const CardMain = ({
   const { translate: translatePricingTrucking } = useI18n('pricingTrucking');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
+  const { role } = useContext(AppContext);
 
   const propCopyAndCreate = router.query;
   const dateFormat = 'YYYY-MM-DD';
@@ -471,13 +474,19 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
-        <Col lg={8} span={24}>
+        <Col
+          lg={8}
+          span={24}
+          style={{
+            display: role === ROLE.MANAGER || role === ROLE.SALE ? '' : 'none',
+          }}
+        >
           <Form.Item
             label={translatePricingTrucking('vendor_form.title')}
             name="vendorID"
             rules={[
               {
-                required: true,
+                required: role === ROLE.MANAGER || role === ROLE.SALE,
                 message: translatePricingTrucking('vendor_form.error_required'),
               },
             ]}

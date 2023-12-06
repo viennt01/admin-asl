@@ -14,6 +14,9 @@ import {
 import { createSeaPricing, editSeaPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
+import { AppContext } from '@/app-context';
+import { useContext } from 'react';
+import { ROLE } from '@/constant/permission';
 
 export const returnFeeDTOs = (
   seaPricingFeeDTOs?: SeaPricingFeeFormValue[],
@@ -53,6 +56,7 @@ export const returnFeeDTOs = (
 
 const CreateSeaPricing = () => {
   const queryClient = useQueryClient();
+  const { role, userInfo } = useContext(AppContext);
 
   const createMutation = useMutation({
     mutationFn: (body: SeaPricingCreate) => {
@@ -89,7 +93,10 @@ const CreateSeaPricing = () => {
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         note: formValues.note || '',
         dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
@@ -120,7 +127,10 @@ const CreateSeaPricing = () => {
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         note: formValues.note || '',
         dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
@@ -174,7 +184,10 @@ const CreateSeaPricing = () => {
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         note: formValues.note || '',
         dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
@@ -208,7 +221,10 @@ const CreateSeaPricing = () => {
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         note: formValues.note || '',
         dateEffect: formValues.dateEffect?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),

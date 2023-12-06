@@ -33,7 +33,7 @@ const ListFee = ({ form, create }: Props) => {
 
   useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL],
-    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.TOTAL }),
+    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.CUSTOM_QUOTATION }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

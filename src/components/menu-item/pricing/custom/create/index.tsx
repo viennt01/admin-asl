@@ -14,6 +14,9 @@ import {
 import { createCustomPricing, editCustomPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_CUSTOM_PRICING } from '@/fetcherAxios/endpoint';
+import { ROLE } from '@/constant/permission';
+import { useContext } from 'react';
+import { AppContext } from '@/app-context';
 
 export const returnFeeDTOs = (
   seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
@@ -53,6 +56,7 @@ export const returnFeeDTOs = (
 
 const CreateCustomPricing = () => {
   const queryClient = useQueryClient();
+  const { role, userInfo } = useContext(AppContext);
 
   const createMutation = useMutation({
     mutationFn: (body: ICustomPricingCreate) => {
@@ -79,7 +83,10 @@ const CreateCustomPricing = () => {
       const _requestData: ICustomPricingEdit = {
         customPricingID: id || '',
         typeDelaracrionID: formValues.typeDelaracrionID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
@@ -103,7 +110,10 @@ const CreateCustomPricing = () => {
       const _requestData: ICustomPricingCreate = {
         typeDelaracrionID: formValues.typeDelaracrionID || '',
         commodityID: formValues.commodityID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
@@ -147,7 +157,10 @@ const CreateCustomPricing = () => {
         customPricingID: id,
         typeDelaracrionID: formValues.typeDelaracrionID || '',
         commodityID: formValues.commodityID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
@@ -173,7 +186,10 @@ const CreateCustomPricing = () => {
       const _requestData: ICustomPricingCreate = {
         typeDelaracrionID: formValues.typeDelaracrionID || '',
         commodityID: formValues.commodityID || '',
-        vendorID: formValues.vendorID || '',
+        vendorID:
+          role === ROLE.MANAGER || role === ROLE.SALE
+            ? formValues.vendorID || ''
+            : userInfo?.userID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
