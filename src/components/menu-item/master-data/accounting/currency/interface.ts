@@ -56,6 +56,7 @@ export interface FormValues {
   currencyName: string;
   exchangeRateToVND: string;
   exchangeRateToUSD: string;
+  public: boolean;
   statusCurrency: string;
 }
 

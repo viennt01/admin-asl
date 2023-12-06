@@ -32,6 +32,7 @@ const CreateTypeFeeGroup = () => {
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
         typeFeeGroupNameVN:
           formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
+        public: true,
         statusTypeFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -50,6 +51,7 @@ const CreateTypeFeeGroup = () => {
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
         typeFeeGroupNameVN:
           formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
+        public: true,
         statusTypeFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -73,6 +75,7 @@ const CreateTypeFeeGroup = () => {
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
         typeFeeGroupNameVN:
           formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
+        public: true,
         statusTypeFeeGroup: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -94,6 +97,7 @@ const CreateTypeFeeGroup = () => {
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
         typeFeeGroupNameVN:
           formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
+        public: true,
         statusTypeFeeGroup: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

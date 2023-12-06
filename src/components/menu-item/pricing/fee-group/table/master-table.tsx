@@ -97,10 +97,7 @@ export default function MasterDataTable() {
     querySelectParams.status.length === 0
       ? {
           ...querySelectParams,
-          statusFeeGroup: [
-            STATUS_MATER_LABELS.ACTIVE,
-            STATUS_MATER_LABELS.DEACTIVE,
-          ],
+          status: [STATUS_MATER_LABELS.ACTIVE, STATUS_MATER_LABELS.DEACTIVE],
         }
       : querySelectParams;
 

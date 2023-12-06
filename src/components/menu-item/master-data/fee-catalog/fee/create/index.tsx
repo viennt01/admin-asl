@@ -35,6 +35,7 @@ const CreateFee = () => {
         typeFeeID: formValues.typeFeeID || '',
         currencyID: formValues.currencyID || '',
         unitID: formValues.unitID || '',
+        public: true,
         statusFee: STATUS_ALL_LABELS.REQUEST,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -56,6 +57,7 @@ const CreateFee = () => {
         typeFeeID: formValues.typeFeeID || '',
         currencyID: formValues.currencyID || '',
         unitID: formValues.unitID || '',
+        public: true,
         statusFee: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -82,6 +84,7 @@ const CreateFee = () => {
         typeFeeID: formValues.typeFeeID || '',
         currencyID: formValues.currencyID || '',
         unitID: formValues.unitID || '',
+        public: true,
         statusFee: STATUS_ALL_LABELS.DRAFT,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -106,6 +109,7 @@ const CreateFee = () => {
         typeFeeID: formValues.typeFeeID || '',
         currencyID: formValues.currencyID || '',
         unitID: formValues.unitID || '',
+        public: true,
         statusFee: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

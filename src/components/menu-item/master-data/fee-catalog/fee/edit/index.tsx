@@ -25,6 +25,7 @@ const EditFee = () => {
         typeFeeID: formValues.typeFeeID || '',
         currencyID: formValues.currencyID || '',
         unitID: formValues.unitID || '',
+        public: true,
         statusFee: formValues.statusFee,
       };
       updateMutation.mutate(_requestData, {

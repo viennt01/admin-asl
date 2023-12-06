@@ -22,6 +22,7 @@ const CommodityEditPage = () => {
         commodityNameEN: formValues.commodityNameEN || '',
         commodityNameVN:
           formValues.commodityNameVN || formValues.commodityNameEN || '',
+        public: true,
         statusCommodity: formValues.statusCommodity || STATUS_ALL_LABELS.ACTIVE,
       };
       updatetMutation.mutate(_requestData, {

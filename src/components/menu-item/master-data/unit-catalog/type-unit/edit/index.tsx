@@ -25,6 +25,7 @@ const EditTypeUnit = () => {
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
+        public: true,
         statusTypeUnit: formValues.statusTypeUnit || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {

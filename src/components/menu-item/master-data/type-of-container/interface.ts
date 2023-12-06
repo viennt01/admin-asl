@@ -62,6 +62,7 @@ export interface FormValues {
   detailsVN: string;
   teus: string;
   statusContainerType: string;
+  public: boolean;
 }
 
 export interface ContainerTypeDetailType extends FormValues {

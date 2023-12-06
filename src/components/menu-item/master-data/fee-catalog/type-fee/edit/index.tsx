@@ -22,6 +22,7 @@ const EditTypeFee = () => {
         typeFeeNameEN: formValues.typeFeeNameEN || '',
         typeFeeNameVN:
           formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
+        public: true,
         statusTypeFee: formValues.statusTypeFee,
       };
       updateMutation.mutate(_requestData, {

@@ -68,11 +68,11 @@ export interface IFormValues {
   descriptionEN: string;
   descriptionVN: string;
   statusLoadCapacity: string;
+  public: boolean;
 }
 
 export interface ILoadCapacityDetail extends IFormValues {
   typeLoadCapacityName: string;
-  public: boolean;
   insertedByUser: string;
   dateInserted: string;
   dateUpdated: string;

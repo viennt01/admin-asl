@@ -23,6 +23,7 @@ const EditTypeOfContainer = () => {
         detailsEN: formValues.detailsEN,
         detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
+        public: true,
         statusContainerType: formValues.statusContainerType,
       };
       updateContainerTypeMutation.mutate(_requestData, {

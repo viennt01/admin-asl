@@ -31,6 +31,7 @@ const CreateCurrency = () => {
         currencyName: formValues.currencyName || '',
         exchangeRateToVND: formValues.exchangeRateToVND || '',
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
+        public: true,
         statusCurrency: STATUS_ALL_LABELS.REQUEST,
       };
       updateCurrencyMutation.mutate(_requestData, {
@@ -48,6 +49,7 @@ const CreateCurrency = () => {
         currencyName: formValues.currencyName || '',
         exchangeRateToVND: formValues.exchangeRateToVND || '',
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
+        public: true,
         statusCurrency: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -70,6 +72,7 @@ const CreateCurrency = () => {
         currencyName: formValues.currencyName || '',
         exchangeRateToVND: formValues.exchangeRateToVND || '',
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
+        public: true,
         statusCurrency: STATUS_ALL_LABELS.DRAFT,
       };
       updateCurrencyMutation.mutate(_requestData, {
@@ -90,6 +93,7 @@ const CreateCurrency = () => {
         currencyName: formValues.currencyName || '',
         exchangeRateToVND: formValues.exchangeRateToVND || '',
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
+        public: true,
         statusCurrency: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

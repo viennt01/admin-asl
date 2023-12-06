@@ -25,6 +25,7 @@ const EditLoadCapacity = () => {
         descriptionEN: formValues.descriptionEN || '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
+        public: true,
         statusLoadCapacity:
           formValues.statusLoadCapacity || STATUS_ALL_LABELS.ACTIVE,
       };

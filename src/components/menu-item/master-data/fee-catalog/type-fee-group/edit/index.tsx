@@ -23,6 +23,7 @@ const EditTypeFeeGroup = () => {
         typeFeeGroupNameEN: formValues.typeFeeGroupNameEN || '',
         typeFeeGroupNameVN:
           formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
+        public: true,
         statusTypeFeeGroup:
           formValues.statusTypeFeeGroup || STATUS_ALL_LABELS.ACTIVE,
       };

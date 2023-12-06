@@ -25,6 +25,7 @@ const EditLocationType = () => {
         descriptionEN: formValues.descriptionEN || '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
+        public: true,
         statusTypeLocation:
           formValues.statusTypeLocation || STATUS_ALL_LABELS.ACTIVE,
       };

@@ -37,6 +37,7 @@ const CreateBank = () => {
         address: formValues.address || '',
         bankBranch: formValues.bankBranch || '',
         note: formValues.note || '',
+        public: true,
         statusBank: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -60,6 +61,7 @@ const CreateBank = () => {
         address: formValues.address || '',
         bankBranch: formValues.bankBranch || '',
         note: formValues.note || '',
+        public: true,
         statusBank: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -88,6 +90,7 @@ const CreateBank = () => {
         address: formValues.address || '',
         bankBranch: formValues.bankBranch || '',
         note: formValues.note || '',
+        public: true,
         statusBank: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -114,6 +117,7 @@ const CreateBank = () => {
         address: formValues.address || '',
         bankBranch: formValues.bankBranch || '',
         note: formValues.note || '',
+        public: true,
         statusBank: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

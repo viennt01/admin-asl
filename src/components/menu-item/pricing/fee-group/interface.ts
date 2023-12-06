@@ -26,7 +26,7 @@ export interface FeeGroup {
   statusFeeGroup: string;
   dateStart: string;
   dateExpiration: string;
-  public: true;
+  public: boolean;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;
@@ -82,10 +82,10 @@ export interface FormValues {
   statusFeeGroup: string;
   dateStart: Dayjs;
   dateExpiration: Dayjs;
+  public: boolean;
 }
 
 export interface FeeGroupDetailType extends FormValues {
-  public: boolean;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;

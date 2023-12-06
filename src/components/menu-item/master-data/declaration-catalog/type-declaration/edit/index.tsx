@@ -29,6 +29,7 @@ const EditTypeDeclaration = () => {
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
+        public: true,
         statusTypeDelaracrion:
           formValues.statusTypeDelaracrion || STATUS_ALL_LABELS.ACTIVE,
       };

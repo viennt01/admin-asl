@@ -22,6 +22,7 @@ const EditUnit = () => {
         internationalCode: formValues.internationalCode || '',
         typeUnitID: formValues.typeUnitID || '',
         descriptionEN: formValues.descriptionEN || '',
+        public: true,
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         statusUnit: formValues.statusUnit || STATUS_ALL_LABELS.ACTIVE,

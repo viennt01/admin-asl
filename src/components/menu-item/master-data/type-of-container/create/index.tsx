@@ -37,6 +37,7 @@ const CreateTypeOfContainer = () => {
         detailsEN: formValues.detailsEN,
         detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
+        public: true,
         statusContainerType: STATUS_ALL_LABELS.REQUEST,
       };
       updateContainerTypeMutation.mutate(_requestData, {
@@ -57,6 +58,7 @@ const CreateTypeOfContainer = () => {
         detailsEN: formValues.detailsEN,
         detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
+        public: true,
         statusContainerType: STATUS_ALL_LABELS.REQUEST,
       };
       createContainerTypeMutation.mutate(_requestData, {
@@ -82,6 +84,7 @@ const CreateTypeOfContainer = () => {
         detailsEN: formValues.detailsEN,
         detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
+        public: true,
         statusContainerType: STATUS_ALL_LABELS.DRAFT,
       };
       updateContainerTypeMutation.mutate(_requestData, {
@@ -104,6 +107,7 @@ const CreateTypeOfContainer = () => {
         detailsEN: formValues.detailsEN || '',
         detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus || '',
+        public: true,
         statusContainerType: STATUS_ALL_LABELS.DRAFT,
       };
       createContainerTypeMutation.mutate(_requestData, {

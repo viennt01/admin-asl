@@ -37,6 +37,7 @@ const CreateFeeGroup = () => {
         feeGroupNameEN: formValues.feeGroupNameEN || '',
         feeGroupNameVN:
           formValues.feeGroupNameVN || formValues.feeGroupNameEN || '',
+        public: true,
         statusFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -58,6 +59,7 @@ const CreateFeeGroup = () => {
         feeGroupNameVN:
           formValues.feeGroupNameVN || formValues.feeGroupNameEN || '',
         listFee: listFee || [],
+        public: true,
         statusFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -87,6 +89,7 @@ const CreateFeeGroup = () => {
         feeGroupNameEN: formValues.feeGroupNameEN || '',
         feeGroupNameVN:
           formValues.feeGroupNameVN || formValues.feeGroupNameEN || '',
+        public: true,
         statusFeeGroup: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -110,6 +113,7 @@ const CreateFeeGroup = () => {
         feeGroupNameVN:
           formValues.feeGroupNameVN || formValues.feeGroupNameEN || '',
         listFee: listFee || [],
+        public: true,
         statusFeeGroup: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

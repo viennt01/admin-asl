@@ -41,6 +41,7 @@ const CreateTypeDeclaration = () => {
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
+        public: true,
         statusTypeDelaracrion: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -66,6 +67,7 @@ const CreateTypeDeclaration = () => {
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
+        public: true,
         statusTypeDelaracrion: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -96,6 +98,7 @@ const CreateTypeDeclaration = () => {
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
+        public: true,
         statusTypeDelaracrion: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -123,6 +126,7 @@ const CreateTypeDeclaration = () => {
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
+        public: true,
         statusTypeDelaracrion: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

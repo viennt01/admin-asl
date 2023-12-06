@@ -59,6 +59,7 @@ export interface FormValues {
   descriptionVN: string;
   descriptionEN: string;
   statusUnit: string;
+  public: boolean;
 }
 
 export interface UnitDetailType extends FormValues {

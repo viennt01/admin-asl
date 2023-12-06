@@ -80,6 +80,7 @@ export interface FormValues {
   typeFeeID: string;
   currencyID: string;
   unitID: string;
+  public: boolean;
 }
 
 export interface FeeDetailType extends FormValues {

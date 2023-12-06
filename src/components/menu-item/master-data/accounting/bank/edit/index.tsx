@@ -28,6 +28,7 @@ const EditBank = () => {
         address: formValues.address || '',
         bankBranch: formValues.bankBranch || '',
         note: formValues.note || '',
+        public: true,
         statusBank: formValues.statusBank || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {

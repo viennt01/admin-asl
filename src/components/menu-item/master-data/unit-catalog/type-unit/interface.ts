@@ -56,10 +56,10 @@ export interface IFormValues {
   descriptionEN: string;
   descriptionVN: string;
   statusTypeUnit: string;
+  public: boolean;
 }
 
 export interface ITypeUnitDetailType extends IFormValues {
-  public: true;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;

@@ -32,6 +32,7 @@ const CreateTypeFee = () => {
         typeFeeNameEN: formValues.typeFeeNameEN || '',
         typeFeeNameVN:
           formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
+        public: true,
         statusTypeFee: STATUS_ALL_LABELS.REQUEST,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -50,6 +51,7 @@ const CreateTypeFee = () => {
         typeFeeNameEN: formValues.typeFeeNameEN || '',
         typeFeeNameVN:
           formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
+        public: true,
         statusTypeFee: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -73,6 +75,7 @@ const CreateTypeFee = () => {
         typeFeeNameEN: formValues.typeFeeNameEN || '',
         typeFeeNameVN:
           formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
+        public: true,
         statusTypeFee: STATUS_ALL_LABELS.DRAFT,
       };
       updateFeeMutation.mutate(_requestData, {
@@ -94,6 +97,7 @@ const CreateTypeFee = () => {
         typeFeeNameEN: formValues.typeFeeNameEN || '',
         typeFeeNameVN:
           formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
+        public: true,
         statusTypeFee: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

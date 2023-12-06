@@ -35,6 +35,7 @@ const CreateLocation = () => {
         locationNameVN:
           formValues.locationNameVN || formValues.locationNameEN || '',
         typeLocations: formValues.typeLocations || [],
+        public: true,
         statusLocation: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -56,6 +57,7 @@ const CreateLocation = () => {
         locationNameVN:
           formValues.locationNameVN || formValues.locationNameEN || '',
         typeLocations: formValues.typeLocations || [],
+        public: true,
         statusLocation: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -82,6 +84,7 @@ const CreateLocation = () => {
         locationNameVN:
           formValues.locationNameVN || formValues.locationNameEN || '',
         typeLocations: formValues.typeLocations || [],
+        public: true,
         statusLocation: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -106,6 +109,7 @@ const CreateLocation = () => {
         locationNameVN:
           formValues.locationNameVN || formValues.locationNameEN || '',
         typeLocations: formValues.typeLocations || [],
+        public: true,
         statusLocation: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

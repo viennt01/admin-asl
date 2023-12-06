@@ -56,6 +56,7 @@ export interface FormValues {
   typeLocationNameVN: string;
   descriptionEN: string;
   descriptionVN: string;
+  public: boolean;
   statusTypeLocation: string;
 }
 

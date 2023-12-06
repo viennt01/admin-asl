@@ -38,6 +38,7 @@ const CreateLoadCapacity = () => {
         descriptionEN: formValues.descriptionEN || '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
+        public: true,
         statusLoadCapacity: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -58,6 +59,7 @@ const CreateLoadCapacity = () => {
         descriptionEN: formValues.descriptionEN || '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
+        public: true,
         statusLoadCapacity: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -83,6 +85,7 @@ const CreateLoadCapacity = () => {
         descriptionEN: formValues.descriptionEN || '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
+        public: true,
         statusLoadCapacity: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -106,6 +109,7 @@ const CreateLoadCapacity = () => {
         descriptionEN: formValues.descriptionEN || '',
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
+        public: true,
         statusLoadCapacity: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

@@ -31,6 +31,7 @@ const CommodityPage = () => {
         commodityNameEN: formValues.commodityNameEN || '',
         commodityNameVN:
           formValues.commodityNameVN || formValues.commodityNameEN || '',
+        public: true,
         statusCommodity: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -48,6 +49,7 @@ const CommodityPage = () => {
         commodityNameEN: formValues.commodityNameEN || '',
         commodityNameVN:
           formValues.commodityNameVN || formValues.commodityNameEN || '',
+        public: true,
         statusCommodity: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
@@ -70,6 +72,7 @@ const CommodityPage = () => {
         commodityNameEN: formValues.commodityNameEN || '',
         commodityNameVN:
           formValues.commodityNameVN || formValues.commodityNameEN || '',
+        public: true,
         statusCommodity: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
@@ -90,6 +93,7 @@ const CommodityPage = () => {
         commodityNameEN: formValues.commodityNameEN || '',
         commodityNameVN:
           formValues.commodityNameVN || formValues.commodityNameEN || '',
+        public: true,
         statusCommodity: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {

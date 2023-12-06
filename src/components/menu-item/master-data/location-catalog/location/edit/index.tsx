@@ -26,6 +26,7 @@ const EditLocation = () => {
         locationNameVN:
           formValues.locationNameVN || formValues.locationNameEN || '',
         typeLocations: formValues.typeLocations || [],
+        public: true,
         statusLocation: formValues.statusLocation || STATUS_ALL_LABELS.ACTIVE,
       };
       updateMutation.mutate(_requestData, {

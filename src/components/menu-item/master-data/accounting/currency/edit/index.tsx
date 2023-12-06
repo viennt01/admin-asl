@@ -21,6 +21,7 @@ const EditCurrency = () => {
         currencyName: formValues.currencyName || '',
         exchangeRateToVND: formValues.exchangeRateToVND || '',
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
+        public: true,
         statusCurrency: formValues.statusCurrency,
       };
       updateMutation.mutate(_requestData, {

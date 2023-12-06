@@ -55,6 +55,7 @@ export interface FormValues {
   typeFeeGroupNo: string;
   typeFeeGroupNameEN: string;
   typeFeeGroupNameVN: string;
+  public: boolean;
   statusTypeFeeGroup: string;
 }
 

@@ -51,6 +51,7 @@ export interface FormValues {
   commodityID: string;
   commodityNameEN: string;
   commodityNameVN: string;
+  public: boolean;
   statusCommodity: string;
 }
 

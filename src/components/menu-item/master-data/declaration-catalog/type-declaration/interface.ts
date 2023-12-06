@@ -64,10 +64,10 @@ export interface IFormValues {
   descriptionEN: string;
   descriptionVN: string;
   statusTypeDelaracrion: string;
+  public: boolean;
 }
 
 export interface ITypeDeclarationDetailType extends IFormValues {
-  public: true;
   dateInserted: string;
   insertedByUser: string;
   dateUpdated: string;

@@ -85,6 +85,7 @@ export interface FormValues {
   address: string;
   bankBranch: string;
   note: string;
+  public: boolean;
   statusBank: string;
 }
 
