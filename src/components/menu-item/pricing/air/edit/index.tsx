@@ -44,8 +44,7 @@ const EditAirPricing = () => {
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
         airPricingFeeGroupUpdateRequests: returnFeeDTO,
-        statusAirPricing:
-          formValues.statusAirPricing || STATUS_ALL_LABELS.ACTIVE,
+        statusAirPricing: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

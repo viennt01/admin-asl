@@ -38,7 +38,7 @@ const EditStaff = () => {
         citizenIdentification: formValues.citizenIdentification || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
-        statusUser: formValues.statusUser || STATUS_ALL_LABELS.ACTIVE,
+        statusUser: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import FeeForm from '../components/form';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 const EditFee = () => {
   const checkRow = router.query.checkRow as string;
@@ -26,7 +27,7 @@ const EditFee = () => {
         currencyID: formValues.currencyID || '',
         unitID: formValues.unitID || '',
         public: true,
-        statusFee: formValues.statusFee,
+        statusFee: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

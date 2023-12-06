@@ -26,8 +26,7 @@ const EditLoadCapacity = () => {
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
         public: true,
-        statusLoadCapacity:
-          formValues.statusLoadCapacity || STATUS_ALL_LABELS.ACTIVE,
+        statusLoadCapacity: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

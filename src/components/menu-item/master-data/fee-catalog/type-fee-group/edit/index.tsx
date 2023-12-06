@@ -24,8 +24,7 @@ const EditTypeFeeGroup = () => {
         typeFeeGroupNameVN:
           formValues.typeFeeGroupNameVN || formValues.typeFeeGroupNameEN || '',
         public: true,
-        statusTypeFeeGroup:
-          formValues.statusTypeFeeGroup || STATUS_ALL_LABELS.ACTIVE,
+        statusTypeFeeGroup: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

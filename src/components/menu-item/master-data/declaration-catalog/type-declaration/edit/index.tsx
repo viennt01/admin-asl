@@ -30,8 +30,7 @@ const EditTypeDeclaration = () => {
           formValues.descriptionVN || formValues.descriptionEN || '',
         descriptionEN: formValues.descriptionEN || '',
         public: true,
-        statusTypeDelaracrion:
-          formValues.statusTypeDelaracrion || STATUS_ALL_LABELS.ACTIVE,
+        statusTypeDelaracrion: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

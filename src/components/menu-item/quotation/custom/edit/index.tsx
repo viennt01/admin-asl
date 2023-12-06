@@ -29,8 +29,7 @@ const EditCustomQuotation = () => {
         validityDate: formValues.validityDate?.valueOf(),
         forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
-        statusCustomQuotation:
-          formValues.statusCustomQuotation || STATUS_ALL_LABELS.ACTIVE,
+        statusCustomQuotation: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

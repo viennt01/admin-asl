@@ -59,8 +59,7 @@ const EditSeaQuotation = () => {
         seaQuotationDetailUpdateRequests: returnQuotationDetail || [],
         // seaPricingFeeGroupUpdateRequests: returnFeeDTO,
         salesLeadsSeaQuotationUpdateRequests: returnSaleLead || [],
-        statusSeaQuotation:
-          formValues.statusSeaQuotation || STATUS_ALL_LABELS.ACTIVE,
+        statusSeaQuotation: STATUS_ALL_LABELS.REQUEST,
       };
 
       updateMutation.mutate(_requestData, {

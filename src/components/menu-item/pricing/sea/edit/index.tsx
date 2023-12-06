@@ -50,8 +50,7 @@ const EditSeaPricing = () => {
         public: formValues.public || true,
         seaPricingDetailUpdateRequests: formValues.seaPricingDetailDTOs || [],
         seaPricingFeeGroupUpdateRequests: returnFeeDTO,
-        statusSeaPricing:
-          formValues.statusSeaPricing || STATUS_ALL_LABELS.ACTIVE,
+        statusSeaPricing: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

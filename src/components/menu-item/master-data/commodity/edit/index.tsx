@@ -23,7 +23,7 @@ const CommodityEditPage = () => {
         commodityNameVN:
           formValues.commodityNameVN || formValues.commodityNameEN || '',
         public: true,
-        statusCommodity: formValues.statusCommodity || STATUS_ALL_LABELS.ACTIVE,
+        statusCommodity: STATUS_ALL_LABELS.REQUEST,
       };
       updatetMutation.mutate(_requestData, {
         onSuccess: (data) => {

@@ -28,8 +28,7 @@ const EditCustomPricing = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         public: formValues.public || true,
-        statusCustomPricing:
-          formValues.statusCustomPricing || STATUS_ALL_LABELS.ACTIVE,
+        statusCustomPricing: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

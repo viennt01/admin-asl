@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import CurrencyForm from '../components/form';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 const EditCurrency = () => {
   const checkRow = router.query.checkRow as string;
@@ -22,7 +23,7 @@ const EditCurrency = () => {
         exchangeRateToVND: formValues.exchangeRateToVND || '',
         exchangeRateToUSD: formValues.exchangeRateToUSD || '',
         public: true,
-        statusCurrency: formValues.statusCurrency,
+        statusCurrency: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

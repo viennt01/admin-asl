@@ -46,8 +46,7 @@ const EditTruckingPricing = () => {
         seaPricingDetailUpdateRequests:
           formValues.truckingPricingDetailByContainerTypeDTOs || [],
         seaPricingFeeGroupUpdateRequests: returnFeeDTO,
-        statusTruckingPricing:
-          formValues.statusTruckingPricing || STATUS_ALL_LABELS.ACTIVE,
+        statusTruckingPricing: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

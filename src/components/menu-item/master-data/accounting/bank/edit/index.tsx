@@ -29,7 +29,7 @@ const EditBank = () => {
         bankBranch: formValues.bankBranch || '',
         note: formValues.note || '',
         public: true,
-        statusBank: formValues.statusBank || STATUS_ALL_LABELS.ACTIVE,
+        statusBank: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

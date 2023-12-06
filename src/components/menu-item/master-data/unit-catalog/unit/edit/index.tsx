@@ -25,7 +25,7 @@ const EditUnit = () => {
         public: true,
         descriptionVN:
           formValues.descriptionVN || formValues.descriptionEN || '',
-        statusUnit: formValues.statusUnit || STATUS_ALL_LABELS.ACTIVE,
+        statusUnit: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

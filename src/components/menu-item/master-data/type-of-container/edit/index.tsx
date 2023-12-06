@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import TypeOfContainerTypeForm from '../components/form';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 const EditTypeOfContainer = () => {
   const checkRow = router.query.checkRow as string;
@@ -24,7 +25,7 @@ const EditTypeOfContainer = () => {
         detailsVN: formValues.detailsVN || formValues.detailsEN || '',
         teus: formValues.teus,
         public: true,
-        statusContainerType: formValues.statusContainerType,
+        statusContainerType: STATUS_ALL_LABELS.REQUEST,
       };
       updateContainerTypeMutation.mutate(_requestData, {
         onSuccess: (data) => {

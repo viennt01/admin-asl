@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import TypeFeeForm from '../components/form';
+import { STATUS_ALL_LABELS } from '@/constant/form';
 
 const EditTypeFee = () => {
   const checkRow = router.query.checkRow as string;
@@ -23,7 +24,7 @@ const EditTypeFee = () => {
         typeFeeNameVN:
           formValues.typeFeeNameVN || formValues.typeFeeNameEN || '',
         public: true,
-        statusTypeFee: formValues.statusTypeFee,
+        statusTypeFee: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

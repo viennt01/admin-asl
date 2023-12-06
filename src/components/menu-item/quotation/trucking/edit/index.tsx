@@ -56,8 +56,7 @@ const EditTruckQuotation = () => {
         seaQuotationDetailUpdateRequests: returnQuotationDetail || [],
         // seaPricingFeeGroupUpdateRequests: returnFeeDTO,
         salesLeadsSeaQuotationUpdateRequests: returnSaleLead || [],
-        statusTruckingQuotation:
-          formValues.statusTruckingQuotation || STATUS_ALL_LABELS.ACTIVE,
+        statusTruckingQuotation: STATUS_ALL_LABELS.REQUEST,
       };
 
       updateMutation.mutate(_requestData, {
