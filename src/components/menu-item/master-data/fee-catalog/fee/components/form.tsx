@@ -1,7 +1,17 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Switch, Select } from 'antd';
+import {
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  Switch,
+  Select,
+  InputNumber,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
@@ -180,7 +190,8 @@ const FeeForm = ({
     const props = {
       checkCopyAndCreate: true,
       feeNo: form.getFieldValue('feeNo'),
-      feeName: form.getFieldValue('feeName'),
+      feeNameEN: form.getFieldValue('feeNameEN'),
+      feeNameVN: form.getFieldValue('feeNameVN'),
       vatFee: form.getFieldValue('vatFee'),
       typeFeeID: form.getFieldValue('typeFeeID'),
       typeFeeName: form.getFieldValue('typeFeeName'),
@@ -355,13 +366,13 @@ const FeeForm = ({
                 label={translateFee('vat_fee_form.title')}
                 name="vatFee"
               >
-                <Input
+                <InputNumber
+                  style={{ width: '100%' }}
                   type="number"
                   min={0}
                   suffix="%"
                   size="large"
                   placeholder={translateFee('vat_fee_form.placeholder')}
-                  allowClear
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
@@ -380,6 +391,16 @@ const FeeForm = ({
               >
                 <Select
                   placeholder={translateFee('type_fee_form.placeholder')}
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.label ?? '').includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? '')
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? '').toLowerCase())
+                  }
                   size="large"
                   options={
                     typeFee.data?.data.map((type) => ({
@@ -404,6 +425,16 @@ const FeeForm = ({
               >
                 <Select
                   placeholder={translateFee('currency_form.placeholder')}
+                  showSearch
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.label ?? '').includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? '')
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? '').toLowerCase())
+                  }
                   size="large"
                   options={
                     typeCurrency.data?.data.map((type) => ({
@@ -419,6 +450,17 @@ const FeeForm = ({
             <Col lg={12} span={24}>
               <Form.Item label={translateFee('unit_form.title')} name="unitID">
                 <Select
+                  showSearch
+                  allowClear
+                  optionFilterProp="children"
+                  filterOption={(input, option) =>
+                    (option?.label ?? '').includes(input)
+                  }
+                  filterSort={(optionA, optionB) =>
+                    (optionA?.label ?? '')
+                      .toLowerCase()
+                      .localeCompare((optionB?.label ?? '').toLowerCase())
+                  }
                   placeholder={translateFee('unit_form.placeholder')}
                   size="large"
                   options={dataUnit || []}
