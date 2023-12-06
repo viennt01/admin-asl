@@ -192,47 +192,6 @@ const CardMain = ({
     },
   });
 
-  const suffixSelectorCurrencyLCLMin = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translatePricingSea('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
-
-  const suffixSelectorCurrencyLCL = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translatePricingSea('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
   return (
     <Card
       style={{ marginBottom: 24 }}
@@ -464,16 +423,7 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingSea('STO')}
-            name="stoSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('STO_form.placeholder'),
-              },
-            ]}
-          >
+          <Form.Item label={translatePricingSea('STO')} name="stoSeaPricing">
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
               placeholder={translatePricingSea('STO_form.placeholder')}
@@ -484,16 +434,7 @@ const CardMain = ({
           </Form.Item>
         </Col>
         <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingSea('DEM')}
-            name="demSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('DEM_form.placeholder'),
-              },
-            ]}
-          >
+          <Form.Item label={translatePricingSea('DEM')} name="demSeaPricing">
             <InputNumber
               style={{ width: '100%' }}
               placeholder={translatePricingSea('DEM_form.placeholder')}
@@ -504,16 +445,7 @@ const CardMain = ({
           </Form.Item>
         </Col>
         <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingSea('DET')}
-            name="detSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('DET_form.placeholder'),
-              },
-            ]}
-          >
+          <Form.Item label={translatePricingSea('DET')} name="detSeaPricing">
             <InputNumber
               style={{ width: '100%' }}
               placeholder={translatePricingSea('DET_form.placeholder')}
@@ -560,18 +492,8 @@ const CardMain = ({
           </Form.Item>
         </Col>
         <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingSea('LCL')}
-            name="lclSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('LCL_form.placeholder'),
-              },
-            ]}
-          >
+          <Form.Item label={translatePricingSea('LCL')} name="lclSeaPricing">
             <InputNumber
-              addonAfter={suffixSelectorCurrencyLCL}
               placeholder={translatePricingSea('LCL_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
@@ -584,20 +506,34 @@ const CardMain = ({
           <Form.Item
             label={translatePricingSea('LCLMin')}
             name="lclMinSeaPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('LCLMin_form.placeholder'),
-              },
-            ]}
           >
             <InputNumber
-              addonAfter={suffixSelectorCurrencyLCLMin}
               placeholder={translatePricingSea('LCLMin_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            name="currencyID"
+            label="Currency"
+            rules={[
+              {
+                required: true,
+                message: translatePricingSea('currency_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              placeholder={translatePricingSea('currency_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
             />
           </Form.Item>
         </Col>

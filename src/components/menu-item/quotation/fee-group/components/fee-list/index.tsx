@@ -181,7 +181,7 @@ const FeeList = ({
     {
       title: 'Fee',
       dataIndex: 'feeID',
-      width: '20%',
+      width: '30%',
       editable: !isCheckPermissionEdit,
       fixed: 'left',
       render: (value) => {

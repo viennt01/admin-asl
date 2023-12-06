@@ -225,47 +225,6 @@ const CardMain = ({
     },
   });
 
-  const suffixSelectorCurrencyLCLMin = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translateQuotationSea('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
-
-  const suffixSelectorCurrencyLCL = (
-    <Form.Item
-      name="currencyID"
-      noStyle
-      rules={[
-        {
-          required: true,
-          message: translateQuotationSea('currency_form.placeholder'),
-        },
-      ]}
-    >
-      <Select
-        placeholder={'$'}
-        disabled={checkRow && isCheckPermissionEdit}
-        showSearch
-        style={{ width: 75 }}
-        options={optionCurrency}
-      />
-    </Form.Item>
-  );
   return (
     <Card
       style={{ marginBottom: 24 }}
@@ -500,12 +459,6 @@ const CardMain = ({
           <Form.Item
             label={translateQuotationSea('STO')}
             name="stoSeaQuotation"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('STO_form.placeholder'),
-              },
-            ]}
           >
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
@@ -520,12 +473,6 @@ const CardMain = ({
           <Form.Item
             label={translateQuotationSea('DEM')}
             name="demSeaQuotation"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('DEM_form.placeholder'),
-              },
-            ]}
           >
             <InputNumber
               style={{ width: '100%' }}
@@ -540,12 +487,6 @@ const CardMain = ({
           <Form.Item
             label={translateQuotationSea('DET')}
             name="detSeaQuotation"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('DET_form.placeholder'),
-              },
-            ]}
           >
             <InputNumber
               style={{ width: '100%' }}
@@ -596,15 +537,8 @@ const CardMain = ({
           <Form.Item
             label={translateQuotationSea('LCL')}
             name="lclSeaQuotation"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('LCL_form.placeholder'),
-              },
-            ]}
           >
             <InputNumber
-              addonAfter={suffixSelectorCurrencyLCL}
               placeholder={translateQuotationSea('LCL_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
@@ -617,15 +551,8 @@ const CardMain = ({
           <Form.Item
             label={translateQuotationSea('LCLMin')}
             name="lclMinSeaQuotation"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('LCLMin_form.placeholder'),
-              },
-            ]}
           >
             <InputNumber
-              addonAfter={suffixSelectorCurrencyLCLMin}
               placeholder={translateQuotationSea('LCLMin_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || 0)}
               parser={(value: any) => value.replace().replace(/,/g, '')}
@@ -635,6 +562,26 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
+        <Col lg={8} span={24}>
+          <Form.Item
+            name="currencyID"
+            label="Currency"
+            rules={[
+              {
+                required: true,
+                message: translateQuotationSea('currency_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              placeholder={translateQuotationSea('currency_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
+            />
+          </Form.Item>
+        </Col>
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationSea('vendor_form.title')}
