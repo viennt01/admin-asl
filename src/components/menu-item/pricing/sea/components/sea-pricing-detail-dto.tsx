@@ -236,6 +236,7 @@ const SeaPricingDetailDTO = ({
       setCountLoadData(1);
     }
   }, [form.getFieldValue('seaPricingDetailDTOs')]);
+  console.log(form.getFieldValue('seaPricingDetailDTOs'));
 
   useEffect(() => {
     if (valueCurrencyID) {
@@ -429,7 +430,7 @@ const SeaPricingDetailDTO = ({
 
     form.setFieldValue(
       'seaPricingDetailDTOs',
-      dataSource.map((item) => {
+      newData.map((item) => {
         return {
           seaPricingDetailID: item.key,
           containerTypeID: item.containerTypeID,

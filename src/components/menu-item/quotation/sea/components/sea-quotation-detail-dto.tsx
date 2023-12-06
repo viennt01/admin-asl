@@ -429,7 +429,7 @@ const SeaPricingDetailDTO = ({
 
     form.setFieldValue(
       'seaQuotationDetailDTOs',
-      dataSource.map((item) => {
+      newData.map((item) => {
         return {
           seaQuotationDetailID: item.key,
           containerTypeID: item.containerTypeID,
