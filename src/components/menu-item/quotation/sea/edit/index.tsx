@@ -43,7 +43,7 @@ const EditSeaQuotation = () => {
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
-        partnerID: formValues.vendor || '',
+        vendorID: formValues.vendorID || '',
         forNewUser: formValues.forNewUser || false,
         note: formValues.note || '',
         dateEffect: formValues.dateEffect.valueOf(),

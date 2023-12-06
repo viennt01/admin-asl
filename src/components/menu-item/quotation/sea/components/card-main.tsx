@@ -169,7 +169,7 @@ const CardMain = ({
         dateEffect: dayjs(Number(propCopyAndCreate.dateEffect as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
-        vendor: propCopyAndCreate.vendor as string,
+        vendorID: propCopyAndCreate.vendorID as string,
         forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
         demSeaQuotation: propCopyAndCreate.demSeaQuotation as string,
         detSeaQuotation: propCopyAndCreate.detSeaQuotation as string,
@@ -585,7 +585,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationSea('vendor_form.title')}
-            name="vendor"
+            name="vendorID"
             rules={[
               {
                 required: true,

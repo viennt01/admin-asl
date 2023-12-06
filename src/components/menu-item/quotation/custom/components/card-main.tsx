@@ -169,7 +169,7 @@ const CardMain = ({
         currencyID: propCopyAndCreate.currencyID as string,
         transactionTypeID: propCopyAndCreate.transactionTypeID as string,
         note: propCopyAndCreate.note as string,
-        vendor: propCopyAndCreate.vendor as string,
+        vendorID: propCopyAndCreate.vendorID as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
@@ -433,7 +433,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationCustom('vendor_form.title')}
-            name="vendor"
+            name="vendorID"
             rules={[
               {
                 required: true,

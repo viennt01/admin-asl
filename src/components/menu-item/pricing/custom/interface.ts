@@ -67,9 +67,9 @@ export interface ICustomPricingDetailDataBody {
 export interface IFormValues {
   customPricingID: string;
   typeDelaracrionID: string;
-  partnerID: string;
   commodityID: string;
   currencyID: string;
+  vendorID: string;
   transactionTypeID: string;
   note: string;
   effectDated: Dayjs;

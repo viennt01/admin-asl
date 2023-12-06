@@ -79,7 +79,7 @@ export interface IFormValues {
   validityDate: Dayjs;
   public: boolean;
   forNewUser: boolean;
-  vendor: string;
+  vendorID: string;
   statusCustomQuotation: string;
   customQuotationFeeGroupDTOs: ISeaQuotationFeeFormValue[];
   salesLeadsCustomQuotationDTOs: string[];
@@ -143,7 +143,6 @@ export type ICustomQuotationCreate = Omit<
   | 'customQuotationID'
   | 'effectDated'
   | 'validityDate'
-  | 'vendor'
   | 'customQuotationFeeGroupDTOs'
   | 'salesLeadsCustomQuotationDTOs'
   | 'customQuotationLCLDetailDTO'
@@ -152,7 +151,6 @@ export type ICustomQuotationCreate = Omit<
 > & {
   effectDated: number;
   validityDate: number;
-  partnerID: string;
   customQuotationFeeGroupRegisterRequests: { feeGroupID: string }[];
   salesLeadsQuotationRegisters: { partnerID: React.Key }[];
   customQuotationLCLDetailRegisterRequest: ICustomQuotationLCLDetailDTO;
@@ -164,13 +162,12 @@ export type ICustomQuotationEdit = Omit<
   IFormValues,
   | 'effectDated'
   | 'validityDate'
-  | 'vendor'
   | 'customQuotationFeeGroupDTOs'
   | 'salesLeadsCustomQuotationDTOs'
   | 'customQuotationLCLDetailDTO'
   | 'customQuotationFCLDetailDTOs'
   | 'customQuotationAirDetailDTO'
-> & { partnerID: string; effectDated: number; validityDate: number };
+> & { effectDated: number; validityDate: number };
 export type SeaQuotationDelete = {
   ids: React.Key[];
 };

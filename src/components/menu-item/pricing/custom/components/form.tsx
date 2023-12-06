@@ -176,7 +176,7 @@ const CustomPricing = ({
       if (data.status) {
         form.setFieldsValue({
           typeDelaracrionID: data.data.typeDelaracrionID,
-          partnerID: data.data.partnerID,
+          vendorID: data.data.vendorID,
           commodityID: data.data.commodityID,
           currencyID: data.data.currencyID,
           transactionTypeID: data.data.transactionTypeID,
@@ -234,7 +234,7 @@ const CustomPricing = ({
     const props = {
       checkCopyAndCreate: true,
       typeDelaracrionID: form.getFieldValue('typeDelaracrionID'),
-      partnerID: form.getFieldValue('partnerID'),
+      vendorID: form.getFieldValue('vendorID'),
       commodityID: form.getFieldValue('commodityID'),
       currencyID: form.getFieldValue('currencyID'),
       transactionTypeID: form.getFieldValue('transactionTypeID'),

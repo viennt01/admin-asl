@@ -24,7 +24,7 @@ const EditCustomQuotation = () => {
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
-        partnerID: formValues.vendor || '',
+        vendorID: formValues.vendorID || '',
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         forNewUser: formValues.forNewUser || false,

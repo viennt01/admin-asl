@@ -20,7 +20,7 @@ const EditCustomPricing = () => {
       const _requestData: ICustomPricingEdit = {
         customPricingID: idQuery,
         typeDelaracrionID: formValues.typeDelaracrionID || '',
-        partnerID: formValues.partnerID || '',
+        vendorID: formValues.vendorID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',

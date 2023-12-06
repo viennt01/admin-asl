@@ -154,7 +154,7 @@ const CardMain = ({
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
         typeDelaracrionID: propCopyAndCreate.typeDelaracrionID as string,
-        partnerID: propCopyAndCreate.partnerID as string,
+        vendorID: propCopyAndCreate.vendorID as string,
         commodityID: propCopyAndCreate.commodityID as string,
         currencyID: propCopyAndCreate.currencyID as string,
         transactionTypeID: propCopyAndCreate.transactionTypeID as string,
@@ -337,7 +337,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingCustom('vendor_form.title')}
-            name="partnerID"
+            name="vendorID"
             rules={[
               {
                 required: true,

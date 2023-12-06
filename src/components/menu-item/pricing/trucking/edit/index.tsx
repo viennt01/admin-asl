@@ -37,7 +37,7 @@ const EditTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        partnerID: formValues.vendor || '',
+        vendorID: formValues.vendorID || '',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),

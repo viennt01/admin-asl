@@ -163,14 +163,12 @@ export type SeaPricingCreate = Omit<
   FormValues,
   | 'seaPricingID'
   | 'dateEffect'
-  | 'vendorID'
   | 'validityDate'
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'
 > & {
   dateEffect: number;
   validityDate: number;
-  partnerId: string;
   seaPricingDetailRegisterRequests: SeaPricingDetailDTOsCreate[];
   seaPricingFeeGroupRegisterRequests: SeaPricingFeeDTOsCreate[];
 };
@@ -179,13 +177,11 @@ export type SeaPricingEdit = Omit<
   FormValues,
   | 'dateEffect'
   | 'validityDate'
-  | 'vendorID'
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'
 > & {
   dateEffect: number;
   validityDate: number;
-  partnerId: string;
   seaPricingDetailUpdateRequests: SeaPricingDetailDTOsUpdate[];
   seaPricingFeeGroupUpdateRequests: SeaPricingFeeUpdate[];
 };

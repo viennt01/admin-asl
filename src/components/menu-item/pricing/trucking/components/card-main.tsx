@@ -159,7 +159,7 @@ const CardMain = ({
         deliveryID: propCopyAndCreate.deliveryID as string,
         commodityID: propCopyAndCreate.commodityID as string,
         currencyID: propCopyAndCreate.currencyID as string,
-        vendor: propCopyAndCreate.vendor as string,
+        vendorID: propCopyAndCreate.vendorID as string,
         public: propCopyAndCreate.public as unknown as boolean,
         note: propCopyAndCreate.note as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
@@ -474,7 +474,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingTrucking('vendor_form.title')}
-            name="vendor"
+            name="vendorID"
             rules={[
               {
                 required: true,

@@ -74,7 +74,7 @@ export interface IFormValues {
   currencyID: string;
   public: boolean;
   note: string;
-  vendor: string;
+  vendorID: string;
   effectDated: Dayjs;
   validityDate: Dayjs;
   freqDate: string;
@@ -180,14 +180,12 @@ export type ITruckingPricingCreate = Omit<
   | 'truckingPricingID'
   | 'effectDated'
   | 'validityDate'
-  | 'vendor'
   | 'truckingPricingDetailByContainerTypeDTOs'
   | 'truckingPricingFeeGroupDTOs'
   | 'truckingPricingDetailByLoadCapacityDTOs'
 > & {
   effectDated: number;
   validityDate: number;
-  partnerID: string;
   truckingPricingDetailRegisterRequests: ITruckingDetailDTOsCreate[];
   truckingPricingFeeGroupRegisterRequests: ITruckingPricingFeeDTOsCreate[];
   truckingLoadCapacityDetailRegisterRequests: ITruckingDetailLoadCapacityDTOsCreate[];
@@ -197,14 +195,12 @@ export type SeaPricingEdit = Omit<
   IFormValues,
   | 'effectDated'
   | 'validityDate'
-  | 'vendor'
   | 'truckingPricingDetailByContainerTypeDTOs'
   | 'truckingPricingFeeGroupDTOs'
   | 'truckingPricingDetailByLoadCapacityDTOs'
 > & {
   effectDated: number;
   validityDate: number;
-  partnerID: string;
   seaPricingDetailUpdateRequests: ITruckingPricingDetailDTOsUpdate[];
   seaPricingFeeGroupUpdateRequests: ITruckingPricingFeeUpdate[];
 };

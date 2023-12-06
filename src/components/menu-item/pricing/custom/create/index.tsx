@@ -79,7 +79,7 @@ const CreateCustomPricing = () => {
       const _requestData: ICustomPricingEdit = {
         customPricingID: id || '',
         typeDelaracrionID: formValues.typeDelaracrionID || '',
-        partnerID: formValues.partnerID || '',
+        vendorID: formValues.vendorID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
@@ -102,8 +102,8 @@ const CreateCustomPricing = () => {
     } else {
       const _requestData: ICustomPricingCreate = {
         typeDelaracrionID: formValues.typeDelaracrionID || '',
-        partnerID: formValues.partnerID || '',
         commodityID: formValues.commodityID || '',
+        vendorID: formValues.vendorID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
@@ -146,8 +146,8 @@ const CreateCustomPricing = () => {
       const _requestData: ICustomPricingEdit = {
         customPricingID: id,
         typeDelaracrionID: formValues.typeDelaracrionID || '',
-        partnerID: formValues.partnerID || '',
         commodityID: formValues.commodityID || '',
+        vendorID: formValues.vendorID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
@@ -172,8 +172,8 @@ const CreateCustomPricing = () => {
     } else {
       const _requestData: ICustomPricingCreate = {
         typeDelaracrionID: formValues.typeDelaracrionID || '',
-        partnerID: formValues.partnerID || '',
         commodityID: formValues.commodityID || '',
+        vendorID: formValues.vendorID || '',
         currencyID: formValues.currencyID || '',
         transactionTypeID: formValues.transactionTypeID || '',
         note: formValues.note || '',
