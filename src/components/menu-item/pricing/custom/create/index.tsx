@@ -129,6 +129,8 @@ const CreateCustomPricing = () => {
           formValues.customPricingAirDetailDTO,
         statusCustomPricing: STATUS_ALL_LABELS.REQUEST,
       };
+      console.log(formValues.customPricingFCLDetailDTOs);
+
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status

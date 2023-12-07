@@ -416,10 +416,6 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
     };
     const newDataSource = [newData, ...dataSource];
     setDataSource(newDataSource);
-    if (optionUnitActive.length > 0) {
-      setOptionUnitActive(optionUnitActive.slice(1));
-    }
-    setCount(count + 1);
     form.setFieldValue(
       'customQuotationFCLDetailDTOs',
       newDataSource.map((item) => {
@@ -436,6 +432,10 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
         };
       })
     );
+    if (optionUnitActive.length > 0) {
+      setOptionUnitActive(optionUnitActive.slice(1));
+    }
+    setCount(count + 1);
   };
 
   const handleSave = (row: DataType) => {
@@ -455,7 +455,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
 
     form.setFieldValue(
       'customQuotationFCLDetailDTOs',
-      dataSource.map((item) => {
+      newData.map((item) => {
         return {
           customQuotationFCLDetailID: item.key,
           unitID: item.unitID,

@@ -416,10 +416,6 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
     };
     const newDataSource = [newData, ...dataSource];
     setDataSource(newDataSource);
-    if (optionUnitActive.length > 0) {
-      setOptionUnitActive(optionUnitActive.slice(1));
-    }
-    setCount(count + 1);
     form.setFieldValue(
       'customPricingFCLDetailDTOs',
       newDataSource.map((item) => {
@@ -436,6 +432,10 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
         };
       })
     );
+    if (optionUnitActive.length > 0) {
+      setOptionUnitActive(optionUnitActive.slice(1));
+    }
+    setCount(count + 1);
   };
 
   const handleSave = (row: DataType) => {
@@ -455,7 +455,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
 
     form.setFieldValue(
       'customPricingFCLDetailDTOs',
-      dataSource.map((item) => {
+      newData.map((item) => {
         return {
           truckingPricingDetailID: item.key,
           unitID: item.unitID,
