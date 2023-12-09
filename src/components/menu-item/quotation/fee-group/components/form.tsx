@@ -317,16 +317,16 @@ const FeeGroupForm = ({
         }))
         .find((type) => type.value === typeFeeId)?.label;
       switch (dataSelect) {
-        case 'Sea Pricing':
+        case 'Sea Quotation':
           setListIdTypeFeeNeedSearch([
             TYPE_FEE.SEA_FREIGHT,
             TYPE_FEE.SEA_LOCAL_CHARGES,
           ]);
           break;
-        case 'Trucking Pricing':
+        case 'Trucking Quotation':
           setListIdTypeFeeNeedSearch([TYPE_FEE.TRUCKING]);
           break;
-        case 'Custom Pricing':
+        case 'Custom Quotation':
           setListIdTypeFeeNeedSearch([
             TYPE_FEE.SEA_FREIGHT,
             TYPE_FEE.SEA_LOCAL_CHARGES,
@@ -336,7 +336,7 @@ const FeeGroupForm = ({
             TYPE_FEE.TRUCKING,
           ]);
           break;
-        case 'Air Pricing':
+        case 'Air Quotation':
           setListIdTypeFeeNeedSearch([
             TYPE_FEE.AIR_FREIGHT,
             TYPE_FEE.AIR_LOCAL_CHARGES,
