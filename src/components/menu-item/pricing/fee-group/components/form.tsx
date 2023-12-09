@@ -324,10 +324,7 @@ const FeeGroupForm = ({
           ]);
           break;
         case 'Trucking Pricing':
-          setListIdTypeFeeNeedSearch([
-            TYPE_FEE.SEA_FREIGHT,
-            TYPE_FEE.SEA_LOCAL_CHARGES,
-          ]);
+          setListIdTypeFeeNeedSearch([TYPE_FEE.TRUCKING]);
           break;
         case 'Custom Pricing':
           setListIdTypeFeeNeedSearch([
