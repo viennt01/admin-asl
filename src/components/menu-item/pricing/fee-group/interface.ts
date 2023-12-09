@@ -17,6 +17,15 @@ export enum TYPE_QUOTATION_PRICING {
   'PRICING' = 'PRICING',
 }
 
+export enum TYPE_FEE {
+  'SEA_FREIGHT' = 'SEA FREIGHT',
+  'SEA_LOCAL_CHARGES' = 'Sea Local Charges',
+  'AIR_FREIGHT' = 'AIR FREIGHT',
+  'TRUCKING' = 'Trucking',
+  'CUSTOMS' = 'Customs',
+  'AIR_LOCAL_CHARGES' = 'Air Local Charges',
+}
+
 export interface FeeGroup {
   feeGroupID: string;
   typeFeeGroupID: string;
@@ -161,7 +170,7 @@ export interface ITypeFeeGroup {
   type: TYPE_QUOTATION_PRICING;
 }
 export interface ITypeFeeRequest {
-  typeFeeIDs: string[];
+  typeFeeName: string[];
 }
 export interface FeeData {
   feeID: string;

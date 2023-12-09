@@ -46,7 +46,10 @@ import {
   getListFeeByTypeFee,
   getListTypeFeeGroup,
 } from '@/components/menu-item/pricing/fee-group/fetcher';
-import { TYPE_QUOTATION_PRICING } from '@/components/menu-item/pricing/fee-group/interface';
+import {
+  TYPE_FEE,
+  TYPE_QUOTATION_PRICING,
+} from '@/components/menu-item/pricing/fee-group/interface';
 
 const initialValue = {
   description: '',
@@ -92,6 +95,9 @@ const FeeGroupForm = ({
   const [optionFee, setOptionFee] = useState<FeeDataOption[]>([]);
   const [dataSource, setDataSource] = useState<FeeTable[]>([]);
   const [listFeeData, setListFeeData] = useState<Fee[]>([]);
+  const [listIdTypeFeeNeedSearch, setListIdTypeFeeNeedSearch] = useState<
+    TYPE_FEE[]
+  >([]);
   const [dataUnit, setDataUnit] = useState<
     {
       label: string;
@@ -166,9 +172,10 @@ const FeeGroupForm = ({
 
   // get Fee
   useQuery({
-    queryKey: [API_FEE.GET_ALL_FEE_BY_TYPE_FEE, typeFeeId],
-    queryFn: () => getListFeeByTypeFee({ typeFeeIDs: [typeFeeId] }),
-    enabled: typeFeeId !== undefined,
+    queryKey: [API_FEE.GET_ALL_FEE_BY_TYPE_FEE, listIdTypeFeeNeedSearch],
+    queryFn: () =>
+      getListFeeByTypeFee({ typeFeeName: listIdTypeFeeNeedSearch }),
+    enabled: listIdTypeFeeNeedSearch.length !== 0,
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -300,6 +307,49 @@ const FeeGroupForm = ({
     propCopyAndCreate,
     form.getFieldValue('statusFeeGroup'),
   ]);
+
+  useEffect(() => {
+    if (typeFeeGroup.data?.data && typeFeeId) {
+      const dataSelect = typeFeeGroup.data?.data
+        .map((type) => ({
+          label: type.typeFeeGroupName,
+          value: type.typeFeeGroupID,
+        }))
+        .find((type) => type.value === typeFeeId)?.label;
+      switch (dataSelect) {
+        case 'Sea Pricing':
+          setListIdTypeFeeNeedSearch([
+            TYPE_FEE.SEA_FREIGHT,
+            TYPE_FEE.SEA_LOCAL_CHARGES,
+          ]);
+          break;
+        case 'Trucking Pricing':
+          setListIdTypeFeeNeedSearch([
+            TYPE_FEE.SEA_FREIGHT,
+            TYPE_FEE.SEA_LOCAL_CHARGES,
+          ]);
+          break;
+        case 'Custom Pricing':
+          setListIdTypeFeeNeedSearch([
+            TYPE_FEE.SEA_FREIGHT,
+            TYPE_FEE.SEA_LOCAL_CHARGES,
+            TYPE_FEE.AIR_FREIGHT,
+            TYPE_FEE.AIR_LOCAL_CHARGES,
+            TYPE_FEE.CUSTOMS,
+            TYPE_FEE.TRUCKING,
+          ]);
+          break;
+        case 'Air Pricing':
+          setListIdTypeFeeNeedSearch([
+            TYPE_FEE.AIR_FREIGHT,
+            TYPE_FEE.AIR_LOCAL_CHARGES,
+          ]);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [typeFeeId]);
 
   return (
     <div style={{ padding: '24px 0' }}>
