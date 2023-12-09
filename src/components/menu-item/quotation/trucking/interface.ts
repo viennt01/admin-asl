@@ -2,7 +2,7 @@ import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
 export interface ITruckingQuotation {
-  truckingPricingID: string;
+  truckingQuotationID: string;
   pickupID: string;
   pickupName: string;
   deliveryID: string;
@@ -34,7 +34,7 @@ export interface IDetailDTOs {
 }
 
 export interface ISeaQuotationTable
-  extends Omit<ITruckingQuotation, 'truckingPricingID'> {
+  extends Omit<ITruckingQuotation, 'truckingQuotationID'> {
   key: string;
   searchAll: string;
 }
@@ -85,7 +85,7 @@ export interface IFormValues {
   statusTruckingQuotation: string;
   truckingQuotationDetailByContainerTypeDTOs: IContainerDTOFormValue[];
   truckingQuotationDetailByLoadCapacityDTOs: ILoadCapacityDTOFormValue[];
-  truckingQuotaionFeeGroupDTOs: ITruckQuotationFeeFormValue[];
+  truckingQuotationFeeGroupDTOs: ITruckQuotationFeeFormValue[];
   salesLeadsTruckingQuotationDTOs: string[];
   truckingQuotaionGroupPartnerDTOs: string[];
 }
@@ -212,7 +212,7 @@ export type ITruckQuotationCreate = Omit<
   | 'validityDate'
   | 'truckingQuotationDetailByContainerTypeDTOs'
   | 'truckingQuotationDetailByLoadCapacityDTOs'
-  | 'truckingQuotaionFeeGroupDTOs'
+  | 'truckingQuotationFeeGroupDTOs'
   | 'salesLeadsTruckingQuotationDTOs'
   | 'truckingQuotaionGroupPartnerDTOs'
 > & {
@@ -233,7 +233,7 @@ export type ITruckQuotationEdit = Omit<
   | 'validityDate'
   | 'truckingQuotationDetailByContainerTypeDTOs'
   | 'truckingQuotationDetailByLoadCapacityDTOs'
-  | 'truckingQuotaionFeeGroupDTOs'
+  | 'truckingQuotationFeeGroupDTOs'
   | 'salesLeadsTruckingQuotationDTOs'
   | 'truckingQuotaionGroupPartnerDTOs'
 > & {

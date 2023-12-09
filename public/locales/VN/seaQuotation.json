@@ -14,7 +14,7 @@
     "currency": "Currency",
     "vat": "VAT",
     "effect_date": "Effect Date",
-    "validity": "Validity",
+    "validity": "Validity Date",
     "freq": "Freq",
     "Cutoff": "Cut Off",
     "TT": "TT",
@@ -115,9 +115,9 @@
     },
 
     "validity_form": {
-        "title": "Validity",
-        "placeholder": "Nhập validity",
-        "error_required": "Vui lòng nhập validity"
+        "title": "Validity Date",
+        "placeholder": "Nhập Validity Date",
+        "error_required": "Vui lòng nhập Validity Date"
     },
 
     "freq_form": {

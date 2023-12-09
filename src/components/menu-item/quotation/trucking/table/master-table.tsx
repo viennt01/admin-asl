@@ -108,7 +108,7 @@ export default function MasterDataTable() {
 
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.truckingPricingID,
+            key: data.truckingQuotationID,
             pickupID: data.pickupID,
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,

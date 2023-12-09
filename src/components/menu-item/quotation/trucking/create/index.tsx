@@ -191,7 +191,7 @@ const CreateSeaQuotation = () => {
         })) || [];
 
       const truckQuotationFeeGroupRegisterRequests =
-        formValues.truckingQuotaionFeeGroupDTOs?.map((id) => {
+        formValues.truckingQuotationFeeGroupDTOs?.map((id) => {
           return {
             feeGroupID: id.feeGroupID,
           };
@@ -313,7 +313,7 @@ const CreateSeaQuotation = () => {
           groupPartnerID: id,
         })) || [];
       const truckQuotationFeeGroupRegisterRequests =
-        formValues.truckingQuotaionFeeGroupDTOs?.map((id) => {
+        formValues.truckingQuotationFeeGroupDTOs?.map((id) => {
           return {
             feeGroupID: id.feeGroupID,
           };

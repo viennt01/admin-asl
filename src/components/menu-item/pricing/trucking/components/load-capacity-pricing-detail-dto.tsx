@@ -220,6 +220,7 @@ const TruckingPricingLoadCapacity = ({
   const [countLoadData, setCountLoadData] = useState(0);
 
   const valueCurrencyID = Form.useWatch('currencyID', form);
+  console.log(form.getFieldValue('truckingPricingDetailByLoadCapacityDTOs'));
 
   // Lấy data từ API và chỉ lấy lần đầu (setDataRequire)
   useEffect(() => {
@@ -339,7 +340,7 @@ const TruckingPricingLoadCapacity = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type FCL',
+      title: 'Type LCL',
       dataIndex: 'loadCapacityID',
       width: '30%',
       align: 'center',

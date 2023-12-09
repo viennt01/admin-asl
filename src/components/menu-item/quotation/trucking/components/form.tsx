@@ -66,7 +66,7 @@ interface FormProps {
 }
 
 const initalValues = {
-  truckingQuotaionFeeGroupDTOs: [],
+  truckingQuotationFeeGroupDTOs: [],
 };
 
 const TruckQuotation = ({
@@ -165,7 +165,7 @@ const TruckQuotation = ({
   // get load capacity
   useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TOTAL }),
+    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TRUCKING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -268,7 +268,8 @@ const TruckQuotation = ({
             data.data.truckingQuotationDetailByContainerTypeDTOs,
           truckingQuotationDetailByLoadCapacityDTOs:
             data.data.truckingQuotationDetailByLoadCapacityDTOs,
-          truckingQuotaionFeeGroupDTOs: data.data.truckingQuotaionFeeGroupDTOs,
+          truckingQuotationFeeGroupDTOs:
+            data.data.truckingQuotationFeeGroupDTOs,
           salesLeadsTruckingQuotationDTOs:
             data.data.salesLeadsTruckingQuotationDTOs?.map(
               (partner) => partner.partnerID
@@ -284,7 +285,7 @@ const TruckQuotation = ({
         setLoadCapacityDetail(
           data.data.truckingQuotationDetailByLoadCapacityDTOs
         );
-        setFeeDTOs(data.data.truckingQuotaionFeeGroupDTOs);
+        setFeeDTOs(data.data.truckingQuotationFeeGroupDTOs);
         setSalesLeads(data.data.salesLeadsTruckingQuotationDTOs);
         setSeaQuotaionGroupPartner(data.data.truckingQuotaionGroupPartnerDTOs);
       } else {
@@ -352,8 +353,8 @@ const TruckQuotation = ({
       truckingQuotationDetailByLoadCapacityDTOs: JSON.stringify(
         form.getFieldValue('truckingQuotationDetailByLoadCapacityDTOs')
       ),
-      truckingQuotaionFeeGroupDTOs: JSON.stringify(
-        form.getFieldValue('truckingQuotaionFeeGroupDTOs')
+      truckingQuotationFeeGroupDTOs: JSON.stringify(
+        form.getFieldValue('truckingQuotationFeeGroupDTOs')
       ),
       salesLeadsTruckingQuotationDTOs: JSON.stringify(
         form.getFieldValue('salesLeadsTruckingQuotationDTOs')
@@ -395,7 +396,7 @@ const TruckQuotation = ({
         />
 
         <CollapseCard
-          title="LCL"
+          title="FLC"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
@@ -408,7 +409,7 @@ const TruckQuotation = ({
         </CollapseCard>
 
         <CollapseCard
-          title="FCL"
+          title="LCL"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >

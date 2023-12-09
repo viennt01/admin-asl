@@ -141,7 +141,7 @@ const TruckingPricingForm = ({
   // get load capacity
   useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TOTAL }),
+    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TRUCKING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -219,12 +219,14 @@ const TruckingPricingForm = ({
           statusTruckingPricing: data.data.statusTruckingPricing,
           truckingPricingDetailByContainerTypeDTOs:
             data.data.truckingPricingDetailByContainerTypeDTOs,
+          truckingPricingDetailByLoadCapacityDTOs:
+            data.data.truckingPricingDetailByLoadCapacityDTOs,
           truckingPricingFeeGroupDTOs:
             data.data.truckingPricingFeeGroupDTOs?.map((fee) => fee.feeGroupID),
         });
         setTruckingPricingFeeDTOs(data.data.truckingPricingFeeGroupDTOs);
       } else {
-        router.push(ROUTERS.SEA_PRICING);
+        router.back();
       }
     },
   });
@@ -242,7 +244,7 @@ const TruckingPricingForm = ({
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.SEA_PRICING))
+            ? (successToast(data.message), router.back())
             : errorToast(data.message);
         },
         onError() {
@@ -280,6 +282,9 @@ const TruckingPricingForm = ({
       truckingPricingDetailByContainerTypeDTOs: JSON.stringify(
         form.getFieldValue('truckingPricingDetailByContainerTypeDTOs')
       ),
+      truckingPricingDetailByLoadCapacityDTOs: JSON.stringify(
+        form.getFieldValue('truckingPricingDetailByLoadCapacityDTOs')
+      ),
       truckingPricingFeeGroupDTOs: form.getFieldValue(
         'truckingPricingFeeGroupDTOs'
       ),
@@ -316,7 +321,7 @@ const TruckingPricingForm = ({
         />
 
         <CollapseCard
-          title="LCL"
+          title="FCL"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
@@ -329,7 +334,7 @@ const TruckingPricingForm = ({
         </CollapseCard>
 
         <CollapseCard
-          title="FCL"
+          title="LCL"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >

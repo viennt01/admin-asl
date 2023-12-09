@@ -26,7 +26,7 @@ const ListFee = ({ form, create }: Props) => {
   const onOke = () => formModalAdd.submit();
   const [dataFee, setDataFee] = useState<ITruckQuotationFeeFormValue[]>([]);
   const [idActive, setIdActive] = useState<string[]>([]);
-  const listIdFeeGroup = Form.useWatch('truckingQuotaionFeeGroupDTOs', form);
+  const listIdFeeGroup = Form.useWatch('truckingQuotationFeeGroupDTOs', form);
   const [activeKey, setActiveKey] = useState('1');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [feeGroupData, setFeeGroupData] = useState<IDataFeeGroup[]>([]);
@@ -109,7 +109,7 @@ const ListFee = ({ form, create }: Props) => {
       setIsModalOpen(false);
       formModalAdd.resetFields();
 
-      form.setFieldValue('truckingQuotaionFeeGroupDTOs', [
+      form.setFieldValue('truckingQuotationFeeGroupDTOs', [
         ...listIdFeeGroup,
         {
           feeGroupName: newData[0]?.label || 'New Group',
@@ -138,7 +138,7 @@ const ListFee = ({ form, create }: Props) => {
     }
     setItems(newPanes);
     form.setFieldValue(
-      'truckingQuotaionFeeGroupDTOs',
+      'truckingQuotationFeeGroupDTOs',
       newPanes.map((pane) => {
         return {
           feeGroupName: pane.label,

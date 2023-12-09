@@ -334,7 +334,7 @@ const ContainerDetailDTO = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type container',
+      title: 'Type FCL',
       dataIndex: 'containerTypeID',
       width: '30%',
       align: 'center',

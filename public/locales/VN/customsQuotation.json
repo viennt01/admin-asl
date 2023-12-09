@@ -31,7 +31,7 @@
     },
 
     "validity_form": {
-        "title": "Validity",
+        "title": "Validity Date",
         "placeholder": "Nhập validity date",
         "error_required": "Vui lòng nhập validity date"
     },

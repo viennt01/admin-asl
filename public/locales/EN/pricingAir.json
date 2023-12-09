@@ -13,7 +13,7 @@
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "validity": "Validity",
+    "validity": "Validity date",
     "freq": "Freq",
     "Cutoff": "Cut Off",
     "TT": "TT",
@@ -110,9 +110,9 @@
     },
 
     "validity_form": {
-        "title": "Validity",
-        "placeholder": "Enter validity",
-        "error_required": "Please enter validity"
+        "title": "Validity date",
+        "placeholder": "Enter validity date",
+        "error_required": "Please enter validity date"
     },
 
     "freq_form": {

@@ -333,7 +333,7 @@ const SeaPricingDetailDTO = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type LCL',
+      title: 'Type FCL',
       dataIndex: 'containerTypeID',
       width: '30%',
       align: 'center',

@@ -16,7 +16,7 @@
     "currency": "Currency",
     "vat": "VAT",
     "effect_date": "Effect Date",
-    "validity": "Validity",
+    "validity": "Validity Date",
     "freq": "Freq",
     "Cutoff": "Cut Off",
     "TT": "TT",
@@ -123,9 +123,9 @@
     },
 
     "validity_form": {
-        "title": "Validity",
-        "placeholder": "Enter validity",
-        "error_required": "Please enter validity"
+        "title": "Validity Date",
+        "placeholder": "Enter validity Date",
+        "error_required": "Please enter validity Date"
     },
 
     "freq_form": {

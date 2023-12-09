@@ -191,8 +191,8 @@ const CardMain = ({
         truckingQuotationDetailByLoadCapacityDTOs: JSON.parse(
           propCopyAndCreate.truckingQuotationDetailByLoadCapacityDTOs as string
         ) as unknown as IDetailDTOs[],
-        truckingQuotaionFeeGroupDTOs: JSON.parse(
-          propCopyAndCreate.truckingQuotaionFeeGroupDTOs as string
+        truckingQuotationFeeGroupDTOs: JSON.parse(
+          propCopyAndCreate.truckingQuotationFeeGroupDTOs as string
         ) as unknown as ITruckQuotationFeeFormValue[],
         salesLeadsTruckingQuotationDTOs: JSON.parse(
           propCopyAndCreate.salesLeadsTruckingQuotationDTOs as string
@@ -700,7 +700,7 @@ const CardMain = ({
           <Form.Item name="truckingQuotationDetailByLoadCapacityDTOs"></Form.Item>
         </Col>
         <Col span={0}>
-          <Form.Item name="truckingQuotaionFeeGroupDTOs"></Form.Item>
+          <Form.Item name="truckingQuotationFeeGroupDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

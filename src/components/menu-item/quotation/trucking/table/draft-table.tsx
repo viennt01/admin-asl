@@ -62,7 +62,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.truckingPricingID,
+            key: data.truckingQuotationID,
             pickupID: data.pickupID,
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,

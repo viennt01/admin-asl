@@ -50,7 +50,7 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.truckingPricingID,
+            key: data.truckingQuotationID,
             pickupID: data.pickupID,
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
@@ -286,7 +286,7 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TRUCKING_PRICING_MANAGER(id));
+    router.push(ROUTERS.TRUCKING_QUOTATION_MANAGER(id));
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
@@ -328,7 +328,7 @@ const RequestTable = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.TRUCKING_PRICING_MANAGER(record.key));
+      router.push(ROUTERS.TRUCKING_QUOTATION_MANAGER(record.key));
     }
   };
 

@@ -339,7 +339,7 @@ const LoadCapacityDetailDTO = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type Load Capacity',
+      title: 'Type LCL',
       dataIndex: 'loadCapacityID',
       width: '30%',
       align: 'center',
