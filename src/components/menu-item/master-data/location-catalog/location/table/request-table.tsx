@@ -97,6 +97,7 @@ const RequestTable = () => {
             key: data.locationID,
             cityID: data.cityID,
             cityName: data.cityName,
+            countryName: data.countryName,
             locationCode: data.locationCode,
             locationName: data.locationName,
             typeLocations: data.typeLocations,

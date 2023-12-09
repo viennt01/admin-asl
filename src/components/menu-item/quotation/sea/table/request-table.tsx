@@ -257,8 +257,8 @@ const RequestTable = () => {
     {
       title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
       width: 200,
-      dataIndex: 'lclMinSeaPricing',
-      key: 'lclMinSeaPricing',
+      dataIndex: 'lclMinSeaQuotation',
+      key: 'lclMinSeaQuotation',
       align: 'right',
       render: (value) => {
         return formatNumber(Number(value) || 0);
@@ -267,8 +267,8 @@ const RequestTable = () => {
     {
       title: <div className={style.title}>{translateCommon('LCL')}</div>,
       width: 200,
-      dataIndex: 'lclSeaPricing',
-      key: 'lclSeaPricing',
+      dataIndex: 'lclSeaQuotation',
+      key: 'lclSeaQuotation',
       align: 'right',
       render: (value) => {
         return formatNumber(Number(value) || 0);
@@ -279,7 +279,7 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.SEA_PRICING_MANAGER(id));
+    router.push(ROUTERS.SEA_QUOTATION_MANAGER(id));
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
@@ -321,7 +321,7 @@ const RequestTable = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.SEA_PRICING_MANAGER(record.key));
+      router.push(ROUTERS.SEA_QUOTATION_MANAGER(record.key));
     }
   };
 

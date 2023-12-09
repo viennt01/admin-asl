@@ -200,15 +200,15 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: <div className={style.title}>{translateCommon('LCLMin')}</div>,
       width: 200,
-      dataIndex: 'lclMinSeaPricing',
-      key: 'lclMinSeaPricing',
+      dataIndex: 'lclMinSeaQuotation',
+      key: 'lclMinSeaQuotation',
       align: 'right',
     },
     {
       title: <div className={style.title}>{translateCommon('LCL')}</div>,
       width: 200,
-      dataIndex: 'lclSeaPricing',
-      key: 'lclSeaPricing',
+      dataIndex: 'lclSeaQuotation',
+      key: 'lclSeaQuotation',
       align: 'right',
     },
     {

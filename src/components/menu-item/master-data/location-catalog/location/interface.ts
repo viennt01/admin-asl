@@ -4,6 +4,7 @@ export interface Location {
   locationID: string;
   cityID: string;
   cityName: string;
+  countryName: string;
   locationCode: string;
   locationName: string;
   statusLocation: string;

@@ -4,6 +4,7 @@
     "code": "Mã",
     "name": "Tên",
     "country_name": "Quốc gia",
+    "city_name": "Thành phố",
     "type_of_port": "Loại địa điểm",
     "company":"Công ty quản lý",
     "status":"Trạng thái",

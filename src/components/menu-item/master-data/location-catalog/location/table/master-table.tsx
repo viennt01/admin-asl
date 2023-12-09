@@ -153,6 +153,7 @@ export default function MasterDataTable() {
             key: data.locationID,
             cityID: data.cityID,
             cityName: data.cityName,
+            countryName: data.countryName,
             locationCode: data.locationCode,
             locationName: data.locationName,
             typeLocations: data.typeLocations,
@@ -347,7 +348,7 @@ export default function MasterDataTable() {
       }),
     },
     {
-      title: translateLocation('country_name'),
+      title: translateLocation('city_name'),
       width: 150,
       dataIndex: 'cityID',
       key: 'cityID',
@@ -374,6 +375,16 @@ export default function MasterDataTable() {
       filterMultiple: false,
       render: (_, value) => {
         return <div>{value.cityName}</div>;
+      },
+    },
+    {
+      title: translateLocation('country_name'),
+      width: 150,
+      dataIndex: 'countryName',
+      key: 'countryName',
+      align: 'left',
+      render: (_, value) => {
+        return <div>{value.countryName}</div>;
       },
     },
     {

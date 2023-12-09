@@ -4,6 +4,7 @@
     "code": "Code",
     "name": "Name",
     "country_name": "Country",
+    "city_name": "City",
     "type_of_port": "Type of Location",
     "company":"Management Company",
     "status":"Status",
