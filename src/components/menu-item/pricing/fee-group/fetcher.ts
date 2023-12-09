@@ -27,6 +27,7 @@ import {
   IDataFeeGroup,
   IRequestFeeGroup,
   ITypeFeeGroup,
+  ITypeFeeRequest,
 } from './interface';
 import {
   API_COLUMN,
@@ -133,6 +134,11 @@ export const getListTypeFeeGroup = (data: ITypeFeeGroup) => {
 //Get fee
 export const getListFee = () => {
   return get<ResponseWithPayload<FeeData[]>>({})(API_FEE.GET_ALL);
+};
+export const getListFeeByTypeFee = (data: ITypeFeeRequest) => {
+  return post<ITypeFeeRequest, ResponseWithPayload<FeeData[]>>({ data })(
+    API_FEE.GET_ALL_FEE_BY_TYPE_FEE
+  );
 };
 //----------------------------------------------------------------
 // Get table fee with feeGroup

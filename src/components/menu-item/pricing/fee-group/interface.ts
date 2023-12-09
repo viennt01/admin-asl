@@ -160,6 +160,9 @@ export interface ITypeFeeGroupData {
 export interface ITypeFeeGroup {
   type: TYPE_QUOTATION_PRICING;
 }
+export interface ITypeFeeRequest {
+  typeFeeIDs: string[];
+}
 export interface FeeData {
   feeID: string;
   feeName: string;

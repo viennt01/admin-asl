@@ -305,6 +305,7 @@ export const API_FEE = {
   GET_ALL: '/get-all-fee',
   EXPORT: '/export-fee-with-excel',
   GET_ALL_FEE_WITH_FEE_GROUP: '/get-all-fee-with-fee-group',
+  GET_ALL_FEE_BY_TYPE_FEE: '/get-all-fee-by-type-fee',
 };
 
 export const API_TYPE_FEE = {

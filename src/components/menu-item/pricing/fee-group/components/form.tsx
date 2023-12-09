@@ -32,7 +32,7 @@ import {
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import {
   getFeeGroupDetail,
-  getListFee,
+  getListFeeByTypeFee,
   getListTypeFeeGroup,
   updateStatus,
 } from '../fetcher';
@@ -99,6 +99,9 @@ const FeeGroupForm = ({
       value: string;
     }[]
   >([]);
+
+  const typeFeeId = Form.useWatch('typeFeeGroupID', form);
+
   const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
 
   useQuery({
@@ -164,8 +167,9 @@ const FeeGroupForm = ({
 
   // get Fee
   useQuery({
-    queryKey: [API_FEE.GET_ALL],
-    queryFn: () => getListFee(),
+    queryKey: [API_FEE.GET_ALL_FEE_BY_TYPE_FEE, typeFeeId],
+    queryFn: () => getListFeeByTypeFee({ typeFeeIDs: [typeFeeId] }),
+    enabled: typeFeeId !== undefined,
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

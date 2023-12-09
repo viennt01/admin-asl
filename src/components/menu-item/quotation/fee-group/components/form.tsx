@@ -29,7 +29,7 @@ import {
   API_UNIT,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getFeeGroupDetail, getListFee, updateStatus } from '../fetcher';
+import { getFeeGroupDetail, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
@@ -42,7 +42,10 @@ import {
   getListTypeCurrency,
   getListTypeUnit,
 } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
-import { getListTypeFeeGroup } from '@/components/menu-item/pricing/fee-group/fetcher';
+import {
+  getListFeeByTypeFee,
+  getListTypeFeeGroup,
+} from '@/components/menu-item/pricing/fee-group/fetcher';
 import { TYPE_QUOTATION_PRICING } from '@/components/menu-item/pricing/fee-group/interface';
 
 const initialValue = {
@@ -95,6 +98,9 @@ const FeeGroupForm = ({
       value: string;
     }[]
   >([]);
+
+  const typeFeeId = Form.useWatch('typeFeeGroupID', form);
+
   const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
 
   useQuery({
@@ -160,8 +166,9 @@ const FeeGroupForm = ({
 
   // get Fee
   useQuery({
-    queryKey: [API_FEE.GET_ALL],
-    queryFn: () => getListFee(),
+    queryKey: [API_FEE.GET_ALL_FEE_BY_TYPE_FEE, typeFeeId],
+    queryFn: () => getListFeeByTypeFee({ typeFeeIDs: [typeFeeId] }),
+    enabled: typeFeeId !== undefined,
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
