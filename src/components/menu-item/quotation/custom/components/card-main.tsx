@@ -434,12 +434,12 @@ const CardMain = ({
           <Form.Item
             label={translateQuotationCustom('vendor_form.title')}
             name="vendorID"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationCustom('vendor_form.error_required'),
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: translateQuotationCustom('vendor_form.error_required'),
+            //   },
+            // ]}
           >
             <Select
               showSearch
@@ -525,7 +525,7 @@ const CardMain = ({
               checked={componentDisabled}
               onChange={(e) => setComponentDisabled(e.target.checked)}
             >
-              For New User
+              Public
             </Checkbox>
           </Form.Item>
         </Col>

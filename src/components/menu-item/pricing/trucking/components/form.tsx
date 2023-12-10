@@ -290,7 +290,7 @@ const TruckingPricingForm = ({
       ),
     };
     router.push({
-      pathname: ROUTERS.SEA_PRICING_CREATE,
+      pathname: ROUTERS.TRUCKING_PRICING_CREATE,
       query: props,
     });
   };
@@ -321,7 +321,7 @@ const TruckingPricingForm = ({
         />
 
         <CollapseCard
-          title="FCL"
+          title="Container"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
@@ -334,7 +334,7 @@ const TruckingPricingForm = ({
         </CollapseCard>
 
         <CollapseCard
-          title="LCL"
+          title="Truck"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >

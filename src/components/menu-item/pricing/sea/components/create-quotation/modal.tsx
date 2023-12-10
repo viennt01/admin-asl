@@ -260,7 +260,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                     checked={componentDisabled}
                     onChange={(e) => setComponentDisabled(e.target.checked)}
                   >
-                    For New User
+                    Public
                   </Checkbox>
                 </Form.Item>
               </Col>
