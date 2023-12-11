@@ -26,6 +26,7 @@ import {
   initalValueQueryInputParamsDraft,
   initalValueQuerySelectParamsDraft,
 } from '../constant';
+import { DAY_WEEK } from '@/constant';
 
 interface PortFormProps {
   handleIdQuery: (id: string) => void;
@@ -248,7 +249,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       dataIndex: 'freqDate',
       key: 'freqDate',
       align: 'right',
-      render: (value) => formatDate(Number(value)),
+      render: (value) =>
+        DAY_WEEK.find((date) => date.value === value)?.label || '-',
     },
     {
       title: (

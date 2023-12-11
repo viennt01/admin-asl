@@ -54,6 +54,7 @@ import ImportCSVModal, {
 } from '@/components/commons/import-data';
 import CreateQuotationModal from '../components/create-quotation/modal';
 import { getSystemDate } from '@/utils/common';
+import { DAY_WEEK } from '@/constant';
 
 const { confirm } = Modal;
 
@@ -370,7 +371,8 @@ export default function MasterDataTable() {
       dataIndex: 'freqDate',
       key: 'freqDate',
       align: 'right',
-      render: (value) => formatDate(Number(value)),
+      render: (value) =>
+        DAY_WEEK.find((date) => date.value === value)?.label || '-',
     },
     {
       title: <div className={style.title}>{translatePricingSea('DEM')}</div>,

@@ -38,6 +38,7 @@ import { getAllLocation } from '../../sea/fetcher';
 import { TYPE_LOCATION } from '../../sea/interface';
 import { ROLE } from '@/constant/permission';
 import { AppContext } from '@/app-context';
+import { DAY_WEEK } from '@/constant';
 
 interface Props {
   create?: boolean;
@@ -402,36 +403,7 @@ const CardMain = ({
                   .toLowerCase()
                   .localeCompare((optionB?.label ?? '').toLowerCase())
               }
-              options={[
-                {
-                  value: '2',
-                  label: 'Monday',
-                },
-                {
-                  value: '3',
-                  label: 'Tuesday',
-                },
-                {
-                  value: '4',
-                  label: 'Wednesday',
-                },
-                {
-                  value: '5',
-                  label: 'Thursday',
-                },
-                {
-                  value: '6',
-                  label: 'Friday',
-                },
-                {
-                  value: '7',
-                  label: 'Saturday',
-                },
-                {
-                  value: '8',
-                  label: 'Sunday',
-                },
-              ]}
+              options={DAY_WEEK}
             />
           </Form.Item>
         </Col>

@@ -22,6 +22,7 @@ import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 import { initalValueQueryInputParamsRequest } from '../constant';
 import { ITypeDTOs, ITruckingPricingTable, IUpdateStatus } from '../interface';
+import { DAY_WEEK } from '@/constant';
 
 const RequestTable = () => {
   const router = useRouter();
@@ -300,7 +301,8 @@ const RequestTable = () => {
       dataIndex: 'freqDate',
       key: 'freqDate',
       align: 'right',
-      render: (value) => formatDate(Number(value)),
+      render: (value) =>
+        DAY_WEEK.find((date) => date.value === value)?.label || '-',
     },
     {
       title: (
