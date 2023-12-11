@@ -67,9 +67,9 @@
     },
 
     "fee_group_form": {
-        "title": "Fee group",
-        "placeholder": "Select fee group",
-        "error_required": "Please select fee group"
+        "title": "Other Charges",
+        "placeholder": "Select Other Charges",
+        "error_required": "Please select Other Charges"
     },
 
     "note_form": {

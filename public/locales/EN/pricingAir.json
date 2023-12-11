@@ -170,9 +170,9 @@
     },
 
     "Fee_Group_form": {
-        "title": "Fee group",
-        "placeholder": "Enter fee group",
-        "error_required": "Please enter fee group"
+        "title": "Other Charges",
+        "placeholder": "Enter Other Charges",
+        "error_required": "Please enter Other Charges"
     },
     
     "modify_date_placeholder": "Please input modify date",
