@@ -37,6 +37,7 @@ interface Item {
   priceRedLane: string;
   priceGreenLane: string;
   priceYellowLane: string;
+  vatCustomQuotation: string;
 }
 
 interface EditableRowProps {
@@ -129,6 +130,14 @@ const EditableCell: React.FC<EditableCellProps> = ({
     ) : (
       <Select
         ref={inputRef}
+        showSearch
+        filterOption={(input, option) => (option?.label ?? '').includes(input)}
+        filterSort={(optionA, optionB) =>
+          (optionA?.label ?? '')
+            .toLowerCase()
+            .localeCompare((optionB?.label ?? '').toLowerCase())
+        }
+        optionFilterProp="children"
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             save();
@@ -182,6 +191,7 @@ interface DataType {
   priceRedLane: string;
   priceGreenLane: string;
   priceYellowLane: string;
+  vatCustomQuotation: string;
 }
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
@@ -225,6 +235,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
               priceRedLane: item.priceRedLane || '',
               priceGreenLane: item.priceGreenLane || '',
               priceYellowLane: item.priceYellowLane || '',
+              vatCustomQuotation: item.vatCustomQuotation || '',
             };
           })
       );
@@ -263,6 +274,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
             priceRedLane: item.priceRedLane,
             priceGreenLane: item.priceGreenLane,
             priceYellowLane: item.priceYellowLane,
+            vatCustomQuotation: item.vatCustomQuotation,
           };
         })
       );
@@ -299,6 +311,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
           priceRedLane: item.priceRedLane,
           priceGreenLane: item.priceGreenLane,
           priceYellowLane: item.priceYellowLane,
+          vatCustomQuotation: item.vatCustomQuotation,
         };
       })
     );
@@ -376,6 +389,17 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       },
     },
     {
+      title: <Text>VAT</Text>,
+      dataIndex: 'vatCustomQuotation',
+      align: 'center',
+      editable: !isCheckPermissionEdit,
+      render: (value) => {
+        return formatNumber(Number(value) || 0) === '0'
+          ? '-'
+          : formatNumber(Number(value) || 0);
+      },
+    },
+    {
       dataIndex: 'key',
       width: 10,
       render: (value) =>
@@ -413,6 +437,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       priceRedLane: '0',
       priceGreenLane: '0',
       priceYellowLane: '0',
+      vatCustomQuotation: '',
     };
     const newDataSource = [newData, ...dataSource];
     setDataSource(newDataSource);
@@ -429,6 +454,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
           priceRedLane: item.priceRedLane,
           priceGreenLane: item.priceGreenLane,
           priceYellowLane: item.priceYellowLane,
+          vatCustomQuotation: item.vatCustomQuotation,
         };
       })
     );
@@ -466,6 +492,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
           priceRedLane: item.priceRedLane,
           priceGreenLane: item.priceGreenLane,
           priceYellowLane: item.priceYellowLane,
+          vatCustomQuotation: item.vatCustomQuotation,
         };
       })
     );

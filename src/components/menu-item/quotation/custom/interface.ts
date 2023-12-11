@@ -92,6 +92,7 @@ export interface ICustomQuotationLCLDetailDTO {
   priceRedLane: string;
   priceYellowLane: string;
   priceGreenLane: string;
+  vatCustomQuotation: string;
 }
 export interface ICustomQuotationFCLDetailDTOs {
   customQuotationFCLDetailID?: string;
@@ -103,6 +104,7 @@ export interface ICustomQuotationFCLDetailDTOs {
   priceRedLane: string;
   priceGreenLane: string;
   priceYellowLane: string;
+  vatCustomQuotation: string;
 }
 
 export interface ICustomQuotationAirDetailDTO {
@@ -110,6 +112,7 @@ export interface ICustomQuotationAirDetailDTO {
   priceRedLane: string;
   priceYellowLane: string;
   priceGreenLane: string;
+  vatCustomQuotation: string;
 }
 
 export interface ISeaQuotationFeeFormValue {

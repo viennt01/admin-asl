@@ -1,6 +1,6 @@
 import React, { Ref, useContext, useEffect, useRef, useState } from 'react';
 import type { InputRef } from 'antd';
-import { Form, InputNumber, Table, Tag } from 'antd';
+import { Form, InputNumber, Table, Typography } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import { formatNumber } from '@/utils/format';
 import { IFormValues } from '../../interface';
@@ -20,6 +20,8 @@ interface Item {
 interface EditableRowProps {
   index: number;
 }
+
+const { Text } = Typography;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
@@ -117,98 +119,93 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   key: React.Key;
-  priceName: string;
-  priceColor: string;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
+  vatCustomQuotation: string;
 }
 
 const initialValue = {
   priceRedLane: '0',
   priceYellowLane: '0',
   priceGreenLane: '0',
+  vatCustomQuotation: '',
 };
-type AccType = Record<string, string>;
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const Air = ({ form }: PropsLCL) => {
-  const [isMounted, setIsMounted] = useState(false);
   const [dataSource, setDataSource] = useState<DataType[]>([
     {
       key: 1,
-      priceName: 'Green',
-      priceColor: initialValue.priceGreenLane,
-    },
-    {
-      key: 2,
-      priceName: 'Yellow',
-      priceColor: initialValue.priceYellowLane,
-    },
-    {
-      key: 3,
-      priceName: 'Red',
-      priceColor: initialValue.priceRedLane,
+      priceRedLane: initialValue.priceRedLane,
+      priceYellowLane: initialValue.priceYellowLane,
+      priceGreenLane: initialValue.priceGreenLane,
+      vatCustomQuotation: initialValue.vatCustomQuotation,
     },
   ]);
-  const dataRequestPricingLCL = Form.useWatch(
+  const dataRequestQuotationLCL = Form.useWatch(
     'customQuotationAirDetailDTO',
     form
   );
 
   useEffect(() => {
-    if (dataRequestPricingLCL) {
+    if (dataRequestQuotationLCL) {
       setDataSource([
         {
           key: 1,
-          priceName: 'Green',
-          priceColor: dataRequestPricingLCL.priceGreenLane,
-        },
-        {
-          key: 2,
-          priceName: 'Yellow',
-          priceColor: dataRequestPricingLCL.priceYellowLane,
-        },
-        {
-          key: 3,
-          priceName: 'Red',
-          priceColor: dataRequestPricingLCL.priceRedLane,
+          priceRedLane: dataRequestQuotationLCL.priceRedLane,
+          priceYellowLane: dataRequestQuotationLCL.priceYellowLane,
+          priceGreenLane: dataRequestQuotationLCL.priceGreenLane,
+          vatCustomQuotation: dataRequestQuotationLCL.vatCustomQuotation,
         },
       ]);
     }
-    if (!isMounted) {
-      setIsMounted(true);
-      const resultObject = dataSource.reduce<AccType>((acc, item) => {
-        const { priceName, priceColor } = item;
-        acc['price' + priceName + 'Lane'] = priceColor;
-        if (dataRequestPricingLCL?.customQuotationAirDetailID) {
-          acc['customQuotationAirDetailID'] =
-            dataRequestPricingLCL.customQuotationAirDetailID || '';
-        }
-        return acc;
-      }, {});
-      form.setFieldValue('customQuotationAirDetailDTO', resultObject);
-    }
-  }, [dataRequestPricingLCL]);
+  }, [dataRequestQuotationLCL]);
 
   const defaultColumns: (ColumnTypes[number] & {
     editable?: boolean;
     dataIndex: string;
   })[] = [
     {
-      title: 'Price Color',
-      dataIndex: 'priceName',
-      width: '50%',
+      title: <Text style={{ color: 'green' }}>Price Green</Text>,
+      dataIndex: 'priceGreenLane',
+      width: '25%',
       align: 'center',
+      editable: true,
       render: (value) => {
-        return <Tag color={value?.toLowerCase()}>{value}</Tag>;
+        return formatNumber(Number(value) || 0);
       },
     },
     {
-      title: 'Price',
-      dataIndex: 'priceColor',
-      width: '50%',
+      title: <Text style={{ color: '#d4b106' }}>Price Yellow</Text>,
+      dataIndex: 'priceYellowLane',
+      width: '25%',
+      align: 'center',
+      editable: true,
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: <Text style={{ color: '#cf1322' }}>Price Red</Text>,
+      dataIndex: 'priceRedLane',
+      width: '25%',
+      align: 'center',
+      editable: true,
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: 'VAT',
+      dataIndex: 'vatCustomQuotation',
+      width: '25%',
       editable: true,
       align: 'center',
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || 0) === '0'
+          ? '-'
+          : formatNumber(Number(value) || 0);
       },
     },
   ];
@@ -221,17 +218,8 @@ const Air = ({ form }: PropsLCL) => {
       ...item,
       ...row,
     });
-
-    const resultObject = newData.reduce<AccType>((acc, item) => {
-      const { priceName, priceColor } = item;
-      acc['price' + priceName + 'Lane'] = priceColor;
-      if (dataRequestPricingLCL.customQuotationAirDetailID) {
-        acc['customQuotationAirDetailID'] =
-          dataRequestPricingLCL?.customQuotationAirDetailID || '';
-      }
-      return acc;
-    }, {});
-    form.setFieldValue('customQuotationAirDetailDTO', resultObject);
+    setDataSource(newData);
+    form.setFieldValue('customQuotationAirDetailDTO', newData[0]);
   };
 
   const components = {

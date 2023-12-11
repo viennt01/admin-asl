@@ -87,6 +87,7 @@ export interface ICustomPricingLCLDetailDTO {
   priceRedLane: string;
   priceYellowLane: string;
   priceGreenLane: string;
+  vatCustomPricing: string;
 }
 export interface ICustomPricingFCLDetailDTOs {
   customPricingFCLDetailID?: string;
@@ -98,6 +99,7 @@ export interface ICustomPricingFCLDetailDTOs {
   priceRedLane: string;
   priceGreenLane: string;
   priceYellowLane: string;
+  vatCustomPricing: string;
 }
 
 export interface ICustomPricingAirDetailDTO {
@@ -105,6 +107,7 @@ export interface ICustomPricingAirDetailDTO {
   priceRedLane: string;
   priceYellowLane: string;
   priceGreenLane: string;
+  vatCustomPricing: string;
 }
 
 export interface ICustomPricingDetailType
