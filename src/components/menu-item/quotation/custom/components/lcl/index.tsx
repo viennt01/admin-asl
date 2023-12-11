@@ -152,8 +152,6 @@ const LCL = ({ form }: PropsLCL) => {
     'customQuotationLCLDetailDTO',
     form
   );
-  console.log('dataSource', dataSource);
-  console.log('dataRequestPricingLCL', dataRequestQuotationLCL);
 
   useEffect(() => {
     if (dataRequestQuotationLCL) {

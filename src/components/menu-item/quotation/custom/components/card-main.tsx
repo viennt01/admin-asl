@@ -87,6 +87,10 @@ const CardMain = ({
     form.setFieldValue('forNewUser', componentDisabled);
   }, [componentDisabled]);
 
+  useEffect(() => {
+    setComponentDisabled(form.getFieldValue('forNewUser'));
+  }, [form.getFieldValue('forNewUser')]);
+
   const propCopyAndCreate = router.query;
 
   const typeTransaction = useQuery(
