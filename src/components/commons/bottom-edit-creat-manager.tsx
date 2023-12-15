@@ -28,6 +28,7 @@ interface Props {
   checkQuery?: boolean;
   useDraft?: boolean;
   handleCopyAndCreate?: () => void;
+  checkPermissionEdit?: boolean;
 }
 const { confirm } = Modal;
 export const BottomCreateEdit = ({
@@ -47,6 +48,7 @@ export const BottomCreateEdit = ({
   checkQuery,
   useDraft,
   handleCopyAndCreate,
+  checkPermissionEdit,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
   const handleCancel = () => {
@@ -149,7 +151,10 @@ export const BottomCreateEdit = ({
                 <Button
                   type="primary"
                   onClick={() => handleCheckEdit(false)}
-                  style={{ marginLeft: '12px' }}
+                  style={{
+                    marginLeft: '12px',
+                    display: checkPermissionEdit ? 'none' : '',
+                  }}
                   loading={loading}
                 >
                   {translateCommon('button_bottom_form.edit')}

@@ -1,10 +1,9 @@
 import {
-  EditOutlined,
+  EyeOutlined,
   ExclamationCircleFilled,
   FilterFilled,
-  DeleteOutlined,
 } from '@ant-design/icons';
-import { Button, Modal, PaginationProps, Tag, Popconfirm } from 'antd';
+import { Button, Modal, PaginationProps, Tag } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -498,12 +497,12 @@ export default function MasterDataTable() {
         <div style={{ display: 'flex' }}>
           <Button
             onClick={() => handleEditCustomer(value as string)}
-            icon={<EditOutlined />}
+            icon={<EyeOutlined />}
             style={{
               marginRight: '10px',
             }}
           />
-          <Popconfirm
+          {/* <Popconfirm
             title={translateCommon('modal_delete.title')}
             okText={translateCommon('modal_delete.button_ok')}
             cancelText={translateCommon('modal_delete.button_cancel')}
@@ -519,7 +518,7 @@ export default function MasterDataTable() {
                 borderColor: COLORS.ERROR,
               }}
             />
-          </Popconfirm>
+          </Popconfirm> */}
         </div>
       ),
     },
@@ -528,7 +527,7 @@ export default function MasterDataTable() {
   ];
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TRUCKING_PRICING_EDIT(id));
+    router.push(ROUTERS.TRUCKING_PRICING_EDIT(id, true));
   };
 
   const handleSelectionChange = (selectedRowKey: Key[]) => {

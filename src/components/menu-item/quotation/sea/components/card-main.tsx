@@ -256,7 +256,7 @@ const CardMain = ({
       extra={
         <>
           {create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />}
-          {edit && idQuery && !isCheckPermissionEdit && (
+          {edit && idQuery && (
             <Switch
               checked={checkStatus}
               checkedChildren="Active"

@@ -338,6 +338,7 @@ const CustomPricing = ({
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}
+          checkPermissionEdit={true}
         />
       </Form>
     </div>
