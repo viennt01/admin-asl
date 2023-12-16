@@ -47,9 +47,8 @@ export const PERMISSION_RULES = () => {
       '/quotation/trucking-quotation/manager-admin/[id]': PERMISSION.EDIT,
 
       '/booking': PERMISSION.EDIT,
-      '/booking/create': PERMISSION.EDIT,
-      '/booking/edit/[id]': PERMISSION.EDIT,
-      '/booking/manager-admin/[id]': PERMISSION.EDIT,
+      '/booking/fcl-detail/[id]': PERMISSION.EDIT,
+      '/booking/lcl-detail/[id]': PERMISSION.EDIT,
 
       '/pricing/fee-group': PERMISSION.EDIT,
       '/pricing/fee-group/create': PERMISSION.EDIT,
@@ -212,9 +211,8 @@ export const PERMISSION_RULES = () => {
       '/quotation/trucking-quotation/manager-admin/[id]': PERMISSION.EDIT,
 
       '/booking': PERMISSION.EDIT,
-      '/booking/create': PERMISSION.EDIT,
-      '/booking/edit/[id]': PERMISSION.EDIT,
-      '/booking/manager-admin/[id]': PERMISSION.EDIT,
+      '/booking/fcl-detail/[id]': PERMISSION.EDIT,
+      '/booking/lcl-detail/[id]': PERMISSION.EDIT,
 
       '/pricing/fee-group': PERMISSION.VIEW,
       '/pricing/fee-group/create': PERMISSION.EDIT,
@@ -379,9 +377,8 @@ export const PERMISSION_RULES = () => {
       '/quotation/trucking-quotation/manager-admin/[id]': PERMISSION.NO_VIEW,
 
       '/booking': PERMISSION.NO_VIEW,
-      '/booking/create': PERMISSION.NO_VIEW,
-      '/booking/edit/[id]': PERMISSION.NO_VIEW,
-      '/booking/manager-admin/[id]': PERMISSION.NO_VIEW,
+      '/booking/fcl-detail/[id]': PERMISSION.NO_VIEW,
+      '/booking/lcl-detail/[id]': PERMISSION.NO_VIEW,
 
       '/pricing/fee-group': PERMISSION.VIEW,
       '/pricing/fee-group/create': PERMISSION.EDIT,
@@ -548,9 +545,8 @@ export const PERMISSION_RULES = () => {
       '/quotation/trucking-quotation/manager-admin/[id]': PERMISSION.NO_VIEW,
 
       '/booking': PERMISSION.NO_VIEW,
-      '/booking/create': PERMISSION.NO_VIEW,
-      '/booking/edit/[id]': PERMISSION.NO_VIEW,
-      '/booking/manager-admin/[id]': PERMISSION.NO_VIEW,
+      '/booking/fcl-detail/[id]': PERMISSION.NO_VIEW,
+      '/booking/lcl-detail/[id]': PERMISSION.NO_VIEW,
 
       '/pricing/fee-group': PERMISSION.VIEW,
       '/pricing/fee-group/create': PERMISSION.EDIT,
