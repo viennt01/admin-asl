@@ -7,6 +7,8 @@ import { API_PARTNER } from '@/fetcherAxios/endpoint';
 import { ROLE } from '@/constant/permission';
 import { useContext } from 'react';
 import { AppContext } from '@/app-context';
+import CustomersDataTable from './table/customers-table';
+import LinerDataTable from './table/liner-table';
 
 export default function Partner() {
   const queryClient = useQueryClient();
@@ -25,9 +27,19 @@ export default function Partner() {
         style={{ marginTop: 10, display: role === ROLE.MANAGER ? '' : 'none' }}
         items={[
           {
-            label: 'Master Data',
-            key: API_PARTNER.GET_SEARCH,
+            label: 'Agent',
+            key: 'Agent',
             children: <MasterDataTable />,
+          },
+          {
+            label: 'Liner',
+            key: 'Liner',
+            children: <LinerDataTable />,
+          },
+          {
+            label: 'Customers',
+            key: 'Customers',
+            children: <CustomersDataTable />,
           },
           {
             label: (
@@ -47,7 +59,31 @@ export default function Partner() {
       <div
         style={{ marginTop: 36, display: role !== ROLE.MANAGER ? '' : 'none' }}
       >
-        <MasterDataTable />
+        <Tabs
+          onChange={onChange}
+          type="card"
+          style={{
+            marginTop: 10,
+            display: role === ROLE.MANAGER ? '' : 'none',
+          }}
+          items={[
+            {
+              label: 'Agent',
+              key: 'Agent',
+              children: <MasterDataTable />,
+            },
+            {
+              label: 'Liner',
+              key: 'Liner',
+              children: <LinerDataTable />,
+            },
+            {
+              label: 'Customers',
+              key: 'Customers',
+              children: <CustomersDataTable />,
+            },
+          ]}
+        />
       </div>
     </>
   );

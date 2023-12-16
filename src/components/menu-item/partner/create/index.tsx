@@ -4,10 +4,46 @@ import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import UnitForm from '../components/form';
-import { IFormValues, IPartnerCreate, IPartnerEdit } from '../interface';
+import {
+  IFormValues,
+  IPartnerCreate,
+  IPartnerEdit,
+  IRolePartners,
+} from '../interface';
 import { createUnit, editUnit } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_PARTNER } from '@/fetcherAxios/endpoint';
+
+export const returnPartnerDTOs = (
+  partnerDTOs?: IRolePartners[],
+  fromPartnerDTOs?: string[]
+) => {
+  const resultArray: Array<IRolePartners> =
+    partnerDTOs?.map((item) => ({
+      partnerRoleDetailID: item.partnerRoleDetailID,
+      partnerRoleID: item.partnerRoleID,
+      isDelete: false,
+    })) || [];
+
+  for (const item of resultArray) {
+    if (fromPartnerDTOs && fromPartnerDTOs.includes(item.partnerRoleID)) {
+      item.isDelete = false;
+    } else {
+      item.isDelete = true;
+    }
+  }
+  if (fromPartnerDTOs) {
+    for (const id of fromPartnerDTOs) {
+      if (!resultArray.some((item) => item.partnerRoleID === id)) {
+        resultArray.push({
+          partnerRoleID: id,
+          isDelete: false,
+        });
+      }
+    }
+  }
+  return resultArray;
+};
 
 const CreatePartner = () => {
   const queryClient = useQueryClient();
@@ -24,37 +60,30 @@ const CreatePartner = () => {
     },
   });
 
-  const handleSubmit = (formValues: IFormValues, id?: string) => {
+  const handleSubmit = (
+    formValues: IFormValues,
+    id?: string,
+    listPartnerDTOs?: IRolePartners[]
+  ) => {
+    const returnFeeDTO = returnPartnerDTOs(
+      listPartnerDTOs,
+      formValues.rolePartners
+    );
     if (id) {
       const _requestData: IPartnerEdit = {
-        userID: id,
-        languageID: formValues.languageID || '',
-        genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        partnerID: id,
         cityID: formValues.cityID || '',
         aslPersonalContactID: formValues.aslPersonalContactID || '',
-        email: formValues.email || '',
-        firstName: formValues.firstName || '',
-        lastName: formValues.lastName || '',
-        fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
+        companyName: formValues.companyName || '',
         abbreviations: formValues.abbreviations || '',
         emailCompany: formValues.emailCompany || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
-        workingBranch: formValues.workingBranch || '',
-        nationality: formValues.nationality || '',
-        visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        address: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        avatar: formValues.avatar || '',
-        statusUser: STATUS_ALL_LABELS.REQUEST,
+        rolePartners: returnFeeDTO || [],
+        statusPartner: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
@@ -68,33 +97,18 @@ const CreatePartner = () => {
       });
     } else {
       const _requestData: IPartnerCreate = {
-        languageID: formValues.languageID || '',
-        genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
         cityID: formValues.cityID || '',
         aslPersonalContactID: formValues.aslPersonalContactID || '',
-        email: formValues.email || '',
-        firstName: formValues.firstName || '',
-        lastName: formValues.lastName || '',
-        fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
+        companyName: formValues.companyName || '',
         abbreviations: formValues.abbreviations || '',
         emailCompany: formValues.emailCompany || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
-        workingBranch: formValues.workingBranch || '',
-        nationality: formValues.nationality || '',
-        visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        address: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        avatar: formValues.avatar || '',
-        statusUser: STATUS_ALL_LABELS.REQUEST,
+        rolePartners: formValues.rolePartners || '',
+        statusPartner: STATUS_ALL_LABELS.REQUEST,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
@@ -109,37 +123,31 @@ const CreatePartner = () => {
     }
   };
 
-  const handleSaveDraft = (formValues: IFormValues, id?: string) => {
+  const handleSaveDraft = (
+    formValues: IFormValues,
+    id?: string,
+    listPartnerDTOs?: IRolePartners[]
+  ) => {
+    const returnFeeDTO = returnPartnerDTOs(
+      listPartnerDTOs,
+      formValues.rolePartners
+    );
+
     if (id) {
       const _requestData: IPartnerEdit = {
-        userID: id,
-        languageID: formValues.languageID || '',
-        genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        partnerID: id,
         cityID: formValues.cityID || '',
         aslPersonalContactID: formValues.aslPersonalContactID || '',
-        email: formValues.email || '',
-        firstName: formValues.firstName || '',
-        lastName: formValues.lastName || '',
-        fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
+        companyName: formValues.companyName || '',
         abbreviations: formValues.abbreviations || '',
         emailCompany: formValues.emailCompany || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
-        workingBranch: formValues.workingBranch || '',
-        nationality: formValues.nationality || '',
-        visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        address: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        avatar: formValues.avatar || '',
-        statusUser: STATUS_ALL_LABELS.DRAFT,
+        rolePartners: returnFeeDTO || [],
+        statusPartner: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
@@ -156,33 +164,18 @@ const CreatePartner = () => {
       });
     } else {
       const _requestData: IPartnerCreate = {
-        languageID: formValues.languageID || '',
-        genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
         cityID: formValues.cityID || '',
         aslPersonalContactID: formValues.aslPersonalContactID || '',
-        email: formValues.email || '',
-        firstName: formValues.firstName || '',
-        lastName: formValues.lastName || '',
-        fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
+        companyName: formValues.companyName || '',
         abbreviations: formValues.abbreviations || '',
         emailCompany: formValues.emailCompany || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
-        workingBranch: formValues.workingBranch || '',
-        nationality: formValues.nationality || '',
-        visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        address: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        avatar: formValues.avatar || '',
-        statusUser: STATUS_ALL_LABELS.DRAFT,
+        rolePartners: formValues.rolePartners || '',
+        statusPartner: STATUS_ALL_LABELS.DRAFT,
       };
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {

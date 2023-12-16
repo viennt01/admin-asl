@@ -15,3 +15,9 @@ function BookingEditPage() {
 export default withAuthentication(BookingEditPage);
 import { getStatic } from '@/lib/getStaticProps';
 export const getStaticProps = getStatic(['common', 'booking']);
+export const getStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};

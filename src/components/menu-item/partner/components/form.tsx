@@ -1,51 +1,51 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  Form,
-  Input,
-  Typography,
-  Card,
-  Row,
-  Col,
-  Switch,
-  DatePicker,
-  Select,
-} from 'antd';
+import { Form, Input, Typography, Card, Row, Col, Switch, Select } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { IFormValues, UpdateStatusUnit } from '../interface';
 import {
-  API_GENDER,
-  API_LANGUAGE,
+  IFormValues,
+  IRolePartners,
+  IUserBaseDTOs,
+  UpdateStatusUnit,
+} from '../interface';
+import {
   API_MASTER_DATA,
   API_PARTNER,
   API_PARTNER_ROLE,
   API_STAFF,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
-import { getListGender, getUnitDetail, updateStatus } from '../fetcher';
-import DraftTable from '../table/draft-table';
+import { getUnitDetail, updateStatus } from '../fetcher';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { UpdateStatusLocationType } from '@/components/menu-item/master-data/location-catalog/type-of-location/interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import dayjs from 'dayjs';
 import { getAllPartnerRole } from '../../quotation/sea/fetcher';
 import { getListCity } from '@/layout/fetcher';
-import { getListLanguage, getListStaff } from '../../system/staff/fetcher';
+import { getListStaff } from '../../system/staff/fetcher';
+import CollapseCard from '@/components/commons/collapse-card';
+import ListUser from './list-user';
 
 const initialValue = {
-  description: '',
+  address: '',
 };
-const dateFormat = 'YYYY-MM-DD';
 
 interface PortFormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
-  handleSubmit?: (formValues: IFormValues, id?: string) => void;
-  handleSaveDraft?: (formValues: IFormValues, id?: string) => void;
+  handleSubmit?: (
+    formValues: IFormValues,
+    id?: string,
+    listPartnerDTOs?: IRolePartners[]
+  ) => void;
+  handleSaveDraft?: (
+    formValues: IFormValues,
+    id?: string,
+    listPartnerDTOs?: IRolePartners[]
+  ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
   useDraft?: boolean;
@@ -73,41 +73,13 @@ const UnitForm = ({
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query;
-  // const { Option } = Select;
+  const [listPartnerDTOs, setListPartnerDTOsDTOs] = useState<IRolePartners[]>(
+    []
+  );
 
   const getAllPartner = useQuery({
     queryKey: [API_PARTNER_ROLE.GET_ALL],
     queryFn: () => getAllPartnerRole(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-        errorToast(API_MESSAGE.ERROR);
-      }
-    },
-    onError: () => {
-      router.back();
-      errorToast(API_MESSAGE.ERROR);
-    },
-  });
-
-  const getGender = useQuery({
-    queryKey: [API_GENDER.GET_ALL],
-    queryFn: () => getListGender(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-        errorToast(API_MESSAGE.ERROR);
-      }
-    },
-    onError: () => {
-      router.back();
-      errorToast(API_MESSAGE.ERROR);
-    },
-  });
-
-  const getLanguage = useQuery({
-    queryKey: [API_LANGUAGE.GET_ALL],
-    queryFn: () => getListLanguage(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -146,23 +118,21 @@ const UnitForm = ({
     setIdQuery(id as string);
   }, [router, form]);
 
-  const handleIdQuery = (id: string) => {
-    setIdQuery(id as string);
-  };
-
   const onFinish = (formValues: IFormValues) => {
     if (idQuery) {
-      handleSubmit && handleSubmit(formValues, idQuery);
+      handleSubmit && handleSubmit(formValues, idQuery, listPartnerDTOs);
     } else {
-      handleSubmit && handleSubmit(formValues);
+      handleSubmit && handleSubmit(formValues, undefined, listPartnerDTOs);
     }
   };
 
   const onSaveDraft = () => {
     if (idQuery) {
-      handleSaveDraft && handleSaveDraft(form.getFieldsValue(), idQuery);
+      handleSaveDraft &&
+        handleSaveDraft(form.getFieldsValue(), idQuery, listPartnerDTOs);
     } else {
-      handleSaveDraft && handleSaveDraft(form.getFieldsValue());
+      handleSaveDraft &&
+        handleSaveDraft(form.getFieldsValue(), undefined, listPartnerDTOs);
     }
   };
 
@@ -173,33 +143,24 @@ const UnitForm = ({
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          languageID: data.data.languageID,
-          genderID: data.data.genderID,
-          roleID: data.data.roleID,
+          partnerID: data.data.partnerID,
           cityID: data.data.cityID,
           aslPersonalContactID: data.data.aslPersonalContactID,
-          email: data.data.email,
-          firstName: data.data.firstName,
-          lastName: data.data.lastName,
-          fullName: data.data.fullName,
-          companyNameEN: data.data.companyNameEN,
-          companyNameVN: data.data.companyNameVN,
+          companyName: data.data.companyName,
           abbreviations: data.data.abbreviations,
           emailCompany: data.data.emailCompany,
           phoneNumber: data.data.phoneNumber,
           taxCode: data.data.taxCode,
-          addressEN: data.data.addressEN,
-          addressVN: data.data.addressVN,
-          birthdated: dayjs(Number(data.data.birthdated)),
-          workingBranch: data.data.workingBranch,
-          nationality: data.data.nationality,
-          visa: data.data.visa,
-          citizenIdentification: data.data.citizenIdentification,
+          address: data.data.address,
           website: data.data.website,
           note: data.data.note,
-          avatar: data.data.avatar,
-          statusUser: data.data.statusUser,
+          statusPartner: data.data.statusPartner,
+          rolePartners: data.data.rolePartners.map(
+            (rolePartner) => rolePartner.partnerRoleID
+          ),
+          userBaseDTOs: data.data.userBaseDTOs,
         });
+        setListPartnerDTOsDTOs(data.data.rolePartners);
       } else {
         router.push(ROUTERS.PARTNER);
       }
@@ -240,32 +201,20 @@ const UnitForm = ({
   const handleCopyAndCreate = () => {
     const props = {
       checkCopyAndCreate: true,
-      languageID: form.getFieldValue('languageID'),
-      genderID: form.getFieldValue('genderID'),
-      roleID: form.getFieldValue('roleID'),
+      partnerID: form.getFieldValue('partnerID'),
       cityID: form.getFieldValue('cityID'),
       aslPersonalContactID: form.getFieldValue('aslPersonalContactID'),
-      email: form.getFieldValue('email'),
-      firstName: form.getFieldValue('firstName'),
-      lastName: form.getFieldValue('lastName'),
-      fullName: form.getFieldValue('fullName'),
-      companyNameEN: form.getFieldValue('companyNameEN'),
-      companyNameVN: form.getFieldValue('companyNameVN'),
+      companyName: form.getFieldValue('companyName'),
       abbreviations: form.getFieldValue('abbreviations'),
       emailCompany: form.getFieldValue('emailCompany'),
       phoneNumber: form.getFieldValue('phoneNumber'),
       taxCode: form.getFieldValue('taxCode'),
-      addressEN: form.getFieldValue('addressEN'),
-      addressVN: form.getFieldValue('addressVN'),
-      birthdated: form.getFieldValue('birthdated')?.valueOf(),
-      workingBranch: form.getFieldValue('workingBranch'),
-      nationality: form.getFieldValue('nationality'),
-      visa: form.getFieldValue('visa'),
-      citizenIdentification: form.getFieldValue('citizenIdentification'),
+      address: form.getFieldValue('address'),
       website: form.getFieldValue('website'),
       note: form.getFieldValue('note'),
-      avatar: form.getFieldValue('avatar'),
-      statusUser: form.getFieldValue('statusUser'),
+      statusPartner: form.getFieldValue('statusPartner'),
+      rolePartners: form.getFieldValue('rolePartners'),
+      userBaseDTOs: form.getFieldValue('userBaseDTOs'),
     };
     router.push({
       pathname: ROUTERS.PARTNER_CREATE,
@@ -274,8 +223,8 @@ const UnitForm = ({
   };
 
   useEffect(() => {
-    if (form.getFieldValue('statusUser')) {
-      form.getFieldValue('statusUser') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusPartner')) {
+      form.getFieldValue('statusPartner') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -284,33 +233,21 @@ const UnitForm = ({
     }
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
-        languageID: propCopyAndCreate.languageID as string,
-        genderID: propCopyAndCreate.genderID as string,
-        roleID: propCopyAndCreate.roleID as string,
+        partnerID: propCopyAndCreate.partnerID as string,
         cityID: propCopyAndCreate.cityID as string,
         aslPersonalContactID: propCopyAndCreate.aslPersonalContactID as string,
-        email: propCopyAndCreate.email as string,
-        firstName: propCopyAndCreate.firstName as string,
-        lastName: propCopyAndCreate.lastName as string,
-        fullName: propCopyAndCreate.fullName as string,
-        companyNameEN: propCopyAndCreate.companyNameEN as string,
-        companyNameVN: propCopyAndCreate.companyNameVN as string,
+        companyName: propCopyAndCreate.companyName as string,
         abbreviations: propCopyAndCreate.abbreviations as string,
         emailCompany: propCopyAndCreate.emailCompany as string,
         phoneNumber: propCopyAndCreate.phoneNumber as string,
         taxCode: propCopyAndCreate.taxCode as string,
-        addressEN: propCopyAndCreate.addressEN as string,
-        addressVN: propCopyAndCreate.addressVN as string,
-        birthdated: dayjs(Number(propCopyAndCreate.birthdated as string)),
-        workingBranch: propCopyAndCreate.workingBranch as string,
-        nationality: propCopyAndCreate.nationality as string,
-        visa: propCopyAndCreate.visa as string,
-        citizenIdentification:
-          propCopyAndCreate.citizenIdentification as string,
+        address: propCopyAndCreate.address as string,
         website: propCopyAndCreate.website as string,
         note: propCopyAndCreate.note as string,
-        avatar: propCopyAndCreate.avatar as string,
-        statusUser: propCopyAndCreate.statusUser as string,
+        statusPartner: propCopyAndCreate.statusPartner as string,
+        rolePartners: propCopyAndCreate.rolePartners as unknown as string[],
+        userBaseDTOs:
+          propCopyAndCreate.userBaseDTOs as unknown as IUserBaseDTOs[],
       });
     }
   }, [
@@ -319,17 +256,8 @@ const UnitForm = ({
     checkRow,
     manager,
     propCopyAndCreate,
-    form.getFieldValue('statusUser'),
+    form.getFieldValue('statusPartner'),
   ]);
-
-  // const prefixSelector = (
-  //   <Form.Item name="typeIdentification" noStyle>
-  //     <Select style={{ width: 90 }} defaultValue={'visa'}>
-  //       <Option value="visa">Visa</Option>
-  //       <Option value="CCCD">CCCD</Option>
-  //     </Select>
-  //   </Form.Item>
-  // );
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -364,9 +292,6 @@ const UnitForm = ({
           }
           extra={
             <>
-              {create && useDraft && (
-                <DraftTable handleIdQuery={handleIdQuery} />
-              )}
               {edit && idQuery && !isCheckPermissionEdit && (
                 <Switch
                   checked={checkStatus}
@@ -404,61 +329,49 @@ const UnitForm = ({
           }
         >
           <Row gutter={16}>
-            <Col lg={12} span={24}>
+            <Col lg={16} span={24}>
               <Form.Item
-                label={translatePartner('firstName_form.title')}
-                name="firstName"
+                label={translatePartner('companyName_form.title')}
+                name="companyName"
                 rules={[
                   {
                     required: true,
-                    message: translatePartner('firstName_form.error_required'),
+                    message: translatePartner(
+                      'companyName_form.error_required'
+                    ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translatePartner('firstName_form.placeholder')}
+                  placeholder={translatePartner('companyName_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} span={24}>
+            <Col lg={8} span={24}>
               <Form.Item
-                label={translatePartner('lastName_form.title')}
-                name="lastName"
+                label={translatePartner('abbreviations_form.title')}
+                name="abbreviations"
                 rules={[
                   {
                     required: true,
-                    message: translatePartner('lastName_form.error_required'),
+                    message: translatePartner(
+                      'abbreviations_form.error_required'
+                    ),
                   },
                 ]}
               >
                 <Input
-                  placeholder={translatePartner('lastName_form.placeholder')}
+                  placeholder={translatePartner(
+                    'abbreviations_form.placeholder'
+                  )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
 
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('email_form.title')}
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('email_form.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner('email_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
             <Col lg={8} span={24}>
               <Form.Item
                 label={translatePartner('phone_number_form.title')}
@@ -483,19 +396,41 @@ const UnitForm = ({
             </Col>
             <Col lg={8} span={24}>
               <Form.Item
-                label={translatePartner('birthday_form.title')}
-                name="birthdated"
+                label={translatePartner('emailCompany_form.title')}
+                name="emailCompany"
                 rules={[
                   {
                     required: true,
-                    message: translatePartner('birthday_form.error_required'),
+                    message: translatePartner(
+                      'emailCompany_form.error_required'
+                    ),
                   },
                 ]}
               >
-                <DatePicker
+                <Input
+                  placeholder={translatePartner(
+                    'emailCompany_form.placeholder'
+                  )}
+                  size="large"
                   disabled={checkRow && isCheckPermissionEdit}
-                  format={dateFormat}
-                  style={{ width: '100%' }}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={8} span={24}>
+              <Form.Item
+                label={translatePartner('address_form.title')}
+                name="address"
+                rules={[
+                  {
+                    required: true,
+                    message: translatePartner('address_form.error_required'),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translatePartner('address_form.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
             </Col>
@@ -503,7 +438,7 @@ const UnitForm = ({
             <Col lg={8} span={24}>
               <Form.Item
                 label={translatePartner('role_form.title')}
-                name="roleID"
+                name="rolePartners"
                 rules={[
                   {
                     required: true,
@@ -525,10 +460,11 @@ const UnitForm = ({
                       .toLowerCase()
                       .localeCompare((optionB?.label ?? '').toLowerCase())
                   }
+                  mode="multiple"
                   options={
                     getAllPartner.data?.data.map((item) => {
                       return {
-                        value: item.partnerRoleID,
+                        value: item.roleID,
                         label: item.name,
                       };
                     }) || []
@@ -574,141 +510,6 @@ const UnitForm = ({
             </Col>
             <Col lg={8} span={24}>
               <Form.Item
-                label={translatePartner('gender_form.title')}
-                name="genderID"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('gender_form.error_required'),
-                  },
-                ]}
-              >
-                <Select
-                  showSearch
-                  placeholder={translatePartner('gender_form.placeholder')}
-                  disabled={checkRow && isCheckPermissionEdit}
-                  optionFilterProp="children"
-                  size="large"
-                  filterOption={(input, option) =>
-                    (option?.label ?? '').includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? '')
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? '').toLowerCase())
-                  }
-                  options={
-                    getGender.data?.data.map((item) => {
-                      return {
-                        value: item.genderID,
-                        label: item.name,
-                      };
-                    }) || []
-                  }
-                />
-              </Form.Item>
-            </Col>
-            {/* 
-            <Col lg={8} span={24}>
-              <Form.Item
-                name="phone"
-                label="Phone Number"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your phone number!',
-                  },
-                ]}
-              >
-                <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-              </Form.Item>
-            </Col> */}
-
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('visa_form.title')}
-                name="visa"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('visa_form.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner('visa_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('citizenIdentification_form.title')}
-                name="citizenIdentification"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'citizenIdentification_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner(
-                    'citizenIdentification_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('nationality_form.title')}
-                name="nationality"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'nationality_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner('nationality_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('workingBranch_form.title')}
-                name="workingBranch"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'workingBranch_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner(
-                    'workingBranch_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
                 label={translatePartner('taxCode_form.title')}
                 name="taxCode"
                 rules={[
@@ -720,83 +521,6 @@ const UnitForm = ({
               >
                 <Input
                   placeholder={translatePartner('taxCode_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('emailCompany_form.title')}
-                name="emailCompany"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'emailCompany_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner(
-                    'emailCompany_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('companyName_form.titleEN')}
-                name="companyNameEN"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'companyName_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner('companyName_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('companyName_form.titleVN')}
-                name="companyNameVN"
-              >
-                <Input
-                  placeholder={translatePartner('companyName_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('abbreviations_form.title')}
-                name="abbreviations"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'abbreviations_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner(
-                    'abbreviations_form.placeholder'
-                  )}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />
@@ -818,73 +542,6 @@ const UnitForm = ({
                   placeholder={translatePartner('website_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('address_form.titleEN')}
-                name="addressEN"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('address_form.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translatePartner('address_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('address_form.titleVN')}
-                name="addressVN"
-              >
-                <Input
-                  placeholder={translatePartner('address_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translatePartner('languageID_form.title')}
-                name="languageID"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('languageID_form.error_required'),
-                  },
-                ]}
-              >
-                <Select
-                  showSearch
-                  placeholder={translatePartner('languageID_form.placeholder')}
-                  disabled={checkRow && isCheckPermissionEdit}
-                  optionFilterProp="children"
-                  size="large"
-                  filterOption={(input, option) =>
-                    (option?.label ?? '').includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? '')
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? '').toLowerCase())
-                  }
-                  options={
-                    getLanguage.data?.data.map((item) => {
-                      return {
-                        value: item.languageID,
-                        label: item.name,
-                      };
-                    }) || []
-                  }
                 />
               </Form.Item>
             </Col>
@@ -943,13 +600,21 @@ const UnitForm = ({
               </Form.Item>
             </Col>
             <Col span={0}>
-              <Form.Item name="statusUser"></Form.Item>
+              <Form.Item name="statusPartner"></Form.Item>
             </Col>
             <Col span={0}>
-              <Form.Item name="avatar"></Form.Item>
+              <Form.Item name="userBaseDTOs"></Form.Item>
             </Col>
           </Row>
         </Card>
+
+        <CollapseCard
+          title="List user"
+          style={{ marginBottom: '24px', display: !create ? '' : 'none' }}
+          defaultActive={true}
+        >
+          <ListUser form={form} />
+        </CollapseCard>
 
         <BottomCreateEdit
           create={create}

@@ -1,52 +1,31 @@
 import { IPagination } from '@/components/commons/table/table-default';
-import { Dayjs } from 'dayjs';
 
 export interface IPartner {
-  userID: string;
-  languageID: string;
-  languageName: string;
-  genderID: string;
-  genderName: string;
-  roleID: string;
-  roleName: string;
+  partnerID: string;
   cityID: string;
   cityName: string;
+  countryName: string;
   aslPersonalContactID: string;
-  aslSalesMan: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  companyNameEN: string;
-  companyNameVN: string;
+  saleManName: string;
+  companyName: string;
   abbreviations: string;
   emailCompany: string;
   phoneNumber: string;
   taxCode: string;
-  addressEN: string;
-  addressVN: string;
-  birthdated: string;
-  workingBranch: string;
-  nationality: string;
-  visa: string;
-  citizenIdentification: string;
+  address: string;
   website: string;
   note: string;
-  avatar: string;
-  colorAvatar: string;
-  defaultAvatar: string;
-  lastUserLogin: string;
-  lastUserLoginFailed: string;
+  statusPartner: string;
+  rolePartner: IRolePartner[];
   insertedByUser: string;
   dateInserted: string;
   dateUpdated: string;
   updatedByUser: string;
   confirmDated: string;
   confirmByUser: string;
-  statusUser: string;
 }
 
-export interface IPartnerTable extends Omit<IPartner, 'userID'> {
+export interface IPartnerTable extends Omit<IPartner, 'partnerID'> {
   key: string;
   searchAll: string;
 }
@@ -57,11 +36,16 @@ export interface IPartnerRequire extends IPagination {
 //
 export interface IQueryInputParamType {
   searchAll: string;
+  rolePartner: string;
 }
 export interface IQuerySelectParamType {
   status: string[];
 }
-
+export interface IRolePartner {
+  roleID: string;
+  abbreviations: string;
+  name: string;
+}
 export interface IRequestPartnerType
   extends IQueryInputParamType,
     IQuerySelectParamType {
@@ -80,46 +64,41 @@ export interface IPartnerDetailDataBody {
 }
 
 export interface IFormValues {
-  userID: string;
-  languageID: string;
-  genderID: string;
-  roleID: string;
+  partnerID: string;
   cityID: string;
   aslPersonalContactID: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  companyNameEN: string;
-  companyNameVN: string;
+  companyName: string;
   abbreviations: string;
   emailCompany: string;
   phoneNumber: string;
   taxCode: string;
-  addressEN: string;
-  addressVN: string;
-  birthdated: Dayjs;
-  workingBranch: string;
-  nationality: string;
-  visa: string;
-  citizenIdentification: string;
+  address: string;
   website: string;
   note: string;
-  avatar: string;
-  statusUser: string;
-  // typeIdentification: string;
+  statusPartner: string;
+  rolePartners: string[];
+  userBaseDTOs: IUserBaseDTOs[];
 }
-
-export interface IPartnerDetailType extends IFormValues {
-  languageName: string;
-  genderName: string;
-  roleName: string;
+export interface IRolePartners {
+  partnerRoleDetailID?: string;
+  partnerRoleID: string;
+  isDelete?: boolean;
+}
+export interface IUserBaseDTOs {
+  userID: string;
+  employeeCode: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+}
+export interface IUserBaseDTOsTable extends Omit<IUserBaseDTOs, 'userID'> {
+  key: string;
+}
+export interface IPartnerDetailType extends Omit<IFormValues, 'rolePartners'> {
+  rolePartners: IRolePartners[];
+  countryName: string;
   cityName: string;
-  aslSalesMan: string;
-  colorAvatar: string;
-  defaultAvatar: string;
-  lastUserLogin: string;
-  lastUserLoginFailed: string;
+  saleManName: string;
   insertedByUser: string;
   dateInserted: string;
   dateUpdated: string;
@@ -128,12 +107,18 @@ export interface IPartnerDetailType extends IFormValues {
   confirmByUser: string;
 }
 
-export type IPartnerCreate = Omit<IFormValues, 'userID' | 'birthdated'> & {
-  birthday: number;
+export type IPartnerCreate = Omit<
+  IFormValues,
+  'partnerID' | 'userBaseDTOs' | 'rolePartners'
+> & {
+  rolePartners: string[];
 };
 
-export type IPartnerEdit = Omit<IFormValues, 'birthdated'> & {
-  birthday: number;
+export type IPartnerEdit = Omit<
+  IFormValues,
+  'userBaseDTOs' | 'rolePartners'
+> & {
+  rolePartners: IRolePartners[];
 };
 
 export type IPartnerDelete = {
@@ -141,27 +126,6 @@ export type IPartnerDelete = {
 };
 
 //----------------------------------------------------------------
-export interface QueryInputDraft {
-  searchAll: string;
-}
-export interface QuerySelectDraft {
-  status: string[];
-}
-export interface RequestUnitTableDraft
-  extends QueryInputDraft,
-    QuerySelectDraft {
-  paginateRequest: IPagination;
-}
-
-export type SelectDratSearch = {
-  [key in keyof QueryInputDraft]: {
-    label: string;
-    value: string;
-  };
-};
-
-//----------------------------------------------------------------
-
 export interface UpdateStatusUnit {
   id: React.Key[];
   status: string;
@@ -169,6 +133,10 @@ export interface UpdateStatusUnit {
 
 export interface QueryInputRequest {
   searchAll: string;
+  rolePartner: string;
+}
+export interface QuerySelectRequest {
+  status: string[];
 }
 export interface RequestUnitTableRequest extends QueryInputRequest {
   paginateRequest: IPagination;

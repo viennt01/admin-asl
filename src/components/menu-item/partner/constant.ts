@@ -1,7 +1,9 @@
 import { STATUS_ALL_LABELS } from '@/constant/form';
+import { ROLE } from '@/constant/permission';
 
 export const initalValueQueryInputParamsMaster = {
   searchAll: '',
+  rolePartner: ROLE.AGENT,
 };
 
 export const initalValueQuerySelectParamsMaster = {
@@ -24,35 +26,35 @@ export const initalSelectSearchMaster = {
     label: '',
     value: '',
   },
-  statusUser: {
-    label: '',
-    value: [],
-  },
-};
-
-//draft
-export const initalValueQueryInputParamsDraft = {
-  searchAll: '',
-};
-
-export const initalValueQuerySelectParamsDraft = {
-  status: [STATUS_ALL_LABELS.DRAFT, STATUS_ALL_LABELS.REJECT],
-};
-
-export const initalSelectSearchDraft = {
-  searchAll: {
+  rolePartner: {
     label: '',
     value: '',
   },
   status: {
     label: '',
-    value: '',
+    value: [],
   },
 };
 
 //request
 export const initalValueQueryInputParamsRequest = {
   searchAll: '',
+  rolePartner: '',
+};
+
+export const initalValueQuerySelectParamsRequest = {
+  status: [STATUS_ALL_LABELS.REQUEST],
+};
+
+export const initalValueDisplayColumnRequest = {
+  operation: {
+    order: 0,
+    fixed: 'left' as const,
+  },
+  index: {
+    order: 1,
+    fixed: 'left' as const,
+  },
 };
 
 export const initalSelectSearchRequest = {
@@ -60,4 +62,22 @@ export const initalSelectSearchRequest = {
     label: '',
     value: '',
   },
+  rolePartner: {
+    label: '',
+    value: '',
+  },
+  status: {
+    label: '',
+    value: [],
+  },
+};
+
+export const initalValueQueryInputParamsLiner = {
+  searchAll: '',
+  rolePartner: ROLE.LINER,
+};
+
+export const initalValueQueryInputParamsCustomers = {
+  searchAll: '',
+  rolePartner: ROLE.CUSTOMER,
 };

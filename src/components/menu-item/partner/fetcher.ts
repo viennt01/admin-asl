@@ -9,7 +9,6 @@ import {
 import {
   IPartnerRequire,
   IRequestPartnerType,
-  RequestUnitTableDraft,
   IPartnerCreate,
   IPartnerDelete,
   IPartnerDetailDataBody,
@@ -64,12 +63,6 @@ export const deleteUnit = (data: React.Key[]) => {
       ids: data,
     },
   })(API_PARTNER.DELETE);
-};
-
-export const getDartTable = (data: RequestUnitTableDraft) => {
-  return post<RequestUnitTableDraft, ResponseWithPayload<IPartnerRequire>>({
-    data,
-  })(API_PARTNER.GET_DRAFT);
 };
 
 //----------------------------------------------------------------

@@ -1,11 +1,12 @@
 import router from 'next/router';
-import { IFormValues, IPartnerEdit } from '../interface';
+import { IFormValues, IPartnerEdit, IRolePartners } from '../interface';
 import { editUnit } from '../fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import UnitForm from '../components/form';
 import { STATUS_ALL_LABELS } from '@/constant/form';
+import { returnPartnerDTOs } from '../create';
 
 const EditPartner = () => {
   const checkRow = router.query.checkRow as string;
@@ -15,37 +16,30 @@ const EditPartner = () => {
     },
   });
 
-  const handleSubmit = (formValues: IFormValues, idQuery?: string) => {
+  const handleSubmit = (
+    formValues: IFormValues,
+    idQuery?: string,
+    listPartnerDTOs?: IRolePartners[]
+  ) => {
+    const returnFeeDTO = returnPartnerDTOs(
+      listPartnerDTOs,
+      formValues.rolePartners
+    );
     if (idQuery) {
       const _requestData: IPartnerEdit = {
-        userID: idQuery,
-        languageID: formValues.languageID || '',
-        genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        partnerID: idQuery,
         cityID: formValues.cityID || '',
         aslPersonalContactID: formValues.aslPersonalContactID || '',
-        email: formValues.email || '',
-        firstName: formValues.firstName || '',
-        lastName: formValues.lastName || '',
-        fullName: `${formValues.firstName} ${formValues.lastName}` || '',
-        companyNameEN: formValues.companyNameEN || '',
-        companyNameVN:
-          formValues.companyNameVN || formValues.companyNameEN || '',
+        companyName: formValues.companyName || '',
         abbreviations: formValues.abbreviations || '',
         emailCompany: formValues.emailCompany || '',
         phoneNumber: formValues.phoneNumber || '',
         taxCode: formValues.taxCode || '',
-        addressEN: formValues.addressEN || '',
-        addressVN: formValues.addressVN || formValues.addressEN || '',
-        birthday: formValues.birthdated?.valueOf(),
-        workingBranch: formValues.workingBranch || '',
-        nationality: formValues.nationality || '',
-        visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        address: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        avatar: formValues.avatar || '',
-        statusUser: STATUS_ALL_LABELS.REQUEST,
+        rolePartners: returnFeeDTO || [],
+        statusPartner: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {

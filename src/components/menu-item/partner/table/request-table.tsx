@@ -7,6 +7,7 @@ import Table from '@/components/commons/table/table';
 import {
   IPartnerTable,
   IQueryInputParamType,
+  IRolePartner,
   ISelectSearch,
   UpdateStatusUnit,
 } from '../interface';
@@ -15,7 +16,7 @@ import { API_PARTNER } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps } from 'antd';
+import { Button, PaginationProps, Popover, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
@@ -24,11 +25,12 @@ import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getTable, updateStatus } from '../fetcher';
+import { getUnitSearch, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 import {
   initalSelectSearchRequest,
   initalValueQueryInputParamsRequest,
+  initalValueQuerySelectParamsRequest,
 } from '../constant';
 
 type DataIndex = keyof IQueryInputParamType;
@@ -53,8 +55,9 @@ const RequestTable = () => {
   useQuery({
     queryKey: [API_PARTNER.GET_REQUEST, pagination, queryInputParams],
     queryFn: () =>
-      getTable({
+      getUnitSearch({
         ...queryInputParams,
+        ...initalValueQuerySelectParamsRequest,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -65,48 +68,28 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.userID,
-            languageID: data.languageID,
-            languageName: data.languageName,
-            genderID: data.genderID,
-            genderName: data.genderName,
-            roleID: data.roleID,
-            roleName: data.roleName,
+            key: data.partnerID,
             cityID: data.cityID,
             cityName: data.cityName,
+            countryName: data.countryName,
             aslPersonalContactID: data.aslPersonalContactID,
-            aslSalesMan: data.aslSalesMan,
-            email: data.email,
-            firstName: data.firstName,
-            lastName: data.lastName,
-            fullName: data.fullName,
-            companyNameEN: data.companyNameEN,
-            companyNameVN: data.companyNameEN,
+            saleManName: data.saleManName,
+            companyName: data.companyName,
             abbreviations: data.abbreviations,
             emailCompany: data.emailCompany,
             phoneNumber: data.phoneNumber,
             taxCode: data.taxCode,
-            addressEN: data.addressEN,
-            addressVN: data.addressVN,
-            birthdated: data.birthdated,
-            workingBranch: data.workingBranch,
-            nationality: data.nationality,
-            visa: data.visa,
-            citizenIdentification: data.citizenIdentification,
+            address: data.address,
             website: data.website,
             note: data.note,
-            avatar: data.avatar,
-            colorAvatar: data.colorAvatar,
-            defaultAvatar: data.defaultAvatar,
-            lastUserLogin: data.lastUserLogin,
-            lastUserLoginFailed: data.lastUserLoginFailed,
+            statusPartner: data.statusPartner,
+            rolePartner: data.rolePartner,
             insertedByUser: data.insertedByUser,
             dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
-            statusUser: data.statusUser,
             searchAll: '',
           }))
         );
@@ -213,33 +196,11 @@ const RequestTable = () => {
     {
       title: (
         <div className={style.title}>
-          {translatePartner('fullName_form.title')}
-        </div>
-      ),
-      dataIndex: 'fullName',
-      key: 'fullName',
-      width: 150,
-      align: 'center',
-    },
-    {
-      title: (
-        <div className={style.title}>
           {translatePartner('email_form.title')}
         </div>
       ),
-      dataIndex: 'email',
-      key: 'email',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePartner('gender_form.title')}
-        </div>
-      ),
-      dataIndex: 'genderName',
-      key: 'genderName',
+      dataIndex: 'emailCompany',
+      key: 'emailCompany',
       width: 250,
       align: 'left',
     },
@@ -251,6 +212,33 @@ const RequestTable = () => {
       key: 'roleName',
       width: 250,
       align: 'left',
+      render: (_, value) => {
+        const content = (valueTypeLocations: IRolePartner[]) => {
+          return (
+            <div>
+              {valueTypeLocations.map((type) => {
+                return <Tag key={type.roleID}>{type.name}</Tag>;
+              })}
+            </div>
+          );
+        };
+        return (
+          <Popover content={content(value.rolePartner)}>
+            {value.rolePartner.length <= 2 ? (
+              value.rolePartner.map((type) => (
+                <Tag key={type.roleID}>{type.name}</Tag>
+              ))
+            ) : (
+              <>
+                {value.rolePartner.slice(0, 2).map((type) => (
+                  <Tag key={type.roleID}>{type.name}</Tag>
+                ))}
+                <Tag>...</Tag>
+              </>
+            )}
+          </Popover>
+        );
+      },
     },
     {
       title: (
@@ -258,6 +246,15 @@ const RequestTable = () => {
       ),
       dataIndex: 'cityName',
       key: 'cityName',
+      width: 250,
+      align: 'left',
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePartner('nationality')}</div>
+      ),
+      dataIndex: 'countryName',
+      key: 'countryName',
       width: 250,
       align: 'left',
     },
@@ -274,8 +271,8 @@ const RequestTable = () => {
           {translatePartner('companyName_form.title')}
         </div>
       ),
-      dataIndex: 'companyNameEN',
-      key: 'companyNameEN',
+      dataIndex: 'companyName',
+      key: 'companyName',
       width: 250,
       align: 'left',
     },
@@ -329,8 +326,8 @@ const RequestTable = () => {
           {translatePartner('address_form.title')}
         </div>
       ),
-      dataIndex: 'addressEN',
-      key: 'addressEN',
+      dataIndex: 'address',
+      key: 'address',
       width: 250,
       align: 'left',
     },
@@ -345,48 +342,6 @@ const RequestTable = () => {
       width: 150,
       align: 'left',
       render: (value) => formatDate(Number(value)),
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePartner('workingBranch_form.title')}
-        </div>
-      ),
-      dataIndex: 'workingBranch',
-      key: 'workingBranch',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePartner('nationality_form.title')}
-        </div>
-      ),
-      dataIndex: 'nationality',
-      key: 'nationality',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>{translatePartner('visa_form.title')}</div>
-      ),
-      dataIndex: 'visa',
-      key: 'visa',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePartner('citizenIdentification_form.title')}
-        </div>
-      ),
-      dataIndex: 'citizenIdentification',
-      key: 'citizenIdentification',
-      width: 250,
-      align: 'left',
     },
     {
       title: (
@@ -414,6 +369,23 @@ const RequestTable = () => {
       width: 200,
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
+      align: 'center',
+    },
+    {
+      title: (
+        <div className={style.title}>{translateCommon('date_inserted')}</div>
+      ),
+      width: 150,
+      dataIndex: 'dateUpdated',
+      key: 'dateUpdated',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: <div className={style.title}>{translateCommon('inserter')}</div>,
+      width: 200,
+      dataIndex: 'updatedByUser',
+      key: 'updatedByUser',
       align: 'center',
     },
   ];

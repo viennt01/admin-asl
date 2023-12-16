@@ -47,7 +47,7 @@ import style from '@/components/commons/table/index.module.scss';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
-  initalValueQueryInputParamsMaster,
+  initalValueQueryInputParamsCustomers,
   initalValueQuerySelectParamsMaster,
 } from '../constant';
 import ImportCSVModal, {
@@ -61,7 +61,7 @@ const { confirm } = Modal;
 
 type DataIndex = keyof IQueryInputParamType;
 
-export default function MasterDataTable() {
+export default function CustomersDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { translate: translatePartner } = useI18n('partner');
@@ -70,7 +70,7 @@ export default function MasterDataTable() {
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [queryInputParams, setQueryInputParams] =
-    useState<IQueryInputParamType>(initalValueQueryInputParamsMaster);
+    useState<IQueryInputParamType>(initalValueQueryInputParamsCustomers);
   const [querySelectParams, setQuerySelectParams] =
     useState<IQuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<IPartnerTable[]>([]);
@@ -106,7 +106,7 @@ export default function MasterDataTable() {
         }
       : querySelectParams;
   const locationsQuerySearch = useQuery({
-    queryKey: [API_PARTNER.GET_SEARCH, queryInputParams, querySelectParams],
+    queryKey: ['Customers', queryInputParams, querySelectParams],
     queryFn: () =>
       getUnitSearch({
         ...queryInputParams,
@@ -193,7 +193,7 @@ export default function MasterDataTable() {
 
   const refreshingQuery = () => {
     setSelectedActiveKey(initalSelectSearchMaster);
-    setQueryInputParams(initalValueQueryInputParamsMaster);
+    setQueryInputParams(initalValueQueryInputParamsCustomers);
     setRefreshingLoading(true);
     pagination.current = 1;
     locationsQuerySearch.refetch();
@@ -212,7 +212,7 @@ export default function MasterDataTable() {
       },
     });
     setQueryInputParams({
-      ...initalValueQueryInputParamsMaster,
+      ...initalValueQueryInputParamsCustomers,
       searchAll: value,
     });
     setQuerySelectParams({
