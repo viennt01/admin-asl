@@ -403,3 +403,10 @@ export const API_STAFF = {
   EXPORT: '/export-staff-with-excel',
   GET_ALL: '/get-all-staff',
 };
+export const API_BOOKING = {
+  GET_HISTORY_BOOKING_BY_ASL_C: '/get-booking-by-asl',
+  GET_HISTORY_BOOKING_BY_ASL_P: '/get-booking-by-asl',
+  GET_HISTORY_BOOKING_BY_ASL_Pr: '/get-booking-by-asl',
+  GET_HISTORY_BOOKING_BY_ASL_Ca: '/get-booking-by-asl',
+  UPDATE_STATUS_BOOKING: '/update-status-booking',
+};
