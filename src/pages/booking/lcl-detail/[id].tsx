@@ -1,13 +1,13 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import FclOceanFreightDetail from '@/components/fcl-sea-detail';
+import LclOceanFreightDetail from '@/components/lcl-sea-deatil';
 function BookingEditPage() {
   return (
     <>
       <Head>
-        <title>ASL | BOOKING DETAIL FCL</title>
+        <title>ASL | BOOKING DETAIL LCL</title>
       </Head>
-      <FclOceanFreightDetail />
+      <LclOceanFreightDetail />
     </>
   );
 }

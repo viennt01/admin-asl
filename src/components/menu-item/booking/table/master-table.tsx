@@ -1,4 +1,4 @@
-import { EditOutlined } from '@ant-design/icons';
+import { EyeOutlined } from '@ant-design/icons';
 import { Button, PaginationProps } from 'antd';
 import { Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
@@ -108,6 +108,26 @@ export default function MasterDataTable() {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
       },
+    },
+    {
+      key: 'operation',
+      width: 50,
+      align: 'center',
+      dataIndex: 'key',
+      fixed: 'left',
+      render: (value, recode) => (
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() =>
+              recode.typeOfSeaService === 'FCL'
+                ? router.push(ROUTERS.FCL_DETAIL(value as string))
+                : router.push(ROUTERS.LCL_DETAIL(value as string))
+            }
+            icon={<EyeOutlined />}
+            style={{ marginRight: '10px' }}
+          />
+        </div>
+      ),
     },
     {
       title: (
@@ -249,29 +269,7 @@ export default function MasterDataTable() {
       key: 'confirmByUser',
       align: 'center',
     },
-    {
-      key: 'operation',
-      width: 50,
-      align: 'center',
-      dataIndex: 'key',
-      render: (value) => (
-        <div style={{ display: 'flex' }}>
-          <Button
-            onClick={() => handleEditCustomer(value as string)}
-            icon={<EditOutlined />}
-            style={{
-              marginRight: '10px',
-            }}
-          />
-        </div>
-      ),
-    },
   ];
-
-  // Handle logic table
-  const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.PARTNER_EDIT(id));
-  };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
@@ -289,7 +287,9 @@ export default function MasterDataTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.PARTNER_EDIT(record.key, true));
+      record.typeOfSeaService === 'FCL'
+        ? router.push(ROUTERS.FCL_DETAIL(record.key as string))
+        : router.push(ROUTERS.LCL_DETAIL(record.key as string));
     }
   };
 

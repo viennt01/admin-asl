@@ -1,9 +1,4 @@
-import {
-  EditOutlined,
-  EyeOutlined,
-  CheckOutlined,
-  CloseOutlined,
-} from '@ant-design/icons';
+import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, PaginationProps } from 'antd';
 import { Key, MouseEvent, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
@@ -128,10 +123,14 @@ export default function PendingTable() {
       align: 'center',
       dataIndex: 'key',
       fixed: 'left',
-      render: (value) => (
+      render: (value, recode) => (
         <div style={{ display: 'flex' }}>
           <Button
-            onClick={() => handleEditCustomer(value as string)}
+            onClick={() =>
+              recode.typeOfSeaService === 'FCL'
+                ? router.push(ROUTERS.FCL_DETAIL(value as string))
+                : router.push(ROUTERS.LCL_DETAIL(value as string))
+            }
             icon={<EyeOutlined />}
             style={{ marginRight: '10px' }}
           />
@@ -300,30 +299,9 @@ export default function PendingTable() {
       key: 'confirmByUser',
       align: 'center',
     },
-    {
-      key: 'operation',
-      width: 50,
-      align: 'center',
-      dataIndex: 'key',
-      render: (value) => (
-        <div style={{ display: 'flex' }}>
-          <Button
-            onClick={() => handleEditCustomer(value as string)}
-            icon={<EditOutlined />}
-            style={{
-              marginRight: '10px',
-            }}
-          />
-        </div>
-      ),
-    },
   ];
 
   // Handle logic table
-  const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.FCL_DETAIL(id));
-  };
-
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
@@ -340,7 +318,9 @@ export default function PendingTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.FCL_DETAIL(record.key));
+      console.log(record);
+
+      // router.push(ROUTERS.FCL_DETAIL(record.key));
     }
   };
 
