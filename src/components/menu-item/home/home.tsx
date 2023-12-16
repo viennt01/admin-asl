@@ -71,7 +71,7 @@ export default function DashboardPage() {
             />
           </ProCard>
           <StatisticCard
-            title="Bình quân lợi nhuận"
+            title="Bình quân lợi nhuận test"
             chart={
               <img
                 src="https://gw.alipayobjects.com/zos/alicdn/qoYmFMxWY/jieping2021-03-29%252520xiawu4.32.34.png"
