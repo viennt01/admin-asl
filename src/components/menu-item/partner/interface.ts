@@ -109,16 +109,24 @@ export interface IPartnerDetailType extends Omit<IFormValues, 'rolePartners'> {
 
 export type IPartnerCreate = Omit<
   IFormValues,
-  'partnerID' | 'userBaseDTOs' | 'rolePartners'
+  'partnerID' | 'userBaseDTOs' | 'rolePartners' | 'address' | 'companyName'
 > & {
   rolePartners: string[];
+  companyNameEN: string;
+  companyNameVN: string;
+  addressEN: string;
+  addressVN: string;
 };
 
 export type IPartnerEdit = Omit<
   IFormValues,
-  'userBaseDTOs' | 'rolePartners'
+  'userBaseDTOs' | 'rolePartners' | 'address' | 'companyName'
 > & {
   rolePartners: IRolePartners[];
+  companyNameEN: string;
+  companyNameVN: string;
+  addressEN: string;
+  addressVN: string;
 };
 
 export type IPartnerDelete = {
