@@ -409,4 +409,6 @@ export const API_BOOKING = {
   GET_HISTORY_BOOKING_BY_ASL_Pr: '/get-booking-by-asl',
   GET_HISTORY_BOOKING_BY_ASL_Ca: '/get-booking-by-asl',
   UPDATE_STATUS_BOOKING: '/update-status-booking',
+  GET_SEA_BOOKING_BY_ID: '/get-sea-booking-by-id',
+  SEND_FILE_IN_EMAIL_BOOKING_BY_USER: '/send-file-in-email-booking',
 };

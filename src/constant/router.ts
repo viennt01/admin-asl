@@ -212,4 +212,7 @@ export const ROUTERS = {
   PERMISSION: '/system/permission',
   PERMISSION_EDIT: (permissionId: string) =>
     `/system/permission/edit/${permissionId}`,
+
+  LCL_DETAIL: (id: string) => `/booking/lcl-detail/${id}`,
+  FCL_DETAIL: (id: string) => `/booking/fcl-detail/${id}`,
 };

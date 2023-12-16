@@ -321,7 +321,7 @@ export default function PendingTable() {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.PARTNER_EDIT(id));
+    router.push(ROUTERS.FCL_DETAIL(id));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -340,7 +340,7 @@ export default function PendingTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.PARTNER_EDIT(record.key, true));
+      router.push(ROUTERS.FCL_DETAIL(record.key));
     }
   };
 
