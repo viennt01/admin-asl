@@ -78,6 +78,9 @@ export interface IFormValues {
   statusPartner: string;
   rolePartners: string[];
   userBaseDTOs: IUserBaseDTOs[];
+  seaPricingForPartnerDTOs: ISeaPricingForPartnerDTOs[];
+  truckingPricingForPartnerDTOs: ITruckingPricingForPartnerDTOs[];
+  customPricingForPartnerDTOs: ICustomPricingForPartnerDTOs[];
 }
 export interface IRolePartners {
   partnerRoleDetailID?: string;
@@ -106,10 +109,72 @@ export interface IPartnerDetailType extends Omit<IFormValues, 'rolePartners'> {
   confirmDated: string;
   confirmByUser: string;
 }
+export interface ISeaPricingForPartnerDTOs {
+  seaPricingID: string;
+  podName: string;
+  polName: string;
+  commodityName: string;
+  currencyAbbreviations: string;
+  vendor: string;
+  note: string;
+  effectDated: string;
+  validityDate: string;
+  freqDate: string;
+  demSeaPricing: string;
+  detSeaPricing: string;
+  stoSeaPricing: string;
+  lclMinSeaPricing: string;
+  lclSeaPricing: string;
+  statusSeaPricing: string;
+}
+export interface ITruckingPricingForPartnerDTOs {
+  truckingPricingID: string;
+  pickupName: string;
+  deliveryName: string;
+  commodityName: string;
+  currencyAbbreviations: string;
+  vendor: string;
+  note: string;
+  effectDated: string;
+  validityDate: string;
+  freqDate: string;
+  statusTruckingPricing: string;
+}
+export interface ICustomPricingForPartnerDTOs {
+  customPricingID: string;
+  typeDelaracrionName: string;
+  transactionTypeName: string;
+  vendor: string;
+  commodityName: string;
+  currencyAbbreviations: string;
+  note: string;
+  effectDated: string;
+  validityDate: string;
+  statusCustomPricing: string;
+}
 
+export interface ISeaPricingForPartnerDTOsTable
+  extends Omit<ISeaPricingForPartnerDTOs, 'seaPricingID'> {
+  key: string;
+}
+export interface ITruckingPricingForPartnerDTOsTable
+  extends Omit<ITruckingPricingForPartnerDTOs, 'truckingPricingID'> {
+  key: string;
+}
+export interface ICustomPricingForPartnerDTOsTable
+  extends Omit<ICustomPricingForPartnerDTOs, 'customPricingID'> {
+  key: string;
+}
 export type IPartnerCreate = Omit<
   IFormValues,
-  'partnerID' | 'userBaseDTOs' | 'rolePartners' | 'address' | 'companyName'
+  | 'partnerID'
+  | 'userBaseDTOs'
+  | 'rolePartners'
+  | 'address'
+  | 'companyName'
+  | 'seaPricingForPartnerDTOs'
+  | 'truckingPricingForPartnerDTOs'
+  | 'customPricingForPartnerDTOs'
 > & {
   rolePartners: string[];
   companyNameEN: string;
@@ -120,7 +185,13 @@ export type IPartnerCreate = Omit<
 
 export type IPartnerEdit = Omit<
   IFormValues,
-  'userBaseDTOs' | 'rolePartners' | 'address' | 'companyName'
+  | 'userBaseDTOs'
+  | 'rolePartners'
+  | 'address'
+  | 'companyName'
+  | 'seaPricingForPartnerDTOs'
+  | 'truckingPricingForPartnerDTOs'
+  | 'customPricingForPartnerDTOs'
 > & {
   rolePartnerUpdateRequests: IRolePartners[];
   companyNameEN: string;

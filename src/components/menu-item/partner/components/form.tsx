@@ -39,6 +39,9 @@ import { getListCity } from '@/layout/fetcher';
 import { getListStaff } from '../../system/staff/fetcher';
 import ListUser from './list-user';
 import AddUserModal from './add-user/modal';
+import ListSea from './list-sea';
+import ListTrucking from './list-trucking';
+import ListCustoms from './list-customs';
 
 const { Panel } = Collapse;
 
@@ -170,6 +173,10 @@ const UnitForm = ({
           website: data.data.website,
           note: data.data.note,
           statusPartner: data.data.statusPartner,
+          seaPricingForPartnerDTOs: data.data.seaPricingForPartnerDTOs,
+          truckingPricingForPartnerDTOs:
+            data.data.truckingPricingForPartnerDTOs,
+          customPricingForPartnerDTOs: data.data.customPricingForPartnerDTOs,
           rolePartners: data.data.rolePartners.map(
             (rolePartner) => rolePartner.partnerRoleID
           ),
@@ -633,6 +640,15 @@ const UnitForm = ({
             <Col span={0}>
               <Form.Item name="userBaseDTOs"></Form.Item>
             </Col>
+            <Col span={0}>
+              <Form.Item name="seaPricingForPartnerDTOs"></Form.Item>
+            </Col>
+            <Col span={0}>
+              <Form.Item name="truckingPricingForPartnerDTOs"></Form.Item>
+            </Col>
+            <Col span={0}>
+              <Form.Item name="customPricingForPartnerDTOs"></Form.Item>
+            </Col>
           </Row>
         </Card>
 
@@ -643,6 +659,7 @@ const UnitForm = ({
             background: 'white',
             border: 'none',
             marginBottom: '16px',
+            display: create ? 'none' : '',
           }}
         >
           <Panel
@@ -680,6 +697,99 @@ const UnitForm = ({
               handleCancel={cancelAddUser}
             />
             <ListUser form={form} />
+          </Panel>
+        </Collapse>
+
+        <Collapse
+          style={{
+            borderRadius: 4,
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            background: 'white',
+            border: 'none',
+            marginBottom: '16px',
+            display: create ? 'none' : '',
+          }}
+        >
+          <Panel
+            style={{
+              borderRadius: 4,
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              background: 'white',
+              border: 'none',
+            }}
+            forceRender
+            header={
+              <Badge count={0} style={{ marginRight: '-10px' }}>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  List sea pricing
+                </Title>
+              </Badge>
+            }
+            key="1"
+          >
+            <ListSea form={form} />
+          </Panel>
+        </Collapse>
+
+        <Collapse
+          style={{
+            borderRadius: 4,
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            background: 'white',
+            border: 'none',
+            marginBottom: '16px',
+            display: create ? 'none' : '',
+          }}
+        >
+          <Panel
+            style={{
+              borderRadius: 4,
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              background: 'white',
+              border: 'none',
+            }}
+            forceRender
+            header={
+              <Badge count={0} style={{ marginRight: '-10px' }}>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  List trucking pricing
+                </Title>
+              </Badge>
+            }
+            key="1"
+          >
+            <ListTrucking form={form} />
+          </Panel>
+        </Collapse>
+
+        <Collapse
+          style={{
+            borderRadius: 4,
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            background: 'white',
+            border: 'none',
+            marginBottom: '16px',
+            display: create ? 'none' : '',
+          }}
+        >
+          <Panel
+            style={{
+              borderRadius: 4,
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              background: 'white',
+              border: 'none',
+            }}
+            forceRender
+            header={
+              <Badge count={0} style={{ marginRight: '-10px' }}>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  List customs pricing
+                </Title>
+              </Badge>
+            }
+            key="1"
+          >
+            <ListCustoms form={form} />
           </Panel>
         </Collapse>
 
