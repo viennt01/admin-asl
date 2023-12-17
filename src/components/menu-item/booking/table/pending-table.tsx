@@ -108,7 +108,7 @@ export default function PendingTable() {
   // Handle data show table
   const columns: ProColumns<IDataHistoryTable>[] = [
     {
-      title: <div className={style.title}>{translatePartner('code')}</div>,
+      // title: <div className={style.title}>{translatePartner('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'right',
@@ -160,6 +160,26 @@ export default function PendingTable() {
       ),
     },
     {
+      key: 'operation',
+      width: 50,
+      align: 'center',
+      dataIndex: 'key',
+      fixed: 'left',
+      render: (value, recode) => (
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() =>
+              recode.typeOfSeaService === 'FCL'
+                ? router.push(ROUTERS.FCL_DETAIL(value as string))
+                : router.push(ROUTERS.LCL_DETAIL(value as string))
+            }
+            icon={<EyeOutlined />}
+            style={{ marginRight: '10px' }}
+          />
+        </div>
+      ),
+    },
+    {
       title: (
         <div className={style.title}>{translatePartner('Booking No')}</div>
       ),
@@ -167,6 +187,24 @@ export default function PendingTable() {
       key: 'bookingNo',
       width: 150,
       align: 'center',
+    },
+    {
+      title: <div className={style.title}>Customer</div>,
+      width: 200,
+      dataIndex: 'insertedByUser',
+      key: 'insertedByUser',
+      align: 'center',
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePartner('Type Service')}</div>
+      ),
+      dataIndex: 'typeOfService',
+      key: 'typeOfService',
+      width: 150,
+      align: 'left',
+      render: (value, record) =>
+        `${record.typeOfService} (${record.typeOfSeaService})`,
     },
     {
       title: <div className={style.title}>{translatePartner('POL')}</div>,
@@ -218,26 +256,6 @@ export default function PendingTable() {
       align: 'left',
     },
     {
-      title: (
-        <div className={style.title}>{translatePartner('Type Service')}</div>
-      ),
-      dataIndex: 'typeOfService',
-      key: 'typeOfService',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePartner('Type Of Sea Service')}
-        </div>
-      ),
-      dataIndex: 'typeOfSeaService',
-      key: 'typeOfSeaService',
-      width: 250,
-      align: 'left',
-    },
-    {
       title: <div className={style.title}>{translatePartner('Note')}</div>,
       dataIndex: 'note',
       key: 'note',
@@ -262,6 +280,7 @@ export default function PendingTable() {
       dataIndex: 'cargoCutOffDated',
       key: 'cargoCutOffDated',
       align: 'center',
+      render: (value) => formatDate(Number(value)),
     },
     {
       title: (
@@ -272,13 +291,6 @@ export default function PendingTable() {
       key: 'dateInserted',
       align: 'center',
       render: (value) => formatDate(Number(value)),
-    },
-    {
-      title: <div className={style.title}>{translateCommon('creator')}</div>,
-      width: 200,
-      dataIndex: 'insertedByUser',
-      key: 'insertedByUser',
-      align: 'center',
     },
     {
       title: (

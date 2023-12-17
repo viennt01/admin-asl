@@ -21,11 +21,6 @@ export default function Booking() {
         style={{ marginTop: 10 }}
         items={[
           {
-            label: 'Completed',
-            key: 'API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_C',
-            children: <MasterDataTable />,
-          },
-          {
             label: 'Pending confirmation',
             key: 'API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_P',
             children: <PendingTable />,
@@ -34,6 +29,11 @@ export default function Booking() {
             label: 'Processing',
             key: 'API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_Pr',
             children: <ProcessingTable />,
+          },
+          {
+            label: 'Completed',
+            key: 'API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_C',
+            children: <MasterDataTable />,
           },
           {
             label: 'Cancelled',

@@ -100,7 +100,7 @@ export default function CancelledTable() {
   // Handle data show table
   const columns: ProColumns<IDataHistoryTable>[] = [
     {
-      title: <div className={style.title}>{translatePartner('code')}</div>,
+      // title: <div className={style.title}>{translatePartner('code')}</div>,
       dataIndex: 'index',
       width: 50,
       align: 'right',
@@ -137,6 +137,24 @@ export default function CancelledTable() {
       key: 'bookingNo',
       width: 150,
       align: 'center',
+    },
+    {
+      title: <div className={style.title}>Customer</div>,
+      width: 200,
+      dataIndex: 'insertedByUser',
+      key: 'insertedByUser',
+      align: 'center',
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePartner('Type Service')}</div>
+      ),
+      dataIndex: 'typeOfService',
+      key: 'typeOfService',
+      width: 150,
+      align: 'left',
+      render: (value, record) =>
+        `${record.typeOfService} (${record.typeOfSeaService})`,
     },
     {
       title: <div className={style.title}>{translatePartner('POL')}</div>,
@@ -188,26 +206,6 @@ export default function CancelledTable() {
       align: 'left',
     },
     {
-      title: (
-        <div className={style.title}>{translatePartner('Type Service')}</div>
-      ),
-      dataIndex: 'typeOfService',
-      key: 'typeOfService',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePartner('Type Of Sea Service')}
-        </div>
-      ),
-      dataIndex: 'typeOfSeaService',
-      key: 'typeOfSeaService',
-      width: 250,
-      align: 'left',
-    },
-    {
       title: <div className={style.title}>{translatePartner('Note')}</div>,
       dataIndex: 'note',
       key: 'note',
@@ -232,6 +230,7 @@ export default function CancelledTable() {
       dataIndex: 'cargoCutOffDated',
       key: 'cargoCutOffDated',
       align: 'center',
+      render: (value) => formatDate(Number(value)),
     },
     {
       title: (
@@ -242,13 +241,6 @@ export default function CancelledTable() {
       key: 'dateInserted',
       align: 'center',
       render: (value) => formatDate(Number(value)),
-    },
-    {
-      title: <div className={style.title}>{translateCommon('creator')}</div>,
-      width: 200,
-      dataIndex: 'insertedByUser',
-      key: 'insertedByUser',
-      align: 'center',
     },
     {
       title: (
