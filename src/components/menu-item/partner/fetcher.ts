@@ -19,6 +19,7 @@ import {
   RequestExportData,
   ITypeUnit,
   IGenderPartner,
+  IRequestAddUserPartner,
 } from './interface';
 import {
   API_COLUMN,
@@ -111,4 +112,11 @@ export const getListTyeUnit = () => {
 //Get type unit
 export const getListGender = () => {
   return get<ResponseWithPayload<IGenderPartner[]>>({})(API_GENDER.GET_ALL);
+};
+//----------------------------------------------------------------
+//add user partner
+export const addUserPartner = (data: IRequestAddUserPartner) => {
+  return post<IRequestAddUserPartner, ResponseWithPayload<string>>({
+    data,
+  })(API_PARTNER.ADD_USER_PARTNER);
 };

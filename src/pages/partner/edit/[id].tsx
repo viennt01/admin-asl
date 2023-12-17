@@ -15,7 +15,7 @@ function EditPartnerPage() {
 
 export default withAuthentication(EditPartnerPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'partner']);
+export const getStaticProps = getStatic(['common', 'partner', 'staff']);
 export const getStaticPaths = () => {
   return {
     paths: [],

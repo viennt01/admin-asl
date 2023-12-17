@@ -376,6 +376,7 @@ export const API_PARTNER = {
   IMPORT: '/import-partner-with-excel',
   EXPORT: '/export-partner-with-excel',
   GET_ALL: '/get-all-partner',
+  ADD_USER_PARTNER: '/add-user-partner',
 };
 export const API_PARTNER_ROLE = {
   GET_ALL: '/get-all-partner-role',

@@ -1,11 +1,16 @@
 import { SearchOutlined } from '@ant-design/icons';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import type { FormInstance, InputRef } from 'antd';
 import { Button, Form, Input, Space, Table } from 'antd';
 import type { ColumnType, ColumnsType } from 'antd/es/table';
 import type { FilterConfirmProps } from 'antd/es/table/interface';
 import { IFormValues, IUserBaseDTOsTable } from '../interface';
+import { EyeOutlined } from '@ant-design/icons';
+import { ROLE } from '@/constant/permission';
+import { ROUTERS } from '@/constant/router';
+import { useRouter } from 'next/router';
+import { AppContext } from '@/app-context';
 
 interface FormProps {
   form: FormInstance<IFormValues>;
@@ -19,6 +24,8 @@ const ListUser = ({ form }: FormProps) => {
   const searchInput = useRef<InputRef>(null);
   const userBaseDTOs = Form.useWatch('userBaseDTOs', form);
   const [dataTable, setDataTable] = useState<IUserBaseDTOsTable[]>([]);
+  const router = useRouter();
+  const { role } = useContext(AppContext);
 
   useEffect(() => {
     setDataTable(
@@ -147,13 +154,6 @@ const ListUser = ({ form }: FormProps) => {
       ...getColumnSearchProps('fullName'),
     },
     {
-      title: 'Employee Code',
-      dataIndex: 'employeeCode',
-      key: 'employeeCode',
-      width: '20%',
-      ...getColumnSearchProps('employeeCode'),
-    },
-    {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
@@ -164,6 +164,28 @@ const ListUser = ({ form }: FormProps) => {
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
       ...getColumnSearchProps('phoneNumber'),
+    },
+    {
+      key: 'operation',
+      width: 50,
+      align: 'center',
+      dataIndex: 'key',
+      render: (value) => (
+        <div
+          style={{
+            marginTop: 10,
+            display: role === ROLE.MANAGER ? '' : 'none',
+          }}
+        >
+          <Button
+            onClick={() => router.push(ROUTERS.USER_DETAIL(value))}
+            icon={<EyeOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
+        </div>
+      ),
     },
   ];
 

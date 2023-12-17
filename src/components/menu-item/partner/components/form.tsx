@@ -1,7 +1,19 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Switch, Select } from 'antd';
+import {
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  Switch,
+  Select,
+  Collapse,
+  Button,
+  Badge,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
@@ -25,8 +37,10 @@ import { API_MESSAGE } from '@/constant/message';
 import { getAllPartnerRole } from '../../quotation/sea/fetcher';
 import { getListCity } from '@/layout/fetcher';
 import { getListStaff } from '../../system/staff/fetcher';
-import CollapseCard from '@/components/commons/collapse-card';
 import ListUser from './list-user';
+import CreateQuotationModal from './create-quotation/modal';
+
+const { Panel } = Collapse;
 
 const initialValue = {
   address: '',
@@ -76,6 +90,8 @@ const UnitForm = ({
   const [listPartnerDTOs, setListPartnerDTOsDTOs] = useState<IRolePartners[]>(
     []
   );
+  const [openCreateQuotationModal, setOpenCreateQuotationModal] =
+    useState(false);
 
   const getAllPartner = useQuery({
     queryKey: [API_PARTNER_ROLE.GET_ALL],
@@ -258,6 +274,19 @@ const UnitForm = ({
     propCopyAndCreate,
     form.getFieldValue('statusPartner'),
   ]);
+
+  //handle create quotation
+  const cancelCreateQuotation = () => {
+    setOpenCreateQuotationModal(false);
+  };
+
+  const handleOpenCreateQuotation = () => {
+    setOpenCreateQuotationModal(true);
+  };
+
+  const handleCreateQuotation = () => {
+    setOpenCreateQuotationModal(false);
+  };
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -608,13 +637,52 @@ const UnitForm = ({
           </Row>
         </Card>
 
-        <CollapseCard
-          title="List user"
-          style={{ marginBottom: '24px', display: !create ? '' : 'none' }}
-          defaultActive={true}
+        <Collapse
+          style={{
+            borderRadius: 4,
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            background: 'white',
+            border: 'none',
+            marginBottom: '16px',
+          }}
         >
-          <ListUser form={form} />
-        </CollapseCard>
+          <Panel
+            style={{
+              borderRadius: 4,
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              background: 'white',
+              border: 'none',
+            }}
+            forceRender
+            header={
+              <Badge count={0} style={{ marginRight: '-10px' }}>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  List user
+                </Title>
+              </Badge>
+            }
+            extra={
+              <Button
+                type="primary"
+                // htmlType="submit"
+                onClick={(event) => {
+                  handleOpenCreateQuotation();
+                  event.stopPropagation();
+                }}
+              >
+                Add user
+              </Button>
+            }
+            key="1"
+          >
+            <CreateQuotationModal
+              open={openCreateQuotationModal}
+              handleOk={handleCreateQuotation}
+              handleCancel={cancelCreateQuotation}
+            />
+            <ListUser form={form} />
+          </Panel>
+        </Collapse>
 
         <BottomCreateEdit
           create={create}

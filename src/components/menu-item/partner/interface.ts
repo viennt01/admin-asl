@@ -164,3 +164,21 @@ export interface IGenderPartner {
   genderID: string;
   name: string;
 }
+//Add user partner
+export interface IRequestAddUserPartner {
+  genderID: string; //
+  partnerID: string;
+  email: string; //
+  firstName: string; //
+  lastName: string; //
+  fullName: string; //
+  birthday: number; //
+  phoneNumber: string; //
+  address: string; //
+  taxCode: string; //
+  visa: string; //
+  citizenIdentification: string; //
+  workingBranch: string;
+  nationality: string;
+  note: string;
+}
