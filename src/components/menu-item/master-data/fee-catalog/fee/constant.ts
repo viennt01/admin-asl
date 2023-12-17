@@ -2,16 +2,10 @@ import { STATUS_ALL_LABELS } from '@/constant/form';
 
 export const initalValueQueryInputParamsMaster = {
   searchAll: '',
-  feeNo: '',
-  feeName: '',
-  vatFee: '',
 };
 
 export const initalValueQuerySelectParamsMaster = {
   statusFee: [],
-  typeFeeID: '',
-  currencyID: '',
-  unitID: '',
 };
 
 export const initalValueDisplayColumnMaster = {

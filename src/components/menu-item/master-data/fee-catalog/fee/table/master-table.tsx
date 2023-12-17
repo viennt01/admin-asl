@@ -17,13 +17,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  API_COLUMN,
-  API_CURRENCY,
-  API_FEE,
-  API_TYPE_FEE,
-  API_UNIT,
-} from '@/fetcherAxios/endpoint';
+import { API_COLUMN, API_FEE, API_UNIT } from '@/fetcherAxios/endpoint';
 import style from '@/components/commons/table/index.module.scss';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
@@ -48,13 +42,10 @@ import {
   exportTableFile,
   getColumnTable,
   getFeeSearch,
-  getListTypeCurrency,
-  getListTypeFee,
   getListTypeUnit,
   importDataTable,
   updateColumnTable,
 } from '../fetcher';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import Table from '../../../../../commons/table/table';
 import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
 import {
@@ -98,8 +89,9 @@ export default function MasterDataTable() {
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
 
   // Handle data
-  const typeFee = useQuery([API_TYPE_FEE.GET_ALL], getListTypeFee);
-  const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
+  // const typeFee = useQuery([API_TYPE_FEE.GET_ALL], getListTypeFee);
+  // const typeCurrency = useQuery([API_CURRENCY.GET_ALL], getListTypeCurrency);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dataUnit, setDataUnit] = useState<
     {
       text: string;
@@ -265,6 +257,7 @@ export default function MasterDataTable() {
     });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearchInput = (
     selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
@@ -272,10 +265,10 @@ export default function MasterDataTable() {
   ) => {
     setSelectedActiveKey((prevData) => ({
       ...prevData,
-      [dataIndex]: {
-        label: dataIndex,
-        value: selectedKeys,
-      },
+      // [dataIndex]: {
+      //   label: dataIndex,
+      //   value: selectedKeys,
+      // },
       searchAll: {
         label: 'searchAll',
         value: '',
@@ -315,6 +308,7 @@ export default function MasterDataTable() {
     setQuerySelectParams(newQueryParams);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
     setQueryInputParams((prevData) => ({
       ...prevData,
@@ -346,16 +340,16 @@ export default function MasterDataTable() {
       key: 'feeNo',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'feeNo',
-        },
-      }),
+      // ...ColumnSearchTableProps<QueryInputParamType>({
+      //   props: {
+      //     handleSearch: handleSearchInput,
+      //     handleReset: handleReset,
+      //     queryParams: queryInputParams,
+      //     selectedKeyShow: selectedActiveKey,
+      //     setSelectedKeyShow: setSelectedActiveKey,
+      //     dataIndex: 'feeNo',
+      //   },
+      // }),
     },
     {
       title: <div className={style.title}>{translateFee('name')}</div>,
@@ -363,16 +357,16 @@ export default function MasterDataTable() {
       key: 'feeName',
       width: 250,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'feeName',
-        },
-      }),
+      // ...ColumnSearchTableProps<QueryInputParamType>({
+      //   props: {
+      //     handleSearch: handleSearchInput,
+      //     handleReset: handleReset,
+      //     queryParams: queryInputParams,
+      //     selectedKeyShow: selectedActiveKey,
+      //     setSelectedKeyShow: setSelectedActiveKey,
+      //     dataIndex: 'feeName',
+      //   },
+      // }),
     },
     {
       title: <div className={style.title}>{translateFee('vat')}</div>,
@@ -380,16 +374,16 @@ export default function MasterDataTable() {
       key: 'vatFee',
       width: 250,
       align: 'right',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedActiveKey,
-          setSelectedKeyShow: setSelectedActiveKey,
-          dataIndex: 'vatFee',
-        },
-      }),
+      // ...ColumnSearchTableProps<QueryInputParamType>({
+      //   props: {
+      //     handleSearch: handleSearchInput,
+      //     handleReset: handleReset,
+      //     queryParams: queryInputParams,
+      //     selectedKeyShow: selectedActiveKey,
+      //     setSelectedKeyShow: setSelectedActiveKey,
+      //     dataIndex: 'vatFee',
+      //   },
+      // }),
     },
     {
       title: translateFee('type_fee'),
@@ -397,25 +391,25 @@ export default function MasterDataTable() {
       dataIndex: 'typeFeeID',
       key: 'typeFeeID',
       align: 'left',
-      filteredValue: [querySelectParams.typeFeeID] || null,
-      filters:
-        typeFee.data?.data.map((item) => ({
-          text: item.typeFeeName,
-          value: item.typeFeeID,
-        })) || [],
-      filterSearch: true,
-      filterIcon: () => {
-        return (
-          <FilterFilled
-            style={{
-              color:
-                querySelectParams.typeFeeID?.length !== 0
-                  ? COLORS.SEARCH.FILTER_ACTIVE
-                  : COLORS.SEARCH.FILTER_DEFAULT,
-            }}
-          />
-        );
-      },
+      // filteredValue: [querySelectParams.typeFeeID] || null,
+      // filters:
+      //   typeFee.data?.data.map((item) => ({
+      //     text: item.typeFeeName,
+      //     value: item.typeFeeID,
+      //   })) || [],
+      // filterSearch: true,
+      // filterIcon: () => {
+      //   return (
+      //     <FilterFilled
+      //       style={{
+      //         color:
+      //           querySelectParams.typeFeeID?.length !== 0
+      //             ? COLORS.SEARCH.FILTER_ACTIVE
+      //             : COLORS.SEARCH.FILTER_DEFAULT,
+      //       }}
+      //     />
+      //   );
+      // },
       filterMultiple: false,
       render: (_, value) => {
         return <div>{value.typeFeeName}</div>;
@@ -427,26 +421,26 @@ export default function MasterDataTable() {
       dataIndex: 'currencyID',
       key: 'currencyID',
       align: 'left',
-      filteredValue: [querySelectParams.currencyID] || null,
-      filters:
-        typeCurrency.data?.data.map((item) => ({
-          text: item.abbreviations,
-          value: item.currencyID,
-        })) || [],
-      filterSearch: true,
-      filterIcon: () => {
-        return (
-          <FilterFilled
-            style={{
-              color:
-                querySelectParams.currencyID?.length !== 0
-                  ? COLORS.SEARCH.FILTER_ACTIVE
-                  : COLORS.SEARCH.FILTER_DEFAULT,
-            }}
-          />
-        );
-      },
-      filterMultiple: false,
+      // filteredValue: [querySelectParams.currencyID] || null,
+      // filters:
+      //   typeCurrency.data?.data.map((item) => ({
+      //     text: item.abbreviations,
+      //     value: item.currencyID,
+      //   })) || [],
+      // filterSearch: true,
+      // filterIcon: () => {
+      //   return (
+      //     <FilterFilled
+      //       style={{
+      //         color:
+      //           querySelectParams.currencyID?.length !== 0
+      //             ? COLORS.SEARCH.FILTER_ACTIVE
+      //             : COLORS.SEARCH.FILTER_DEFAULT,
+      //       }}
+      //     />
+      //   );
+      // },
+      // filterMultiple: false,
       render: (_, value) => {
         return <div>{value.currencyName}</div>;
       },
@@ -457,22 +451,22 @@ export default function MasterDataTable() {
       dataIndex: 'unitID',
       key: 'unitID',
       align: 'left',
-      filteredValue: [querySelectParams.unitID] || null,
-      filters: dataUnit || [],
-      filterSearch: true,
-      filterIcon: () => {
-        return (
-          <FilterFilled
-            style={{
-              color:
-                querySelectParams.unitID?.length !== 0
-                  ? COLORS.SEARCH.FILTER_ACTIVE
-                  : COLORS.SEARCH.FILTER_DEFAULT,
-            }}
-          />
-        );
-      },
-      filterMultiple: false,
+      // filteredValue: [querySelectParams.unitID] || null,
+      // filters: dataUnit || [],
+      // filterSearch: true,
+      // filterIcon: () => {
+      //   return (
+      //     <FilterFilled
+      //       style={{
+      //         color:
+      //           querySelectParams.unitID?.length !== 0
+      //             ? COLORS.SEARCH.FILTER_ACTIVE
+      //             : COLORS.SEARCH.FILTER_DEFAULT,
+      //       }}
+      //     />
+      //   );
+      // },
+      // filterMultiple: false,
       render: (_, value) => {
         return <div>{value.unitInternationalCode}</div>;
       },

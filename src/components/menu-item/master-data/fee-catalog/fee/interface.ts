@@ -41,16 +41,10 @@ export interface FeeRequire extends IPagination {
 
 export interface QueryInputParamType {
   searchAll: string;
-  feeNo: string;
-  feeName: string;
-  vatFee: string;
 }
 
 export interface QuerySelectParamType {
   statusFee: string[];
-  typeFeeID: string;
-  currencyID: string;
-  unitID: string;
 }
 
 export interface RequestFeeType
