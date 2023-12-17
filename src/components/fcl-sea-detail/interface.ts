@@ -328,6 +328,7 @@ export interface IRequireTypeUnit {
 export interface IDetailBooking {
   customerInformation: ICustomerInformation;
   shipmentDetail: {
+    bookingNo: string;
     modeOfTransportation: string;
     pol: string;
     pod: string;

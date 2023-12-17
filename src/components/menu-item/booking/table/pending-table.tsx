@@ -160,26 +160,6 @@ export default function PendingTable() {
       ),
     },
     {
-      key: 'operation',
-      width: 50,
-      align: 'center',
-      dataIndex: 'key',
-      fixed: 'left',
-      render: (value, recode) => (
-        <div style={{ display: 'flex' }}>
-          <Button
-            onClick={() =>
-              recode.typeOfSeaService === 'FCL'
-                ? router.push(ROUTERS.FCL_DETAIL(value as string))
-                : router.push(ROUTERS.LCL_DETAIL(value as string))
-            }
-            icon={<EyeOutlined />}
-            style={{ marginRight: '10px' }}
-          />
-        </div>
-      ),
-    },
-    {
       title: (
         <div className={style.title}>{translatePartner('Booking No')}</div>
       ),

@@ -34,6 +34,7 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     valitidyTo,
     commodity,
     seaBookingFCLDetailDTOs,
+    bookingNo,
   } = dataPropsBooking?.detailBooking?.shipmentDetail || {};
 
   const columns: ColumnsType<DataType> = [
@@ -175,7 +176,7 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Shipment details
+          Booking details - {bookingNo}
         </div>
         <Table
           style={{ width: '100%' }}

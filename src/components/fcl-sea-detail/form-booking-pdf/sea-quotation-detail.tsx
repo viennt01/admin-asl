@@ -233,7 +233,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Quotation details
+          Freight charges
         </div>
         <Table
           style={{ width: '100%' }}
