@@ -23,6 +23,7 @@
     "@types/react-dom": "18.2.1",
     "antd": "^5.4.7",
     "axios": "^1.4.0",
+    "chart.js": "^4.4.1",
     "dayjs": "^1.11.8",
     "html2pdf.js": "^0.10.1",
     "i18next": "22.4.14",

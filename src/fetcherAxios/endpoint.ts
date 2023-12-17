@@ -416,3 +416,6 @@ export const API_BOOKING = {
   GET_SEA_BOOKING_BY_ID: '/get-sea-booking-by-id',
   SEND_FILE_IN_EMAIL_BOOKING_BY_USER: '/send-file-in-email-booking',
 };
+export const API_CHART = {
+  GET_CHART_PRICING: '/get-sea-pricing-for-draw-chart-by-partner',
+};

@@ -253,3 +253,12 @@ export interface IRequestAddUserPartner {
   nationality: string;
   note: string;
 }
+//----------------------------------------------------------------
+//get all gender
+export interface IRequestChartPricing {
+  id: string;
+}
+export interface IDataChartPricing {
+  totalPricing: string;
+  date: 0;
+}

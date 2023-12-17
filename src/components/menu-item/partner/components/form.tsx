@@ -42,6 +42,7 @@ import AddUserModal from './add-user/modal';
 import ListSea from './list-sea';
 import ListTrucking from './list-trucking';
 import ListCustoms from './list-customs';
+import ChartPricing from './chart-pricing';
 
 const { Panel } = Collapse;
 
@@ -790,6 +791,37 @@ const UnitForm = ({
             key="1"
           >
             <ListCustoms form={form} />
+          </Panel>
+        </Collapse>
+
+        <Collapse
+          style={{
+            borderRadius: 4,
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            background: 'white',
+            border: 'none',
+            marginBottom: '16px',
+            display: create ? 'none' : '',
+          }}
+        >
+          <Panel
+            style={{
+              borderRadius: 4,
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              background: 'white',
+              border: 'none',
+            }}
+            forceRender
+            header={
+              <Badge count={0} style={{ marginRight: '-10px' }}>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  Chart pricing
+                </Title>
+              </Badge>
+            }
+            key="1"
+          >
+            <ChartPricing />
           </Panel>
         </Collapse>
 

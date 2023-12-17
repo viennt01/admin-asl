@@ -20,12 +20,15 @@ import {
   ITypeUnit,
   IGenderPartner,
   IRequestAddUserPartner,
+  IDataChartPricing,
+  IRequestChartPricing,
 } from './interface';
 import {
   API_COLUMN,
   API_TYPE_UNIT,
   API_PARTNER,
   API_GENDER,
+  API_CHART,
 } from '@/fetcherAxios/endpoint';
 import {
   ColumnTable,
@@ -119,4 +122,10 @@ export const addUserPartner = (data: IRequestAddUserPartner) => {
   return post<IRequestAddUserPartner, ResponseWithPayload<string>>({
     data,
   })(API_PARTNER.ADD_USER_PARTNER);
+};
+//add chart pricing
+export const getChartPricing = (data: IRequestChartPricing) => {
+  return post<IRequestChartPricing, ResponseWithPayload<IDataChartPricing[]>>({
+    data,
+  })(API_CHART.GET_CHART_PRICING);
 };

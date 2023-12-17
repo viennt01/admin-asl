@@ -14,6 +14,16 @@ export function formatDate(
   return;
 }
 
+export function formatDateMMDD(
+  value: dayjs.ConfigType,
+  formatString = 'MM-DD'
+) {
+  if (value) {
+    return dayjs(value).format(formatString);
+  }
+  return;
+}
+
 export const formatNumber = (value: number | string) => {
   return new Intl.NumberFormat().format(Number(value));
 };
