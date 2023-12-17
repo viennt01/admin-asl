@@ -360,6 +360,8 @@ export const API_PARTNER = {
   GET_ALL_PARTNER_GROUP: '/get-all-group-partner',
   GET_ALL_PARTNER: '/get-all-partner',
   GET_ALL_VENDOR: '/get-all-vendor',
+  GET_ALL_CUSTOMER: '/get-all-customer',
+  GET_ALL_USER_BY_PARTNER_IDS: '/get-all-user-by-partner-ids',
   GET_ALL_PARTNER_BY_IDS: '/get-partner-by-list-id',
   GET_ALL_PARTNER_BY_GROUPS_ID: '/get-partner-with-group-partner',
   GET_SEARCH: '/get-partner-with-status-and-role',

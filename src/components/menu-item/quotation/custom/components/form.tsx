@@ -2,9 +2,10 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
-import { Key, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   IFormValues,
+  ISalesLeadsSeaQuotationDTOs,
   ISeaQuotationFeeFormValue,
   UpdateStatus,
 } from '../interface';
@@ -40,13 +41,13 @@ interface FormProps {
     formValues: IFormValues,
     id?: string,
     seaQuotationFeeDTOs?: ISeaQuotationFeeFormValue[],
-    selectedRowKeys?: Key[]
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
   ) => void;
   handleSaveDraft?: (
     formValues: IFormValues,
     id?: string,
     seaQuotationFeeDTOs?: ISeaQuotationFeeFormValue[],
-    selectedRowKeys?: Key[]
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
   ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
@@ -82,10 +83,10 @@ const CustomsQuotation = ({
   const [seaQuotationFeeDTOs, setSeaQuotationFeeDTOs] = useState<
     ISeaQuotationFeeFormValue[]
   >([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const idPartners = Form.useWatch('Customer', form);
-  const idGroupPartner = Form.useWatch('Group', form);
-
+  const idPartners = Form.useWatch('salesLeadsCustomQuotationDTOs', form);
+  const [salesLeads, setSalesLeads] = useState<ISalesLeadsSeaQuotationDTOs[]>(
+    []
+  );
   useEffect(() => {
     if (!id) return;
     setIdQuery(id as string);
@@ -139,10 +140,10 @@ const CustomsQuotation = ({
   const onFinish = (formValues: IFormValues) => {
     if (idQuery) {
       handleSubmit &&
-        handleSubmit(formValues, idQuery, seaQuotationFeeDTOs, selectedRowKeys);
+        handleSubmit(formValues, idQuery, seaQuotationFeeDTOs, salesLeads);
     } else {
       handleSubmit &&
-        handleSubmit(formValues, '', seaQuotationFeeDTOs, selectedRowKeys);
+        handleSubmit(formValues, '', seaQuotationFeeDTOs, salesLeads);
     }
   };
 
@@ -153,7 +154,7 @@ const CustomsQuotation = ({
           form.getFieldsValue(),
           idQuery,
           seaQuotationFeeDTOs,
-          selectedRowKeys
+          salesLeads
         );
     } else {
       handleSaveDraft &&
@@ -161,7 +162,7 @@ const CustomsQuotation = ({
           form.getFieldsValue(),
           '',
           seaQuotationFeeDTOs,
-          selectedRowKeys
+          salesLeads
         );
     }
   };
@@ -194,6 +195,7 @@ const CustomsQuotation = ({
           customQuotationFeeGroupDTOs: data.data.customQuotationFeeGroupDTOs,
         });
         setSeaQuotationFeeDTOs(data.data.customQuotationFeeGroupDTOs);
+        setSalesLeads(data.data.salesLeadsCustomQuotationDTOs);
       } else {
         router.push(ROUTERS.CUSTOMS_QUOTATION);
       }
@@ -333,12 +335,7 @@ const CustomsQuotation = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <TableSaleLead
-            idPartners={idPartners}
-            idGroupPartner={idGroupPartner}
-            selectedRowKeys={selectedRowKeys}
-            setSelectedRowKeys={setSelectedRowKeys}
-          />
+          <TableSaleLead idPartners={idPartners} />
         </CollapseCard>
 
         <BottomCreateEdit

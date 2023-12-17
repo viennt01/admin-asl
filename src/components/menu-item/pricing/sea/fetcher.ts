@@ -29,6 +29,7 @@ import {
   IRequireLocation,
   RequestExportData,
   RequireVendor,
+  Partner,
 } from './interface';
 import {
   API_COMMODITY,
@@ -152,11 +153,18 @@ export const getAllPartner = () =>
   get<ResponseWithPayload<RequirePartner[]>>({})(API_PARTNER.GET_ALL_PARTNER);
 export const getAllVendor = () =>
   get<ResponseWithPayload<RequireVendor[]>>({})(API_PARTNER.GET_ALL_VENDOR);
+export const getAllCustomer = () =>
+  get<ResponseWithPayload<RequireVendor[]>>({})(API_PARTNER.GET_ALL_CUSTOMER);
 // Get table partner
 export const getTablePartnerId = (data: RequestPartnerTable) => {
   return post<RequestPartnerTable, ResponseWithPayload<TablePartner[]>>({
     data,
   })(API_PARTNER.GET_ALL_PARTNER_BY_IDS);
+};
+export const getUserPartnerId = (data: RequestPartnerTable) => {
+  return post<RequestPartnerTable, ResponseWithPayload<Partner[]>>({
+    data,
+  })(API_PARTNER.GET_ALL_USER_BY_PARTNER_IDS);
 };
 export const getTablePartnerByGroup = (data: RequestPartnerTable) => {
   return post<RequestPartnerTable, ResponseWithPayload<TablePartner[]>>({

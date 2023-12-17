@@ -9,11 +9,12 @@ import {
   ICustomQuotationCreate,
   ICustomQuotationEdit,
   ISeaQuotationFeeFormValue,
+  ISalesLeadsSeaQuotationDTOs,
 } from '../interface';
 import { createCustomQuotation, editCustomQuotation } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_CUSTOMS_QUOTATION } from '@/fetcherAxios/endpoint';
-import { Key } from 'react';
+import { returnSaleLeads } from '../../sea/create';
 
 const CreateCustomQuotation = () => {
   const queryClient = useQueryClient();
@@ -34,9 +35,14 @@ const CreateCustomQuotation = () => {
     formValues: IFormValues,
     id?: string,
     seaQuotationFeeDTOs?: ISeaQuotationFeeFormValue[],
-    selectedRowKeys?: Key[]
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
   ) => {
     if (id) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const returnSaleLead = returnSaleLeads(
+        salesLeads,
+        formValues.salesLeadsCustomQuotationDTOs
+      );
       const _requestData: ICustomQuotationEdit = {
         customQuotationID: id || '',
         typeDelaracrionID: formValues.typeDelaracrionID || '',
@@ -70,11 +76,12 @@ const CreateCustomQuotation = () => {
           };
         });
 
-      const salesLeadsQuotationRegisters = selectedRowKeys?.map((id) => {
-        return {
-          partnerID: id,
-        };
-      });
+      const salesLeadsQuotationRegisters =
+        formValues.salesLeadsCustomQuotationDTOs?.map((id) => {
+          return {
+            partnerID: id,
+          };
+        });
       const _requestData: ICustomQuotationCreate = {
         typeDelaracrionID: formValues.typeDelaracrionID || '',
         commodityID: formValues.commodityID || '',
@@ -115,9 +122,14 @@ const CreateCustomQuotation = () => {
     formValues: IFormValues,
     id?: string,
     seaQuotationFeeDTOs?: ISeaQuotationFeeFormValue[],
-    selectedRowKeys?: Key[]
+    salesLeads?: ISalesLeadsSeaQuotationDTOs[]
   ) => {
     if (id) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const returnSaleLead = returnSaleLeads(
+        salesLeads,
+        formValues.salesLeadsCustomQuotationDTOs
+      );
       const _requestData: ICustomQuotationEdit = {
         customQuotationID: id,
         typeDelaracrionID: formValues.typeDelaracrionID || '',
@@ -153,11 +165,12 @@ const CreateCustomQuotation = () => {
           };
         });
 
-      const salesLeadsQuotationRegisters = selectedRowKeys?.map((id) => {
-        return {
-          partnerID: id,
-        };
-      });
+      const salesLeadsQuotationRegisters =
+        formValues.salesLeadsCustomQuotationDTOs?.map((id) => {
+          return {
+            partnerID: id,
+          };
+        });
       const _requestData: ICustomQuotationCreate = {
         typeDelaracrionID: formValues.typeDelaracrionID || '',
         commodityID: formValues.commodityID || '',

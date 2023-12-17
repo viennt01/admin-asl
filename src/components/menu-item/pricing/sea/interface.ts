@@ -295,13 +295,12 @@ export interface RequestPartnerTable {
 export interface Partner {
   userID: string;
   email: string;
+  phoneNumber: string;
   fullName: string;
   companyName: string;
-  cityName: string;
-  nationality: string;
 }
-export interface TablePartner extends Partner {
-  key: React.Key;
+export interface TablePartner extends Omit<Partner, 'userID'> {
+  key: string;
 }
 // export table
 export interface RequestExportData {

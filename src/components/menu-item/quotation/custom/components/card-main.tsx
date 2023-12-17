@@ -29,7 +29,7 @@ import {
   API_TRANSACTION_TYPE,
   API_TYPE_DECLARATION,
 } from '@/fetcherAxios/endpoint';
-import { getAllCommodity, getAllPartnerGroup, updateStatus } from '../fetcher';
+import { getAllCommodity, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
@@ -39,7 +39,10 @@ import {
   getListTypeDeclaration,
   getListTypeTransaction,
 } from '@/components/menu-item/master-data/declaration-catalog/type-declaration/fetcher';
-import { getAllVendor } from '@/components/menu-item/pricing/sea/fetcher';
+import {
+  getAllCustomer,
+  getAllVendor,
+} from '@/components/menu-item/pricing/sea/fetcher';
 
 interface Props {
   create?: boolean;
@@ -77,7 +80,6 @@ const CardMain = ({
   const { translate: translateQuotationCustom } = useI18n('customsQuotation');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
-  const checkObject = Form.useWatch('checkbox-group', form);
   const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
   useEffect(() => {
     form.setFieldValue('forNewUser', componentDisabled);
@@ -137,9 +139,9 @@ const CardMain = ({
     },
   });
 
-  const getPartnerGroup = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER_GROUP],
-    queryFn: () => getAllPartnerGroup(),
+  const getCustomer = useQuery({
+    queryKey: [API_PARTNER.GET_ALL_CUSTOMER],
+    queryFn: () => getAllCustomer(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -201,14 +203,6 @@ const CardMain = ({
       return updateStatus(body);
     },
   });
-  useEffect(() => {
-    if (!checkObject?.includes('Group')) {
-      form.setFieldValue('Group', []);
-    }
-    if (!checkObject?.includes('Customer')) {
-      form.setFieldValue('Customer', []);
-    }
-  }, [checkObject]);
 
   return (
     <Card
@@ -492,34 +486,6 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item
-            name="checkbox-group"
-            label="Object"
-            rules={[
-              {
-                required: true,
-                message: 'Please choose an object',
-              },
-            ]}
-          >
-            <Checkbox.Group>
-              <Row>
-                <Col span={14}>
-                  <Checkbox value="Customer" style={{ lineHeight: '32px' }}>
-                    Customer
-                  </Checkbox>
-                </Col>
-                <Col span={10}>
-                  <Checkbox value="Group" style={{ lineHeight: '32px' }}>
-                    Group
-                  </Checkbox>
-                </Col>
-              </Row>
-            </Checkbox.Group>
-          </Form.Item>
-        </Col>
-
-        <Col lg={8} span={24}>
           <Form.Item name="forNewUser">
             <Checkbox
               checked={componentDisabled}
@@ -530,56 +496,18 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
-        <Col span={checkObject?.includes('Group') ? 24 : 0}>
-          <Form.Item
-            label={'Group'}
-            name="Group"
-            rules={[
-              {
-                required: checkObject?.includes('Group'),
-                message: 'Please select group',
-              },
-            ]}
-          >
-            <Select
-              disabled={!checkObject?.includes('Group')}
-              showSearch
-              mode="multiple"
-              placeholder="Select group"
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                getPartnerGroup.data?.data.map((item) => {
-                  return {
-                    value: item.groupPartnerID,
-                    label: item.abbreviations,
-                  };
-                }) || []
-              }
-            />
-          </Form.Item>
-        </Col>
-
-        <Col span={checkObject?.includes('Customer') ? 24 : 0}>
+        <Col span={24}>
           <Form.Item
             label={'Customer'}
-            name="Customer"
-            rules={[
-              {
-                required: checkObject?.includes('Customer'),
-                message: 'Please select customer',
-              },
-            ]}
+            name="salesLeadsCustomQuotationDTOs"
+            // rules={[
+            //   {
+            //     required: checkObject?.includes('Customer'),
+            //     message: 'Please select customer',
+            //   },
+            // ]}
           >
             <Select
-              disabled={!checkObject?.includes('Customer')}
               showSearch
               mode="multiple"
               placeholder="Select customer"
@@ -593,7 +521,7 @@ const CardMain = ({
                   .localeCompare((optionB?.label ?? '').toLowerCase())
               }
               options={
-                getPartner.data?.data.map((item) => {
+                getCustomer.data?.data?.map((item) => {
                   return {
                     value: item.partnerID,
                     label: item.companyName,

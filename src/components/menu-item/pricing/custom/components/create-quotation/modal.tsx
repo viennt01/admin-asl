@@ -67,9 +67,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const onCancel = () => handleCancel();
   const checkObject = Form.useWatch('checkbox-group', form);
   const { translate: translatePricingCustom } = useI18n('pricingCustoms');
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const idPartners = Form.useWatch('Customer', form);
-  const idGroupPartner = Form.useWatch('Group', form);
   const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
     { key: 'Other', unitName: 'Other', profitRate: '0' },
   ]);
@@ -431,12 +429,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                 </Row>
               </Col>
               <Col span={checkObject?.includes('Customer') ? 24 : 0}>
-                <TableSaleLead
-                  idPartners={idPartners}
-                  idGroupPartner={idGroupPartner}
-                  selectedRowKeys={selectedRowKeys}
-                  setSelectedRowKeys={setSelectedRowKeys}
-                />
+                <TableSaleLead idPartners={idPartners} />
               </Col>
             </Row>
           </Col>
