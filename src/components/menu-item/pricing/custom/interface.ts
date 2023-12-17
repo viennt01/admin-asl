@@ -24,6 +24,7 @@ export interface ICustomPricing {
   updatedByUser: string;
   confirmDated: string;
   confirmByUser: string;
+  isASLMember: boolean;
 }
 
 export interface SeaPricingDetailDTOs {

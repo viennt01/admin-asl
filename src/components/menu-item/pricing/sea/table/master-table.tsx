@@ -141,6 +141,7 @@ export default function MasterDataTable() {
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
             vendor: data.vendor,
+            isASLMember: data.isASLMember,
             searchAll: '',
           }))
         );
@@ -281,6 +282,14 @@ export default function MasterDataTable() {
       dataIndex: 'podName',
       key: 'podName',
       align: 'left',
+    },
+    {
+      title: <div className={style.title}>Member</div>,
+      width: 200,
+      dataIndex: 'isASLMember',
+      key: 'isASLMember',
+      align: 'left',
+      render: (value) => (value ? 'ASL' : 'vendor'),
     },
     {
       title: <div className={style.title}>{translatePricingSea('status')}</div>,

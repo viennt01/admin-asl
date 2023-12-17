@@ -72,6 +72,7 @@ const RequestTable = () => {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             public: data.public,
+            isASLMember: data.isASLMember,
             searchAll: '',
           }))
         );
@@ -197,6 +198,14 @@ const RequestTable = () => {
       key: 'transactionTypeName',
       align: 'left',
       render: (value) => value,
+    },
+    {
+      title: <div className={style.title}>Member</div>,
+      width: 200,
+      dataIndex: 'isASLMember',
+      key: 'isASLMember',
+      align: 'left',
+      render: (value) => (value ? 'ASL' : 'vendor'),
     },
     {
       title: (

@@ -25,6 +25,7 @@ export interface ITruckingPricing {
   dateUpdated: string;
   updatedByUser: string;
   confirmDated: string;
+  isASLMember: boolean;
   confirmByUser: string;
 }
 

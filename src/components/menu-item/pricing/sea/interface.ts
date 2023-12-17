@@ -35,6 +35,7 @@ export interface SeaPricing {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
+  isASLMember: boolean;
   seaPricingDetailDTOs: { [key: string]: string };
   vendor: string;
 }
