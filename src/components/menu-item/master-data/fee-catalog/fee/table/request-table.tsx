@@ -24,7 +24,6 @@ import { Button, PaginationProps, TablePaginationConfig, Tag } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent, Key } from 'react';
 import { FilterConfirmProps, FilterValue } from 'antd/lib/table/interface';
-import { ColumnSearchTableProps } from '@/components/commons/search-table';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
@@ -41,6 +40,7 @@ import style from '@/components/commons/table/index.module.scss';
 
 import {
   FeeTable,
+  QueryInputDraft,
   QueryInputParamType,
   QuerySelectRequest,
   SelectSearch,
@@ -62,12 +62,13 @@ const RequestTable = () => {
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
+  const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
     initalValueQueryInputParamsRequest
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectRequest>(initalValueQuerySelectParamsRequest);
   const [dataTable, setDataTable] = useState<FeeTable[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedKeyShow, setSelectedKeyShow] = useState<SelectSearch>(
     initalSelectSearchRequest
   );
@@ -157,6 +158,7 @@ const RequestTable = () => {
   });
 
   // Handle search
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearchInput = (
     selectedKeys: string,
     confirm: (param?: FilterConfirmProps) => void,
@@ -170,11 +172,12 @@ const RequestTable = () => {
       },
     }));
     const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
+    // newQueryParams[dataIndex] = selectedKeys;
     setQueryInputParams(newQueryParams);
     confirm();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
     setQueryInputParams((prevData) => ({
       ...prevData,
@@ -245,16 +248,16 @@ const RequestTable = () => {
       key: 'feeNo',
       width: 150,
       align: 'center',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeNo',
-        },
-      }),
+      // ...ColumnSearchTableProps<QueryInputParamType>({
+      //   props: {
+      //     handleSearch: handleSearchInput,
+      //     handleReset: handleReset,
+      //     queryParams: queryInputParams,
+      //     selectedKeyShow: selectedKeyShow,
+      //     setSelectedKeyShow: setSelectedKeyShow,
+      //     dataIndex: 'feeNo',
+      //   },
+      // }),
     },
     {
       title: <div className={style.title}>{translateFee('name')}</div>,
@@ -262,16 +265,16 @@ const RequestTable = () => {
       key: 'feeName',
       width: 250,
       align: 'left',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'feeName',
-        },
-      }),
+      // ...ColumnSearchTableProps<QueryInputParamType>({
+      //   props: {
+      //     handleSearch: handleSearchInput,
+      //     handleReset: handleReset,
+      //     queryParams: queryInputParams,
+      //     selectedKeyShow: selectedKeyShow,
+      //     setSelectedKeyShow: setSelectedKeyShow,
+      //     dataIndex: 'feeName',
+      //   },
+      // }),
     },
     {
       title: <div className={style.title}>{translateFee('vat')}</div>,
@@ -279,16 +282,16 @@ const RequestTable = () => {
       key: 'vatFee',
       width: 250,
       align: 'right',
-      ...ColumnSearchTableProps<QueryInputParamType>({
-        props: {
-          handleSearch: handleSearchInput,
-          handleReset: handleReset,
-          queryParams: queryInputParams,
-          selectedKeyShow: selectedKeyShow,
-          setSelectedKeyShow: setSelectedKeyShow,
-          dataIndex: 'vatFee',
-        },
-      }),
+      // ...ColumnSearchTableProps<QueryInputParamType>({
+      //   props: {
+      //     handleSearch: handleSearchInput,
+      //     handleReset: handleReset,
+      //     queryParams: queryInputParams,
+      //     selectedKeyShow: selectedKeyShow,
+      //     setSelectedKeyShow: setSelectedKeyShow,
+      //     dataIndex: 'vatFee',
+      //   },
+      // }),
     },
     {
       title: translateFee('type_fee'),

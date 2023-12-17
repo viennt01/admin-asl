@@ -105,7 +105,7 @@ export const initalSelectSearchDraft = {
 
 //request
 export const initalValueQueryInputParamsRequest = {
-  searchAll: '',
+  // searchAll: '',
   feeNo: '',
   feeName: '',
   vatFee: '',
