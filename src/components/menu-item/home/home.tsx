@@ -1,12 +1,50 @@
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import RcResizeObserver from 'rc-resize-observer';
 import { useState } from 'react';
-
-const { Statistic } = StatisticCard;
+import ChartPricing from './chart-pricing';
+import RankMember from './rank-member';
+import { useQuery } from '@tanstack/react-query';
+import { API_CHART } from '@/fetcherAxios/endpoint';
+import { getChartInformation } from './fetcher';
+import { IAslTopSale, IDataInformation } from './interface';
+import { formatDateMMDD } from '@/utils/format';
 
 export default function DashboardPage() {
   const [responsive, setResponsive] = useState(false);
+  const [dataInformation, setDataInformation] = useState<IDataInformation>();
+  const [data, setListData] = useState<string[]>([]);
+  const [labels, setListLabel] = useState<string[]>([]);
+  const [dataQuotation, setListDataQuotation] = useState<string[]>([]);
+  const [dataPricing, setListDataPricing] = useState<string[]>([]);
+  const [dataTopASL, setListTopASL] = useState<IAslTopSale[]>([]);
   const today = new Date();
+
+  useQuery({
+    queryKey: [API_CHART.GET_INFORMATION_DRAW_CHART],
+    queryFn: () => getChartInformation(),
+    onSuccess: (dataIf) => {
+      if (dataIf.status) {
+        if (dataIf.status) {
+          setDataInformation(dataIf.data);
+          setListLabel(
+            dataIf.data.bookingForChartDTOs.map(
+              (d) => `${formatDateMMDD(Number(d.date))}`
+            )
+          );
+          setListData(
+            dataIf.data.bookingForChartDTOs.map((d) => `${d.totalBooking}`)
+          );
+          setListDataQuotation(
+            dataIf.data.quotationForChartDTOs.map((d) => `${d.totalQuotation}`)
+          );
+          setListDataPricing(
+            dataIf.data.pricingForChartDTOs.map((d) => `${d.totalPricing}`)
+          );
+          setListTopASL(dataIf.data.aslTopSale);
+        }
+      }
+    },
+  });
   return (
     <div style={{ margin: '15px 0' }}>
       <RcResizeObserver
@@ -27,58 +65,53 @@ export default function DashboardPage() {
               <ProCard split="vertical">
                 <StatisticCard
                   statistic={{
-                    title: 'Total monthly revenue',
-                    value: '234,123,1223',
-                    description: (
-                      <Statistic title="Growth" value="8.04%" trend="down" />
-                    ),
+                    title: 'Total Pricing',
+                    value: dataInformation?.totalPricing,
+                    // description: (
+                    //   <Statistic title="Growth" value="8.04%" trend="down" />
+                    // ),
                   }}
                 />
                 <StatisticCard
                   statistic={{
-                    title: 'Total annual revenue',
-                    value: '234,123,1223',
-                    description: (
-                      <Statistic title="Growth" value="8.04%" trend="up" />
-                    ),
+                    title: 'Total Quotation',
+                    value: dataInformation?.totalQuoation,
+                    // description: (
+                    //   <Statistic title="Growth" value="8.04%" trend="up" />
+                    // ),
                   }}
                 />
               </ProCard>
               <ProCard split="vertical">
                 <StatisticCard
                   statistic={{
-                    title: 'Total number of existing customers',
-                    value: '155620',
+                    title: 'Total Booking',
+                    value: dataInformation?.totalBooking,
                   }}
                 />
                 <StatisticCard
                   statistic={{
-                    title: 'Total number of transactions available',
-                    value: '1500',
+                    title: 'Total User',
+                    value: dataInformation?.totalUser,
                   }}
                 />
               </ProCard>
             </ProCard>
             <StatisticCard
-              title="PNL"
+              title="Chart overview"
               chart={
-                <img
-                  src="https://gw.alipayobjects.com/zos/alicdn/_dZIob2NB/zhuzhuangtu.svg"
-                  width="100%"
-                  alt="chart"
+                <ChartPricing
+                  data={data}
+                  labels={labels}
+                  dataQuotation={dataQuotation}
+                  dataPricing={dataPricing}
                 />
               }
             />
           </ProCard>
           <StatisticCard
-            title="Bình quân lợi nhuận test"
-            chart={
-              <img
-                src="https://gw.alipayobjects.com/zos/alicdn/qoYmFMxWY/jieping2021-03-29%252520xiawu4.32.34.png"
-                alt="profit"
-                width="100%"
-              />
-            }
+            title="Ranking"
+            chart={<RankMember dataTopASL={dataTopASL} />}
           />
         </ProCard>
       </RcResizeObserver>
