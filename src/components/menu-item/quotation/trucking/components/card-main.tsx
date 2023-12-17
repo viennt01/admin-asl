@@ -34,8 +34,8 @@ import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
   getAllLocation,
-  getAllPartner,
   getAllPartnerGroup,
+  getAllVendor,
 } from '@/components/menu-item/pricing/sea/fetcher';
 import dayjs from 'dayjs';
 import { TYPE_LOCATION } from '@/components/menu-item/pricing/sea/interface';
@@ -134,8 +134,8 @@ const CardMain = ({
   });
 
   const getPartner = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER],
-    queryFn: () => getAllPartner(),
+    queryKey: [API_PARTNER.GET_ALL_VENDOR],
+    queryFn: () => getAllVendor(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -489,12 +489,12 @@ const CardMain = ({
           <Form.Item
             label={translateQuotationTruck('vendor_form.title')}
             name="vendorID"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: translateQuotationTruck('vendor_form.error_required'),
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: translateQuotationTruck('vendor_form.error_required'),
+              },
+            ]}
           >
             <Select
               showSearch
@@ -513,7 +513,7 @@ const CardMain = ({
                 getPartner.data?.data.map((item) => {
                   return {
                     value: item.partnerID,
-                    label: item.name,
+                    label: item.companyName,
                   };
                 }) || []
               }
@@ -649,7 +649,7 @@ const CardMain = ({
                 getPartner.data?.data.map((item) => {
                   return {
                     value: item.partnerID,
-                    label: item.name,
+                    label: item.companyName,
                   };
                 }) || []
               }

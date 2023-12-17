@@ -28,7 +28,7 @@ import {
   API_TRANSACTION_TYPE,
   API_TYPE_DECLARATION,
 } from '@/fetcherAxios/endpoint';
-import { getAllCommodity, getAllPartner, updateStatus } from '../fetcher';
+import { getAllCommodity, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
@@ -42,6 +42,7 @@ import {
 } from '@/components/menu-item/master-data/declaration-catalog/type-declaration/fetcher';
 import { ROLE } from '@/constant/permission';
 import { AppContext } from '@/app-context';
+import { getAllVendor } from '../../sea/fetcher';
 
 interface Props {
   create?: boolean;
@@ -130,8 +131,8 @@ const CardMain = ({
     },
   });
   const getPartner = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER],
-    queryFn: () => getAllPartner(),
+    queryKey: [API_PARTNER.GET_ALL_VENDOR],
+    queryFn: () => getAllVendor(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -337,13 +338,7 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col
-          lg={8}
-          span={24}
-          style={{
-            display: role === ROLE.MANAGER || role === ROLE.SALE ? '' : 'none',
-          }}
-        >
+        <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingCustom('vendor_form.title')}
             name="vendorID"
@@ -371,7 +366,7 @@ const CardMain = ({
                 getPartner.data?.data.map((item) => {
                   return {
                     value: item.partnerID,
-                    label: item.name,
+                    label: item.companyName,
                   };
                 }) || []
               }

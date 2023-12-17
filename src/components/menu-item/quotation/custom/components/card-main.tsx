@@ -29,12 +29,7 @@ import {
   API_TRANSACTION_TYPE,
   API_TYPE_DECLARATION,
 } from '@/fetcherAxios/endpoint';
-import {
-  getAllCommodity,
-  getAllPartner,
-  getAllPartnerGroup,
-  updateStatus,
-} from '../fetcher';
+import { getAllCommodity, getAllPartnerGroup, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
 import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
@@ -44,6 +39,7 @@ import {
   getListTypeDeclaration,
   getListTypeTransaction,
 } from '@/components/menu-item/master-data/declaration-catalog/type-declaration/fetcher';
+import { getAllVendor } from '@/components/menu-item/pricing/sea/fetcher';
 
 interface Props {
   create?: boolean;
@@ -127,8 +123,8 @@ const CardMain = ({
     },
   });
   const getPartner = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER],
-    queryFn: () => getAllPartner(),
+    queryKey: [API_PARTNER.GET_ALL_VENDOR],
+    queryFn: () => getAllVendor(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -462,7 +458,7 @@ const CardMain = ({
                 getPartner.data?.data.map((item) => {
                   return {
                     value: item.partnerID,
-                    label: item.name,
+                    label: item.companyName,
                   };
                 }) || []
               }
@@ -600,7 +596,7 @@ const CardMain = ({
                 getPartner.data?.data.map((item) => {
                   return {
                     value: item.partnerID,
-                    label: item.name,
+                    label: item.companyName,
                   };
                 }) || []
               }

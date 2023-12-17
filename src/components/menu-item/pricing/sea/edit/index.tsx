@@ -11,12 +11,8 @@ import { API_MESSAGE } from '@/constant/message';
 import SeaPricing from '../components/form';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { returnFeeDTOs } from '../create';
-import { AppContext } from '@/app-context';
-import { useContext } from 'react';
-import { ROLE } from '@/constant/permission';
 
 const EditSeaPricing = () => {
-  const { role, userInfo } = useContext(AppContext);
   const checkRow = router.query.checkRow as string;
   const updateMutation = useMutation({
     mutationFn: (body: SeaPricingEdit) => {
@@ -40,10 +36,7 @@ const EditSeaPricing = () => {
         podid: formValues.podid || '',
         polid: formValues.polid || '',
         commodityID: formValues.commodityID || '',
-        vendorID:
-          role === ROLE.MANAGER || role === ROLE.SALE
-            ? formValues.vendorID || ''
-            : userInfo?.userID || '',
+        vendorID: formValues.vendorID || '',
         note: formValues.note || '',
         dateEffect: formValues.dateEffect.valueOf(),
         validityDate: formValues.validityDate.valueOf(),

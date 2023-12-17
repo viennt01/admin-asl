@@ -31,7 +31,7 @@ import {
 import {
   getAllCommodity,
   getAllLocation,
-  getAllPartner,
+  getAllVendor,
   updateStatus,
 } from '../fetcher';
 import DraftTable from '../table/draft-table';
@@ -131,8 +131,8 @@ const CardMain = ({
   });
 
   const getPartner = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER],
-    queryFn: () => getAllPartner(),
+    queryKey: [API_PARTNER.GET_ALL_VENDOR],
+    queryFn: () => getAllVendor(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -512,13 +512,7 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col
-          lg={8}
-          span={24}
-          style={{
-            display: role === ROLE.MANAGER || role === ROLE.SALE ? '' : 'none',
-          }}
-        >
+        <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingSea('vendor_form.title')}
             name="vendorID"
@@ -546,7 +540,7 @@ const CardMain = ({
                 getPartner.data?.data.map((item) => {
                   return {
                     value: item.partnerID,
-                    label: item.name,
+                    label: item.companyName,
                   };
                 }) || []
               }

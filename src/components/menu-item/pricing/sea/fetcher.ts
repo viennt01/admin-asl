@@ -28,6 +28,7 @@ import {
   TablePartner,
   IRequireLocation,
   RequestExportData,
+  RequireVendor,
 } from './interface';
 import {
   API_COMMODITY,
@@ -149,6 +150,8 @@ export const getAllPartnerGroup = () => {
 };
 export const getAllPartner = () =>
   get<ResponseWithPayload<RequirePartner[]>>({})(API_PARTNER.GET_ALL_PARTNER);
+export const getAllVendor = () =>
+  get<ResponseWithPayload<RequireVendor[]>>({})(API_PARTNER.GET_ALL_VENDOR);
 // Get table partner
 export const getTablePartnerId = (data: RequestPartnerTable) => {
   return post<RequestPartnerTable, ResponseWithPayload<TablePartner[]>>({

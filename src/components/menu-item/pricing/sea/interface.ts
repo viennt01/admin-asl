@@ -285,6 +285,10 @@ export interface RequirePartner {
   partnerID: string;
   name: string;
 }
+export interface RequireVendor {
+  partnerID: string;
+  companyName: string;
+}
 export interface RequestPartnerTable {
   ids: string[];
 }

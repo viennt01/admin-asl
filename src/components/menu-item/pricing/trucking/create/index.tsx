@@ -14,9 +14,6 @@ import {
 import { createTruckPricing, editTruckPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import { API_TRUCKING_PRICING } from '@/fetcherAxios/endpoint';
-import { useContext } from 'react';
-import { AppContext } from '@/app-context';
-import { ROLE } from '@/constant/permission';
 
 export const returnFeeDTOs = (
   truckingPricingFeeDTOs?: ITruckingPricingFeeFormValue[],
@@ -56,7 +53,6 @@ export const returnFeeDTOs = (
 
 const CreateTruckingPricing = () => {
   const queryClient = useQueryClient();
-  const { role, userInfo } = useContext(AppContext);
 
   const createMutation = useMutation({
     mutationFn: (body: ITruckingPricingCreate) => {
@@ -104,10 +100,7 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID:
-          role === ROLE.MANAGER || role === ROLE.SALE
-            ? formValues.vendorID || ''
-            : userInfo?.userID || '',
+        vendorID: formValues.vendorID || '',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
@@ -135,10 +128,7 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID:
-          role === ROLE.MANAGER || role === ROLE.SALE
-            ? formValues.vendorID || ''
-            : userInfo?.userID || '',
+        vendorID: formValues.vendorID || '',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
@@ -200,10 +190,7 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID:
-          role === ROLE.MANAGER || role === ROLE.SALE
-            ? formValues.vendorID || ''
-            : userInfo?.userID || '',
+        vendorID: formValues.vendorID || '',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
@@ -233,10 +220,7 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID:
-          role === ROLE.MANAGER || role === ROLE.SALE
-            ? formValues.vendorID || ''
-            : userInfo?.userID || '',
+        vendorID: formValues.vendorID || '',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
