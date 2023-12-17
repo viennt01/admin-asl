@@ -275,7 +275,7 @@ const ListSea = ({ form }: FormProps) => {
           }}
         >
           <Button
-            onClick={() => router.push(ROUTERS.SEA_PRICING_EDIT(value))}
+            onClick={() => router.push(ROUTERS.SEA_PRICING_EDIT(value, true))}
             icon={<EyeOutlined />}
             style={{
               marginRight: '10px',

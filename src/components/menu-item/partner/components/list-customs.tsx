@@ -218,7 +218,9 @@ const ListCustoms = ({ form }: FormProps) => {
           }}
         >
           <Button
-            onClick={() => router.push(ROUTERS.TRUCKING_PRICING_EDIT(value))}
+            onClick={() =>
+              router.push(ROUTERS.CUSTOMS_PRICING_EDIT(value, true))
+            }
             icon={<EyeOutlined />}
             style={{
               marginRight: '10px',

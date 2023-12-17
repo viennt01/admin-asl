@@ -234,7 +234,9 @@ const ListTrucking = ({ form }: FormProps) => {
           }}
         >
           <Button
-            onClick={() => router.push(ROUTERS.USER_DETAIL(value))}
+            onClick={() =>
+              router.push(ROUTERS.TRUCKING_PRICING_EDIT(value, true))
+            }
             icon={<EyeOutlined />}
             style={{
               marginRight: '10px',
