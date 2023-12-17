@@ -122,7 +122,7 @@ export type IPartnerEdit = Omit<
   IFormValues,
   'userBaseDTOs' | 'rolePartners' | 'address' | 'companyName'
 > & {
-  rolePartners: IRolePartners[];
+  rolePartnerUpdateRequests: IRolePartners[];
   companyNameEN: string;
   companyNameVN: string;
   addressEN: string;

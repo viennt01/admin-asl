@@ -32,6 +32,8 @@ export const returnPartnerDTOs = (
       item.isDelete = true;
     }
   }
+  console.log('resultArray1', resultArray);
+
   if (fromPartnerDTOs) {
     for (const id of fromPartnerDTOs) {
       if (!resultArray.some((item) => item.partnerRoleID === id)) {
@@ -42,6 +44,8 @@ export const returnPartnerDTOs = (
       }
     }
   }
+  console.log('resultArray2', resultArray);
+
   return resultArray;
 };
 
@@ -84,7 +88,7 @@ const CreatePartner = () => {
         addressVN: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        rolePartners: returnFeeDTO || [],
+        rolePartnerUpdateRequests: returnFeeDTO || [],
         statusPartner: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
@@ -152,7 +156,7 @@ const CreatePartner = () => {
         addressVN: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        rolePartners: returnFeeDTO || [],
+        rolePartnerUpdateRequests: returnFeeDTO || [],
         statusPartner: STATUS_ALL_LABELS.DRAFT,
       };
       updateMutation.mutate(_requestData, {

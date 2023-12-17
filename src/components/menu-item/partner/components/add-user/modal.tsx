@@ -34,7 +34,7 @@ export interface DataTypeProfit {
 
 const { TextArea } = Input;
 
-const CreateQuotationModal: React.FC<ImportModalProps> = ({
+const AddUserModal: React.FC<ImportModalProps> = ({
   open,
   handleOk,
   handleCancel,
@@ -363,4 +363,4 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   );
 };
 
-export default CreateQuotationModal;
+export default AddUserModal;

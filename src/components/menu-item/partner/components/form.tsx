@@ -38,7 +38,7 @@ import { getAllPartnerRole } from '../../quotation/sea/fetcher';
 import { getListCity } from '@/layout/fetcher';
 import { getListStaff } from '../../system/staff/fetcher';
 import ListUser from './list-user';
-import CreateQuotationModal from './create-quotation/modal';
+import AddUserModal from './add-user/modal';
 
 const { Panel } = Collapse;
 
@@ -90,8 +90,7 @@ const UnitForm = ({
   const [listPartnerDTOs, setListPartnerDTOsDTOs] = useState<IRolePartners[]>(
     []
   );
-  const [openCreateQuotationModal, setOpenCreateQuotationModal] =
-    useState(false);
+  const [openAddUserModal, setOpenAddUser] = useState(false);
 
   const getAllPartner = useQuery({
     queryKey: [API_PARTNER_ROLE.GET_ALL],
@@ -276,16 +275,16 @@ const UnitForm = ({
   ]);
 
   //handle create quotation
-  const cancelCreateQuotation = () => {
-    setOpenCreateQuotationModal(false);
+  const cancelAddUser = () => {
+    setOpenAddUser(false);
   };
 
-  const handleOpenCreateQuotation = () => {
-    setOpenCreateQuotationModal(true);
+  const handleOpenAddUser = () => {
+    setOpenAddUser(true);
   };
 
-  const handleCreateQuotation = () => {
-    setOpenCreateQuotationModal(false);
+  const handleAddUser = () => {
+    setOpenAddUser(false);
   };
 
   return (
@@ -666,7 +665,7 @@ const UnitForm = ({
                 type="primary"
                 // htmlType="submit"
                 onClick={(event) => {
-                  handleOpenCreateQuotation();
+                  handleOpenAddUser();
                   event.stopPropagation();
                 }}
               >
@@ -675,10 +674,10 @@ const UnitForm = ({
             }
             key="1"
           >
-            <CreateQuotationModal
-              open={openCreateQuotationModal}
-              handleOk={handleCreateQuotation}
-              handleCancel={cancelCreateQuotation}
+            <AddUserModal
+              open={openAddUserModal}
+              handleOk={handleAddUser}
+              handleCancel={cancelAddUser}
             />
             <ListUser form={form} />
           </Panel>

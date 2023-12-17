@@ -40,7 +40,7 @@ const EditPartner = () => {
         addressVN: formValues.address || '',
         website: formValues.website || '',
         note: formValues.note || '',
-        rolePartners: returnFeeDTO || [],
+        rolePartnerUpdateRequests: returnFeeDTO || [],
         statusPartner: STATUS_ALL_LABELS.REQUEST,
       };
       updateMutation.mutate(_requestData, {
