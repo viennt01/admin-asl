@@ -33,10 +33,10 @@ import CollapseCard from '@/components/commons/collapse-card';
 import ContainerDetailDTO from './container-detail-dto';
 
 import ListFee from './list-fee';
-import TableSaleLead from './table-sale-lead';
 import LoadCapacityDetailDTO from './load-capacity-detail-dto';
 import { getAllLoadCapacity } from '@/components/menu-item/pricing/trucking/fetcher';
 import { TYPE_LOAD_CAPACITY } from '@/components/menu-item/pricing/air/interface';
+import SaleLead from './sale-lead';
 
 interface FormProps {
   create?: boolean;
@@ -434,7 +434,7 @@ const TruckQuotation = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <TableSaleLead idPartners={idPartners} />
+          <SaleLead idPartners={idPartners} />
         </CollapseCard>
 
         <BottomCreateEdit

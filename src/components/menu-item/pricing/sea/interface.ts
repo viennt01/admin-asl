@@ -292,12 +292,16 @@ export interface RequireVendor {
 export interface RequestPartnerTable {
   ids: string[];
 }
+export interface PartnerData {
+  companyName: string;
+  partnerID: string;
+  userBaseDTOs: Partner[];
+}
 export interface Partner {
   userID: string;
   email: string;
   phoneNumber: string;
   fullName: string;
-  companyName: string;
 }
 export interface TablePartner extends Omit<Partner, 'userID'> {
   key: string;

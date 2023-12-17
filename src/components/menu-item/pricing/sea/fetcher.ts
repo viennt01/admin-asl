@@ -29,7 +29,7 @@ import {
   IRequireLocation,
   RequestExportData,
   RequireVendor,
-  Partner,
+  PartnerData,
 } from './interface';
 import {
   API_COMMODITY,
@@ -162,7 +162,7 @@ export const getTablePartnerId = (data: RequestPartnerTable) => {
   })(API_PARTNER.GET_ALL_PARTNER_BY_IDS);
 };
 export const getUserPartnerId = (data: RequestPartnerTable) => {
-  return post<RequestPartnerTable, ResponseWithPayload<Partner[]>>({
+  return post<RequestPartnerTable, ResponseWithPayload<PartnerData[]>>({
     data,
   })(API_PARTNER.GET_ALL_USER_BY_PARTNER_IDS);
 };

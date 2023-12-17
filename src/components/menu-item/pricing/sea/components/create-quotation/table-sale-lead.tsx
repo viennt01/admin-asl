@@ -1,57 +1,64 @@
-import React, { useState } from 'react';
-import { Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useQuery } from '@tanstack/react-query';
-import { getTablePartnerId } from '../../fetcher';
-import { API_PARTNER } from '@/fetcherAxios/endpoint';
-import { TablePartner } from '../../interface';
-
+import {
+  Partner,
+  TablePartner,
+} from '@/components/menu-item/pricing/sea/interface';
+import { EyeOutlined } from '@ant-design/icons';
+import { ROUTERS } from '@/constant/router';
+import { useRouter } from 'next/router';
 interface Props {
-  idPartners: string[];
+  dataTablePartner: Partner[];
 }
 
-const columns: ColumnsType<TablePartner> = [
-  {
-    title: 'No',
-    dataIndex: 'index',
-    width: 50,
-    align: 'right',
-    render: (_, record, index) => {
-      return index + 1;
-    },
-  },
-  {
-    title: 'Name',
-    dataIndex: 'fullName',
-  },
-];
-
-const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
+const TableSaleLead: React.FC<Props> = ({ dataTablePartner }) => {
+  const router = useRouter();
   const [dataTable, setDataTable] = useState<TablePartner[]>([]);
-
-  useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER_BY_IDS, idPartners],
-    queryFn: () => getTablePartnerId({ ids: idPartners }),
-    enabled: idPartners !== undefined,
-    onSuccess(data) {
-      setDataTable([]);
-      if (data.status) {
-        if (data.data) {
-          setDataTable(data.data);
-        }
-      }
+  const columns: ColumnsType<TablePartner> = [
+    {
+      title: 'Name',
+      dataIndex: 'fullName',
     },
-  });
-
+    {
+      title: 'Email',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+    },
+    {
+      key: 'operation',
+      width: 50,
+      align: 'center',
+      dataIndex: 'key',
+      render: (value) => (
+        <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() => router.push(ROUTERS.USER_DETAIL(value))}
+            icon={<EyeOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
+        </div>
+      ),
+    },
+  ];
+  useEffect(() => {
+    setDataTable(
+      dataTablePartner.map((item) => ({
+        key: item.userID,
+        email: item.email,
+        phoneNumber: item.phoneNumber,
+        fullName: item.fullName,
+      }))
+    );
+  }, [dataTablePartner]);
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={dataTable}
-        pagination={{
-          pageSize: 15,
-        }}
-      />
+      <Table columns={columns} dataSource={dataTable} />
     </div>
   );
 };

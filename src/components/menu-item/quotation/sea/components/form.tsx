@@ -31,7 +31,7 @@ import CollapseCard from '@/components/commons/collapse-card';
 import SeaPricingDetailDTO from './sea-quotation-detail-dto';
 
 import ListFee from './list-fee';
-import TableSaleLead from './table-sale-lead';
+import SaleLead from './sale-lead';
 
 interface PortFormProps {
   create?: boolean;
@@ -369,7 +369,7 @@ const SeaQuotation = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <TableSaleLead idPartners={idPartners} />
+          <SaleLead idPartners={idPartners} />
         </CollapseCard>
 
         <BottomCreateEdit

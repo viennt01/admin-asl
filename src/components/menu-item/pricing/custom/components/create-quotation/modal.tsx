@@ -12,11 +12,7 @@ import {
 } from 'antd';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_PARTNER } from '@/fetcherAxios/endpoint';
-import {
-  createQuotationWithPricing,
-  getAllPartner,
-  getAllPartnerGroup,
-} from '../../fetcher';
+import { createQuotationWithPricing } from '../../fetcher';
 import { API_MESSAGE } from '@/constant/message';
 import { useRouter } from 'next/router';
 import { errorToast, successToast } from '@/hook/toast';
@@ -29,7 +25,8 @@ import UnitProfit from './table-unit-profit';
 import style from './index.module.scss';
 import { formatNumber } from '@/utils/format';
 import useI18n from '@/i18n/useI18N';
-import TableSaleLead from '@/components/menu-item/quotation/custom/components/table-sale-lead';
+import { getAllCustomer } from '../../../sea/fetcher';
+import SaleLead from './sale-lead';
 
 export interface ImportFormValues {
   file: FileList;
@@ -65,9 +62,8 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
   const [form] = Form.useForm();
   const onOke = () => form.submit();
   const onCancel = () => handleCancel();
-  const checkObject = Form.useWatch('checkbox-group', form);
   const { translate: translatePricingCustom } = useI18n('pricingCustoms');
-  const idPartners = Form.useWatch('Customer', form);
+  const idPartners = Form.useWatch('salesLeadsQuotationRegisters', form);
   const [dataSourceProfit, setDataSourceProfit] = useState<DataTypeProfit[]>([
     { key: 'Other', unitName: 'Other', profitRate: '0' },
   ]);
@@ -76,23 +72,9 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
     form.setFieldValue('forNewUser', componentDisabled);
   }, [componentDisabled]);
 
-  const getPartner = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER],
-    queryFn: () => getAllPartner(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-        errorToast(API_MESSAGE.ERROR);
-      }
-    },
-    onError: () => {
-      router.back();
-      errorToast(API_MESSAGE.ERROR);
-    },
-  });
-  const getPartnerGroup = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER_GROUP],
-    queryFn: () => getAllPartnerGroup(),
+  const getCustomer = useQuery({
+    queryKey: [API_PARTNER.GET_ALL_CUSTOMER],
+    queryFn: () => getAllCustomer(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -236,88 +218,16 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
 
                   <Col span={24}>
                     <Form.Item
-                      name="checkbox-group"
-                      label="Object"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please choose an object',
-                        },
-                      ]}
-                    >
-                      <Checkbox.Group>
-                        <Row>
-                          <Col span={14}>
-                            <Checkbox
-                              value="Customer"
-                              style={{ lineHeight: '32px' }}
-                            >
-                              Customer
-                            </Checkbox>
-                          </Col>
-                          <Col span={10}>
-                            <Checkbox
-                              value="Group"
-                              style={{ lineHeight: '32px' }}
-                            >
-                              Group
-                            </Checkbox>
-                          </Col>
-                        </Row>
-                      </Checkbox.Group>
-                    </Form.Item>
-                  </Col>
-
-                  <Col span={checkObject?.includes('Group') ? 24 : 0}>
-                    <Form.Item
-                      label={'Group'}
-                      name="Group"
-                      rules={[
-                        {
-                          required: checkObject?.includes('Group'),
-                          message: 'Please select group',
-                        },
-                      ]}
-                    >
-                      <Select
-                        disabled={!checkObject?.includes('Group')}
-                        showSearch
-                        mode="multiple"
-                        placeholder="Select group"
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                          (option?.label ?? '').includes(input)
-                        }
-                        filterSort={(optionA, optionB) =>
-                          (optionA?.label ?? '')
-                            .toLowerCase()
-                            .localeCompare((optionB?.label ?? '').toLowerCase())
-                        }
-                        options={
-                          getPartnerGroup.data?.data.map((item) => {
-                            return {
-                              value: item.groupPartnerID,
-                              label: item.abbreviations,
-                            };
-                          }) || []
-                        }
-                      />
-                    </Form.Item>
-                  </Col>
-
-                  <Col span={checkObject?.includes('Customer') ? 24 : 0}>
-                    <Form.Item
                       label={'Customer'}
-                      name="Customer"
-                      rules={[
-                        {
-                          required: checkObject?.includes('Customer'),
-                          message: 'Please select customer',
-                        },
-                      ]}
+                      name="salesLeadsQuotationRegisters"
+                      // rules={[
+                      //   {
+                      //     required: checkObject?.includes('Customer'),
+                      //     message: 'Please select customer',
+                      //   },
+                      // ]}
                     >
                       <Select
-                        disabled={!checkObject?.includes('Customer')}
                         showSearch
                         mode="multiple"
                         placeholder="Select customer"
@@ -331,10 +241,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                             .localeCompare((optionB?.label ?? '').toLowerCase())
                         }
                         options={
-                          getPartner.data?.data.map((item) => {
+                          getCustomer.data?.data.map((item) => {
                             return {
                               value: item.partnerID,
-                              label: item.name,
+                              label: item.companyName,
                             };
                           }) || []
                         }
@@ -428,8 +338,8 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                   </Col>
                 </Row>
               </Col>
-              <Col span={checkObject?.includes('Customer') ? 24 : 0}>
-                <TableSaleLead idPartners={idPartners} />
+              <Col span={24}>
+                <SaleLead idPartners={idPartners} />
               </Col>
             </Row>
           </Col>

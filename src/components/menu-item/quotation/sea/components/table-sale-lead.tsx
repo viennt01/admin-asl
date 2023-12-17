@@ -1,21 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { useQuery } from '@tanstack/react-query';
-import { API_PARTNER } from '@/fetcherAxios/endpoint';
-import { TablePartner } from '@/components/menu-item/pricing/sea/interface';
-import { getUserPartnerId } from '@/components/menu-item/pricing/sea/fetcher';
+import {
+  Partner,
+  TablePartner,
+} from '@/components/menu-item/pricing/sea/interface';
 import { EyeOutlined } from '@ant-design/icons';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 interface Props {
-  idPartners: string[];
+  dataTablePartner: Partner[];
 }
 
-const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
+const TableSaleLead: React.FC<Props> = ({ dataTablePartner }) => {
   const router = useRouter();
   const [dataTable, setDataTable] = useState<TablePartner[]>([]);
-
   const columns: ColumnsType<TablePartner> = [
     {
       title: 'Name',
@@ -28,10 +27,6 @@ const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
     {
       title: 'Phone Number',
       dataIndex: 'phoneNumber',
-    },
-    {
-      title: 'Company Name',
-      dataIndex: 'companyName',
     },
     {
       key: 'operation',
@@ -51,28 +46,16 @@ const TableSaleLead: React.FC<Props> = ({ idPartners }) => {
       ),
     },
   ];
-  useQuery({
-    queryKey: [API_PARTNER.GET_ALL_PARTNER_BY_IDS, idPartners],
-    queryFn: () => getUserPartnerId({ ids: idPartners }),
-    enabled: idPartners !== undefined,
-    onSuccess(data) {
-      setDataTable([]);
-      if (data.status) {
-        if (data.data) {
-          setDataTable(
-            data.data.map((item) => ({
-              key: item.userID,
-              email: item.email,
-              phoneNumber: item.phoneNumber,
-              fullName: item.fullName,
-              companyName: item.companyName,
-            }))
-          );
-        }
-      }
-    },
-  });
-
+  useEffect(() => {
+    setDataTable(
+      dataTablePartner.map((item) => ({
+        key: item.userID,
+        email: item.email,
+        phoneNumber: item.phoneNumber,
+        fullName: item.fullName,
+      }))
+    );
+  }, [dataTablePartner]);
   return (
     <div>
       <Table columns={columns} dataSource={dataTable} />

@@ -26,12 +26,12 @@ import dayjs from 'dayjs';
 import CardMain from './card-main';
 import CollapseCard from '@/components/commons/collapse-card';
 import ListFee from './list-fee';
-import TableSaleLead from './table-sale-lead';
 import LCL from './lcl';
 import FCL from './fcl';
 import Air from './air';
 import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
 import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
+import SaleLead from './sale-lead';
 
 interface FormProps {
   create?: boolean;
@@ -335,7 +335,7 @@ const CustomsQuotation = ({
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <TableSaleLead idPartners={idPartners} />
+          <SaleLead idPartners={idPartners} />
         </CollapseCard>
 
         <BottomCreateEdit
