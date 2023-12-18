@@ -86,7 +86,7 @@ export const getTable = (data: IRequestUnitTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_TYPE_UNIT.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(API_TYPE_UNIT.IMPORT);
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_TYPE_UNIT.DOWNLOAD_EXAMPLE_FILE);

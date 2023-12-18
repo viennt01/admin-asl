@@ -82,7 +82,7 @@ export const getTableRequire = (data: RequestCurrencyTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_CURRENCY.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(API_CURRENCY.IMPORT);
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_CURRENCY.DOWNLOAD_EXAMPLE_FILE);

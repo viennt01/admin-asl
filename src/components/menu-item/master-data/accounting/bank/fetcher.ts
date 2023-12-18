@@ -78,7 +78,7 @@ export const getTableRequire = (data: RequestBankTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_BANK.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(API_BANK.IMPORT);
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_BANK.DOWNLOAD_EXAMPLE_FILE);

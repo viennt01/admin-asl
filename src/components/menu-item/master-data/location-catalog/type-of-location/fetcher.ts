@@ -93,7 +93,9 @@ export const getTableRequire = (data: RequestLocationTypeTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_LOCATION_TYPE.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(
+    API_LOCATION_TYPE.IMPORT
+  );
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_LOCATION_TYPE.DOWNLOAD_EXAMPLE_FILE);

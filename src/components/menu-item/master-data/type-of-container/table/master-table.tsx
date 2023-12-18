@@ -563,17 +563,21 @@ export default function MasterDataTable() {
   const importData = useMutation({
     mutationFn: (value: FormData) => importDataTable(value),
     onSuccess: (data) => {
-      if (data.status) {
-        successToast(data.message);
-        queryClient.invalidateQueries({
-          queryKey: [API_CONTAINER_TYPE.GET_REQUEST],
-        });
-        setLoadingImport(false);
-        setOpenImportModal(false);
-      } else {
-        errorToast(data.message);
-        setLoadingImport(false);
-      }
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute(
+        'download',
+        `ASL_TYPE_CONTAINER${getSystemDate()}.xlsx`
+      );
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      queryClient.invalidateQueries({
+        queryKey: [API_CONTAINER_TYPE.GET_REQUEST],
+      });
+      setLoadingImport(false);
+      setOpenImportModal(false);
     },
     onError: () => {
       errorToast(API_MESSAGE.ERROR);

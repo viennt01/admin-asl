@@ -92,7 +92,7 @@ export const getTable = (data: RequestFeeGroupTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_FEE_GROUP.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(API_FEE_GROUP.IMPORT);
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_FEE_GROUP.DOWNLOAD_EXAMPLE_FILE);

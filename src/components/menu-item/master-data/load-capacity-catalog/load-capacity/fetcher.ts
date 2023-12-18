@@ -97,7 +97,9 @@ export const getTableRequire = (data: IRequestLoadCapacityTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_LOAD_CAPACITY.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(
+    API_LOAD_CAPACITY.IMPORT
+  );
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_LOAD_CAPACITY.DOWNLOAD_EXAMPLE_FILE);

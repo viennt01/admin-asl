@@ -94,7 +94,9 @@ export const getTable = (data: RequestContainerTypeTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_CONTAINER_TYPE.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(
+    API_CONTAINER_TYPE.IMPORT
+  );
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_CONTAINER_TYPE.DOWNLOAD_EXAMPLE_FILE);

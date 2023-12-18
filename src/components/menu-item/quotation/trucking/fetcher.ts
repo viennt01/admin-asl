@@ -99,7 +99,9 @@ export const getTable = (data: RequestTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_TRUCKING_QUOTATION.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(
+    API_TRUCKING_QUOTATION.IMPORT
+  );
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(

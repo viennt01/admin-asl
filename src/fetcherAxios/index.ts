@@ -240,8 +240,8 @@ export const deleteGW =
   };
 
 export const uploadFile =
-  ({ data, headers, gw, timeout }: CRUDProps<FormData>) =>
-  async (url: string) => {
+  <R>({ data, headers, gw, timeout }: CRUDProps<FormData>) =>
+  (url: string): Promise<R> => {
     const axiosPromise = requestWithTimeout(
       apiClient.post(`${getGateway(gw)}${url}`, data, {
         headers: {
@@ -249,6 +249,7 @@ export const uploadFile =
           'Content-Type':
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         },
+        responseType: 'blob',
       }),
       timeout
     );

@@ -90,7 +90,7 @@ export const getTableRequire = (data: RequestFeeTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile({ data, timeout: 10000 })(API_FEE.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 10000 })(API_FEE.IMPORT);
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_FEE.DOWNLOAD_EXAMPLE_FILE);

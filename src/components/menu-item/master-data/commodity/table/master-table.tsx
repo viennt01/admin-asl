@@ -492,17 +492,25 @@ export default function MasterDataTable() {
   const importData = useMutation({
     mutationFn: (value: FormData) => importCommodity(value),
     onSuccess: (data) => {
-      if (data.status) {
-        successToast(data.message);
-        queryClient.invalidateQueries({
-          queryKey: [API_COMMODITY.GET_SEARCH],
-        });
-        setLoadingImport(false);
-        setOpenImportModal(false);
-      } else {
-        errorToast(data.message);
-        setLoadingImport(false);
-      }
+      const url = window.URL.createObjectURL(new Blob([data]));
+
+      // Tạo một thẻ a để tạo sự kiện nhấp chuột và tải xuống tệp
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `ASL_COMMODITY${getSystemDate()}.xlsx`); // Tên tệp bạn muốn đặt
+
+      // Thêm thẻ a vào DOM và kích hoạt sự kiện nhấp chuột để tải xuống
+      document.body.appendChild(link);
+      link.click();
+
+      // Loại bỏ URL đối tượng sau khi tải xuống
+      window.URL.revokeObjectURL(url);
+
+      queryClient.invalidateQueries({
+        queryKey: [API_COMMODITY.GET_SEARCH],
+      });
+      setLoadingImport(false);
+      setOpenImportModal(false);
     },
     onError: () => {
       errorToast(API_MESSAGE.ERROR);
