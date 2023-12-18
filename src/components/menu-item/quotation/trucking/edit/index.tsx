@@ -48,7 +48,7 @@ const EditTruckQuotation = () => {
         currencyID: formValues.currencyID || '',
         vendorID: formValues.vendorID || '',
         note: formValues.note || '',
-        effectDated: formValues.dateEffect?.valueOf(),
+        effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
         forNewUser: formValues.forNewUser || false,

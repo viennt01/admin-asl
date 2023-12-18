@@ -180,7 +180,7 @@ const CardMain = ({
         currencyID: propCopyAndCreate.currencyID as string,
         vendorID: propCopyAndCreate.vendorID as string,
         note: propCopyAndCreate.note as string,
-        dateEffect: dayjs(Number(propCopyAndCreate.dateEffect as string)),
+        effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
         public: propCopyAndCreate.public as unknown as boolean,
@@ -381,7 +381,7 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationTruck('effect_date')}
-            name="dateEffect"
+            name="effectDated"
             rules={[
               {
                 required: true,

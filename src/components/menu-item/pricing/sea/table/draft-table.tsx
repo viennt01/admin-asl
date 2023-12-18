@@ -73,7 +73,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             currencyID: data.currencyID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
-            dateEffect: data.dateEffect,
+            effectDated: data.effectDated,
             validityDate: data.validityDate,
             freqDate: data.freqDate,
             demSeaPricing: data.demSeaPricing,

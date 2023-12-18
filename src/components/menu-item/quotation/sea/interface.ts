@@ -76,7 +76,7 @@ export interface IFormValues {
   polid: string;
   commodityID: string;
   note: string;
-  dateEffect: Dayjs;
+  effectDated: Dayjs;
   validityDate: Dayjs;
   vendorID: string;
   freqDate: string;
@@ -177,14 +177,14 @@ export type ISeaQuotationCreate = Omit<
   IFormValues,
   | 'seaQuotationID'
   | 'seaPricingID'
-  | 'dateEffect'
+  | 'effectDated'
   | 'validityDate'
   | 'seaQuotationDetailDTOs'
   | 'seaQuotaionFeeGroupDTOs'
   | 'salesLeadsSeaQuotationDTOs'
   | 'seaQuotaionGroupPartnerDTOs'
 > & {
-  dateEffect: number;
+  effectDated: number;
   validityDate: number;
   seaQuotationDetailRegisterRequests: ISeaQuotationDetailDTOsCreate[];
   seaQuotationFeeGroupRegisterRequests: { feeGroupID: string }[];
@@ -194,14 +194,14 @@ export type ISeaQuotationCreate = Omit<
 
 export type ISeaQuotationEdit = Omit<
   IFormValues,
-  | 'dateEffect'
+  | 'effectDated'
   | 'validityDate'
   | 'seaQuotationDetailDTOs'
   | 'seaQuotaionFeeGroupDTOs'
   | 'salesLeadsSeaQuotationDTOs'
   | 'seaQuotaionGroupPartnerDTOs'
 > & {
-  dateEffect: number;
+  effectDated: number;
   validityDate: number;
   seaQuotationDetailUpdateRequests: ISeaQuotationDetailDTOsUpdate[];
   salesLeadsSeaQuotationUpdateRequests: IEditSalesLeadsSeaQuotationDTOs[];

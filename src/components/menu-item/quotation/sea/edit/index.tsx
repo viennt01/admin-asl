@@ -46,7 +46,7 @@ const EditSeaQuotation = () => {
         vendorID: formValues.vendorID || '',
         forNewUser: formValues.forNewUser || false,
         note: formValues.note || '',
-        dateEffect: formValues.dateEffect.valueOf(),
+        effectDated: formValues.effectDated.valueOf(),
         validityDate: formValues.validityDate.valueOf(),
         freqDate: formValues.freqDate || '',
         demSeaQuotation: formValues.demSeaQuotation || '0',

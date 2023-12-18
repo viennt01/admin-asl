@@ -191,8 +191,8 @@ const ListCustoms = ({ form }: FormProps) => {
     {
       title: 'Effect Date',
       width: 200,
-      dataIndex: 'dateEffect',
-      key: 'dateEffect',
+      dataIndex: 'effectDated',
+      key: 'effectDated',
       align: 'right',
       render: (value) => formatDate(Number(value)),
     },

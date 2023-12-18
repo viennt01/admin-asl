@@ -19,7 +19,7 @@ export interface SeaPricing {
   currencyID: string;
   currencyAbbreviations: string;
   note: string;
-  dateEffect: string;
+  effectDated: string;
   validityDate: string;
   freqDate: string;
   demSeaPricing: string;
@@ -83,7 +83,7 @@ export interface FormValues {
   polid: string;
   commodityID: string;
   note: string;
-  dateEffect: Dayjs;
+  effectDated: Dayjs;
   validityDate: Dayjs;
   vendorID: string;
   freqDate: string;
@@ -163,7 +163,7 @@ export type SeaPricingFeeUpdate = Omit<
 export type SeaPricingCreate = Omit<
   FormValues,
   | 'seaPricingID'
-  | 'dateEffect'
+  | 'effectDated'
   | 'validityDate'
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'
@@ -176,7 +176,7 @@ export type SeaPricingCreate = Omit<
 
 export type SeaPricingEdit = Omit<
   FormValues,
-  | 'dateEffect'
+  | 'effectDated'
   | 'validityDate'
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'

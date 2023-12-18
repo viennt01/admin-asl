@@ -77,7 +77,7 @@ export interface IFormValues {
   currencyID: string;
   vendorID: string;
   note: string;
-  dateEffect: Dayjs;
+  effectDated: Dayjs;
   validityDate: Dayjs;
   freqDate: string;
   forNewUser: boolean;
@@ -208,7 +208,7 @@ export type ITruckQuotationCreate = Omit<
   | 'truckingQuotationID'
   | 'truckingPricingID'
   | 'truckingQuotationNo'
-  | 'dateEffect'
+  | 'effectDated'
   | 'validityDate'
   | 'truckingQuotationDetailByContainerTypeDTOs'
   | 'truckingQuotationDetailByLoadCapacityDTOs'
@@ -229,7 +229,7 @@ export type ITruckQuotationEdit = Omit<
   IFormValues,
   | 'truckingPricingID'
   | 'truckingQuotationNo'
-  | 'dateEffect'
+  | 'effectDated'
   | 'validityDate'
   | 'truckingQuotationDetailByContainerTypeDTOs'
   | 'truckingQuotationDetailByLoadCapacityDTOs'

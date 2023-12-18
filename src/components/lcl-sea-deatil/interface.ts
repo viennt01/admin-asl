@@ -115,7 +115,7 @@ export interface ISeaPricingDetail {
   polName: string;
   commodityID: string;
   note: string;
-  dateEffect: Dayjs;
+  effectDated: Dayjs;
   validityDate: Dayjs;
   vendor: string;
   freqDate: string;
