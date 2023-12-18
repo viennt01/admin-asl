@@ -485,14 +485,14 @@ const CardMain = ({
           <Form.Item
             label={translatePricingTrucking('Fee_Group_form.title')}
             name="truckingPricingFeeGroupDTOs"
-            rules={[
-              {
-                required: true,
-                message: translatePricingTrucking(
-                  'Fee_Group_form.error_required'
-                ),
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: translatePricingTrucking(
+            //       'Fee_Group_form.error_required'
+            //     ),
+            //   },
+            // ]}
           >
             <Select
               showSearch

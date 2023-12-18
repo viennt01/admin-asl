@@ -385,12 +385,12 @@ const CardMain = ({
           <Form.Item
             label={translatePricingAir('Fee_Group_form.title')}
             name="airPricingFeeDTOs"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('Fee_Group_form.error_required'),
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: translatePricingAir('Fee_Group_form.error_required'),
+            //   },
+            // ]}
           >
             <Select
               showSearch

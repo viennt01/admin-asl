@@ -552,12 +552,12 @@ const CardMain = ({
           <Form.Item
             label={translatePricingSea('Fee_Group_form.title')}
             name="seaPricingFeeGroupDTOs"
-            rules={[
-              {
-                required: true,
-                message: translatePricingSea('Fee_Group_form.error_required'),
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: translatePricingSea('Fee_Group_form.error_required'),
+            //   },
+            // ]}
           >
             <Select
               showSearch

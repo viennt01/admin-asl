@@ -471,14 +471,14 @@ const CardMain = ({
           <Form.Item
             label={translatePricingCustom('fee_group_form.title')}
             name="customPricingFeeGroupDTOs"
-            rules={[
-              {
-                required: true,
-                message: translatePricingCustom(
-                  'fee_group_form.error_required'
-                ),
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: translatePricingCustom(
+            //       'fee_group_form.error_required'
+            //     ),
+            //   },
+            // ]}
           >
             <Select
               showSearch
