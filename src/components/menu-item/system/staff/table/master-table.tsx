@@ -120,8 +120,7 @@ export default function MasterDataTable() {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.userID,
-            userID: data.userID,
+            key: data.aslPersonalContactID,
             languageID: data.languageID,
             languageName: data.languageName,
             genderID: data.genderID,
@@ -291,17 +290,17 @@ export default function MasterDataTable() {
         return index + pageSize * (current - 1) + 1;
       },
     },
-    {
-      title: (
-        <div className={style.title}>
-          {translateStaff('employeeCode_form.title')}
-        </div>
-      ),
-      dataIndex: 'employeeCode',
-      key: 'employeeCode',
-      width: 250,
-      align: 'left',
-    },
+    // {
+    //   title: (
+    //     <div className={style.title}>
+    //       {translateStaff('employeeCode_form.title')}
+    //     </div>
+    //   ),
+    //   dataIndex: 'employeeCode',
+    //   key: 'employeeCode',
+    //   width: 250,
+    //   align: 'left',
+    // },
     {
       title: (
         <div className={style.title}>

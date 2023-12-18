@@ -2,7 +2,7 @@ import { IPagination } from '@/components/commons/table/table-default';
 import { Dayjs } from 'dayjs';
 
 export interface IPartner {
-  userID: string;
+  aslPersonalContactID: string;
   languageID: string;
   languageName: string;
   genderID: string;
@@ -36,7 +36,7 @@ export interface IPartner {
   statusUser: string;
 }
 
-export interface IPartnerTable extends Omit<IPartner, 'userID'> {
+export interface IPartnerTable extends Omit<IPartner, 'aslPersonalContactID'> {
   key: string;
   searchAll: string;
 }

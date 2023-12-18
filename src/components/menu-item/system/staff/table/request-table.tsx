@@ -67,8 +67,7 @@ const RequestTable = () => {
         const { currentPage, pageSize, totalPages } = data.data;
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.userID,
-            userID: data.userID,
+            key: data.aslPersonalContactID,
             languageID: data.languageID,
             languageName: data.languageName,
             genderID: data.genderID,
@@ -180,6 +179,8 @@ const RequestTable = () => {
           />
           <Button
             onClick={() => {
+              console.log();
+
               handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE, [
                 value as React.Key,
               ]);
@@ -203,17 +204,17 @@ const RequestTable = () => {
         </div>
       ),
     },
-    {
-      title: (
-        <div className={style.title}>
-          {translateStaff('employeeCode_form.title')}
-        </div>
-      ),
-      dataIndex: 'employeeCode',
-      key: 'employeeCode',
-      width: 250,
-      align: 'left',
-    },
+    // {
+    //   title: (
+    //     <div className={style.title}>
+    //       {translateStaff('employeeCode_form.title')}
+    //     </div>
+    //   ),
+    //   dataIndex: 'employeeCode',
+    //   key: 'employeeCode',
+    //   width: 250,
+    //   align: 'left',
+    // },
     {
       title: (
         <div className={style.title}>
@@ -389,6 +390,8 @@ const RequestTable = () => {
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
+    console.log(id);
+
     const _requestData: UpdateStatusUnit = {
       id: id || selectedRowKeys,
       status,

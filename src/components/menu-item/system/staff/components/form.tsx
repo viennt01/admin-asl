@@ -750,12 +750,12 @@ const UnitForm = ({
               <Form.Item
                 label={translateStaff('note_form.title')}
                 name="note"
-                rules={[
-                  {
-                    required: true,
-                    message: translateStaff('note_form.error_required'),
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: translateStaff('note_form.error_required'),
+                //   },
+                // ]}
               >
                 <TextArea
                   size="large"
