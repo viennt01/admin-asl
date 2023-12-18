@@ -276,8 +276,8 @@ export default function PendingTable() {
         <div className={style.title}>{translateCommon('Cargo Ready')}</div>
       ),
       width: 150,
-      dataIndex: 'cargoReady',
-      key: 'cargoReady',
+      dataIndex: 'cargoReadyDated',
+      key: 'cargoReadyDated',
       align: 'center',
       render: (value) => formatDate(Number(value)),
     },
