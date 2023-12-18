@@ -205,17 +205,17 @@ const SHOW_ROUTER_HEADER = () => {
       },
       { title: `${translateCommon('create')}` },
     ],
-    '/booking/edit/[id]': [
+    '/booking/fcl-detail/[id]': [
       {
         title: <Link href={ROUTERS.BOOKING}>{translateCommon('booking')}</Link>,
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/booking/manager-admin/[id]': [
+    '/booking/lcl-detail/[id]': [
       {
         title: <Link href={ROUTERS.BOOKING}>{translateCommon('booking')}</Link>,
       },
-      { title: `${translateCommon('request_for_approval')}` },
+      { title: `${translateCommon('detail')}` },
     ],
 
     '/pricing/fee-group': [
