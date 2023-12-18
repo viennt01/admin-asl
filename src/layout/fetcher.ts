@@ -37,7 +37,7 @@ export interface UserInfo {
   totalCommodity: string;
   totalCurrency: string;
   totalFee: string;
-  totalFeeGroup: string;
+  // totalFeeGroup: string; //
   totalLocation: string;
   totalTypeContainer: string;
   totalTypeFeeGroup: string;
@@ -47,6 +47,28 @@ export interface UserInfo {
   userID: string;
   note: string;
   partnerID: string;
+
+  totalAirPricing: string;
+  totalAirQuotation: string;
+  totalBookingCancelled: string;
+  totalBookingCompleted: string;
+  totalBookingPending: string;
+  totalBookingProcessing: string;
+  totalCustomsPricing: string;
+  totalCustomsQuotation: string;
+  totalLoadCapacity: string;
+  totalOtherChargesGroupPricing: string;
+  totalOtherChargesGroupQuotation: string;
+  totalPartner: string;
+  totalSeaPricing: string;
+  totalSeaQuotation: string;
+  totalStaff: string;
+  totalTruckingPricing: string;
+  totalTruckingQuotation: string;
+  totalTypeCustoms: string;
+  totalTypeFee: string;
+  totalTypeOfLoadCapacity: string;
+  totalTypeUnit: string;
 }
 
 export const getUserInfo = () => {

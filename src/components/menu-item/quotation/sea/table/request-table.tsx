@@ -6,13 +6,13 @@ import {
 import Table from '@/components/commons/table/table';
 import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
 import { ROUTERS } from '@/constant/router';
-import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
+import { API_SEA_QUOTATION, API_USER } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
-import { useState, MouseEvent, useMemo } from 'react';
+import { useState, MouseEvent, useMemo, useContext } from 'react';
 import {
   formatCurrencyHasCurrency,
   formatDate,
@@ -30,6 +30,11 @@ import {
   ISeaQuotationTable,
   UpdateStatus,
 } from '../interface';
+import { AppContext } from '@/app-context';
+import { getUserInfo } from '@/layout/fetcher';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import { appLocalStorage } from '@/utils/localstorage';
+import { getPriorityRole } from '@/hook/useAuthentication';
 
 const RequestTable = () => {
   const router = useRouter();
@@ -41,6 +46,29 @@ const RequestTable = () => {
 
   const [dataTable, setDataTable] = useState<ISeaQuotationTable[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { setUserInfo, setRole } = useContext(AppContext);
+
+  const checkUser = useQuery({
+    queryKey: [API_USER.CHECK_USER],
+    queryFn: () => getUserInfo(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        // remove token and redirect to home
+        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+        router.replace(ROUTERS.LOGIN);
+      } else {
+        const dataRole = getPriorityRole(data?.data?.listRole || ['AGENT']);
+        if (setRole) setRole(dataRole);
+        if (setUserInfo) setUserInfo(data.data);
+      }
+    },
+    onError: () => {
+      // remove token and redirect to home
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      router.replace(ROUTERS.LOGIN);
+    },
+    retry: 0,
+  });
 
   // Handle data
   useQuery({
@@ -294,7 +322,8 @@ const RequestTable = () => {
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [API_SEA_QUOTATION.GET_REQUEST, pagination],
-            }))
+            }),
+            checkUser.refetch())
           : errorToast(data.message);
       },
       onError() {

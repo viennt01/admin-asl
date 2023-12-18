@@ -219,12 +219,26 @@ const AppSider = ({ collapsed }: Props) => {
       ? getItem(
           `${translateCommon('quotation')}`,
           '1',
-          <ContainerOutlined ref={refQuotation} />,
+          <Badge
+            dot={
+              Number(userInfo?.totalSeaQuotation) +
+                Number(userInfo?.totalAirQuotation) +
+                Number(userInfo?.totalCustomsQuotation) +
+                Number(userInfo?.totalTruckingQuotation) +
+                Number(userInfo?.totalOtherChargesGroupQuotation) >
+              0
+            }
+            style={{
+              marginTop: '4px',
+            }}
+          >
+            <ContainerOutlined ref={refQuotation} />
+          </Badge>,
           [
             displayRouter(ROUTERS.SEA_QUOTATION)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(userInfo?.totalSeaQuotation)}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -238,7 +252,7 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.AIR_QUOTATION)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(userInfo?.totalAirQuotation)}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -252,7 +266,9 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.CUSTOMS_QUOTATION)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalCustomsQuotation
+                    )}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -266,7 +282,9 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.TRUCKING_QUOTATION)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalTruckingQuotation
+                    )}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -280,7 +298,9 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.QUOTATION_FEE_GROUP)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalOtherChargesGroupQuotation
+                    )}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -297,16 +317,16 @@ const AppSider = ({ collapsed }: Props) => {
 
     displayRouter(ROUTERS.BOOKING)
       ? getItem(
+          `${translateCommon('booking')}`,
+          ROUTERS.BOOKING,
           <Badge
-            count={GetTitleNotificationTab('0')}
+            dot={Number(userInfo?.totalBookingPending) > 0}
             style={{
-              marginRight: '-12px',
+              marginTop: '4px',
             }}
           >
-            {`${translateCommon('booking')}`}
-          </Badge>,
-          ROUTERS.BOOKING,
-          <SolutionOutlined ref={refBooking} />
+            <SolutionOutlined ref={refBooking} />
+          </Badge>
         )
       : null,
 
@@ -320,12 +340,26 @@ const AppSider = ({ collapsed }: Props) => {
       ? getItem(
           `${translateCommon('pricing')}`,
           '2',
-          <AuditOutlined ref={refPricing} />,
+          <Badge
+            dot={
+              Number(userInfo?.totalSeaPricing) +
+                Number(userInfo?.totalTruckingPricing) +
+                Number(userInfo?.totalCustomsPricing) +
+                Number(userInfo?.totalOtherChargesGroupPricing) +
+                Number(userInfo?.totalAirPricing) >
+              0
+            }
+            style={{
+              marginTop: '4px',
+            }}
+          >
+            <AuditOutlined ref={refPricing} />
+          </Badge>,
           [
             displayRouter(ROUTERS.SEA_PRICING)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(userInfo?.totalSeaPricing)}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -339,7 +373,7 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.AIR_PRICING)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(userInfo?.totalAirPricing)}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -353,7 +387,9 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.CUSTOMS_PRICING)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalCustomsPricing
+                    )}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -367,7 +403,9 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.TRUCKING_PRICING)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalTruckingPricing
+                    )}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -381,7 +419,9 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.PRICING_FEE_GROUP)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalOtherChargesGroupPricing
+                    )}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -398,16 +438,16 @@ const AppSider = ({ collapsed }: Props) => {
 
     displayRouter(ROUTERS.PARTNER)
       ? getItem(
+          `${translateCommon('partner')}`,
+          ROUTERS.PARTNER,
           <Badge
-            count={GetTitleNotificationTab('0')}
+            dot={Number(userInfo?.totalPartner) > 0}
             style={{
-              marginRight: '-12px',
+              marginTop: '4px',
             }}
           >
-            {`${translateCommon('partner')}`}
-          </Badge>,
-          ROUTERS.PARTNER,
-          <TeamOutlined ref={refPartner} />
+            <TeamOutlined ref={refPartner} />
+          </Badge>
         )
       : null,
 
@@ -430,20 +470,41 @@ const AppSider = ({ collapsed }: Props) => {
       ? getItem(
           `${translateCommon('object_list')}`,
           '5',
-          // <Badge
-          //   dot={true}
-          //   style={{
-          //     marginTop: '0px',
-          //   }}
-          // >
-          //   <AppstoreOutlined ref={refMasterData} />
-          // </Badge>,
-          <AppstoreOutlined ref={refMasterData} />,
+          <Badge
+            dot={
+              Number(userInfo?.totalTypeContainer) +
+                Number(userInfo?.totalTypeLocation) +
+                Number(userInfo?.totalLoadCapacity) +
+                Number(userInfo?.totalTypeOfLoadCapacity) +
+                Number(userInfo?.totalFee) +
+                Number(userInfo?.totalTypeFeeGroup) +
+                Number(userInfo?.totalTypeFee) +
+                Number(userInfo?.totalCurrency) +
+                Number(userInfo?.totalBank) +
+                Number(userInfo?.totalCommodity) +
+                Number(userInfo?.totalTypeUnit) +
+                Number(userInfo?.totalUnit) +
+                Number(userInfo?.totalTypeCustoms) +
+                Number(userInfo?.totalLocation) >
+              0
+            }
+            style={{
+              marginTop: '4px',
+            }}
+          >
+            <AppstoreOutlined ref={refMasterData} />
+          </Badge>,
+          // <AppstoreOutlined ref={refMasterData} />,
           [
             displayRouter([ROUTERS.LOCATION, ROUTERS.TYPE_OF_LOCATION])
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab(userInfo?.totalLocation)}
+                    count={GetTitleNotificationTab(
+                      `${
+                        Number(userInfo?.totalLocation) +
+                        Number(userInfo?.totalTypeLocation)
+                      }`
+                    )}
                     style={{
                       marginRight: '-12px',
                     }}
@@ -494,14 +555,28 @@ const AppSider = ({ collapsed }: Props) => {
               ROUTERS.TYPE_OF_LOAD_CAPACITY,
             ])
               ? getItem(
-                  `${translateCommon('load_capacity_catalog')}`,
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      `${
+                        Number(userInfo?.totalLoadCapacity) +
+                        Number(userInfo?.totalTypeOfLoadCapacity)
+                      }`
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {translateCommon('load_capacity_catalog')}
+                  </Badge>,
                   'load_capacity_catalog',
                   <FolderOpenOutlined ref={refLoadCapacityCatalog} />,
                   [
                     displayRouter(ROUTERS.LOAD_CAPACITY)
                       ? getItem(
                           <Badge
-                            count={GetTitleNotificationTab('0')}
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalLoadCapacity
+                            )}
                             style={{
                               marginRight: '-12px',
                             }}
@@ -514,7 +589,16 @@ const AppSider = ({ collapsed }: Props) => {
                       : null,
                     displayRouter(ROUTERS.TYPE_OF_LOAD_CAPACITY)
                       ? getItem(
-                          `${translateCommon('type_load_capacity')}`,
+                          <Badge
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalTypeOfLoadCapacity
+                            )}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('type_load_capacity')}`}
+                          </Badge>,
                           ROUTERS.TYPE_OF_LOAD_CAPACITY,
                           <GlobalOutlined ref={refTypeLoadCapacity} />
                         )
@@ -529,7 +613,20 @@ const AppSider = ({ collapsed }: Props) => {
               ROUTERS.TYPE_FEE_GROUP,
             ])
               ? getItem(
-                  `${translateCommon('fee_catalog')}`,
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      `${
+                        Number(userInfo?.totalFee) +
+                        Number(userInfo?.totalTypeFee) +
+                        Number(userInfo?.totalTypeFeeGroup)
+                      }`
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {translateCommon('fee_catalog')}
+                  </Badge>,
                   'fee_catalog',
                   <FolderOpenOutlined ref={refFeeCatalog} />,
                   [
@@ -550,7 +647,9 @@ const AppSider = ({ collapsed }: Props) => {
                     displayRouter(ROUTERS.TYPE_FEE)
                       ? getItem(
                           <Badge
-                            count={GetTitleNotificationTab('0')}
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalTypeFee
+                            )}
                             style={{
                               marginRight: '-12px',
                             }}
@@ -583,7 +682,19 @@ const AppSider = ({ collapsed }: Props) => {
 
             displayRouter([ROUTERS.CURRENCY, ROUTERS.BANK])
               ? getItem(
-                  `${translateCommon('accountant')}`,
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      `${
+                        Number(userInfo?.totalCurrency) +
+                        Number(userInfo?.totalBank)
+                      }`
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {translateCommon('accountant')}
+                  </Badge>,
                   '8',
                   <DollarOutlined ref={refAccountant} />,
                   [
@@ -597,7 +708,7 @@ const AppSider = ({ collapsed }: Props) => {
                               marginRight: '-12px',
                             }}
                           >
-                            {`${translateCommon('currency')}`}
+                            {translateCommon('currency')}
                           </Badge>,
                           ROUTERS.CURRENCY,
                           <DollarOutlined ref={refCurrency} />
@@ -655,7 +766,19 @@ const AppSider = ({ collapsed }: Props) => {
 
             displayRouter([ROUTERS.UNIT, ROUTERS.TYPE_UNIT])
               ? getItem(
-                  `${translateCommon('unit_catalog')}`,
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      `${
+                        Number(userInfo?.totalUnit) +
+                        Number(userInfo?.totalTypeUnit)
+                      }`
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {translateCommon('unit_catalog')}
+                  </Badge>,
                   'unit_catalog',
                   <DollarOutlined ref={refUnitCatalog} />,
                   [
@@ -676,7 +799,9 @@ const AppSider = ({ collapsed }: Props) => {
                     displayRouter(ROUTERS.TYPE_UNIT)
                       ? getItem(
                           <Badge
-                            count={GetTitleNotificationTab('0')}
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalTypeUnit
+                            )}
                             style={{
                               marginRight: '-12px',
                             }}
@@ -693,14 +818,25 @@ const AppSider = ({ collapsed }: Props) => {
 
             displayRouter(ROUTERS.TYPE_DECLARATION)
               ? getItem(
-                  `${translateCommon('declaration_catalog')}`,
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      `${Number(userInfo?.totalTypeCustoms)}`
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {translateCommon('declaration_catalog')}
+                  </Badge>,
                   'declaration_catalog',
                   <FileTextOutlined ref={refDeclarationCatalog} />,
                   [
                     displayRouter(ROUTERS.TYPE_DECLARATION)
                       ? getItem(
                           <Badge
-                            count={GetTitleNotificationTab('0')}
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalTypeCustoms
+                            )}
                             style={{
                               marginRight: '-12px',
                             }}
@@ -722,7 +858,14 @@ const AppSider = ({ collapsed }: Props) => {
       ? getItem(
           `${translateCommon('system')}`,
           '9',
-          <ClusterOutlined ref={refSystem} />,
+          <Badge
+            dot={Number(userInfo?.totalStaff) > 0}
+            style={{
+              marginTop: '4px',
+            }}
+          >
+            <ClusterOutlined ref={refSystem} />
+          </Badge>,
           [
             displayRouter(ROUTERS.USER)
               ? getItem(
@@ -741,7 +884,7 @@ const AppSider = ({ collapsed }: Props) => {
             displayRouter(ROUTERS.STAFF)
               ? getItem(
                   <Badge
-                    count={GetTitleNotificationTab('0')}
+                    count={GetTitleNotificationTab(userInfo?.totalStaff)}
                     style={{
                       marginRight: '-12px',
                     }}

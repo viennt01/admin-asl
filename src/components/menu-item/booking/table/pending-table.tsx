@@ -1,6 +1,6 @@
 import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, PaginationProps } from 'antd';
-import { Key, MouseEvent, useState } from 'react';
+import { Key, MouseEvent, useContext, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -23,6 +23,12 @@ import {
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import COLORS from '@/constant/color';
+import { API_USER } from '@/fetcherAxios/endpoint';
+import { getUserInfo } from '@/layout/fetcher';
+import { appLocalStorage } from '@/utils/localstorage';
+import { getPriorityRole } from '@/hook/useAuthentication';
+import { AppContext } from '@/app-context';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 
 export default function PendingTable() {
   const router = useRouter();
@@ -35,6 +41,29 @@ export default function PendingTable() {
   const [dataTable, setDataTable] = useState<IDataHistoryTable[]>([]);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
   const queryClient = useQueryClient();
+  const { setUserInfo, setRole } = useContext(AppContext);
+
+  const checkUser = useQuery({
+    queryKey: [API_USER.CHECK_USER],
+    queryFn: () => getUserInfo(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        // remove token and redirect to home
+        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+        router.replace(ROUTERS.LOGIN);
+      } else {
+        const dataRole = getPriorityRole(data?.data?.listRole || ['AGENT']);
+        if (setRole) setRole(dataRole);
+        if (setUserInfo) setUserInfo(data.data);
+      }
+    },
+    onError: () => {
+      // remove token and redirect to home
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      router.replace(ROUTERS.LOGIN);
+    },
+    retry: 0,
+  });
 
   const locationsQuerySearch = useQuery({
     queryKey: ['API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_P', querySelectParams],
@@ -334,7 +363,8 @@ export default function PendingTable() {
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: ['API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_P'],
-            }))
+            }),
+            checkUser.refetch())
           : errorToast(data.message);
       },
       onError() {

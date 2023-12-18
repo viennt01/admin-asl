@@ -1,4 +1,4 @@
-import { Tabs } from 'antd';
+import { Badge, Tabs } from 'antd';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
 import { API_TRUCKING_QUOTATION } from '@/fetcherAxios/endpoint';
@@ -7,10 +7,11 @@ import RequestTable from './table/request-table';
 import { ROLE } from '@/constant/permission';
 import { useContext } from 'react';
 import { AppContext } from '@/app-context';
+import { GetTitleNotificationTab } from '@/utils/common';
 
 export default function TruckingQuotation() {
   const queryClient = useQueryClient();
-  const { role } = useContext(AppContext);
+  const { role, userInfo } = useContext(AppContext);
 
   const onChange = (key: string) => {
     if (key === 'API_SEA_QUOTATION.GET_SEARCH') {
@@ -41,13 +42,23 @@ export default function TruckingQuotation() {
           },
           {
             label: (
-              <div
+              <Badge
+                count={GetTitleNotificationTab(
+                  userInfo?.totalTruckingQuotation
+                )}
                 style={{
-                  color: COLORS.GREEN,
+                  marginRight: '-4px',
+                  marginTop: '-2px',
                 }}
               >
-                Request
-              </div>
+                <div
+                  style={{
+                    color: COLORS.GREEN,
+                  }}
+                >
+                  Request
+                </div>
+              </Badge>
             ),
             key: 'API_TRUCKING_QUOTATION.GET_REQUEST',
             children: <RequestTable />,

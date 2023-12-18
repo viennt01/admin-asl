@@ -38,7 +38,7 @@ export const INITIAL_VALUE_USER_INFO = {
   totalCommodity: '',
   totalCurrency: '',
   totalFee: '',
-  totalFeeGroup: '',
+  // totalFeeGroup: '',
   totalLocation: '',
   totalTypeContainer: '',
   totalTypeFeeGroup: '',
@@ -48,6 +48,27 @@ export const INITIAL_VALUE_USER_INFO = {
   userID: '',
   note: '',
   partnerID: '',
+  totalAirPricing: '', //
+  totalAirQuotation: '', //
+  totalBookingCancelled: '',
+  totalBookingCompleted: '',
+  totalBookingPending: '', //
+  totalBookingProcessing: '',
+  totalCustomsPricing: '', //
+  totalCustomsQuotation: '', //
+  totalLoadCapacity: '', //
+  totalOtherChargesGroupPricing: '', //
+  totalOtherChargesGroupQuotation: '', //
+  totalPartner: '', //
+  totalSeaPricing: '', //
+  totalSeaQuotation: '', //
+  totalStaff: '', //
+  totalTruckingPricing: '', //
+  totalTruckingQuotation: '', //
+  totalTypeCustoms: '', //
+  totalTypeFee: '', //
+  totalTypeOfLoadCapacity: '', //
+  totalTypeUnit: '', //
 };
 
 const INITIAL_VALUE_CONTEXT = {
