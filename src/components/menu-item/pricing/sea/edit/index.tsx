@@ -38,7 +38,7 @@ const EditSeaPricing = () => {
         commodityID: formValues.commodityID || '',
         vendorID: formValues.vendorID || '',
         note: formValues.note || '',
-        dateEffect: formValues.dateEffect.valueOf(),
+        effectDated: formValues.dateEffect.valueOf(),
         validityDate: formValues.validityDate.valueOf(),
         freqDate: formValues.freqDate || '',
         demSeaPricing: formValues.demSeaPricing || '0',

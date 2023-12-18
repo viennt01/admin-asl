@@ -168,7 +168,7 @@ export type SeaPricingCreate = Omit<
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'
 > & {
-  dateEffect: number;
+  effectDated: number;
   validityDate: number;
   seaPricingDetailRegisterRequests: SeaPricingDetailDTOsCreate[];
   seaPricingFeeGroupRegisterRequests: SeaPricingFeeDTOsCreate[];
@@ -181,7 +181,7 @@ export type SeaPricingEdit = Omit<
   | 'seaPricingDetailDTOs'
   | 'seaPricingFeeGroupDTOs'
 > & {
-  dateEffect: number;
+  effectDated: number;
   validityDate: number;
   seaPricingDetailUpdateRequests: SeaPricingDetailDTOsUpdate[];
   seaPricingFeeGroupUpdateRequests: SeaPricingFeeUpdate[];
