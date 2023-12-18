@@ -553,7 +553,7 @@ export default function MasterDataTable() {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.PARTNER_EDIT(record.key, true));
+      router.push(ROUTERS.STAFF_EDIT(record.key, true));
     }
   };
 

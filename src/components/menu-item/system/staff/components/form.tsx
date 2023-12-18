@@ -191,7 +191,7 @@ const UnitForm = ({
           statusUser: data.data.statusUser,
         });
       } else {
-        router.push(ROUTERS.PARTNER);
+        router.push(ROUTERS.STAFF);
       }
     },
   });
@@ -209,7 +209,7 @@ const UnitForm = ({
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.PARTNER))
+            ? (successToast(data.message), router.push(ROUTERS.STAFF))
             : errorToast(data.message);
         },
         onError() {
@@ -253,7 +253,7 @@ const UnitForm = ({
       statusUser: form.getFieldValue('statusUser'),
     };
     router.push({
-      pathname: ROUTERS.PARTNER_CREATE,
+      pathname: ROUTERS.STAFF_CREATE,
       query: props,
     });
   };

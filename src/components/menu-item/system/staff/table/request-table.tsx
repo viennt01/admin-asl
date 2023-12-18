@@ -386,7 +386,7 @@ const RequestTable = () => {
 
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.UNIT_MANAGER(id));
+    router.push(ROUTERS.STAFF_MANAGER(id));
   };
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
@@ -430,7 +430,7 @@ const RequestTable = () => {
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.UNIT_MANAGER(record.key));
+      router.push(ROUTERS.STAFF_MANAGER(record.key));
     }
   };
 

@@ -52,7 +52,7 @@ const CreateStaff = () => {
       updateMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            ? (successToast(data.message), router.push(ROUTERS.STAFF))
             : errorToast(data.message);
         },
         onError() {
@@ -85,7 +85,7 @@ const CreateStaff = () => {
       createMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.UNIT))
+            ? (successToast(data.message), router.push(ROUTERS.STAFF))
             : errorToast(data.message);
         },
         onError() {
