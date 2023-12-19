@@ -226,6 +226,7 @@ const SeaQuotation = ({
           lclSeaQuotation: data.data.lclSeaQuotation,
           currencyID: data.data.currencyID,
           public: data.data.public,
+          seaPricingID: data.data.seaPricingID,
           statusSeaQuotation: data.data.statusSeaQuotation,
           seaQuotationDetailDTOs: data.data.seaQuotationDetailDTOs,
           seaQuotaionFeeGroupDTOs: data.data.seaQuotaionFeeGroupDTOs,

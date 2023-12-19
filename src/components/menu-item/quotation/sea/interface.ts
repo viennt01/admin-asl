@@ -93,6 +93,7 @@ export interface IFormValues {
   seaQuotaionFeeGroupDTOs: ISeaQuotationFeeFormValue[];
   salesLeadsSeaQuotationDTOs: string[];
   seaQuotaionGroupPartnerDTOs: string[];
+  seaPricingID: string;
 }
 
 export interface ISeaPricingDetailType
@@ -183,6 +184,7 @@ export type ISeaQuotationCreate = Omit<
   | 'seaQuotaionFeeGroupDTOs'
   | 'salesLeadsSeaQuotationDTOs'
   | 'seaQuotaionGroupPartnerDTOs'
+  | 'seaPricingID'
 > & {
   effectDated: number;
   validityDate: number;
@@ -200,6 +202,7 @@ export type ISeaQuotationEdit = Omit<
   | 'seaQuotaionFeeGroupDTOs'
   | 'salesLeadsSeaQuotationDTOs'
   | 'seaQuotaionGroupPartnerDTOs'
+  | 'seaPricingID'
 > & {
   effectDated: number;
   validityDate: number;

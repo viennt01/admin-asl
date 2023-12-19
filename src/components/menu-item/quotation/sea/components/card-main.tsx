@@ -638,6 +638,12 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
+        <Col lg={8} span={24} style={{ display: create ? 'none' : '' }}>
+          <Form.Item label={'Sea pricing'} name="seaPricingID">
+            <Input style={{ width: '100%' }} disabled={true} />
+          </Form.Item>
+        </Col>
+
         <Col lg={8} span={24}>
           <Form.Item name="forNewUser" label=" ">
             <Checkbox
