@@ -99,7 +99,9 @@ export const getTable = (data: RequestTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile<BlobPart>({ data, timeout: 10000 })(API_SEA_PRICING.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 1000000 })(
+    API_SEA_PRICING.IMPORT
+  );
 };
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_SEA_PRICING.DOWNLOAD_EXAMPLE_FILE);
