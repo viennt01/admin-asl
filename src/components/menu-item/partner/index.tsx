@@ -1,4 +1,4 @@
-import { Tabs } from 'antd';
+import { Badge, Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
@@ -9,10 +9,11 @@ import { useContext } from 'react';
 import { AppContext } from '@/app-context';
 import CustomersDataTable from './table/customers-table';
 import LinerDataTable from './table/liner-table';
+import { GetTitleNotificationTab } from '@/utils/common';
 
 export default function Partner() {
   const queryClient = useQueryClient();
-  const { role } = useContext(AppContext);
+  const { role, userInfo } = useContext(AppContext);
 
   const onChange = (key: string) => {
     queryClient.invalidateQueries({
@@ -43,13 +44,21 @@ export default function Partner() {
           },
           {
             label: (
-              <div
+              <Badge
+                count={GetTitleNotificationTab(userInfo?.totalPartner)}
                 style={{
-                  color: COLORS.GREEN,
+                  marginRight: '-4px',
+                  marginTop: '-2px',
                 }}
               >
-                Request
-              </div>
+                <div
+                  style={{
+                    color: COLORS.GREEN,
+                  }}
+                >
+                  Request
+                </div>
+              </Badge>
             ),
             key: API_PARTNER.GET_REQUEST,
             children: <RequestTable />,
