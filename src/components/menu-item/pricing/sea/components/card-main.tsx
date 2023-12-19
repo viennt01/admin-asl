@@ -12,6 +12,7 @@ import {
   Switch,
   InputNumber,
   FormInstance,
+  Tag,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
@@ -275,20 +276,53 @@ const CardMain = ({
               showSearch
               placeholder={translatePricingSea('POL_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
+              optionFilterProp="label"
+              filterOption={(input, option) => {
+                return (option?.display ?? '').includes(
+                  input.toString().toLocaleUpperCase()
+                );
+              }}
+              size="large"
               options={
-                getLocation.data?.data.map((item) => {
+                getLocation.data?.data?.map((item) => {
                   return {
                     value: item.locationID,
-                    label: item.locationName,
+                    display: item.locationName,
+                    label: (
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <div>{item.locationName}</div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {item.typeLocation.map((item, index) => {
+                            return (
+                              <Tag
+                                key={index}
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  height: '20px',
+                                  marginRight: '4px',
+                                }}
+                              >
+                                {item}
+                              </Tag>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ),
                   };
                 }) || []
               }
@@ -311,20 +345,53 @@ const CardMain = ({
               showSearch
               placeholder={translatePricingSea('POD_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
+              optionFilterProp="label"
+              filterOption={(input, option) => {
+                return (option?.display ?? '').includes(
+                  input.toString().toLocaleUpperCase()
+                );
+              }}
+              size="large"
               options={
-                getLocation.data?.data.map((item) => {
+                getLocation.data?.data?.map((item) => {
                   return {
                     value: item.locationID,
-                    label: item.locationName,
+                    display: item.locationName,
+                    label: (
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <div>{item.locationName}</div>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {item.typeLocation.map((item, index) => {
+                            return (
+                              <Tag
+                                key={index}
+                                style={{
+                                  display: 'flex',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  height: '20px',
+                                  marginRight: '4px',
+                                }}
+                              >
+                                {item}
+                              </Tag>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ),
                   };
                 }) || []
               }

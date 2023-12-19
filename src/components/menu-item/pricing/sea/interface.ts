@@ -227,6 +227,7 @@ export interface RequestTableRequest extends QueryInputRequest {
 export interface IDataLocation {
   locationID: string;
   locationName: string;
+  typeLocation: string[];
 }
 export interface IRequireLocation {
   type: TYPE_LOCATION[];
