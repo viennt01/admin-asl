@@ -89,7 +89,7 @@ export const getTable = (data: RequestUnitTableRequest) => {
 
 //----------------------------------------------------------------
 export const importCommodity = (data: FormData) => {
-  return uploadFile<BlobPart>({ data, timeout: 10000 })(API_COMMODITY.IMPORT);
+  return uploadFile<BlobPart>({ data, timeout: 100000 })(API_COMMODITY.IMPORT);
 };
 export const downloadExampleFileCommodity = () => {
   return downloadFile<BlobPart>({})(API_COMMODITY.DOWNLOAD_EXAMPLE_FILE);

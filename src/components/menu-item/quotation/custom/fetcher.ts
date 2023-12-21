@@ -101,7 +101,7 @@ export const getTable = (data: RequestTableRequest) => {
 };
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
-  return uploadFile<BlobPart>({ data, timeout: 10000 })(
+  return uploadFile<BlobPart>({ data, timeout: 100000 })(
     API_CUSTOMS_QUOTATION.IMPORT
   );
 };
