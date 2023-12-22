@@ -7,6 +7,7 @@ const COLORS = {
   BRIGHT: '#cad7ee',
   BLUE: '#0300A6',
   BLACK: '#000000',
+  BLACK_BLUR: '#000000E0',
   PRIMARY: '#03375e',
   GREY_COLOR_HOVER: '#1D4486',
   WARNING: '#faad14',

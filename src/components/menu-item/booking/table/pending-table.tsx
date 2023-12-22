@@ -7,7 +7,11 @@ import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDate } from '@/utils/format';
-import { IDataHistoryTable, IRequestStatusHistoryBooking } from '../interface';
+import {
+  IDataHistoryTable,
+  IRequestStatusHistoryBooking,
+  TYPE_TABS,
+} from '../interface';
 import {
   DEFAULT_PAGINATION,
   IPaginationOfAntd,
@@ -65,8 +69,8 @@ export default function PendingTable() {
     retry: 0,
   });
 
-  const locationsQuerySearch = useQuery({
-    queryKey: ['API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_P', querySelectParams],
+  const pendingQuerySearch = useQuery({
+    queryKey: [TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PENDING, querySelectParams],
     queryFn: () =>
       getHistoryBooking({
         bookingNo: querySelectParams,
@@ -123,7 +127,7 @@ export default function PendingTable() {
   const refreshingQuery = () => {
     setRefreshingLoading(true);
     pagination.current = 1;
-    locationsQuerySearch.refetch();
+    pendingQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
@@ -330,7 +334,7 @@ export default function PendingTable() {
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     pagination.current = page;
     pagination.pageSize = size;
-    locationsQuerySearch.refetch();
+    pendingQuerySearch.refetch();
   };
 
   const handleOnDoubleClick = (
@@ -362,7 +366,7 @@ export default function PendingTable() {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: ['API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_P'],
+              queryKey: [TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PENDING],
             }),
             checkUser.refetch())
           : errorToast(data.message);
@@ -374,7 +378,7 @@ export default function PendingTable() {
   };
   return (
     <div style={{ marginTop: -18 }}>
-      {locationsQuerySearch.isLoading ? (
+      {pendingQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
         <>

@@ -7,7 +7,7 @@ import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useQuery } from '@tanstack/react-query';
 import { formatDate } from '@/utils/format';
-import { IDataHistoryTable } from '../interface';
+import { IDataHistoryTable, TYPE_TABS } from '../interface';
 import {
   DEFAULT_PAGINATION,
   IPaginationOfAntd,
@@ -28,8 +28,11 @@ export default function ProcessingTable() {
   const [dataTable, setDataTable] = useState<IDataHistoryTable[]>([]);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
-  const locationsQuerySearch = useQuery({
-    queryKey: ['API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_Pr', querySelectParams],
+  const processingQuerySearch = useQuery({
+    queryKey: [
+      TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PROCESSING,
+      querySelectParams,
+    ],
     queryFn: () =>
       getHistoryBooking({
         bookingNo: querySelectParams,
@@ -86,7 +89,7 @@ export default function ProcessingTable() {
   const refreshingQuery = () => {
     setRefreshingLoading(true);
     pagination.current = 1;
-    locationsQuerySearch.refetch();
+    processingQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
@@ -270,7 +273,7 @@ export default function ProcessingTable() {
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     pagination.current = page;
     pagination.pageSize = size;
-    locationsQuerySearch.refetch();
+    processingQuerySearch.refetch();
   };
 
   const handleOnDoubleClick = (
@@ -287,7 +290,7 @@ export default function ProcessingTable() {
 
   return (
     <div style={{ marginTop: -18 }}>
-      {locationsQuerySearch.isLoading ? (
+      {processingQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
         <>

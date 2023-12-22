@@ -7,7 +7,7 @@ import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useQuery } from '@tanstack/react-query';
 import { formatDate } from '@/utils/format';
-import { IDataHistoryTable } from '../interface';
+import { IDataHistoryTable, TYPE_TABS } from '../interface';
 import {
   DEFAULT_PAGINATION,
   IPaginationOfAntd,
@@ -28,8 +28,11 @@ export default function CancelledTable() {
   const [dataTable, setDataTable] = useState<IDataHistoryTable[]>([]);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
-  const locationsQuerySearch = useQuery({
-    queryKey: ['API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_Ca', querySelectParams],
+  const cancelledQuerySearch = useQuery({
+    queryKey: [
+      TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_CANCELLED,
+      querySelectParams,
+    ],
     queryFn: () =>
       getHistoryBooking({
         bookingNo: querySelectParams,
@@ -86,7 +89,7 @@ export default function CancelledTable() {
   const refreshingQuery = () => {
     setRefreshingLoading(true);
     pagination.current = 1;
-    locationsQuerySearch.refetch();
+    cancelledQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
@@ -270,7 +273,7 @@ export default function CancelledTable() {
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     pagination.current = page;
     pagination.pageSize = size;
-    locationsQuerySearch.refetch();
+    cancelledQuerySearch.refetch();
   };
 
   const handleOnDoubleClick = (
@@ -287,7 +290,7 @@ export default function CancelledTable() {
 
   return (
     <div style={{ marginTop: -18 }}>
-      {locationsQuerySearch.isLoading ? (
+      {cancelledQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
         <>

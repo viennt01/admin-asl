@@ -7,7 +7,7 @@ import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useQuery } from '@tanstack/react-query';
 import { formatDate } from '@/utils/format';
-import { IDataHistoryTable } from '../interface';
+import { IDataHistoryTable, TYPE_TABS } from '../interface';
 import {
   DEFAULT_PAGINATION,
   IPaginationOfAntd,
@@ -17,7 +17,7 @@ import style from '@/components/commons/table/index.module.scss';
 import Table from '@/components/commons/table/table';
 import { TYPE_STATUS_BOOKING, getHistoryBooking } from '../fetcher';
 
-export default function MasterDataTable() {
+export default function CompletedDataTable() {
   const router = useRouter();
   const { translate: translatePartner } = useI18n('booking');
   const { translate: translateCommon } = useI18n('common');
@@ -28,8 +28,11 @@ export default function MasterDataTable() {
   const [dataTable, setDataTable] = useState<IDataHistoryTable[]>([]);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
-  const locationsQuerySearch = useQuery({
-    queryKey: ['API_BOOKING.GET_HISTORY_BOOKING_BY_ASL_C', querySelectParams],
+  const completedQuerySearch = useQuery({
+    queryKey: [
+      TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_COMPLETED,
+      querySelectParams,
+    ],
     queryFn: () =>
       getHistoryBooking({
         bookingNo: querySelectParams,
@@ -86,7 +89,7 @@ export default function MasterDataTable() {
   const refreshingQuery = () => {
     setRefreshingLoading(true);
     pagination.current = 1;
-    locationsQuerySearch.refetch();
+    completedQuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
@@ -270,7 +273,7 @@ export default function MasterDataTable() {
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     pagination.current = page;
     pagination.pageSize = size;
-    locationsQuerySearch.refetch();
+    completedQuerySearch.refetch();
   };
 
   const handleOnDoubleClick = (
@@ -287,7 +290,7 @@ export default function MasterDataTable() {
 
   return (
     <div style={{ marginTop: -18 }}>
-      {locationsQuerySearch.isLoading ? (
+      {completedQuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
         <>
