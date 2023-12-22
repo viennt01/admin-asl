@@ -12,7 +12,6 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
 import {
   formatCurrencyHasCurrency,
   formatDate,
@@ -26,6 +25,7 @@ import {
   SelectSearch,
   SeaPricingTable,
   SeaPricingDetailDTOs,
+  TYPE_TABS,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -96,7 +96,11 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [API_SEA_PRICING.GET_SEARCH, queryInputParams, querySelectParams],
+    queryKey: [
+      TYPE_TABS.GET_SEA_PRICING_BY_MASTER_DATA,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
       getSeaPricingSearch({
         ...queryInputParams,
@@ -162,7 +166,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_SEA_PRICING.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_MASTER_DATA],
         });
         setSelectedRowKeys([]);
       } else {
@@ -612,9 +616,8 @@ export default function MasterDataTable() {
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
-
       queryClient.invalidateQueries({
-        queryKey: [API_SEA_PRICING.GET_REQUEST],
+        queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_REQUEST_DATA],
       });
       setLoadingImport(false);
       setOpenImportModal(false);

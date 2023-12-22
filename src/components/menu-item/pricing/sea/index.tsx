@@ -1,19 +1,23 @@
 import { Badge, Tabs } from 'antd';
 import MasterDataTable from './table/master-table';
-import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '@/app-context';
 import { ROLE } from '@/constant/permission';
 import { GetTitleNotificationTab } from '@/utils/common';
+import RequestDataTable from './table/request-table';
+import { TYPE_TABS } from './interface';
 
 export default function SeaPricingPage() {
+  const [keyActive, setKeyActive] = useState<TYPE_TABS>(
+    TYPE_TABS.GET_SEA_PRICING_BY_MASTER_DATA
+  );
   const queryClient = useQueryClient();
   const { role, userInfo } = useContext(AppContext);
 
-  const onChange = (key: string) => {
+  const onChange = (key: TYPE_TABS) => {
+    setKeyActive(key);
     queryClient.invalidateQueries({
       queryKey: [key],
     });
@@ -22,7 +26,7 @@ export default function SeaPricingPage() {
   return (
     <>
       <Tabs
-        onChange={onChange}
+        onChange={(key: string) => onChange(key as TYPE_TABS)}
         type="card"
         style={{
           marginTop: 10,
@@ -31,7 +35,7 @@ export default function SeaPricingPage() {
         items={[
           {
             label: 'Master Data',
-            key: API_SEA_PRICING.GET_SEARCH,
+            key: TYPE_TABS.GET_SEA_PRICING_BY_MASTER_DATA,
             children: <MasterDataTable />,
           },
           {
@@ -45,15 +49,18 @@ export default function SeaPricingPage() {
               >
                 <div
                   style={{
-                    color: COLORS.GREEN,
+                    color:
+                      keyActive === TYPE_TABS.GET_SEA_PRICING_BY_REQUEST_DATA
+                        ? COLORS.GREEN
+                        : COLORS.BLACK_BLUR,
                   }}
                 >
                   Request
                 </div>
               </Badge>
             ),
-            key: API_SEA_PRICING.GET_REQUEST,
-            children: <RequestTable />,
+            key: TYPE_TABS.GET_SEA_PRICING_BY_REQUEST_DATA,
+            children: <RequestDataTable />,
           },
         ]}
       />

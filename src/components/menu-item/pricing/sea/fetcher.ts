@@ -9,14 +9,12 @@ import {
 import {
   SeaPricingRequire,
   RequestSeaPricing,
-  RequestTableDraft,
   SeaPricingCreate,
   SeaPricingDelete,
   SeaPricingDetailDataBody,
   SeaPricingDetailType,
   SeaPricingEdit,
   UpdateStatus,
-  RequestTableRequest,
   IDataLocation,
   RequireCommodity,
   RequireCurrency,
@@ -78,12 +76,6 @@ export const deleteSeaPricing = (data: React.Key[]) => {
   })(API_SEA_PRICING.DELETE);
 };
 
-export const getDartTable = (data: RequestTableDraft) => {
-  return post<RequestTableDraft, ResponseWithPayload<SeaPricingRequire>>({
-    data,
-  })(API_SEA_PRICING.GET_DRAFT);
-};
-
 //----------------------------------------------------------------
 
 export const updateStatus = (data: UpdateStatus) => {
@@ -92,11 +84,6 @@ export const updateStatus = (data: UpdateStatus) => {
   })(API_SEA_PRICING.UPDATE_STATUS);
 };
 
-export const getTable = (data: RequestTableRequest) => {
-  return post<RequestTableRequest, ResponseWithPayload<SeaPricingRequire>>({
-    data,
-  })(API_SEA_PRICING.GET_REQUEST);
-};
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
   return uploadFile<BlobPart>({ data, timeout: 100000 })(

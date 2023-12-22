@@ -1,51 +1,85 @@
 import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, PaginationProps, Tag } from 'antd';
 import {
-  DEFAULT_PAGINATION,
-  IPaginationOfAntd,
-} from '@/components/commons/table/table-default';
-import Table from '@/components/commons/table/table';
-import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
+  ChangeEvent,
+  Key,
+  MouseEvent,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { ROUTERS } from '@/constant/router';
-import { API_SEA_PRICING, API_USER } from '@/fetcherAxios/endpoint';
-import useI18n from '@/i18n/useI18N';
-import { ProColumns } from '@ant-design/pro-components';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
-import { useState, MouseEvent, useMemo, useContext } from 'react';
+import useI18n from '@/i18n/useI18N';
+import COLORS from '@/constant/color';
+import { ColumnsState, ProColumns } from '@ant-design/pro-components';
+import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { API_USER } from '@/fetcherAxios/endpoint';
 import {
   formatCurrencyHasCurrency,
   formatDate,
   formatNumber,
 } from '@/utils/format';
-import { STATUS_ALL_LABELS } from '@/constant/form';
-import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
-import { getTable, updateStatus } from '../fetcher';
-import style from '@/components/commons/table/index.module.scss';
-import { initalValueQueryInputParamsRequest } from '../constant';
 import {
-  SeaPricingDetailDTOs,
+  QueryInputParamType,
+  QuerySelectParamType,
+  SelectSearch,
   SeaPricingTable,
+  SeaPricingDetailDTOs,
   UpdateStatus,
+  TYPE_TABS,
 } from '../interface';
+import {
+  DEFAULT_PAGINATION,
+  IPaginationOfAntd,
+  SkeletonTable,
+} from '@/components/commons/table/table-default';
+import { getSeaPricingSearch, updateStatus } from '../fetcher';
+import Table from '../../../../commons/table/table';
+import style from '@/components/commons/table/index.module.scss';
+import {
+  STATUS_ALL_LABELS,
+  STATUS_MASTER_COLORS,
+  STATUS_MATER_LABELS,
+} from '@/constant/form';
+import {
+  initalSelectSearchMaster,
+  initalValueDisplayColumnMaster,
+  initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
+} from '../constant';
+import { DAY_WEEK } from '@/constant';
+import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
 import { AppContext } from '@/app-context';
 import { getUserInfo } from '@/layout/fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { getPriorityRole } from '@/hook/useAuthentication';
 
-const RequestTable = () => {
+export default function RequestDataTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translatePricingSea } = useI18n('pricingSea');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-
+  const [queryInputParams, setQueryInputParams] = useState<QueryInputParamType>(
+    initalValueQueryInputParamsMaster
+  );
+  const [querySelectParams, setQuerySelectParams] =
+    useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    initalSelectSearchMaster
+  );
+  const [columnsStateMap, setColumnsStateMap] = useState<
+    Record<string, ColumnsState>
+  >(initalValueDisplayColumnMaster);
+  const [refreshingLoading, setRefreshingLoading] = useState(false);
   const { setUserInfo, setRole } = useContext(AppContext);
 
   const checkUser = useQuery({
@@ -71,11 +105,23 @@ const RequestTable = () => {
   });
 
   // Handle data
-  useQuery({
-    queryKey: [API_SEA_PRICING.GET_REQUEST, pagination],
+  const dataSelectSearch =
+    querySelectParams.statusSeaPricing.length === 0
+      ? {
+          statusSeaPricing: [STATUS_ALL_LABELS.REQUEST],
+        }
+      : querySelectParams;
+
+  const locationsQuerySearch = useQuery({
+    queryKey: [
+      TYPE_TABS.GET_SEA_PRICING_BY_REQUEST_DATA,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
-      getTable({
-        ...initalValueQueryInputParamsRequest,
+      getSeaPricingSearch({
+        ...queryInputParams,
+        ...dataSelectSearch,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -119,14 +165,45 @@ const RequestTable = () => {
             searchAll: '',
           }))
         );
-        pagination.current = currentPage;
-        pagination.pageSize = pageSize;
-        pagination.total = totalPages;
+        setPagination({
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalPages,
+        });
       } else {
         setDataTable([]);
       }
     },
   });
+
+  const refreshingQuery = () => {
+    setSelectedActiveKey(initalSelectSearchMaster);
+    setQueryInputParams(initalValueQueryInputParamsMaster);
+    setRefreshingLoading(true);
+    pagination.current = 1;
+    locationsQuerySearch.refetch();
+    setTimeout(() => {
+      setRefreshingLoading(false);
+    }, 500);
+  };
+
+  // Handle search
+  const handleSearchInputKeyAll = (value: string) => {
+    setSelectedActiveKey({
+      ...initalSelectSearchMaster,
+      searchAll: {
+        label: 'searchAll',
+        value: value,
+      },
+    });
+    setQueryInputParams({
+      ...initalValueQueryInputParamsMaster,
+      searchAll: value,
+    });
+    setQuerySelectParams({
+      ...initalValueQuerySelectParamsMaster,
+    });
+  };
 
   const updateStatusMutation = useMutation({
     mutationFn: (body: UpdateStatusUnit) => {
@@ -134,39 +211,43 @@ const RequestTable = () => {
     },
   });
 
-  // Handle search
   // const handleSearchInput = (
   //   selectedKeys: string,
   //   confirm: (param?: FilterConfirmProps) => void,
   //   dataIndex: DataIndex
   // ) => {
-  //   setSelectedKeyShow((prevData) => ({
+  //   setSelectedActiveKey((prevData) => ({
   //     ...prevData,
   //     [dataIndex]: {
   //       label: dataIndex,
   //       value: selectedKeys,
   //     },
+  //     searchAll: {
+  //       label: 'searchAll',
+  //       value: '',
+  //     },
   //   }));
   //   const newQueryParams = { ...queryInputParams };
   //   newQueryParams[dataIndex] = selectedKeys;
+  //   newQueryParams.searchAll = '';
   //   setQueryInputParams(newQueryParams);
   //   confirm();
   // };
 
-  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-  //   setQueryInputParams((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: '',
-  //   }));
-
-  //   setSelectedKeyShow((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: { label: dataIndex, value: '' },
-  //   }));
-  //   clearFilters();
-  // };
-
-  // Handle data show table
+  const handleSearchSelect = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>
+  ) => {
+    const newQueryParams = {
+      ...querySelectParams,
+      searchAll: '',
+      statusSeaPricing:
+        filters.statusSeaPricing?.length !== 0 && filters.statusSeaPricing
+          ? (filters.statusSeaPricing as string[])
+          : [],
+    };
+    setQuerySelectParams(newQueryParams);
+  };
   const columnDTOs = useMemo(() => {
     const result = [{}];
     for (const key in dataTable[0]?.seaPricingDetailDTOs) {
@@ -190,7 +271,6 @@ const RequestTable = () => {
       dataIndex: 'index',
       width: 50,
       align: 'right',
-      fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
@@ -255,7 +335,26 @@ const RequestTable = () => {
       dataIndex: 'isASLMember',
       key: 'isASLMember',
       align: 'left',
-      render: (value) => (value ? 'ASL' : 'vendor'),
+      render: (value) => (value ? 'ASL' : 'Vendor'),
+    },
+    {
+      title: <div className={style.title}>{translatePricingSea('status')}</div>,
+      width: 120,
+      dataIndex: 'statusSeaPricing',
+      key: 'statusSeaPricing',
+      align: 'center',
+      render: (value) => (
+        <Tag
+          color={
+            STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
+          }
+          style={{
+            margin: 0,
+          }}
+        >
+          {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
+        </Tag>
+      ),
     },
     {
       title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
@@ -275,6 +374,81 @@ const RequestTable = () => {
     },
     {
       title: (
+        <div className={style.title}>{translatePricingSea('currency')}</div>
+      ),
+      width: 200,
+      dataIndex: 'currencyAbbreviations',
+      key: 'currencyAbbreviations',
+      align: 'right',
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePricingSea('effect_date')}</div>
+      ),
+      width: 200,
+      dataIndex: 'effectDated',
+      key: 'effectDated',
+      align: 'right',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePricingSea('validity')}</div>
+      ),
+      width: 200,
+      dataIndex: 'validityDate',
+      key: 'validityDate',
+      align: 'right',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: <div className={style.title}>{translatePricingSea('freq')}</div>,
+      width: 150,
+      dataIndex: 'freqDate',
+      key: 'freqDate',
+      align: 'right',
+      render: (value) =>
+        DAY_WEEK.find((date) => date.value === value)?.label || '-',
+    },
+    {
+      title: <div className={style.title}>{translatePricingSea('DEM')}</div>,
+      width: 200,
+      dataIndex: 'demSeaPricing',
+      key: 'demSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: <div className={style.title}>{translatePricingSea('STO')}</div>,
+      width: 200,
+      dataIndex: 'stoSeaPricing',
+      key: 'stoSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: <div className={style.title}>{translatePricingSea('DET')}</div>,
+      width: 200,
+      dataIndex: 'detSeaPricing',
+      key: 'detSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: <div className={style.title}>{translatePricingSea('note')}</div>,
+      width: 200,
+      dataIndex: 'note',
+      key: 'note',
+      align: 'left',
+    },
+    {
+      title: (
         <div className={style.title}>{translateCommon('date_created')}</div>
       ),
       width: 150,
@@ -288,6 +462,23 @@ const RequestTable = () => {
       width: 200,
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
+      align: 'center',
+    },
+    {
+      title: (
+        <div className={style.title}>{translateCommon('date_inserted')}</div>
+      ),
+      width: 150,
+      dataIndex: 'dateUpdated',
+      key: 'dateUpdated',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: <div className={style.title}>{translateCommon('inserter')}</div>,
+      width: 200,
+      dataIndex: 'updatedByUser',
+      key: 'updatedByUser',
       align: 'center',
     },
     {
@@ -312,7 +503,6 @@ const RequestTable = () => {
     },
     ...columnDTOs,
   ];
-
   // Handle logic table
   const handleEditCustomer = (id: string) => {
     router.push(ROUTERS.SEA_PRICING_MANAGER(id));
@@ -329,7 +519,7 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [API_SEA_PRICING.GET_REQUEST, pagination],
+              queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_REQUEST_DATA, pagination],
             }),
             checkUser.refetch())
           : errorToast(data.message);
@@ -340,15 +530,42 @@ const RequestTable = () => {
     });
   };
 
-  const handleSelectionChange = (selectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(selectedRowKeys);
+  const handleSelectionChange = (selectedRowKey: Key[]) => {
+    const keyData = dataTable.map((item) => item.key);
+    const uniqueDataAndSelectedRowKeys = selectedRowKeys.filter((item: any) =>
+      keyData.includes(item)
+    );
+    const unique1AndSelectedRowKey = uniqueDataAndSelectedRowKeys.filter(
+      (item) => !selectedRowKey.includes(item)
+    );
+    const uniqueSelection = selectedRowKey.filter(
+      (item) => !selectedRowKeys.includes(item)
+    );
+    const result = selectedRowKeys
+      .concat(uniqueSelection)
+      .filter((item) => !unique1AndSelectedRowKey.includes(item));
+
+    setSelectedRowKeys(result);
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    setPagination((state) => ({
-      ...state,
-      current: page,
-      pageSize: size,
+    pagination.current = page;
+    pagination.pageSize = size;
+
+    locationsQuerySearch.refetch();
+  };
+
+  const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
+    setColumnsStateMap(map);
+  };
+
+  const handleChangeInputSearchAll = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedActiveKey((prevData) => ({
+      ...prevData,
+      searchAll: {
+        label: 'searchAll',
+        value: e.target.value ? e.target.value : '',
+      },
     }));
   };
 
@@ -363,22 +580,34 @@ const RequestTable = () => {
   };
 
   return (
-    <>
-      <div style={{ marginTop: -18 }}>
-        <Table
-          headerTitle="List of approval-needed requests"
-          dataTable={dataTable}
-          columns={columns}
-          handlePaginationChange={handlePaginationChange}
-          handleOnDoubleClick={handleOnDoubleClick}
-          pagination={pagination}
-          checkTableMaster={true}
-          handleSelectionChange={handleSelectionChange}
-          handleApproveAndReject={handleApproveAndReject}
-        />
-      </div>
-    </>
+    <div style={{ marginTop: -18 }}>
+      {locationsQuerySearch.isLoading ? (
+        <SkeletonTable />
+      ) : (
+        <>
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            headerTitle={'List of approval-needed requests'}
+            selectedRowKeys={selectedRowKeys}
+            handleSelectionChange={handleSelectionChange}
+            handlePaginationChange={handlePaginationChange}
+            handleChangeInputSearchAll={handleChangeInputSearchAll}
+            handleSearchInputKeyAll={handleSearchInputKeyAll}
+            valueSearchAll={selectedActiveKey.searchAll.value}
+            handleOnDoubleClick={handleOnDoubleClick}
+            refreshingQuery={refreshingQuery}
+            refreshingLoading={refreshingLoading}
+            pagination={pagination}
+            handleColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            handleSearchSelect={handleSearchSelect}
+            checkTableMaster={true}
+            itemDataQuotation={selectedRowKeys}
+            handleApproveAndReject={handleApproveAndReject}
+          />
+        </>
+      )}
+    </div>
   );
-};
-
-export default RequestTable;
+}

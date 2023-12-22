@@ -2,9 +2,8 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { SeaPricingTable } from '../interface';
-import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
-import { deleteSeaPricing, getDartTable } from '../fetcher';
+import { SeaPricingTable, TYPE_TABS } from '../interface';
+import { deleteSeaPricing, getSeaPricingSearch } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -37,19 +36,13 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION_5);
-  // const [queryInputParams, setQueryInputParams] = useState<QueryInputDraft>(
-  //   initalValueQueryInputParamsDraft
-  // );
   const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
-  // const [selectedKeyShow, setSelectedKeyShow] = useState<SelectDratSearch>(
-  //   initalSelectSearchDraft
-  // );
 
   // Handle data
   useQuery({
-    queryKey: [API_SEA_PRICING.GET_SEARCH, pagination],
+    queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_DRAFT_DATA, pagination],
     queryFn: () =>
-      getDartTable({
+      getSeaPricingSearch({
         ...initalValueQueryInputParamsDraft,
         ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
@@ -110,7 +103,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_SEA_PRICING.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);

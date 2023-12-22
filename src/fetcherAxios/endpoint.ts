@@ -101,8 +101,6 @@ export const API_SEA_PRICING = {
   EDIT: '/update-sea-pricing',
   DELETE: '/delete-sea-pricing',
   UPDATE_STATUS: '/update-status-sea-pricing',
-  GET_DRAFT: '/search-sea-pricing-with-status',
-  GET_REQUEST: '/search-sea-pricing-with-status',
   DOWNLOAD_EXAMPLE_FILE: '/download-sea-pricing-excel',
   IMPORT: '/import-sea-pricing-with-excel',
   EXPORT: '/export-sea-pricing-with-excel',

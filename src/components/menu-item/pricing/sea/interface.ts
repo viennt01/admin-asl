@@ -1,6 +1,12 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_TABS {
+  GET_SEA_PRICING_BY_MASTER_DATA = 'GET_SEA_PRICING_BY_MASTER_DATA',
+  GET_SEA_PRICING_BY_REQUEST_DATA = 'GET_SEA_PRICING_BY_REQUEST_DATA',
+  GET_SEA_PRICING_BY_DRAFT_DATA = 'GET_SEA_PRICING_BY_DRAFT_DATA',
+}
+
 export enum TYPE_LOCATION {
   'PORT' = 'Port',
   'INDUSTRIAL_ZONE' = 'Industrial Zone',
@@ -191,36 +197,10 @@ export type SeaPricingDelete = {
 };
 
 //----------------------------------------------------------------
-export interface QueryInputDraft {
-  searchAll: string;
-}
-export interface QuerySelectDraft {
-  status: string;
-}
-export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
-  paginateRequest: IPagination;
-}
-
-export type SelectDratSearch = {
-  [key in keyof QueryInputDraft]: {
-    label: string;
-    value: string;
-  };
-};
-
-//----------------------------------------------------------------
 
 export interface UpdateStatus {
   id: React.Key[];
   status: string;
-}
-
-export interface QueryInputRequest {
-  searchAll: string;
-  status: string;
-}
-export interface RequestTableRequest extends QueryInputRequest {
-  paginateRequest: IPagination;
 }
 
 // get all location
