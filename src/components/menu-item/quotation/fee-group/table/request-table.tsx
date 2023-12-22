@@ -8,10 +8,11 @@ import {
   FeeGroupTable,
   QueryInputParamType,
   SelectSearch,
+  TYPE_TABS,
   UpdateStatusFeeGroup,
 } from '../interface';
 import { ROUTERS } from '@/constant/router';
-import { API_TYPE_FEE_GROUP, API_USER } from '@/fetcherAxios/endpoint';
+import { API_USER } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -77,7 +78,11 @@ const RequestTable = () => {
   });
   // Handle data
   useQuery({
-    queryKey: [API_TYPE_FEE_GROUP.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [
+      TYPE_TABS.GET_OTHER_CHARGES_QUOTATION_BY_REQUEST_DATA,
+      pagination,
+      queryInputParams,
+    ],
     queryFn: () =>
       getTable({
         ...initalValueQueryInputParamsRequest,
@@ -264,7 +269,7 @@ const RequestTable = () => {
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [
-                API_TYPE_FEE_GROUP.GET_REQUEST,
+                TYPE_TABS.GET_OTHER_CHARGES_QUOTATION_BY_REQUEST_DATA,
                 pagination,
                 queryInputParams,
               ],

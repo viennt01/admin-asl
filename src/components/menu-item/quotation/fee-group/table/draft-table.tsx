@@ -2,8 +2,12 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { FeeGroupTable, QueryInputDraft, SelectDratSearch } from '../interface';
-import { API_TYPE_FEE_GROUP } from '@/fetcherAxios/endpoint';
+import {
+  FeeGroupTable,
+  QueryInputDraft,
+  SelectDratSearch,
+  TYPE_TABS,
+} from '../interface';
 import { deleteFeeGroup, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
@@ -50,7 +54,11 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_TYPE_FEE_GROUP.GET_SEARCH, pagination, queryInputParams],
+    queryKey: [
+      TYPE_TABS.GET_OTHER_CHARGES_QUOTATION_BY_DRAFT_DATA,
+      pagination,
+      queryInputParams,
+    ],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -101,7 +109,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_TYPE_FEE_GROUP.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_OTHER_CHARGES_QUOTATION_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);
