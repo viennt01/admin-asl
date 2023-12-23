@@ -186,6 +186,7 @@ const SeaPricing = ({
           lclSeaPricing: data.data.lclSeaPricing,
           currencyID: data.data.currencyID,
           public: data.data.public,
+          transitTimeSeaPricing: data.data.transitTimeSeaPricing,
           statusSeaPricing: data.data.statusSeaPricing,
           seaPricingDetailDTOs: data.data.seaPricingDetailDTOs,
           seaPricingFeeGroupDTOs: data.data.seaPricingFeeGroupDTOs?.map(
@@ -248,6 +249,7 @@ const SeaPricing = ({
       lclSeaPricing: form.getFieldValue('lclSeaPricing'),
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
+      transitTimeSeaPricing: form.getFieldValue('transitTimeSeaPricing'),
       statusSeaPricing: form.getFieldValue('statusSeaPricing'),
       seaPricingDetailDTOs: JSON.stringify(
         form.getFieldValue('seaPricingDetailDTOs')

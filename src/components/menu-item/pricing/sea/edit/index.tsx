@@ -48,6 +48,7 @@ const EditSeaPricing = () => {
         lclSeaPricing: formValues.lclSeaPricing || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
+        transitTimeSeaPricing: formValues.transitTimeSeaPricing || '0',
         seaPricingDetailUpdateRequests: formValues.seaPricingDetailDTOs || [],
         seaPricingFeeGroupUpdateRequests: returnFeeDTO,
         statusSeaPricing: STATUS_ALL_LABELS.REQUEST,

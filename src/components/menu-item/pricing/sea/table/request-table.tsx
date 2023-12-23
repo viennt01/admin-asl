@@ -40,11 +40,7 @@ import {
 import { getSeaPricingSearch, updateStatus } from '../fetcher';
 import Table from '../../../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
-import {
-  STATUS_ALL_LABELS,
-  STATUS_MASTER_COLORS,
-  STATUS_MATER_LABELS,
-} from '@/constant/form';
+import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
@@ -162,6 +158,7 @@ export default function RequestDataTable() {
             updatedByUser: data.updatedByUser,
             vendor: data.vendor,
             isASLMember: data.isASLMember,
+            transitTimeSeaPricing: data.transitTimeSeaPricing,
             searchAll: '',
           }))
         );
@@ -345,14 +342,12 @@ export default function RequestDataTable() {
       align: 'center',
       render: (value) => (
         <Tag
-          color={
-            STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
-          }
+          color={STATUS_ALL_COLORS[value as keyof typeof STATUS_ALL_COLORS]}
           style={{
             margin: 0,
           }}
         >
-          {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
+          {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
         </Tag>
       ),
     },
@@ -441,6 +436,20 @@ export default function RequestDataTable() {
       },
     },
     {
+      title: (
+        <div className={style.title}>
+          {translatePricingSea('transitTimeSeaPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeSeaPricing',
+      key: 'transitTimeSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
+    },
+    {
       title: <div className={style.title}>{translatePricingSea('note')}</div>,
       width: 200,
       dataIndex: 'note',
@@ -519,7 +528,7 @@ export default function RequestDataTable() {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_REQUEST_DATA, pagination],
+              queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_REQUEST_DATA],
             }),
             checkUser.refetch())
           : errorToast(data.message);

@@ -15,7 +15,7 @@ import {
   Tag,
 } from 'antd';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FormValues,
   SeaPricingDetailDTOs,
@@ -43,8 +43,6 @@ import { formatNumber } from '@/utils/format';
 import dayjs from 'dayjs';
 import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
 import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
-import { ROLE } from '@/constant/permission';
-import { AppContext } from '@/app-context';
 import { DAY_WEEK } from '@/constant';
 
 interface Props {
@@ -83,7 +81,6 @@ const CardMain = ({
   const { translate: translatePricingSea } = useI18n('pricingSea');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
-  const { role } = useContext(AppContext);
 
   const propCopyAndCreate = router.query;
 
@@ -172,6 +169,9 @@ const CardMain = ({
         lclSeaPricing: propCopyAndCreate.lclSeaPricing as string,
         currencyID: propCopyAndCreate.currencyID as string,
         public: propCopyAndCreate.public as unknown as boolean,
+        vendorID: propCopyAndCreate.vendorID as string,
+        transitTimeSeaPricing:
+          propCopyAndCreate.transitTimeSeaPricing as string,
         statusSeaPricing: propCopyAndCreate.statusSeaPricing as string,
         seaPricingDetailDTOs: JSON.parse(
           propCopyAndCreate.seaPricingDetailDTOs as string
@@ -469,9 +469,10 @@ const CardMain = ({
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
               placeholder={translatePricingSea('STO_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
+              min={0}
             />
           </Form.Item>
         </Col>
@@ -481,8 +482,9 @@ const CardMain = ({
               style={{ width: '100%' }}
               placeholder={translatePricingSea('DEM_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+              min={0}
             />
           </Form.Item>
         </Col>
@@ -492,7 +494,26 @@ const CardMain = ({
               style={{ width: '100%' }}
               placeholder={translatePricingSea('DET_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+              min={0}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingSea('transitTimeSeaPricing_form.title')}
+            name="transitTimeSeaPricing"
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingSea(
+                'transitTimeSeaPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -537,10 +558,11 @@ const CardMain = ({
           <Form.Item label={translatePricingSea('LCL')} name="lclSeaPricing">
             <InputNumber
               placeholder={translatePricingSea('LCL_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
+              min={0}
             />
           </Form.Item>
         </Col>
@@ -551,10 +573,11 @@ const CardMain = ({
           >
             <InputNumber
               placeholder={translatePricingSea('LCLMin_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
+              min={0}
             />
           </Form.Item>
         </Col>
@@ -581,18 +604,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('vendor_form.title')}
+            label={translatePricingSea('vendorID_form.title')}
             name="vendorID"
             rules={[
               {
-                required: role === ROLE.MANAGER || role === ROLE.SALE,
-                message: translatePricingSea('vendor_form.error_required'),
+                required: true,
+                message: translatePricingSea('vendorID_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingSea('vendor_form.placeholder')}
+              placeholder={translatePricingSea('vendorID_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -615,16 +638,10 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
-        <Col lg={8} span={24}>
+        <Col span={24}>
           <Form.Item
             label={translatePricingSea('Fee_Group_form.title')}
             name="seaPricingFeeGroupDTOs"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: translatePricingSea('Fee_Group_form.error_required'),
-            //   },
-            // ]}
           >
             <Select
               showSearch

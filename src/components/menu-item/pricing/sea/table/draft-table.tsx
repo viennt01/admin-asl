@@ -85,6 +85,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             updatedByUser: data.updatedByUser,
             vendor: data.vendor,
             isASLMember: data.isASLMember,
+            transitTimeSeaPricing: data.transitTimeSeaPricing,
             searchAll: '',
           }))
         );

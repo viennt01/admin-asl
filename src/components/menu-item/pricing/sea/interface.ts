@@ -42,6 +42,7 @@ export interface SeaPricing {
   dateUpdated: string;
   updatedByUser: string;
   isASLMember: boolean;
+  transitTimeSeaPricing: string;
   seaPricingDetailDTOs: { [key: string]: string };
   vendor: string;
 }
@@ -100,6 +101,7 @@ export interface FormValues {
   currencyID: string;
   lclSeaPricing: string;
   public: boolean;
+  transitTimeSeaPricing: string;
   statusSeaPricing: string;
   seaPricingDetailDTOs: SeaPricingDetailDTOsFormValue[];
   seaPricingFeeGroupDTOs: string[];

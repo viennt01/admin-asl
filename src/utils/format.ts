@@ -10,8 +10,9 @@ export function formatDate(
 ) {
   if (value) {
     return dayjs(value).format(formatString);
+  } else {
+    return '-';
   }
-  return;
 }
 
 export function formatDateMMDD(
@@ -20,11 +21,29 @@ export function formatDateMMDD(
 ) {
   if (value) {
     return dayjs(value).format(formatString);
+  } else {
+    return '-';
   }
-  return;
+}
+
+export function formatDateYYYYMMDD(
+  value: dayjs.ConfigType,
+  formatString = 'YYYY-MM-DD'
+) {
+  if (value) {
+    return dayjs(value).format(formatString);
+  } else {
+    return '-';
+  }
 }
 
 export const formatNumber = (value: number | string) => {
+  // const a = 0;
+  if (!value) {
+    console.log(1);
+
+    return '-';
+  }
   return new Intl.NumberFormat().format(Number(value));
 };
 

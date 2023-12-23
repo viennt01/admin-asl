@@ -146,6 +146,7 @@ export default function MasterDataTable() {
             updatedByUser: data.updatedByUser,
             vendor: data.vendor,
             isASLMember: data.isASLMember,
+            transitTimeSeaPricing: data.transitTimeSeaPricing,
             searchAll: '',
           }))
         );
@@ -414,6 +415,20 @@ export default function MasterDataTable() {
       align: 'right',
       render: (value) => {
         return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingSea('transitTimeSeaPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeSeaPricing',
+      key: 'transitTimeSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
       },
     },
     {

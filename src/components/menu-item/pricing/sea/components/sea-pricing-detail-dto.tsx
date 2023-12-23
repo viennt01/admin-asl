@@ -236,7 +236,6 @@ const SeaPricingDetailDTO = ({
       setCountLoadData(1);
     }
   }, [form.getFieldValue('seaPricingDetailDTOs')]);
-  console.log(form.getFieldValue('seaPricingDetailDTOs'));
 
   useEffect(() => {
     if (valueCurrencyID) {
