@@ -12,7 +12,14 @@ import {
   Popconfirm,
   Checkbox,
 } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
+import {
+  ChangeEvent,
+  Key,
+  MouseEvent,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -54,6 +61,8 @@ import {
 import ImportCSVModal, {
   ImportFormValues,
 } from '@/components/commons/import-data';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 const { confirm } = Modal;
 
@@ -81,6 +90,7 @@ export default function MasterDataTable() {
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
+  const { role } = useContext(AppContext);
 
   // Handle data
   const dataSelectSearch =
@@ -575,7 +585,11 @@ export default function MasterDataTable() {
             handleSearchInputKeyAll={handleSearchInputKeyAll}
             valueSearchAll={selectedActiveKey.searchAll.value}
             handleOnDoubleClick={handleOnDoubleClick}
-            handleCreate={handleCreate}
+            handleCreate={
+              role === ROLE.LINER || role === ROLE.AGENT
+                ? handleCreate
+                : undefined
+            }
             showPropsConfirmDelete={showPropsConfirmDelete}
             refreshingQuery={refreshingQuery}
             refreshingLoading={refreshingLoading}

@@ -4,7 +4,7 @@ import {
   FilterFilled,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useState } from 'react';
+import { ChangeEvent, Key, MouseEvent, useContext, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -48,6 +48,8 @@ import ImportCSVModal, {
 } from '@/components/commons/import-data';
 import CreateQuotationModal from '../components/create-quotation/modal';
 import { getSystemDate } from '@/utils/common';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 const { confirm } = Modal;
 
@@ -76,7 +78,7 @@ export default function MasterDataTable() {
   const [openCreateQuotationModal, setOpenCreateQuotationModal] =
     useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
-
+  const { role } = useContext(AppContext);
   // Handle data
   const dataSelectSearch =
     querySelectParams.statusCustomPricing.length === 0
@@ -647,7 +649,11 @@ export default function MasterDataTable() {
             handleSearchInputKeyAll={handleSearchInputKeyAll}
             valueSearchAll={selectedActiveKey.searchAll.value}
             handleOnDoubleClick={handleOnDoubleClick}
-            handleCreate={handleCreate}
+            handleCreate={
+              role === ROLE.LINER || role === ROLE.AGENT
+                ? handleCreate
+                : undefined
+            }
             showPropsConfirmDelete={showPropsConfirmDelete}
             refreshingQuery={refreshingQuery}
             refreshingLoading={refreshingLoading}
