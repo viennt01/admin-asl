@@ -213,8 +213,6 @@ const TruckingPricingForm = ({
           commodityID: data.data.commodityID,
           currencyID: data.data.currencyID,
           transitTimetruckingPricing: data.data.transitTimetruckingPricing,
-          lclTruckingPricing: data.data.lclTruckingPricing,
-          lclMinTruckingPricing: data.data.lclMinTruckingPricing,
           public: data.data.public,
           note: data.data.note,
           effectDated: dayjs(Number(data.data.effectDated)),
@@ -282,8 +280,6 @@ const TruckingPricingForm = ({
       effectDated: form.getFieldValue('effectDated')?.valueOf(),
       validityDate: form.getFieldValue('validityDate')?.valueOf(),
       freqDate: form.getFieldValue('freqDate'),
-      lclMinTruckingPricing: form.getFieldValue('lclMinTruckingPricing'),
-      lclTruckingPricing: form.getFieldValue('lclTruckingPricing'),
       statusTruckingPricing: form.getFieldValue('statusTruckingPricing'),
       truckingPricingDetailByContainerTypeDTOs: JSON.stringify(
         form.getFieldValue('truckingPricingDetailByContainerTypeDTOs')

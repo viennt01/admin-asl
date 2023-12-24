@@ -39,8 +39,6 @@ const EditTruckingPricing = () => {
         currencyID: formValues.currencyID || '',
         transitTimetruckingPricing:
           formValues.transitTimetruckingPricing || '0',
-        lclTruckingPricing: formValues.lclTruckingPricing || '0',
-        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '0',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),

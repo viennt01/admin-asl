@@ -149,9 +149,6 @@ const CardMain = ({
         currencyID: propCopyAndCreate.currencyID as string,
         transitTimetruckingPricing:
           propCopyAndCreate.transitTimetruckingPricing as string,
-        lclTruckingPricing: propCopyAndCreate.lclTruckingPricing as string,
-        lclMinTruckingPricing:
-          propCopyAndCreate.lclMinTruckingPricing as string,
         public: propCopyAndCreate.public as unknown as boolean,
         note: propCopyAndCreate.note as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
@@ -476,36 +473,6 @@ const CardMain = ({
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingTrucking('LCL_form.title')}
-            name="lclTruckingPricing"
-          >
-            <InputNumber
-              placeholder={translatePricingTrucking('LCL_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-              min={0}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingTrucking('LCLMin_form.title')}
-            name="lclMinTruckingPricing"
-          >
-            <InputNumber
-              placeholder={translatePricingTrucking('LCLMin_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-              min={0}
             />
           </Form.Item>
         </Col>

@@ -85,8 +85,6 @@ export interface IFormValues {
   freqDate: string;
   statusTruckingPricing: string;
   transitTimetruckingPricing: string;
-  lclTruckingPricing: string;
-  lclMinTruckingPricing: string;
   truckingPricingDetailByContainerTypeDTOs: ITruckingPricingDetailDTOsFormValue[];
   truckingPricingDetailByLoadCapacityDTOs: ITruckingPricingDetailLoadCapacityDTOsFormValue[];
   truckingPricingFeeGroupDTOs: string[];
