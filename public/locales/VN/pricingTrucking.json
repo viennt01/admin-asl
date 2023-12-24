@@ -1,6 +1,6 @@
 {
     "title": "Danh sách định giá đường bộ",
-    "no" : "No",
+    "no": "No",
     "pickup": "Pickup",
     "delivery": "Delivery",
     "emtyPickup": "Emty Pickup",
@@ -36,156 +36,110 @@
     "note": "Ghi chú",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
-
     "title_trucking_freight": "Vận tải bằng đường bộ",
     "title_local_chart": "Phụ phí",
     "information_add_trucking_pricing": "Thêm mới định giá đường bộ",
     "information_edit_trucking_pricing": "Chỉnh sửa định giá đường bộ",
-
     "pickup_form": {
         "title": "Pickup",
         "placeholder": "Nhập pickup",
         "error_required": "Vui lòng nhập pickup"
     },
-
     "delivery_form": {
         "title": "Delivery",
         "placeholder": "Nhập delivery",
         "error_required": "Vui lòng nhập delivery"
     },
-
     "emtyPickup_form": {
         "title": "Emty Pickup",
         "placeholder": "Nhập emty pickup",
         "error_required": "Vui lòng nhập emty pickup"
     },
-
     "destination_form": {
         "title": "Destination",
         "placeholder": "Nhập destination",
         "error_required": "Vui lòng nhập destination"
     },
-
     "country_form": {
         "title": "Country",
         "placeholder": "Nhập country",
         "error_required": "Vui lòng nhập country"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Nhập vendor",
         "error_required": "Vui lòng nhập vendor"
     },
-
     "carrier_form": {
         "title": "Carrier",
         "placeholder": "Nhập carrier",
         "error_required": "Vui lòng nhập carrier"
     },
-
     "service_form": {
         "title": "Service",
         "placeholder": "Nhập service",
         "error_required": "Vui lòng nhập service"
     },
-
     "commodity_form": {
         "title": "commodity",
         "placeholder": "Nhập commodity",
         "error_required": "Vui lòng nhập commodity"
     },
-
     "LCLMin_form": {
         "title": "LCLMin",
         "placeholder": "Nhập LCLMin",
         "error_required": "Vui lòng nhập LCLMin"
     },
-
     "LCL_form": {
         "title": "LCL",
         "placeholder": "Nhập LCL",
         "error_required": "Vui lòng nhập LCL"
     },
-
     "others_form": {
         "title": "Others",
         "placeholder": "Nhập others",
         "error_required": "Vui lòng nhập others"
     },
-
     "type_form": {
         "title": "Type",
         "placeholder": "Nhập type",
         "error_required": "Vui lòng nhập type"
     },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Nhập currency",
         "error_required": "Vui lòng nhập currency"
     },
-
     "VAT_form": {
         "title": "VAT",
         "placeholder": "Nhập VAT",
         "error_required": "Vui lòng nhập VAT"
     },
-
     "effect_date_form": {
         "title": "Effect Date",
         "placeholder": "Nhập Effect Date",
         "error_required": "Vui lòng nhập Effect Date"
     },
-
     "validity_form": {
         "title": "Validity Date",
         "placeholder": "Nhập Validity Date",
         "error_required": "Vui lòng nhập Validity Date"
     },
-
     "freq_form": {
         "title": "Freq",
         "placeholder": "Nhập freq",
         "error_required": "Vui lòng nhập freq"
     },
-
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Nhập Cut Off",
-        "error_required": "Vui lòng nhập Cut Off"
+    "transitTimeSeaPricing_form": {
+        "title": "Thời gian quá cảnh",
+        "placeholder": "Nhập thời gian quá cảnh",
+        "error_required": "Vui lòng nhập thời gian quá cảnh"
     },
-
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Nhập TT",
-        "error_required": "Vui lòng nhập TT"
-    },
-
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Nhập InlAddon",
-        "error_required": "Vui lòng nhập InlAddon"
-    },
-
-    "empty_return_form": {
-        "title": "empty_return",
-        "placeholder": "Nhập empty_return",
-        "error_required": "Vui lòng nhập Empty Return"
-    },
-
-    "amend_form": {
-        "title": "Amend",
-        "placeholder": "Nhập Amend",
-        "error_required": "Vui lòng nhập Amend"
-    },
-
     "Fee_Group_form": {
         "title": "Loại nhóm phí",
         "placeholder": "Nhập loại nhóm phí",
         "error_required": "Vui lòng chọn loại nhóm phí"
     },
-
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

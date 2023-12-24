@@ -10,10 +10,10 @@ import {
   SeaPricingEdit,
   ITruckingPricingFeeFormValue,
   ITruckingPricingFeeUpdate,
+  TYPE_TABS,
 } from '../interface';
 import { createTruckPricing, editTruckPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_TRUCKING_PRICING } from '@/fetcherAxios/endpoint';
 
 export const returnFeeDTOs = (
   truckingPricingFeeDTOs?: ITruckingPricingFeeFormValue[],
@@ -100,7 +100,10 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID: formValues.vendorID || '',
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
+        lclTruckingPricing: formValues.lclTruckingPricing || '0',
+        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '0',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
@@ -128,7 +131,10 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID: formValues.vendorID || '',
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
+        lclTruckingPricing: formValues.lclTruckingPricing || '0',
+        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '0',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
@@ -190,7 +196,10 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID: formValues.vendorID || '',
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
+        lclTruckingPricing: formValues.lclTruckingPricing || '0',
+        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '0',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
@@ -206,7 +215,7 @@ const CreateTruckingPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_TRUCKING_PRICING.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_TRUCK_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -220,7 +229,10 @@ const CreateTruckingPricing = () => {
         deliveryID: formValues.deliveryID || '',
         commodityID: formValues.commodityID || '',
         currencyID: formValues.currencyID || '',
-        vendorID: formValues.vendorID || '',
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
+        lclTruckingPricing: formValues.lclTruckingPricing || '0',
+        lclMinTruckingPricing: formValues.lclMinTruckingPricing || '0',
         note: formValues.note || '',
         public: formValues.public || true,
         effectDated: formValues.effectDated?.valueOf(),
@@ -238,7 +250,7 @@ const CreateTruckingPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_TRUCKING_PRICING.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_TRUCK_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

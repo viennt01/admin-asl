@@ -551,27 +551,27 @@ export const PERMISSION_RULES = () => {
       '/pricing/fee-group': PERMISSION.VIEW,
       '/pricing/fee-group/create': PERMISSION.EDIT,
       '/pricing/fee-group/edit/[id]': PERMISSION.VIEW,
-      '/pricing/fee-group/manager-admin/[id]': PERMISSION.NO_VIEW,
+      '/pricing/fee-group/manager-admin/[id]': PERMISSION.VIEW,
 
       '/pricing/pricing-sea': PERMISSION.VIEW,
       '/pricing/pricing-sea/create': PERMISSION.EDIT,
       '/pricing/pricing-sea/edit/[id]': PERMISSION.VIEW,
-      '/pricing/pricing-sea/manager-admin/[id]': PERMISSION.NO_VIEW,
+      '/pricing/pricing-sea/manager-admin/[id]': PERMISSION.VIEW,
 
       '/pricing/pricing-air': PERMISSION.VIEW,
       '/pricing/pricing-air/create': PERMISSION.EDIT,
       '/pricing/pricing-air/edit/[id]': PERMISSION.VIEW,
-      '/pricing/pricing-air/manager-admin/[id]': PERMISSION.NO_VIEW,
+      '/pricing/pricing-air/manager-admin/[id]': PERMISSION.VIEW,
 
       '/pricing/pricing-customs': PERMISSION.VIEW,
       '/pricing/pricing-customs/create': PERMISSION.EDIT,
       '/pricing/pricing-customs/edit/[id]': PERMISSION.VIEW,
-      '/pricing/pricing-customs/manager-admin/[id]': PERMISSION.NO_VIEW,
+      '/pricing/pricing-customs/manager-admin/[id]': PERMISSION.VIEW,
 
       '/pricing/pricing-trucking': PERMISSION.EDIT,
       '/pricing/pricing-trucking/create': PERMISSION.EDIT,
       '/pricing/pricing-trucking/edit/[id]': PERMISSION.EDIT,
-      '/pricing/pricing-trucking/manager-admin/[id]': PERMISSION.NO_VIEW,
+      '/pricing/pricing-trucking/manager-admin/[id]': PERMISSION.VIEW,
 
       '/partner': PERMISSION.NO_VIEW,
       '/partner/create': PERMISSION.NO_VIEW,

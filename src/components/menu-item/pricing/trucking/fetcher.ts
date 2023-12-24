@@ -9,14 +9,12 @@ import {
 import {
   ITruckingRequire,
   IRequestTruckingPricing,
-  RequestTableDraft,
   ITruckingPricingCreate,
   SeaPricingDelete,
   SeaPricingDetailDataBody,
   ITruckingDetailType,
   SeaPricingEdit,
   IUpdateStatus,
-  IRequestTableRequest,
   RequireCommodity,
   RequireCurrency,
   RequireTypeContainer,
@@ -86,12 +84,6 @@ export const deleteTruckPricing = (data: React.Key[]) => {
   })(API_TRUCKING_PRICING.DELETE);
 };
 
-export const getDartTable = (data: RequestTableDraft) => {
-  return post<RequestTableDraft, ResponseWithPayload<ITruckingRequire>>({
-    data,
-  })(API_TRUCKING_PRICING.GET_DRAFT);
-};
-
 //----------------------------------------------------------------
 
 export const updateStatus = (data: IUpdateStatus) => {
@@ -100,11 +92,6 @@ export const updateStatus = (data: IUpdateStatus) => {
   })(API_TRUCKING_PRICING.UPDATE_STATUS);
 };
 
-export const getTable = (data: IRequestTableRequest) => {
-  return post<IRequestTableRequest, ResponseWithPayload<ITruckingRequire>>({
-    data,
-  })(API_TRUCKING_PRICING.GET_REQUEST);
-};
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
   return uploadFile<BlobPart>({ data, timeout: 100000 })(

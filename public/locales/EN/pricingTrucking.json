@@ -1,6 +1,6 @@
 {
     "title": "List of Trucking Pricing",
-    "no" : "No",
+    "no": "No",
     "pickup": "Pickup",
     "delivery": "Delivery",
     "emtyPickup": "Emty Pickup",
@@ -39,216 +39,145 @@
     "note": "Note",
     "date_created": "Date created",
     "creator": "Creator",
-
     "title_trucking_freight": "Trucking Freight",
     "title_local_chart": "Local Chart",
     "information_add_trucking_pricing": "Add New Trucking Pricing",
     "information_edit_trucking_pricing": "Edit Trucking Pricing",
-
     "pickup_form": {
         "title": "Pickup",
         "placeholder": "Enter pickup",
         "error_required": "Please enter pickup"
     },
-
     "delivery_form": {
         "title": "Delivery",
         "placeholder": "Enter delivery",
         "error_required": "Please enter delivery"
     },
-
     "emtyPickup_form": {
         "title": "Emty Pickup",
         "placeholder": "Enter emty Pickup",
         "error_required": "Please enter emty Pickup"
     },
-
     "destination_form": {
         "title": "Destination",
         "placeholder": "Enter destination",
         "error_required": "Please enter destination"
     },
-
     "country_form": {
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Enter vendor",
         "error_required": "Please enter vendor"
     },
-
     "carrier_form": {
         "title": "Carrier",
         "placeholder": "Enter carrier",
         "error_required": "Please enter carrier"
     },
-
     "service_form": {
         "title": "Service",
         "placeholder": "Enter service",
         "error_required": "Please enter service"
     },
-
     "commodity_form": {
         "title": "commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
-
     "LCLMin_form": {
         "title": "LCLMin",
         "placeholder": "Enter LCLMin",
         "error_required": "Please enter LCLMin"
     },
-
     "LCL_form": {
         "title": "LCL",
         "placeholder": "Enter LCL",
         "error_required": "Please enter LCL"
     },
-
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Enter DC20",
-        "error_required": "Please enter DC20"
-    },
-
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Enter DC40",
-        "error_required": "Please enter DC40"
-    },
-
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Enter HC40",
-        "error_required": "Please enter HC40"
-    },
-
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Enter HC45",
-        "error_required": "Please enter HC45"
-    },
-
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Enter RF20",
-        "error_required": "Please enter RF20"
-    },
-
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Enter RF40",
-        "error_required": "Please enter RF40"
-    },
-
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Enter DB20",
-        "error_required": "Please enter DB20"
-    },
-
     "others_form": {
         "title": "Others",
         "placeholder": "Enter others",
         "error_required": "Please enter others"
     },
-
     "type_form": {
         "title": "Type",
         "placeholder": "Enter type",
         "error_required": "Please enter type"
     },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
         "error_required": "Please chooses currency"
     },
-
     "VAT_form": {
         "title": "VAT",
         "placeholder": "Enter VAT",
         "error_required": "Please enter VAT"
     },
-
     "effect_date_form": {
         "title": "Effect Date",
         "placeholder": "Enter Effect Date",
         "error_required": "Please enter Effect Date"
     },
-
     "validity_form": {
         "title": "Validity Date",
         "placeholder": "Enter validity Date",
         "error_required": "Please enter validity Date"
     },
-
     "freq_form": {
         "title": "Freq",
         "placeholder": "Enter freq",
         "error_required": "Please enter freq"
     },
-
     "cut_off_form": {
         "title": "Cut Off",
         "placeholder": "Enter Cut Off",
         "error_required": "Please enter Cut Off"
     },
-
     "TT_form": {
         "title": "TT",
         "placeholder": "Enter TT",
         "error_required": "Please enter TT"
     },
-
     "inl_addon_form": {
         "title": "InlAddon",
         "placeholder": "Enter InlAddon",
         "error_required": "Please enter InlAddon"
     },
-
     "empty_return_form": {
         "title": "empty_return",
         "placeholder": "Enter empty_return",
         "error_required": "Please enter Empty Return"
     },
-
-    "amend_form": {
-        "title": "Amend",
-        "placeholder": "Enter Amend",
-        "error_required": "Please enter Amend"
+    "transitTimeSeaPricing_form": {
+        "title": "Transit Time",
+        "placeholder": "Enter Transit Time",
+        "error_required": "Please enter Transit Time"
     },
-
     "DEM_form": {
         "title": "DEM",
         "placeholder": "Enter DEM",
         "error_required": "Please enter DEM"
     },
-
     "DET_form": {
         "title": "DET",
         "placeholder": "Enter DET",
         "error_required": "Please enter DET"
     },
-
     "STO_form": {
         "title": "STO",
         "placeholder": "Enter STO",
         "error_required": "Please enter STO"
     },
-
     "Fee_Group_form": {
         "title": "Other Charges",
         "placeholder": "Enter Other Charges",
         "error_required": "Please enter Other Charges"
     },
-    
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

@@ -2,7 +2,7 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   IFormValues,
   ITruckingPricingFeeFormValue,
@@ -34,6 +34,8 @@ import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import ListFee from './list-fee';
 import TruckingPricingLoadCapacity from './load-capacity-pricing-detail-dto';
 import { TYPE_LOAD_CAPACITY } from '../../air/interface';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 interface PortFormProps {
   create?: boolean;
@@ -68,6 +70,7 @@ const TruckingPricingForm = ({
   const [form] = Form.useForm<IFormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
+  const { role } = useContext(AppContext);
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [optionCurrency, setOptionCurrency] = useState<
@@ -83,7 +86,6 @@ const TruckingPricingForm = ({
     ITruckingPricingFeeFormValue[]
   >([]);
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
-
   const listIdFeeGroup = Form.useWatch('truckingPricingFeeGroupDTOs', form);
 
   useEffect(() => {
@@ -209,8 +211,10 @@ const TruckingPricingForm = ({
           pickupID: data.data.pickupID,
           deliveryID: data.data.deliveryID,
           commodityID: data.data.commodityID,
-          vendorID: data.data.vendorID,
           currencyID: data.data.currencyID,
+          transitTimetruckingPricing: data.data.transitTimetruckingPricing,
+          lclTruckingPricing: data.data.lclTruckingPricing,
+          lclMinTruckingPricing: data.data.lclMinTruckingPricing,
           public: data.data.public,
           note: data.data.note,
           effectDated: dayjs(Number(data.data.effectDated)),
@@ -270,8 +274,10 @@ const TruckingPricingForm = ({
       emtyPickupID: form.getFieldValue('emtyPickupID'),
       commodityID: form.getFieldValue('commodityID'),
       currencyID: form.getFieldValue('currencyID'),
-      vendorID: form.getFieldValue('vendorID'),
       public: form.getFieldValue('public'),
+      transitTimetruckingPricing: form.getFieldValue(
+        'transitTimetruckingPricing'
+      ),
       note: form.getFieldValue('note'),
       effectDated: form.getFieldValue('effectDated')?.valueOf(),
       validityDate: form.getFieldValue('validityDate')?.valueOf(),
@@ -367,7 +373,9 @@ const TruckingPricingForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={handleAR}
+          handleAR={
+            role === ROLE.LINER || role === ROLE.AGENT ? undefined : handleAR
+          }
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}

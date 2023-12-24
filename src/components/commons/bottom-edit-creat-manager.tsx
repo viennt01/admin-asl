@@ -24,7 +24,7 @@ interface Props {
   dateUpdated: string;
   handleCheckEdit: (data: boolean) => void;
   handleSaveDraft?: () => void;
-  handleAR: (status: string) => void;
+  handleAR?: (status: string) => void;
   checkQuery?: boolean;
   useDraft?: boolean;
   handleCopyAndCreate?: () => void;
@@ -44,7 +44,7 @@ export const BottomCreateEdit = ({
   dateUpdated,
   handleCheckEdit,
   handleSaveDraft,
-  handleAR: handleAJ,
+  handleAR,
   checkQuery,
   useDraft,
   handleCopyAndCreate,
@@ -119,9 +119,10 @@ export const BottomCreateEdit = ({
                   marginLeft: '12px',
                   color: COLORS.ERROR,
                   borderColor: COLORS.ERROR,
+                  display: handleAR ? '' : 'none',
                 }}
                 onClick={() => {
-                  return handleAJ(STATUS_ALL_LABELS.REJECT);
+                  return handleAR && handleAR(STATUS_ALL_LABELS.REJECT);
                 }}
                 loading={loading}
               >
@@ -133,9 +134,10 @@ export const BottomCreateEdit = ({
                   marginLeft: '12px',
                   color: COLORS.SUCCESS,
                   borderColor: COLORS.SUCCESS,
+                  display: handleAR ? '' : 'none',
                 }}
                 onClick={() => {
-                  return handleAJ(STATUS_ALL_LABELS.ACTIVE);
+                  return handleAR && handleAR(STATUS_ALL_LABELS.ACTIVE);
                 }}
                 loading={loading}
               >

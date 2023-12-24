@@ -140,6 +140,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
       />
     ) : (
       <Select
+        showSearch
         ref={inputRef}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
@@ -149,6 +150,15 @@ const EditableCell: React.FC<EditableCellProps> = ({
         style={{ width: '100%' }}
         onBlur={save}
         options={optionTypeLoadCapacitySelected}
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          (option?.label ?? '').toUpperCase().includes(input.toUpperCase())
+        }
+        filterSort={(optionA, optionB) =>
+          (optionA?.label ?? '')
+            .toLowerCase()
+            .localeCompare((optionB?.label ?? '').toLowerCase())
+        }
       />
     );
   let childNode = children;
@@ -340,7 +350,7 @@ const TruckingPricingLoadCapacity = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Type LCL',
+      title: 'Type Truck',
       dataIndex: 'loadCapacityID',
       width: '30%',
       align: 'center',

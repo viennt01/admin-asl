@@ -306,7 +306,6 @@ const FeeList = ({
         dataIndex: col.dataIndex,
         title: col.title,
         inputType: col.dataIndex,
-        optionFeeActive: optionFee,
         optionFee: optionFee,
         optionUnit: optionUnit,
         optionCurrency: optionCurrency,

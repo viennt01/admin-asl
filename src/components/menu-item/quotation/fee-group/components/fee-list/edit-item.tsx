@@ -40,7 +40,6 @@ interface EditableCellProps {
     | 'vatFeeGroup'
     | 'currencyID'
     | 'unitID';
-  optionFeeActive: { value: string; label: string }[];
   optionFee: { value: string; label: string }[];
   optionUnit: { value: string; label: string }[];
   optionCurrency: { value: string; label: string }[];
@@ -55,7 +54,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   editable,
   inputType,
   children,
-  optionFeeActive,
   optionFee,
   optionUnit,
   optionCurrency,
@@ -67,18 +65,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   const [editing, setEditing] = useState(false);
   const inputRef = useRef() as MutableRefObject<BaseSelectRef>;
   const form = useContext(EditableContext)!;
-  const [optionFeeSelected, setoptionFeeSelect] = useState<
-    { value: string; label: string }[]
-  >([]);
-
-  useEffect(() => {
-    if (optionFee) {
-      const itemActive = optionFee.find((item) => item.value === record.feeID);
-      setoptionFeeSelect(
-        itemActive ? [itemActive, ...optionFeeActive] : optionFeeActive
-      );
-    }
-  }, [optionFee, optionFeeActive, record?.feeID]);
 
   useEffect(() => {
     if (editing) {
@@ -121,7 +107,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
             .toLowerCase()
             .localeCompare((optionB?.label ?? '').toLowerCase())
         }
-        options={optionFeeSelected}
+        options={optionFee}
       />
     ) : inputType === 'currencyID' ? (
       <Select

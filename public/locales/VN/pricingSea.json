@@ -67,11 +67,6 @@
         "placeholder": "Nhập vendor",
         "error_required": "Vui lòng nhập vendor"
     },
-    "carrier_form": {
-        "title": "Carrier",
-        "placeholder": "Nhập carrier",
-        "error_required": "Vui lòng nhập carrier"
-    },
     "service_form": {
         "title": "Service",
         "placeholder": "Nhập service",
@@ -91,41 +86,6 @@
         "title": "LCL",
         "placeholder": "Nhập LCL",
         "error_required": "Vui lòng nhập LCL"
-    },
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Nhập DC20",
-        "error_required": "Vui lòng nhập DC20"
-    },
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Nhập DC40",
-        "error_required": "Vui lòng nhập DC40"
-    },
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Nhập HC40",
-        "error_required": "Vui lòng nhập HC40"
-    },
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Nhập HC45",
-        "error_required": "Vui lòng nhập HC45"
-    },
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Nhập RF20",
-        "error_required": "Vui lòng nhập RF20"
-    },
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Nhập RF40",
-        "error_required": "Vui lòng nhập RF40"
-    },
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Nhập DB20",
-        "error_required": "Vui lòng nhập DB20"
     },
     "others_form": {
         "title": "Others",
@@ -161,21 +121,6 @@
         "title": "Freq",
         "placeholder": "Nhập freq",
         "error_required": "Vui lòng nhập freq"
-    },
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Nhập Cut Off",
-        "error_required": "Vui lòng nhập Cut Off"
-    },
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Nhập TT",
-        "error_required": "Vui lòng nhập TT"
-    },
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Nhập InlAddon",
-        "error_required": "Vui lòng nhập InlAddon"
     },
     "transitTimeSeaPricing_form": {
         "title": "Thời gian quá cảnh",

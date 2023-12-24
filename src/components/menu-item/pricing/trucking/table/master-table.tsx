@@ -19,8 +19,12 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_TRUCKING_PRICING } from '@/fetcherAxios/endpoint';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import { API_COLUMN } from '@/fetcherAxios/endpoint';
+import {
+  formatCurrencyHasCurrency,
+  formatDate,
+  formatNumber,
+} from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -29,6 +33,7 @@ import {
   ISelectSearch,
   ITruckingPricingTable,
   ITypeDTOs,
+  TYPE_TABS,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -118,7 +123,7 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_TRUCKING_PRICING.GET_SEARCH,
+      TYPE_TABS.GET_TRUCK_PRICING_BY_MASTER_DATA,
       queryInputParams,
       querySelectParams,
     ],
@@ -146,7 +151,8 @@ export default function MasterDataTable() {
             commodityName: data.commodityName,
             currencyID: data.currencyID,
             currencyAbbreviations: data.currencyAbbreviations,
-            vendor: data.vendor,
+            vendorName: data.vendorName,
+            transitTimeTruckingPricing: data.transitTimeTruckingPricing,
             note: data.note,
             effectDated: data.effectDated,
             validityDate: data.validityDate,
@@ -163,7 +169,6 @@ export default function MasterDataTable() {
             updatedByUser: data.updatedByUser,
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
-            isASLMember: data.isASLMember,
             searchAll: '',
           }))
         );
@@ -200,7 +205,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_TRUCKING_PRICING.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_TRUCK_PRICING_BY_MASTER_DATA],
         });
         setSelectedRowKeys([]);
       } else {
@@ -352,14 +357,6 @@ export default function MasterDataTable() {
       align: 'left',
     },
     {
-      title: <div className={style.title}>Member</div>,
-      width: 200,
-      dataIndex: 'isASLMember',
-      key: 'isASLMember',
-      align: 'left',
-      render: (value) => (value ? 'ASL' : 'vendor'),
-    },
-    {
       title: (
         <div className={style.title}>{translatePricingTrucking('status')}</div>
       ),
@@ -403,8 +400,8 @@ export default function MasterDataTable() {
         <div className={style.title}>{translatePricingTrucking('vendor')}</div>
       ),
       width: 200,
-      dataIndex: 'vendor',
-      key: 'vendor',
+      dataIndex: 'vendorName',
+      key: 'vendorName',
       align: 'left',
     },
     {
@@ -452,6 +449,20 @@ export default function MasterDataTable() {
       key: 'validityDate',
       align: 'right',
       render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('transitTimeSeaPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeSeaPricing',
+      key: 'transitTimeSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
     },
     {
       title: (
@@ -654,7 +665,7 @@ export default function MasterDataTable() {
       link.click();
       window.URL.revokeObjectURL(url);
       queryClient.invalidateQueries({
-        queryKey: [API_TRUCKING_PRICING.GET_REQUEST],
+        queryKey: [TYPE_TABS.GET_TRUCK_PRICING_BY_REQUEST_DATA],
       });
       setLoadingImport(false);
       setOpenImportModal(false);

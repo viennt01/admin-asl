@@ -2,9 +2,8 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { ITruckingPricingTable } from '../interface';
-import { API_TRUCKING_PRICING } from '@/fetcherAxios/endpoint';
-import { deleteTruckPricing, getDartTable } from '../fetcher';
+import { ITruckingPricingTable, TYPE_TABS } from '../interface';
+import { deleteTruckPricing, getTruckPricingSearch } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -17,7 +16,7 @@ import {
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatDate } from '@/utils/format';
+import { formatDate, formatNumber } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -48,9 +47,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_TRUCKING_PRICING.GET_SEARCH, pagination],
+    queryKey: [TYPE_TABS.GET_TRUCK_PRICING_BY_DRAFT_DATA, pagination],
     queryFn: () =>
-      getDartTable({
+      getTruckPricingSearch({
         ...initalValueQueryInputParamsDraft,
         ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
@@ -72,7 +71,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             commodityName: data.commodityName,
             currencyID: data.currencyID,
             currencyAbbreviations: data.currencyAbbreviations,
-            vendor: data.vendor,
+            vendorName: data.vendorName,
+            transitTimeTruckingPricing: data.transitTimeTruckingPricing,
             note: data.note,
             effectDated: data.effectDated,
             validityDate: data.validityDate,
@@ -89,7 +89,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             updatedByUser: data.updatedByUser,
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
-            isASLMember: data.isASLMember,
             searchAll: '',
           }))
         );
@@ -108,7 +107,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_TRUCKING_PRICING.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_TRUCK_PRICING_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);
@@ -249,6 +248,20 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'validityDate',
       align: 'right',
       render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingTrucking('transitTimeSeaPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeSeaPricing',
+      key: 'transitTimeSeaPricing',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
     },
     {
       title: (

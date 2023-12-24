@@ -12,9 +12,10 @@ import {
   Switch,
   FormInstance,
   Tag,
+  InputNumber,
 } from 'antd';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   IFormValues,
   ITypeDTOs,
@@ -25,7 +26,6 @@ import {
   API_COMMODITY,
   API_FEE_GROUP,
   API_LOCATION,
-  API_PARTNER,
 } from '@/fetcherAxios/endpoint';
 import { getAllCommodity, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
@@ -35,11 +35,10 @@ import { API_MESSAGE } from '@/constant/message';
 import dayjs from 'dayjs';
 import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
-import { getAllLocation, getAllVendor } from '../../sea/fetcher';
+import { getAllLocation } from '../../sea/fetcher';
 import { TYPE_LOCATION } from '../../sea/interface';
-import { ROLE } from '@/constant/permission';
-import { AppContext } from '@/app-context';
 import { DAY_WEEK } from '@/constant';
+import { formatNumber } from '@/utils/format';
 
 interface Props {
   create?: boolean;
@@ -76,7 +75,6 @@ const CardMain = ({
   const { translate: translatePricingTrucking } = useI18n('pricingTrucking');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
-  const { role } = useContext(AppContext);
 
   const propCopyAndCreate = router.query;
   const dateFormat = 'YYYY-MM-DD';
@@ -133,21 +131,6 @@ const CardMain = ({
     },
   });
 
-  const getPartner = useQuery({
-    queryKey: [API_PARTNER.GET_ALL_VENDOR],
-    queryFn: () => getAllVendor(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-        errorToast(API_MESSAGE.ERROR);
-      }
-    },
-    onError: () => {
-      router.back();
-      errorToast(API_MESSAGE.ERROR);
-    },
-  });
-
   useEffect(() => {
     if (form.getFieldValue('statusTruckingPricing')) {
       form.getFieldValue('statusTruckingPricing') === STATUS_ALL_LABELS.ACTIVE
@@ -164,7 +147,11 @@ const CardMain = ({
         deliveryID: propCopyAndCreate.deliveryID as string,
         commodityID: propCopyAndCreate.commodityID as string,
         currencyID: propCopyAndCreate.currencyID as string,
-        vendorID: propCopyAndCreate.vendorID as string,
+        transitTimetruckingPricing:
+          propCopyAndCreate.transitTimetruckingPricing as string,
+        lclTruckingPricing: propCopyAndCreate.lclTruckingPricing as string,
+        lclMinTruckingPricing:
+          propCopyAndCreate.lclMinTruckingPricing as string,
         public: propCopyAndCreate.public as unknown as boolean,
         note: propCopyAndCreate.note as string,
         effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
@@ -477,6 +464,54 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
+            label={translatePricingTrucking('transitTimeSeaPricing_form.title')}
+            name="transitTimeSeaPricing"
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingTrucking(
+                'transitTimeSeaPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingTrucking('LCL_form.title')}
+            name="lclTruckingPricing"
+          >
+            <InputNumber
+              placeholder={translatePricingTrucking('LCL_form.placeholder')}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace().replace(/,/g, '')}
+              style={{ width: '100%' }}
+              disabled={checkRow && isCheckPermissionEdit}
+              min={0}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingTrucking('LCLMin_form.title')}
+            name="lclMinTruckingPricing"
+          >
+            <InputNumber
+              placeholder={translatePricingTrucking('LCLMin_form.placeholder')}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace().replace(/,/g, '')}
+              style={{ width: '100%' }}
+              disabled={checkRow && isCheckPermissionEdit}
+              min={0}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
             label={translatePricingTrucking('commodity')}
             name="commodityID"
             rules={[
@@ -512,54 +547,35 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
-        <Col lg={8} span={24}>
+        <Col span={8}>
           <Form.Item
-            label={translatePricingTrucking('vendor_form.title')}
-            name="vendorID"
+            label="Currency"
+            name="currencyID"
             rules={[
               {
-                required: role === ROLE.MANAGER || role === ROLE.SALE,
-                message: translatePricingTrucking('vendor_form.error_required'),
+                required: true,
+                message: translatePricingTrucking(
+                  'currency_form.error_required'
+                ),
               },
             ]}
           >
             <Select
-              showSearch
-              placeholder={translatePricingTrucking('vendor_form.placeholder')}
+              placeholder={translatePricingTrucking(
+                'currency_form.placeholder'
+              )}
               disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                getPartner.data?.data?.map((item) => {
-                  return {
-                    value: item.partnerID,
-                    label: item.companyName,
-                  };
-                }) || []
-              }
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24}>
+
+        <Col span={24}>
           <Form.Item
             label={translatePricingTrucking('Fee_Group_form.title')}
             name="truckingPricingFeeGroupDTOs"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: translatePricingTrucking(
-            //       'Fee_Group_form.error_required'
-            //     ),
-            //   },
-            // ]}
           >
             <Select
               showSearch
@@ -585,31 +601,6 @@ const CardMain = ({
                   };
                 }) || []
               }
-            />
-          </Form.Item>
-        </Col>
-
-        <Col span={8}>
-          <Form.Item
-            label="Currency"
-            name="currencyID"
-            rules={[
-              {
-                required: true,
-                message: translatePricingTrucking(
-                  'currency_form.error_required'
-                ),
-              },
-            ]}
-          >
-            <Select
-              placeholder={translatePricingTrucking(
-                'currency_form.placeholder'
-              )}
-              disabled={checkRow && isCheckPermissionEdit}
-              showSearch
-              style={{ width: '100%' }}
-              options={optionCurrency}
             />
           </Form.Item>
         </Col>

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import SeaTrucking from '@/components/menu-item/pricing/trucking';
+import TruckingPricing from '@/components/menu-item/pricing/trucking';
 
 function PricingTruckingPage() {
   return (
@@ -8,7 +8,7 @@ function PricingTruckingPage() {
       <Head>
         <title>ASL | TRUCKING PRICING</title>
       </Head>
-      <SeaTrucking />
+      <TruckingPricing />
     </>
   );
 }

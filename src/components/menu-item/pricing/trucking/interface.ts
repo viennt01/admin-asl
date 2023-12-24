@@ -1,6 +1,11 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_TABS {
+  GET_TRUCK_PRICING_BY_MASTER_DATA = 'GET_TRUCK_PRICING_BY_MASTER_DATA',
+  GET_TRUCK_PRICING_BY_REQUEST_DATA = 'GET_TRUCK_PRICING_BY_REQUEST_DATA',
+  GET_TRUCK_PRICING_BY_DRAFT_DATA = 'GET_TRUCK_PRICING_BY_DRAFT_DATA',
+}
 export interface ITruckingPricing {
   truckingPricingID: string;
   pickupID: string;
@@ -11,7 +16,8 @@ export interface ITruckingPricing {
   commodityName: string;
   currencyID: string;
   currencyAbbreviations: string;
-  vendor: string;
+  vendorName: string;
+  transitTimeTruckingPricing: string;
   note: string;
   effectDated: string;
   validityDate: string;
@@ -25,7 +31,6 @@ export interface ITruckingPricing {
   dateUpdated: string;
   updatedByUser: string;
   confirmDated: string;
-  isASLMember: boolean;
   confirmByUser: string;
 }
 
@@ -75,11 +80,13 @@ export interface IFormValues {
   currencyID: string;
   public: boolean;
   note: string;
-  vendorID: string;
   effectDated: Dayjs;
   validityDate: Dayjs;
   freqDate: string;
   statusTruckingPricing: string;
+  transitTimetruckingPricing: string;
+  lclTruckingPricing: string;
+  lclMinTruckingPricing: string;
   truckingPricingDetailByContainerTypeDTOs: ITruckingPricingDetailDTOsFormValue[];
   truckingPricingDetailByLoadCapacityDTOs: ITruckingPricingDetailLoadCapacityDTOsFormValue[];
   truckingPricingFeeGroupDTOs: string[];
@@ -210,38 +217,10 @@ export type SeaPricingDelete = {
 };
 
 //----------------------------------------------------------------
-export interface IQueryInputDraft {
-  searchAll: string;
-}
-export interface IQuerySelectDraft {
-  status: string;
-}
-export interface RequestTableDraft extends IQueryInputDraft, IQuerySelectDraft {
-  paginateRequest: IPagination;
-}
-
-export type ISelectDratSearch = {
-  [key in keyof IQueryInputDraft]: {
-    label: string;
-    value: string;
-  };
-};
-
-//----------------------------------------------------------------
-
 export interface IUpdateStatus {
   id: React.Key[];
   status: string;
 }
-
-export interface IQueryInputRequest {
-  searchAll: string;
-  status: string;
-}
-export interface IRequestTableRequest extends IQueryInputRequest {
-  paginateRequest: IPagination;
-}
-
 // get all commodity
 export interface RequireCommodity {
   commodityID: string;
