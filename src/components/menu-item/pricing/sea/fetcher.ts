@@ -144,6 +144,8 @@ export const getAllVendor = () =>
   get<ResponseWithPayload<RequireVendor[]>>({})(API_PARTNER.GET_ALL_VENDOR);
 export const getAllCustomer = () =>
   get<ResponseWithPayload<RequireVendor[]>>({})(API_PARTNER.GET_ALL_CUSTOMER);
+export const getAllLiner = () =>
+  get<ResponseWithPayload<RequireVendor[]>>({})(API_PARTNER.GET_ALL_LINER);
 // Get table partner
 export const getTablePartnerId = (data: RequestPartnerTable) => {
   return post<RequestPartnerTable, ResponseWithPayload<TablePartner[]>>({

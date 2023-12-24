@@ -359,6 +359,7 @@ export const API_PARTNER = {
   GET_ALL_PARTNER: '/get-all-partner',
   GET_ALL_VENDOR: '/get-all-vendor',
   GET_ALL_CUSTOMER: '/get-all-customer',
+  GET_ALL_LINER: '/get-all-lines',
   GET_ALL_USER_BY_PARTNER_IDS: '/get-all-user-by-partner-id',
   GET_ALL_PARTNER_BY_IDS: '/get-partner-by-list-id',
   GET_ALL_PARTNER_BY_GROUPS_ID: '/get-partner-with-group-partner',

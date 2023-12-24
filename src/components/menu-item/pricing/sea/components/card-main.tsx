@@ -31,8 +31,8 @@ import {
 } from '@/fetcherAxios/endpoint';
 import {
   getAllCommodity,
+  getAllLiner,
   getAllLocation,
-  getAllVendor,
   updateStatus,
 } from '../fetcher';
 import DraftTable from '../table/draft-table';
@@ -128,9 +128,9 @@ const CardMain = ({
     },
   });
 
-  const getPartner = useQuery({
+  const getLiner = useQuery({
     queryKey: [API_PARTNER.GET_ALL_VENDOR],
-    queryFn: () => getAllVendor(),
+    queryFn: () => getAllLiner(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -627,7 +627,7 @@ const CardMain = ({
                   .localeCompare((optionB?.label ?? '').toLowerCase())
               }
               options={
-                getPartner.data?.data.map((item) => {
+                getLiner.data?.data.map((item) => {
                   return {
                     value: item.partnerID,
                     label: item.companyName,
