@@ -2,7 +2,7 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FormValues, SeaPricingFeeFormValue, UpdateStatus } from '../interface';
 import {
   API_CONTAINER_TYPE,
@@ -26,6 +26,8 @@ import SeaPricingDetailDTO from './sea-pricing-detail-dto';
 import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import ListFee from './list-fee';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 interface PortFormProps {
   create?: boolean;
@@ -60,6 +62,7 @@ const SeaPricing = ({
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
+  const { role } = useContext(AppContext);
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [optionCurrency, setOptionCurrency] = useState<
@@ -321,7 +324,9 @@ const SeaPricing = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={handleAR}
+          handleAR={
+            role === ROLE.LINER || role === ROLE.AGENT ? undefined : handleAR
+          }
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}

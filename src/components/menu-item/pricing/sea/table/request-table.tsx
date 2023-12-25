@@ -54,6 +54,7 @@ import { getUserInfo } from '@/layout/fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { getPriorityRole } from '@/hook/useAuthentication';
+import { ROLE } from '@/constant/permission';
 
 export default function RequestDataTable() {
   const router = useRouter();
@@ -76,7 +77,7 @@ export default function RequestDataTable() {
     Record<string, ColumnsState>
   >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
-  const { setUserInfo, setRole } = useContext(AppContext);
+  const { setUserInfo, setRole, role } = useContext(AppContext);
 
   const checkUser = useQuery({
     queryKey: [API_USER.CHECK_USER],
@@ -297,6 +298,7 @@ export default function RequestDataTable() {
               marginRight: '10px',
               color: COLORS.SUCCESS,
               borderColor: COLORS.SUCCESS,
+              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
             }}
           />
           <Button
@@ -306,7 +308,11 @@ export default function RequestDataTable() {
               ]);
             }}
             icon={<CloseOutlined />}
-            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
+            style={{
+              color: COLORS.ERROR,
+              borderColor: COLORS.ERROR,
+              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
+            }}
           />
         </div>
       ),
@@ -613,7 +619,11 @@ export default function RequestDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             itemDataQuotation={selectedRowKeys}
-            handleApproveAndReject={handleApproveAndReject}
+            handleApproveAndReject={
+              role === ROLE.LINER || role === ROLE.AGENT
+                ? undefined
+                : handleApproveAndReject
+            }
           />
         </>
       )}

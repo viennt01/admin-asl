@@ -4,7 +4,6 @@ import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
 import { useContext, useState } from 'react';
 import { AppContext } from '@/app-context';
-import { ROLE } from '@/constant/permission';
 import { GetTitleNotificationTab } from '@/utils/common';
 import RequestDataTable from './table/request-table';
 import { TYPE_TABS } from './interface';
@@ -14,7 +13,7 @@ export default function SeaPricingPage() {
     TYPE_TABS.GET_SEA_PRICING_BY_MASTER_DATA
   );
   const queryClient = useQueryClient();
-  const { role, userInfo } = useContext(AppContext);
+  const { userInfo } = useContext(AppContext);
 
   const onChange = (key: TYPE_TABS) => {
     setKeyActive(key);
@@ -30,7 +29,6 @@ export default function SeaPricingPage() {
         type="card"
         style={{
           marginTop: 10,
-          display: role === ROLE.MANAGER || role === ROLE.SALE ? '' : 'none',
         }}
         items={[
           {
@@ -64,14 +62,6 @@ export default function SeaPricingPage() {
           },
         ]}
       />
-      <div
-        style={{
-          marginTop: 36,
-          display: role === ROLE.MANAGER || role === ROLE.SALE ? 'none' : '',
-        }}
-      >
-        <MasterDataTable />
-      </div>
     </>
   );
 }
