@@ -9,31 +9,30 @@
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
+    "LCLMin": "Min CBM",
     "LCL": "LCL",
-    "others": "Others",
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
-    "validity": "Validity Date",
-    "freq": "Freq",
+    "effect_date": "Effective date",
+    "validity": "Expiry date",
+    "freq": "Frequency",
     "Cutoff": "Cut Off",
     "TT": "TT",
     "inl_addon": "InlAddon",
     "empty_return": "Empty Return",
     "amend": "Amend",
-    "DEM": "DEM",
-    "DET": "DET",
-    "STO": "STO",
+    "DEM": "Demurrage",
+    "DET": "Detention",
+    "STO": "Storage",
     "modify_date": "Modify Date",
     "status": "Status",
     "note": "Note",
-    "date_created": "Date created",
+    "date_created": "Create date",
     "creator": "Creator",
     "title_sea_freight": "Sea Freight",
     "title_local_chart": "Local Chart",
-    "information_add_sea_pricing": "Add new Sea Pricing",
+    "information_add_sea_pricing": "New Sea Pricing",
     "information_edit_sea_pricing": "Edit Sea Pricing",
     "POL_form": {
         "title": "POL",
@@ -56,9 +55,9 @@
         "error_required": "Please enter country"
     },
     "vendor_form": {
-        "title": "Vendor",
-        "placeholder": "Enter vendor",
-        "error_required": "Please enter vendor"
+        "title": "Carrier",
+        "placeholder": "Enter Carrier",
+        "error_required": "Please enter Carrier"
     },
     "carrier_form": {
         "title": "Carrier",
@@ -76,49 +75,14 @@
         "error_required": "Please enter commodity"
     },
     "LCLMin_form": {
-        "title": "LCLMin",
-        "placeholder": "Enter LCLMin",
-        "error_required": "Please enter LCLMin"
+        "title": "Min CBM",
+        "placeholder": "Enter Min CBM",
+        "error_required": "Please enter Min CBM"
     },
     "LCL_form": {
         "title": "LCL",
         "placeholder": "Enter LCL",
         "error_required": "Please enter LCL"
-    },
-    "DC20_form": {
-        "title": "DC20",
-        "placeholder": "Enter DC20",
-        "error_required": "Please enter DC20"
-    },
-    "DC40_form": {
-        "title": "DC40",
-        "placeholder": "Enter DC40",
-        "error_required": "Please enter DC40"
-    },
-    "HC40_form": {
-        "title": "HC40",
-        "placeholder": "Enter HC40",
-        "error_required": "Please enter HC40"
-    },
-    "HC45_form": {
-        "title": "HC45",
-        "placeholder": "Enter HC45",
-        "error_required": "Please enter HC45"
-    },
-    "RF20_form": {
-        "title": "RF20",
-        "placeholder": "Enter RF20",
-        "error_required": "Please enter RF20"
-    },
-    "RF40_form": {
-        "title": "RF40",
-        "placeholder": "Enter RF40",
-        "error_required": "Please enter RF40"
-    },
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Enter DB20",
-        "error_required": "Please enter DB20"
     },
     "others_form": {
         "title": "Others",
@@ -141,19 +105,19 @@
         "error_required": "Please enter VAT"
     },
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Enter Effect Date",
-        "error_required": "Please enter Effect Date"
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
     },
     "validity_form": {
-        "title": "Validity date",
-        "placeholder": "Enter validity date",
-        "error_required": "Please enter validity date"
+        "title": "Expiry date",
+        "placeholder": "Enter expiry date",
+        "error_required": "Please enter expiry date"
     },
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Enter freq",
-        "error_required": "Please enter freq"
+        "title": "Frequency",
+        "placeholder": "Enter Frequency",
+        "error_required": "Please enter Frequency"
     },
     "cut_off_form": {
         "title": "Cut Off",
@@ -171,9 +135,9 @@
         "error_required": "Please enter InlAddon"
     },
     "vendorID_form": {
-        "title": "Liner",
-        "placeholder": "Enter Liner",
-        "error_required": "Please enter Liner"
+        "title": "Carrier",
+        "placeholder": "Enter Carrier",
+        "error_required": "Please enter Carrier"
     },
     "transitTimeSeaPricing_form": {
         "title": "Transit Time",
@@ -181,19 +145,19 @@
         "error_required": "Please enter Transit Time"
     },
     "DEM_form": {
-        "title": "DEM",
-        "placeholder": "Enter DEM",
-        "error_required": "Please enter DEM"
+        "title": "Demurrage",
+        "placeholder": "Enter Demurrage",
+        "error_required": "Please enter Demurrage"
     },
     "DET_form": {
-        "title": "DET",
-        "placeholder": "Enter DET",
-        "error_required": "Please enter DET"
+        "title": "Detention",
+        "placeholder": "Enter Detention",
+        "error_required": "Please enter Detention"
     },
     "STO_form": {
-        "title": "STO",
-        "placeholder": "Enter STO",
-        "error_required": "Please enter STO"
+        "title": "Storage",
+        "placeholder": "Enter Storage",
+        "error_required": "Please enter Storage"
     },
     "Fee_Group_form": {
         "title": "Other Charges",

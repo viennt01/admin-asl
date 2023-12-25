@@ -1,6 +1,6 @@
 {
     "title": "List of Trucking Quotation",
-    "no" : "No",
+    "no": "No",
     "code": "Code",
     "pickup": "Pickup",
     "delivery": "Delivery",
@@ -11,22 +11,11 @@
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
-    "LCL": "LCL",
-    "DC20": "DC20",
-    "DC40": "DC40",
-    "HC40": "HC40",
-    "HC45": "HC45",
-    "RF20": "RF20",
-    "RF40": "RF40",
-    "DB20": "DB20",
-    "others": "Others",
-    "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
-    "validity": "Validity Date",
-    "freq": "Freq",
+    "effect_date": "Effective date",
+    "validity": "Expiry date",
+    "freq": "Frequency",
     "Cutoff": "Cut Off",
     "TT": "TT",
     "inl_addon": "InlAddon",
@@ -37,170 +26,121 @@
     "note": "Note",
     "date_created": "Date created",
     "creator": "Creator",
-
     "title_list_of_customer": "List of Customer",
     "title_trucking_freight": "Trucking Freight",
     "title_local_chart": "Local Chart",
     "information_add_trucking_quotation": "Add New Trucking Quotation",
     "information_edit_trucking_quotation": "Edit Trucking Quotation",
-    
     "pickup_form": {
         "title": "POL",
         "placeholder": "Enter POL",
         "error_required": "Please enter POL"
     },
-
     "delivery_form": {
         "title": "POD",
         "placeholder": "Enter POD",
         "error_required": "Please enter POD"
     },
-
     "emtyPickup_form": {
         "title": "Emty Pickup",
         "placeholder": "Enter emty pickup",
         "error_required": "Please enter emty pickup"
     },
-
     "destination_form": {
         "title": "Destination",
         "placeholder": "Enter destination",
         "error_required": "Please enter destination"
     },
-
     "country_form": {
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
     },
-
     "customerID_form": {
         "title": "Customer ID",
         "placeholder": "Enter Customer ID",
         "error_required": "Please enter Customer ID"
     },
-
     "carrier_form": {
         "title": "Carrier",
         "placeholder": "Enter carrier",
         "error_required": "Please enter carrier"
     },
-
     "service_form": {
         "title": "Service",
         "placeholder": "Enter service",
         "error_required": "Please enter service"
     },
-
     "commodity_form": {
         "title": "commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
-
-    "LCLMin_form": {
-        "title": "LCLMin",
-        "placeholder": "Enter LCLMin",
-        "error_required": "Please enter LCLMin"
-    },
-
-    "LCL_form": {
-        "title": "LCL",
-        "placeholder": "Enter LCL",
-        "error_required": "Please enter LCL"
-    },
-
-    "DB20_form": {
-        "title": "DB20",
-        "placeholder": "Enter DB20",
-        "error_required": "Please enter DB20"
-    },
-
-    "others_form": {
-        "title": "Others",
-        "placeholder": "Enter others",
-        "error_required": "Please enter others"
-    },
-
     "type_form": {
         "title": "Type",
         "placeholder": "Enter type",
         "error_required": "Please enter type"
     },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
         "error_required": "Please enter currency"
     },
-
     "VAT_form": {
         "title": "VAT",
         "placeholder": "Enter VAT",
         "error_required": "Please enter VAT"
     },
-
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Enter Effect Date",
-        "error_required": "Please enter Effect Date"
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
     },
-
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Enter Validity Date",
-        "error_required": "Please enter Validity Date"
+        "title": "Expiry date",
+        "placeholder": "Enter expiry date",
+        "error_required": "Please enter expiry date"
     },
-
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Enter freq",
-        "error_required": "Please enter freq"
+        "title": "Frequency",
+        "placeholder": "Enter frequency",
+        "error_required": "Please enter frequency"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Enter vendor",
         "error_required": "Please enter vendor"
     },
-
     "cut_off_form": {
         "title": "Cut Off",
         "placeholder": "Enter Cut Off",
         "error_required": "Please enter Cut Off"
     },
-
     "TT_form": {
         "title": "TT",
         "placeholder": "Enter TT",
         "error_required": "Please enter TT"
     },
-
     "inl_addon_form": {
         "title": "InlAddon",
         "placeholder": "Enter InlAddon",
         "error_required": "Please enter InlAddon"
     },
-
     "empty_return_form": {
         "title": "empty_return",
         "placeholder": "Enter empty_return",
         "error_required": "Please enter empty_return"
     },
-
     "amend_form": {
         "title": "Amend",
         "placeholder": "Enter Amend",
         "error_required": "Please enter Amend"
     },
-
     "Fee_Group_form": {
         "title": "Fee group",
         "placeholder": "Enter fee group",
         "error_required": "Please enter fee group"
     },
-    
-
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

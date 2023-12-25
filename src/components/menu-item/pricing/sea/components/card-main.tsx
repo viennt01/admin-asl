@@ -401,12 +401,12 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('validity')}
-            name="validityDate"
+            label={translatePricingSea('effect_date')}
+            name="effectDated"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('validity_form.placeholder'),
+                message: translatePricingSea('effect_date_form.placeholder'),
               },
             ]}
           >
@@ -419,12 +419,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingSea('effect_date')}
-            name="effectDated"
+            label={translatePricingSea('validity')}
+            name="validityDate"
             rules={[
               {
                 required: true,
-                message: translatePricingSea('effect_date_form.placeholder'),
+                message: translatePricingSea('validity_form.placeholder'),
               },
             ]}
           >

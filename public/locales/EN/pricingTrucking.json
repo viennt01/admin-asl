@@ -1,8 +1,8 @@
 {
     "title": "List of Trucking Pricing",
     "no": "No",
-    "pickup": "Pickup",
-    "delivery": "Delivery",
+    "pickup": "Place of pick up",
+    "delivery": "Place of delivery",
     "emtyPickup": "Emty Pickup",
     "destination": "Destination",
     "country": "Country",
@@ -10,22 +10,11 @@
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
-    "LCL": "LCL",
-    "DC20": "DC20",
-    "DC40": "DC40",
-    "HC40": "HC40",
-    "HC45": "HC45",
-    "RF20": "RF20",
-    "RF40": "RF40",
-    "DB20": "DB20",
-    "others": "Others",
-    "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
-    "validity": "Validity Date",
-    "freq": "Freq",
+    "effect_date": "Effective date",
+    "validity": "Expiry date",
+    "freq": "Frequency",
     "Cutoff": "Cut Off",
     "TT": "TT",
     "inl_addon": "InlAddon",
@@ -44,14 +33,14 @@
     "information_add_trucking_pricing": "Add New Trucking Pricing",
     "information_edit_trucking_pricing": "Edit Trucking Pricing",
     "pickup_form": {
-        "title": "Pickup",
-        "placeholder": "Enter pickup",
-        "error_required": "Please enter pickup"
+        "title": "Place of pick up",
+        "placeholder": "Enter place of pick up",
+        "error_required": "Please enter place of pick up"
     },
     "delivery_form": {
-        "title": "Delivery",
-        "placeholder": "Enter delivery",
-        "error_required": "Please enter delivery"
+        "title": "Place of delivery",
+        "placeholder": "Enter place of delivery",
+        "error_required": "Please enter place of delivery"
     },
     "emtyPickup_form": {
         "title": "Emty Pickup",
@@ -88,26 +77,6 @@
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
-    "LCLMin_form": {
-        "title": "LCLMin",
-        "placeholder": "Enter LCLMin",
-        "error_required": "Please enter LCLMin"
-    },
-    "LCL_form": {
-        "title": "LCL",
-        "placeholder": "Enter LCL",
-        "error_required": "Please enter LCL"
-    },
-    "others_form": {
-        "title": "Others",
-        "placeholder": "Enter others",
-        "error_required": "Please enter others"
-    },
-    "type_form": {
-        "title": "Type",
-        "placeholder": "Enter type",
-        "error_required": "Please enter type"
-    },
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
@@ -119,39 +88,19 @@
         "error_required": "Please enter VAT"
     },
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Enter Effect Date",
-        "error_required": "Please enter Effect Date"
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
     },
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Enter validity Date",
-        "error_required": "Please enter validity Date"
+        "title": "Expiry date",
+        "placeholder": "Enter expiry date",
+        "error_required": "Please enter expiry date"
     },
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Enter freq",
-        "error_required": "Please enter freq"
-    },
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Enter Cut Off",
-        "error_required": "Please enter Cut Off"
-    },
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Enter TT",
-        "error_required": "Please enter TT"
-    },
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Enter InlAddon",
-        "error_required": "Please enter InlAddon"
-    },
-    "empty_return_form": {
-        "title": "empty_return",
-        "placeholder": "Enter empty_return",
-        "error_required": "Please enter Empty Return"
+        "title": "Frequency",
+        "placeholder": "Enter frequency",
+        "error_required": "Please enter frequency"
     },
     "transitTimeSeaPricing_form": {
         "title": "Transit Time",

@@ -412,12 +412,12 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('validity')}
-            name="validityDate"
+            label={translateQuotationSea('effect_date')}
+            name="effectDated"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('validity_form.placeholder'),
+                message: translateQuotationSea('effect_date_form.placeholder'),
               },
             ]}
           >
@@ -430,12 +430,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('effect_date')}
-            name="effectDated"
+            label={translateQuotationSea('validity')}
+            name="validityDate"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('effect_date_form.placeholder'),
+                message: translateQuotationSea('validity_form.placeholder'),
               },
             ]}
           >
@@ -483,7 +483,7 @@ const CardMain = ({
             <InputNumber
               disabled={checkRow && isCheckPermissionEdit}
               placeholder={translateQuotationSea('STO_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
             />
@@ -498,7 +498,7 @@ const CardMain = ({
               style={{ width: '100%' }}
               placeholder={translateQuotationSea('DEM_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -512,7 +512,7 @@ const CardMain = ({
               style={{ width: '100%' }}
               placeholder={translateQuotationSea('DET_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -560,7 +560,7 @@ const CardMain = ({
           >
             <InputNumber
               placeholder={translateQuotationSea('LCL_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
@@ -574,7 +574,7 @@ const CardMain = ({
           >
             <InputNumber
               placeholder={translateQuotationSea('LCLMin_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || 0)}
+              formatter={(value) => formatNumber(Number(value) || '0')}
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
@@ -604,18 +604,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('vendor_form.title')}
+            label={translateQuotationSea('carrier_form.title')}
             name="vendorID"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('vendor_form.error_required'),
+                message: translateQuotationSea('carrier_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translateQuotationSea('vendor_form.placeholder')}
+              placeholder={translateQuotationSea('carrier_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>

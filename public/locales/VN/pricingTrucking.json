@@ -1,8 +1,8 @@
 {
     "title": "Danh sách định giá đường bộ",
     "no": "No",
-    "pickup": "Pickup",
-    "delivery": "Delivery",
+    "pickup": "Place of pick up",
+    "delivery": "Place of delivery",
     "emtyPickup": "Emty Pickup",
     "destination": "Destination",
     "country": "Country",
@@ -10,22 +10,11 @@
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
-    "LCL": "LCL",
-    "DC20": "DC20",
-    "DC40": "DC40",
-    "HC40": "HC40",
-    "HC45": "HC45",
-    "RF20": "RF20",
-    "RF40": "RF40",
-    "DB20": "DB20",
-    "others": "Others",
-    "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
-    "validity": "Validity Date",
-    "freq": "Freq",
+    "effect_date": "Effective date",
+    "validity": "Expiry date",
+    "freq": "Frequency",
     "Cutoff": "Cut Off",
     "TT": "TT",
     "inl_addon": "InlAddon",
@@ -41,14 +30,14 @@
     "information_add_trucking_pricing": "Thêm mới định giá đường bộ",
     "information_edit_trucking_pricing": "Chỉnh sửa định giá đường bộ",
     "pickup_form": {
-        "title": "Pickup",
-        "placeholder": "Nhập pickup",
-        "error_required": "Vui lòng nhập pickup"
+        "title": "Place of pick up",
+        "placeholder": "Nhập place of pick up",
+        "error_required": "Vui lòng nhập place of pick up"
     },
     "delivery_form": {
-        "title": "Delivery",
-        "placeholder": "Nhập delivery",
-        "error_required": "Vui lòng nhập delivery"
+        "title": "Place of delivery",
+        "placeholder": "Nhập place of delivery",
+        "error_required": "Vui lòng nhập place of delivery"
     },
     "emtyPickup_form": {
         "title": "Emty Pickup",
@@ -85,26 +74,6 @@
         "placeholder": "Nhập commodity",
         "error_required": "Vui lòng nhập commodity"
     },
-    "LCLMin_form": {
-        "title": "LCLMin",
-        "placeholder": "Nhập LCLMin",
-        "error_required": "Vui lòng nhập LCLMin"
-    },
-    "LCL_form": {
-        "title": "LCL",
-        "placeholder": "Nhập LCL",
-        "error_required": "Vui lòng nhập LCL"
-    },
-    "others_form": {
-        "title": "Others",
-        "placeholder": "Nhập others",
-        "error_required": "Vui lòng nhập others"
-    },
-    "type_form": {
-        "title": "Type",
-        "placeholder": "Nhập type",
-        "error_required": "Vui lòng nhập type"
-    },
     "currency_form": {
         "title": "Currency",
         "placeholder": "Nhập currency",
@@ -116,19 +85,19 @@
         "error_required": "Vui lòng nhập VAT"
     },
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Nhập Effect Date",
-        "error_required": "Vui lòng nhập Effect Date"
+        "title": "Effective date",
+        "placeholder": "Nhập effective date",
+        "error_required": "Vui lòng nhập effective date"
     },
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Nhập Validity Date",
-        "error_required": "Vui lòng nhập Validity Date"
+        "title": "Expiry date",
+        "placeholder": "Nhập expiry date",
+        "error_required": "Vui lòng nhập expiry date"
     },
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Nhập freq",
-        "error_required": "Vui lòng nhập freq"
+        "title": "Frequency",
+        "placeholder": "Nhập frequency",
+        "error_required": "Vui lòng nhập frequency"
     },
     "transitTimeSeaPricing_form": {
         "title": "Thời gian quá cảnh",

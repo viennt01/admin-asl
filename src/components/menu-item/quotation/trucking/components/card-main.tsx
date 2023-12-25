@@ -552,18 +552,18 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationTruck('vendor_form.title')}
+            label={translateQuotationTruck('carrier_form.title')}
             name="vendorID"
             rules={[
               {
                 required: true,
-                message: translateQuotationTruck('vendor_form.error_required'),
+                message: translateQuotationTruck('carrier_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translateQuotationTruck('vendor_form.placeholder')}
+              placeholder={translateQuotationTruck('carrier_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>

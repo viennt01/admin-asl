@@ -1,6 +1,6 @@
 {
     "title": "List of Sea Quotation",
-    "no" : "No",
+    "no": "No",
     "code": "Code",
     "POL": "POL",
     "POD": "POD",
@@ -10,167 +10,137 @@
     "carrier": "Carrier",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
+    "LCLMin": "Min CBM",
     "LCL": "LCL",
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
-    "validity": "Validity Date",
-    "freq": "Freq",
-    "Cutoff": "Cut Off",
-    "TT": "TT",
-    "inl_addon": "InlAddon",
-    "empty_return": "Empty Return",
-    "amend": "Amend",
-    "DEM": "DEM",
-    "DET": "DET",
-    "STO": "STO",
+    "effect_date": "Effective date",
+    "validity": "Expiry date",
+    "freq": "Frequency",
+    "DEM": "Demurrage",
+    "DET": "Detention",
+    "STO": "Storage",
     "modify_date": "Modify Date",
     "status": "Status",
     "note": "Note",
     "date_created": "Date created",
     "creator": "Creator",
-
     "title_list_of_customer": "List of Customer",
     "title_sea_freight": "Sea Freight",
     "title_local_chart": "Local Chart",
-    "information_add_sea_quotation": "Add New Sea Quotation",
+    "information_add_sea_quotation": "New Sea Quotation",
     "information_edit_sea_quotation": "Edit Sea Quotation",
-    
     "POL_form": {
         "title": "POL",
         "placeholder": "Enter POL",
         "error_required": "Please enter POL"
     },
-
     "POD_form": {
         "title": "POD",
         "placeholder": "Enter POD",
         "error_required": "Please enter POD"
     },
-
     "destination_form": {
         "title": "Destination",
         "placeholder": "Enter destination",
         "error_required": "Please enter destination"
     },
-
     "country_form": {
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
     },
-
     "customerID_form": {
         "title": "Customer ID",
         "placeholder": "Enter Customer ID",
         "error_required": "Please enter Customer ID"
     },
-
     "carrier_form": {
         "title": "Carrier",
         "placeholder": "Enter carrier",
         "error_required": "Please enter carrier"
     },
-
     "service_form": {
         "title": "Service",
         "placeholder": "Enter service",
         "error_required": "Please enter service"
     },
-
     "commodity_form": {
         "title": "commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
-
     "LCLMin_form": {
         "title": "LCLMin",
         "placeholder": "Enter LCLMin",
         "error_required": "Please enter LCLMin"
     },
-
     "LCL_form": {
         "title": "LCL",
         "placeholder": "Enter LCL",
         "error_required": "Please enter LCL"
     },
-
     "type_form": {
         "title": "Type",
         "placeholder": "Enter type",
         "error_required": "Please enter type"
     },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
         "error_required": "Please enter currency"
     },
-
     "VAT_form": {
         "title": "VAT",
         "placeholder": "Enter VAT",
         "error_required": "Please enter VAT"
     },
-
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Enter Effect Date",
-        "error_required": "Please enter Effect Date"
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
     },
-
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Enter validity Date",
-        "error_required": "Please enter validity Date"
+        "title": "Expiry date",
+        "placeholder": "Enter expiry date",
+        "error_required": "Please enter expiry date"
     },
-
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Enter freq",
-        "error_required": "Please enter freq"
+        "title": "Frequency",
+        "placeholder": "Enter frequency",
+        "error_required": "Please enter frequency"
     },
-
-
     "empty_return_form": {
         "title": "empty_return",
         "placeholder": "Enter empty_return",
         "error_required": "Please enter empty_return"
     },
-
     "DEM_form": {
-        "title": "DEM",
-        "placeholder": "Enter DEM",
-        "error_required": "Please enter DEM"
+        "title": "Demurrage",
+        "placeholder": "Enter demurrage",
+        "error_required": "Please enter demurrage"
     },
-
     "DET_form": {
-        "title": "DET",
-        "placeholder": "Enter DET",
-        "error_required": "Please enter DET"
+        "title": "Detention",
+        "placeholder": "Enter detention",
+        "error_required": "Please enter detention"
     },
-
     "STO_form": {
-        "title": "STO",
-        "placeholder": "Enter STO",
-        "error_required": "Please enter STO"
+        "title": "Storage",
+        "placeholder": "Enter storage",
+        "error_required": "Please enter storage"
     },
-
     "Fee_Group_form": {
         "title": "Fee group",
         "placeholder": "Enter fee group",
         "error_required": "Please enter fee group"
     },
-    
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Enter vendor",
         "error_required": "Please enter vendor"
     },
-
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

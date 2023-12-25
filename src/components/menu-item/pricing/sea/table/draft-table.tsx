@@ -175,7 +175,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       align: 'left',
     },
     {
-      title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
+      title: (
+        <div className={style.title}>{translatePricingSea('carrier')}</div>
+      ),
       width: 200,
       dataIndex: 'vendorName',
       key: 'vendorName',

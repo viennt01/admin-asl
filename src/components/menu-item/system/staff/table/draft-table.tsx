@@ -227,7 +227,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: (
         <div className={style.title}>
-          {translateStaff('aslRoleName_form.title')}
+          {translateStaff('aslRoleID_form.title')}
         </div>
       ),
       dataIndex: 'aslRoleName',

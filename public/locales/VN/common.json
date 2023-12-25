@@ -60,6 +60,8 @@
     "creator": "Người tạo",
     "date_inserted": "Ngày cập nhật",
     "inserter": "Người cập nhật",
+    "date_start": "Ngày có hiệu lực",
+    "date_expiration": "Ngày hết hạn",
     "search": "Tìm",
     "reset": "Bỏ lọc",
 

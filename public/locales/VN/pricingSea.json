@@ -6,33 +6,25 @@
     "destination": "Destination",
     "country": "Country",
     "vendor": "Vendor",
-    "carrier": "Carrier",
+    "carrier": "Vận chuyển",
     "service": "Service",
     "commodity": "Commodity",
-    "LCLMin": "LCLMin",
+    "LCLMin": "Min CBM",
     "LCL": "LCL",
-    "DC20": "DC20",
-    "DC40": "DC40",
-    "HC40": "HC40",
-    "HC45": "HC45",
-    "RF20": "RF20",
-    "RF40": "RF40",
-    "DB20": "DB20",
-    "others": "Others",
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "effect_date": "Effect Date",
-    "validity": "Validity Date",
-    "freq": "Freq",
+    "effect_date": "Effective date",
+    "validity": "Expiry date",
+    "freq": "Frequency",
     "Cutoff": "Cut Off",
     "TT": "TT",
     "inl_addon": "InlAddon",
     "empty_return": "Empty Return",
     "amend": "Amend",
-    "DEM": "DEM",
-    "DET": "DET",
-    "STO": "STO",
+    "DEM": "Demurrage",
+    "DET": "Detention",
+    "STO": "Storage",
     "modify_date": "Ngày cập nhật",
     "status": "Trạng thái",
     "note": "Ghi chú",
@@ -78,9 +70,9 @@
         "error_required": "Vui lòng nhập commodity"
     },
     "LCLMin_form": {
-        "title": "LCLMin",
-        "placeholder": "Nhập LCLMin",
-        "error_required": "Vui lòng nhập LCLMin"
+        "title": "Min CBM",
+        "placeholder": "Nhập Min CBM",
+        "error_required": "Vui lòng nhập Min CBM"
     },
     "LCL_form": {
         "title": "LCL",
@@ -108,19 +100,19 @@
         "error_required": "Vui lòng nhập VAT"
     },
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Nhập Effect Date",
-        "error_required": "Vui lòng nhập Effect Date"
+        "title": "Effective date",
+        "placeholder": "Nhập effective date",
+        "error_required": "Vui lòng nhập effective date"
     },
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Nhập Validity Date",
-        "error_required": "Vui lòng nhập Validity Date"
+        "title": "Expiry date",
+        "placeholder": "Nhập expiry date",
+        "error_required": "Vui lòng nhập expiry date"
     },
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Nhập freq",
-        "error_required": "Vui lòng nhập freq"
+        "title": "Frequency",
+        "placeholder": "Nhập Frequency",
+        "error_required": "Vui lòng nhập Frequency"
     },
     "transitTimeSeaPricing_form": {
         "title": "Thời gian quá cảnh",
@@ -128,24 +120,24 @@
         "error_required": "Vui lòng nhập thời gian quá cảnh"
     },
     "vendorID_form": {
-        "title": "Liner",
-        "placeholder": "Nhập Liner",
-        "error_required": "Vui lòng nhập Liner"
+        "title": "Vận chuyển",
+        "placeholder": "Nhập đơn vị vận chuyển",
+        "error_required": "Vui lòng nhập đơn vị vận chuyển"
     },
     "DEM_form": {
-        "title": "DEM",
-        "placeholder": "Nhập DEM",
-        "error_required": "Vui lòng nhập DEM"
+        "title": "Demurrage",
+        "placeholder": "Nhập Demurrage",
+        "error_required": "Vui lòng nhập Demurrage"
     },
     "DET_form": {
-        "title": "DET",
-        "placeholder": "Nhập DET",
-        "error_required": "Vui lòng nhập DET"
+        "title": "Detention",
+        "placeholder": "Nhập Detention",
+        "error_required": "Vui lòng nhập Detention"
     },
     "STO_form": {
-        "title": "STO",
-        "placeholder": "Nhập STO",
-        "error_required": "Vui lòng nhập STO"
+        "title": "Storage",
+        "placeholder": "Nhập Storage",
+        "error_required": "Vui lòng nhập Storage"
     },
     "Fee_Group_form": {
         "title": "Loại nhóm phí",

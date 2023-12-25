@@ -335,7 +335,9 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
+      title: (
+        <div className={style.title}>{translatePricingSea('carrier')}</div>
+      ),
       width: 300,
       dataIndex: 'vendorName',
       key: 'vendorName',
@@ -354,7 +356,7 @@ export default function MasterDataTable() {
       title: (
         <div className={style.title}>{translatePricingSea('currency')}</div>
       ),
-      width: 200,
+      width: 100,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'right',

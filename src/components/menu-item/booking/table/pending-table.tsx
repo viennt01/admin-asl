@@ -210,7 +210,9 @@ export default function PendingTable() {
     },
     {
       title: (
-        <div className={style.title}>{translatePartner('Type Service')}</div>
+        <div className={style.title}>
+          {translatePartner('Mode of transportation')}
+        </div>
       ),
       dataIndex: 'typeOfService',
       key: 'typeOfService',
@@ -234,14 +236,22 @@ export default function PendingTable() {
       align: 'left',
     },
     {
-      title: <div className={style.title}>{translatePartner('Receipt')}</div>,
+      title: (
+        <div className={style.title}>
+          {translatePartner('Place of receipt')}
+        </div>
+      ),
       dataIndex: 'placeOfRecipt',
       key: 'placeOfRecipt',
       width: 250,
       align: 'left',
     },
     {
-      title: <div className={style.title}>{translatePartner('Delivery')}</div>,
+      title: (
+        <div className={style.title}>
+          {translatePartner('Place of delivery')}
+        </div>
+      ),
       dataIndex: 'placeOfDelivery',
       key: 'placeOfDelivery',
       width: 250,
