@@ -406,7 +406,7 @@ export default function RequestTable() {
     },
     {
       title: (
-        <div className={style.title}>{translatePricingTrucking('vendor')}</div>
+        <div className={style.title}>{translatePricingTrucking('carrier')}</div>
       ),
       width: 200,
       dataIndex: 'vendorName',

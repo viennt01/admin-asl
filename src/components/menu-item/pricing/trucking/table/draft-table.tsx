@@ -187,16 +187,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       align: 'left',
     },
     {
-      title: <div className={style.title}>Member</div>,
-      width: 200,
-      dataIndex: 'isASLMember',
-      key: 'isASLMember',
-      align: 'left',
-      render: (value) => (value ? 'ASL' : 'vendor'),
-    },
-    {
       title: (
-        <div className={style.title}>{translatePricingTrucking('vendor')}</div>
+        <div className={style.title}>{translatePricingTrucking('carrier')}</div>
       ),
       width: 200,
       dataIndex: 'vendor',
