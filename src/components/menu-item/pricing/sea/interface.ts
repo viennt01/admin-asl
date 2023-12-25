@@ -41,10 +41,9 @@ export interface SeaPricing {
   insertedByUser: string;
   dateUpdated: string;
   updatedByUser: string;
-  isASLMember: boolean;
   transitTimeSeaPricing: string;
   seaPricingDetailDTOs: { [key: string]: string };
-  vendor: string;
+  vendorName: string;
 }
 
 export interface SeaPricingDetailDTOs {

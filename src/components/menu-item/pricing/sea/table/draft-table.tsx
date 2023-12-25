@@ -83,8 +83,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            vendor: data.vendor,
-            isASLMember: data.isASLMember,
+            vendorName: data.vendorName,
             transitTimeSeaPricing: data.transitTimeSeaPricing,
             searchAll: '',
           }))
@@ -176,18 +175,10 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       align: 'left',
     },
     {
-      title: <div className={style.title}>Member</div>,
-      width: 200,
-      dataIndex: 'isASLMember',
-      key: 'isASLMember',
-      align: 'left',
-      render: (value) => (value ? 'ASL' : 'vendor'),
-    },
-    {
       title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
       width: 200,
-      dataIndex: 'vendor',
-      key: 'vendor',
+      dataIndex: 'vendorName',
+      key: 'vendorName',
       align: 'left',
     },
     {

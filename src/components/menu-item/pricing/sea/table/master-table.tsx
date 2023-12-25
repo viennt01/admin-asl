@@ -154,8 +154,7 @@ export default function MasterDataTable() {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            vendor: data.vendor,
-            isASLMember: data.isASLMember,
+            vendorName: data.vendorName,
             transitTimeSeaPricing: data.transitTimeSeaPricing,
             searchAll: '',
           }))
@@ -299,14 +298,6 @@ export default function MasterDataTable() {
       align: 'left',
     },
     {
-      title: <div className={style.title}>Member</div>,
-      width: 200,
-      dataIndex: 'isASLMember',
-      key: 'isASLMember',
-      align: 'left',
-      render: (value) => (value ? 'ASL' : 'vendor'),
-    },
-    {
       title: <div className={style.title}>{translatePricingSea('status')}</div>,
       width: 120,
       dataIndex: 'statusSeaPricing',
@@ -345,9 +336,9 @@ export default function MasterDataTable() {
     },
     {
       title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
-      width: 200,
-      dataIndex: 'vendor',
-      key: 'vendor',
+      width: 300,
+      dataIndex: 'vendorName',
+      key: 'vendorName',
       align: 'left',
     },
     {

@@ -157,8 +157,7 @@ export default function RequestDataTable() {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            vendor: data.vendor,
-            isASLMember: data.isASLMember,
+            vendorName: data.vendorName,
             transitTimeSeaPricing: data.transitTimeSeaPricing,
             searchAll: '',
           }))
@@ -333,14 +332,6 @@ export default function RequestDataTable() {
       align: 'left',
     },
     {
-      title: <div className={style.title}>Member</div>,
-      width: 200,
-      dataIndex: 'isASLMember',
-      key: 'isASLMember',
-      align: 'left',
-      render: (value) => (value ? 'ASL' : 'Vendor'),
-    },
-    {
       title: <div className={style.title}>{translatePricingSea('status')}</div>,
       width: 120,
       dataIndex: 'statusSeaPricing',
@@ -360,8 +351,8 @@ export default function RequestDataTable() {
     {
       title: <div className={style.title}>{translatePricingSea('vendor')}</div>,
       width: 200,
-      dataIndex: 'vendor',
-      key: 'vendor',
+      dataIndex: 'vendorName',
+      key: 'vendorName',
       align: 'left',
     },
     {
