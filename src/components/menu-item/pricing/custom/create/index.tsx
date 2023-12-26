@@ -10,10 +10,10 @@ import {
   ICustomPricingEdit,
   ICustomPricingFeeFormValue,
   ICustomPricingFeeUpdate,
+  TYPE_TABS,
 } from '../interface';
 import { createCustomPricing, editCustomPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_CUSTOM_PRICING } from '@/fetcherAxios/endpoint';
 
 export const returnFeeDTOs = (
   seaPricingFeeDTOs?: ICustomPricingFeeFormValue[],
@@ -163,7 +163,7 @@ const CreateCustomPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_CUSTOM_PRICING.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_CUSTOM_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -196,7 +196,7 @@ const CreateCustomPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_CUSTOM_PRICING.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_CUSTOM_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

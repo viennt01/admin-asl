@@ -13,7 +13,7 @@ import {
   FormInstance,
 } from 'antd';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ICustomPricingAirDetailDTO,
   ICustomPricingFCLDetailDTOs,
@@ -40,8 +40,6 @@ import {
   getListTypeDeclaration,
   getListTypeTransaction,
 } from '@/components/menu-item/master-data/declaration-catalog/type-declaration/fetcher';
-import { ROLE } from '@/constant/permission';
-import { AppContext } from '@/app-context';
 import { getAllVendor } from '../../sea/fetcher';
 
 interface Props {
@@ -80,7 +78,6 @@ const CardMain = ({
   const { translate: translatePricingCustom } = useI18n('pricingCustoms');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
-  const { role } = useContext(AppContext);
 
   const propCopyAndCreate = router.query;
 
@@ -340,18 +337,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingCustom('vendor_form.title')}
+            label={translatePricingCustom('carrier_form.title')}
             name="vendorID"
             rules={[
               {
-                required: role === ROLE.MANAGER || role === ROLE.SALE,
-                message: translatePricingCustom('vendor_form.error_required'),
+                required: true,
+                message: translatePricingCustom('carrier_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translatePricingCustom('vendor_form.placeholder')}
+              placeholder={translatePricingCustom('carrier_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -376,12 +373,12 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingCustom('validity_form.title')}
-            name="validityDate"
+            label={translatePricingCustom('effect_date_form.title')}
+            name="effectDated"
             rules={[
               {
                 required: true,
-                message: translatePricingCustom('validity_form.placeholder'),
+                message: translatePricingCustom('effect_date_form.placeholder'),
               },
             ]}
           >
@@ -394,12 +391,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingCustom('effect_date_form.title')}
-            name="effectDated"
+            label={translatePricingCustom('validity_form.title')}
+            name="validityDate"
             rules={[
               {
                 required: true,
-                message: translatePricingCustom('effect_date_form.placeholder'),
+                message: translatePricingCustom('validity_form.placeholder'),
               },
             ]}
           >

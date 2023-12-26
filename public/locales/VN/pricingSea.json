@@ -59,6 +59,11 @@
         "placeholder": "Nhập vendor",
         "error_required": "Vui lòng nhập vendor"
     },
+    "carrier_form": {
+        "title": "Carrier",
+        "placeholder": "Nhập carrier",
+        "error_required": "Vui lòng nhập carrier"
+    },
     "service_form": {
         "title": "Service",
         "placeholder": "Nhập service",

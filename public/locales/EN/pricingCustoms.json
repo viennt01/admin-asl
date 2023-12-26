@@ -1,77 +1,69 @@
 {
     "title": "List of Customs Pricing",
-    "no" : "NO",
+    "no": "NO",
     "status": "Status",
-
-    "information_add_customs_pricing": "Add New Customs Pricing",
+    "information_add_customs_pricing": "New Customs Pricing",
     "information_edit_customs_pricing": "Edit Customs Pricing",
-
     "typeDelaracrionID_form": {
         "title": "Declaration",
         "placeholder": "Enter declaration",
         "error_required": "Please enter declaration"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Enter vendor",
         "error_required": "Please enter vendor"
     },
-
+    "carrier_form": {
+        "title": "Carrier",
+        "placeholder": "Enter carrier",
+        "error_required": "Please enter carrier"
+    },
     "transactionTypeID_form": {
         "title": "Transaction",
         "placeholder": "Select transaction",
         "error_required": "Please select transaction"
     },
-
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Enter effect date",
-        "error_required": "Please enter effect date"
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
     },
-
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Enter validity date",
-        "error_required": "Please enter validity date"
+        "title": "Expiry date",
+        "placeholder": "Enter expiry date",
+        "error_required": "Please enter expiry date"
     },
-
     "commodity_form": {
         "title": "Commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
-
     "customRedPrice_form": {
         "title": "Red Price",
         "placeholder": "Enter Red price",
         "error_required": "Please enter Red price"
     },
-
     "customYellowPrice_form": {
         "title": "Yellow Price",
         "placeholder": "Enter yellow price",
         "error_required": "Please enter yellow price"
     },
-
     "customGreenPrice_form": {
         "title": "Green Price",
         "placeholder": "Enter green price",
         "error_required": "Please enter green price"
     },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
         "error_required": "Please enter currency"
     },
-
     "fee_group_form": {
         "title": "Other Charges",
         "placeholder": "Select Other Charges",
         "error_required": "Please select Other Charges"
     },
-
     "note_form": {
         "title": "Note",
         "placeholder": "Enter note",

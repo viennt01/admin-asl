@@ -36,29 +36,5 @@ export const initalValueQueryInputParamsDraft = {
 };
 
 export const initalValueQuerySelectParamsDraft = {
-  status: STATUS_ALL_LABELS.DRAFT,
-};
-
-export const initalSelectSearchDraft = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  statusCustomPricing: {
-    label: '',
-    value: '',
-  },
-};
-
-//request
-export const initalValueQueryInputParamsRequest = {
-  searchAll: '',
-  status: STATUS_ALL_LABELS.REQUEST,
-};
-
-export const initalSelectSearchRequest = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
+  statusCustomPricing: [STATUS_ALL_LABELS.DRAFT],
 };

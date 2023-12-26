@@ -1,44 +1,69 @@
 import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, PaginationProps, Tag } from 'antd';
+import { ChangeEvent, Key, MouseEvent, useContext, useState } from 'react';
+import { ROUTERS } from '@/constant/router';
+import { useRouter } from 'next/router';
+import useI18n from '@/i18n/useI18N';
+import COLORS from '@/constant/color';
+import { ColumnsState, ProColumns } from '@ant-design/pro-components';
+import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { API_USER } from '@/fetcherAxios/endpoint';
+import { formatDate } from '@/utils/format';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constant/message';
+import {
+  IQueryInputParamType,
+  IQuerySelectParamType,
+  SelectSearch,
+  ICustomPricingTable,
+  UpdateStatus,
+  TYPE_TABS,
+} from '../interface';
 import {
   DEFAULT_PAGINATION,
   IPaginationOfAntd,
+  SkeletonTable,
 } from '@/components/commons/table/table-default';
-import Table from '@/components/commons/table/table';
-import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
-import { ROUTERS } from '@/constant/router';
-import { API_CUSTOM_PRICING, API_USER } from '@/fetcherAxios/endpoint';
-import useI18n from '@/i18n/useI18N';
-import { ProColumns } from '@ant-design/pro-components';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Button, PaginationProps } from 'antd';
-import { useRouter } from 'next/router';
-import { useState, MouseEvent, useContext } from 'react';
-import { formatDate } from '@/utils/format';
-import { STATUS_ALL_LABELS } from '@/constant/form';
-import COLORS from '@/constant/color';
-import { errorToast, successToast } from '@/hook/toast';
-import { API_MESSAGE } from '@/constant/message';
-import { getTable, updateStatus } from '../fetcher';
+import { getCustomPricingSearch, updateStatus } from '../fetcher';
+import Table from '../../../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
-import { initalValueQueryInputParamsRequest } from '../constant';
-import { ICustomPricingTable, UpdateStatus } from '../interface';
+import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
+import {
+  initalSelectSearchMaster,
+  initalValueDisplayColumnMaster,
+  initalValueQueryInputParamsMaster,
+  initalValueQuerySelectParamsMaster,
+} from '../constant';
 import { AppContext } from '@/app-context';
+import { UpdateStatusUnit } from '@/components/menu-item/partner/interface';
 import { getUserInfo } from '@/layout/fetcher';
-import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import { appLocalStorage } from '@/utils/localstorage';
 import { getPriorityRole } from '@/hook/useAuthentication';
+import { ROLE } from '@/constant/permission';
 
-const RequestTable = () => {
+export default function RequestTable() {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const { translate: translatePricingCustom } = useI18n('pricingCustoms');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-
+  const [queryInputParams, setQueryInputParams] =
+    useState<IQueryInputParamType>(initalValueQueryInputParamsMaster);
+  const [querySelectParams, setQuerySelectParams] =
+    useState<IQuerySelectParamType>(initalValueQuerySelectParamsMaster);
   const [dataTable, setDataTable] = useState<ICustomPricingTable[]>([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { setUserInfo, setRole } = useContext(AppContext);
+  const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
+    initalSelectSearchMaster
+  );
+  const [columnsStateMap, setColumnsStateMap] = useState<
+    Record<string, ColumnsState>
+  >(initalValueDisplayColumnMaster);
+  const [refreshingLoading, setRefreshingLoading] = useState(false);
+  const { role, setRole, setUserInfo } = useContext(AppContext);
 
   const checkUser = useQuery({
     queryKey: [API_USER.CHECK_USER],
@@ -62,11 +87,23 @@ const RequestTable = () => {
     retry: 0,
   });
   // Handle data
-  useQuery({
-    queryKey: [API_CUSTOM_PRICING.GET_REQUEST, pagination],
+  const dataSelectSearch =
+    querySelectParams.statusCustomPricing.length === 0
+      ? {
+          statusCustomPricing: [STATUS_ALL_LABELS.REQUEST],
+        }
+      : querySelectParams;
+
+  const locationsQuerySearch = useQuery({
+    queryKey: [
+      TYPE_TABS.GET_CUSTOM_PRICING_BY_REQUEST_DATA,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
-      getTable({
-        ...initalValueQueryInputParamsRequest,
+      getCustomPricingSearch({
+        ...queryInputParams,
+        ...dataSelectSearch,
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -99,58 +136,86 @@ const RequestTable = () => {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             public: data.public,
-            isASLMember: data.isASLMember,
             searchAll: '',
           }))
         );
-        pagination.current = currentPage;
-        pagination.pageSize = pageSize;
-        pagination.total = totalPages;
+        setPagination({
+          current: currentPage,
+          pageSize: pageSize,
+          total: totalPages,
+        });
       } else {
         setDataTable([]);
       }
     },
   });
 
-  const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatusUnit) => {
-      return updateStatus(body);
-    },
-  });
+  const refreshingQuery = () => {
+    setSelectedActiveKey(initalSelectSearchMaster);
+    setQueryInputParams(initalValueQueryInputParamsMaster);
+    setRefreshingLoading(true);
+    pagination.current = 1;
+    locationsQuerySearch.refetch();
+    setTimeout(() => {
+      setRefreshingLoading(false);
+    }, 500);
+  };
 
   // Handle search
+  const handleSearchInputKeyAll = (value: string) => {
+    setSelectedActiveKey({
+      ...initalSelectSearchMaster,
+      searchAll: {
+        label: 'searchAll',
+        value: value,
+      },
+    });
+    setQueryInputParams({
+      ...initalValueQueryInputParamsMaster,
+      searchAll: value,
+    });
+    setQuerySelectParams({
+      ...initalValueQuerySelectParamsMaster,
+    });
+  };
+
   // const handleSearchInput = (
   //   selectedKeys: string,
   //   confirm: (param?: FilterConfirmProps) => void,
   //   dataIndex: DataIndex
   // ) => {
-  //   setSelectedKeyShow((prevData) => ({
+  //   setSelectedActiveKey((prevData) => ({
   //     ...prevData,
   //     [dataIndex]: {
   //       label: dataIndex,
   //       value: selectedKeys,
   //     },
+  //     searchAll: {
+  //       label: 'searchAll',
+  //       value: '',
+  //     },
   //   }));
   //   const newQueryParams = { ...queryInputParams };
   //   newQueryParams[dataIndex] = selectedKeys;
+  //   newQueryParams.searchAll = '';
   //   setQueryInputParams(newQueryParams);
   //   confirm();
   // };
 
-  // const handleReset = (clearFilters: () => void, dataIndex: DataIndex) => {
-  //   setQueryInputParams((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: '',
-  //   }));
-
-  //   setSelectedKeyShow((prevData) => ({
-  //     ...prevData,
-  //     [dataIndex]: { label: dataIndex, value: '' },
-  //   }));
-  //   clearFilters();
-  // };
-
-  // Handle data show table
+  const handleSearchSelect = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>
+  ) => {
+    const newQueryParams = {
+      ...querySelectParams,
+      searchAll: '',
+      statusCustomPricing:
+        filters.statusCustomPricing?.length !== 0 && filters.statusCustomPricing
+          ? (filters.statusCustomPricing as string[])
+          : [],
+    };
+    setQuerySelectParams(newQueryParams);
+  };
 
   const columns: ProColumns<ICustomPricingTable>[] = [
     {
@@ -158,7 +223,6 @@ const RequestTable = () => {
       dataIndex: 'index',
       width: 50,
       align: 'right',
-      fixed: 'left',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
@@ -188,6 +252,7 @@ const RequestTable = () => {
               marginRight: '10px',
               color: COLORS.SUCCESS,
               borderColor: COLORS.SUCCESS,
+              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
             }}
           />
           <Button
@@ -197,7 +262,11 @@ const RequestTable = () => {
               ]);
             }}
             icon={<CloseOutlined />}
-            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
+            style={{
+              color: COLORS.ERROR,
+              borderColor: COLORS.ERROR,
+              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
+            }}
           />
         </div>
       ),
@@ -227,14 +296,6 @@ const RequestTable = () => {
       render: (value) => value,
     },
     {
-      title: <div className={style.title}>Member</div>,
-      width: 200,
-      dataIndex: 'isASLMember',
-      key: 'isASLMember',
-      align: 'left',
-      render: (value) => (value ? 'ASL' : 'vendor'),
-    },
-    {
       title: (
         <div className={style.title}>
           {translatePricingCustom('currency_form.title')}
@@ -248,13 +309,32 @@ const RequestTable = () => {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('vendor_form.title')}
+          {translatePricingCustom('carrier_form.title')}
         </div>
       ),
       width: 200,
       dataIndex: 'vendor',
       key: 'vendor',
       align: 'left',
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePricingCustom('status')}</div>
+      ),
+      width: 120,
+      dataIndex: 'statusCustomPricing',
+      key: 'statusCustomPricing',
+      align: 'center',
+      render: (value) => (
+        <Tag
+          color={STATUS_ALL_COLORS[value as keyof typeof STATUS_ALL_COLORS]}
+          style={{
+            margin: 0,
+          }}
+        >
+          {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
+        </Tag>
+      ),
     },
     {
       title: (
@@ -319,12 +399,34 @@ const RequestTable = () => {
       key: 'insertedByUser',
       align: 'center',
     },
+    {
+      title: (
+        <div className={style.title}>{translateCommon('date_inserted')}</div>
+      ),
+      width: 150,
+      dataIndex: 'dateUpdated',
+      key: 'dateUpdated',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: <div className={style.title}>{translateCommon('inserter')}</div>,
+      width: 200,
+      dataIndex: 'updatedByUser',
+      key: 'updatedByUser',
+      align: 'center',
+    },
   ];
-
   // Handle logic table
   const handleEditCustomer = (id: string) => {
     router.push(ROUTERS.CUSTOMS_PRICING_MANAGER(id));
   };
+
+  const updateStatusMutation = useMutation({
+    mutationFn: (body: UpdateStatusUnit) => {
+      return updateStatus(body);
+    },
+  });
 
   const handleApproveAndReject = (status: string, id?: React.Key[]) => {
     const _requestData: UpdateStatus = {
@@ -337,7 +439,7 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [API_CUSTOM_PRICING.GET_REQUEST, pagination],
+              queryKey: [TYPE_TABS.GET_CUSTOM_PRICING_BY_REQUEST_DATA],
             }),
             checkUser.refetch())
           : errorToast(data.message);
@@ -348,15 +450,42 @@ const RequestTable = () => {
     });
   };
 
-  const handleSelectionChange = (selectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(selectedRowKeys);
+  const handleSelectionChange = (selectedRowKey: Key[]) => {
+    const keyData = dataTable.map((item) => item.key);
+    const uniqueDataAndSelectedRowKeys = selectedRowKeys.filter((item: any) =>
+      keyData.includes(item)
+    );
+    const unique1AndSelectedRowKey = uniqueDataAndSelectedRowKeys.filter(
+      (item) => !selectedRowKey.includes(item)
+    );
+    const uniqueSelection = selectedRowKey.filter(
+      (item) => !selectedRowKeys.includes(item)
+    );
+    const result = selectedRowKeys
+      .concat(uniqueSelection)
+      .filter((item) => !unique1AndSelectedRowKey.includes(item));
+
+    setSelectedRowKeys(result);
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    setPagination((state) => ({
-      ...state,
-      current: page,
-      pageSize: size,
+    pagination.current = page;
+    pagination.pageSize = size;
+
+    locationsQuerySearch.refetch();
+  };
+
+  const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
+    setColumnsStateMap(map);
+  };
+
+  const handleChangeInputSearchAll = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedActiveKey((prevData) => ({
+      ...prevData,
+      searchAll: {
+        label: 'searchAll',
+        value: e.target.value ? e.target.value : '',
+      },
     }));
   };
 
@@ -371,22 +500,38 @@ const RequestTable = () => {
   };
 
   return (
-    <>
-      <div style={{ marginTop: -18 }}>
-        <Table
-          headerTitle="List of approval-needed requests"
-          dataTable={dataTable}
-          columns={columns}
-          handlePaginationChange={handlePaginationChange}
-          handleOnDoubleClick={handleOnDoubleClick}
-          pagination={pagination}
-          checkTableMaster={true}
-          handleSelectionChange={handleSelectionChange}
-          handleApproveAndReject={handleApproveAndReject}
-        />
-      </div>
-    </>
+    <div style={{ marginTop: -18 }}>
+      {locationsQuerySearch.isLoading ? (
+        <SkeletonTable />
+      ) : (
+        <>
+          <Table
+            dataTable={dataTable}
+            columns={columns}
+            headerTitle="List of approval-needed requests"
+            selectedRowKeys={selectedRowKeys}
+            handleSelectionChange={handleSelectionChange}
+            handlePaginationChange={handlePaginationChange}
+            handleChangeInputSearchAll={handleChangeInputSearchAll}
+            handleSearchInputKeyAll={handleSearchInputKeyAll}
+            valueSearchAll={selectedActiveKey.searchAll.value}
+            handleOnDoubleClick={handleOnDoubleClick}
+            refreshingQuery={refreshingQuery}
+            refreshingLoading={refreshingLoading}
+            pagination={pagination}
+            handleColumnsStateChange={handleColumnsStateChange}
+            columnsStateMap={columnsStateMap}
+            handleSearchSelect={handleSearchSelect}
+            checkTableMaster={true}
+            itemDataQuotation={selectedRowKeys}
+            handleApproveAndReject={
+              role === ROLE.LINER || role === ROLE.AGENT
+                ? undefined
+                : handleApproveAndReject
+            }
+          />
+        </>
+      )}
+    </div>
   );
-};
-
-export default RequestTable;
+}

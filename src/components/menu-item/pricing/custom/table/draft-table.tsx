@@ -2,9 +2,8 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { ICustomPricingTable } from '../interface';
-import { API_CUSTOM_PRICING } from '@/fetcherAxios/endpoint';
-import { deleteCustomPricing, getDartTable } from '../fetcher';
+import { ICustomPricingTable, TYPE_TABS } from '../interface';
+import { deleteCustomPricing, getCustomPricingSearch } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -47,9 +46,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_CUSTOM_PRICING.GET_SEARCH, pagination],
+    queryKey: [TYPE_TABS.GET_CUSTOM_PRICING_BY_DRAFT_DATA, pagination],
     queryFn: () =>
-      getDartTable({
+      getCustomPricingSearch({
         ...initalValueQueryInputParamsDraft,
         ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
@@ -84,7 +83,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
             public: data.public,
-            isASLMember: data.isASLMember,
             searchAll: '',
           }))
         );
@@ -103,7 +101,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_CUSTOM_PRICING.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_CUSTOM_PRICING_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);
@@ -184,14 +182,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       render: (value) => value,
     },
     {
-      title: <div className={style.title}>Member</div>,
-      width: 200,
-      dataIndex: 'isASLMember',
-      key: 'isASLMember',
-      align: 'left',
-      render: (value) => (value ? 'ASL' : 'vendor'),
-    },
-    {
       title: (
         <div className={style.title}>
           {translatePricingCustom('currency_form.title')}
@@ -205,7 +195,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: (
         <div className={style.title}>
-          {translatePricingCustom('vendor_form.title')}
+          {translatePricingCustom('carrier_form.title')}
         </div>
       ),
       width: 200,

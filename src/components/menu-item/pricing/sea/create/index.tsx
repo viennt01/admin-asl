@@ -10,10 +10,10 @@ import {
   SeaPricingEdit,
   SeaPricingFeeFormValue,
   SeaPricingFeeUpdate,
+  TYPE_TABS,
 } from '../interface';
 import { createSeaPricing, editSeaPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_SEA_PRICING } from '@/fetcherAxios/endpoint';
 
 export const returnFeeDTOs = (
   seaPricingFeeDTOs?: SeaPricingFeeFormValue[],
@@ -197,7 +197,7 @@ const CreateSeaPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_SEA_PRICING.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -233,7 +233,7 @@ const CreateSeaPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_SEA_PRICING.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_SEA_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

@@ -1,6 +1,12 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_TABS {
+  GET_CUSTOM_PRICING_BY_MASTER_DATA = 'GET_CUSTOM_PRICING_BY_MASTER_DATA',
+  GET_CUSTOM_PRICING_BY_REQUEST_DATA = 'GET_CUSTOM_PRICING_BY_REQUEST_DATA',
+  GET_CUSTOM_PRICING_BY_DRAFT_DATA = 'GET_CUSTOM_PRICING_BY_DRAFT_DATA',
+}
+
 export interface ICustomPricing {
   customPricingID: string;
   typeDelaracrionID: string;
@@ -24,7 +30,6 @@ export interface ICustomPricing {
   updatedByUser: string;
   confirmDated: string;
   confirmByUser: string;
-  isASLMember: boolean;
 }
 
 export interface SeaPricingDetailDTOs {
