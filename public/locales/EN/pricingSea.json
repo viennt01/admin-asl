@@ -119,21 +119,6 @@
         "placeholder": "Enter Frequency",
         "error_required": "Please enter Frequency"
     },
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Enter Cut Off",
-        "error_required": "Please enter Cut Off"
-    },
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Enter TT",
-        "error_required": "Please enter TT"
-    },
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Enter InlAddon",
-        "error_required": "Please enter InlAddon"
-    },
     "vendorID_form": {
         "title": "Carrier",
         "placeholder": "Enter Carrier",
@@ -141,8 +126,8 @@
     },
     "transitTimeSeaPricing_form": {
         "title": "Transit Time",
-        "placeholder": "Enter Transit Time",
-        "error_required": "Please enter Transit Time"
+        "placeholder": "Enter transit time",
+        "error_required": "Please enter transit time"
     },
     "DEM_form": {
         "title": "Demurrage",

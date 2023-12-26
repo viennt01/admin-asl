@@ -2,7 +2,7 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   AirPricingFeeFormValue,
   FormValues,
@@ -31,6 +31,8 @@ import AirPricingDetailDTO from './air-pricing-detail-dto';
 import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import ListFee from './list-fee';
 import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 interface PortFormProps {
   create?: boolean;
@@ -69,6 +71,7 @@ const AirPricing = ({
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
+  const { role } = useContext(AppContext);
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [optionCurrency, setOptionCurrency] = useState<
@@ -81,7 +84,6 @@ const AirPricing = ({
     AirPricingFeeFormValue[]
   >([]);
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
-
   const listIdFeeGroup = Form.useWatch('airPricingFeeDTOs', form);
 
   useEffect(() => {
@@ -115,7 +117,7 @@ const AirPricing = ({
   // get load capacity type
   useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () => getAllTypeLoadCapacity({ type: TYPE_LOAD_CAPACITY.TOTAL }),
+    queryFn: () => getAllTypeLoadCapacity({ type: TYPE_LOAD_CAPACITY.AIR }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -185,9 +187,13 @@ const AirPricing = ({
           commodityID: data.data.commodityID,
           note: data.data.note,
           validityDate: dayjs(Number(data.data.validityDate)),
+          effectDated: dayjs(Number(data.data.effectDated)),
           freqDate: data.data.freqDate,
           currencyID: data.data.currencyID,
           public: data.data.public,
+          vendorID: data.data.vendorID,
+          gw: data.data.gw,
+          transitTimeAirPricing: data.data.transitTimeAirPricing,
           statusAirPricing: data.data.statusAirPricing,
           airPricingDetailDTOs: data.data.airPricingDetailDTOs,
           airPricingFeeDTOs: data.data.airPricingFeeDTOs.map(
@@ -240,9 +246,13 @@ const AirPricing = ({
       commodityID: form.getFieldValue('commodityID'),
       note: form.getFieldValue('note'),
       validityDate: form.getFieldValue('validityDate'),
+      effectDated: form.getFieldValue('effectDated'),
       freqDate: form.getFieldValue('freqDate'),
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
+      vendorID: form.getFieldValue('vendorID'),
+      gw: form.getFieldValue('gw'),
+      transitTimeAirPricing: form.getFieldValue('transitTimeAirPricing'),
       statusAirPricing: form.getFieldValue('statusAirPricing'),
       airPricingDetailDTOs: form.getFieldValue('airPricingDetailDTOs'),
       airPricingFeeDTOs: form.getFieldValue('airPricingFeeDTOs'),
@@ -286,6 +296,7 @@ const AirPricing = ({
         >
           <AirPricingDetailDTO
             form={form}
+            create={create}
             optionCurrency={optionCurrency}
             optionTypeLoadCapacity={optionTypeLoadCapacity}
             isCheckPermissionEdit={isCheckPermissionEdit}
@@ -313,10 +324,13 @@ const AirPricing = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={handleAR}
+          handleAR={
+            role === ROLE.LINER || role === ROLE.AGENT ? undefined : handleAR
+          }
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}
+          checkPermissionEdit={true}
         />
       </Form>
     </div>

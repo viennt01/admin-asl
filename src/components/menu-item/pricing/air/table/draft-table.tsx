@@ -9,9 +9,8 @@ import {
   Checkbox,
 } from 'antd';
 import { useState, MouseEvent, useMemo } from 'react';
-import { AirPricingDetailDTOs, AirPricingTable } from '../interface';
-import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
-import { deleteAirPricing, getDartTable } from '../fetcher';
+import { AirPricingDetailDTOs, AirPricingTable, TYPE_TABS } from '../interface';
+import { deleteAirPricing, getAirPricingSearch } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -54,9 +53,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_AIR_PRICING.GET_DRAFT, pagination],
+    queryKey: [TYPE_TABS.GET_AIR_PRICING_BY_DRAFT_DATA, pagination],
     queryFn: () =>
-      getDartTable({
+      getAirPricingSearch({
         ...initalValueQueryInputParamsDraft,
         ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
@@ -80,6 +79,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
             validityDate: data.validityDate,
+            effectDated: data.effectDated,
             freqDate: data.freqDate,
             public: data.public,
             statusAirPricing: data.statusAirPricing,
@@ -90,6 +90,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
+            transitTimeAirPricing: data.transitTimeAirPricing,
             vendor: data.vendor,
             gw: data.gw,
             searchAll: '',
@@ -110,7 +111,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_AIR_PRICING.GET_DRAFT],
+          queryKey: [TYPE_TABS.GET_AIR_PRICING_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);
@@ -183,19 +184,19 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       },
     },
     {
-      title: 'AOL',
+      title: <div className={style.title}>{translatePricingAir('AOL')}</div>,
       width: 200,
       dataIndex: 'aolName',
       key: 'aolName',
-      align: 'center',
+      align: 'left',
       render: (value) => value,
     },
     {
-      title: 'AOD',
+      title: <div className={style.title}>{translatePricingAir('AOD')}</div>,
       width: 200,
       dataIndex: 'aodName',
       key: 'aodName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: translatePricingAir('vendor'),
@@ -212,7 +213,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       align: 'center',
     },
     {
-      title: 'GW',
+      title: <div className={style.title}>{translatePricingAir('GW')}</div>,
       dataIndex: 'gw',
       width: 50,
       key: 'gw',

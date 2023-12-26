@@ -36,41 +36,5 @@ export const initalValueQueryInputParamsDraft = {
 };
 
 export const initalValueQuerySelectParamsDraft = {
-  status: STATUS_ALL_LABELS.DRAFT,
-};
-
-export const initalSelectSearchDraft = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  statusAirPricing: {
-    label: '',
-    value: '',
-  },
-};
-
-//request
-export const initalValueQueryInputParamsRequest = {
-  searchAll: '',
-  status: STATUS_ALL_LABELS.REQUEST,
-};
-
-export const initalSelectSearchRequest = {
-  searchAll: {
-    label: '',
-    value: '',
-  },
-  internationalCode: {
-    label: '',
-    value: '',
-  },
-  description: {
-    label: '',
-    value: '',
-  },
-  statusAirPricing: {
-    label: '',
-    value: '',
-  },
+  statusAirPricing: [STATUS_ALL_LABELS.DRAFT],
 };

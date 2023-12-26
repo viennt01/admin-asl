@@ -1,6 +1,6 @@
 {
     "title": "Danh sách định giá đường biển",
-    "no" : "No",
+    "no": "No",
     "AOL": "AOL",
     "AOD": "AOD",
     "destination": "Destination",
@@ -13,168 +13,87 @@
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "validity": "Validity Date",
-    "freq": "Freq",
-    "Cutoff": "Cut Off",
-    "TT": "TT",
-    "inl_addon": "InlAddon",
-    "empty_return": "Empty Return",
-    "amend": "Amend",
-    "modify_date": "Ngày cập nhật",
+    "validity": "Expiry date",
+    "effective": "Effective date",
+    "freq": "Frequency",
     "status": "Trạng thái",
     "note": "Ghi chú",
     "date_created": "Ngày tạo",
     "creator": "Người tạo",
-
     "title_air_freight": "Vận tải bằng hàng không",
     "title_local_chart": "Phụ phí",
     "information_add_air_pricing": "Thêm mới định giá hàng không",
     "information_edit_air_pricing": "Chỉnh sửa định giá hàng không",
-
     "AOL_form": {
         "title": "AOL",
         "placeholder": "Nhập AOL",
         "error_required": "Vui lòng nhập AOL"
     },
-
     "AOD_form": {
         "title": "AOD",
         "placeholder": "Nhập AOD",
         "error_required": "Vui lòng nhập AOD"
     },
-
     "destination_form": {
         "title": "Destination",
         "placeholder": "Nhập destination",
         "error_required": "Vui lòng nhập destination"
     },
-
     "country_form": {
         "title": "Country",
         "placeholder": "Nhập country",
         "error_required": "Vui lòng nhập country"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Nhập vendor",
         "error_required": "Vui lòng nhập vendor"
     },
-
     "carrier_form": {
         "title": "Carrier",
         "placeholder": "Nhập carrier",
         "error_required": "Vui lòng nhập carrier"
     },
-
-    "service_form": {
-        "title": "Service",
-        "placeholder": "Nhập service",
-        "error_required": "Vui lòng nhập service"
-    },
-
     "commodity_form": {
         "title": "Commodity",
         "placeholder": "Nhập commodity",
         "error_required": "Vui lòng nhập commodity"
     },
-
-    "others_form": {
-        "title": "Others",
-        "placeholder": "Nhập others",
-        "error_required": "Vui lòng nhập others"
-    },
-
-    "type_form": {
-        "title": "Type",
-        "placeholder": "Nhập type",
-        "error_required": "Vui lòng nhập type"
-    },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Nhập currency",
         "error_required": "Vui lòng nhập currency"
     },
-
+    "transitTime_form": {
+        "title": "Transit Time",
+        "placeholder": "Nhập transit time",
+        "error_required": "Vui lòng nhập transit time"
+    },
     "VAT_form": {
         "title": "VAT",
         "placeholder": "Nhập VAT",
         "error_required": "Vui lòng nhập VAT"
     },
-
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Nhập Effect Date",
-        "error_required": "Vui lòng nhập Effect Date"
+        "title": "Effective date",
+        "placeholder": "Nhập effective date",
+        "error_required": "Vui lòng nhập effective date"
     },
-
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Nhập Validity Date",
-        "error_required": "Vui lòng nhập Validity Date"
+        "title": "Expiry date",
+        "placeholder": "Nhập expiry date",
+        "error_required": "Vui lòng nhập expiry date"
     },
-
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Nhập freq",
-        "error_required": "Vui lòng nhập freq"
+        "title": "Frequency",
+        "placeholder": "Nhập frequency",
+        "error_required": "Vui lòng nhập frequency"
     },
-
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Nhập Cut Off",
-        "error_required": "Vui lòng nhập Cut Off"
-    },
-
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Nhập TT",
-        "error_required": "Vui lòng nhập TT"
-    },
-
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Nhập InlAddon",
-        "error_required": "Vui lòng nhập InlAddon"
-    },
-
-    "empty_return_form": {
-        "title": "empty_return",
-        "placeholder": "Nhập empty_return",
-        "error_required": "Vui lòng nhập Empty Return"
-    },
-
-    "amend_form": {
-        "title": "Amend",
-        "placeholder": "Nhập Amend",
-        "error_required": "Vui lòng nhập Amend"
-    },
-
-    "DEM_form": {
-        "title": "DEM",
-        "placeholder": "Nhập DEM",
-        "error_required": "Vui lòng nhập DEM"
-    },
-
-    "DET_form": {
-        "title": "DET",
-        "placeholder": "Nhập DET",
-        "error_required": "Vui lòng nhập DET"
-    },
-
-    "STO_form": {
-        "title": "STO",
-        "placeholder": "Nhập STO",
-        "error_required": "Vui lòng nhập STO"
-    },
-
     "Fee_Group_form": {
         "title": "Loại nhóm phí",
         "placeholder": "Nhập loại nhóm phí",
         "error_required": "Vui lòng chọn loại nhóm phí"
     },
-    
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

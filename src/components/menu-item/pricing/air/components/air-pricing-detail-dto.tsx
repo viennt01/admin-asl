@@ -190,6 +190,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
 interface Props {
   form: FormInstance<FormValues>;
+  create: boolean | undefined;
   isCheckPermissionEdit: boolean;
   optionCurrency: { value: string; label: string }[];
   optionTypeLoadCapacity: { value: string; label: string }[];
@@ -197,41 +198,68 @@ interface Props {
 
 const AirPricingDetailDTO = ({
   form,
+  create,
   isCheckPermissionEdit,
   optionCurrency,
   optionTypeLoadCapacity,
 }: Props) => {
   const { translate: translateCommon } = useI18n('common');
-  const [dataSource, setDataSource] = useState<DataType[]>([]);
-  const [dataRequire, setDataRequire] = useState<DataType[]>([]);
   const [optionTypeContainerActive, setOptionTypeContainerActive] = useState<
     { value: string; label: string }[]
   >([]);
   const [idKeyAndContainerType, setIdKeyAndContainerType] = useState<
     { idAirPricingDetailID: Key; idContainerType: string }[]
   >([]);
+  const [count, setCount] = useState(0);
   const [countLoadData, setCountLoadData] = useState(0);
-  const valueCurrencyID = Form.useWatch('currencyID', form);
+  const valueCurrencyID =
+    Form.useWatch('currencyID', form) || optionCurrency[0]?.value;
+  const [dataSource, setDataSource] = useState<DataType[]>([]);
+  const [dataRequire, setDataRequire] = useState<DataType[]>([]);
 
   // Lấy data từ API và chỉ lấy lần đầu (setDataRequire)
   useEffect(() => {
-    // Chỉ lấy data từ API khi lần đầu vào form
-    if (form.getFieldValue('airPricingDetailDTOs') && countLoadData === 0) {
-      setDataRequire(
-        form
-          .getFieldValue('airPricingDetailDTOs')
-          .map((item: AirPricingDetailDTOsFormValue) => {
+    if (
+      optionTypeLoadCapacity &&
+      form.getFieldValue('airPricingDetailDTOs') &&
+      countLoadData === 0
+    ) {
+      if (create) {
+        setDataRequire(
+          optionTypeLoadCapacity.map((item) => {
             return {
-              key: item.airPricingDetailID || '',
-              loadCapacityName: item.loadCapacityName || '',
-              loadCapacityID: item.loadCapacityID || '',
-              price: item.price || '',
+              key:
+                idKeyAndContainerType.find(
+                  (item) =>
+                    item.idContainerType === optionTypeContainerActive[0]?.value
+                )?.idAirPricingDetailID || count,
+              containerTypeCode: '',
+              loadCapacityID: item.value || '',
+              loadCapacityName: optionTypeContainerActive[0]?.label || '',
+              currencyID: valueCurrencyID || optionCurrency[0]?.value || '',
+              currencyName: optionCurrency[0].label || '',
+              price: '1000000',
             };
           })
-      );
+        );
+        setCount(count + 1);
+      } else {
+        setDataRequire(
+          form
+            .getFieldValue('airPricingDetailDTOs')
+            .map((item: AirPricingDetailDTOsFormValue) => {
+              return {
+                key: item.airPricingDetailID || '',
+                loadCapacityName: item.loadCapacityName || '',
+                loadCapacityID: item.loadCapacityID || '',
+                price: item.price || '',
+              };
+            })
+        );
+      }
       setCountLoadData(1);
     }
-  }, [form.getFieldValue('airPricingDetailDTOs')]);
+  }, [form.getFieldValue('airPricingDetailDTOs'), optionTypeLoadCapacity]);
 
   useEffect(() => {
     if (valueCurrencyID) {
@@ -372,7 +400,6 @@ const AirPricingDetailDTO = ({
     },
   ];
 
-  const [count, setCount] = useState(0);
   const handleAdd = () => {
     const newData: DataType = {
       key:

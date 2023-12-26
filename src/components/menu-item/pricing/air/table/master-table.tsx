@@ -2,16 +2,8 @@ import {
   EditOutlined,
   ExclamationCircleFilled,
   FilterFilled,
-  DeleteOutlined,
 } from '@ant-design/icons';
-import {
-  Button,
-  Modal,
-  PaginationProps,
-  Tag,
-  Popconfirm,
-  Checkbox,
-} from 'antd';
+import { Button, Modal, PaginationProps, Tag, Checkbox } from 'antd';
 import {
   ChangeEvent,
   Key,
@@ -27,7 +19,6 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
 import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -37,6 +28,7 @@ import {
   SelectSearch,
   AirPricingTable,
   AirPricingDetailDTOs,
+  TYPE_TABS,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -46,6 +38,7 @@ import {
 import {
   deleteAirPricing,
   downloadExampleFile,
+  exportTableFile,
   getAirPricingSearch,
   importDataTable,
 } from '../fetcher';
@@ -63,6 +56,8 @@ import ImportCSVModal, {
 } from '@/components/commons/import-data';
 import { ROLE } from '@/constant/permission';
 import { AppContext } from '@/app-context';
+import { DAY_WEEK } from '@/constant';
+import { getSystemDate } from '@/utils/common';
 
 const { confirm } = Modal;
 
@@ -104,7 +99,11 @@ export default function MasterDataTable() {
       : querySelectParams;
 
   const locationsQuerySearch = useQuery({
-    queryKey: [API_AIR_PRICING.GET_SEARCH, queryInputParams, querySelectParams],
+    queryKey: [
+      TYPE_TABS.GET_AIR_PRICING_BY_MASTER_DATA,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
       getAirPricingSearch({
         ...queryInputParams,
@@ -131,6 +130,7 @@ export default function MasterDataTable() {
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
             validityDate: data.validityDate,
+            effectDated: data.effectDated,
             freqDate: data.freqDate,
             public: data.public,
             statusAirPricing: data.statusAirPricing,
@@ -142,6 +142,7 @@ export default function MasterDataTable() {
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
             vendor: data.vendor,
+            transitTimeAirPricing: data.transitTimeAirPricing,
             gw: data.gw,
             searchAll: '',
           }))
@@ -164,7 +165,7 @@ export default function MasterDataTable() {
         successToast(data.message);
         queryClient.invalidateQueries({
           queryKey: [
-            API_AIR_PRICING.GET_SEARCH,
+            TYPE_TABS.GET_AIR_PRICING_BY_MASTER_DATA,
             pagination,
             queryInputParams,
             querySelectParams,
@@ -275,19 +276,19 @@ export default function MasterDataTable() {
       },
     },
     {
-      title: 'AOL',
+      title: <div className={style.title}>{translatePricingAir('AOL')}</div>,
       width: 200,
       dataIndex: 'aolName',
       key: 'aolName',
-      align: 'center',
+      align: 'left',
       render: (value) => value,
     },
     {
-      title: 'AOD',
+      title: <div className={style.title}>{translatePricingAir('AOD')}</div>,
       width: 200,
       dataIndex: 'aodName',
       key: 'aodName',
-      align: 'center',
+      align: 'left',
     },
     {
       title: <div className={style.title}>{translatePricingAir('status')}</div>,
@@ -327,25 +328,31 @@ export default function MasterDataTable() {
       ),
     },
     {
-      title: translatePricingAir('vendor'),
+      title: (
+        <div className={style.title}>{translatePricingAir('carrier')}</div>
+      ),
       width: 200,
-      dataIndex: 'partnerName', // TODO:Check again
-      key: 'partnerName',
-      align: 'center',
+      dataIndex: 'vendor', // TODO:Check again
+      key: 'vendor',
+      align: 'left',
     },
     {
-      title: translatePricingAir('commodity'),
+      title: (
+        <div className={style.title}>{translatePricingAir('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
-      align: 'center',
+      align: 'left',
     },
     {
-      title: 'Currency',
+      title: (
+        <div className={style.title}>{translatePricingAir('Currency')}</div>
+      ),
       width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
-      align: 'center',
+      align: 'right',
     },
     {
       title: translatePricingAir('validity'),
@@ -370,8 +377,9 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
-      align: 'center',
-      render: (value) => formatDate(Number(value)),
+      align: 'right',
+      render: (value) =>
+        DAY_WEEK.find((date) => date.value === value)?.label || '-',
     },
     {
       title: translatePricingAir('note'),
@@ -395,7 +403,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
-      align: 'center',
+      align: 'left',
     },
     {
       title: (
@@ -412,7 +420,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'updatedByUser',
       key: 'updatedByUser',
-      align: 'center',
+      align: 'left',
     },
     {
       key: 'operation',
@@ -428,23 +436,6 @@ export default function MasterDataTable() {
               marginRight: '10px',
             }}
           />
-          <Popconfirm
-            title={translateCommon('modal_delete.title')}
-            okText={translateCommon('modal_delete.button_ok')}
-            cancelText={translateCommon('modal_delete.button_cancel')}
-            onConfirm={() => {
-              setSelectedRowKeys([value as string]);
-              deleteMutation.mutate();
-            }}
-          >
-            <Button
-              icon={<DeleteOutlined />}
-              style={{
-                color: COLORS.ERROR,
-                borderColor: COLORS.ERROR,
-              }}
-            />
-          </Popconfirm>
         </div>
       ),
     },
@@ -452,7 +443,7 @@ export default function MasterDataTable() {
   ];
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.AIR_PRICING_EDIT(id));
+    router.push(ROUTERS.AIR_PRICING_EDIT(id, true));
   };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
@@ -470,6 +461,7 @@ export default function MasterDataTable() {
     setColumnsStateMap(map);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showPropsConfirmDelete = () => {
     confirm({
       icon: <ExclamationCircleFilled />,
@@ -506,9 +498,26 @@ export default function MasterDataTable() {
   const handleCreate = () => {
     router.push(ROUTERS.AIR_PRICING_CREATE);
   };
-  // export table data to csv
+  // export table data
+  const exportData = useMutation({
+    mutationFn: () =>
+      exportTableFile({
+        ids: selectedRowKeys,
+        status: querySelectParams.statusAirPricing,
+      }),
+    onSuccess: (data) => {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `ASL_AIR_PRICING${getSystemDate()}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      window.URL.revokeObjectURL(url);
+      setIsLoadingDownload(false);
+    },
+  });
   const exportTableData = () => {
-    console.log('export');
+    exportData.mutate();
   };
 
   // import table data from excel file
@@ -518,12 +527,12 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_AIR_PRICING.xlsx');
+      link.setAttribute('download', `ASL_AIR_PRICING${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
       queryClient.invalidateQueries({
-        queryKey: [API_AIR_PRICING.GET_REQUEST],
+        queryKey: [TYPE_TABS.GET_AIR_PRICING_BY_REQUEST_DATA],
       });
       setLoadingImport(false);
       setOpenImportModal(false);
@@ -553,7 +562,7 @@ export default function MasterDataTable() {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', 'ASL_AIR_PRICING.xlsx');
+      link.setAttribute('download', `ASL_AIR_PRICING${getSystemDate()}.xlsx`);
       document.body.appendChild(link);
       link.click();
       window.URL.revokeObjectURL(url);
@@ -590,7 +599,7 @@ export default function MasterDataTable() {
                 ? handleCreate
                 : undefined
             }
-            showPropsConfirmDelete={showPropsConfirmDelete}
+            // showPropsConfirmDelete={showPropsConfirmDelete}
             refreshingQuery={refreshingQuery}
             refreshingLoading={refreshingLoading}
             pagination={pagination}

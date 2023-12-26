@@ -1,6 +1,6 @@
 {
     "title": "List of Air Pricing",
-    "no" : "No",
+    "no": "No",
     "AOL": "AOL",
     "AOD": "AOD",
     "destination": "Destination",
@@ -13,168 +13,88 @@
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "validity": "Validity date",
-    "freq": "Freq",
+    "validity": "Expiry date",
+    "effective": "Effective date",
+    "freq": "Frequency",
     "Cutoff": "Cut Off",
-    "TT": "TT",
-    "inl_addon": "InlAddon",
-    "empty_return": "Empty Return",
-    "amend": "Amend",
-    "modify_date": "Modify Date",
     "status": "Status",
     "note": "Note",
     "date_created": "Date created",
     "creator": "Creator",
-
     "title_air_freight": "Air Freight",
     "title_local_chart": "Local Chart",
     "information_add_air_pricing": "Add new Air Pricing",
     "information_edit_air_pricing": "Edit Air Pricing",
-
     "AOL_form": {
         "title": "AOL",
         "placeholder": "Enter AOL",
         "error_required": "Please enter AOL"
     },
-
     "AOD_form": {
         "title": "AOD",
         "placeholder": "Enter AOD",
         "error_required": "Please enter AOD"
     },
-
     "destination_form": {
         "title": "Destination",
         "placeholder": "Enter destination",
         "error_required": "Please enter destination"
     },
-
     "country_form": {
         "title": "Country",
         "placeholder": "Enter country",
         "error_required": "Please enter country"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Enter vendor",
         "error_required": "Please enter vendor"
     },
-
     "carrier_form": {
         "title": "Carrier",
         "placeholder": "Enter carrier",
         "error_required": "Please enter carrier"
     },
-
-    "service_form": {
-        "title": "Service",
-        "placeholder": "Enter service",
-        "error_required": "Please enter service"
-    },
-
     "commodity_form": {
-        "title": "commodity",
+        "title": "Commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
-
-    "others_form": {
-        "title": "Others",
-        "placeholder": "Enter others",
-        "error_required": "Please enter others"
-    },
-
-    "type_form": {
-        "title": "Type",
-        "placeholder": "Enter type",
-        "error_required": "Please enter type"
-    },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
         "error_required": "Please chooses currency"
     },
-
+    "transitTime_form": {
+        "title": "Transit Time",
+        "placeholder": "Enter transit time",
+        "error_required": "Please enter transit time"
+    },
     "VAT_form": {
         "title": "VAT",
         "placeholder": "Enter VAT",
         "error_required": "Please enter VAT"
     },
-
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Enter Effect Date",
-        "error_required": "Please enter Effect Date"
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
     },
-
     "validity_form": {
-        "title": "Validity date",
-        "placeholder": "Enter validity date",
-        "error_required": "Please enter validity date"
+        "title": "Expiry date",
+        "placeholder": "Enter expiry date",
+        "error_required": "Please enter expiry date"
     },
-
     "freq_form": {
-        "title": "Freq",
-        "placeholder": "Enter freq",
-        "error_required": "Please enter freq"
+        "title": "Frequency",
+        "placeholder": "Enter frequency",
+        "error_required": "Please enter frequency"
     },
-
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Enter Cut Off",
-        "error_required": "Please enter Cut Off"
-    },
-
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Enter TT",
-        "error_required": "Please enter TT"
-    },
-
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Enter InlAddon",
-        "error_required": "Please enter InlAddon"
-    },
-
-    "empty_return_form": {
-        "title": "empty_return",
-        "placeholder": "Enter empty_return",
-        "error_required": "Please enter Empty Return"
-    },
-
-    "amend_form": {
-        "title": "Amend",
-        "placeholder": "Enter Amend",
-        "error_required": "Please enter Amend"
-    },
-
-    "DEM_form": {
-        "title": "DEM",
-        "placeholder": "Enter DEM",
-        "error_required": "Please enter DEM"
-    },
-
-    "DET_form": {
-        "title": "DET",
-        "placeholder": "Enter DET",
-        "error_required": "Please enter DET"
-    },
-
-    "STO_form": {
-        "title": "STO",
-        "placeholder": "Enter STO",
-        "error_required": "Please enter STO"
-    },
-
     "Fee_Group_form": {
         "title": "Other Charges",
         "placeholder": "Enter Other Charges",
         "error_required": "Please enter Other Charges"
     },
-    
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

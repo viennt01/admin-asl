@@ -6,6 +6,11 @@ export enum TYPE_LOAD_CAPACITY {
   'AIR' = 'Air',
   'TOTAL' = '',
 }
+export enum TYPE_TABS {
+  GET_AIR_PRICING_BY_MASTER_DATA = 'GET_AIR_PRICING_BY_MASTER_DATA',
+  GET_AIR_PRICING_BY_REQUEST_DATA = 'GET_AIR_PRICING_BY_REQUEST_DATA',
+  GET_AIR_PRICING_BY_DRAFT_DATA = 'GET_AIR_PRICING_BY_DRAFT_DATA',
+}
 
 export interface AirPricing {
   airPricingID: string;
@@ -19,6 +24,7 @@ export interface AirPricing {
   currencyAbbreviations: string;
   note: string;
   validityDate: string;
+  effectDated: string;
   freqDate: string;
   public: boolean;
   statusAirPricing: string;
@@ -30,6 +36,7 @@ export interface AirPricing {
   updatedByUser: string;
   airPricingDetailDTOs: { [key: string]: string };
   vendor: string;
+  transitTimeAirPricing: string;
   gw: boolean;
 }
 
@@ -77,11 +84,14 @@ export interface FormValues {
   commodityID: string;
   note: string;
   validityDate: Dayjs;
+  effectDated: Dayjs;
   freqDate: string;
   currencyID: string;
   public: boolean;
   statusAirPricing: string;
   gw: boolean;
+  vendorID: string;
+  transitTimeAirPricing: string;
   airPricingDetailDTOs: AirPricingDetailDTOsFormValue[];
   airPricingFeeDTOs: string[];
 }
@@ -145,18 +155,24 @@ export type AirPricingFeeUpdate = Omit<
 
 export type AirPricingCreate = Omit<
   FormValues,
-  'airPricingID' | 'validityDate' | 'airPricingDetailDTOs' | 'airPricingFeeDTOs'
+  | 'airPricingID'
+  | 'validityDate'
+  | 'airPricingDetailDTOs'
+  | 'airPricingFeeDTOs'
+  | 'effectDated'
 > & {
   validityDate: number;
+  effectDated: number;
   airPricingDetailRegisterRequests: AirPricingDetailDTOsCreate[];
   airPricingFeeGroupRegisterRequests: AirPricingFeeDTOsCreate[];
 };
 
 export type AirPricingEdit = Omit<
   FormValues,
-  'validityDate' | 'airPricingDetailDTOs' | 'airPricingFeeDTOs'
+  'validityDate' | 'airPricingDetailDTOs' | 'airPricingFeeDTOs' | 'effectDated'
 > & {
   validityDate: number;
+  effectDated: number;
   airPricingDetailUpdateRequests: AirPricingDetailDTOsUpdate[];
   airPricingFeeGroupUpdateRequests: AirPricingFeeUpdate[];
 };

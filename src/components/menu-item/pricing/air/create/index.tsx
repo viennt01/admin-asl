@@ -9,10 +9,10 @@ import {
   AirPricingCreate,
   AirPricingEdit,
   AirPricingFeeFormValue,
+  TYPE_TABS,
 } from '../interface';
 import { createAirPricing, editAirPricing } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_AIR_PRICING } from '@/fetcherAxios/endpoint';
 
 export const returnFeeDTOs = (
   seaPricingFeeDTOs?: AirPricingFeeFormValue[],
@@ -95,8 +95,11 @@ const CreateAirPricing = () => {
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
         validityDate: formValues.validityDate?.valueOf(),
+        effectDated: formValues.effectDated?.valueOf(),
         freqDate: formValues.freqDate || '',
         currencyID: formValues.currencyID || '',
+        vendorID: formValues.vendorID || '',
+        transitTimeAirPricing: formValues.transitTimeAirPricing || '0',
         gw: formValues.gw,
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
@@ -120,8 +123,11 @@ const CreateAirPricing = () => {
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
         validityDate: formValues.validityDate?.valueOf(),
+        effectDated: formValues.effectDated?.valueOf(),
         freqDate: formValues.freqDate || '',
         gw: formValues.gw,
+        vendorID: formValues.vendorID || '',
+        transitTimeAirPricing: formValues.transitTimeAirPricing || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailRegisterRequests:
@@ -166,8 +172,11 @@ const CreateAirPricing = () => {
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
         validityDate: formValues.validityDate?.valueOf(),
+        effectDated: formValues.effectDated?.valueOf(),
         freqDate: formValues.freqDate || '',
         gw: formValues.gw,
+        vendorID: formValues.vendorID || '',
+        transitTimeAirPricing: formValues.transitTimeAirPricing || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],
@@ -179,7 +188,7 @@ const CreateAirPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_AIR_PRICING.GET_DRAFT],
+                queryKey: [TYPE_TABS.GET_AIR_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -194,8 +203,11 @@ const CreateAirPricing = () => {
         commodityID: formValues.commodityID || '',
         note: formValues.note || '',
         validityDate: formValues.validityDate?.valueOf(),
+        effectDated: formValues.effectDated?.valueOf(),
         freqDate: formValues.freqDate || '',
         gw: formValues.gw,
+        vendorID: formValues.vendorID || '',
+        transitTimeAirPricing: formValues.transitTimeAirPricing || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailRegisterRequests:
@@ -208,7 +220,7 @@ const CreateAirPricing = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_AIR_PRICING.GET_DRAFT],
+                queryKey: [TYPE_TABS.GET_AIR_PRICING_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

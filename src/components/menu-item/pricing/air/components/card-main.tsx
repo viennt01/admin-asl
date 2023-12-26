@@ -22,6 +22,7 @@ import {
   API_COMMODITY,
   API_FEE_GROUP,
   API_LOCATION,
+  API_PARTNER,
 } from '@/fetcherAxios/endpoint';
 import { getAllCommodity, updateStatus } from '../fetcher';
 import DraftTable from '../table/draft-table';
@@ -29,10 +30,11 @@ import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { formatNumber } from '@/utils/format';
-import { getAllLocation } from '../../sea/fetcher';
+import { getAllLiner, getAllLocation } from '../../sea/fetcher';
 import { TYPE_LOCATION } from '../../sea/interface';
 import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
+import { DAY_WEEK } from '@/constant';
 
 interface Props {
   create?: boolean;
@@ -70,6 +72,14 @@ const CardMain = ({
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    form.setFieldValue('gw', componentDisabled);
+  }, [componentDisabled]);
+
+  useEffect(() => {
+    setComponentDisabled(form.getFieldValue('gw'));
+  }, [form.getFieldValue('gw')]);
 
   const propCopyAndCreate = router.query;
   const dateFormat = 'YYYY-MM-DD';
@@ -119,6 +129,21 @@ const CardMain = ({
     },
   });
 
+  const getLiner = useQuery({
+    queryKey: [API_PARTNER.GET_ALL_VENDOR],
+    queryFn: () => getAllLiner(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
   useEffect(() => {
     if (form.getFieldValue('statusAirPricing')) {
       form.getFieldValue('statusAirPricing') === STATUS_ALL_LABELS.ACTIVE
@@ -136,14 +161,21 @@ const CardMain = ({
         commodityID: propCopyAndCreate.commodityID as string,
         note: propCopyAndCreate.note as string,
         validityDate: propCopyAndCreate.validityDate as string,
+        effectDated: propCopyAndCreate.effectDated as string,
         freqDate: propCopyAndCreate.freqDate as string,
         currencyID: propCopyAndCreate.currencyID as string,
+        vendorID: propCopyAndCreate.vendorID as string,
+        gw: propCopyAndCreate.gw as unknown as boolean,
+        transitTimeAirPricing:
+          propCopyAndCreate.transitTimeAirPricing as string,
         public: propCopyAndCreate.public as unknown as boolean,
         statusAirPricing: propCopyAndCreate.statusAirPricing as string,
         airPricingDetailDTOs:
           propCopyAndCreate.airPricingDetailDTOs as unknown as AirPricingDetailDTOs[],
-        // airPricingFeeDTOs:
-        //   propCopyAndCreate.airPricingFeeDTOs as unknown as AirPricingFeeDTOs[],
+        airPricingFeeDTOs:
+          typeof propCopyAndCreate.airPricingFeeDTOs === 'string'
+            ? [propCopyAndCreate.airPricingFeeDTOs as unknown as string]
+            : (propCopyAndCreate.airPricingFeeDTOs as unknown as string[]),
       });
     }
   }, [
@@ -237,7 +269,7 @@ const CardMain = ({
           >
             <Select
               showSearch
-              placeholder={translatePricingAir('AOL_form.error_required')}
+              placeholder={translatePricingAir('AOL_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="label"
               filterOption={(input, option) => {
@@ -255,7 +287,7 @@ const CardMain = ({
                       <div
                         style={{
                           display: 'flex',
-                          justifyContent: 'center',
+                          justifyContent: 'space-between',
                           alignItems: 'center',
                         }}
                       >
@@ -324,7 +356,7 @@ const CardMain = ({
                       <div
                         style={{
                           display: 'flex',
-                          justifyContent: 'center',
+                          justifyContent: 'space-between',
                           alignItems: 'center',
                         }}
                       >
@@ -364,6 +396,24 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
+            label={translatePricingAir('effect_date_form.title')}
+            name="effectDated"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('effect_date_form.error_required'),
+              },
+            ]}
+          >
+            <DatePicker
+              disabled={checkRow && isCheckPermissionEdit}
+              format={dateFormat}
+              style={{ width: '100%' }}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
             label={translatePricingAir('validity_form.title')}
             name="validityDate"
             rules={[
@@ -391,12 +441,20 @@ const CardMain = ({
               },
             ]}
           >
-            <InputNumber
-              disabled={checkRow && isCheckPermissionEdit}
+            <Select
+              showSearch
               placeholder={translatePricingAir('freq_form.placeholder')}
-              formatter={(value) => formatNumber(value)}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-              style={{ width: '100%' }}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={DAY_WEEK}
             />
           </Form.Item>
         </Col>
@@ -439,16 +497,88 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('vendor_form.title')}
-            name="vendor"
+            label={translatePricingAir('carrier_form.title')}
+            name="vendorID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('carrier_form.error_required'),
+              },
+            ]}
           >
-            <Input
-              placeholder={translatePricingAir('vendor_form.placeholder')}
-              disabled
+            <Select
+              showSearch
+              placeholder={translatePricingAir('carrier_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getLiner.data?.data.map((item) => {
+                  return {
+                    value: item.partnerID,
+                    label: item.companyName,
+                  };
+                }) || []
+              }
             />
           </Form.Item>
         </Col>
+
         <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('transitTime_form.title')}
+            name="transitTimeAirPricing"
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir('transitTime_form.placeholder')}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('currency_form.title')}
+            name="currencyID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('currency_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              placeholder={translatePricingAir('currency_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={12}>
+          <Form.Item label={'GW'} name="gw">
+            <Checkbox
+              disabled={checkRow && isCheckPermissionEdit}
+              checked={componentDisabled}
+              onChange={(e) => setComponentDisabled(e.target.checked)}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={24}>
           <Form.Item
             label={translatePricingAir('Fee_Group_form.title')}
             name="airPricingFeeDTOs"
@@ -481,37 +611,6 @@ const CardMain = ({
                   };
                 }) || []
               }
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={4} span={12}>
-          <Form.Item
-            label={translatePricingAir('currency')}
-            name="currencyID"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir('currency_form.placeholder'),
-              },
-            ]}
-          >
-            <Select
-              placeholder={'$'}
-              disabled={checkRow && isCheckPermissionEdit}
-              showSearch
-              style={{ width: '100%' }}
-              options={optionCurrency}
-            />
-          </Form.Item>
-        </Col>
-        <Col span={12}>
-          <Form.Item label={'GW'} name="gw" valuePropName="gw">
-            <Checkbox
-              checked={componentDisabled}
-              onChange={(e) => (
-                setComponentDisabled(e.target.checked),
-                form.setFieldValue('gw', e.target.checked)
-              )}
             />
           </Form.Item>
         </Col>

@@ -1,6 +1,7 @@
 import {
   ResponseWithPayload,
   downloadFile,
+  exportFile,
   get,
   post,
   uploadFile,
@@ -27,6 +28,7 @@ import {
   API_AIR_PRICING,
   API_LOAD_CAPACITY,
 } from '@/fetcherAxios/endpoint';
+import { RequestExportData } from '../custom/interface';
 
 export const getAirPricingSearch = (data: RequestAirPricing) => {
   return post<RequestAirPricing, ResponseWithPayload<AirPricingRequire>>({
@@ -93,7 +95,11 @@ export const importDataTable = (data: FormData) => {
 export const downloadExampleFile = () => {
   return downloadFile<BlobPart>({})(API_AIR_PRICING.DOWNLOAD_EXAMPLE_FILE);
 };
-
+export const exportTableFile = (data: RequestExportData) => {
+  return exportFile<RequestExportData, BlobPart>({ data })(
+    API_AIR_PRICING.EXPORT
+  );
+};
 export const getAllCommodity = () => {
   return get<ResponseWithPayload<RequireCommodity[]>>({})(
     API_COMMODITY.GET_ALL
