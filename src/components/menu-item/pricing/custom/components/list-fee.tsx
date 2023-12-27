@@ -169,14 +169,7 @@ const ListFee = ({ FeeDataTable }: Props) => {
       },
     },
     {
-      title: 'Type fee',
-      dataIndex: 'typeFeeName',
-      key: 'typeFeeName',
-      fixed: 'left',
-      ...getColumnSearchProps('typeFeeName'),
-    },
-    {
-      title: 'NO',
+      title: 'Fee No',
       dataIndex: 'feeNo',
       key: 'feeNo',
       fixed: 'left',

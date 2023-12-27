@@ -125,7 +125,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         onPressEnter={save}
         onBlur={save}
         style={{ width: '100%' }}
-        formatter={(value) => formatNumber(Number(value) || 0)}
+        formatter={(value) => formatNumber(Number(value) || '0')}
       />
     ) : (
       <Select
@@ -157,8 +157,15 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
-            message: `${title} is required.`,
+            required:
+              (title as React.ReactElement).props.children === 'VAT'
+                ? false
+                : true,
+            message: `${
+              React.isValidElement(title)
+                ? (title as React.ReactElement).props.children
+                : title
+            } is required.`,
           },
         ]}
       >
@@ -336,7 +343,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -345,7 +352,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -354,7 +361,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -367,7 +374,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -376,7 +383,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -385,7 +392,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -394,9 +401,9 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0) === '0'
+        return formatNumber(Number(value)) === '0'
           ? '-'
-          : formatNumber(Number(value) || 0);
+          : formatNumber(Number(value));
       },
     },
     {

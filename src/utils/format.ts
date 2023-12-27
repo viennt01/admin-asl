@@ -38,10 +38,7 @@ export function formatDateYYYYMMDD(
 }
 
 export const formatNumber = (value: number | string) => {
-  // const a = 0;
   if (!value) {
-    console.log(1);
-
     return '-';
   }
   return new Intl.NumberFormat().format(Number(value));

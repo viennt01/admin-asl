@@ -88,8 +88,12 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
-            message: `${title} is required.`,
+            required: title === 'VAT' ? false : true,
+            message: `${
+              React.isValidElement(title)
+                ? (title as React.ReactElement).props.children
+                : title
+            } is required.`,
           },
         ]}
       >
@@ -171,7 +175,7 @@ const Air = ({ form }: PropsLCL) => {
       align: 'center',
       editable: true,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -181,7 +185,7 @@ const Air = ({ form }: PropsLCL) => {
       align: 'center',
       editable: true,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -191,7 +195,7 @@ const Air = ({ form }: PropsLCL) => {
       align: 'center',
       editable: true,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -201,9 +205,9 @@ const Air = ({ form }: PropsLCL) => {
       editable: true,
       align: 'center',
       render: (value) => {
-        return formatNumber(Number(value) || 0) === '0'
+        return formatNumber(Number(value)) === '0'
           ? '-'
-          : formatNumber(Number(value) || 0);
+          : formatNumber(Number(value));
       },
     },
   ];
