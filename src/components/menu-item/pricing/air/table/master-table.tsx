@@ -1,7 +1,7 @@
 import {
-  EditOutlined,
   ExclamationCircleFilled,
   FilterFilled,
+  EyeOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag, Checkbox } from 'antd';
 import {
@@ -431,7 +431,7 @@ export default function MasterDataTable() {
         <div style={{ display: 'flex' }}>
           <Button
             onClick={() => handleEditCustomer(value as string)}
-            icon={<EditOutlined />}
+            icon={<EyeOutlined />}
             style={{
               marginRight: '10px',
             }}

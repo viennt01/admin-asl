@@ -13,7 +13,7 @@ import {
   DatePicker,
 } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   Fee,
   FeeDataOption,
@@ -49,6 +49,8 @@ import {
   getListTypeUnit,
 } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
 import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 const initialValue = {
   description: '',
@@ -87,6 +89,7 @@ const FeeGroupForm = ({
   const [form] = Form.useForm<FormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
+  const { role } = useContext(AppContext);
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
@@ -579,7 +582,9 @@ const FeeGroupForm = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={handleAR}
+          handleAR={
+            role === ROLE.LINER || role === ROLE.AGENT ? undefined : handleAR
+          }
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}

@@ -36,6 +36,7 @@ import { getUserInfo } from '@/layout/fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { getPriorityRole } from '@/hook/useAuthentication';
+import { ROLE } from '@/constant/permission';
 
 type DataIndex = keyof QueryInputParamType;
 
@@ -55,7 +56,7 @@ const RequestTable = () => {
     initalSelectSearchRequest
   );
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { setUserInfo, setRole } = useContext(AppContext);
+  const { setUserInfo, setRole, role } = useContext(AppContext);
 
   const checkUser = useQuery({
     queryKey: [API_USER.CHECK_USER],
@@ -205,6 +206,7 @@ const RequestTable = () => {
               marginRight: '10px',
               color: COLORS.SUCCESS,
               borderColor: COLORS.SUCCESS,
+              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
             }}
           />
           <Button
@@ -214,7 +216,11 @@ const RequestTable = () => {
               ]);
             }}
             icon={<CloseOutlined />}
-            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
+            style={{
+              color: COLORS.ERROR,
+              borderColor: COLORS.ERROR,
+              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
+            }}
           />
         </div>
       ),
@@ -321,7 +327,11 @@ const RequestTable = () => {
           pagination={pagination}
           checkTableMaster={true}
           handleSelectionChange={handleSelectionChange}
-          handleApproveAndReject={handleApproveAndReject}
+          handleApproveAndReject={
+            role === ROLE.LINER || role === ROLE.AGENT
+              ? undefined
+              : handleApproveAndReject
+          }
         />
       </div>
     </>

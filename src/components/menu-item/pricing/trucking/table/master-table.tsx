@@ -589,6 +589,7 @@ export default function MasterDataTable() {
     updateColumnMutation.mutate();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showPropsConfirmDelete = () => {
     confirm({
       icon: <ExclamationCircleFilled />,
@@ -756,7 +757,7 @@ export default function MasterDataTable() {
                 ? handleCreate
                 : undefined
             }
-            showPropsConfirmDelete={showPropsConfirmDelete}
+            // showPropsConfirmDelete={showPropsConfirmDelete}
             refreshingQuery={refreshingQuery}
             refreshingLoading={refreshingLoading}
             pagination={pagination}
