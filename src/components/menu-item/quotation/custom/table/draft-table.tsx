@@ -2,9 +2,8 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { ICustomQuotationTable } from '../interface';
-import { API_CUSTOMS_QUOTATION } from '@/fetcherAxios/endpoint';
-import { deleteCustomQuotation, getDartTable } from '../fetcher';
+import { ICustomQuotationTable, TYPE_TABS } from '../interface';
+import { deleteCustomQuotation, getCustomQuotationSearch } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -47,9 +46,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_CUSTOMS_QUOTATION.GET_SEARCH, pagination],
+    queryKey: [TYPE_TABS.GET_CUSTOM_QUOTATION_BY_DRAFT_DATA, pagination],
     queryFn: () =>
-      getDartTable({
+      getCustomQuotationSearch({
         ...initalValueQueryInputParamsDraft,
         ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
@@ -103,7 +102,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_CUSTOMS_QUOTATION.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_CUSTOM_QUOTATION_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);

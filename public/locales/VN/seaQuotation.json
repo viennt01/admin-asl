@@ -135,6 +135,11 @@
         "placeholder": "Nhập vendor",
         "error_required": "Vui lòng nhập vendor"
     },
+    "transitTime_form": {
+        "title": "Thời gian quá cảnh",
+        "placeholder": "Nhập thời gian quá cảnh",
+        "error_required": "Vui lòng nhập thời gian quá cảnh"
+    },
     "modify_date_placeholder": "Please input modify date",
     "status_placeholder": "Please select status",
     "note_placeholder": "Please input note",

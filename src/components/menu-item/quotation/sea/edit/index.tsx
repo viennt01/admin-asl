@@ -53,6 +53,7 @@ const EditSeaQuotation = () => {
         detSeaQuotation: formValues.detSeaQuotation || '0',
         stoSeaQuotation: formValues.stoSeaQuotation || '0',
         lclSeaQuotation: formValues.lclSeaQuotation || '0',
+        transitTimeSeaQuotation: formValues.transitTimeSeaQuotation || '0',
         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,

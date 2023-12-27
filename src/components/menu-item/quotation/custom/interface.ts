@@ -1,6 +1,11 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_TABS {
+  GET_CUSTOM_QUOTATION_BY_MASTER_DATA = 'GET_CUSTOM_QUOTATION_BY_MASTER_DATA',
+  GET_CUSTOM_QUOTATION_BY_REQUEST_DATA = 'GET_CUSTOM_QUOTATION_BY_REQUEST_DATA',
+  GET_CUSTOM_QUOTATION_BY_DRAFT_DATA = 'GET_CUSTOM_QUOTATION_BY_DRAFT_DATA',
+}
 export interface ICustomQuotation {
   customQuotationID: string;
   typeDelaracrionID: string;

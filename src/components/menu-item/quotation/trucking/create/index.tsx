@@ -14,10 +14,10 @@ import {
   ISalesLeadsSeaQuotationDTOs,
   IEditSalesLeadsSeaQuotationDTOs,
   ILoadCapacityDTOFormValue,
+  TYPE_TABS,
 } from '../interface';
 import { createSeaQuotation, editSeaQuotation } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_TRUCKING_QUOTATION } from '@/fetcherAxios/endpoint';
 
 export const returnQuotationDetails = (
   old?: IContainerDTOFormValue[],
@@ -160,6 +160,8 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
         forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
@@ -209,6 +211,8 @@ const CreateSeaQuotation = () => {
         freqDate: formValues.freqDate || '',
         public: formValues.public || true,
         forNewUser: formValues.forNewUser || false,
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
         truckingQuotationDetailRegisterRequests:
           containerDetailRegisterRequests || [],
         truckingLoadCapacityDetailRegisterRequests:
@@ -281,6 +285,8 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
         forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
@@ -295,7 +301,7 @@ const CreateSeaQuotation = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_TRUCKING_QUOTATION.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_TRUCK_QUOTATION_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -329,6 +335,8 @@ const CreateSeaQuotation = () => {
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
         forNewUser: formValues.forNewUser || false,
+        transitTimetruckingPricing:
+          formValues.transitTimetruckingPricing || '0',
         public: formValues.public || true,
         truckingQuotationDetailRegisterRequests:
           truckQuotationDetailRegisterRequests || [],
@@ -347,7 +355,7 @@ const CreateSeaQuotation = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_TRUCKING_QUOTATION.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_TRUCK_QUOTATION_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

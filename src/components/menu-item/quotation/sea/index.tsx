@@ -3,42 +3,36 @@ import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
 import MasterDataTable from './table/master-table';
-import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '@/app-context';
-import { ROLE } from '@/constant/permission';
 import { GetTitleNotificationTab } from '@/utils/common';
+import { TYPE_TABS } from './interface';
 
 export default function SeaQuotationPage() {
+  const [keyActive, setKeyActive] = useState<TYPE_TABS>(
+    TYPE_TABS.GET_SEA_QUOTATION_BY_MASTER_DATA
+  );
   const queryClient = useQueryClient();
-  const { role, userInfo } = useContext(AppContext);
+  const { userInfo } = useContext(AppContext);
 
-  const onChange = (key: string) => {
-    if (key === 'API_SEA_QUOTATION.GET_SEARCH') {
-      queryClient.invalidateQueries({
-        queryKey: [API_SEA_QUOTATION.GET_SEARCH],
-      });
-    }
-    if (key === 'API_SEA_QUOTATION.GET_REQUEST') {
-      queryClient.invalidateQueries({
-        queryKey: [API_SEA_QUOTATION.GET_REQUEST],
-      });
-    }
+  const onChange = (key: TYPE_TABS) => {
+    setKeyActive(key);
+    queryClient.invalidateQueries({
+      queryKey: [key],
+    });
   };
-
   return (
     <>
       <Tabs
-        onChange={onChange}
+        onChange={(key: string) => onChange(key as TYPE_TABS)}
         type="card"
         style={{
           marginTop: 10,
-          display: role === ROLE.MANAGER || role === ROLE.SALE ? '' : 'none',
         }}
         items={[
           {
             label: 'Master Data',
-            key: 'API_SEA_QUOTATION.GET_SEARCH',
+            key: TYPE_TABS.GET_SEA_QUOTATION_BY_MASTER_DATA,
             children: <MasterDataTable />,
           },
           {
@@ -52,26 +46,21 @@ export default function SeaQuotationPage() {
               >
                 <div
                   style={{
-                    color: COLORS.GREEN,
+                    color:
+                      keyActive === TYPE_TABS.GET_SEA_QUOTATION_BY_REQUEST_DATA
+                        ? COLORS.GREEN
+                        : COLORS.BLACK_BLUR,
                   }}
                 >
                   Request
                 </div>
               </Badge>
             ),
-            key: 'API_SEA_QUOTATION.GET_REQUEST',
+            key: TYPE_TABS.GET_SEA_QUOTATION_BY_REQUEST_DATA,
             children: <RequestTable />,
           },
         ]}
       />
-      <div
-        style={{
-          marginTop: 36,
-          display: role === ROLE.MANAGER || role === ROLE.SALE ? 'none' : '',
-        }}
-      >
-        <MasterDataTable />
-      </div>
     </>
   );
 }

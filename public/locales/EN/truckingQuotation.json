@@ -111,30 +111,10 @@
         "placeholder": "Enter vendor",
         "error_required": "Please enter vendor"
     },
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Enter Cut Off",
-        "error_required": "Please enter Cut Off"
-    },
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Enter TT",
-        "error_required": "Please enter TT"
-    },
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Enter InlAddon",
-        "error_required": "Please enter InlAddon"
-    },
-    "empty_return_form": {
-        "title": "empty_return",
-        "placeholder": "Enter empty_return",
-        "error_required": "Please enter empty_return"
-    },
-    "amend_form": {
-        "title": "Amend",
-        "placeholder": "Enter Amend",
-        "error_required": "Please enter Amend"
+    "transitTime_form": {
+        "title": "Transit Time",
+        "placeholder": "Enter transit time",
+        "error_required": "Please enter transit time"
     },
     "Fee_Group_form": {
         "title": "Fee group",

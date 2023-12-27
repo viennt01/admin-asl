@@ -262,6 +262,7 @@ const TruckQuotation = ({
           validityDate: dayjs(Number(data.data.validityDate)),
           freqDate: data.data.freqDate,
           public: data.data.public,
+          transitTimetruckingPricing: data.data.transitTimetruckingPricing,
           forNewUser: data.data.forNewUser,
           statusTruckingQuotation: data.data.statusTruckingQuotation,
           truckingQuotationDetailByContainerTypeDTOs:
@@ -346,6 +347,9 @@ const TruckQuotation = ({
       lclMinTruckingQuotation: form.getFieldValue('lclMinTruckingQuotation'),
       lclTruckingQuotation: form.getFieldValue('lclTruckingQuotation'),
       public: form.getFieldValue('public'),
+      transitTimetruckingPricing: form.getFieldValue(
+        'transitTimetruckingPricing'
+      ),
       statusTruckingQuotation: form.getFieldValue('statusTruckingQuotation'),
       truckingQuotationDetailByContainerTypeDTOs: JSON.stringify(
         form.getFieldValue('truckingQuotationDetailByContainerTypeDTOs')

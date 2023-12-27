@@ -81,10 +81,10 @@
         "placeholder": "Enter LCL",
         "error_required": "Please enter LCL"
     },
-    "type_form": {
-        "title": "Type",
-        "placeholder": "Enter type",
-        "error_required": "Please enter type"
+    "transitTime_form": {
+        "title": "Transit Time",
+        "placeholder": "Enter transit time",
+        "error_required": "Please enter transit time"
     },
     "currency_form": {
         "title": "Currency",

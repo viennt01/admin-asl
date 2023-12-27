@@ -1,6 +1,11 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_TABS {
+  GET_TRUCK_QUOTATION_BY_MASTER_DATA = 'GET_TRUCK_QUOTATION_BY_MASTER_DATA',
+  GET_TRUCK_QUOTATION_BY_REQUEST_DATA = 'GET_TRUCK_QUOTATION_BY_REQUEST_DATA',
+  GET_TRUCK_QUOTATION_BY_DRAFT_DATA = 'GET_TRUCK_QUOTATION_BY_DRAFT_DATA',
+}
 export interface ITruckingQuotation {
   truckingQuotationID: string;
   pickupID: string;
@@ -88,6 +93,7 @@ export interface IFormValues {
   truckingQuotationFeeGroupDTOs: ITruckQuotationFeeFormValue[];
   salesLeadsTruckingQuotationDTOs: string[];
   truckingQuotaionGroupPartnerDTOs: string[];
+  transitTimetruckingPricing: string;
 }
 
 export interface ITruckingPricingDetailType

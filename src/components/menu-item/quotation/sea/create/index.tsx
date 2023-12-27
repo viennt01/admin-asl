@@ -13,10 +13,10 @@ import {
   ISeaQuotationDetailDTOsFormValue,
   ISalesLeadsSeaQuotationDTOs,
   IEditSalesLeadsSeaQuotationDTOs,
+  TYPE_TABS,
 } from '../interface';
 import { createSeaQuotation, editSeaQuotation } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
 
 export const returnQuotationDetails = (
   old?: ISeaQuotationDetailDTOsFormValue[],
@@ -150,6 +150,7 @@ const CreateSeaQuotation = () => {
         detSeaQuotation: formValues.detSeaQuotation || '0',
         stoSeaQuotation: formValues.stoSeaQuotation || '0',
         lclSeaQuotation: formValues.lclSeaQuotation || '0',
+        transitTimeSeaQuotation: formValues.transitTimeSeaQuotation || '0',
         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
@@ -200,6 +201,7 @@ const CreateSeaQuotation = () => {
         detSeaQuotation: formValues.detSeaQuotation || '0',
         stoSeaQuotation: formValues.stoSeaQuotation || '0',
         lclSeaQuotation: formValues.lclSeaQuotation || '0',
+        transitTimeSeaQuotation: formValues.transitTimeSeaQuotation || '0',
         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
@@ -266,6 +268,7 @@ const CreateSeaQuotation = () => {
         detSeaQuotation: formValues.detSeaQuotation || '0',
         stoSeaQuotation: formValues.stoSeaQuotation || '0',
         lclSeaQuotation: formValues.lclSeaQuotation || '0',
+        transitTimeSeaQuotation: formValues.transitTimeSeaQuotation || '0',
         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
@@ -281,7 +284,7 @@ const CreateSeaQuotation = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_SEA_QUOTATION.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_SEA_QUOTATION_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -319,6 +322,7 @@ const CreateSeaQuotation = () => {
         detSeaQuotation: formValues.detSeaQuotation || '0',
         stoSeaQuotation: formValues.stoSeaQuotation || '0',
         lclSeaQuotation: formValues.lclSeaQuotation || '0',
+        transitTimeSeaQuotation: formValues.transitTimeSeaQuotation || '0',
         lclMinSeaQuotation: formValues.lclMinSeaQuotation || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
@@ -337,7 +341,7 @@ const CreateSeaQuotation = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_SEA_QUOTATION.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_SEA_QUOTATION_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

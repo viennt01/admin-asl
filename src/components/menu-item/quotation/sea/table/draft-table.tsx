@@ -2,9 +2,8 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { ISeaQuotationTable } from '../interface';
-import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
-import { deleteSeaQuotation, getDartTable } from '../fetcher';
+import { ISeaQuotationTable, TYPE_TABS } from '../interface';
+import { deleteSeaQuotation, getSeaQuotationSearch } from '../fetcher';
 import {
   DiffOutlined,
   DownloadOutlined,
@@ -47,9 +46,9 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_SEA_QUOTATION.GET_SEARCH, pagination],
+    queryKey: [TYPE_TABS.GET_SEA_QUOTATION_BY_DRAFT_DATA, pagination],
     queryFn: () =>
-      getDartTable({
+      getSeaQuotationSearch({
         ...initalValueQueryInputParamsDraft,
         ...initalValueQuerySelectParamsDraft,
         paginateRequest: {
@@ -109,7 +108,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_SEA_QUOTATION.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_SEA_QUOTATION_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);

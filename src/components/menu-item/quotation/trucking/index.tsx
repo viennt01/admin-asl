@@ -1,43 +1,38 @@
 import { Badge, Tabs } from 'antd';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_TRUCKING_QUOTATION } from '@/fetcherAxios/endpoint';
 import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
-import { ROLE } from '@/constant/permission';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '@/app-context';
 import { GetTitleNotificationTab } from '@/utils/common';
+import { TYPE_TABS } from './interface';
 
 export default function TruckingQuotation() {
+  const [keyActive, setKeyActive] = useState<TYPE_TABS>(
+    TYPE_TABS.GET_TRUCK_QUOTATION_BY_MASTER_DATA
+  );
   const queryClient = useQueryClient();
-  const { role, userInfo } = useContext(AppContext);
+  const { userInfo } = useContext(AppContext);
 
-  const onChange = (key: string) => {
-    if (key === 'API_SEA_QUOTATION.GET_SEARCH') {
-      queryClient.invalidateQueries({
-        queryKey: [API_TRUCKING_QUOTATION.GET_SEARCH],
-      });
-    }
-    if (key === 'API_SEA_QUOTATION.GET_REQUEST') {
-      queryClient.invalidateQueries({
-        queryKey: [API_TRUCKING_QUOTATION.GET_REQUEST],
-      });
-    }
+  const onChange = (key: TYPE_TABS) => {
+    setKeyActive(key);
+    queryClient.invalidateQueries({
+      queryKey: [key],
+    });
   };
   return (
     <>
       <Tabs
-        onChange={onChange}
+        onChange={(key: string) => onChange(key as TYPE_TABS)}
         type="card"
         style={{
           marginTop: 10,
-          display: role === ROLE.MANAGER || role === ROLE.SALE ? '' : 'none',
         }}
         items={[
           {
             label: 'Master Data',
-            key: 'API_TRUCKING_QUOTATION.GET_SEARCH',
+            key: TYPE_TABS.GET_TRUCK_QUOTATION_BY_MASTER_DATA,
             children: <MasterDataTable />,
           },
           {
@@ -53,26 +48,22 @@ export default function TruckingQuotation() {
               >
                 <div
                   style={{
-                    color: COLORS.GREEN,
+                    color:
+                      keyActive ===
+                      TYPE_TABS.GET_TRUCK_QUOTATION_BY_REQUEST_DATA
+                        ? COLORS.GREEN
+                        : COLORS.BLACK_BLUR,
                   }}
                 >
                   Request
                 </div>
               </Badge>
             ),
-            key: 'API_TRUCKING_QUOTATION.GET_REQUEST',
+            key: TYPE_TABS.GET_TRUCK_QUOTATION_BY_REQUEST_DATA,
             children: <RequestTable />,
           },
         ]}
       />
-      <div
-        style={{
-          marginTop: 36,
-          display: role === ROLE.MANAGER || role === ROLE.SALE ? 'none' : '',
-        }}
-      >
-        <MasterDataTable />
-      </div>
     </>
   );
 }

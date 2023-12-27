@@ -13,6 +13,7 @@ import {
   FormInstance,
   Checkbox,
   Tag,
+  InputNumber,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -41,6 +42,7 @@ import {
 import dayjs from 'dayjs';
 import { TYPE_LOCATION } from '@/components/menu-item/pricing/sea/interface';
 import { DAY_WEEK } from '@/constant';
+import { formatNumber } from '@/utils/format';
 
 interface Props {
   create?: boolean;
@@ -185,10 +187,11 @@ const CardMain = ({
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
         public: propCopyAndCreate.public as unknown as boolean,
+        transitTimetruckingPricing:
+          propCopyAndCreate.transitTimetruckingPricing as string,
         forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
         statusTruckingQuotation:
           propCopyAndCreate.statusTruckingQuotation as string,
-
         truckingQuotationDetailByContainerTypeDTOs: JSON.parse(
           propCopyAndCreate.truckingQuotationDetailByContainerTypeDTOs as string
         ) as unknown as IDetailDTOs[],
@@ -512,6 +515,23 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translateQuotationTruck('transitTime_form.title')}
+            name="transitTimetruckingPricing"
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translateQuotationTruck(
+                'transitTime_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationTruck('commodity')}

@@ -6,7 +6,7 @@ import {
 import Table from '@/components/commons/table/table';
 import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
 import { ROUTERS } from '@/constant/router';
-import { API_CUSTOMS_QUOTATION, API_USER } from '@/fetcherAxios/endpoint';
+import { API_USER } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -21,7 +21,7 @@ import { API_MESSAGE } from '@/constant/message';
 import { getTable, updateStatus } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
 import { initalValueQueryInputParamsRequest } from '../constant';
-import { ICustomQuotationTable, UpdateStatus } from '../interface';
+import { ICustomQuotationTable, TYPE_TABS, UpdateStatus } from '../interface';
 import { AppContext } from '@/app-context';
 import { getUserInfo } from '@/layout/fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
@@ -63,7 +63,7 @@ const RequestTable = () => {
   });
   // Handle data
   useQuery({
-    queryKey: [API_CUSTOMS_QUOTATION.GET_REQUEST, pagination],
+    queryKey: [TYPE_TABS.GET_CUSTOM_QUOTATION_BY_REQUEST_DATA, pagination],
     queryFn: () =>
       getTable({
         ...initalValueQueryInputParamsRequest,
@@ -320,7 +320,7 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [API_CUSTOMS_QUOTATION.GET_REQUEST, pagination],
+              queryKey: [TYPE_TABS.GET_CUSTOM_QUOTATION_BY_REQUEST_DATA],
             }),
             checkUser.refetch())
           : errorToast(data.message);

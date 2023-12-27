@@ -39,7 +39,7 @@ export default function AirPricingPage() {
           {
             label: (
               <Badge
-                count={GetTitleNotificationTab(userInfo?.totalSeaPricing)} // TODO: sửa thành air
+                count={GetTitleNotificationTab(userInfo?.totalAirPricing)}
                 style={{
                   marginRight: '-4px',
                   marginTop: '-2px',

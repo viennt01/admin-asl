@@ -177,6 +177,8 @@ const CardMain = ({
         lclMinSeaQuotation: propCopyAndCreate.lclMinSeaQuotation as string,
         lclSeaQuotation: propCopyAndCreate.lclSeaQuotation as string,
         currencyID: propCopyAndCreate.currencyID as string,
+        transitTimeSeaQuotation:
+          propCopyAndCreate.transitTimeSeaQuotation as string,
         public: propCopyAndCreate.public as unknown as boolean,
         statusSeaQuotation: propCopyAndCreate.statusSeaQuotation as string,
         seaQuotationDetailDTOs: JSON.parse(
@@ -409,7 +411,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationSea('effect_date')}
@@ -474,7 +475,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationSea('STO')}
@@ -517,39 +517,20 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('commodity')}
-            name="commodityID"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('commodity_form.placeholder'),
-              },
-            ]}
+            label={translateQuotationSea('transitTime_form.title')}
+            name="transitTimeSeaQuotation"
           >
-            <Select
-              showSearch
-              placeholder={translateQuotationSea('commodity_form.placeholder')}
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translateQuotationSea(
+                'transitTime_form.placeholder'
+              )}
+              min={0}
               disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                getCommodity.data?.data.map((item) => {
-                  return {
-                    value: item.commodityID,
-                    label: item.commodityName,
-                  };
-                }) || []
-              }
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
         </Col>
@@ -581,7 +562,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item
             name="currencyID"
@@ -637,16 +617,50 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translateQuotationSea('commodity')}
+            name="commodityID"
+            rules={[
+              {
+                required: true,
+                message: translateQuotationSea('commodity_form.placeholder'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translateQuotationSea('commodity_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getCommodity.data?.data.map((item) => {
+                  return {
+                    value: item.commodityID,
+                    label: item.commodityName,
+                  };
+                }) || []
+              }
+            />
+          </Form.Item>
+        </Col>
         <Col lg={8} span={24} style={{ display: create ? 'none' : '' }}>
           <Form.Item label={'Sea pricing'} name="seaPricingID">
             <Input style={{ width: '100%' }} disabled={true} />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item name="forNewUser" label=" ">
             <Checkbox
+              disabled={checkRow && isCheckPermissionEdit}
               checked={componentDisabled}
               onChange={(e) => setComponentDisabled(e.target.checked)}
             >
@@ -654,7 +668,6 @@ const CardMain = ({
             </Checkbox>
           </Form.Item>
         </Col>
-
         <Col span={24}>
           <Form.Item
             label={'Customer'}
@@ -671,6 +684,7 @@ const CardMain = ({
               mode="multiple"
               placeholder="Select customer"
               optionFilterProp="children"
+              disabled={checkRow && isCheckPermissionEdit}
               filterOption={(input, option) =>
                 (option?.label ?? '').includes(input)
               }
@@ -690,7 +704,6 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col span={24}>
           <Form.Item label="Note" name="note">
             <Input.TextArea

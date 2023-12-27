@@ -1,80 +1,72 @@
 {
     "title": "Danh sách báo giá hải quan",
-    "no" : "STT",
+    "no": "STT",
     "status": "Trạng thái",
-    
     "information_add_customs_quotation": "Thêm mới báo giá hải quan",
     "information_edit_customs_quotation": "Chỉnh sửa báo giá hải quan",
-
     "typeDelaracrionID_form": {
         "title": "Declaration",
         "placeholder": "Nhập declaration",
         "error_required": "Vui lòng nhập declaration"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Nhập vendor",
         "error_required": "Vui lòng nhập vendor"
     },
-
     "transactionTypeID_form": {
         "title": "Giao dịch",
         "placeholder": "Chọn giao dịch",
         "error_required": "Vui lòng chọn giao dịch"
     },
-
     "effect_date_form": {
         "title": "Effect Date",
         "placeholder": "Nhập effect date",
         "error_required": "Vui lòng nhập effect date"
     },
-
     "validity_form": {
         "title": "Validity Date",
         "placeholder": "Nhập validity date",
         "error_required": "Vui lòng nhập validity date"
     },
-
     "commodity_form": {
         "title": "commodity",
         "placeholder": "Nhập commodity",
         "error_required": "Vui lòng nhập commodity"
     },
-
     "customRedPrice_form": {
         "title": "Giá đỏ",
         "placeholder": "Nhập giá đỏ",
         "error_required": "Vui lòng nhập giá đỏ"
     },
-
     "customYellowPrice_form": {
         "title": "Giá vàng",
         "placeholder": "Nhập giá vàng",
         "error_required": "Vui lòng nhập giá vàng"
     },
-
     "customGreenPrice_form": {
         "title": "Giá xanh",
         "placeholder": "Nhập giá xanh",
         "error_required": "Vui lòng nhập giá xanh"
     },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Nhập currency",
         "error_required": "Vui lòng nhập currency"
     },
-
     "fee_group_form": {
         "title": "Loại nhóm phí",
         "placeholder": "Chọn loại nhóm phí",
         "error_required": "Vui lòng chọn loại nhóm phí"
     },
-
     "note_form": {
         "title": "Ghi chú",
         "placeholder": "Nhập ghi chú",
         "error_required": "Vui lòng nhập ghi chú"
+    },
+    "transitTime_form": {
+        "title": "Thời gian quá cảnh",
+        "placeholder": "Nhập thời gian quá cảnh",
+        "error_required": "Vui lòng nhập thời gian quá cảnh"
     }
 }

@@ -10,10 +10,10 @@ import {
   ICustomQuotationEdit,
   ISeaQuotationFeeFormValue,
   ISalesLeadsSeaQuotationDTOs,
+  TYPE_TABS,
 } from '../interface';
 import { createCustomQuotation, editCustomQuotation } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_CUSTOMS_QUOTATION } from '@/fetcherAxios/endpoint';
 import { returnSaleLeads } from '../../sea/create';
 
 const CreateCustomQuotation = () => {
@@ -149,7 +149,7 @@ const CreateCustomQuotation = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_CUSTOMS_QUOTATION.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_CUSTOM_QUOTATION_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -198,7 +198,7 @@ const CreateCustomQuotation = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_CUSTOMS_QUOTATION.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_CUSTOM_QUOTATION_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

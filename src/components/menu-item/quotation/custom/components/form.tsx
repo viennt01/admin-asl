@@ -2,7 +2,7 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   IFormValues,
   ISalesLeadsSeaQuotationDTOs,
@@ -32,6 +32,8 @@ import Air from './air';
 import { getListTypeUnit } from '@/components/menu-item/master-data/fee-catalog/fee/fetcher';
 import { TYPE_UNIT } from '@/components/menu-item/master-data/fee-catalog/fee/interface';
 import SaleLead from './sale-lead';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 interface FormProps {
   create?: boolean;
@@ -72,6 +74,7 @@ const CustomsQuotation = ({
   const [form] = Form.useForm<IFormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
+  const { role } = useContext(AppContext);
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [optionCurrency, setOptionCurrency] = useState<
@@ -351,7 +354,7 @@ const CustomsQuotation = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={handleAR}
+          handleAR={role === ROLE.MANAGER ? handleAR : undefined}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}

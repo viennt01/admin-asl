@@ -2,7 +2,7 @@ import { ROUTERS } from '@/constant/router';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Form } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   IFormValues,
   ISeaQuotationFeeFormValue,
@@ -32,6 +32,8 @@ import SeaPricingDetailDTO from './sea-quotation-detail-dto';
 
 import ListFee from './list-fee';
 import SaleLead from './sale-lead';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 interface PortFormProps {
   create?: boolean;
@@ -76,6 +78,7 @@ const SeaQuotation = ({
   const [form] = Form.useForm<IFormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
+  const { role } = useContext(AppContext);
   const [isCheckPermissionEdit, setCheckPermissionEdit] =
     useState<boolean>(false);
   const [optionCurrency, setOptionCurrency] = useState<
@@ -227,6 +230,7 @@ const SeaQuotation = ({
           currencyID: data.data.currencyID,
           public: data.data.public,
           seaPricingID: data.data.seaPricingID,
+          transitTimeSeaQuotation: data.data.transitTimeSeaQuotation,
           statusSeaQuotation: data.data.statusSeaQuotation,
           seaQuotationDetailDTOs: data.data.seaQuotationDetailDTOs,
           seaQuotaionFeeGroupDTOs: data.data.seaQuotaionFeeGroupDTOs,
@@ -298,6 +302,7 @@ const SeaQuotation = ({
       lclSeaQuotation: form.getFieldValue('lclSeaQuotation'),
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
+      transitTimeSeaQuotation: form.getFieldValue('transitTimeSeaQuotation'),
       statusSeaQuotation: form.getFieldValue('statusSeaQuotation'),
       seaQuotationDetailDTOs: JSON.stringify(
         form.getFieldValue('seaQuotationDetailDTOs')
@@ -386,7 +391,7 @@ const SeaQuotation = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={handleAR}
+          handleAR={role === ROLE.MANAGER ? handleAR : undefined}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}

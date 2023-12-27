@@ -124,30 +124,10 @@
         "placeholder": "Nhập vendor",
         "error_required": "Vui lòng nhập vendor"
     },
-    "cut_off_form": {
-        "title": "Cut Off",
-        "placeholder": "Nhập Cut Off",
-        "error_required": "Vui lòng nhập Cut Off"
-    },
-    "TT_form": {
-        "title": "TT",
-        "placeholder": "Nhập TT",
-        "error_required": "Vui lòng nhập TT"
-    },
-    "inl_addon_form": {
-        "title": "InlAddon",
-        "placeholder": "Nhập InlAddon",
-        "error_required": "Vui lòng nhập InlAddon"
-    },
-    "empty_return_form": {
-        "title": "empty_return",
-        "placeholder": "Nhập empty_return",
-        "error_required": "Vui lòng nhập Empty Return"
-    },
-    "amend_form": {
-        "title": "Amend",
-        "placeholder": "Nhập Amend",
-        "error_required": "Vui lòng nhập Amend"
+    "transitTime_form": {
+        "title": "Thời gian quá cảnh",
+        "placeholder": "Nhập thời gian quá cảnh",
+        "error_required": "Vui lòng nhập thời gian quá cảnh"
     },
     "Fee_Group_form": {
         "title": "Loại nhóm phí",

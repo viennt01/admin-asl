@@ -1,6 +1,12 @@
 import { Dayjs } from 'dayjs';
 import { IPagination } from '../../../commons/table/table-default';
 
+export enum TYPE_TABS {
+  GET_SEA_QUOTATION_BY_MASTER_DATA = 'GET_SEA_QUOTATION_BY_MASTER_DATA',
+  GET_SEA_QUOTATION_BY_REQUEST_DATA = 'GET_SEA_QUOTATION_BY_REQUEST_DATA',
+  GET_SEA_QUOTATION_BY_DRAFT_DATA = 'GET_SEA_QUOTATION_BY_DRAFT_DATA',
+}
+
 export interface ISeaQuotation {
   seaQuotationID: string;
   seaQuotationNo: string;
@@ -94,6 +100,7 @@ export interface IFormValues {
   salesLeadsSeaQuotationDTOs: string[];
   seaQuotaionGroupPartnerDTOs: string[];
   seaPricingID: string;
+  transitTimeSeaQuotation: string;
 }
 
 export interface ISeaPricingDetailType

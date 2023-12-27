@@ -6,7 +6,7 @@ import {
 import Table from '@/components/commons/table/table';
 import { UpdateStatusUnit } from '@/components/menu-item/master-data/unit-catalog/unit/interface';
 import { ROUTERS } from '@/constant/router';
-import { API_SEA_QUOTATION, API_USER } from '@/fetcherAxios/endpoint';
+import { API_USER } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -28,6 +28,7 @@ import { initalValueQueryInputParamsRequest } from '../constant';
 import {
   ISeaQuotationDetailDTOs,
   ISeaQuotationTable,
+  TYPE_TABS,
   UpdateStatus,
 } from '../interface';
 import { AppContext } from '@/app-context';
@@ -35,6 +36,7 @@ import { getUserInfo } from '@/layout/fetcher';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { appLocalStorage } from '@/utils/localstorage';
 import { getPriorityRole } from '@/hook/useAuthentication';
+import { ROLE } from '@/constant/permission';
 
 const RequestTable = () => {
   const router = useRouter();
@@ -46,7 +48,7 @@ const RequestTable = () => {
 
   const [dataTable, setDataTable] = useState<ISeaQuotationTable[]>([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { setUserInfo, setRole } = useContext(AppContext);
+  const { setUserInfo, setRole, role } = useContext(AppContext);
 
   const checkUser = useQuery({
     queryKey: [API_USER.CHECK_USER],
@@ -72,7 +74,7 @@ const RequestTable = () => {
 
   // Handle data
   useQuery({
-    queryKey: [API_SEA_QUOTATION.GET_REQUEST, pagination],
+    queryKey: [TYPE_TABS.GET_SEA_QUOTATION_BY_REQUEST_DATA, pagination],
     queryFn: () =>
       getTable({
         ...initalValueQueryInputParamsRequest,
@@ -227,6 +229,7 @@ const RequestTable = () => {
               marginRight: '10px',
               color: COLORS.SUCCESS,
               borderColor: COLORS.SUCCESS,
+              display: role === ROLE.MANAGER ? '' : 'none',
             }}
           />
           <Button
@@ -236,7 +239,11 @@ const RequestTable = () => {
               ]);
             }}
             icon={<CloseOutlined />}
-            style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
+            style={{
+              color: COLORS.ERROR,
+              borderColor: COLORS.ERROR,
+              display: role === ROLE.MANAGER ? '' : 'none',
+            }}
           />
         </div>
       ),
@@ -321,7 +328,10 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [API_SEA_QUOTATION.GET_REQUEST, pagination],
+              queryKey: [
+                TYPE_TABS.GET_SEA_QUOTATION_BY_REQUEST_DATA,
+                pagination,
+              ],
             }),
             checkUser.refetch())
           : errorToast(data.message);
@@ -366,7 +376,9 @@ const RequestTable = () => {
           pagination={pagination}
           checkTableMaster={true}
           handleSelectionChange={handleSelectionChange}
-          handleApproveAndReject={handleApproveAndReject}
+          handleApproveAndReject={
+            role === ROLE.MANAGER ? handleApproveAndReject : undefined
+          }
         />
       </div>
     </>

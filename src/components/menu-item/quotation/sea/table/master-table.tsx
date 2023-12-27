@@ -12,7 +12,6 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
 import {
   formatCurrencyHasCurrency,
   formatDate,
@@ -26,6 +25,7 @@ import {
   ISelectSearch,
   ISeaQuotationTable,
   ISeaQuotationDetailDTOs,
+  TYPE_TABS,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -93,7 +93,7 @@ export default function MasterDataTable() {
 
   const locationsQuerySearch = useQuery({
     queryKey: [
-      API_SEA_QUOTATION.GET_SEARCH,
+      TYPE_TABS.GET_SEA_QUOTATION_BY_MASTER_DATA,
       queryInputParams,
       querySelectParams,
     ],
@@ -161,7 +161,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_SEA_QUOTATION.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_SEA_QUOTATION_BY_MASTER_DATA],
         });
         setSelectedRowKeys([]);
       } else {
@@ -596,7 +596,7 @@ export default function MasterDataTable() {
       link.click();
       window.URL.revokeObjectURL(url);
       queryClient.invalidateQueries({
-        queryKey: [API_SEA_QUOTATION.GET_REQUEST],
+        queryKey: [TYPE_TABS.GET_SEA_QUOTATION_BY_REQUEST_DATA],
       });
       setLoadingImport(false);
       setOpenImportModal(false);

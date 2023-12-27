@@ -1,81 +1,72 @@
 {
     "title": "List of Customs Quotation",
-    "no" : "NO",
+    "no": "NO",
     "status": "Status",
-
     "information_add_customs_quotation": "Add New Customs Quotation",
     "information_edit_customs_quotation": "Edit Customs Quotation",
-
     "typeDelaracrionID_form": {
         "title": "Declaration",
         "placeholder": "Enter declaration",
         "error_required": "Please enter declaration"
     },
-
     "vendor_form": {
         "title": "Vendor",
         "placeholder": "Enter vendor",
         "error_required": "Please enter vendor"
     },
-
     "transactionTypeID_form": {
         "title": "Transaction",
         "placeholder": "Select transaction",
         "error_required": "Please select transaction"
     },
-
     "effect_date_form": {
         "title": "Effect Date",
         "placeholder": "Enter effect date",
         "error_required": "Please enter effect date"
     },
-
     "validity_form": {
         "title": "Validity Date",
         "placeholder": "Enter validity date",
         "error_required": "Please enter validity date"
     },
-
     "commodity_form": {
         "title": "Commodity",
         "placeholder": "Enter commodity",
         "error_required": "Please enter commodity"
     },
-
     "customRedPrice_form": {
         "title": "Red Price",
         "placeholder": "Enter Red price",
         "error_required": "Please enter Red price"
     },
-
     "customYellowPrice_form": {
         "title": "Yellow Price",
         "placeholder": "Enter yellow price",
         "error_required": "Please enter yellow price"
     },
-
     "customGreenPrice_form": {
         "title": "Green Price",
         "placeholder": "Enter green price",
         "error_required": "Please enter green price"
     },
-
     "currency_form": {
         "title": "Currency",
         "placeholder": "Enter currency",
         "error_required": "Please enter currency"
     },
-
     "fee_group_form": {
         "title": "Fee group",
         "placeholder": "Select fee group",
         "error_required": "Please select fee group"
     },
-
     "note_form": {
         "title": "Note",
         "placeholder": "Enter note",
         "error_required": "Please enter note"
+    },
+    "transitTime_form": {
+        "title": "Transit Time",
+        "placeholder": "Enter transit time",
+        "error_required": "Please enter transit time"
     }
-
 }
