@@ -56,11 +56,13 @@ export enum TABLE_NAME {
 }
 
 export interface ColumnTable {
-  tableName: string;
+  tableName: TABLE_NAME;
   density: DENSITY;
   columnFixed: Record<string, ColumnsState>;
 }
-
+export interface RequestGetColumnTable {
+  tableName: TABLE_NAME;
+}
 export const SkeletonTable = () => {
   const data = [];
   for (let i = 0; i < 19; i++) {

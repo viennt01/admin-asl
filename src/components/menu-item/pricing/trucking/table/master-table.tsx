@@ -46,10 +46,8 @@ import {
   deleteTruckPricing,
   downloadExampleFile,
   exportTableFile,
-  getColumnTable,
   getTruckPricingSearch,
   importDataTable,
-  updateColumnTable,
 } from '../fetcher';
 import Table from '../../../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
@@ -68,6 +66,10 @@ import { getSystemDate } from '@/utils/common';
 import { DAY_WEEK } from '@/constant';
 import { ROLE } from '@/constant/permission';
 import { AppContext } from '@/app-context';
+import {
+  getColumnTable,
+  updateColumnTable,
+} from '@/components/menu-item/pricing/fee-group/fetcher';
 
 const { confirm } = Modal;
 
@@ -101,7 +103,10 @@ export default function MasterDataTable() {
   // Handle data
   useQuery({
     queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
-    queryFn: () => getColumnTable(),
+    queryFn: () =>
+      getColumnTable({
+        tableName: TABLE_NAME.TRUCKING_PRICING,
+      }),
     onSuccess(data) {
       data.status
         ? !('operation' in data.data.columnFixed)

@@ -32,8 +32,10 @@ import {
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
+  DENSITY,
   IPaginationOfAntd,
   SkeletonTable,
+  TABLE_NAME,
 } from '@/components/commons/table/table-default';
 import {
   deleteAirPricing,
@@ -58,6 +60,11 @@ import { ROLE } from '@/constant/permission';
 import { AppContext } from '@/app-context';
 import { DAY_WEEK } from '@/constant';
 import { getSystemDate } from '@/utils/common';
+import { API_COLUMN } from '@/fetcherAxios/endpoint';
+import {
+  getColumnTable,
+  updateColumnTable,
+} from '@/components/menu-item/pricing/fee-group/fetcher';
 
 const { confirm } = Modal;
 
@@ -88,6 +95,21 @@ export default function MasterDataTable() {
   const { role } = useContext(AppContext);
 
   // Handle data
+  useQuery({
+    queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
+    queryFn: () =>
+      getColumnTable({
+        tableName: TABLE_NAME.AIR_PRICING,
+      }),
+    onSuccess(data) {
+      data.status
+        ? !('operation' in data.data.columnFixed)
+          ? setColumnsStateMap(initalValueDisplayColumnMaster)
+          : setColumnsStateMap(data.data.columnFixed)
+        : setColumnsStateMap(initalValueDisplayColumnMaster);
+    },
+  });
+
   const dataSelectSearch =
     querySelectParams.statusAirPricing.length === 0
       ? {
@@ -178,6 +200,22 @@ export default function MasterDataTable() {
     },
     onError: () => {
       errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  const updateColumnMutation = useMutation({
+    mutationFn: () =>
+      updateColumnTable({
+        tableName: TABLE_NAME.AIR_PRICING,
+        density: DENSITY.Middle,
+        columnFixed: columnsStateMap,
+      }),
+    onSuccess: (data) => {
+      if (data.status) {
+        queryClient.invalidateQueries({
+          queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
+        });
+      }
     },
   });
 
@@ -459,6 +497,7 @@ export default function MasterDataTable() {
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
     setColumnsStateMap(map);
+    updateColumnMutation.mutate();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -37,7 +37,7 @@ import {
 } from '@/fetcherAxios/endpoint';
 import {
   ColumnTable,
-  TABLE_NAME,
+  RequestGetColumnTable,
 } from '@/components/commons/table/table-default';
 
 export const getFeeGroupSearch = (data: RequestFeeGroup) => {
@@ -112,11 +112,9 @@ export const exportTableFile = (data: RequestExportData) => {
 };
 //----------------------------------------------------------------
 //Get format column
-export const getColumnTable = () => {
-  return post<{ tableName: string }, ResponseWithPayload<ColumnTable>>({
-    data: {
-      tableName: TABLE_NAME.FEE_GROUP,
-    },
+export const getColumnTable = (data: RequestGetColumnTable) => {
+  return post<RequestGetColumnTable, ResponseWithPayload<ColumnTable>>({
+    data,
   })(API_COLUMN.GET_COLUMN_TABLE_NAME);
 };
 export const updateColumnTable = (data: ColumnTable) => {

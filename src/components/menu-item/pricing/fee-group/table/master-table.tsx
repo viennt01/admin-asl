@@ -83,7 +83,10 @@ export default function MasterDataTable() {
   // Handle data
   useQuery({
     queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
-    queryFn: () => getColumnTable(),
+    queryFn: () =>
+      getColumnTable({
+        tableName: TABLE_NAME.FEE_GROUP,
+      }),
     onSuccess(data) {
       data.status
         ? !('operation' in data.data.columnFixed)
