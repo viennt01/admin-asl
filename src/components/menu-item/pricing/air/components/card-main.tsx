@@ -165,6 +165,8 @@ const CardMain = ({
         freqDate: propCopyAndCreate.freqDate as string,
         currencyID: propCopyAndCreate.currencyID as string,
         vendorID: propCopyAndCreate.vendorID as string,
+        hscAirPricing: propCopyAndCreate.hscAirPricing as string,
+        sscAirPricing: propCopyAndCreate.sscAirPricing as string,
         gw: propCopyAndCreate.gw as unknown as boolean,
         transitTimeAirPricing:
           propCopyAndCreate.transitTimeAirPricing as string,
@@ -530,19 +532,15 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-
         <Col lg={8} span={24}>
           <Form.Item
             label={translatePricingAir('transitTime_form.title')}
             name="transitTimeAirPricing"
           >
-            <InputNumber
+            <Input
               style={{ width: '100%' }}
               placeholder={translatePricingAir('transitTime_form.placeholder')}
-              min={0}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
         </Col>
@@ -564,6 +562,40 @@ const CardMain = ({
               showSearch
               style={{ width: '100%' }}
               options={optionCurrency}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('hscAirPricing_form.title')}
+            name="hscAirPricing"
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'hscAirPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('sscAirPricing_form.title')}
+            name="sscAirPricing"
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'sscAirPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
         </Col>

@@ -23,7 +23,11 @@ import {
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import {
+  formatCurrencyHasCurrency,
+  formatDate,
+  formatNumber,
+} from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -93,6 +97,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             transitTimeAirPricing: data.transitTimeAirPricing,
             vendor: data.vendor,
             gw: data.gw,
+            hscAirPricing: data.hscAirPricing,
+            sscAirPricing: data.sscAirPricing,
             searchAll: '',
           }))
         );
@@ -199,18 +205,81 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       align: 'left',
     },
     {
-      title: translatePricingAir('vendor'),
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('effect_date_form.title')}
+        </div>
+      ),
       width: 200,
-      dataIndex: 'partnerName', // TODO: check again
-      key: 'partnerName',
+      dataIndex: 'effectDated',
+      key: 'effectDated',
       align: 'center',
+      render: (value) => formatDate(Number(value)),
     },
     {
-      title: translatePricingAir('commodity'),
+      title: (
+        <div className={style.title}>{translatePricingAir('validity')}</div>
+      ),
+      width: 200,
+      dataIndex: 'validityDate',
+      key: 'validityDate',
+      align: 'right',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePricingAir('carrier')}</div>
+      ),
+      width: 200,
+      dataIndex: 'vendor', // TODO: check again
+      key: 'vendor',
+      align: 'left',
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePricingAir('commodity')}</div>
+      ),
       width: 300,
       dataIndex: 'commodityName',
       key: 'commodityName',
-      align: 'center',
+      align: 'left',
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('transitTime_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeAirPricing',
+      key: 'transitTimeAirPricing',
+      align: 'right',
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('sscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'sscAirPricing',
+      key: 'sscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('hscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'hscAirPricing',
+      key: 'hscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
     },
     {
       title: <div className={style.title}>{translatePricingAir('GW')}</div>,

@@ -19,7 +19,11 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import {
+  formatCurrencyHasCurrency,
+  formatDate,
+  formatNumber,
+} from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -165,6 +169,8 @@ export default function MasterDataTable() {
             updatedByUser: data.updatedByUser,
             vendor: data.vendor,
             transitTimeAirPricing: data.transitTimeAirPricing,
+            hscAirPricing: data.hscAirPricing,
+            sscAirPricing: data.sscAirPricing,
             gw: data.gw,
             searchAll: '',
           }))
@@ -370,7 +376,7 @@ export default function MasterDataTable() {
         <div className={style.title}>{translatePricingAir('carrier')}</div>
       ),
       width: 200,
-      dataIndex: 'vendor', // TODO:Check again
+      dataIndex: '', // TODO:Check again
       key: 'vendor',
       align: 'left',
     },
@@ -393,12 +399,63 @@ export default function MasterDataTable() {
       align: 'right',
     },
     {
-      title: translatePricingAir('validity'),
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('effect_date_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'effectDated',
+      key: 'effectDated',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>{translatePricingAir('validity')}</div>
+      ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
       align: 'center',
       render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('transitTime_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeAirPricing',
+      key: 'transitTimeAirPricing',
+      align: 'right',
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('sscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'sscAirPricing',
+      key: 'sscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('hscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'hscAirPricing',
+      key: 'hscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
     },
     {
       title: 'GW',
@@ -424,7 +481,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'note',
       key: 'note',
-      align: 'center',
+      align: 'left',
     },
     {
       title: (

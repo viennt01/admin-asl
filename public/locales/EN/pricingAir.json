@@ -23,7 +23,7 @@
     "creator": "Creator",
     "title_air_freight": "Air Freight",
     "title_local_chart": "Local Chart",
-    "information_add_air_pricing": "Add new Air Pricing",
+    "information_add_air_pricing": "New Air Pricing",
     "information_edit_air_pricing": "Edit Air Pricing",
     "AOL_form": {
         "title": "AOL",
@@ -89,6 +89,16 @@
         "title": "Frequency",
         "placeholder": "Enter frequency",
         "error_required": "Please enter frequency"
+    },
+    "hscAirPricing_form": {
+        "title": "HSC",
+        "placeholder": "Enter HSC",
+        "error_required": "Please enter HSC"
+    },
+    "sscAirPricing_form": {
+        "title": "SSC",
+        "placeholder": "Enter SSC",
+        "error_required": "Please enter SSC"
     },
     "Fee_Group_form": {
         "title": "Other Charges",

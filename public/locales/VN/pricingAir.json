@@ -89,6 +89,16 @@
         "placeholder": "Nhập frequency",
         "error_required": "Vui lòng nhập frequency"
     },
+    "hscAirPricing_form": {
+        "title": "HSC",
+        "placeholder": "Nhập HSC",
+        "error_required": "Vui lòng nhập HSC"
+    },
+    "sscAirPricing_form": {
+        "title": "SSC",
+        "placeholder": "Nhập SSC",
+        "error_required": "Vui lòng nhập SSC"
+    },
     "Fee_Group_form": {
         "title": "Loại nhóm phí",
         "placeholder": "Nhập loại nhóm phí",

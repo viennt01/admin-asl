@@ -15,7 +15,11 @@ import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
+import {
+  formatCurrencyHasCurrency,
+  formatDate,
+  formatNumber,
+} from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -124,6 +128,8 @@ export default function RequestTable() {
             vendor: data.vendor,
             transitTimeAirPricing: data.transitTimeAirPricing,
             gw: data.gw,
+            hscAirPricing: data.hscAirPricing,
+            sscAirPricing: data.sscAirPricing,
             searchAll: '',
           }))
         );
@@ -336,6 +342,18 @@ export default function RequestTable() {
     },
     {
       title: (
+        <div className={style.title}>
+          {translatePricingAir('effect_date_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'effectDated',
+      key: 'effectDated',
+      align: 'center',
+      render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
         <div className={style.title}>{translatePricingAir('validity')}</div>
       ),
       width: 200,
@@ -343,6 +361,43 @@ export default function RequestTable() {
       key: 'validityDate',
       align: 'right',
       render: (value) => formatDate(Number(value)),
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('transitTime_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeAirPricing',
+      key: 'transitTimeAirPricing',
+      align: 'right',
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('sscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'sscAirPricing',
+      key: 'sscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('hscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'hscAirPricing',
+      key: 'hscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
     },
     {
       title: <div className={style.title}>{translatePricingAir('GW')}</div>,

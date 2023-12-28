@@ -37,6 +37,8 @@ export interface AirPricing {
   airPricingDetailDTOs: { [key: string]: string };
   vendor: string;
   transitTimeAirPricing: string;
+  hscAirPricing: string;
+  sscAirPricing: string;
   gw: boolean;
 }
 
@@ -89,6 +91,8 @@ export interface FormValues {
   currencyID: string;
   public: boolean;
   statusAirPricing: string;
+  hscAirPricing: string;
+  sscAirPricing: string;
   gw: boolean;
   vendorID: string;
   transitTimeAirPricing: string;
