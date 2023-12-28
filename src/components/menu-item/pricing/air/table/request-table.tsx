@@ -130,6 +130,8 @@ export default function RequestTable() {
             gw: data.gw,
             hscAirPricing: data.hscAirPricing,
             sscAirPricing: data.sscAirPricing,
+            loadCapacityMinAirPricing: data.loadCapacityMinAirPricing,
+            priceLoadCapacityMinAirPricing: data.priceLoadCapacityMinAirPricing,
             searchAll: '',
           }))
         );
@@ -395,6 +397,32 @@ export default function RequestTable() {
       width: 200,
       dataIndex: 'hscAirPricing',
       key: 'hscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('loadCapacityMin_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'loadCapacityMinAirPricing',
+      key: 'loadCapacityMinAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('priceLoadCapacityMin_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'priceLoadCapacityMinAirPricing',
+      key: 'priceLoadCapacityMinAirPricing',
       render: (value) => {
         return value ? formatNumber(Number(value)) : '-';
       },

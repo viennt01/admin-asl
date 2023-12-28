@@ -167,6 +167,10 @@ const CardMain = ({
         vendorID: propCopyAndCreate.vendorID as string,
         hscAirPricing: propCopyAndCreate.hscAirPricing as string,
         sscAirPricing: propCopyAndCreate.sscAirPricing as string,
+        loadCapacityMinAirPricing:
+          propCopyAndCreate.loadCapacityMinAirPricing as string,
+        priceLoadCapacityMinAirPricing:
+          propCopyAndCreate.priceLoadCapacityMinAirPricing as string,
         gw: propCopyAndCreate.gw as unknown as boolean,
         transitTimeAirPricing:
           propCopyAndCreate.transitTimeAirPricing as string,
@@ -569,6 +573,14 @@ const CardMain = ({
           <Form.Item
             label={translatePricingAir('hscAirPricing_form.title')}
             name="hscAirPricing"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'hscAirPricing_form.error_required'
+                ),
+              },
+            ]}
           >
             <InputNumber
               style={{ width: '100%' }}
@@ -586,11 +598,70 @@ const CardMain = ({
           <Form.Item
             label={translatePricingAir('sscAirPricing_form.title')}
             name="sscAirPricing"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'sscAirPricing_form.error_required'
+                ),
+              },
+            ]}
           >
             <InputNumber
               style={{ width: '100%' }}
               placeholder={translatePricingAir(
                 'sscAirPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('loadCapacityMin_form.title')}
+            name="loadCapacityMinAirQuotation"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'loadCapacityMin_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'loadCapacityMin_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('priceLoadCapacityMin_form.title')}
+            name="priceLoadCapacityMinAirQuotation"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'priceLoadCapacityMin_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'priceLoadCapacityMin_form.placeholder'
               )}
               min={0}
               disabled={checkRow && isCheckPermissionEdit}

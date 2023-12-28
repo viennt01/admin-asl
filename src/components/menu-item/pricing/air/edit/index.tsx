@@ -45,6 +45,9 @@ const EditAirPricing = () => {
         transitTimeAirPricing: formValues.transitTimeAirPricing || '',
         hscAirPricing: formValues.hscAirPricing || '0',
         sscAirPricing: formValues.sscAirPricing || '0',
+        loadCapacityMinAirPricing: formValues.loadCapacityMinAirPricing || '0',
+        priceLoadCapacityMinAirPricing:
+          formValues.priceLoadCapacityMinAirPricing || '0',
         currencyID: formValues.currencyID || '',
         public: formValues.public || true,
         airPricingDetailUpdateRequests: formValues.airPricingDetailDTOs || [],

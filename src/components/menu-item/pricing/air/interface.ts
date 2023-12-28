@@ -40,6 +40,8 @@ export interface AirPricing {
   hscAirPricing: string;
   sscAirPricing: string;
   gw: boolean;
+  loadCapacityMinAirPricing: string;
+  priceLoadCapacityMinAirPricing: string;
 }
 
 export interface AirPricingDetailDTOs {
@@ -98,6 +100,8 @@ export interface FormValues {
   transitTimeAirPricing: string;
   airPricingDetailDTOs: AirPricingDetailDTOsFormValue[];
   airPricingFeeDTOs: string[];
+  loadCapacityMinAirPricing: string;
+  priceLoadCapacityMinAirPricing: string;
 }
 
 export interface AirPricingDetailType

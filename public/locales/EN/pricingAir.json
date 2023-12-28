@@ -100,6 +100,16 @@
         "placeholder": "Enter SSC",
         "error_required": "Please enter SSC"
     },
+    "loadCapacityMin_form": {
+        "title": "Load Capacity Min (Kg)",
+        "placeholder": "Enter load capacity min (Kg)",
+        "error_required": "Please enter load capacity min (Kg)"
+    },
+    "priceLoadCapacityMin_form": {
+        "title": "Price Load Capacity Min",
+        "placeholder": "Enter price load capacity min",
+        "error_required": "Please enter price load capacity min"
+    },
     "Fee_Group_form": {
         "title": "Other Charges",
         "placeholder": "Enter Other Charges",

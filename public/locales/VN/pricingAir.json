@@ -99,6 +99,16 @@
         "placeholder": "Nhập SSC",
         "error_required": "Vui lòng nhập SSC"
     },
+    "loadCapacityMin_form": {
+        "title": "Load Capacity Min (Kg)",
+        "placeholder": "Nhập load capacity min (Kg)",
+        "error_required": "Vui lòng nhập load capacity min (Kg)"
+    },
+    "priceLoadCapacityMin_form": {
+        "title": "Price Load Capacity Min",
+        "placeholder": "Nhập price load capacity min",
+        "error_required": "Vui lòng nhập price load capacity min"
+    },
     "Fee_Group_form": {
         "title": "Loại nhóm phí",
         "placeholder": "Nhập loại nhóm phí",

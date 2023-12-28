@@ -194,6 +194,9 @@ const AirPricing = ({
           vendorID: data.data.vendorID,
           hscAirPricing: data.data.hscAirPricing,
           sscAirPricing: data.data.sscAirPricing,
+          loadCapacityMinAirPricing: data.data.loadCapacityMinAirPricing,
+          priceLoadCapacityMinAirPricing:
+            data.data.priceLoadCapacityMinAirPricing,
           gw: data.data.gw,
           transitTimeAirPricing: data.data.transitTimeAirPricing,
           statusAirPricing: data.data.statusAirPricing,
@@ -255,6 +258,12 @@ const AirPricing = ({
       vendorID: form.getFieldValue('vendorID'),
       hscAirPricing: form.getFieldValue('hscAirPricing'),
       sscAirPricing: form.getFieldValue('sscAirPricing'),
+      loadCapacityMinAirPricing: form.getFieldValue(
+        'loadCapacityMinAirPricing'
+      ),
+      priceLoadCapacityMinAirPricing: form.getFieldValue(
+        'priceLoadCapacityMinAirPricing'
+      ),
       gw: form.getFieldValue('gw'),
       transitTimeAirPricing: form.getFieldValue('transitTimeAirPricing'),
       statusAirPricing: form.getFieldValue('statusAirPricing'),
