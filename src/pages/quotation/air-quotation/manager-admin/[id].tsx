@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import ManagerSeaQuotation from '@/components/menu-item/pricing/sea/manager';
+import ManagerAirQuotation from '@/components/menu-item/quotation/air/manager';
 
 function SeaQuotationManagerPage() {
   return (
@@ -8,14 +8,14 @@ function SeaQuotationManagerPage() {
       <Head>
         <title>ASL | SEA QUOTATION MANAGER</title>
       </Head>
-      <ManagerSeaQuotation />
+      <ManagerAirQuotation />
     </>
   );
 }
 
 export default withAuthentication(SeaQuotationManagerPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'seaQuotation']);
+export const getStaticProps = getStatic(['common', 'airQuotation']);
 export const getStaticPaths = () => {
   return {
     paths: [],

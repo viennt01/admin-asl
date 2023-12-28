@@ -127,8 +127,6 @@ export const API_AIR_PRICING = {
   EDIT: '/update-air-pricing',
   DELETE: '/delete-air-pricing',
   UPDATE_STATUS: '/update-status-air-pricing',
-  GET_DRAFT: '/search-air-pricing-with-status',
-  GET_REQUEST: '/search-air-pricing-with-status',
   DOWNLOAD_EXAMPLE_FILE: '/download-air-pricing-excel',
   IMPORT: '/import-air-pricing-with-excel',
   EXPORT: '/export-air-pricing-with-excel',
@@ -161,6 +159,18 @@ export const API_CONTAINER_TYPE = {
   IMPORT: '/import-container-type-with-excel',
   EXPORT: '/export-container-type-with-excel',
   GET_ALL: '/get-all-container-type',
+};
+
+export const API_AIR_QUOTATION = {
+  GET_SEARCH: '/search-air-quotation',
+  GET_DETAIL: '/get-air-quotation-by-id',
+  CREATE: '/add-air-quotation',
+  EDIT: '/update-air-quotation',
+  DELETE: '/delete-air-quotation',
+  UPDATE_STATUS: '/update-status-air-quotation',
+  DOWNLOAD_EXAMPLE_FILE: '/download-air-quotation-excel',
+  IMPORT: '/import-air-quotation-with-excel',
+  EXPORT: '/export-air-quotation-with-excel',
 };
 
 export const API_CUSTOMS_QUOTATION = {

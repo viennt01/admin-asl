@@ -4,15 +4,15 @@ import { Form } from 'antd';
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import {
-  AirPricingFeeFormValue,
-  FormValues,
+  IAirQuotationFeeFormValue,
+  IFormValues,
   TYPE_LOAD_CAPACITY,
-  UpdateStatus,
+  IUpdateStatus,
 } from '../interface';
 import {
   API_CURRENCY,
   API_FEE_GROUP,
-  API_AIR_PRICING,
+  API_AIR_QUOTATION,
   API_LOAD_CAPACITY,
 } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
@@ -27,26 +27,27 @@ import { API_MESSAGE } from '@/constant/message';
 import dayjs from 'dayjs';
 import CardMain from './card-main';
 import CollapseCard from '@/components/commons/collapse-card';
-import AirPricingDetailDTO from './air-pricing-detail-dto';
+import AirQuotationDetailDTO from './air-detail-dto';
 import { FeeTable } from '@/components/menu-item/quotation/fee-group/interface';
 import ListFee from './list-fee';
 import { getFeeWithFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
 import { ROLE } from '@/constant/permission';
 import { AppContext } from '@/app-context';
+import SaleLead from '../../sea/components/sale-lead';
 
-interface PortFormProps {
+interface FormProps {
   create?: boolean;
   manager?: boolean;
   edit?: boolean;
   handleSubmit?: (
-    formValues: FormValues,
+    formValues: IFormValues,
     id?: string,
-    airPricingFeeDTOs?: AirPricingFeeFormValue[]
+    airPricingFeeDTOs?: IAirQuotationFeeFormValue[]
   ) => void;
   handleSaveDraft?: (
-    formValues: FormValues,
+    formValues: IFormValues,
     id?: string,
-    airPricingFeeDTOs?: AirPricingFeeFormValue[]
+    airPricingFeeDTOs?: IAirQuotationFeeFormValue[]
   ) => void;
   loadingSubmit?: boolean;
   checkRow: boolean;
@@ -57,7 +58,7 @@ const initialValues = {
   gw: false,
 };
 
-const AirPricing = ({
+const AirQuotation = ({
   create,
   manager,
   edit,
@@ -66,9 +67,9 @@ const AirPricing = ({
   loadingSubmit,
   checkRow,
   useDraft,
-}: PortFormProps) => {
+}: FormProps) => {
   const router = useRouter();
-  const [form] = Form.useForm<FormValues>();
+  const [form] = Form.useForm<IFormValues>();
   const { id } = router.query;
   const [idQuery, setIdQuery] = useState<string>();
   const { role } = useContext(AppContext);
@@ -80,11 +81,13 @@ const AirPricing = ({
   const [optionTypeLoadCapacity, setOptionTypeLoadCapacity] = useState<
     { value: string; label: string }[]
   >([]);
+
   const [airPricingFeeDTOs, setAirPricingFeeDTOs] = useState<
-    AirPricingFeeFormValue[]
+    IAirQuotationFeeFormValue[]
   >([]);
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
-  const listIdFeeGroup = Form.useWatch('airPricingFeeDTOs', form);
+  const listIdFeeGroup = Form.useWatch('airQuotaionFeeGroupDTOs', form);
+  const idPartners = Form.useWatch('salesLeadsAirQuotationDTOs', form);
 
   useEffect(() => {
     if (!id) return;
@@ -153,10 +156,14 @@ const AirPricing = ({
     },
   });
 
-  const onFinish = (formValues: FormValues) => {
+  const onFinish = (formValues: IFormValues) => {
+    console.log(1);
+
     if (idQuery) {
       handleSubmit && handleSubmit(formValues, idQuery, airPricingFeeDTOs);
     } else {
+      console.log(2);
+
       handleSubmit && handleSubmit(formValues, '', airPricingFeeDTOs);
     }
   };
@@ -176,7 +183,7 @@ const AirPricing = ({
   };
 
   const detailQuery = useQuery({
-    queryKey: [API_AIR_PRICING.GET_DETAIL, idQuery],
+    queryKey: [API_AIR_QUOTATION.GET_DETAIL, idQuery],
     queryFn: () => getAirPricingDetail(idQuery as string),
     enabled: idQuery !== undefined,
     onSuccess: (data) => {
@@ -192,19 +199,26 @@ const AirPricing = ({
           currencyID: data.data.currencyID,
           public: data.data.public,
           vendorID: data.data.vendorID,
-          hscAirPricing: data.data.hscAirPricing,
-          sscAirPricing: data.data.sscAirPricing,
+          hscAirQuotation: data.data.hscAirQuotation,
+          sscAirQuotation: data.data.sscAirQuotation,
+          loadCapacityMinAirQuotation: data.data.loadCapacityMinAirQuotation,
+          priceLoadCapacityMinAirQuotation:
+            data.data.priceLoadCapacityMinAirQuotation,
           gw: data.data.gw,
-          transitTimeAirPricing: data.data.transitTimeAirPricing,
-          statusAirPricing: data.data.statusAirPricing,
-          airPricingDetailDTOs: data.data.airPricingDetailDTOs,
-          airPricingFeeDTOs: data.data.airPricingFeeDTOs.map(
+          forNewUser: data.data.forNewUser,
+          transitTimeAirQuotation: data.data.transitTimeAirQuotation,
+          statusAirQuotation: data.data.statusAirQuotation,
+          airQuotationDetailDTOs: data.data.airQuotationDetailDTOs,
+          airQuotaionFeeGroupDTOs: data.data.airQuotaionFeeGroupDTOs.map(
             (fee) => fee.feeGroupID
           ),
+          salesLeadsAirQuotationDTOs: data.data.salesLeadsAirQuotationDTOs?.map(
+            (partner) => partner.partnerID
+          ),
         });
-        setAirPricingFeeDTOs(data.data.airPricingFeeDTOs);
+        setAirPricingFeeDTOs(data.data.airQuotaionFeeGroupDTOs);
       } else {
-        router.push(ROUTERS.AIR_PRICING);
+        router.back();
       }
     },
   });
@@ -215,14 +229,14 @@ const AirPricing = ({
 
   const handleAR = (status: string) => {
     if (idQuery) {
-      const _requestData: UpdateStatus = {
+      const _requestData: IUpdateStatus = {
         id: [idQuery],
         status,
       };
       updateStatusMutation.mutate(_requestData, {
         onSuccess: (data) => {
           data.status
-            ? (successToast(data.message), router.push(ROUTERS.AIR_PRICING))
+            ? (successToast(data.message), router.push(ROUTERS.AIR_QUOTATION))
             : errorToast(data.message);
         },
         onError() {
@@ -235,7 +249,7 @@ const AirPricing = ({
   };
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatus) => {
+    mutationFn: (body: IUpdateStatus) => {
       return updateStatus(body);
     },
   });
@@ -253,16 +267,25 @@ const AirPricing = ({
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
       vendorID: form.getFieldValue('vendorID'),
-      hscAirPricing: form.getFieldValue('hscAirPricing'),
-      sscAirPricing: form.getFieldValue('sscAirPricing'),
+      hscAirQuotation: form.getFieldValue('hscAirQuotation'),
+      sscAirQuotation: form.getFieldValue('sscAirQuotation'),
+      loadCapacityMinAirQuotation: form.getFieldValue(
+        'loadCapacityMinAirQuotation'
+      ),
+      priceLoadCapacityMinAirQuotation: form.getFieldValue(
+        'priceLoadCapacityMinAirQuotation'
+      ),
       gw: form.getFieldValue('gw'),
-      transitTimeAirPricing: form.getFieldValue('transitTimeAirPricing'),
-      statusAirPricing: form.getFieldValue('statusAirPricing'),
-      airPricingDetailDTOs: form.getFieldValue('airPricingDetailDTOs'),
-      airPricingFeeDTOs: form.getFieldValue('airPricingFeeDTOs'),
+      transitTimeAirQuotation: form.getFieldValue('transitTimeAirQuotation'),
+      statusAirQuotation: form.getFieldValue('statusAirQuotation'),
+      airQuotationDetailDTOs: form.getFieldValue('airQuotationDetailDTOs'),
+      airQuotaionFeeGroupDTOs: form.getFieldValue('airQuotaionFeeGroupDTOs'),
+      salesLeadsAirQuotationDTOs: JSON.stringify(
+        form.getFieldValue('salesLeadsAirQuotationDTOs')
+      ),
     };
     router.push({
-      pathname: ROUTERS.AIR_PRICING_CREATE,
+      pathname: ROUTERS.AIR_QUOTATION_CREATE,
       query: props,
     });
   };
@@ -294,11 +317,11 @@ const AirPricing = ({
         />
 
         <CollapseCard
-          title="Air Pricing Detail"
+          title="Air Quotation Detail"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >
-          <AirPricingDetailDTO
+          <AirQuotationDetailDTO
             form={form}
             create={create}
             optionCurrency={optionCurrency}
@@ -315,6 +338,14 @@ const AirPricing = ({
           <ListFee FeeDataTable={dataFeeTable} />
         </CollapseCard>
 
+        <CollapseCard
+          title="Customer"
+          style={{ marginBottom: '24px' }}
+          defaultActive={true}
+        >
+          <SaleLead idPartners={idPartners} />
+        </CollapseCard>
+
         <BottomCreateEdit
           create={create}
           checkRow={checkRow}
@@ -328,9 +359,7 @@ const AirPricing = ({
           handleCheckEdit={handleCheckEdit}
           handleSaveDraft={onSaveDraft}
           manager={manager}
-          handleAR={
-            role === ROLE.LINER || role === ROLE.AGENT ? undefined : handleAR
-          }
+          handleAR={role === ROLE.MANAGER ? handleAR : undefined}
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}
           handleCopyAndCreate={handleCopyAndCreate}
@@ -341,4 +370,4 @@ const AirPricing = ({
   );
 };
 
-export default AirPricing;
+export default AirQuotation;

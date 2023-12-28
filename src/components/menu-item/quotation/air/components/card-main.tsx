@@ -19,13 +19,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
   IFormValues,
-  ISeaQuotationDetailDTOs,
-  ISeaQuotationFeeFormValue,
-  // SeaPricingFeeDTOs,
-  UpdateStatus,
+  IAirQuotationDetailDTOs,
+  IUpdateStatus,
 } from '../interface';
 import {
   API_COMMODITY,
+  API_FEE_GROUP,
   API_LOCATION,
   API_PARTNER,
 } from '@/fetcherAxios/endpoint';
@@ -35,14 +34,15 @@ import { STATUS_ALL_LABELS, STATUS_MASTER_COLORS } from '@/constant/form';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { formatNumber } from '@/utils/format';
+import { getAllFeeGroup } from '@/components/menu-item/quotation/fee-group/fetcher';
+import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/interface';
+import { DAY_WEEK } from '@/constant';
 import {
   getAllCustomer,
+  getAllLiner,
   getAllLocation,
-  getAllVendor,
 } from '@/components/menu-item/pricing/sea/fetcher';
-import dayjs from 'dayjs';
-import { TYPE_LOCATION } from '@/components/menu-item/pricing/sea/interface';
-import { DAY_WEEK } from '@/constant';
+import { TYPE_LOCATION } from '@/components/fcl-sea-detail/interface';
 
 interface Props {
   create?: boolean;
@@ -62,7 +62,6 @@ interface Props {
 }
 
 const { Title } = Typography;
-const dateFormat = 'YYYY-MM-DD';
 
 const CardMain = ({
   create,
@@ -77,23 +76,33 @@ const CardMain = ({
   handleCheckEdit,
   isCheckPermissionEdit,
 }: Props) => {
-  const { translate: translateQuotationSea } = useI18n('seaQuotation');
+  const { translate: translatePricingAir } = useI18n('airQuotation');
   const router = useRouter();
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
-  useEffect(() => {
-    form.setFieldValue('forNewUser', componentDisabled);
-  }, [componentDisabled]);
+  const [componentDisabledNewUser, setComponentDisabledNewUser] =
+    useState<boolean>(false);
 
   useEffect(() => {
-    setComponentDisabled(form.getFieldValue('forNewUser'));
+    form.setFieldValue('gw', componentDisabled);
+  }, [componentDisabled]);
+  useEffect(() => {
+    setComponentDisabled(form.getFieldValue('gw'));
+  }, [form.getFieldValue('gw')]);
+
+  useEffect(() => {
+    form.setFieldValue('forNewUser', componentDisabled);
+  }, [componentDisabledNewUser]);
+  useEffect(() => {
+    setComponentDisabledNewUser(form.getFieldValue('forNewUser'));
   }, [form.getFieldValue('forNewUser')]);
 
   const propCopyAndCreate = router.query;
+  const dateFormat = 'YYYY-MM-DD';
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
-    queryFn: () => getAllLocation({ type: [TYPE_LOCATION.PORT] }),
+    queryFn: () => getAllLocation({ type: [TYPE_LOCATION.AIR_PORT] }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -121,9 +130,24 @@ const CardMain = ({
     },
   });
 
-  const getPartner = useQuery({
+  const getFeeGroup = useQuery({
+    queryKey: [API_FEE_GROUP.GET_ALL],
+    queryFn: () => getAllFeeGroup({ type: TYPE_FEE_GROUP.AIR_QUOTATION }),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+        errorToast(API_MESSAGE.ERROR);
+      }
+    },
+    onError: () => {
+      router.back();
+      errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  const getLiner = useQuery({
     queryKey: [API_PARTNER.GET_ALL_VENDOR],
-    queryFn: () => getAllVendor(),
+    queryFn: () => getAllLiner(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -150,9 +174,10 @@ const CardMain = ({
       errorToast(API_MESSAGE.ERROR);
     },
   });
+
   useEffect(() => {
-    if (form.getFieldValue('statusSeaQuotation')) {
-      form.getFieldValue('statusSeaQuotation') === STATUS_ALL_LABELS.ACTIVE
+    if (form.getFieldValue('statusAirQuotation')) {
+      form.getFieldValue('statusAirQuotation') === STATUS_ALL_LABELS.ACTIVE
         ? setCheckStatus(true)
         : setCheckStatus(false);
     }
@@ -162,36 +187,30 @@ const CardMain = ({
 
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
-        podid: propCopyAndCreate.podid as string,
-        polid: propCopyAndCreate.polid as string,
+        aodid: propCopyAndCreate.aodid as string,
+        aolid: propCopyAndCreate.aolid as string,
         commodityID: propCopyAndCreate.commodityID as string,
         note: propCopyAndCreate.note as string,
-        effectDated: dayjs(Number(propCopyAndCreate.effectDated as string)),
-        validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
+        validityDate: propCopyAndCreate.validityDate as string,
+        effectDated: propCopyAndCreate.effectDated as string,
         freqDate: propCopyAndCreate.freqDate as string,
-        vendorID: propCopyAndCreate.vendorID as string,
-        forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
-        demSeaQuotation: propCopyAndCreate.demSeaQuotation as string,
-        detSeaQuotation: propCopyAndCreate.detSeaQuotation as string,
-        stoSeaQuotation: propCopyAndCreate.stoSeaQuotation as string,
-        lclMinSeaQuotation: propCopyAndCreate.lclMinSeaQuotation as string,
-        lclSeaQuotation: propCopyAndCreate.lclSeaQuotation as string,
         currencyID: propCopyAndCreate.currencyID as string,
-        transitTimeSeaQuotation:
-          propCopyAndCreate.transitTimeSeaQuotation as string,
+        vendorID: propCopyAndCreate.vendorID as string,
+        hscAirQuotation: propCopyAndCreate.hscAirQuotation as string,
+        sscAirQuotation: propCopyAndCreate.sscAirQuotation as string,
+        gw: propCopyAndCreate.gw as unknown as boolean,
+        transitTimeAirQuotation:
+          propCopyAndCreate.transitTimeAirQuotation as string,
         public: propCopyAndCreate.public as unknown as boolean,
-        statusSeaQuotation: propCopyAndCreate.statusSeaQuotation as string,
-        seaQuotationDetailDTOs: JSON.parse(
-          propCopyAndCreate.seaQuotationDetailDTOs as string
-        ) as unknown as ISeaQuotationDetailDTOs[],
-        seaQuotaionFeeGroupDTOs: JSON.parse(
-          propCopyAndCreate.seaQuotaionFeeGroupDTOs as string
-        ) as unknown as ISeaQuotationFeeFormValue[],
-        salesLeadsSeaQuotationDTOs: JSON.parse(
-          propCopyAndCreate.salesLeadsSeaQuotationDTOs as string
-        ) as unknown as string[],
-        seaQuotaionGroupPartnerDTOs: JSON.parse(
-          propCopyAndCreate.seaQuotaionGroupPartnerDTOs as string
+        statusAirQuotation: propCopyAndCreate.statusAirQuotation as string,
+        airQuotationDetailDTOs:
+          propCopyAndCreate.airQuotationDetailDTOs as unknown as IAirQuotationDetailDTOs[],
+        airQuotaionFeeGroupDTOs:
+          typeof propCopyAndCreate.airQuotaionFeeGroupDTOs === 'string'
+            ? [propCopyAndCreate.airQuotaionFeeGroupDTOs as unknown as string]
+            : (propCopyAndCreate.airQuotaionFeeGroupDTOs as unknown as string[]),
+        salesLeadsAirQuotationDTOs: JSON.parse(
+          propCopyAndCreate.salesLeadsAirQuotationDTOs as string
         ) as unknown as string[],
       });
     }
@@ -201,15 +220,14 @@ const CardMain = ({
     checkRow,
     manager,
     propCopyAndCreate,
-    form.getFieldValue('statusSeaQuotation'),
+    form.getFieldValue('statusAirQuotation'),
   ]);
 
   const updateStatusMutation = useMutation({
-    mutationFn: (body: UpdateStatus) => {
+    mutationFn: (body: IUpdateStatus) => {
       return updateStatus(body);
     },
   });
-
   return (
     <Card
       style={{ marginBottom: 24 }}
@@ -217,17 +235,17 @@ const CardMain = ({
         <Row justify={'center'}>
           <Col>
             <Title level={3} style={{ margin: '-4px 0' }}>
-              {create && translateQuotationSea('information_add_sea_quotation')}
+              {create && translatePricingAir('information_add_air_pricing')}
               {manager && 'Approval needed requests'}
               {edit &&
                 (checkRow ? (
                   <>
                     {isCheckPermissionEdit && 'View'}
                     {!isCheckPermissionEdit &&
-                      translateQuotationSea('information_edit_sea_quotation')}
+                      translatePricingAir('information_edit_air_pricing')}
                   </>
                 ) : (
-                  translateQuotationSea('information_edit_sea_quotation')
+                  translatePricingAir('information_edit_air_pricing')
                 ))}
             </Title>
           </Col>
@@ -236,7 +254,7 @@ const CardMain = ({
       extra={
         <>
           {create && useDraft && <DraftTable handleIdQuery={handleIdQuery} />}
-          {edit && idQuery && (
+          {edit && idQuery && !isCheckPermissionEdit && (
             <Switch
               checked={checkStatus}
               checkedChildren="Active"
@@ -247,7 +265,7 @@ const CardMain = ({
                   : STATUS_MASTER_COLORS.DEACTIVE,
               }}
               onChange={(value) => {
-                const _requestData: UpdateStatus = {
+                const _requestData: IUpdateStatus = {
                   id: [idQuery],
                   status: value
                     ? STATUS_ALL_LABELS.ACTIVE
@@ -275,19 +293,19 @@ const CardMain = ({
       <Row gutter={16}>
         <Col lg={12} span={24}>
           <Form.Item
-            label={translateQuotationSea('POL')}
-            tooltip={translateQuotationSea('POL')}
-            name="polid"
+            label={translatePricingAir('AOL_form.title')}
+            tooltip={translatePricingAir('AOL_form.title')}
+            name="aolid"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('POL_form.placeholder'),
+                message: translatePricingAir('AOL_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translateQuotationSea('POL_form.placeholder')}
+              placeholder={translatePricingAir('AOL_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="label"
               filterOption={(input, option) => {
@@ -344,19 +362,19 @@ const CardMain = ({
         </Col>
         <Col lg={12} span={24}>
           <Form.Item
-            label={translateQuotationSea('POD')}
-            tooltip={translateQuotationSea('POD')}
-            name="podid"
+            label={translatePricingAir('AOD_form.title')}
+            tooltip={translatePricingAir('AOD_form.title')}
+            name="aodid"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('POD_form.placeholder'),
+                message: translatePricingAir('AOD_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translateQuotationSea('POD_form.placeholder')}
+              placeholder={translatePricingAir('AOD_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="label"
               filterOption={(input, option) => {
@@ -411,14 +429,15 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
+
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('effect_date')}
+            label={translatePricingAir('effect_date_form.title')}
             name="effectDated"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('effect_date_form.placeholder'),
+                message: translatePricingAir('effect_date_form.error_required'),
               },
             ]}
           >
@@ -431,12 +450,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('validity')}
+            label={translatePricingAir('validity_form.title')}
             name="validityDate"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('validity_form.placeholder'),
+                message: translatePricingAir('validity_form.error_required'),
               },
             ]}
           >
@@ -449,18 +468,18 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('freq')}
+            label={translatePricingAir('freq_form.title')}
             name="freqDate"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('freq_form.placeholder'),
+                message: translatePricingAir('freq_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translateQuotationSea('freq_form.placeholder')}
+              placeholder={translatePricingAir('freq_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -475,162 +494,21 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
+
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationSea('STO')}
-            name="stoSeaQuotation"
-          >
-            <InputNumber
-              disabled={checkRow && isCheckPermissionEdit}
-              placeholder={translateQuotationSea('STO_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('DEM')}
-            name="demSeaQuotation"
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translateQuotationSea('DEM_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('DET')}
-            name="detSeaQuotation"
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translateQuotationSea('DET_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('transitTime_form.title')}
-            name="transitTimeSeaQuotation"
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translateQuotationSea(
-                'transitTime_form.placeholder'
-              )}
-              min={0}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('LCL')}
-            name="lclSeaQuotation"
-          >
-            <InputNumber
-              placeholder={translateQuotationSea('LCL_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('LCLMin')}
-            name="lclMinSeaQuotation"
-          >
-            <InputNumber
-              placeholder={translateQuotationSea('LCLMin_form.placeholder')}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace().replace(/,/g, '')}
-              style={{ width: '100%' }}
-              disabled={checkRow && isCheckPermissionEdit}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            name="currencyID"
-            label="Currency"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('currency_form.error_required'),
-              },
-            ]}
-          >
-            <Select
-              placeholder={translateQuotationSea('currency_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              showSearch
-              style={{ width: '100%' }}
-              options={optionCurrency}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('carrier_form.title')}
-            name="vendorID"
-            rules={[
-              {
-                required: true,
-                message: translateQuotationSea('carrier_form.error_required'),
-              },
-            ]}
-          >
-            <Select
-              showSearch
-              placeholder={translateQuotationSea('carrier_form.placeholder')}
-              disabled={checkRow && isCheckPermissionEdit}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option?.label ?? '').includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA?.label ?? '')
-                  .toLowerCase()
-                  .localeCompare((optionB?.label ?? '').toLowerCase())
-              }
-              options={
-                getPartner.data?.data?.map((item) => {
-                  return {
-                    value: item.partnerID,
-                    label: item.companyName,
-                  };
-                }) || []
-              }
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translateQuotationSea('commodity')}
+            label={translatePricingAir('commodity_form.title')}
             name="commodityID"
             rules={[
               {
                 required: true,
-                message: translateQuotationSea('commodity_form.placeholder'),
+                message: translatePricingAir('commodity_form.error_required'),
               },
             ]}
           >
             <Select
               showSearch
-              placeholder={translateQuotationSea('commodity_form.placeholder')}
+              placeholder={translatePricingAir('commodity_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               optionFilterProp="children"
               filterOption={(input, option) =>
@@ -652,24 +530,208 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col lg={8} span={24} style={{ display: create ? 'none' : '' }}>
-          <Form.Item label={'Sea pricing'} name="seaPricingID">
-            <Input style={{ width: '100%' }} disabled={true} />
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('carrier_form.title')}
+            name="vendorID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('carrier_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              showSearch
+              placeholder={translatePricingAir('carrier_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getLiner.data?.data.map((item) => {
+                  return {
+                    value: item.partnerID,
+                    label: item.companyName,
+                  };
+                }) || []
+              }
+            />
           </Form.Item>
         </Col>
         <Col lg={8} span={24}>
-          <Form.Item name="forNewUser" label=" ">
+          <Form.Item
+            label={translatePricingAir('transitTime_form.title')}
+            name="transitTimeAirQuotation"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('transitTime_form.error_required'),
+              },
+            ]}
+          >
+            <Input
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir('transitTime_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('currency_form.title')}
+            name="currencyID"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir('currency_form.error_required'),
+              },
+            ]}
+          >
+            <Select
+              placeholder={translatePricingAir('currency_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              showSearch
+              style={{ width: '100%' }}
+              options={optionCurrency}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('hscAirPricing_form.title')}
+            name="hscAirQuotation"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'hscAirPricing_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'hscAirPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('sscAirPricing_form.title')}
+            name="sscAirQuotation"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'sscAirPricing_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'sscAirPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir(
+              'loadCapacityMinAirQuotation_form.title'
+            )}
+            name="loadCapacityMinAirQuotation"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'loadCapacityMinAirQuotation_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'loadCapacityMinAirQuotation_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir(
+              'priceLoadCapacityMinAirQuotation_form.title'
+            )}
+            name="priceLoadCapacityMinAirQuotation"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'priceLoadCapacityMinAirQuotation_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'priceLoadCapacityMinAirQuotation_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+
+        <Col span={4}>
+          <Form.Item label={'GW'} name="gw">
             <Checkbox
               disabled={checkRow && isCheckPermissionEdit}
               checked={componentDisabled}
               onChange={(e) => setComponentDisabled(e.target.checked)}
-            >
-              Public
-            </Checkbox>
+            />
           </Form.Item>
         </Col>
+        <Col span={4}>
+          <Form.Item name="forNewUser" label="Public">
+            <Checkbox
+              disabled={checkRow && isCheckPermissionEdit}
+              checked={componentDisabledNewUser}
+              onChange={(e) => setComponentDisabledNewUser(e.target.checked)}
+            />
+          </Form.Item>
+        </Col>
+
         <Col span={24}>
-          <Form.Item label={'Customer'} name="salesLeadsSeaQuotationDTOs">
+          <Form.Item label={'Customer'} name="salesLeadsAirQuotationDTOs">
             <Select
               showSearch
               mode="multiple"
@@ -695,6 +757,38 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
+
+        <Col span={24}>
+          <Form.Item
+            label={translatePricingAir('Fee_Group_form.title')}
+            name="airQuotaionFeeGroupDTOs"
+          >
+            <Select
+              showSearch
+              mode="multiple"
+              placeholder={translatePricingAir('Fee_Group_form.placeholder')}
+              disabled={checkRow && isCheckPermissionEdit}
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option?.label ?? '').includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '')
+                  .toLowerCase()
+                  .localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={
+                getFeeGroup.data?.data.map((item) => {
+                  return {
+                    value: item.feeGroupID,
+                    label: item.feeGroupName,
+                  };
+                }) || []
+              }
+            />
+          </Form.Item>
+        </Col>
+
         <Col span={24}>
           <Form.Item label="Note" name="note">
             <Input.TextArea
@@ -705,13 +799,10 @@ const CardMain = ({
           </Form.Item>
         </Col>
         <Col span={0}>
-          <Form.Item name="statusSeaQuotation"></Form.Item>
+          <Form.Item name="statusAirQuotation"></Form.Item>
         </Col>
         <Col span={0}>
-          <Form.Item name="seaQuotationDetailDTOs"></Form.Item>
-        </Col>
-        <Col span={0}>
-          <Form.Item name="seaQuotaionFeeGroupDTOs"></Form.Item>
+          <Form.Item name="airQuotationDetailDTOs"></Form.Item>
         </Col>
       </Row>
     </Card>

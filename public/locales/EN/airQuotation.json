@@ -1,0 +1,124 @@
+{
+    "title": "List of Air Quotation",
+    "no": "No",
+    "code": "Quotation No",
+    "AOL": "AOL",
+    "AOD": "AOD",
+    "destination": "Destination",
+    "country": "Country",
+    "vendor": "Vendor",
+    "carrier": "Carrier",
+    "service": "Service",
+    "commodity": "Commodity",
+    "others": "Others",
+    "type": "Type",
+    "currency": "Currency",
+    "vat": "VAT",
+    "validity": "Expiry date",
+    "effective": "Effective date",
+    "freq": "Frequency",
+    "Cutoff": "Cut Off",
+    "status": "Status",
+    "note": "Note",
+    "date_created": "Date created",
+    "creator": "Creator",
+    "title_air_freight": "Air Freight",
+    "title_local_chart": "Local Chart",
+    "information_add_air_pricing": "New Air Quotation",
+    "information_edit_air_pricing": "Edit Air Quotation",
+    "AOL_form": {
+        "title": "AOL",
+        "placeholder": "Enter AOL",
+        "error_required": "Please enter AOL"
+    },
+    "AOD_form": {
+        "title": "AOD",
+        "placeholder": "Enter AOD",
+        "error_required": "Please enter AOD"
+    },
+    "destination_form": {
+        "title": "Destination",
+        "placeholder": "Enter destination",
+        "error_required": "Please enter destination"
+    },
+    "country_form": {
+        "title": "Country",
+        "placeholder": "Enter country",
+        "error_required": "Please enter country"
+    },
+    "vendor_form": {
+        "title": "Vendor",
+        "placeholder": "Enter vendor",
+        "error_required": "Please enter vendor"
+    },
+    "carrier_form": {
+        "title": "Carrier",
+        "placeholder": "Enter carrier",
+        "error_required": "Please enter carrier"
+    },
+    "commodity_form": {
+        "title": "Commodity",
+        "placeholder": "Enter commodity",
+        "error_required": "Please enter commodity"
+    },
+    "currency_form": {
+        "title": "Currency",
+        "placeholder": "Enter currency",
+        "error_required": "Please chooses currency"
+    },
+    "transitTime_form": {
+        "title": "Transit Time",
+        "placeholder": "Enter transit time",
+        "error_required": "Please enter transit time"
+    },
+    "VAT_form": {
+        "title": "VAT",
+        "placeholder": "Enter VAT",
+        "error_required": "Please enter VAT"
+    },
+    "effect_date_form": {
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
+    },
+    "validity_form": {
+        "title": "Expiry date",
+        "placeholder": "Enter expiry date",
+        "error_required": "Please enter expiry date"
+    },
+    "freq_form": {
+        "title": "Frequency",
+        "placeholder": "Enter frequency",
+        "error_required": "Please enter frequency"
+    },
+    "hscAirPricing_form": {
+        "title": "HSC",
+        "placeholder": "Enter HSC",
+        "error_required": "Please enter HSC"
+    },
+    "sscAirPricing_form": {
+        "title": "SSC",
+        "placeholder": "Enter SSC",
+        "error_required": "Please enter SSC"
+    },
+    "loadCapacityMinAirQuotation_form": {
+        "title": "Load Capacity Min (Kg)",
+        "placeholder": "Enter load capacity min (Kg)",
+        "error_required": "Please enter load capacity min (Kg)"
+    },
+    "priceLoadCapacityMinAirQuotation_form": {
+        "title": "Price Load Capacity Min",
+        "placeholder": "Enter price load capacity min",
+        "error_required": "Please enter price load capacity min"
+    },
+    "Fee_Group_form": {
+        "title": "Other Charges",
+        "placeholder": "Enter Other Charges",
+        "error_required": "Please enter Other Charges"
+    },
+    "modify_date_placeholder": "Please input modify date",
+    "status_placeholder": "Please select status",
+    "note_placeholder": "Please input note",
+    "date_created_placeholder": "Please select date created",
+    "creator_placeholder": "Please select creator"
+}

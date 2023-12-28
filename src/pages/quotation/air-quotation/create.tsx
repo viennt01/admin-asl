@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-// import CreateSeaQuotation from '@/components/menu-item/quotation/sea/create';
+import CreateAirQuotation from '@/components/menu-item/quotation/air/create';
 
 function CreateSeaQuotationPage() {
   return (
@@ -8,11 +8,11 @@ function CreateSeaQuotationPage() {
       <Head>
         <title>ASL | CREATE SEA QUOTATION</title>
       </Head>
-      {/* <CreateSeaQuotation /> */}
+      <CreateAirQuotation />
     </>
   );
 }
 
 export default withAuthentication(CreateSeaQuotationPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'seaQuotation']);
+export const getStaticProps = getStatic(['common', 'airQuotation']);

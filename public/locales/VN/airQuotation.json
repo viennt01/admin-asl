@@ -1,0 +1,123 @@
+{
+    "title": "Danh sách định giá đường biển",
+    "no": "No",
+    "code": "Quotation No",
+    "AOL": "AOL",
+    "AOD": "AOD",
+    "destination": "Destination",
+    "country": "Country",
+    "vendor": "Vendor",
+    "carrier": "Carrier",
+    "service": "Service",
+    "commodity": "Commodity",
+    "others": "Others",
+    "type": "Type",
+    "currency": "Currency",
+    "vat": "VAT",
+    "validity": "Expiry date",
+    "effective": "Effective date",
+    "freq": "Frequency",
+    "status": "Trạng thái",
+    "note": "Ghi chú",
+    "date_created": "Ngày tạo",
+    "creator": "Người tạo",
+    "title_air_freight": "Vận tải bằng hàng không",
+    "title_local_chart": "Phụ phí",
+    "information_add_air_pricing": "Thêm mới định giá hàng không",
+    "information_edit_air_pricing": "Chỉnh sửa định giá hàng không",
+    "AOL_form": {
+        "title": "AOL",
+        "placeholder": "Nhập AOL",
+        "error_required": "Vui lòng nhập AOL"
+    },
+    "AOD_form": {
+        "title": "AOD",
+        "placeholder": "Nhập AOD",
+        "error_required": "Vui lòng nhập AOD"
+    },
+    "destination_form": {
+        "title": "Destination",
+        "placeholder": "Nhập destination",
+        "error_required": "Vui lòng nhập destination"
+    },
+    "country_form": {
+        "title": "Country",
+        "placeholder": "Nhập country",
+        "error_required": "Vui lòng nhập country"
+    },
+    "vendor_form": {
+        "title": "Vendor",
+        "placeholder": "Nhập vendor",
+        "error_required": "Vui lòng nhập vendor"
+    },
+    "carrier_form": {
+        "title": "Carrier",
+        "placeholder": "Nhập carrier",
+        "error_required": "Vui lòng nhập carrier"
+    },
+    "commodity_form": {
+        "title": "Commodity",
+        "placeholder": "Nhập commodity",
+        "error_required": "Vui lòng nhập commodity"
+    },
+    "currency_form": {
+        "title": "Currency",
+        "placeholder": "Nhập currency",
+        "error_required": "Vui lòng nhập currency"
+    },
+    "transitTime_form": {
+        "title": "Transit Time",
+        "placeholder": "Nhập transit time",
+        "error_required": "Vui lòng nhập transit time"
+    },
+    "VAT_form": {
+        "title": "VAT",
+        "placeholder": "Nhập VAT",
+        "error_required": "Vui lòng nhập VAT"
+    },
+    "effect_date_form": {
+        "title": "Effective date",
+        "placeholder": "Nhập effective date",
+        "error_required": "Vui lòng nhập effective date"
+    },
+    "validity_form": {
+        "title": "Expiry date",
+        "placeholder": "Nhập expiry date",
+        "error_required": "Vui lòng nhập expiry date"
+    },
+    "freq_form": {
+        "title": "Frequency",
+        "placeholder": "Nhập frequency",
+        "error_required": "Vui lòng nhập frequency"
+    },
+    "hscAirPricing_form": {
+        "title": "HSC",
+        "placeholder": "Nhập HSC",
+        "error_required": "Vui lòng nhập HSC"
+    },
+    "sscAirPricing_form": {
+        "title": "SSC",
+        "placeholder": "Nhập SSC",
+        "error_required": "Vui lòng nhập SSC"
+    },
+    "loadCapacityMinAirQuotation_form": {
+        "title": "Load Capacity Min (Kg)",
+        "placeholder": "Nhập load capacity min (Kg)",
+        "error_required": "Vui lòng nhập load capacity min (Kg)"
+    },
+    "priceLoadCapacityMinAirQuotation_form": {
+        "title": "Price Load Capacity Min",
+        "placeholder": "Nhập price load capacity min",
+        "error_required": "Vui lòng nhập price load capacity min"
+    },
+    "Fee_Group_form": {
+        "title": "Loại nhóm phí",
+        "placeholder": "Nhập loại nhóm phí",
+        "error_required": "Vui lòng chọn loại nhóm phí"
+    },
+    "modify_date_placeholder": "Please input modify date",
+    "status_placeholder": "Please select status",
+    "note_placeholder": "Please input note",
+    "date_created_placeholder": "Please select date created",
+    "creator_placeholder": "Please select creator"
+}

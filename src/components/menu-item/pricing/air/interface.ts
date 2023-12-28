@@ -185,36 +185,10 @@ export type AirPricingDelete = {
 };
 
 //----------------------------------------------------------------
-export interface QueryInputDraft {
-  searchAll: string;
-}
-export interface QuerySelectDraft {
-  status: string;
-}
-export interface RequestTableDraft extends QueryInputDraft, QuerySelectDraft {
-  paginateRequest: IPagination;
-}
-
-export type SelectDratSearch = {
-  [key in keyof QueryInputDraft]: {
-    label: string;
-    value: string;
-  };
-};
-
-//----------------------------------------------------------------
 
 export interface UpdateStatus {
   id: React.Key[];
   status: string;
-}
-
-export interface QueryInputRequest {
-  searchAll: string;
-  status: string;
-}
-export interface RequestTableRequest extends QueryInputRequest {
-  paginateRequest: IPagination;
 }
 
 // get all commodity

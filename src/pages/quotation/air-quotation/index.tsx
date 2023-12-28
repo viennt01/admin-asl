@@ -1,18 +1,18 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
 
-function SeaQuotation() {
+function AirQuotation() {
   return (
     <>
       <Head>
         <title>ASL | AIR QUOTATION</title>
       </Head>
-      <ComingSoon />
+      <AirQuotationPage />
     </>
   );
 }
 
-export default withAuthentication(SeaQuotation);
+export default withAuthentication(AirQuotation);
 import { getStatic } from '@/lib/getStaticProps';
-import ComingSoon from '@/components/coming-soon';
-export const getStaticProps = getStatic(['common', 'seaQuotation']);
+import AirQuotationPage from '@/components/menu-item/quotation/air';
+export const getStaticProps = getStatic(['common', 'airQuotation']);

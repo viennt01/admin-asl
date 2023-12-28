@@ -7,15 +7,15 @@ import {
   uploadFile,
 } from '@/fetcherAxios';
 import {
-  AirPricingRequire,
-  RequestAirPricing,
-  AirPricingCreate,
-  AirPricingDelete,
-  AirPricingDetailDataBody,
-  AirPricingDetailType,
-  AirPricingEdit,
-  UpdateStatus,
-  RequireCommodity,
+  IAirQuotationRequire,
+  IRequestAirQuotation,
+  IAirQuotationCreate,
+  IAirQuotationDelete,
+  IAirQuotationDetailDataBody,
+  IAirQuotationDetailType,
+  IAirQuotationEdit,
+  IUpdateStatus,
+  IRequireCommodity,
   RequireCurrency,
   RequireTypeLoadCapacity,
   IRequireTypeLoadCapacity,
@@ -23,72 +23,72 @@ import {
 import {
   API_COMMODITY,
   API_CURRENCY,
-  API_AIR_PRICING,
+  API_AIR_QUOTATION,
   API_LOAD_CAPACITY,
 } from '@/fetcherAxios/endpoint';
 import { RequestExportData } from '../custom/interface';
 
-export const getAirPricingSearch = (data: RequestAirPricing) => {
-  return post<RequestAirPricing, ResponseWithPayload<AirPricingRequire>>({
+export const getAirPricingSearch = (data: IRequestAirQuotation) => {
+  return post<IRequestAirQuotation, ResponseWithPayload<IAirQuotationRequire>>({
     data,
-  })(API_AIR_PRICING.GET_SEARCH);
+  })(API_AIR_QUOTATION.GET_SEARCH);
 };
 
 export const getAirPricingDetail = (id: string) => {
   return post<
-    AirPricingDetailDataBody,
-    ResponseWithPayload<AirPricingDetailType>
+    IAirQuotationDetailDataBody,
+    ResponseWithPayload<IAirQuotationDetailType>
   >({
     data: {
       id,
     },
-  })(API_AIR_PRICING.GET_DETAIL);
+  })(API_AIR_QUOTATION.GET_DETAIL);
 };
 
-export const createAirPricing = (data: AirPricingCreate) => {
-  return post<AirPricingCreate, ResponseWithPayload<AirPricingCreate>>({
+export const createAirPricing = (data: IAirQuotationCreate) => {
+  return post<IAirQuotationCreate, ResponseWithPayload<IAirQuotationCreate>>({
     data,
-  })(API_AIR_PRICING.CREATE);
+  })(API_AIR_QUOTATION.CREATE);
 };
 
-export const editAirPricing = (data: AirPricingEdit) => {
-  return post<AirPricingEdit, ResponseWithPayload<AirPricingEdit>>({
+export const editAirPricing = (data: IAirQuotationEdit) => {
+  return post<IAirQuotationEdit, ResponseWithPayload<IAirQuotationEdit>>({
     data,
-  })(API_AIR_PRICING.EDIT);
+  })(API_AIR_QUOTATION.EDIT);
 };
 
 export const deleteAirPricing = (data: React.Key[]) => {
-  return post<AirPricingDelete, ResponseWithPayload<AirPricingDelete>>({
+  return post<IAirQuotationDelete, ResponseWithPayload<IAirQuotationDelete>>({
     data: {
       ids: data,
     },
-  })(API_AIR_PRICING.DELETE);
+  })(API_AIR_QUOTATION.DELETE);
 };
 
 //----------------------------------------------------------------
 
-export const updateStatus = (data: UpdateStatus) => {
-  return post<UpdateStatus, ResponseWithPayload<UpdateStatus>>({
+export const updateStatus = (data: IUpdateStatus) => {
+  return post<IUpdateStatus, ResponseWithPayload<IUpdateStatus>>({
     data,
-  })(API_AIR_PRICING.UPDATE_STATUS);
+  })(API_AIR_QUOTATION.UPDATE_STATUS);
 };
 
 //----------------------------------------------------------------
 export const importDataTable = (data: FormData) => {
   return uploadFile<BlobPart>({ data, timeout: 100000 })(
-    API_AIR_PRICING.IMPORT
+    API_AIR_QUOTATION.IMPORT
   );
 };
 export const downloadExampleFile = () => {
-  return downloadFile<BlobPart>({})(API_AIR_PRICING.DOWNLOAD_EXAMPLE_FILE);
+  return downloadFile<BlobPart>({})(API_AIR_QUOTATION.DOWNLOAD_EXAMPLE_FILE);
 };
 export const exportTableFile = (data: RequestExportData) => {
   return exportFile<RequestExportData, BlobPart>({ data })(
-    API_AIR_PRICING.EXPORT
+    API_AIR_QUOTATION.EXPORT
   );
 };
 export const getAllCommodity = () => {
-  return get<ResponseWithPayload<RequireCommodity[]>>({})(
+  return get<ResponseWithPayload<IRequireCommodity[]>>({})(
     API_COMMODITY.GET_ALL
   );
 };
