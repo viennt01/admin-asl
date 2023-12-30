@@ -13,7 +13,7 @@
     "currency": "Currency",
     "vat": "VAT",
     "effect_date": "Effective date",
-    "validity": "Expiry date",
+    "validity": "Expire date",
     "freq": "Frequency",
     "Cutoff": "Cut Off",
     "TT": "TT",
@@ -90,9 +90,9 @@
         "error_required": "Vui lòng nhập effective date"
     },
     "validity_form": {
-        "title": "Expiry date",
-        "placeholder": "Nhập expiry date",
-        "error_required": "Vui lòng nhập expiry date"
+        "title": "Expire date",
+        "placeholder": "Nhập expire date",
+        "error_required": "Vui lòng nhập expire date"
     },
     "freq_form": {
         "title": "Frequency",

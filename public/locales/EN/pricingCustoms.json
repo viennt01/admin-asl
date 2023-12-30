@@ -30,9 +30,9 @@
         "error_required": "Please enter effective date"
     },
     "validity_form": {
-        "title": "Expiry date",
-        "placeholder": "Enter expiry date",
-        "error_required": "Please enter expiry date"
+        "title": "Expire date",
+        "placeholder": "Enter expire date",
+        "error_required": "Please enter expire date"
     },
     "commodity_form": {
         "title": "Commodity",

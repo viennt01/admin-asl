@@ -13,7 +13,7 @@
     "type": "Type",
     "currency": "Currency",
     "vat": "VAT",
-    "validity": "Expiry date",
+    "validity": "Expire date",
     "effective": "Effective date",
     "freq": "Frequency",
     "Cutoff": "Cut Off",
@@ -81,9 +81,9 @@
         "error_required": "Please enter effective date"
     },
     "validity_form": {
-        "title": "Expiry date",
-        "placeholder": "Enter expiry date",
-        "error_required": "Please enter expiry date"
+        "title": "Expire date",
+        "placeholder": "Enter expire date",
+        "error_required": "Please enter expire date"
     },
     "freq_form": {
         "title": "Frequency",

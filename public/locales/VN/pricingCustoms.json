@@ -30,9 +30,9 @@
         "error_required": "Vui lòng nhập effective date"
     },
     "validity_form": {
-        "title": "Expiry date",
-        "placeholder": "Nhập expiry date",
-        "error_required": "Vui lòng nhập expiry date"
+        "title": "Expire date",
+        "placeholder": "Nhập expire date",
+        "error_required": "Vui lòng nhập expire date"
     },
     "commodity_form": {
         "title": "commodity",
