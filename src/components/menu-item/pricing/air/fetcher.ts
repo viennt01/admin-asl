@@ -19,12 +19,14 @@ import {
   RequireCurrency,
   RequireTypeLoadCapacity,
   IRequireTypeLoadCapacity,
+  RequireCreateQuotationWithPricing,
 } from './interface';
 import {
   API_COMMODITY,
   API_CURRENCY,
   API_AIR_PRICING,
   API_LOAD_CAPACITY,
+  API_AIR_QUOTATION,
 } from '@/fetcherAxios/endpoint';
 import { RequestExportData } from '../custom/interface';
 
@@ -102,4 +104,16 @@ export const getAllTypeLoadCapacity = (data: IRequireTypeLoadCapacity) => {
     IRequireTypeLoadCapacity,
     ResponseWithPayload<RequireTypeLoadCapacity[]>
   >({ data })(API_LOAD_CAPACITY.GET_ALL);
+};
+//----------------------------------------------------------------
+// create quotation with pricing
+export const createQuotationWithPricing = (
+  data: RequireCreateQuotationWithPricing
+) => {
+  return post<
+    RequireCreateQuotationWithPricing,
+    ResponseWithPayload<RequireCreateQuotationWithPricing>
+  >({
+    data,
+  })(API_AIR_QUOTATION.CREATE_WITH_PRICING);
 };

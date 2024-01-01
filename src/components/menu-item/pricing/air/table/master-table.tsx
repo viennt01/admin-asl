@@ -69,6 +69,7 @@ import {
   getColumnTable,
   updateColumnTable,
 } from '@/components/menu-item/pricing/fee-group/fetcher';
+import CreateQuotationModal from '../components/create-quotation/modal';
 
 const { confirm } = Modal;
 
@@ -96,6 +97,8 @@ export default function MasterDataTable() {
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
+  const [openCreateQuotationModal, setOpenCreateQuotationModal] =
+    useState(false);
   const { role } = useContext(AppContext);
 
   // Handle data
@@ -693,6 +696,18 @@ export default function MasterDataTable() {
       setIsLoadingDownload(false);
     },
   });
+  //handle create quotation
+  const cancelCreateQuotation = () => {
+    setOpenCreateQuotationModal(false);
+  };
+
+  const handleOpenCreateQuotation = () => {
+    setOpenCreateQuotationModal(true);
+  };
+
+  const handleCreateQuotation = () => {
+    setOpenCreateQuotationModal(false);
+  };
   return (
     <div style={{ marginTop: -18 }}>
       {locationsQuerySearch.isLoading ? (
@@ -706,6 +721,12 @@ export default function MasterDataTable() {
             handleCancel={cancelImportTableData}
             isLoadingDownload={isLoadingDownload}
             downloadFile={downloadFile}
+          />
+          <CreateQuotationModal
+            itemData={selectedRowKeys}
+            open={openCreateQuotationModal}
+            handleOk={handleCreateQuotation}
+            handleCancel={cancelCreateQuotation}
           />
           <Table
             dataTable={dataTable}
@@ -733,6 +754,8 @@ export default function MasterDataTable() {
             checkTableMaster={true}
             importTableData={importTableData}
             exportTableData={exportTableData}
+            handleCreateQuotation={handleOpenCreateQuotation}
+            itemDataQuotation={selectedRowKeys}
           />
         </>
       )}

@@ -165,6 +165,7 @@ export const API_AIR_QUOTATION = {
   GET_SEARCH: '/search-air-quotation',
   GET_DETAIL: '/get-air-quotation-by-id',
   CREATE: '/add-air-quotation',
+  CREATE_WITH_PRICING: '/add-air-quotation-by-pricing',
   EDIT: '/update-air-quotation',
   DELETE: '/delete-air-quotation',
   UPDATE_STATUS: '/update-status-air-quotation',

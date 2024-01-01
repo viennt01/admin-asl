@@ -214,3 +214,22 @@ export interface RequireTypeLoadCapacity {
 export interface IRequireTypeLoadCapacity {
   type: TYPE_LOAD_CAPACITY;
 }
+export interface RequireCreateQuotationWithPricing {
+  airPricingID: React.Key[];
+  effectDated: number;
+  validityDate: number;
+  profitRateOfLoadCapacityForAll: string;
+  profitRateOfFee: string;
+  profitRateOfLoadCapacity: { [key: string]: string };
+  profitRateOfUnitforFee: { [key: string]: string };
+  forNewUser: boolean;
+  salesLeadsQuotationRegisters: { partnerID: string }[];
+  status: string;
+}
+export interface RequireCreateQuotationWithPricingFormValue
+  extends Omit<
+    RequireCreateQuotationWithPricing,
+    'salesLeadsQuotationRegisters'
+  > {
+  salesLeadsQuotationRegisters: string[];
+}
