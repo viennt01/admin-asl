@@ -228,37 +228,37 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
             <Row>
               <Col span={24}>
                 <Form.Item
-                  label="Effect date"
+                  label="Effective date"
                   name="effectDated"
                   rules={[
                     {
                       required: true,
-                      message: 'Please select effect date',
+                      message: 'Please select effective date',
                     },
                   ]}
                 >
                   <DatePicker
                     format={dateFormat}
                     style={{ width: '100%' }}
-                    placeholder="Select effect date"
+                    placeholder="Select effective date"
                   />
                 </Form.Item>
               </Col>
               <Col span={24}>
                 <Form.Item
-                  label="Validity date"
+                  label="Expire date"
                   name="validityDate"
                   rules={[
                     {
                       required: true,
-                      message: 'Please select validity date',
+                      message: 'Please select expire date',
                     },
                   ]}
                 >
                   <DatePicker
                     format={dateFormat}
                     style={{ width: '100%' }}
-                    placeholder="Select validity date"
+                    placeholder="Select expire date"
                   />
                 </Form.Item>
               </Col>

@@ -52,6 +52,7 @@ interface EditableCellProps {
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   title,
   editable,
   children,
@@ -93,19 +94,19 @@ const EditableCell: React.FC<EditableCellProps> = ({
       <Form.Item
         style={{ margin: 0 }}
         name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: `${title} is required.`,
+        //   },
+        // ]}
       >
         <InputNumber
           ref={inputRef as unknown as Ref<HTMLInputElement>}
           onPressEnter={save}
           onBlur={save}
           style={{ width: '100%' }}
-          formatter={(value) => formatNumber(Number(value) || 0)}
+          formatter={(value) => formatNumber(Number(value) || '0')}
         />
       </Form.Item>
     ) : (
@@ -171,7 +172,7 @@ const ContainerType: React.FC<ImportModalProps> = ({
       key: 'profitRate',
       fixed: 'right',
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
       editable: true,
     },
