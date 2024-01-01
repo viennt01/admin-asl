@@ -54,9 +54,9 @@
         "error_required": "Vui lòng chọn giới tính"
     },
     "visa_form": {
-        "title": "Visa",
-        "placeholder": "Nhập visa",
-        "error_required": "Vui lòng nhập visa"
+        "title": "Căn cước công dân hoặc visa",
+        "placeholder": "Nhập căn cước công dân hoặc visa",
+        "error_required": "Vui lòng nhập căn cước công dân hoặc visa"
     },
     "citizenIdentification_form": {
         "title": "Căn cước công dân",

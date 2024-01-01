@@ -19,9 +19,8 @@ const EditStaff = () => {
     if (idQuery) {
       const _requestData: IPartnerEdit = {
         userID: idQuery,
-        languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',
         ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
@@ -35,7 +34,7 @@ const EditStaff = () => {
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        citizenIdentification: formValues.visa || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.REQUEST,

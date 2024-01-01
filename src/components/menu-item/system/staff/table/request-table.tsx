@@ -8,10 +8,10 @@ import {
   IPartnerTable,
   IQueryInputParamType,
   ISelectSearch,
+  TYPE_TABS,
   UpdateStatusUnit,
 } from '../interface';
 import { ROUTERS } from '@/constant/router';
-import { API_STAFF } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -19,7 +19,7 @@ import { Button, PaginationProps } from 'antd';
 import { useRouter } from 'next/router';
 import { useState, MouseEvent } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
-import { formatDate } from '@/utils/format';
+import { formatDate, formatDateYYYYMMDD } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
@@ -52,7 +52,11 @@ const RequestTable = () => {
 
   // Handle data
   useQuery({
-    queryKey: [API_STAFF.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [
+      TYPE_TABS.GET_STAFF_BY_REQUEST_DATA,
+      pagination,
+      queryInputParams,
+    ],
     queryFn: () =>
       getTable({
         ...initalValueQuerySelectParamsRequest,
@@ -68,12 +72,8 @@ const RequestTable = () => {
         setDataTable(
           data.data.data.map((data) => ({
             key: data.aslPersonalContactID,
-            languageID: data.languageID,
-            languageName: data.languageName,
             genderID: data.genderID,
             genderName: data.genderName,
-            roleID: data.roleID,
-            roleName: data.roleName,
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
@@ -204,17 +204,17 @@ const RequestTable = () => {
         </div>
       ),
     },
-    // {
-    //   title: (
-    //     <div className={style.title}>
-    //       {translateStaff('employeeCode_form.title')}
-    //     </div>
-    //   ),
-    //   dataIndex: 'employeeCode',
-    //   key: 'employeeCode',
-    //   width: 250,
-    //   align: 'left',
-    // },
+    {
+      title: (
+        <div className={style.title}>
+          {translateStaff('employeeCode_form.title')}
+        </div>
+      ),
+      dataIndex: 'employeeCode',
+      key: 'employeeCode',
+      width: 200,
+      align: 'left',
+    },
     {
       title: (
         <div className={style.title}>
@@ -241,15 +241,6 @@ const RequestTable = () => {
       ),
       dataIndex: 'genderName',
       key: 'genderName',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>{translateStaff('role_form.title')}</div>
-      ),
-      dataIndex: 'roleName',
-      key: 'roleName',
       width: 250,
       align: 'left',
     },
@@ -318,7 +309,7 @@ const RequestTable = () => {
       key: 'userBirthday',
       width: 150,
       align: 'left',
-      render: (value) => formatDate(Number(value)),
+      render: (value) => formatDateYYYYMMDD(Number(value)),
     },
     {
       title: (
@@ -348,17 +339,6 @@ const RequestTable = () => {
       ),
       dataIndex: 'visa',
       key: 'visa',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateStaff('citizenIdentification_form.title')}
-        </div>
-      ),
-      dataIndex: 'citizenIdentification',
-      key: 'citizenIdentification',
       width: 250,
       align: 'left',
     },
@@ -402,7 +382,11 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [API_STAFF.GET_REQUEST, pagination, queryInputParams],
+              queryKey: [
+                TYPE_TABS.GET_STAFF_BY_REQUEST_DATA,
+                pagination,
+                queryInputParams,
+              ],
             }))
           : errorToast(data.message);
       },

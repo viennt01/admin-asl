@@ -4,10 +4,14 @@ import { errorToast, successToast } from '@/hook/toast';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
 import UnitForm from '../components/form';
-import { IFormValues, IPartnerCreate, IPartnerEdit } from '../interface';
+import {
+  IFormValues,
+  IPartnerCreate,
+  IPartnerEdit,
+  TYPE_TABS,
+} from '../interface';
 import { createStaff, editStaff } from '../fetcher';
 import { STATUS_ALL_LABELS } from '@/constant/form';
-import { API_STAFF } from '@/fetcherAxios/endpoint';
 
 const CreateStaff = () => {
   const queryClient = useQueryClient();
@@ -28,9 +32,8 @@ const CreateStaff = () => {
     if (id) {
       const _requestData: IPartnerEdit = {
         userID: id,
-        languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',
         ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
@@ -44,7 +47,7 @@ const CreateStaff = () => {
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        citizenIdentification: formValues.visa || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.REQUEST,
@@ -61,9 +64,8 @@ const CreateStaff = () => {
       });
     } else {
       const _requestData: IPartnerCreate = {
-        languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',
         ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
@@ -77,7 +79,7 @@ const CreateStaff = () => {
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        citizenIdentification: formValues.visa || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.REQUEST,
@@ -99,9 +101,8 @@ const CreateStaff = () => {
     if (id) {
       const _requestData: IPartnerEdit = {
         userID: id,
-        languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',
         ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
@@ -115,7 +116,7 @@ const CreateStaff = () => {
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        citizenIdentification: formValues.visa || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.DRAFT,
@@ -125,7 +126,7 @@ const CreateStaff = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_STAFF.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_STAFF_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },
@@ -135,9 +136,8 @@ const CreateStaff = () => {
       });
     } else {
       const _requestData: IPartnerCreate = {
-        languageID: formValues.languageID || '',
         genderID: formValues.genderID || '',
-        roleID: formValues.roleID || '',
+        employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',
         ipAddress: formValues.ipAddress || '',
         email: formValues.email || '',
@@ -151,7 +151,7 @@ const CreateStaff = () => {
         workingBranch: formValues.workingBranch || '',
         nationality: formValues.nationality || '',
         visa: formValues.visa || '',
-        citizenIdentification: formValues.citizenIdentification || '',
+        citizenIdentification: formValues.visa || '',
         note: formValues.note || '',
         avatar: formValues.avatar || '',
         statusUser: STATUS_ALL_LABELS.DRAFT,
@@ -161,7 +161,7 @@ const CreateStaff = () => {
           data.status
             ? (successToast(data.message),
               queryClient.invalidateQueries({
-                queryKey: [API_STAFF.GET_SEARCH],
+                queryKey: [TYPE_TABS.GET_STAFF_BY_DRAFT_DATA],
               }))
             : errorToast(data.message);
         },

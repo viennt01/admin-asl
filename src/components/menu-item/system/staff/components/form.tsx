@@ -15,17 +15,10 @@ import {
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { IFormValues, UpdateStatusUnit } from '../interface';
-import {
-  API_GENDER,
-  API_STAFF,
-  API_PARTNER_ROLE,
-  API_LANGUAGE,
-  API_ROLE,
-} from '@/fetcherAxios/endpoint';
+import { API_GENDER, API_STAFF, API_ROLE } from '@/fetcherAxios/endpoint';
 import { BottomCreateEdit } from '@/components/commons/bottom-edit-creat-manager';
 import {
   getListGender,
-  getListLanguage,
   getListRoleStaff,
   getStaffDetail,
   updateStatus,
@@ -36,7 +29,6 @@ import { UpdateStatusLocationType } from '@/components/menu-item/master-data/loc
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import dayjs from 'dayjs';
-import { getAllPartnerRole } from '@/components/menu-item/quotation/sea/fetcher';
 
 const initialValue = {
   description: '',
@@ -77,39 +69,9 @@ const UnitForm = ({
   const [checkStatus, setCheckStatus] = useState<boolean>(true);
   const propCopyAndCreate = router.query;
 
-  const getAllPartner = useQuery({
-    queryKey: [API_PARTNER_ROLE.GET_ALL],
-    queryFn: () => getAllPartnerRole(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-        errorToast(API_MESSAGE.ERROR);
-      }
-    },
-    onError: () => {
-      router.back();
-      errorToast(API_MESSAGE.ERROR);
-    },
-  });
-
   const getGender = useQuery({
     queryKey: [API_GENDER.GET_ALL],
     queryFn: () => getListGender(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-        errorToast(API_MESSAGE.ERROR);
-      }
-    },
-    onError: () => {
-      router.back();
-      errorToast(API_MESSAGE.ERROR);
-    },
-  });
-
-  const getLanguage = useQuery({
-    queryKey: [API_LANGUAGE.GET_ALL],
-    queryFn: () => getListLanguage(),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -169,9 +131,8 @@ const UnitForm = ({
     onSuccess: (data) => {
       if (data.status) {
         form.setFieldsValue({
-          languageID: data.data.languageID,
           genderID: data.data.genderID,
-          roleID: data.data.roleID,
+          employeeCode: data.data.employeeCode,
           aslRoleID: data.data.aslRoleID,
           ipAddress: data.data.ipAddress,
           email: data.data.email,
@@ -230,7 +191,6 @@ const UnitForm = ({
   const handleCopyAndCreate = () => {
     const props = {
       checkCopyAndCreate: true,
-      languageID: form.getFieldValue('languageID'),
       genderID: form.getFieldValue('genderID'),
       roleID: form.getFieldValue('roleID'),
       aslRoleID: form.getFieldValue('aslRoleID'),
@@ -269,9 +229,8 @@ const UnitForm = ({
     }
     if (propCopyAndCreate.checkCopyAndCreate) {
       form.setFieldsValue({
-        languageID: propCopyAndCreate.languageID as string,
         genderID: propCopyAndCreate.genderID as string,
-        roleID: propCopyAndCreate.roleID as string,
+        employeeCode: propCopyAndCreate.employeeCode as string,
         aslRoleID: propCopyAndCreate.aslRoleID as string,
         ipAddress: propCopyAndCreate.ipAddress as string,
         email: propCopyAndCreate.email as string,
@@ -413,6 +372,24 @@ const UnitForm = ({
 
             <Col lg={8} span={24}>
               <Form.Item
+                label={translateStaff('employeeCode_form.title')}
+                name="employeeCode"
+                rules={[
+                  {
+                    required: true,
+                    message: translateStaff('employeeCode_form.error_required'),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateStaff('employeeCode_form.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={8} span={24}>
+              <Form.Item
                 label={translateStaff('email_form.title')}
                 name="email"
                 rules={[
@@ -447,6 +424,7 @@ const UnitForm = ({
                 />
               </Form.Item>
             </Col>
+
             <Col lg={8} span={24}>
               <Form.Item
                 label={translateStaff('birthday_form.title')}
@@ -462,43 +440,6 @@ const UnitForm = ({
                   disabled={checkRow && isCheckPermissionEdit}
                   format={dateFormat}
                   style={{ width: '100%' }}
-                />
-              </Form.Item>
-            </Col>
-
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translateStaff('role_form.title')}
-                name="roleID"
-                rules={[
-                  {
-                    required: true,
-                    message: translateStaff('role_form.error_required'),
-                  },
-                ]}
-              >
-                <Select
-                  showSearch
-                  placeholder={translateStaff('role_form.placeholder')}
-                  disabled={checkRow && isCheckPermissionEdit}
-                  optionFilterProp="children"
-                  size="large"
-                  filterOption={(input, option) =>
-                    (option?.label ?? '').includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? '')
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? '').toLowerCase())
-                  }
-                  options={
-                    getAllPartner.data?.data.map((item) => {
-                      return {
-                        value: item.roleID,
-                        label: item.abbreviations,
-                      };
-                    }) || []
-                  }
                 />
               </Form.Item>
             </Col>
@@ -595,28 +536,6 @@ const UnitForm = ({
             </Col>
             <Col lg={8} span={24}>
               <Form.Item
-                label={translateStaff('citizenIdentification_form.title')}
-                name="citizenIdentification"
-                rules={[
-                  {
-                    required: true,
-                    message: translateStaff(
-                      'citizenIdentification_form.error_required'
-                    ),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateStaff(
-                    'citizenIdentification_form.placeholder'
-                  )}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
                 label={translateStaff('nationality_form.title')}
                 name="nationality"
                 rules={[
@@ -691,7 +610,7 @@ const UnitForm = ({
               </Form.Item>
             </Col>
 
-            <Col lg={8} span={24}>
+            <Col span={24}>
               <Form.Item
                 label={translateStaff('address_form.title')}
                 name="address"
@@ -706,42 +625,6 @@ const UnitForm = ({
                   placeholder={translateStaff('address_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={8} span={24}>
-              <Form.Item
-                label={translateStaff('languageID_form.title')}
-                name="languageID"
-                rules={[
-                  {
-                    required: true,
-                    message: translateStaff('languageID_form.error_required'),
-                  },
-                ]}
-              >
-                <Select
-                  showSearch
-                  placeholder={translateStaff('languageID_form.placeholder')}
-                  disabled={checkRow && isCheckPermissionEdit}
-                  optionFilterProp="children"
-                  size="large"
-                  filterOption={(input, option) =>
-                    (option?.label ?? '').includes(input)
-                  }
-                  filterSort={(optionA, optionB) =>
-                    (optionA?.label ?? '')
-                      .toLowerCase()
-                      .localeCompare((optionB?.label ?? '').toLowerCase())
-                  }
-                  options={
-                    getLanguage.data?.data.map((item) => {
-                      return {
-                        value: item.languageID,
-                        label: item.name,
-                      };
-                    }) || []
-                  }
                 />
               </Form.Item>
             </Col>

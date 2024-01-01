@@ -1,14 +1,16 @@
 import { IPagination } from '@/components/commons/table/table-default';
 import { Dayjs } from 'dayjs';
 
+export enum TYPE_TABS {
+  GET_STAFF_BY_MASTER_DATA = 'GET_STAFF_BY_MASTER_DATA',
+  GET_STAFF_BY_REQUEST_DATA = 'GET_STAFF_BY_REQUEST_DATA',
+  GET_STAFF_BY_DRAFT_DATA = 'GET_STAFF_BY_DRAFT_DATA',
+}
+
 export interface IPartner {
   aslPersonalContactID: string;
-  languageID: string;
-  languageName: string;
   genderID: string;
   genderName: string;
-  roleID: string;
-  roleName: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -71,9 +73,8 @@ export interface IPartnerDetailDataBody {
 
 export interface IFormValues {
   userID: string;
-  languageID: string;
   genderID: string;
-  roleID: string;
+  employeeCode: string;
   aslRoleID: string;
   ipAddress: string;
   address: string;
@@ -94,10 +95,7 @@ export interface IFormValues {
 }
 
 export interface IPartnerDetailType extends IFormValues {
-  employeeCode: string;
-  languageName: string;
   genderName: string;
-  roleName: string;
   aslRoleName: string;
   colorAvatar: string;
   defaultAvatar: string;

@@ -54,9 +54,9 @@
         "error_required": "Please select gender"
     },
     "visa_form": {
-        "title": "Visa",
-        "placeholder": "Enter visa",
-        "error_required": "Please enter visa"
+        "title": "Citizen identification or visa",
+        "placeholder": "Enter citizen identification or visa",
+        "error_required": "Please enter citizen identification or visa"
     },
     "citizenIdentification_form": {
         "title": "Citizen identification",

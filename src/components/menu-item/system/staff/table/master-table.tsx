@@ -16,8 +16,8 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_STAFF } from '@/fetcherAxios/endpoint';
-import { formatDate } from '@/utils/format';
+import { API_COLUMN } from '@/fetcherAxios/endpoint';
+import { formatDate, formatDateYYYYMMDD } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -25,6 +25,7 @@ import {
   IQuerySelectParamType,
   ISelectSearch,
   IPartnerTable,
+  TYPE_TABS,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -105,7 +106,11 @@ export default function MasterDataTable() {
         }
       : querySelectParams;
   const locationsQuerySearch = useQuery({
-    queryKey: [API_STAFF.GET_SEARCH, queryInputParams, querySelectParams],
+    queryKey: [
+      TYPE_TABS.GET_STAFF_BY_MASTER_DATA,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
       getStaffSearch({
         ...queryInputParams,
@@ -121,12 +126,8 @@ export default function MasterDataTable() {
         setDataTable(
           data.data.data.map((data) => ({
             key: data.aslPersonalContactID,
-            languageID: data.languageID,
-            languageName: data.languageName,
             genderID: data.genderID,
             genderName: data.genderName,
-            roleID: data.roleID,
-            roleName: data.roleName,
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
@@ -172,7 +173,7 @@ export default function MasterDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_STAFF.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_STAFF_BY_MASTER_DATA],
         });
         setSelectedRowKeys([]);
       } else {
@@ -290,17 +291,17 @@ export default function MasterDataTable() {
         return index + pageSize * (current - 1) + 1;
       },
     },
-    // {
-    //   title: (
-    //     <div className={style.title}>
-    //       {translateStaff('employeeCode_form.title')}
-    //     </div>
-    //   ),
-    //   dataIndex: 'employeeCode',
-    //   key: 'employeeCode',
-    //   width: 250,
-    //   align: 'left',
-    // },
+    {
+      title: (
+        <div className={style.title}>
+          {translateStaff('employeeCode_form.title')}
+        </div>
+      ),
+      dataIndex: 'employeeCode',
+      key: 'employeeCode',
+      width: 250,
+      align: 'left',
+    },
     {
       title: (
         <div className={style.title}>
@@ -327,15 +328,6 @@ export default function MasterDataTable() {
       ),
       dataIndex: 'genderName',
       key: 'genderName',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>{translateStaff('role_form.title')}</div>
-      ),
-      dataIndex: 'roleName',
-      key: 'roleName',
       width: 250,
       align: 'left',
     },
@@ -404,7 +396,7 @@ export default function MasterDataTable() {
       key: 'userBirthday',
       width: 150,
       align: 'left',
-      render: (value) => formatDate(Number(value)),
+      render: (value) => formatDateYYYYMMDD(Number(value)),
     },
     {
       title: (
@@ -434,17 +426,6 @@ export default function MasterDataTable() {
       ),
       dataIndex: 'visa',
       key: 'visa',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateStaff('citizenIdentification_form.title')}
-        </div>
-      ),
-      dataIndex: 'citizenIdentification',
-      key: 'citizenIdentification',
       width: 250,
       align: 'left',
     },
@@ -596,7 +577,7 @@ export default function MasterDataTable() {
       link.click();
       window.URL.revokeObjectURL(url);
       queryClient.invalidateQueries({
-        queryKey: [API_STAFF.GET_REQUEST],
+        queryKey: [TYPE_TABS.GET_STAFF_BY_REQUEST_DATA],
       });
       setLoadingImport(false);
       setOpenImportModal(false);

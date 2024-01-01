@@ -2,8 +2,12 @@ import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Tag, PaginationProps, Popover, Popconfirm } from 'antd';
 import { useState, MouseEvent } from 'react';
-import { IPartnerTable, QueryInputDraft, SelectDratSearch } from '../interface';
-import { API_STAFF } from '@/fetcherAxios/endpoint';
+import {
+  IPartnerTable,
+  QueryInputDraft,
+  SelectDratSearch,
+  TYPE_TABS,
+} from '../interface';
 import { deleteStaff, getDartTable } from '../fetcher';
 import {
   DiffOutlined,
@@ -17,7 +21,7 @@ import {
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatDate } from '@/utils/format';
+import { formatDate, formatDateYYYYMMDD } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -52,7 +56,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
 
   // Handle data
   useQuery({
-    queryKey: [API_STAFF.GET_SEARCH, pagination, queryInputParams],
+    queryKey: [TYPE_TABS.GET_STAFF_BY_DRAFT_DATA, pagination, queryInputParams],
     queryFn: () =>
       getDartTable({
         ...queryInputParams,
@@ -68,12 +72,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         setDataTable(
           data.data.data.map((data) => ({
             key: data.aslPersonalContactID,
-            languageID: data.languageID,
-            languageName: data.languageName,
             genderID: data.genderID,
             genderName: data.genderName,
-            roleID: data.roleID,
-            roleName: data.roleName,
             email: data.email,
             firstName: data.firstName,
             lastName: data.lastName,
@@ -117,7 +117,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_STAFF.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_STAFF_BY_DRAFT_DATA],
         });
       } else {
         errorToast(data.message);
@@ -175,17 +175,17 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         return index + pageSize * (current - 1) + 1;
       },
     },
-    // {
-    //   title: (
-    //     <div className={style.title}>
-    //       {translateStaff('employeeCode_form.title')}
-    //     </div>
-    //   ),
-    //   dataIndex: 'employeeCode',
-    //   key: 'employeeCode',
-    //   width: 250,
-    //   align: 'left',
-    // },
+    {
+      title: (
+        <div className={style.title}>
+          {translateStaff('employeeCode_form.title')}
+        </div>
+      ),
+      dataIndex: 'employeeCode',
+      key: 'employeeCode',
+      width: 250,
+      align: 'left',
+    },
     {
       title: (
         <div className={style.title}>
@@ -289,7 +289,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'userBirthday',
       width: 150,
       align: 'left',
-      render: (value) => formatDate(Number(value)),
+      render: (value) => formatDateYYYYMMDD(Number(value)),
     },
     {
       title: (
@@ -319,17 +319,6 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       ),
       dataIndex: 'visa',
       key: 'visa',
-      width: 250,
-      align: 'left',
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translateStaff('citizenIdentification_form.title')}
-        </div>
-      ),
-      dataIndex: 'citizenIdentification',
-      key: 'citizenIdentification',
       width: 250,
       align: 'left',
     },
