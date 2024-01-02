@@ -37,7 +37,11 @@ import {
 } from '../fetcher';
 import Table from '../../../../commons/table/table';
 import style from '@/components/commons/table/index.module.scss';
-import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
+import {
+  STATUS_ALL_COLORS,
+  STATUS_ALL_LABELS,
+  STATUS_MATER_LABELS,
+} from '@/constant/form';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
@@ -124,7 +128,7 @@ export default function MasterDataTable() {
             validityDate: data.validityDate,
             freqDate: data.freqDate,
             public: data.public,
-            statusTruckingPricing: data.statusTruckingPricing,
+            statusTruckingQuotation: data.statusTruckingQuotation,
             insertedByUser: data.insertedByUser,
             dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
@@ -339,14 +343,12 @@ export default function MasterDataTable() {
       },
       render: (value) => (
         <Tag
-          color={
-            STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
-          }
+          color={STATUS_ALL_COLORS[value as keyof typeof STATUS_ALL_COLORS]}
           style={{
             margin: 0,
           }}
         >
-          {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
+          {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
         </Tag>
       ),
     },

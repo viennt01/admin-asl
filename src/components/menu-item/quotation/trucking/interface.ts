@@ -23,7 +23,7 @@ export interface ITruckingQuotation {
   validityDate: string;
   freqDate: string;
   public: boolean;
-  statusTruckingPricing: string;
+  statusTruckingQuotation: string;
   insertedByUser: string;
   dateInserted: string;
   dateUpdated: string;

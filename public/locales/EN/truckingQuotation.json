@@ -2,8 +2,8 @@
     "title": "List of Trucking Quotation",
     "no": "No",
     "code": "Code",
-    "pickup": "Pickup",
-    "delivery": "Delivery",
+    "pickup": "Place of pick up",
+    "delivery": "Place of delivery",
     "emtyPickup": "Emty Pickup",
     "destination": "Destination",
     "country": "Country",
@@ -32,14 +32,14 @@
     "information_add_trucking_quotation": "Add New Trucking Quotation",
     "information_edit_trucking_quotation": "Edit Trucking Quotation",
     "pickup_form": {
-        "title": "POL",
-        "placeholder": "Enter POL",
-        "error_required": "Please enter POL"
+        "title": "Place of pick up",
+        "placeholder": "Enter place of pick up",
+        "error_required": "Please enter place of pick up"
     },
     "delivery_form": {
-        "title": "POD",
-        "placeholder": "Enter POD",
-        "error_required": "Please enter POD"
+        "title": "Place of delivery",
+        "placeholder": "Enter place of delivery",
+        "error_required": "Please enter place of delivery"
     },
     "emtyPickup_form": {
         "title": "Emty Pickup",

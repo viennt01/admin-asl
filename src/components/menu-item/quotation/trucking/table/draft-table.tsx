@@ -77,7 +77,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             validityDate: data.validityDate,
             freqDate: data.freqDate,
             public: data.public,
-            statusTruckingPricing: data.statusTruckingPricing,
+            statusTruckingQuotation: data.statusTruckingQuotation,
             insertedByUser: data.insertedByUser,
             dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
