@@ -1,7 +1,16 @@
 import { ROUTERS } from '@/constant/router';
 import useI18n from '@/i18n/useI18N';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Form, Input, Typography, Card, Row, Col, Switch } from 'antd';
+import {
+  Form,
+  Input,
+  Typography,
+  Card,
+  Row,
+  Col,
+  Switch,
+  InputNumber,
+} from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { FormValues, UpdateStatusCurrency } from '../interface';
@@ -268,8 +277,7 @@ const CurrencyForm = ({
                   },
                 ]}
               >
-                <Input
-                  type="number"
+                <InputNumber
                   min={0}
                   prefix="₫"
                   suffix="VND"
@@ -277,7 +285,7 @@ const CurrencyForm = ({
                   placeholder={translateCurrency(
                     'exchange_rate_to_VND_form.placeholder'
                   )}
-                  allowClear
+                  style={{ width: '100%' }}
                   disabled={checkRow && isCheckPermissionEdit}
                 />
               </Form.Item>
@@ -296,8 +304,7 @@ const CurrencyForm = ({
                   },
                 ]}
               >
-                <Input
-                  type="number"
+                <InputNumber
                   min={0}
                   prefix="$"
                   suffix="USD"
@@ -305,8 +312,8 @@ const CurrencyForm = ({
                   placeholder={translateCurrency(
                     'exchange_rate_to_USD_form.placeholder'
                   )}
-                  allowClear
                   disabled={checkRow && isCheckPermissionEdit}
+                  style={{ width: '100%' }}
                 />
               </Form.Item>
             </Col>
