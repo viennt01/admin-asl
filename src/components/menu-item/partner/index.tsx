@@ -33,7 +33,7 @@ export default function Partner() {
             children: <MasterDataTable />,
           },
           {
-            label: 'Liner',
+            label: 'Carrier',
             key: 'Liner',
             children: <LinerDataTable />,
           },
@@ -82,7 +82,7 @@ export default function Partner() {
               children: <MasterDataTable />,
             },
             {
-              label: 'Liner',
+              label: 'Carrier',
               key: 'Liner',
               children: <LinerDataTable />,
             },
