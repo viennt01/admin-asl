@@ -13,7 +13,6 @@ import {
   FormInstance,
   Checkbox,
   Tag,
-  InputNumber,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -21,7 +20,6 @@ import {
   IFormValues,
   IDetailDTOs,
   ITruckQuotationFeeFormValue,
-  // SeaPricingFeeDTOs,
   IUpdateStatus,
 } from '../interface';
 import {
@@ -42,7 +40,6 @@ import {
 import dayjs from 'dayjs';
 import { TYPE_LOCATION } from '@/components/menu-item/pricing/sea/interface';
 import { DAY_WEEK } from '@/constant';
-import { formatNumber } from '@/utils/format';
 
 interface Props {
   create?: boolean;
@@ -187,8 +184,8 @@ const CardMain = ({
         validityDate: dayjs(Number(propCopyAndCreate.validityDate as string)),
         freqDate: propCopyAndCreate.freqDate as string,
         public: propCopyAndCreate.public as unknown as boolean,
-        transitTimetruckingPricing:
-          propCopyAndCreate.transitTimetruckingPricing as string,
+        transitTimeTruckingQuotation:
+          propCopyAndCreate.transitTimeTruckingQuotation as string,
         forNewUser: propCopyAndCreate.forNewUser as unknown as boolean,
         statusTruckingQuotation:
           propCopyAndCreate.statusTruckingQuotation as string,
@@ -456,7 +453,7 @@ const CardMain = ({
               {
                 required: true,
                 message: translateQuotationTruck(
-                  'effect_date_form.placeholder'
+                  'effect_date_form.error_required'
                 ),
               },
             ]}
@@ -475,7 +472,9 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translateQuotationTruck('validity_form.placeholder'),
+                message: translateQuotationTruck(
+                  'validity_form.error_required'
+                ),
               },
             ]}
           >
@@ -493,7 +492,7 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translateQuotationTruck('freq_form.placeholder'),
+                message: translateQuotationTruck('freq_form.error_required'),
               },
             ]}
           >
@@ -518,17 +517,22 @@ const CardMain = ({
         <Col lg={8} span={24}>
           <Form.Item
             label={translateQuotationTruck('transitTime_form.title')}
-            name="transitTimetruckingPricing"
+            name="transitTimeTruckingQuotation"
+            rules={[
+              {
+                required: true,
+                message: translateQuotationTruck(
+                  'transitTime_form.error_required'
+                ),
+              },
+            ]}
           >
-            <InputNumber
+            <Input
               style={{ width: '100%' }}
               placeholder={translateQuotationTruck(
                 'transitTime_form.placeholder'
               )}
-              min={0}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
         </Col>
@@ -539,7 +543,9 @@ const CardMain = ({
             rules={[
               {
                 required: true,
-                message: translateQuotationTruck('commodity_form.placeholder'),
+                message: translateQuotationTruck(
+                  'commodity_form.error_required'
+                ),
               },
             ]}
           >

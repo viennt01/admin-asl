@@ -160,8 +160,8 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        transitTimetruckingPricing:
-          formValues.transitTimetruckingPricing || '0',
+        transitTimeTruckingQuotation:
+          formValues.transitTimeTruckingQuotation || '0',
         forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
@@ -211,8 +211,8 @@ const CreateSeaQuotation = () => {
         freqDate: formValues.freqDate || '',
         public: formValues.public || true,
         forNewUser: formValues.forNewUser || false,
-        transitTimetruckingPricing:
-          formValues.transitTimetruckingPricing || '0',
+        transitTimeTruckingQuotation:
+          formValues.transitTimeTruckingQuotation || '0',
         truckingQuotationDetailRegisterRequests:
           containerDetailRegisterRequests || [],
         truckingLoadCapacityDetailRegisterRequests:
@@ -285,8 +285,8 @@ const CreateSeaQuotation = () => {
         effectDated: formValues.effectDated?.valueOf(),
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
-        transitTimetruckingPricing:
-          formValues.transitTimetruckingPricing || '0',
+        transitTimeTruckingQuotation:
+          formValues.transitTimeTruckingQuotation || '0',
         forNewUser: formValues.forNewUser || false,
         public: formValues.public || true,
         seaQuotationDetailUpdateRequests:
@@ -335,8 +335,8 @@ const CreateSeaQuotation = () => {
         validityDate: formValues.validityDate?.valueOf(),
         freqDate: formValues.freqDate || '',
         forNewUser: formValues.forNewUser || false,
-        transitTimetruckingPricing:
-          formValues.transitTimetruckingPricing || '0',
+        transitTimeTruckingQuotation:
+          formValues.transitTimeTruckingQuotation || '0',
         public: formValues.public || true,
         truckingQuotationDetailRegisterRequests:
           truckQuotationDetailRegisterRequests || [],

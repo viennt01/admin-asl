@@ -93,7 +93,7 @@ export interface IFormValues {
   truckingQuotationFeeGroupDTOs: ITruckQuotationFeeFormValue[];
   salesLeadsTruckingQuotationDTOs: string[];
   truckingQuotaionGroupPartnerDTOs: string[];
-  transitTimetruckingPricing: string;
+  transitTimeTruckingQuotation: string;
 }
 
 export interface ITruckingPricingDetailType
