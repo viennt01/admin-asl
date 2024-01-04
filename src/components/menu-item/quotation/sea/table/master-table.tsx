@@ -4,7 +4,14 @@ import {
   FilterFilled,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Tag } from 'antd';
-import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
+import {
+  ChangeEvent,
+  Key,
+  MouseEvent,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
 import useI18n from '@/i18n/useI18N';
@@ -53,6 +60,8 @@ import ImportCSVModal, {
 } from '@/components/commons/import-data';
 import { getSystemDate } from '@/utils/common';
 import { DAY_WEEK } from '@/constant';
+import { ROLE } from '@/constant/permission';
+import { AppContext } from '@/app-context';
 
 const { confirm } = Modal;
 
@@ -79,6 +88,7 @@ export default function MasterDataTable() {
   const [loadingImport, setLoadingImport] = useState(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [isLoadingDownload, setIsLoadingDownload] = useState(false);
+  const { role } = useContext(AppContext);
 
   // Handle data
   const dataSelectSearch =
@@ -525,6 +535,7 @@ export default function MasterDataTable() {
     setColumnsStateMap(map);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const showPropsConfirmDelete = () => {
     confirm({
       icon: <ExclamationCircleFilled />,
@@ -658,8 +669,8 @@ export default function MasterDataTable() {
             handleSearchInputKeyAll={handleSearchInputKeyAll}
             valueSearchAll={selectedActiveKey.searchAll.value}
             handleOnDoubleClick={handleOnDoubleClick}
-            handleCreate={handleCreate}
-            showPropsConfirmDelete={showPropsConfirmDelete}
+            handleCreate={role === ROLE.SALE ? handleCreate : undefined}
+            // showPropsConfirmDelete={showPropsConfirmDelete}
             refreshingQuery={refreshingQuery}
             refreshingLoading={refreshingLoading}
             pagination={pagination}
@@ -667,8 +678,9 @@ export default function MasterDataTable() {
             columnsStateMap={columnsStateMap}
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
-            importTableData={importTableData}
+            importTableData={role === ROLE.SALE ? importTableData : undefined}
             exportTableData={exportTableData}
+            itemDataQuotation={selectedRowKeys}
           />
         </>
       )}

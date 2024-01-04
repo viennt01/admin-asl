@@ -738,8 +738,9 @@ export default function MasterDataTable() {
             columnsStateMap={columnsStateMap}
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
-            importTableData={importTableData}
+            importTableData={role === ROLE.SALE ? importTableData : undefined}
             exportTableData={exportTableData}
+            itemDataQuotation={selectedRowKeys}
           />
         </>
       )}
