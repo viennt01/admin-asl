@@ -175,7 +175,7 @@ const CreateSeaQuotation = () => {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
-              router.push(ROUTERS.TRUCKING_PRICING))
+              router.push(ROUTERS.TRUCKING_QUOTATION))
             : errorToast(data.message);
         },
         onError() {
@@ -228,7 +228,7 @@ const CreateSeaQuotation = () => {
         onSuccess: (data) => {
           data.status
             ? (successToast(data.message),
-              router.push(ROUTERS.TRUCKING_PRICING))
+              router.push(ROUTERS.TRUCKING_QUOTATION))
             : errorToast(data.message);
         },
         onError() {
