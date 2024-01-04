@@ -693,7 +693,11 @@ export default function MasterDataTable() {
             columnsStateMap={columnsStateMap}
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
-            importTableData={importTableData}
+            importTableData={
+              role === ROLE.LINER || role === ROLE.AGENT
+                ? importTableData
+                : undefined
+            }
             exportTableData={exportTableData}
             handleCreateQuotation={handleOpenCreateQuotation}
             itemDataQuotation={selectedRowKeys}
