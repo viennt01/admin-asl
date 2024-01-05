@@ -11,6 +11,7 @@ export const initalValueQuerySelectParamsMaster = {
     TYPE_FEE_GROUP.SEA_QUOTATION,
     TYPE_FEE_GROUP.CUSTOM_QUOTATION,
     TYPE_FEE_GROUP.TRUCKING_QUOTATION,
+    TYPE_FEE_GROUP.AIR_QUOTATION,
   ],
 };
 
