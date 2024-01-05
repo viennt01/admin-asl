@@ -1,6 +1,7 @@
 export enum ROLE {
   AGENT = 'AGENT',
   LINER = 'LINER',
+  AIR_LINER = 'AIRLINE',
   CUSTOMER = 'CUSTOMER',
   MANAGER = 'MANAGER',
   SALE = 'SALE',
@@ -519,6 +520,174 @@ export const PERMISSION_RULES = () => {
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
     },
     LINER: {
+      '/quotation/fee-group': PERMISSION.NO_VIEW,
+      '/quotation/fee-group/create': PERMISSION.NO_VIEW,
+      '/quotation/fee-group/edit/[id]': PERMISSION.NO_VIEW,
+      '/quotation/fee-group/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/quotation/sea-quotation': PERMISSION.NO_VIEW,
+      '/quotation/sea-quotation/create': PERMISSION.NO_VIEW,
+      '/quotation/sea-quotation/edit/[id]': PERMISSION.NO_VIEW,
+      '/quotation/sea-quotation/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/quotation/air-quotation': PERMISSION.NO_VIEW,
+      '/quotation/air-quotation/create': PERMISSION.NO_VIEW,
+      '/quotation/air-quotation/edit/[id]': PERMISSION.NO_VIEW,
+      '/quotation/air-quotation/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/quotation/customs-quotation': PERMISSION.NO_VIEW,
+      '/quotation/customs-quotation/create': PERMISSION.NO_VIEW,
+      '/quotation/customs-quotation/edit/[id]': PERMISSION.NO_VIEW,
+      '/quotation/customs-quotation/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/quotation/trucking-quotation': PERMISSION.NO_VIEW,
+      '/quotation/trucking-quotation/create': PERMISSION.NO_VIEW,
+      '/quotation/trucking-quotation/edit/[id]': PERMISSION.NO_VIEW,
+      '/quotation/trucking-quotation/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/booking': PERMISSION.NO_VIEW,
+      '/booking/fcl-detail/[id]': PERMISSION.NO_VIEW,
+      '/booking/lcl-detail/[id]': PERMISSION.NO_VIEW,
+
+      '/pricing/fee-group': PERMISSION.VIEW,
+      '/pricing/fee-group/create': PERMISSION.EDIT,
+      '/pricing/fee-group/edit/[id]': PERMISSION.VIEW,
+      '/pricing/fee-group/manager-admin/[id]': PERMISSION.VIEW,
+
+      '/pricing/pricing-sea': PERMISSION.VIEW,
+      '/pricing/pricing-sea/create': PERMISSION.EDIT,
+      '/pricing/pricing-sea/edit/[id]': PERMISSION.VIEW,
+      '/pricing/pricing-sea/manager-admin/[id]': PERMISSION.VIEW,
+
+      '/pricing/pricing-air': PERMISSION.VIEW,
+      '/pricing/pricing-air/create': PERMISSION.EDIT,
+      '/pricing/pricing-air/edit/[id]': PERMISSION.VIEW,
+      '/pricing/pricing-air/manager-admin/[id]': PERMISSION.VIEW,
+
+      '/pricing/pricing-customs': PERMISSION.VIEW,
+      '/pricing/pricing-customs/create': PERMISSION.EDIT,
+      '/pricing/pricing-customs/edit/[id]': PERMISSION.VIEW,
+      '/pricing/pricing-customs/manager-admin/[id]': PERMISSION.VIEW,
+
+      '/pricing/pricing-trucking': PERMISSION.EDIT,
+      '/pricing/pricing-trucking/create': PERMISSION.EDIT,
+      '/pricing/pricing-trucking/edit/[id]': PERMISSION.EDIT,
+      '/pricing/pricing-trucking/manager-admin/[id]': PERMISSION.VIEW,
+
+      '/partner': PERMISSION.NO_VIEW,
+      '/partner/create': PERMISSION.NO_VIEW,
+      '/partner/edit/[id]': PERMISSION.NO_VIEW,
+      '/partner/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/master-data/location-catalog/type-of-location': PERMISSION.NO_VIEW,
+      '/master-data/location-catalog/type-of-location/create':
+        PERMISSION.NO_VIEW,
+      '/master-data/location-catalog/type-of-location/edit/[id]':
+        PERMISSION.NO_VIEW,
+      '/master-data/location-catalog/type-of-location/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/location-catalog/location': PERMISSION.NO_VIEW,
+      '/master-data/location-catalog/location/create': PERMISSION.NO_VIEW,
+      '/master-data/location-catalog/location/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/location-catalog/location/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/declaration-catalog/type-of-declaration':
+        PERMISSION.NO_VIEW,
+      '/master-data/declaration-catalog/type-of-declaration/create':
+        PERMISSION.NO_VIEW,
+      '/master-data/declaration-catalog/type-of-declaration/edit/[id]':
+        PERMISSION.NO_VIEW,
+      '/master-data/declaration-catalog/type-of-declaration/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/load-capacity-catalog/type-of-load-capacity':
+        PERMISSION.NO_VIEW,
+      '/master-data/load-capacity-catalog/type-of-load-capacity/create':
+        PERMISSION.NO_VIEW,
+      '/master-data/load-capacity-catalog/type-of-load-capacity/edit/[id]':
+        PERMISSION.NO_VIEW,
+      '/master-data/load-capacity-catalog/type-of-load-capacity/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/load-capacity-catalog/load-capacity': PERMISSION.NO_VIEW,
+      '/master-data/load-capacity-catalog/load-capacity/create':
+        PERMISSION.NO_VIEW,
+      '/master-data/load-capacity-catalog/load-capacity/edit/[id]':
+        PERMISSION.NO_VIEW,
+      '/master-data/load-capacity-catalog/load-capacity/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/unit-catalog/unit': PERMISSION.NO_VIEW,
+      '/master-data/unit-catalog/unit/create': PERMISSION.NO_VIEW,
+      '/master-data/unit-catalog/unit/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/unit-catalog/unit/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/master-data/unit-catalog/type-unit': PERMISSION.NO_VIEW,
+      '/master-data/unit-catalog/type-unit/create': PERMISSION.NO_VIEW,
+      '/master-data/unit-catalog/type-unit/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/unit-catalog/type-unit/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/accountant/currency': PERMISSION.NO_VIEW,
+      '/master-data/accountant/currency/create': PERMISSION.NO_VIEW,
+      '/master-data/accountant/currency/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/accountant/currency/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/master-data/accountant/bank': PERMISSION.NO_VIEW,
+      '/master-data/accountant/bank/create': PERMISSION.NO_VIEW,
+      '/master-data/accountant/bank/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/accountant/bank/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/master-data/fee-catalog/fee': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/fee/create': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/fee/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/fee/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/master-data/fee-catalog/type-fee': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/type-fee/create': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/type-fee/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/type-fee/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/fee-group': PERMISSION.NO_VIEW,
+      '/master-data/fee-group/create': PERMISSION.NO_VIEW,
+      '/master-data/fee-group/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/fee-group/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/master-data/fee-catalog/type-fee-group': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/type-fee-group/create': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/type-fee-group/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/fee-catalog/type-fee-group/manager-admin/[id]':
+        PERMISSION.NO_VIEW,
+
+      '/master-data/commodity': PERMISSION.NO_VIEW,
+      '/master-data/commodity/create': PERMISSION.NO_VIEW,
+      '/master-data/commodity/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/commodity/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/master-data/type-of-container': PERMISSION.NO_VIEW,
+      '/master-data/type-of-container/create': PERMISSION.NO_VIEW,
+      '/master-data/type-of-container/edit/[id]': PERMISSION.NO_VIEW,
+      '/master-data/type-of-container/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/system/user': PERMISSION.NO_VIEW,
+      '/system/user/create': PERMISSION.NO_VIEW,
+      '/system/user/edit/[id]': PERMISSION.NO_VIEW,
+      '/system/user/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/system/staff': PERMISSION.NO_VIEW,
+      '/system/staff/create': PERMISSION.NO_VIEW,
+      '/system/staff/edit/[id]': PERMISSION.NO_VIEW,
+      '/system/staff/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/system/permission': PERMISSION.NO_VIEW,
+      '/system/permission/create': PERMISSION.NO_VIEW,
+      '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
+      '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
+    },
+    AIR_LINER: {
       '/quotation/fee-group': PERMISSION.NO_VIEW,
       '/quotation/fee-group/create': PERMISSION.NO_VIEW,
       '/quotation/fee-group/edit/[id]': PERMISSION.NO_VIEW,

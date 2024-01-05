@@ -15,7 +15,7 @@ import {
 } from '@/constant/permission';
 
 export const getPriorityRole = (roles: string[]): string => {
-  const priorityRoles = ['MANAGER', 'SALE', 'LINER', 'AGENT'];
+  const priorityRoles = ['MANAGER', 'SALE', 'LINER', 'AIRLINE', 'AGENT'];
   if (!roles) {
     return 'AGENT';
   }

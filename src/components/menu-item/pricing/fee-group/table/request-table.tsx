@@ -206,7 +206,12 @@ const RequestTable = () => {
               marginRight: '10px',
               color: COLORS.SUCCESS,
               borderColor: COLORS.SUCCESS,
-              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
+              display:
+                role === ROLE.AGENT ||
+                role === ROLE.LINER ||
+                role === ROLE.AIR_LINER
+                  ? 'none'
+                  : '',
             }}
           />
           <Button
@@ -219,7 +224,12 @@ const RequestTable = () => {
             style={{
               color: COLORS.ERROR,
               borderColor: COLORS.ERROR,
-              display: role === ROLE.AGENT || role === ROLE.LINER ? 'none' : '',
+              display:
+                role === ROLE.AGENT ||
+                role === ROLE.LINER ||
+                role === ROLE.AIR_LINER
+                  ? 'none'
+                  : '',
             }}
           />
         </div>
@@ -328,7 +338,9 @@ const RequestTable = () => {
           checkTableMaster={true}
           handleSelectionChange={handleSelectionChange}
           handleApproveAndReject={
-            role === ROLE.LINER || role === ROLE.AGENT
+            role === ROLE.LINER ||
+            role === ROLE.AGENT ||
+            role === ROLE.AIR_LINER
               ? undefined
               : handleApproveAndReject
           }

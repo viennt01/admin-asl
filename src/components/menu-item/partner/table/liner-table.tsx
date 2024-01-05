@@ -16,7 +16,7 @@ import {
   TablePaginationConfig,
 } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { API_COLUMN, API_PARTNER } from '@/fetcherAxios/endpoint';
+import { API_COLUMN } from '@/fetcherAxios/endpoint';
 import { formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -26,6 +26,7 @@ import {
   ISelectSearch,
   IPartnerTable,
   IRolePartner,
+  TYPE_TABS,
 } from '../interface';
 import {
   DEFAULT_PAGINATION,
@@ -106,7 +107,11 @@ export default function LinerDataTable() {
         }
       : querySelectParams;
   const locationsQuerySearch = useQuery({
-    queryKey: ['Liner', queryInputParams, querySelectParams],
+    queryKey: [
+      TYPE_TABS.GET_PARTNER_BY_LINER,
+      queryInputParams,
+      querySelectParams,
+    ],
     queryFn: () =>
       getUnitSearch({
         ...queryInputParams,
@@ -163,7 +168,7 @@ export default function LinerDataTable() {
       if (data.status) {
         successToast(data.message);
         queryClient.invalidateQueries({
-          queryKey: [API_PARTNER.GET_SEARCH],
+          queryKey: [TYPE_TABS.GET_PARTNER_BY_LINER],
         });
         setSelectedRowKeys([]);
       } else {
@@ -223,8 +228,8 @@ export default function LinerDataTable() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSearchInput = (
     selectedKeys: string,
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: DataIndex
+    confirm: (param?: FilterConfirmProps) => void
+    // dataIndex: DataIndex
   ) => {
     setSelectedActiveKey((prevData) => ({
       ...prevData,
@@ -234,7 +239,7 @@ export default function LinerDataTable() {
       },
     }));
     const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
+    // newQueryParams[dataIndex] = selectedKeys;
     newQueryParams.searchAll = '';
     setQueryInputParams(newQueryParams);
     confirm();
@@ -605,7 +610,7 @@ export default function LinerDataTable() {
       window.URL.revokeObjectURL(url);
 
       queryClient.invalidateQueries({
-        queryKey: [API_PARTNER.GET_REQUEST],
+        queryKey: [TYPE_TABS.GET_PARTNER_BY_REQUEST],
       });
       setLoadingImport(false);
       setOpenImportModal(false);

@@ -3,7 +3,7 @@ import { ROLE } from '@/constant/permission';
 
 export const initalValueQueryInputParamsMaster = {
   searchAll: '',
-  rolePartner: ROLE.AGENT,
+  rolePartner: [ROLE.AGENT],
 };
 
 export const initalValueQuerySelectParamsMaster = {
@@ -39,7 +39,7 @@ export const initalSelectSearchMaster = {
 //request
 export const initalValueQueryInputParamsRequest = {
   searchAll: '',
-  rolePartner: '',
+  rolePartner: [],
 };
 
 export const initalValueQuerySelectParamsRequest = {
@@ -74,10 +74,10 @@ export const initalSelectSearchRequest = {
 
 export const initalValueQueryInputParamsLiner = {
   searchAll: '',
-  rolePartner: ROLE.LINER,
+  rolePartner: [ROLE.LINER, ROLE.AIR_LINER],
 };
 
 export const initalValueQueryInputParamsCustomers = {
   searchAll: '',
-  rolePartner: ROLE.CUSTOMER,
+  rolePartner: [ROLE.CUSTOMER],
 };

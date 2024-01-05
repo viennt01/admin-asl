@@ -9,10 +9,10 @@ import {
   IQueryInputParamType,
   IRolePartner,
   ISelectSearch,
+  TYPE_TABS,
   UpdateStatusUnit,
 } from '../interface';
 import { ROUTERS } from '@/constant/router';
-import { API_PARTNER } from '@/fetcherAxios/endpoint';
 import useI18n from '@/i18n/useI18N';
 import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -53,7 +53,7 @@ const RequestTable = () => {
 
   // Handle data
   useQuery({
-    queryKey: [API_PARTNER.GET_REQUEST, pagination, queryInputParams],
+    queryKey: [TYPE_TABS.GET_PARTNER_BY_REQUEST, pagination, queryInputParams],
     queryFn: () =>
       getUnitSearch({
         ...queryInputParams,
@@ -123,7 +123,7 @@ const RequestTable = () => {
       },
     }));
     const newQueryParams = { ...queryInputParams };
-    newQueryParams[dataIndex] = selectedKeys;
+    // newQueryParams[dataIndex] = selectedKeys;
     setQueryInputParams(newQueryParams);
     confirm();
   };
@@ -406,7 +406,11 @@ const RequestTable = () => {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [API_PARTNER.GET_REQUEST, pagination, queryInputParams],
+              queryKey: [
+                TYPE_TABS.GET_PARTNER_BY_REQUEST,
+                pagination,
+                queryInputParams,
+              ],
             }))
           : errorToast(data.message);
       },

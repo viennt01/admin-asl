@@ -1,5 +1,12 @@
 import { IPagination } from '@/components/commons/table/table-default';
 
+export enum TYPE_TABS {
+  GET_PARTNER_BY_AGENT = 'GET_PARTNER_BY_AGENT',
+  GET_PARTNER_BY_LINER = 'GET_PARTNER_BY_LINER',
+  GET_PARTNER_BY_CUSTOMER = 'GET_PARTNER_BY_CUSTOMER',
+  GET_PARTNER_BY_REQUEST = 'GET_PARTNER_BY_REQUEST',
+}
+
 export interface IPartner {
   partnerID: string;
   cityID: string;
@@ -36,7 +43,7 @@ export interface IPartnerRequire extends IPagination {
 //
 export interface IQueryInputParamType {
   searchAll: string;
-  rolePartner: string;
+  rolePartner: string[];
 }
 export interface IQuerySelectParamType {
   status: string[];
@@ -212,7 +219,7 @@ export interface UpdateStatusUnit {
 
 export interface QueryInputRequest {
   searchAll: string;
-  rolePartner: string;
+  rolePartner: string[];
 }
 export interface QuerySelectRequest {
   status: string[];

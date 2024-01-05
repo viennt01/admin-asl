@@ -325,7 +325,11 @@ const SeaPricing = ({
           handleSaveDraft={onSaveDraft}
           manager={manager}
           handleAR={
-            role === ROLE.LINER || role === ROLE.AGENT ? undefined : handleAR
+            role === ROLE.LINER ||
+            role === ROLE.AGENT ||
+            role === ROLE.AIR_LINER
+              ? undefined
+              : handleAR
           }
           checkQuery={idQuery ? true : false}
           useDraft={useDraft}

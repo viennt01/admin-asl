@@ -3,43 +3,46 @@ import MasterDataTable from './table/master-table';
 import RequestTable from './table/request-table';
 import COLORS from '@/constant/color';
 import { useQueryClient } from '@tanstack/react-query';
-import { API_PARTNER } from '@/fetcherAxios/endpoint';
-import { ROLE } from '@/constant/permission';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '@/app-context';
 import CustomersDataTable from './table/customers-table';
 import LinerDataTable from './table/liner-table';
 import { GetTitleNotificationTab } from '@/utils/common';
+import { TYPE_TABS } from './interface';
 
 export default function Partner() {
+  const [keyActive, setKeyActive] = useState<TYPE_TABS>(
+    TYPE_TABS.GET_PARTNER_BY_AGENT
+  );
   const queryClient = useQueryClient();
-  const { role, userInfo } = useContext(AppContext);
+  const { userInfo } = useContext(AppContext);
 
-  const onChange = (key: string) => {
+  const onChange = (key: TYPE_TABS) => {
+    setKeyActive(key);
     queryClient.invalidateQueries({
       queryKey: [key],
     });
   };
+
   return (
     <>
       <Tabs
-        onChange={onChange}
+        onChange={(key: string) => onChange(key as TYPE_TABS)}
         type="card"
-        style={{ marginTop: 10, display: role === ROLE.MANAGER ? '' : 'none' }}
         items={[
           {
             label: 'Agent',
-            key: 'Agent',
+            key: TYPE_TABS.GET_PARTNER_BY_AGENT,
             children: <MasterDataTable />,
           },
           {
             label: 'Carrier',
-            key: 'Liner',
+            key: TYPE_TABS.GET_PARTNER_BY_LINER,
             children: <LinerDataTable />,
           },
           {
             label: 'Customers',
-            key: 'Customers',
+            key: TYPE_TABS.GET_PARTNER_BY_CUSTOMER,
             children: <CustomersDataTable />,
           },
           {
@@ -53,47 +56,21 @@ export default function Partner() {
               >
                 <div
                   style={{
-                    color: COLORS.GREEN,
+                    color:
+                      keyActive === TYPE_TABS.GET_PARTNER_BY_REQUEST
+                        ? COLORS.GREEN
+                        : COLORS.BLACK_BLUR,
                   }}
                 >
                   Request
                 </div>
               </Badge>
             ),
-            key: API_PARTNER.GET_REQUEST,
+            key: TYPE_TABS.GET_PARTNER_BY_REQUEST,
             children: <RequestTable />,
           },
         ]}
       />
-      <div
-        style={{ marginTop: 36, display: role !== ROLE.MANAGER ? '' : 'none' }}
-      >
-        <Tabs
-          onChange={onChange}
-          type="card"
-          style={{
-            marginTop: 10,
-            display: role === ROLE.MANAGER ? '' : 'none',
-          }}
-          items={[
-            {
-              label: 'Agent',
-              key: 'Agent',
-              children: <MasterDataTable />,
-            },
-            {
-              label: 'Carrier',
-              key: 'Liner',
-              children: <LinerDataTable />,
-            },
-            {
-              label: 'Customers',
-              key: 'Customers',
-              children: <CustomersDataTable />,
-            },
-          ]}
-        />
-      </div>
     </>
   );
 }

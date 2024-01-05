@@ -681,7 +681,9 @@ export default function MasterDataTable() {
             valueSearchAll={selectedActiveKey.searchAll.value}
             handleOnDoubleClick={handleOnDoubleClick}
             handleCreate={
-              role === ROLE.LINER || role === ROLE.AGENT
+              role === ROLE.LINER ||
+              role === ROLE.AGENT ||
+              role === ROLE.AIR_LINER
                 ? handleCreate
                 : undefined
             }
@@ -694,7 +696,9 @@ export default function MasterDataTable() {
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
             importTableData={
-              role === ROLE.LINER || role === ROLE.AGENT
+              role === ROLE.LINER ||
+              role === ROLE.AGENT ||
+              role === ROLE.AIR_LINER
                 ? importTableData
                 : undefined
             }
