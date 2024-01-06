@@ -26,6 +26,7 @@ export default function Staff() {
       <Tabs
         onChange={(key: string) => onChange(key as TYPE_TABS)}
         type="card"
+        style={{ marginTop: '10px' }}
         items={[
           {
             label: 'Master Data',
