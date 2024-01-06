@@ -50,6 +50,7 @@ interface EditableCellProps {
 }
 
 export const EditableCell: React.FC<EditableCellProps> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   title,
   editable,
   inputType,
@@ -158,7 +159,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
         onPressEnter={save}
         onBlur={save}
         style={{ width: '100%' }}
-        formatter={(value) => formatNumber(value || 0)}
+        formatter={(value) => formatNumber(value || '0')}
       />
     );
   let childNode = children;
@@ -168,12 +169,12 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       <Form.Item
         style={{ margin: 0 }}
         name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: `${title} is required.`,
+        //   },
+        // ]}
       >
         {inputNode}
       </Form.Item>

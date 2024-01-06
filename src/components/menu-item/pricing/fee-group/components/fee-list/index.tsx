@@ -203,7 +203,7 @@ const FeeList = ({
       editable: !isCheckPermissionEdit,
       fixed: 'right',
       render: (value) => {
-        return value ? formatNumber(Number(value) || 0) : '-';
+        return value ? formatNumber(Number(value) || '0') : '-';
       },
     },
     {
@@ -221,9 +221,9 @@ const FeeList = ({
       editable: !isCheckPermissionEdit,
       fixed: 'right',
       render: (value) => {
-        return formatNumber(Number(value) || 0) === '0'
+        return formatNumber(Number(value) || '0') === '0'
           ? '-'
-          : formatNumber(Number(value) || 0);
+          : formatNumber(Number(value) || '0');
       },
     },
 
@@ -254,7 +254,7 @@ const FeeList = ({
     const newData: FeeTable = {
       key: count,
       feeID: optionFeeActive[0].value,
-      priceFeeGroup: '0',
+      priceFeeGroup: '100000',
       vatFeeGroup: '',
       currencyID: optionCurrency[0].value,
       currencyName: optionCurrency[0].label,
