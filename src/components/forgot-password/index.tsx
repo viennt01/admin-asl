@@ -250,13 +250,13 @@ export default function ForgotPasswordPage() {
                 hasFeedback
                 style={{ marginBottom: 24 }}
               >
-                <Input
+                <Input.Password
                   size="large"
                   type="password"
                   placeholder={`${translateResetPassword(
                     'form-set-password.placeholder-password'
                   )}`}
-                  autoComplete="off"
+                  // autoComplete="off"
                 />
               </Form.Item>
               <Form.Item
@@ -295,13 +295,13 @@ export default function ForgotPasswordPage() {
                 hasFeedback
                 style={{ marginBottom: 24 }}
               >
-                <Input
+                <Input.Password
                   size="large"
                   type="password"
                   placeholder={`${translateResetPassword(
                     'form-set-password.placeholder-new-password'
                   )}`}
-                  autoComplete="off"
+                  // autoComplete="off"
                 />
               </Form.Item>
 
