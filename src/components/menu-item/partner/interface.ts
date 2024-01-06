@@ -43,7 +43,7 @@ export interface IPartnerRequire extends IPagination {
 //
 export interface IQueryInputParamType {
   searchAll: string;
-  rolePartner: string[];
+  rolePartners: string[];
 }
 export interface IQuerySelectParamType {
   status: string[];
@@ -219,7 +219,7 @@ export interface UpdateStatusUnit {
 
 export interface QueryInputRequest {
   searchAll: string;
-  rolePartner: string[];
+  rolePartners: string[];
 }
 export interface QuerySelectRequest {
   status: string[];
