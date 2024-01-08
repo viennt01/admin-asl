@@ -548,12 +548,12 @@ const UnitForm = ({
               <Form.Item
                 label={translatePartner('taxCode_form.title')}
                 name="taxCode"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('taxCode_form.error_required'),
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: translatePartner('taxCode_form.error_required'),
+                //   },
+                // ]}
               >
                 <Input
                   placeholder={translatePartner('taxCode_form.placeholder')}
