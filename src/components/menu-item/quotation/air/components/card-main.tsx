@@ -196,7 +196,7 @@ const CardMain = ({
         freqDate: propCopyAndCreate.freqDate as string,
         currencyID: propCopyAndCreate.currencyID as string,
         vendorID: propCopyAndCreate.vendorID as string,
-        hscAirQuotation: propCopyAndCreate.hscAirQuotation as string,
+        fscAirQuotation: propCopyAndCreate.fscAirQuotation as string,
         sscAirQuotation: propCopyAndCreate.sscAirQuotation as string,
         gw: propCopyAndCreate.gw as unknown as boolean,
         transitTimeAirQuotation:
@@ -607,13 +607,13 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('hscAirPricing_form.title')}
-            name="hscAirQuotation"
+            label={translatePricingAir('fscAirPricing_form.title')}
+            name="fscAirQuotation"
             rules={[
               {
                 required: true,
                 message: translatePricingAir(
-                  'hscAirPricing_form.error_required'
+                  'fscAirPricing_form.error_required'
                 ),
               },
             ]}
@@ -621,7 +621,7 @@ const CardMain = ({
             <InputNumber
               style={{ width: '100%' }}
               placeholder={translatePricingAir(
-                'hscAirPricing_form.placeholder'
+                'fscAirPricing_form.placeholder'
               )}
               min={0}
               disabled={checkRow && isCheckPermissionEdit}

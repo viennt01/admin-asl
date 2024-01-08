@@ -199,7 +199,7 @@ const AirQuotation = ({
           currencyID: data.data.currencyID,
           public: data.data.public,
           vendorID: data.data.vendorID,
-          hscAirQuotation: data.data.hscAirQuotation,
+          fscAirQuotation: data.data.fscAirQuotation,
           sscAirQuotation: data.data.sscAirQuotation,
           loadCapacityMinAirQuotation: data.data.loadCapacityMinAirQuotation,
           priceLoadCapacityMinAirQuotation:
@@ -267,7 +267,7 @@ const AirQuotation = ({
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
       vendorID: form.getFieldValue('vendorID'),
-      hscAirQuotation: form.getFieldValue('hscAirQuotation'),
+      fscAirQuotation: form.getFieldValue('fscAirQuotation'),
       sscAirQuotation: form.getFieldValue('sscAirQuotation'),
       loadCapacityMinAirQuotation: form.getFieldValue(
         'loadCapacityMinAirQuotation'

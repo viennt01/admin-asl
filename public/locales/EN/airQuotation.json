@@ -91,10 +91,10 @@
         "placeholder": "Enter frequency",
         "error_required": "Please enter frequency"
     },
-    "hscAirPricing_form": {
-        "title": "HSC",
-        "placeholder": "Enter HSC",
-        "error_required": "Please enter HSC"
+    "fscAirPricing_form": {
+        "title": "FSC",
+        "placeholder": "Enter FSC",
+        "error_required": "Please enter FSC"
     },
     "sscAirPricing_form": {
         "title": "SSC",

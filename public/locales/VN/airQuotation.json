@@ -90,10 +90,10 @@
         "placeholder": "Nhập frequency",
         "error_required": "Vui lòng nhập frequency"
     },
-    "hscAirPricing_form": {
-        "title": "HSC",
-        "placeholder": "Nhập HSC",
-        "error_required": "Vui lòng nhập HSC"
+    "fscAirPricing_form": {
+        "title": "FSC",
+        "placeholder": "Nhập FSC",
+        "error_required": "Vui lòng nhập FSC"
     },
     "sscAirPricing_form": {
         "title": "SSC",

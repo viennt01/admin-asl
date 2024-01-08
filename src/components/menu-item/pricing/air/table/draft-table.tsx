@@ -97,7 +97,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             transitTimeAirPricing: data.transitTimeAirPricing,
             vendor: data.vendor,
             gw: data.gw,
-            hscAirPricing: data.hscAirPricing,
+            fscAirPricing: data.fscAirPricing,
             sscAirPricing: data.sscAirPricing,
             loadCapacityMinAirPricing: data.loadCapacityMinAirPricing,
             priceLoadCapacityMinAirPricing: data.priceLoadCapacityMinAirPricing,
@@ -273,12 +273,12 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: (
         <div className={style.title}>
-          {translatePricingAir('hscAirPricing_form.title')}
+          {translatePricingAir('fscAirPricing_form.title')}
         </div>
       ),
       width: 200,
-      dataIndex: 'hscAirPricing',
-      key: 'hscAirPricing',
+      dataIndex: 'fscAirPricing',
+      key: 'fscAirPricing',
       render: (value) => {
         return value ? formatNumber(Number(value)) : '-';
       },

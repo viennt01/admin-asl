@@ -100,7 +100,7 @@ const CreateAirPricing = () => {
         currencyID: formValues.currencyID || '',
         vendorID: formValues.vendorID || '',
         transitTimeAirPricing: formValues.transitTimeAirPricing || '',
-        hscAirPricing: formValues.hscAirPricing || '0',
+        fscAirPricing: formValues.fscAirPricing || '0',
         sscAirPricing: formValues.sscAirPricing || '0',
         loadCapacityMinAirPricing: formValues.loadCapacityMinAirPricing || '0',
         priceLoadCapacityMinAirPricing:
@@ -133,7 +133,7 @@ const CreateAirPricing = () => {
         gw: formValues.gw,
         vendorID: formValues.vendorID || '',
         transitTimeAirPricing: formValues.transitTimeAirPricing || '',
-        hscAirPricing: formValues.hscAirPricing || '0',
+        fscAirPricing: formValues.fscAirPricing || '0',
         sscAirPricing: formValues.sscAirPricing || '0',
         loadCapacityMinAirPricing: formValues.loadCapacityMinAirPricing || '0',
         priceLoadCapacityMinAirPricing:
@@ -187,7 +187,7 @@ const CreateAirPricing = () => {
         gw: formValues.gw,
         vendorID: formValues.vendorID || '',
         transitTimeAirPricing: formValues.transitTimeAirPricing || '',
-        hscAirPricing: formValues.hscAirPricing || '0',
+        fscAirPricing: formValues.fscAirPricing || '0',
         sscAirPricing: formValues.sscAirPricing || '0',
         loadCapacityMinAirPricing: formValues.loadCapacityMinAirPricing || '0',
         priceLoadCapacityMinAirPricing:
@@ -223,7 +223,7 @@ const CreateAirPricing = () => {
         gw: formValues.gw,
         vendorID: formValues.vendorID || '',
         transitTimeAirPricing: formValues.transitTimeAirPricing || '',
-        hscAirPricing: formValues.hscAirPricing || '0',
+        fscAirPricing: formValues.fscAirPricing || '0',
         sscAirPricing: formValues.sscAirPricing || '0',
         loadCapacityMinAirPricing: formValues.loadCapacityMinAirPricing || '0',
         priceLoadCapacityMinAirPricing:

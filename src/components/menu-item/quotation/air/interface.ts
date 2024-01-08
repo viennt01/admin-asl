@@ -41,7 +41,7 @@ export interface IAirQuotation {
   airQuotationDetailDTOs: { [key: string]: string };
   vendorName: string;
   transitTimeAirQuotation: string;
-  hscAirQuotation: string;
+  fscAirQuotation: string;
   sscAirQuotation: string;
   gw: boolean;
 }
@@ -96,7 +96,7 @@ export interface IFormValues {
   currencyID: string;
   public: boolean;
   statusAirQuotation: string;
-  hscAirQuotation: string;
+  fscAirQuotation: string;
   sscAirQuotation: string;
   loadCapacityMinAirQuotation: string;
   priceLoadCapacityMinAirQuotation: string;

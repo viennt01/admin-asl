@@ -192,7 +192,7 @@ const AirPricing = ({
           currencyID: data.data.currencyID,
           public: data.data.public,
           vendorID: data.data.vendorID,
-          hscAirPricing: data.data.hscAirPricing,
+          fscAirPricing: data.data.fscAirPricing,
           sscAirPricing: data.data.sscAirPricing,
           loadCapacityMinAirPricing: data.data.loadCapacityMinAirPricing,
           priceLoadCapacityMinAirPricing:
@@ -256,7 +256,7 @@ const AirPricing = ({
       currencyID: form.getFieldValue('currencyID'),
       public: form.getFieldValue('public'),
       vendorID: form.getFieldValue('vendorID'),
-      hscAirPricing: form.getFieldValue('hscAirPricing'),
+      fscAirPricing: form.getFieldValue('fscAirPricing'),
       sscAirPricing: form.getFieldValue('sscAirPricing'),
       loadCapacityMinAirPricing: form.getFieldValue(
         'loadCapacityMinAirPricing'

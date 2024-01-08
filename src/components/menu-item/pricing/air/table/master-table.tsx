@@ -172,7 +172,7 @@ export default function MasterDataTable() {
             updatedByUser: data.updatedByUser,
             vendor: data.vendor,
             transitTimeAirPricing: data.transitTimeAirPricing,
-            hscAirPricing: data.hscAirPricing,
+            fscAirPricing: data.fscAirPricing,
             sscAirPricing: data.sscAirPricing,
             gw: data.gw,
             loadCapacityMinAirPricing: data.loadCapacityMinAirPricing,
@@ -452,12 +452,12 @@ export default function MasterDataTable() {
     {
       title: (
         <div className={style.title}>
-          {translatePricingAir('hscAirPricing_form.title')}
+          {translatePricingAir('fscAirPricing_form.title')}
         </div>
       ),
       width: 200,
-      dataIndex: 'hscAirPricing',
-      key: 'hscAirPricing',
+      dataIndex: 'fscAirPricing',
+      key: 'fscAirPricing',
       render: (value) => {
         return value ? formatNumber(Number(value)) : '-';
       },

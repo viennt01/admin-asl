@@ -43,7 +43,7 @@ const EditAirQuotation = () => {
         currencyID: formValues.currencyID || '',
         vendorID: formValues.vendorID || '',
         transitTimeAirQuotation: formValues.transitTimeAirQuotation || '',
-        hscAirQuotation: formValues.hscAirQuotation || '',
+        fscAirQuotation: formValues.fscAirQuotation || '',
         sscAirQuotation: formValues.sscAirQuotation || '',
         loadCapacityMinAirQuotation:
           formValues.loadCapacityMinAirQuotation || '',
