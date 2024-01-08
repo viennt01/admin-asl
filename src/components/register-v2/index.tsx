@@ -46,11 +46,11 @@ export default function RegisterV2() {
       email: values.email,
       fullName: values.fullName,
 
-      taxCode: values.taxCode,
-      companyName: values.companyName,
+      taxCode: values.taxCode || '',
+      companyName: values.companyName || '',
       address: values.address,
-      emailCompany: values.emailCompany,
-      phoneNumberCompany: values.phoneNumberCompany,
+      emailCompany: values.emailCompany || '',
+      phoneNumberCompany: values.phoneNumberCompany || '',
 
       password: values.password,
       passwordConfirm: values.passwordConfirm,
@@ -245,12 +245,12 @@ export default function RegisterV2() {
                 >
                   <Form.Item
                     name="taxCode"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please input tax code!',
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: 'Please input tax code!',
+                    //   },
+                    // ]}
                     hasFeedback
                   >
                     <Input
@@ -268,12 +268,12 @@ export default function RegisterV2() {
                 >
                   <Form.Item
                     name="companyName"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please input name company!',
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: 'Please input name company!',
+                    //   },
+                    // ]}
                     hasFeedback
                   >
                     <Input
@@ -291,10 +291,10 @@ export default function RegisterV2() {
                   <Form.Item
                     name="emailCompany"
                     rules={[
-                      {
-                        required: true,
-                        message: 'Please input email company!',
-                      },
+                      // {
+                      //   required: true,
+                      //   message: 'Please input email company!',
+                      // },
                       {
                         pattern:
                           /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
@@ -318,10 +318,10 @@ export default function RegisterV2() {
                   <Form.Item
                     name="phoneNumberCompany"
                     rules={[
-                      {
-                        required: true,
-                        message: 'Please input phone number!',
-                      },
+                      // {
+                      //   required: true,
+                      //   message: 'Please input phone number!',
+                      // },
                       {
                         pattern: /^[0-9]{7,15}$/,
                         message: 'Please enter a vailid phone number!',

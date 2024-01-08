@@ -571,57 +571,6 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translatePricingAir('fscAirPricing_form.title')}
-            name="fscAirPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir(
-                  'fscAirPricing_form.error_required'
-                ),
-              },
-            ]}
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translatePricingAir(
-                'fscAirPricing_form.placeholder'
-              )}
-              min={0}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-        <Col lg={8} span={24}>
-          <Form.Item
-            label={translatePricingAir('sscAirPricing_form.title')}
-            name="sscAirPricing"
-            rules={[
-              {
-                required: true,
-                message: translatePricingAir(
-                  'sscAirPricing_form.error_required'
-                ),
-              },
-            ]}
-          >
-            <InputNumber
-              style={{ width: '100%' }}
-              placeholder={translatePricingAir(
-                'sscAirPricing_form.placeholder'
-              )}
-              min={0}
-              disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
-            />
-          </Form.Item>
-        </Col>
-
-        <Col lg={8} span={24}>
-          <Form.Item
             label={translatePricingAir('loadCapacityMin_form.title')}
             name="loadCapacityMinAirQuotation"
             rules={[
@@ -671,6 +620,56 @@ const CardMain = ({
           </Form.Item>
         </Col>
 
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('fscAirPricing_form.title')}
+            name="fscAirPricing"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'fscAirPricing_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'fscAirPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
+        <Col lg={8} span={24}>
+          <Form.Item
+            label={translatePricingAir('sscAirPricing_form.title')}
+            name="sscAirPricing"
+            rules={[
+              {
+                required: true,
+                message: translatePricingAir(
+                  'sscAirPricing_form.error_required'
+                ),
+              },
+            ]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              placeholder={translatePricingAir(
+                'sscAirPricing_form.placeholder'
+              )}
+              min={0}
+              disabled={checkRow && isCheckPermissionEdit}
+              formatter={(value) => formatNumber(Number(value) || '0')}
+              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
+            />
+          </Form.Item>
+        </Col>
         <Col span={12}>
           <Form.Item label={'GW'} name="gw">
             <Checkbox
