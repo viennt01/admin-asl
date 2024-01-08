@@ -640,6 +640,7 @@ const CardMain = ({
             <Checkbox
               checked={componentDisabled}
               onChange={(e) => setComponentDisabled(e.target.checked)}
+              disabled={checkRow && isCheckPermissionEdit}
             >
               Public
             </Checkbox>
@@ -658,6 +659,7 @@ const CardMain = ({
             // ]}
           >
             <Select
+              disabled={checkRow && isCheckPermissionEdit}
               showSearch
               mode="multiple"
               placeholder="Select customer"
