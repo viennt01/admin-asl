@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Chart, { ChartType } from 'chart.js/auto';
 
 interface Props {
-  data: string[];
+  data?: string[];
   labels: string[];
   dataQuotation: string[];
   dataPricing: string[];
@@ -68,5 +68,5 @@ export default function ChartPricing({
     }
   }, [data, labels, dataQuotation, dataPricing]);
 
-  return <canvas ref={chartRef} />;
+  return <canvas style={{ width: '100%' }} ref={chartRef} />;
 }

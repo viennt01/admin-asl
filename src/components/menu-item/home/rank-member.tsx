@@ -8,9 +8,9 @@ interface Props {
 const RankMember = ({ dataTopASL }: Props) => (
   <div
     style={{
-      height: 580,
+      height: 385,
       overflow: 'auto',
-      padding: '0 16px',
+      padding: '16px',
       border: '1px solid rgba(140, 140, 140, 0.35)',
     }}
   >
