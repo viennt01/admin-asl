@@ -109,7 +109,8 @@ export type IPartnerCreate = Omit<IFormValues, 'userID' | 'userBirthday'> & {
   birthday: number;
 };
 
-export type IPartnerEdit = Omit<IFormValues, 'userBirthday'> & {
+export type IPartnerEdit = Omit<IFormValues, 'userID' | 'userBirthday'> & {
+  aslPersonalContactID: string;
   birthday: number;
 };
 

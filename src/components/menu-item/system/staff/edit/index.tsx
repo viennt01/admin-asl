@@ -18,7 +18,7 @@ const EditStaff = () => {
   const handleSubmit = (formValues: IFormValues, idQuery?: string) => {
     if (idQuery) {
       const _requestData: IPartnerEdit = {
-        userID: idQuery,
+        aslPersonalContactID: idQuery,
         genderID: formValues.genderID || '',
         employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',

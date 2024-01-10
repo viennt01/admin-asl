@@ -31,7 +31,7 @@ const CreateStaff = () => {
   const handleSubmit = (formValues: IFormValues, id?: string) => {
     if (id) {
       const _requestData: IPartnerEdit = {
-        userID: id,
+        aslPersonalContactID: id,
         genderID: formValues.genderID || '',
         employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',
@@ -100,7 +100,7 @@ const CreateStaff = () => {
   const handleSaveDraft = (formValues: IFormValues, id?: string) => {
     if (id) {
       const _requestData: IPartnerEdit = {
-        userID: id,
+        aslPersonalContactID: id,
         genderID: formValues.genderID || '',
         employeeCode: formValues.employeeCode || '',
         aslRoleID: formValues.aslRoleID || '',
