@@ -349,12 +349,12 @@ const LocationForm = ({
               <Form.Item
                 label={translateLocation('city_form.title')}
                 name="cityID"
-                rules={[
-                  {
-                    required: true,
-                    message: translateLocation('city_form.error_required'),
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: translateLocation('city_form.error_required'),
+                //   },
+                // ]}
               >
                 <Select
                   placeholder={translateLocation('city_form.placeholder')}

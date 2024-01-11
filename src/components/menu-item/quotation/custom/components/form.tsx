@@ -196,6 +196,10 @@ const CustomsQuotation = ({
           customQuotationFCLDetailDTOs: data.data.customQuotationFCLDetailDTOs,
           customQuotationAirDetailDTO: data.data.customQuotationAirDetailDTO,
           customQuotationFeeGroupDTOs: data.data.customQuotationFeeGroupDTOs,
+          salesLeadsCustomQuotationDTOs:
+            data.data.salesLeadsCustomQuotationDTOs.map(
+              (item) => item.partnerID
+            ),
         });
         setSeaQuotationFeeDTOs(data.data.customQuotationFeeGroupDTOs);
         setSalesLeads(data.data.salesLeadsCustomQuotationDTOs);
