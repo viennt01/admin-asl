@@ -585,14 +585,14 @@ const UnitForm = ({
               <Form.Item
                 label={translatePartner('aslPersonalContactID_form.title')}
                 name="aslPersonalContactID"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner(
-                      'aslPersonalContactID_form.error_required'
-                    ),
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: translatePartner(
+                //       'aslPersonalContactID_form.error_required'
+                //     ),
+                //   },
+                // ]}
               >
                 <Select
                   showSearch
