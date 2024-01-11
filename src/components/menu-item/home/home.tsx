@@ -401,7 +401,7 @@ export default function DashboardPage() {
                 /> */}
               </ProCard>
               <ProCard split="vertical">
-                <StatisticCard
+                {/* <StatisticCard
                   statistic={{
                     title: 'Total Partner',
                     value: dataInformation?.totalPartner,
@@ -434,8 +434,8 @@ export default function DashboardPage() {
                       />
                     ),
                   }}
-                />
-                {/* <StatisticCard
+                /> */}
+                <StatisticCard
                   statistic={{
                     title: 'Total ASL member',
                     value: dataInformation?.totalASLMember,
@@ -457,7 +457,7 @@ export default function DashboardPage() {
                     title: 'Total User',
                     value: dataInformation?.totalUser,
                   }}
-                /> */}
+                />
               </ProCard>
               <ProCard split="vertical">
                 <StatisticCard
