@@ -351,12 +351,14 @@ const CardMain = ({
 
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationCustom('validity_form.title')}
-            name="validityDate"
+            label={translateQuotationCustom('effect_date_form.title')}
+            name="effectDated"
             rules={[
               {
                 required: true,
-                message: translateQuotationCustom('validity_form.placeholder'),
+                message: translateQuotationCustom(
+                  'effect_date_form.placeholder'
+                ),
               },
             ]}
           >
@@ -369,14 +371,12 @@ const CardMain = ({
         </Col>
         <Col lg={8} span={24}>
           <Form.Item
-            label={translateQuotationCustom('effect_date_form.title')}
-            name="effectDated"
+            label={translateQuotationCustom('validity_form.title')}
+            name="validityDate"
             rules={[
               {
                 required: true,
-                message: translateQuotationCustom(
-                  'effect_date_form.placeholder'
-                ),
+                message: translateQuotationCustom('validity_form.placeholder'),
               },
             ]}
           >

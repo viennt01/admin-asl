@@ -20,14 +20,14 @@
         "error_required": "Please select transaction"
     },
     "effect_date_form": {
-        "title": "Effect Date",
-        "placeholder": "Enter effect date",
-        "error_required": "Please enter effect date"
+        "title": "Effective date",
+        "placeholder": "Enter effective date",
+        "error_required": "Please enter effective date"
     },
     "validity_form": {
-        "title": "Validity Date",
-        "placeholder": "Enter validity date",
-        "error_required": "Please enter validity date"
+        "title": "Expire date",
+        "placeholder": "Enter expire date",
+        "error_required": "Please enter expire date"
     },
     "commodity_form": {
         "title": "Commodity",
