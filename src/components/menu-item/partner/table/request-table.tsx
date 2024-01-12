@@ -18,7 +18,7 @@ import { ProColumns } from '@ant-design/pro-components';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, PaginationProps, Popover, Tag } from 'antd';
 import { useRouter } from 'next/router';
-import { useState, MouseEvent } from 'react';
+import { useState, MouseEvent, useContext } from 'react';
 import { FilterConfirmProps } from 'antd/lib/table/interface';
 import { formatDate } from '@/utils/format';
 import { STATUS_ALL_LABELS } from '@/constant/form';
@@ -32,6 +32,12 @@ import {
   initalValueQueryInputParamsRequest,
   initalValueQuerySelectParamsRequest,
 } from '../constant';
+import { API_USER } from '@/fetcherAxios/endpoint';
+import { getUserInfo } from '@/layout/fetcher';
+import { appLocalStorage } from '@/utils/localstorage';
+import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
+import { getPriorityRole } from '@/hook/useAuthentication';
+import { AppContext } from '@/app-context';
 
 type DataIndex = keyof IQueryInputParamType;
 
@@ -50,7 +56,29 @@ const RequestTable = () => {
     initalSelectSearchRequest
   );
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const { setUserInfo, setRole } = useContext(AppContext);
 
+  const checkUser = useQuery({
+    queryKey: [API_USER.CHECK_USER],
+    queryFn: () => getUserInfo(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        // remove token and redirect to home
+        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+        router.replace(ROUTERS.LOGIN);
+      } else {
+        const dataRole = getPriorityRole(data?.data?.listRole || ['AGENT']);
+        if (setRole) setRole(dataRole);
+        if (setUserInfo) setUserInfo(data.data);
+      }
+    },
+    onError: () => {
+      // remove token and redirect to home
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      router.replace(ROUTERS.LOGIN);
+    },
+    retry: 0,
+  });
   // Handle data
   useQuery({
     queryKey: [TYPE_TABS.GET_PARTNER_BY_REQUEST, pagination, queryInputParams],
@@ -411,7 +439,8 @@ const RequestTable = () => {
                 pagination,
                 queryInputParams,
               ],
-            }))
+            }),
+            checkUser.refetch())
           : errorToast(data.message);
       },
       onError() {

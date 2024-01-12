@@ -95,8 +95,10 @@ const UnitForm = ({
     []
   );
   const [openAddUserModal, setOpenAddUser] = useState(false);
+  const valueRole = Form.useWatch('rolePartners', form);
+  const [checkRoleCustomer, setCheckRoleCustomer] = useState<boolean>(false);
 
-  const getAllPartner = useQuery({
+  const getAllRole = useQuery({
     queryKey: [API_PARTNER_ROLE.GET_ALL],
     queryFn: () => getAllPartnerRole(),
     onSuccess: (data) => {
@@ -294,6 +296,25 @@ const UnitForm = ({
   const handleAddUser = () => {
     setOpenAddUser(false);
   };
+
+  useEffect(() => {
+    const Role =
+      getAllRole.data?.data.map((item) => {
+        return {
+          value: item.roleID,
+          label: item.name,
+        };
+      }) || [];
+    const filteredRoles = Role.filter((item1) =>
+      valueRole?.includes(item1.value)
+    );
+    const checkRoleCustomer = filteredRoles.find(
+      (item) => item.label === 'CUSTOMER'
+    );
+    checkRoleCustomer
+      ? setCheckRoleCustomer(true)
+      : setCheckRoleCustomer(false);
+  }, [valueRole]);
 
   return (
     <div style={{ padding: '24px 0' }}>
@@ -498,7 +519,7 @@ const UnitForm = ({
                   }
                   mode="multiple"
                   options={
-                    getAllPartner.data?.data.map((item) => {
+                    getAllRole.data?.data.map((item) => {
                       return {
                         value: item.roleID,
                         label: item.name,
@@ -512,12 +533,12 @@ const UnitForm = ({
               <Form.Item
                 label={translatePartner('city_form.title')}
                 name="cityID"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('city_form.error_required'),
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: translatePartner('city_form.error_required'),
+                //   },
+                // ]}
               >
                 <Select
                   showSearch
@@ -550,7 +571,7 @@ const UnitForm = ({
                 name="taxCode"
                 rules={[
                   {
-                    required: true,
+                    required: checkRoleCustomer ? true : false,
                     message: translatePartner('taxCode_form.error_required'),
                   },
                 ]}
