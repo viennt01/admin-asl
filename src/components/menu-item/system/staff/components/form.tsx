@@ -335,24 +335,6 @@ const UnitForm = ({
           <Row gutter={16}>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateStaff('firstName_form.title')}
-                name="firstName"
-                rules={[
-                  {
-                    required: true,
-                    message: translateStaff('firstName_form.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateStaff('firstName_form.placeholder')}
-                  size="large"
-                  disabled={checkRow && isCheckPermissionEdit}
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} span={24}>
-              <Form.Item
                 label={translateStaff('lastName_form.title')}
                 name="lastName"
                 rules={[
@@ -364,6 +346,24 @@ const UnitForm = ({
               >
                 <Input
                   placeholder={translateStaff('lastName_form.placeholder')}
+                  size="large"
+                  disabled={checkRow && isCheckPermissionEdit}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateStaff('firstName_form.title')}
+                name="firstName"
+                rules={[
+                  {
+                    required: true,
+                    message: translateStaff('firstName_form.error_required'),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateStaff('firstName_form.placeholder')}
                   size="large"
                   disabled={checkRow && isCheckPermissionEdit}
                 />

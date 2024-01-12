@@ -2,6 +2,7 @@ import {
   EditOutlined,
   ExclamationCircleFilled,
   DeleteOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Popconfirm, Popover, Tag } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useState } from 'react';
@@ -508,10 +509,20 @@ export default function LinerDataTable() {
               icon={<DeleteOutlined />}
               style={{
                 color: COLORS.ERROR,
+                marginRight: '10px',
                 borderColor: COLORS.ERROR,
               }}
             />
           </Popconfirm>
+          <Button
+            onClick={() =>
+              router.push(ROUTERS.PARTNER_EDIT(value as string, true))
+            }
+            icon={<EyeOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
         </div>
       ),
     },

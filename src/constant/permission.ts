@@ -336,19 +336,19 @@ export const PERMISSION_RULES = () => {
       '/master-data/type-of-container/edit/[id]': PERMISSION.EDIT,
       '/master-data/type-of-container/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/system/user': PERMISSION.EDIT,
-      '/system/user/create': PERMISSION.EDIT,
-      '/system/user/edit/[id]': PERMISSION.EDIT,
+      '/system/user': PERMISSION.NO_VIEW,
+      '/system/user/create': PERMISSION.NO_VIEW,
+      '/system/user/edit/[id]': PERMISSION.NO_VIEW,
       '/system/user/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/system/staff': PERMISSION.EDIT,
-      '/system/staff/create': PERMISSION.EDIT,
-      '/system/staff/edit/[id]': PERMISSION.EDIT,
+      '/system/staff': PERMISSION.NO_VIEW,
+      '/system/staff/create': PERMISSION.NO_VIEW,
+      '/system/staff/edit/[id]': PERMISSION.NO_VIEW,
       '/system/staff/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/system/permission': PERMISSION.EDIT,
-      '/system/permission/create': PERMISSION.EDIT,
-      '/system/permission/edit/[id]': PERMISSION.EDIT,
+      '/system/permission': PERMISSION.NO_VIEW,
+      '/system/permission/create': PERMISSION.NO_VIEW,
+      '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
     },
     AGENT: {

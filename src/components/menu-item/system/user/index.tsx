@@ -517,8 +517,8 @@ export default function CalculationUserPage() {
         <div className={style.title}>{translateCommon('date_created')}</div>
       ),
       width: 150,
-      dataIndex: 'createdDateUser',
-      key: 'createdDateUser',
+      dataIndex: 'dateInserted',
+      key: 'dateInserted',
       align: 'center',
       render: (value) => formatDate(Number(value)),
     },
@@ -527,8 +527,8 @@ export default function CalculationUserPage() {
         <div className={style.title}>{translateCommon('date_inserted')}</div>
       ),
       width: 150,
-      dataIndex: 'updatedDateUser',
-      key: 'updatedDateUser',
+      dataIndex: 'dateUpdated',
+      key: 'dateUpdated',
       align: 'center',
       render: (value) => formatDate(Number(value)),
     },

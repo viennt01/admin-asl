@@ -132,23 +132,6 @@ const AddUserModal: React.FC<ImportModalProps> = ({
           <Row gutter={24}>
             <Col lg={12} span={24}>
               <Form.Item
-                label={translateStaff('firstName_form.title')}
-                name="firstName"
-                rules={[
-                  {
-                    required: true,
-                    message: translateStaff('firstName_form.error_required'),
-                  },
-                ]}
-              >
-                <Input
-                  placeholder={translateStaff('firstName_form.placeholder')}
-                  size="large"
-                />
-              </Form.Item>
-            </Col>
-            <Col lg={12} span={24}>
-              <Form.Item
                 label={translateStaff('lastName_form.title')}
                 name="lastName"
                 rules={[
@@ -160,6 +143,23 @@ const AddUserModal: React.FC<ImportModalProps> = ({
               >
                 <Input
                   placeholder={translateStaff('lastName_form.placeholder')}
+                  size="large"
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={12} span={24}>
+              <Form.Item
+                label={translateStaff('firstName_form.title')}
+                name="firstName"
+                rules={[
+                  {
+                    required: true,
+                    message: translateStaff('firstName_form.error_required'),
+                  },
+                ]}
+              >
+                <Input
+                  placeholder={translateStaff('firstName_form.placeholder')}
                   size="large"
                 />
               </Form.Item>
@@ -217,7 +217,6 @@ const AddUserModal: React.FC<ImportModalProps> = ({
                 />
               </Form.Item>
             </Col>
-
             <Col lg={8} span={24}>
               <Form.Item
                 label={translateStaff('gender_form.title')}
@@ -253,7 +252,6 @@ const AddUserModal: React.FC<ImportModalProps> = ({
                 />
               </Form.Item>
             </Col>
-
             <Col lg={8} span={24}>
               <Form.Item
                 label={'Citizen identification or visa'}
@@ -273,7 +271,6 @@ const AddUserModal: React.FC<ImportModalProps> = ({
                 />
               </Form.Item>
             </Col>
-
             <Col lg={8} span={24}>
               <Form.Item
                 label={translateStaff('nationality_form.title')}
@@ -291,7 +288,6 @@ const AddUserModal: React.FC<ImportModalProps> = ({
                 />
               </Form.Item>
             </Col>
-
             <Col lg={8} span={24}>
               <Form.Item
                 label={translateStaff('workingBranch_form.title')}
@@ -328,7 +324,6 @@ const AddUserModal: React.FC<ImportModalProps> = ({
                 />
               </Form.Item>
             </Col>
-
             <Col lg={8} span={24}>
               <Form.Item
                 label={translateStaff('address_form.title')}
@@ -346,7 +341,6 @@ const AddUserModal: React.FC<ImportModalProps> = ({
                 />
               </Form.Item>
             </Col>
-
             <Col span={24}>
               <Form.Item label={translateStaff('note_form.title')} name="note">
                 <TextArea

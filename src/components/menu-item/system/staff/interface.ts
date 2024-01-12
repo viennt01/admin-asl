@@ -33,7 +33,7 @@ export interface IPartner {
   defaultAvatar: string;
   lastUserLogin: string;
   lastUserLoginFailed: string;
-  dateCreated: string;
+  dateInserted: string;
   dateUpdated: string;
   statusUser: string;
 }

@@ -173,18 +173,18 @@ export default function UserForm() {
                 <Row gutter={16}>
                   <Col lg={8} span={24}>
                     <Form.Item
-                      label={translateUser('first_name')}
-                      name="firstName"
-                    >
-                      <Input placeholder="Please input First Name" disabled />
-                    </Form.Item>
-                  </Col>
-                  <Col lg={8} span={24}>
-                    <Form.Item
                       label={translateUser('last_name')}
                       name="lastName"
                     >
                       <Input placeholder="Please input Last Name" disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col lg={8} span={24}>
+                    <Form.Item
+                      label={translateUser('first_name')}
+                      name="firstName"
+                    >
+                      <Input placeholder="Please input First Name" disabled />
                     </Form.Item>
                   </Col>
                   <Col lg={8} span={24}>

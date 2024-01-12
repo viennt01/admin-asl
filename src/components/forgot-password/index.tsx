@@ -4,7 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { errorToast, successToast } from '@/hook/toast';
 import style from './forgot-password-page.module.scss';
 import { resetPassword, sendOtp, sendVerifyOtp } from './fetcher';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { API_MESSAGE } from '@/constant/message';
 import {
   LAYOUT_TYPE,
@@ -35,12 +35,14 @@ const initialValuesResetPassword: SendResetPasswordData = {
 };
 
 export default function ForgotPasswordPage() {
+  const [formEmail] = Form.useForm();
   const [isLoadingSendOtp, setIsLoadingSendOtp] = useState(false);
   const [isLoadingConfirmOtp, setIsLoadingConfirmOtp] = useState(false);
   const [isLoadingResetPassword, setIsLoadingResetPassword] = useState(false);
   const [isLayout, setIsLayout] = useState<LAYOUT_TYPE>(LAYOUT_TYPE.SEND_OTP);
   const [isEmail, setIsEmail] = useState<string>('');
   const router = useRouter();
+  const { email } = router.query;
   const { translate: translateResetPassword } = useI18n('forgot-password');
 
   const handleSubmitSendOtp = (values: SendOtpData) => {
@@ -117,6 +119,10 @@ export default function ForgotPasswordPage() {
       });
   };
 
+  useEffect(() => {
+    formEmail.setFieldValue('email', email);
+  }, [email]);
+
   return (
     <Layout className={style.layoutForgotPassword}>
       <div className={style.colorBackdrop}></div>
@@ -161,6 +167,7 @@ export default function ForgotPasswordPage() {
           </div>
           {isLayout === LAYOUT_TYPE.SEND_OTP ? (
             <Form
+              form={formEmail}
               onFinish={handleSubmitSendOtp}
               initialValues={initialValuesSendOtp}
             >

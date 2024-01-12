@@ -2,6 +2,7 @@ import {
   EditOutlined,
   ExclamationCircleFilled,
   DeleteOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
 import { Button, Modal, PaginationProps, Popconfirm } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useState } from 'react';
@@ -150,7 +151,7 @@ export default function MasterDataTable() {
             defaultAvatar: data.defaultAvatar,
             lastUserLogin: data.lastUserLogin,
             lastUserLoginFailed: data.lastUserLoginFailed,
-            dateCreated: data.dateCreated,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             statusUser: data.statusUser,
             searchAll: '',
@@ -434,8 +435,8 @@ export default function MasterDataTable() {
         <div className={style.title}>{translateCommon('date_created')}</div>
       ),
       width: 150,
-      dataIndex: 'dateCreated',
-      key: 'dateCreated',
+      dataIndex: 'dateInserted',
+      key: 'dateInserted',
       align: 'center',
       render: (value) => formatDate(Number(value)),
     },
@@ -456,6 +457,15 @@ export default function MasterDataTable() {
       dataIndex: 'key',
       render: (value) => (
         <div style={{ display: 'flex' }}>
+          <Button
+            onClick={() =>
+              router.push(ROUTERS.STAFF_EDIT(value as string, true))
+            }
+            icon={<EyeOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
           <Button
             onClick={() => handleEditCustomer(value as string)}
             icon={<EditOutlined />}

@@ -42,7 +42,7 @@ export default function Partner() {
             children: <LinerDataTable />,
           },
           {
-            label: 'Customers',
+            label: 'Customer',
             key: TYPE_TABS.GET_PARTNER_BY_CUSTOMER,
             children: <CustomersDataTable />,
           },

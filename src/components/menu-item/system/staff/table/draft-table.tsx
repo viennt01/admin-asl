@@ -96,7 +96,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             defaultAvatar: data.defaultAvatar,
             lastUserLogin: data.lastUserLogin,
             lastUserLoginFailed: data.lastUserLoginFailed,
-            dateCreated: data.dateCreated,
+            dateInserted: data.dateInserted,
             dateUpdated: data.dateUpdated,
             statusUser: data.statusUser,
             searchAll: '',
