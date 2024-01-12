@@ -548,12 +548,12 @@ const UnitForm = ({
               <Form.Item
                 label={translatePartner('taxCode_form.title')}
                 name="taxCode"
-                // rules={[
-                //   {
-                //     required: true,
-                //     message: translatePartner('taxCode_form.error_required'),
-                //   },
-                // ]}
+                rules={[
+                  {
+                    required: true,
+                    message: translatePartner('taxCode_form.error_required'),
+                  },
+                ]}
               >
                 <Input
                   placeholder={translatePartner('taxCode_form.placeholder')}
@@ -567,12 +567,12 @@ const UnitForm = ({
               <Form.Item
                 label={translatePartner('website_form.title')}
                 name="website"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('website_form.error_required'),
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: translatePartner('website_form.error_required'),
+                //   },
+                // ]}
               >
                 <Input
                   placeholder={translatePartner('website_form.placeholder')}

@@ -490,6 +490,15 @@ export default function LinerDataTable() {
       render: (value) => (
         <div style={{ display: 'flex' }}>
           <Button
+            onClick={() =>
+              router.push(ROUTERS.PARTNER_EDIT(value as string, true))
+            }
+            icon={<EyeOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
+          <Button
             onClick={() => handleEditCustomer(value as string)}
             icon={<EditOutlined />}
             style={{
@@ -509,20 +518,10 @@ export default function LinerDataTable() {
               icon={<DeleteOutlined />}
               style={{
                 color: COLORS.ERROR,
-                marginRight: '10px',
                 borderColor: COLORS.ERROR,
               }}
             />
           </Popconfirm>
-          <Button
-            onClick={() =>
-              router.push(ROUTERS.PARTNER_EDIT(value as string, true))
-            }
-            icon={<EyeOutlined />}
-            style={{
-              marginRight: '10px',
-            }}
-          />
         </div>
       ),
     },

@@ -490,6 +490,15 @@ export default function MasterDataTable() {
       render: (value) => (
         <div style={{ display: 'flex' }}>
           <Button
+            onClick={() =>
+              router.push(ROUTERS.PARTNER_EDIT(value as string, true))
+            }
+            icon={<EyeOutlined />}
+            style={{
+              marginRight: '10px',
+            }}
+          />
+          <Button
             onClick={() => handleEditCustomer(value as string)}
             icon={<EditOutlined />}
             style={{
@@ -510,19 +519,9 @@ export default function MasterDataTable() {
               style={{
                 color: COLORS.ERROR,
                 borderColor: COLORS.ERROR,
-                marginRight: '10px',
               }}
             />
           </Popconfirm>
-          <Button
-            onClick={() =>
-              router.push(ROUTERS.PARTNER_EDIT(value as string, true))
-            }
-            icon={<EyeOutlined />}
-            style={{
-              marginRight: '10px',
-            }}
-          />
         </div>
       ),
     },
