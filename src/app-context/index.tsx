@@ -1,3 +1,4 @@
+import AppWebsocket from '@/fetcher/ws';
 import { UserInfo } from '@/layout/fetcher';
 import React, { useEffect, useState } from 'react';
 
@@ -6,6 +7,8 @@ interface AppContext {
   setUserInfo?: (userInfo: UserInfo) => void;
   role: string;
   setRole?: (role: string) => void;
+  appWebbsocket?: AppWebsocket;
+  setAppWebsocket?: (appWebbsocket: AppWebsocket) => void;
 }
 
 export const INITIAL_VALUE_USER_INFO = {
@@ -94,11 +97,16 @@ export default function AppContextProvider({
   const setRole = (role: string) => {
     setValueContext((prev) => ({ ...prev, role }));
   };
+
+  const setAppWebsocket = (appWebbsocket: AppWebsocket) => {
+    setValueContext((prev) => ({ ...prev, appWebbsocket }));
+  };
   useEffect(() => {
     setValueContext((prev) => ({
       ...prev,
       setUserInfo,
       setRole,
+      setAppWebsocket,
     }));
   }, []);
   return (

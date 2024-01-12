@@ -1,0 +1,34 @@
+{
+    "title": "Danh sách loại hoạt động của sale",
+    "no": "STT",
+    "name": "Tên",
+    "code": "Mã",
+    "description": "Mô tả",
+    "status": "Trạng thái",
+    "date_created": "Ngày tạo",
+    "date_update": "Ngày cập nhật",
+    "updater": "Người cập nhật",
+    "creator": "Người tạo",
+    "information_add_type_of_sale_activity": "Thêm mới loại hoạt động của sale",
+    "information_edit_type_of_sale_activity": "Chỉnh sửa loại hoạt động của sale",
+    "name_type_sale_activity_form": {
+        "title": "Tên",
+        "titleEn": "Tên (EN)",
+        "titleVn": "Tên (VN)",
+        "placeholder": "Nhập tên loại hoạt động của sale",
+        "error_required": "Vui lòng nhập tên loại hoạt động của sale"
+    },
+    "description_type_sale_activity_form": {
+        "title": "Mô tả",
+        "titleEn": "Mô tả (EN)",
+        "titleVn": "Mô tả (VN)",
+        "placeholder": "Vui lòng nhập mô tả"
+    },
+    "name_placeholder": "Vui lòng nhập tên loại của hoạt động của sale!",
+    "description_placeholder": "Vui lòng nhập mô tả!",
+    "status_placeholder": "Vui lòng chọn trạng thái!",
+    "date_created_placeholder": "Vui lòng chọn ngày tạo!",
+    "date_update_placeholder": "Vui lòng chọn ngày cập nhật!",
+    "updater_placeholder": "Vui lòng nhập người cập nhật!",
+    "creator_placeholder": "Vui lòng nhập người tạo!"
+}

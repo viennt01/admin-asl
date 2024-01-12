@@ -550,6 +550,48 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
+    '/master-data/sale-activity/type-sale-activity': [
+      { title: `${translateCommon('object_list')}` },
+      { title: `${translateCommon('sale_activity_catalog')}` },
+      { title: `${translateCommon('type_sale_activity')}` },
+    ],
+    '/master-data/sale-activity/type-sale-activity/create': [
+      { title: `${translateCommon('object_list')}` },
+      { title: `${translateCommon('sale_activity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_SALE_ACTIVITY}>
+            {translateCommon('type_sale_activity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('create')}` },
+    ],
+    '/master-data/sale-activity/type-sale-activity/edit/[id]': [
+      { title: `${translateCommon('object_list')}` },
+      { title: `${translateCommon('sale_activity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_SALE_ACTIVITY}>
+            {translateCommon('type_sale_activity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/master-data/sale-activity/type-sale-activity/manager-admin/[id]': [
+      { title: `${translateCommon('object_list')}` },
+      { title: `${translateCommon('sale_activity_catalog')}` },
+      {
+        title: (
+          <Link href={ROUTERS.TYPE_SALE_ACTIVITY}>
+            {translateCommon('type_sale_activity')}
+          </Link>
+        ),
+      },
+      { title: `${translateCommon('request_for_approval')}` },
+    ],
+
     '/master-data/load-capacity-catalog/type-of-load-capacity': [
       { title: `${translateCommon('object_list')}` },
       { title: `${translateCommon('load_capacity_catalog')}` },

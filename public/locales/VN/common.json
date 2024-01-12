@@ -21,6 +21,9 @@
     "load_capacity_catalog": "Danh mục trọng tải",
     "load_capacity": "Trọng tải",
     "type_load_capacity": "Loại trọng tải",
+    "sale_activity_catalog": "Danh mục hoạt động của sale",
+    "sale_activity": "Hoạt động của sale",
+    "type_sale_activity": "Loại hoạt động của sale",
     "fee_catalog": "Danh mục chi phí",
     "fee": "Chi phí",
     "type_fee": "Loại chi phí",
@@ -64,19 +67,16 @@
     "date_expiration": "Ngày hết hạn",
     "search": "Tìm",
     "reset": "Bỏ lọc",
-
     "modal_delete": {
         "title": "Bạn có chắc chắn muốn xóa?",
         "button_ok": "Có",
         "button_cancel": "Không"
     },
-
     "modal_close": {
         "title": "Bạn có chắc muốn thoat khỏi màn hình này không?",
         "button_ok": "Có",
         "button_cancel": "Không"
     },
-
     "button_bottom_form": {
         "close": "Đóng",
         "save": "Lưu",

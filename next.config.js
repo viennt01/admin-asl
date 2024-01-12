@@ -11,10 +11,17 @@ const API_MAIN_GW = {
   production: 'https://asl.softek.com.vn',
 };
 
+const WSS_URL = {
+  dev: 'wss://asl.softek.com.vn/check-notifcation',
+  staging: 'wss://asl.softek.com.vn/check-notifcation',
+  production: 'wss://asl.softek.com.vn/check-notifcation',
+};
+
 const env = {
   VERSION: version,
   APP_ENV: appEnv,
   API_MAIN_GW: API_MAIN_GW[appEnv],
+  WSS_URL: WSS_URL[appEnv],
 };
 
 const nextConfig = {

@@ -64,6 +64,19 @@ export const API_TYPE_DECLARATION = {
   GET_ALL: '/get-all-type-delaracrion',
 };
 
+export const API_TYPE_SALE_ACTIVITY = {
+  GET_SEARCH: '/search-sale-activity-type',
+  GET_DETAIL: '/get-sale-activity-type-by-id',
+  CREATE: '/add-sale-activity-type',
+  EDIT: '/update-sale-activity-type',
+  DELETE: '/delete-sale-activity-type',
+  UPDATE_STATUS: '/update-status-sale-activity-type',
+  DOWNLOAD_EXAMPLE_FILE: '/download-sale-activity-type-excel',
+  IMPORT: '/import-sale-activity-type-with-excel',
+  EXPORT: '/export-sale-activity-type-with-excel',
+  GET_ALL: '/get-all-sale-activity-type',
+};
+
 export const API_SEA_QUOTATION = {
   GET_SEARCH: '/search-sea-quotation',
   GET_DETAIL: '/get-sea-quotation-by-id',

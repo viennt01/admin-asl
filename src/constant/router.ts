@@ -193,6 +193,14 @@ export const ROUTERS = {
   TYPE_DECLARATION_MANAGER: (typeOfDeclarationId: string) =>
     `/master-data/declaration-catalog/type-of-declaration/manager-admin/${typeOfDeclarationId}`,
 
+  TYPE_SALE_ACTIVITY: '/master-data/sale-activity/type-sale-activity',
+  TYPE_SALE_ACTIVITY_CREATE:
+    '/master-data/sale-activity/type-sale-activity/create',
+  TYPE_SALE_ACTIVITY_EDIT: (typeSaleActivityId: string, checkRow = false) =>
+    `/master-data/sale-activity/type-sale-activity/edit/${typeSaleActivityId}?checkRow=${checkRow}`,
+  TYPE_SALE_ACTIVITY_MANAGER: (typeSaleActivityId: string) =>
+    `/master-data/sale-activity/type-sale-activity/manager-admin/${typeSaleActivityId}`,
+
   TYPE_UNIT: '/master-data/unit-catalog/type-unit',
   TYPE_UNIT_CREATE: '/master-data/unit-catalog/type-unit/create',
   TYPE_UNIT_EDIT: (typeUnitId: string, checkRow = false) =>

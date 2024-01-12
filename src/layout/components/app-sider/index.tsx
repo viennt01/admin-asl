@@ -111,6 +111,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refTypeUnit = useRef(null);
   const refDeclarationCatalog = useRef(null);
   const refTypeDeclaration = useRef(null);
+  const refTypeSaleActivity = useRef(null);
   const refUser = useRef(null);
   const refStaff = useRef(null);
   // const refPermission = useRef(null);
@@ -845,6 +846,41 @@ const AppSider = ({ collapsed }: Props) => {
                           </Badge>,
                           ROUTERS.TYPE_DECLARATION,
                           <FileTextOutlined ref={refTypeDeclaration} />
+                        )
+                      : null,
+                  ]
+                )
+              : null,
+
+            displayRouter(ROUTERS.TYPE_SALE_ACTIVITY)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      `${Number(userInfo?.totalTypeCustoms)}` // TODO: check lai
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {translateCommon('sale_activity_catalog')}
+                  </Badge>,
+                  'sale_activity_catalog',
+                  <FileTextOutlined ref={refDeclarationCatalog} />,
+                  [
+                    displayRouter(ROUTERS.TYPE_SALE_ACTIVITY)
+                      ? getItem(
+                          <Badge
+                            count={GetTitleNotificationTab(
+                              userInfo?.totalTypeCustoms // TODO: check lai
+                            )}
+                            style={{
+                              marginRight: '-12px',
+                            }}
+                          >
+                            {`${translateCommon('type_sale_activity')}`}
+                          </Badge>,
+                          ROUTERS.TYPE_SALE_ACTIVITY,
+                          <FileTextOutlined ref={refTypeSaleActivity} />
                         )
                       : null,
                   ]

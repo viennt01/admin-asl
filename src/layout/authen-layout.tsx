@@ -11,6 +11,7 @@ import {
   Typography,
   Button,
   FloatButton,
+  notification,
 } from 'antd';
 import {
   UserOutlined,
@@ -39,6 +40,8 @@ import {
 import SHOW_ROUTER_HEADER from './constant';
 import { AppContext } from '@/app-context';
 import { getPriorityRole } from '@/hook/useAuthentication';
+import AppWebsocket from '@/fetcher/ws';
+import { API_MESSAGE } from '@/constant/message';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -128,6 +131,7 @@ const SelectLanguage = ({
     </div>
   );
 };
+const WSS_URL = process.env.WSS_URL;
 
 export function AppLayout(props: Props) {
   const router = useRouter();
@@ -137,7 +141,33 @@ export function AppLayout(props: Props) {
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
   const locale = useLocale();
-  const { userInfo, setUserInfo, setRole } = useContext(AppContext);
+  const { userInfo, setUserInfo, setRole, setAppWebsocket } =
+    useContext(AppContext);
+
+  const [apiNotification, contextHolder] = notification.useNotification();
+
+  useEffect(() => {
+    let appSocket: AppWebsocket;
+    if (WSS_URL) {
+      appSocket = new AppWebsocket(WSS_URL);
+      if (setAppWebsocket) {
+        setAppWebsocket(appSocket);
+        // try reconnect once
+        appSocket.onError(() => {
+          const appSocket = new AppWebsocket(WSS_URL);
+          setAppWebsocket(appSocket);
+          appSocket.onError(() => {
+            apiNotification.error({ message: API_MESSAGE.ERROR });
+          });
+        });
+      }
+    }
+    // return () => {
+    //   if (appSocket) {
+    //     appSocket.close();
+    //   }
+    // };
+  }, [setAppWebsocket, apiNotification]);
 
   useQuery({
     queryKey: [API_MASTER_DATA.GET_COUNTRY],
@@ -197,6 +227,7 @@ export function AppLayout(props: Props) {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
+      {contextHolder}
       <Head>
         <link rel="favicon" href="/images/asl-logo.png" />
         <link rel="shortcut icon" href="/images/asl-logo.png" />

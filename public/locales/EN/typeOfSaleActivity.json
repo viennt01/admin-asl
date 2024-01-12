@@ -1,0 +1,33 @@
+{
+    "title": "List type of sale activity",
+    "no": "No",
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "date_created": "Date Created",
+    "date_update": "Date Update",
+    "updater": "Updater",
+    "creator": "Creator",
+    "information_add_type_of_sale_activity": "New type of sale activity",
+    "information_edit_type_of_sale_activity": "Edit type of sale activity",
+    "name_type_sale_activity_form": {
+        "title": "Name",
+        "titleEn": "Name (EN)",
+        "titleVn": "Name (VN)",
+        "placeholder": "Please enter the name of the sale activity type",
+        "error_required": "Please enter the name of the sale activity type"
+    },
+    "description_type_sale_activity_form": {
+        "title": "Description",
+        "titleEn": "Description (EN)",
+        "titleVn": "Description (VN)",
+        "placeholder": "Please enter description"
+    },
+    "name_placeholder": "Please input name!",
+    "description_placeholder": "Please input description!",
+    "status_placeholder": "Please choose status!",
+    "date_created_placeholder": "Please input date created!",
+    "date_update_placeholder": "Please input date update!",
+    "updater_placeholder": "Please input updater!",
+    "creator_placeholder": "Please input creator!"
+}
