@@ -34,12 +34,13 @@ import {
   ROUTERS_NOTIFICATION,
 } from '@/constant/router';
 import {
+  confirmNotification,
   getListCity,
   getListCountry,
   getListTypeLocations,
   getUserInfo,
 } from './fetcher';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import {
   API_LOCATION_TYPE,
   API_MASTER_DATA,
@@ -154,6 +155,12 @@ export function AppLayout(props: Props) {
   const { userInfo, setUserInfo, setRole, setNotification, notification } =
     useContext(AppContext);
 
+  const updateStatusReadMutation = useMutation({
+    mutationFn: (id: string) => {
+      return confirmNotification(id);
+    },
+  });
+
   useQuery({
     queryKey: [API_USER.CHECK_USER],
     queryFn: () => getUserInfo(),
@@ -236,10 +243,6 @@ export function AppLayout(props: Props) {
       console.log('WebSocket notification is closed now.', event);
     });
 
-    // Lưu trữ đối tượng WebSocket vào state
-    // setWebSocket(ws);
-
-    // Ngắn chặn kết nối khi component unmount
     return () => {
       ws.close();
     };
@@ -279,8 +282,13 @@ export function AppLayout(props: Props) {
       : setClassActiveAvatarPopup('active');
   }
 
-  const handleChangePageNotification = (id: string, type: string) => {
+  const handleChangePageNotification = (
+    id: string,
+    type: string,
+    IDataInformation: string
+  ) => {
     router.push(ROUTERS_NOTIFICATION[type as NotificationType](id));
+    updateStatusReadMutation.mutate(IDataInformation);
   };
 
   const contentDetail = () => {
@@ -295,7 +303,11 @@ export function AppLayout(props: Props) {
               <List.Item
                 key={item.notificationID}
                 onClick={() =>
-                  handleChangePageNotification(item.objectID, item.typeObject)
+                  handleChangePageNotification(
+                    item.objectID,
+                    item.typeObject,
+                    item.notificationID
+                  )
                 }
               >
                 <List.Item.Meta

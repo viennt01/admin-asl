@@ -2,6 +2,7 @@ import { ResponseWithPayload, get, post } from '@/fetcherAxios';
 import {
   API_LOCATION_TYPE,
   API_MASTER_DATA,
+  API_NOTIFICATION,
   API_USER,
 } from '@/fetcherAxios/endpoint';
 import { CityType, CountriesType, TypePortData } from './interface';
@@ -97,4 +98,11 @@ export const getListCountry = (data: IPagination) => {
   return post<IPagination, ResponseWithPayload<CountriesType>>({
     data,
   })(API_MASTER_DATA.GET_COUNTRY);
+};
+export const confirmNotification = (id: string) => {
+  return post<{ id: string }, ResponseWithPayload<string>>({
+    data: {
+      id,
+    },
+  })(API_NOTIFICATION.CONFIRM_READ);
 };

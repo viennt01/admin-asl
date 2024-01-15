@@ -443,3 +443,6 @@ export const API_CHART = {
   GET_CHART_PRICING: '/get-pricing-for-draw-chart-by-partner',
   GET_INFORMATION_DRAW_CHART: '/get-information-for-draw-chart-by-asl',
 };
+export const API_NOTIFICATION = {
+  CONFIRM_READ: '/Confirm-notification-has-seen',
+};
