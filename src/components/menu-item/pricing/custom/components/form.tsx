@@ -130,7 +130,7 @@ const CustomPricing = ({
 
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
+    queryFn: () => getListTypeUnit({ type: TYPE_UNIT.SEA }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

@@ -163,5 +163,5 @@ export interface TypeUnitData {
 }
 
 export interface IRequireTypeUnit {
-  typeUnit: TYPE_UNIT;
+  type: TYPE_UNIT;
 }

@@ -158,12 +158,12 @@ const EditableCell: React.FC<EditableCellProps> = ({
         rules={[
           {
             required:
-              (title as React.ReactElement).props.children === 'VAT'
+              (title as React.ReactElement)?.props?.children === 'VAT'
                 ? false
                 : true,
             message: `${
               React.isValidElement(title)
-                ? (title as React.ReactElement).props.children
+                ? (title as React.ReactElement).props?.children
                 : title
             } is required.`,
           },

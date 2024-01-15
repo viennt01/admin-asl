@@ -114,7 +114,7 @@ export default function MasterDataTable() {
 
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.TOTAL }),
+    queryFn: () => getListTypeUnit({ type: TYPE_UNIT.TOTAL }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
