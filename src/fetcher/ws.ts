@@ -9,14 +9,8 @@ class AppWebsocket {
   _socket: WebSocket;
   _eventHandler: Record<WSS_EVENTS | any, (data: unknown) => void> = {};
   constructor(url: string) {
-    // const token = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
-
-    const socket = new WebSocket(url);
-    // const socket = new WebSocket(url, {
-    //   headers: {
-    //     accessToken: token,
-    //   },
-    // });
+    const token = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
+    const socket = new WebSocket(`${url}?accessToken=${token}?languageName=VN`);
     this._socket = socket;
     this.onmMessage();
   }
@@ -29,15 +23,6 @@ class AppWebsocket {
   onopen(listener: (data: unknown) => void) {
     this._socket.onopen = listener;
     console.log(1);
-    // const token = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
-
-    // const message = {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // };
-
-    // this._socket.send(JSON.stringify(message));
   }
   onmMessage() {
     this._socket.onmessage = (response) => {
@@ -59,12 +44,12 @@ class AppWebsocket {
     if (data) sendData.data = data;
     console.log(sendData);
 
-    // this._socket?.send(JSON.stringify(sendData));
+    // this._socket.send(JSON.stringify(sendData));
   }
 
-  // close() {
-  //   this._socket.close();
-  // }
+  close() {
+    this._socket.close();
+  }
 
   logout(callback: () => void) {
     appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);

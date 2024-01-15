@@ -219,7 +219,9 @@ export default function PendingTable() {
       width: 150,
       align: 'left',
       render: (value, record) =>
-        `${record.typeOfService} (${record.typeOfSeaService})`,
+        `${record.typeOfService} ${`${
+          record.typeOfService === 'AIR' ? '' : `(${record.typeOfSeaService})`
+        } `}`,
     },
     {
       title: <div className={style.title}>{translatePartner('POL')}</div>,

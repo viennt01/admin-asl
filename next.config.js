@@ -11,7 +11,13 @@ const API_MAIN_GW = {
   production: 'https://asl.softek.com.vn',
 };
 
-const WSS_URL = {
+const WSS_URL_CHECK_USER = {
+  dev: 'wss://asl.softek.com.vn/check-user-real-time',
+  staging: 'wss://asl.softek.com.vn/check-user-real-time',
+  production: 'wss://asl.softek.com.vn/check-user-real-time',
+};
+
+const WSS_URL_NOTIFICATION = {
   dev: 'wss://asl.softek.com.vn/check-notifcation',
   staging: 'wss://asl.softek.com.vn/check-notifcation',
   production: 'wss://asl.softek.com.vn/check-notifcation',
@@ -21,7 +27,8 @@ const env = {
   VERSION: version,
   APP_ENV: appEnv,
   API_MAIN_GW: API_MAIN_GW[appEnv],
-  WSS_URL: WSS_URL[appEnv],
+  WSS_URL_CHECK_USER: WSS_URL_CHECK_USER[appEnv],
+  WSS_URL_NOTIFICATION: WSS_URL_NOTIFICATION[appEnv],
 };
 
 const nextConfig = {

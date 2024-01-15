@@ -45,6 +45,7 @@ interface EditableCellProps {
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   title,
   editable,
   children,
@@ -86,19 +87,19 @@ const EditableCell: React.FC<EditableCellProps> = ({
       <Form.Item
         style={{ margin: 0 }}
         name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: `${title} is required.`,
+        //   },
+        // ]}
       >
         <InputNumber
           ref={inputRef as unknown as Ref<HTMLInputElement>}
           onPressEnter={save}
           onBlur={save}
           style={{ width: '100%' }}
-          formatter={(value) => formatNumber(value || 0)}
+          formatter={(value) => formatNumber(value || '0')}
         />
       </Form.Item>
     ) : (
@@ -173,7 +174,7 @@ const LCL = ({ form }: PropsLCL) => {
       align: 'center',
       editable: true,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -183,7 +184,7 @@ const LCL = ({ form }: PropsLCL) => {
       align: 'center',
       editable: true,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -193,7 +194,7 @@ const LCL = ({ form }: PropsLCL) => {
       align: 'center',
       editable: true,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -203,9 +204,9 @@ const LCL = ({ form }: PropsLCL) => {
       editable: true,
       align: 'center',
       render: (value) => {
-        return formatNumber(Number(value) || 0) === '0'
+        return formatNumber(Number(value) || '0') === '0'
           ? '-'
-          : formatNumber(Number(value) || 0);
+          : formatNumber(Number(value) || '0');
       },
     },
   ];

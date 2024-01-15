@@ -11,7 +11,11 @@ import {
   Typography,
   Button,
   FloatButton,
-  notification,
+  Badge,
+  Popover,
+  Row,
+  Col,
+  List,
 } from 'antd';
 import {
   UserOutlined,
@@ -24,7 +28,11 @@ import {
 import { appLocalStorage } from '@/utils/localstorage';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 import { LANGUAGE, useLocale } from '@/constant';
-import { ROUTERS } from '@/constant/router';
+import {
+  NotificationType,
+  ROUTERS,
+  ROUTERS_NOTIFICATION,
+} from '@/constant/router';
 import {
   getListCity,
   getListCountry,
@@ -40,8 +48,9 @@ import {
 import SHOW_ROUTER_HEADER from './constant';
 import { AppContext } from '@/app-context';
 import { getPriorityRole } from '@/hook/useAuthentication';
-import AppWebsocket from '@/fetcher/ws';
-import { API_MESSAGE } from '@/constant/message';
+import { GetTitleNotificationTab } from '@/utils/common';
+import { calculateElapsedTime } from '@/utils/format';
+import COLORS from '@/constant/color';
 
 const { Text } = Typography;
 const { Header, Content, Footer } = Layout;
@@ -131,7 +140,8 @@ const SelectLanguage = ({
     </div>
   );
 };
-const WSS_URL = process.env.WSS_URL;
+const WSS_URL = process.env.WSS_URL_CHECK_USER;
+const WSS_URL_NOTIFICATION = process.env.WSS_URL_NOTIFICATION;
 
 export function AppLayout(props: Props) {
   const router = useRouter();
@@ -141,54 +151,8 @@ export function AppLayout(props: Props) {
   const [languageSelectedName, setLanguageSelectedName] = useState('');
   const [classActiveAvatarPopup, setClassActiveAvatarPopup] = useState('');
   const locale = useLocale();
-  const { userInfo, setUserInfo, setRole, setAppWebsocket } =
+  const { userInfo, setUserInfo, setRole, setNotification, notification } =
     useContext(AppContext);
-
-  const [apiNotification, contextHolder] = notification.useNotification();
-
-  useEffect(() => {
-    let appSocket: AppWebsocket;
-    if (WSS_URL) {
-      appSocket = new AppWebsocket(WSS_URL);
-      if (setAppWebsocket) {
-        setAppWebsocket(appSocket);
-        // try reconnect once
-        appSocket.onError(() => {
-          const appSocket = new AppWebsocket(WSS_URL);
-          setAppWebsocket(appSocket);
-          appSocket.onError(() => {
-            apiNotification.error({ message: API_MESSAGE.ERROR });
-          });
-        });
-      }
-    }
-    // return () => {
-    //   if (appSocket) {
-    //     appSocket.close();
-    //   }
-    // };
-  }, [setAppWebsocket, apiNotification]);
-
-  useQuery({
-    queryKey: [API_MASTER_DATA.GET_COUNTRY],
-    queryFn: () =>
-      getListCountry({
-        currentPage: 1,
-        pageSize: 500,
-      }),
-  });
-  useQuery({
-    queryKey: [API_LOCATION_TYPE.GET_TYPE_LOCATION],
-    queryFn: () => getListTypeLocations(),
-  });
-  useQuery({
-    queryKey: [API_MASTER_DATA.GET_CITY],
-    queryFn: () =>
-      getListCity({
-        currentPage: 1,
-        pageSize: 500,
-      }),
-  });
 
   useQuery({
     queryKey: [API_USER.CHECK_USER],
@@ -213,6 +177,96 @@ export function AppLayout(props: Props) {
   });
 
   useEffect(() => {
+    const token = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
+    const languageName =
+      appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN;
+    const ws = new WebSocket(
+      `${WSS_URL}?languageName=${languageName}&accessToken=${token}`
+    );
+    ws.addEventListener('open', (event) => {
+      console.log('WebSocket is open now.'), event;
+    });
+
+    ws.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      if (!data.status) {
+        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+        router.replace(ROUTERS.LOGIN);
+      } else {
+        const dataRole = getPriorityRole(data?.data?.listRole || ['AGENT']);
+        if (setRole) setRole(dataRole);
+        if (setUserInfo) setUserInfo(data.data);
+      }
+    });
+
+    ws.addEventListener('close', (event) => {
+      console.log('WebSocket is closed now.', event);
+    });
+
+    return () => {
+      ws.close();
+    };
+  }, [setUserInfo]);
+
+  useEffect(() => {
+    const token = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
+    const languageName =
+      appLocalStorage.get(LOCAL_STORAGE_KEYS.LANGUAGE) || LANGUAGE.EN;
+    const ws = new WebSocket(
+      `${WSS_URL_NOTIFICATION}?languageName=${languageName}&accessToken=${token}`
+    );
+    // Lắng nghe sự kiện mở kết nối
+    ws.addEventListener('open', (event) => {
+      console.log('WebSocket notification is open now.'), event;
+    });
+
+    // Lắng nghe sự kiện nhận dữ liệu từ server
+    ws.addEventListener('message', (event) => {
+      const data = JSON.parse(event.data);
+      if (data.status) {
+        if (setNotification) {
+          console.log(1);
+          setNotification(data.data);
+        }
+      }
+    });
+
+    // Lắng nghe sự kiện đóng kết nối
+    ws.addEventListener('close', (event) => {
+      console.log('WebSocket notification is closed now.', event);
+    });
+
+    // Lưu trữ đối tượng WebSocket vào state
+    // setWebSocket(ws);
+
+    // Ngắn chặn kết nối khi component unmount
+    return () => {
+      ws.close();
+    };
+  }, [setNotification]); // Chỉ chạy một lần khi component được mount
+
+  useQuery({
+    queryKey: [API_MASTER_DATA.GET_COUNTRY],
+    queryFn: () =>
+      getListCountry({
+        currentPage: 1,
+        pageSize: 500,
+      }),
+  });
+  useQuery({
+    queryKey: [API_LOCATION_TYPE.GET_TYPE_LOCATION],
+    queryFn: () => getListTypeLocations(),
+  });
+  useQuery({
+    queryKey: [API_MASTER_DATA.GET_CITY],
+    queryFn: () =>
+      getListCity({
+        currentPage: 1,
+        pageSize: 500,
+      }),
+  });
+
+  useEffect(() => {
     setLanguage(locale);
     languageSelected === LANGUAGE.EN
       ? setLanguageSelectedName('English')
@@ -225,9 +279,70 @@ export function AppLayout(props: Props) {
       : setClassActiveAvatarPopup('active');
   }
 
+  const handleChangePageNotification = (id: string, type: string) => {
+    router.push(ROUTERS_NOTIFICATION[type as NotificationType](id));
+  };
+
+  const contentDetail = () => {
+    return (
+      <Row gutter={16}>
+        <Col span={24}>
+          <List
+            itemLayout="horizontal"
+            dataSource={notification?.notificationDTOs || []}
+            style={{ maxHeight: '800px', width: '500px' }}
+            renderItem={(item) => (
+              <List.Item
+                key={item.notificationID}
+                onClick={() =>
+                  handleChangePageNotification(item.objectID, item.typeObject)
+                }
+              >
+                <List.Item.Meta
+                  style={{ cursor: 'pointer' }}
+                  avatar={
+                    <Avatar
+                      style={{
+                        verticalAlign: 'middle',
+                        backgroundColor: item?.colorAvatar,
+                      }}
+                      src={item?.avatar}
+                    >
+                      {item?.defaultAvatar || ''}
+                    </Avatar>
+                  }
+                  title={
+                    <div
+                      style={{
+                        color: item.isRead ? COLORS.SEARCH.FILTER_DEFAULT : '',
+                      }}
+                    >
+                      {item.fullName} - {item.title}
+                    </div>
+                  }
+                  description={
+                    <div>
+                      <div>{item.content}</div>
+                      <div
+                        style={{
+                          color: item.isRead ? '' : COLORS.BLUE,
+                        }}
+                      >
+                        {calculateElapsedTime(item.dateInserted)}
+                      </div>
+                    </div>
+                  }
+                />
+              </List.Item>
+            )}
+          />
+        </Col>
+      </Row>
+    );
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      {contextHolder}
       <Head>
         <link rel="favicon" href="/images/asl-logo.png" />
         <link rel="shortcut icon" href="/images/asl-logo.png" />
@@ -263,7 +378,7 @@ export function AppLayout(props: Props) {
                 setLanguageSelectedName={setLanguageSelectedName}
                 router={router}
               />
-              {/* <Space
+              <Space
                 style={{
                   cursor: 'pointer',
                   margin: '0px 8px 0px 0px',
@@ -273,20 +388,41 @@ export function AppLayout(props: Props) {
                   height: '64px',
                 }}
               >
-                <div className={AuthenLayout.notification}>
-                  <svg viewBox="-10 0 35 20">
-                    <path
-                      className={AuthenLayout.notificationBell}
-                      d="M14 12v1H0v-1l0.73-0.58c0.77-0.77 0.81-3.55 1.19-4.42 0.77-3.77 4.08-5 4.08-5 0-0.55 0.45-1 1-1s1 0.45 1 1c0 0 3.39 1.23 4.16 5 0.38 1.88 0.42 3.66 1.19 4.42l0.66 0.58z"
-                    ></path>
-                    <path
-                      className={AuthenLayout.notificationBellClapper}
-                      d="M7 15.7c1.11 0 2-0.89 2-2H5c0 1.11 0.89 2 2 2z"
-                    ></path>
-                  </svg>
-                  <span className={AuthenLayout.notificationNumber}></span>
+                <div>
+                  <div className={AuthenLayout.notification}>
+                    <Popover content={contentDetail()} placement="bottomLeft">
+                      <Badge
+                        count={GetTitleNotificationTab(
+                          notification?.totalNewNotification || '0'
+                        )}
+                        style={{
+                          marginRight: '20px',
+                          marginTop: '18px',
+                        }}
+                      >
+                        <svg viewBox="-10 0 35 20">
+                          <path
+                            className={
+                              notification?.totalNewNotification === '0'
+                                ? ''
+                                : AuthenLayout.notificationBell
+                            }
+                            d="M14 12v1H0v-1l0.73-0.58c0.77-0.77 0.81-3.55 1.19-4.42 0.77-3.77 4.08-5 4.08-5 0-0.55 0.45-1 1-1s1 0.45 1 1c0 0 3.39 1.23 4.16 5 0.38 1.88 0.42 3.66 1.19 4.42l0.66 0.58z"
+                          ></path>
+                          <path
+                            className={
+                              notification?.totalNewNotification === '0'
+                                ? ''
+                                : AuthenLayout.notificationBellClapper
+                            }
+                            d="M7 15.7c1.11 0 2-0.89 2-2H5c0 1.11 0.89 2 2 2z"
+                          ></path>
+                        </svg>
+                      </Badge>
+                    </Popover>
+                  </div>
                 </div>
-              </Space> */}
+              </Space>
               <div>
                 <div
                   onClick={onClickShowPopupAvatar}

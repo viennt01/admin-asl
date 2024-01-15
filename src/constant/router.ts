@@ -201,6 +201,13 @@ export const ROUTERS = {
   TYPE_SALE_ACTIVITY_MANAGER: (typeSaleActivityId: string) =>
     `/master-data/sale-activity/type-sale-activity/manager-admin/${typeSaleActivityId}`,
 
+  SALE_ACTIVITY: '/master-data/sale-activity/sale-activity',
+  SALE_ACTIVITY_CREATE: '/master-data/sale-activity/sale-activity/create',
+  SALE_ACTIVITY_EDIT: (typeSaleActivityId: string, checkRow = false) =>
+    `/master-data/sale-activity/sale-activity/edit/${typeSaleActivityId}?checkRow=${checkRow}`,
+  SALE_ACTIVITY_MANAGER: (typeSaleActivityId: string) =>
+    `/master-data/sale-activity/sale-activity/manager-admin/${typeSaleActivityId}`,
+
   TYPE_UNIT: '/master-data/unit-catalog/type-unit',
   TYPE_UNIT_CREATE: '/master-data/unit-catalog/type-unit/create',
   TYPE_UNIT_EDIT: (typeUnitId: string, checkRow = false) =>
@@ -223,4 +230,36 @@ export const ROUTERS = {
 
   LCL_DETAIL: (id: string) => `/booking/lcl-detail/${id}`,
   FCL_DETAIL: (id: string) => `/booking/fcl-detail/${id}`,
+};
+export type NotificationType =
+  | 'Sea Quotation'
+  | 'Air Quotation'
+  | 'Trucking Quotation'
+  | 'Customs Quotation'
+  | 'Sea Pricing'
+  | 'Air Pricing'
+  | 'Trucking Pricing'
+  | 'Customs Pricing'
+  | 'Sale Activity';
+export const ROUTERS_NOTIFICATION = {
+  'Sea Quotation': (seaQuotationId: string) =>
+    `/quotation/sea-quotation/edit/${seaQuotationId}?checkRow=true`,
+  'Air Quotation': (airQuotationId: string, checkRow = true) =>
+    `/quotation/air-quotation/edit/${airQuotationId}?checkRow=${checkRow}`,
+  'Customs Quotation': (customsQuotationId: string, checkRow = true) =>
+    `/quotation/customs-quotation/edit/${customsQuotationId}?checkRow=${checkRow}`,
+  'Trucking Quotation': (truckingQuotationId: string, checkRow = true) =>
+    `/quotation/trucking-quotation/edit/${truckingQuotationId}?checkRow=${checkRow}`,
+
+  'Sea Pricing': (seaPricingId: string, checkRow = true) =>
+    `/pricing/pricing-sea/edit/${seaPricingId}?checkRow=${checkRow}`,
+  'Air Pricing': (airPricingId: string, checkRow = true) =>
+    `/pricing/pricing-air/edit/${airPricingId}?checkRow=${checkRow}`,
+  'Customs Pricing': (customsPricingId: string, checkRow = true) =>
+    `/pricing/pricing-customs/edit/${customsPricingId}?checkRow=${checkRow}`,
+  'Trucking Pricing': (truckingPricingId: string, checkRow = true) =>
+    `/pricing/pricing-trucking/edit/${truckingPricingId}?checkRow=${checkRow}`,
+
+  'Sale Activity': (typeSaleActivityId: string, checkRow = true) =>
+    `/master-data/sale-activity/sale-activity/edit/${typeSaleActivityId}?checkRow=${checkRow}`,
 };

@@ -486,10 +486,11 @@ const CardMain = ({
         </Col>
 
         <Col lg={8} span={24}>
-          <Form.Item name="forNewUser">
+          <Form.Item name="forNewUser" label=" ">
             <Checkbox
               checked={componentDisabled}
               onChange={(e) => setComponentDisabled(e.target.checked)}
+              disabled={checkRow && isCheckPermissionEdit}
             >
               Public
             </Checkbox>
@@ -528,6 +529,7 @@ const CardMain = ({
                   };
                 }) || []
               }
+              disabled={checkRow && isCheckPermissionEdit}
             />
           </Form.Item>
         </Col>

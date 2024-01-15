@@ -73,3 +73,31 @@ export function formatCurrencyHasCurrency(input: string): string {
   }
   return `${amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ` ${parts[1]}`;
 }
+
+export function calculateElapsedTime(eventTimestamp: number) {
+  const currentTimestamp = Date.now();
+  const elapsedMilliseconds = currentTimestamp - eventTimestamp;
+
+  // Chuyển đổi thời gian thành giờ, phút, giây, miligiây
+  const seconds = Math.floor(elapsedMilliseconds / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 7) {
+    // Nếu ngày lớn hơn 7, trả về ngày tháng của eventTimestamp
+    return formatDateYYYYMMDD(eventTimestamp);
+  } else if (days > 0 && hours > 24) {
+    // Nếu ngày nhỏ hơn 7 và số giờ lớn hơn 24, trả về số ngày
+    return `${days} day${days > 1 ? 's' : ''} ago`;
+  } else if (hours > 0 && minutes > 60) {
+    // Nếu số giờ nhỏ hơn 24 và số phút lớn hơn 60, trả về số giờ
+    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  } else if (minutes > 0) {
+    // Nếu số phút nhỏ hơn 60, trả về số phút
+    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  } else {
+    // Nếu dưới 1 phút, trả về số giây
+    return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+  }
+}

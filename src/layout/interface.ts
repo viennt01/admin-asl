@@ -35,3 +35,21 @@ export interface City {
 export interface CityType extends IPagination {
   data: City[];
 }
+
+export interface INotification {
+  totalNotification: string;
+  totalNewNotification: string;
+  notificationDTOs: {
+    notificationID: string;
+    title: string;
+    content: string;
+    objectID: string;
+    typeObject: string;
+    isRead: boolean;
+    dateInserted: number;
+    colorAvatar: string;
+    avatar: string;
+    defaultAvatar: string;
+    fullName: string;
+  }[];
+}

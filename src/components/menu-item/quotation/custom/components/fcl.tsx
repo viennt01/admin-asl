@@ -69,6 +69,7 @@ interface EditableCellProps {
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   title,
   editable,
   inputType,
@@ -155,12 +156,12 @@ const EditableCell: React.FC<EditableCellProps> = ({
       <Form.Item
         style={{ margin: 0 }}
         name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
+        // rules={[
+        //   {
+        //     required: true,
+        //     message: `${title} is required.`,
+        //   },
+        // ]}
       >
         {inputNode}
       </Form.Item>
@@ -336,7 +337,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -345,7 +346,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -354,7 +355,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -367,7 +368,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -376,7 +377,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -385,7 +386,7 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return formatNumber(Number(value) || '0');
       },
     },
     {
@@ -394,9 +395,9 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
       align: 'center',
       editable: !isCheckPermissionEdit,
       render: (value) => {
-        return formatNumber(Number(value) || 0) === '0'
+        return formatNumber(Number(value) || '0') === '0'
           ? '-'
-          : formatNumber(Number(value) || 0);
+          : formatNumber(Number(value) || '0');
       },
     },
     {
@@ -431,12 +432,12 @@ const FCL = ({ form, isCheckPermissionEdit, optionUnit }: Props) => {
           ?.idCustomsFCLPricingDetailID || count,
       unitID: optionUnitActive[0]?.value || '',
       internationalCode: optionUnitActive[0]?.label || '',
-      basePriceRedLane: '0',
-      basePriceGreenLane: '0',
-      basePriceYellowLane: '0',
-      priceRedLane: '0',
-      priceGreenLane: '0',
-      priceYellowLane: '0',
+      basePriceRedLane: '1000000',
+      basePriceGreenLane: '1000000',
+      basePriceYellowLane: '1000000',
+      priceRedLane: '1000000',
+      priceGreenLane: '1000000',
+      priceYellowLane: '1000000',
       vatCustomQuotation: '',
     };
     const newDataSource = [newData, ...dataSource];

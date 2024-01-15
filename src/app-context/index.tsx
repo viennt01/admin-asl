@@ -1,5 +1,6 @@
 import AppWebsocket from '@/fetcher/ws';
 import { UserInfo } from '@/layout/fetcher';
+import { INotification } from '@/layout/interface';
 import React, { useEffect, useState } from 'react';
 
 interface AppContext {
@@ -9,6 +10,8 @@ interface AppContext {
   setRole?: (role: string) => void;
   appWebbsocket?: AppWebsocket;
   setAppWebsocket?: (appWebbsocket: AppWebsocket) => void;
+  notification: INotification;
+  setNotification?: (notification: INotification) => void;
 }
 
 export const INITIAL_VALUE_USER_INFO = {
@@ -73,10 +76,29 @@ export const INITIAL_VALUE_USER_INFO = {
   totalTypeOfLoadCapacity: '', //
   totalTypeUnit: '', //
 };
-
+export const INITIAL_VALUE_NOTIFICATION = {
+  totalNotification: '0',
+  totalNewNotification: '0',
+  notificationDTOs: [
+    {
+      notificationID: '',
+      title: '',
+      content: '',
+      objectID: '',
+      typeObject: '',
+      isRead: false,
+      dateInserted: 1,
+      colorAvatar: '',
+      avatar: '',
+      defaultAvatar: '',
+      fullName: '',
+    },
+  ],
+};
 const INITIAL_VALUE_CONTEXT = {
   userInfo: INITIAL_VALUE_USER_INFO,
   role: 'AGENT',
+  notification: INITIAL_VALUE_NOTIFICATION,
 };
 
 export const AppContext = React.createContext<AppContext>(
@@ -101,12 +123,17 @@ export default function AppContextProvider({
   const setAppWebsocket = (appWebbsocket: AppWebsocket) => {
     setValueContext((prev) => ({ ...prev, appWebbsocket }));
   };
+
+  const setNotification = (notification: INotification) => {
+    setValueContext((prev) => ({ ...prev, notification }));
+  };
   useEffect(() => {
     setValueContext((prev) => ({
       ...prev,
       setUserInfo,
       setRole,
       setAppWebsocket,
+      setNotification,
     }));
   }, []);
   return (

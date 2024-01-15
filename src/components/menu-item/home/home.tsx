@@ -1,6 +1,6 @@
 import { ProCard, Statistic, StatisticCard } from '@ant-design/pro-components';
 import RcResizeObserver from 'rc-resize-observer';
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 import ChartPricing from './chart-pricing';
 import RankMember from './rank-member';
 import { useQuery } from '@tanstack/react-query';
@@ -15,8 +15,6 @@ import { formatDateMMDD } from '@/utils/format';
 import style from './home.module.scss';
 import { Badge, Collapse, Typography } from 'antd';
 import RankCustomer from './rank-customer';
-import { AppContext } from '@/app-context';
-import { WSS_EVENTS } from '@/fetcher/ws';
 
 const initalValue = {
   totalPricing: 0,
@@ -102,18 +100,6 @@ export default function DashboardPage() {
     []
   );
   const today = new Date();
-  const { appWebbsocket } = useContext(AppContext);
-
-  useEffect(() => {
-    if (appWebbsocket) {
-      // Connection opened and init bot
-      appWebbsocket.onopen(() => {
-        // const token = appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN);
-        // appWebbsocket.sendMesssage(WSS_EVENTS.VERIFY, token);
-      });
-      appWebbsocket.sendMesssage(WSS_EVENTS.NOTIFICATION);
-    }
-  }, [appWebbsocket]);
 
   useQuery({
     queryKey: [API_CHART.GET_INFORMATION_DRAW_CHART],
@@ -250,6 +236,10 @@ export default function DashboardPage() {
                     ),
                   }}
                 />
+                {/* <div>
+                  <div>Message from server: {message}</div>
+                  <button onClick={sendMessage}>Send Message</button>
+                </div> */}
                 {/* <StatisticCard
                   statistic={{
                     title: 'Total Booking',
