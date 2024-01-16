@@ -201,12 +201,12 @@ export const ROUTERS = {
   TYPE_SALE_ACTIVITY_MANAGER: (typeSaleActivityId: string) =>
     `/master-data/sale-activity/type-sale-activity/manager-admin/${typeSaleActivityId}`,
 
-  SALE_ACTIVITY: '/master-data/sale-activity/sale-activity',
-  SALE_ACTIVITY_CREATE: '/master-data/sale-activity/sale-activity/create',
+  SALE_ACTIVITY: '/sale-activity',
+  SALE_ACTIVITY_CREATE: 'sale-activity/create',
   SALE_ACTIVITY_EDIT: (typeSaleActivityId: string, checkRow = false) =>
-    `/master-data/sale-activity/sale-activity/edit/${typeSaleActivityId}?checkRow=${checkRow}`,
+    `/sale-activity/edit/${typeSaleActivityId}?checkRow=${checkRow}`,
   SALE_ACTIVITY_MANAGER: (typeSaleActivityId: string) =>
-    `/master-data/sale-activity/sale-activity/manager-admin/${typeSaleActivityId}`,
+    `/sale-activity/manager-admin/${typeSaleActivityId}`,
 
   TYPE_UNIT: '/master-data/unit-catalog/type-unit',
   TYPE_UNIT_CREATE: '/master-data/unit-catalog/type-unit/create',
@@ -261,5 +261,5 @@ export const ROUTERS_NOTIFICATION = {
     `/pricing/pricing-trucking/edit/${truckingPricingId}?checkRow=${checkRow}`,
 
   'Sale Activity': (typeSaleActivityId: string, checkRow = true) =>
-    `/master-data/sale-activity/sale-activity/edit/${typeSaleActivityId}?checkRow=${checkRow}`,
+    `/sale-activity/edit/${typeSaleActivityId}?checkRow=${checkRow}`,
 };

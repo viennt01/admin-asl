@@ -1,0 +1,61 @@
+{
+    "title": "List sale activity",
+    "no": "No",
+    "name": "Name",
+    "description": "Description",
+    "status": "Status",
+    "date_created": "Date Created",
+    "date_update": "Date Update",
+    "updater": "Updater",
+    "creator": "Creator",
+    "information_add_sale_activity": "New sale activity",
+    "information_edit_sale_activity": "Edit sale activity",
+    "name_type_sale_activity_form": {
+        "title": "Sale activity type",
+        "placeholder": "Please select sale activity type",
+        "error_required": "Please select sale activity type"
+    },
+    "aslPersonalContactName_form": {
+        "title": "ASL Personal",
+        "placeholder": "Please select ASL Personal",
+        "error_required": "Please select ASL Personal"
+    },
+    "company_form": {
+        "title": "Company",
+        "placeholder": "Please select company",
+        "error_required": "Please select company"
+    },
+    "partner_form": {
+        "title": "Partner",
+        "placeholder": "Please select partner",
+        "error_required": "Please select partner"
+    },
+    "timeActivitySaleActivity_form": {
+        "title": "Time",
+        "placeholder": "Please select time",
+        "error_required": "Please select time"
+    },
+    "timeNextAppointmentSaleActivity_form": {
+        "title": "Next time",
+        "placeholder": "Please select next time",
+        "error_required": "Please select next time"
+    },
+    "user_form": {
+        "title": "User",
+        "placeholder": "Please select user",
+        "error_required": "Please select user"
+    },
+    "description_type_sale_activity_form": {
+        "title": "Description",
+        "titleEn": "Description (EN)",
+        "titleVn": "Description (VN)",
+        "placeholder": "Please enter description"
+    },
+    "name_placeholder": "Please input name!",
+    "description_placeholder": "Please input description!",
+    "status_placeholder": "Please choose status!",
+    "date_created_placeholder": "Please input date created!",
+    "date_update_placeholder": "Please input date update!",
+    "updater_placeholder": "Please input updater!",
+    "creator_placeholder": "Please input creator!"
+}

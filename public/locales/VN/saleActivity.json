@@ -1,0 +1,61 @@
+{
+    "title": "Danh sách hoạt động của sale",
+    "no": "STT",
+    "name": "Tên",
+    "description": "Mô tả",
+    "status": "Trạng thái",
+    "date_created": "Ngày tạo",
+    "date_update": "Ngày cập nhật",
+    "updater": "Người cập nhật",
+    "creator": "Người tạo",
+    "information_add_sale_activity": "Thêm mới loại hoạt động của sale",
+    "information_edit_sale_activity": "Chỉnh sửa loại hoạt động của sale",
+    "name_type_sale_activity_form": {
+        "title": "Tên",
+        "placeholder": "Chọn loại hoạt động của sale",
+        "error_required": "Vui lòng chọn loại hoạt động của sale"
+    },
+    "aslPersonalContactName_form": {
+        "title": "ASL Personal",
+        "placeholder": "Vui lòng chọn ASL Personal",
+        "error_required": "Vui lòng chọn ASL Personal"
+    },
+    "company_form": {
+        "title": "Công ty",
+        "placeholder": "Vui lòng chọn công ty",
+        "error_required": "Vui lòng chọn công ty"
+    },
+    "partner_form": {
+        "title": "Partner",
+        "placeholder": "Vui lòng chọn partner",
+        "error_required": "Vui lòng chọn partner"
+    },
+    "timeActivitySaleActivity_form": {
+        "title": "Thời gian",
+        "placeholder": "Vui lòng chọn thời gian",
+        "error_required": "Vui lòng chọn thời gian"
+    },
+    "timeNextAppointmentSaleActivity_form": {
+        "title": "Next time",
+        "placeholder": "Vui lòng chọn thời gian",
+        "error_required": "Vui lòng chọn thời gian"
+    },
+    "user_form": {
+        "title": "User",
+        "placeholder": "Vui lòng chọn user",
+        "error_required": "Vui lòng chọn user"
+    },
+    "description_type_sale_activity_form": {
+        "title": "Mô tả",
+        "titleEn": "Mô tả (EN)",
+        "titleVn": "Mô tả (VN)",
+        "placeholder": "Vui lòng nhập mô tả"
+    },
+    "name_placeholder": "Vui lòng nhập tên loại của hoạt động của sale!",
+    "description_placeholder": "Vui lòng nhập mô tả!",
+    "status_placeholder": "Vui lòng chọn trạng thái!",
+    "date_created_placeholder": "Vui lòng chọn ngày tạo!",
+    "date_update_placeholder": "Vui lòng chọn ngày cập nhật!",
+    "updater_placeholder": "Vui lòng nhập người cập nhật!",
+    "creator_placeholder": "Vui lòng nhập người tạo!"
+}

@@ -112,6 +112,7 @@ const AppSider = ({ collapsed }: Props) => {
   const refDeclarationCatalog = useRef(null);
   const refTypeDeclaration = useRef(null);
   const refTypeSaleActivity = useRef(null);
+  const refSaleActivity = useRef(null);
   const refUser = useRef(null);
   const refStaff = useRef(null);
   // const refPermission = useRef(null);
@@ -144,6 +145,11 @@ const AppSider = ({ collapsed }: Props) => {
       description:
         'Menu này bao gồm màn hình khách hàng và màn hình nhà cung cấp.',
       target: () => refPartner.current,
+    },
+    {
+      title: 'Sale activity',
+      description: 'Menu này bao gồm các hoạt động của sale.',
+      target: () => refSaleActivity.current,
     },
     {
       title: 'Danh mục',
@@ -944,6 +950,21 @@ const AppSider = ({ collapsed }: Props) => {
             //   <ApartmentOutlined ref={refPermission} />
             // ),
           ]
+        )
+      : null,
+
+    displayRouter(ROUTERS.SALE_ACTIVITY)
+      ? getItem(
+          `${translateCommon('sale_activity')}`,
+          ROUTERS.SALE_ACTIVITY,
+          <Badge
+            // dot={Number(userInfo?.totalSaleActi) > 0}
+            style={{
+              marginTop: '4px',
+            }}
+          >
+            <TeamOutlined ref={refSaleActivity} />
+          </Badge>
         )
       : null,
   ];

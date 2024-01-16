@@ -550,42 +550,32 @@ const SHOW_ROUTER_HEADER = () => {
       { title: `${translateCommon('request_for_approval')}` },
     ],
 
-    '/master-data/sale-activity/type-sale-activity': [
-      { title: `${translateCommon('object_list')}` },
-      { title: `${translateCommon('sale_activity_catalog')}` },
-      { title: `${translateCommon('type_sale_activity')}` },
-    ],
-    '/master-data/sale-activity/type-sale-activity/create': [
-      { title: `${translateCommon('object_list')}` },
-      { title: `${translateCommon('sale_activity_catalog')}` },
+    '/sale-activity': [{ title: `${translateCommon('sale_activity')}` }],
+    '/sale-activity/create': [
       {
         title: (
-          <Link href={ROUTERS.TYPE_SALE_ACTIVITY}>
-            {translateCommon('type_sale_activity')}
+          <Link href={ROUTERS.SALE_ACTIVITY}>
+            {translateCommon('sale_activity')}
           </Link>
         ),
       },
       { title: `${translateCommon('create')}` },
     ],
-    '/master-data/sale-activity/type-sale-activity/edit/[id]': [
-      { title: `${translateCommon('object_list')}` },
-      { title: `${translateCommon('sale_activity_catalog')}` },
+    '/sale-activity/edit/[id]': [
       {
         title: (
-          <Link href={ROUTERS.TYPE_SALE_ACTIVITY}>
-            {translateCommon('type_sale_activity')}
+          <Link href={ROUTERS.SALE_ACTIVITY}>
+            {translateCommon('sale_activity')}
           </Link>
         ),
       },
       { title: `${translateCommon('detail')}` },
     ],
-    '/master-data/sale-activity/type-sale-activity/manager-admin/[id]': [
-      { title: `${translateCommon('object_list')}` },
-      { title: `${translateCommon('sale_activity_catalog')}` },
+    '/sale-activity/manager-admin/[id]': [
       {
         title: (
-          <Link href={ROUTERS.TYPE_SALE_ACTIVITY}>
-            {translateCommon('type_sale_activity')}
+          <Link href={ROUTERS.SALE_ACTIVITY}>
+            {translateCommon('sale_activity')}
           </Link>
         ),
       },

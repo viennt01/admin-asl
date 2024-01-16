@@ -446,3 +446,16 @@ export const API_CHART = {
 export const API_NOTIFICATION = {
   CONFIRM_READ: '/Confirm-notification-has-seen',
 };
+export const API_SALE_ACTIVITY = {
+  GET_SEARCH: '/search-sale-activity',
+  GET_DETAIL: '/get-sale-activity-by-id',
+  CREATE: '/add-sale-activity',
+  EDIT: '/update-sale-activity',
+  DELETE: '/delete-sale-activity',
+  UPDATE_STATUS: '/update-status-sale-activity',
+  GET_REQUEST: '/get-sale-activity-with-status-request',
+  DOWNLOAD_EXAMPLE_FILE: '/download-sale-activity-excel',
+  IMPORT: '/import-sale-activity-with-excel',
+  EXPORT: '/export-sale-activity-with-excel',
+  GET_ALL: '/get-all-sale-activity',
+};
