@@ -1,7 +1,7 @@
 {
     "title": "List of Partner",
     "code": "No",
-    "information_add_partner": "Create a new partner",
+    "information_add_partner": "New a partner",
     "information_edit_partner": "Edit a partner",
     "firstName_form": {
         "title": "First Name",

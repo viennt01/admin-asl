@@ -1,18 +1,18 @@
 {
-    "title": "List Fee",
+    "title": "List Surcharges",
     "fee_no": "No",
     "code": "Code",
     "name": "Name",
     "vat": "VAT",
     "status":"Status",
 
-    "information_add_fee": "Add new fee",
-    "information_edit_fee": "Edit fee",
+    "information_add_fee": "Add new Surcharges",
+    "information_edit_fee": "Edit surcharges",
 
     "fee_code_form": {
-        "title": "Fee No",
-        "placeholder": "Enter fee no",
-        "error_required": "Please enter fee no"
+        "title": "Surcharges No",
+        "placeholder": "Enter surcharges no",
+        "error_required": "Please enter surcharges no"
     },
     "status_form": {
         "title": "Status",
@@ -27,13 +27,13 @@
     "fee_name_form": {
         "titleEN": "Name(EN)",
         "titleVN": "Name(VN)",
-        "placeholder": "Enter fee name",
-        "error_required": "Please enter fee name"
+        "placeholder": "Enter surcharges name",
+        "error_required": "Please enter surcharges name"
     },
     "type_fee_form": {
-        "title": "Type fee",
-        "placeholder": "Enter type fee",
-        "error_required": "Please enter type fee"
+        "title": "Type surcharges",
+        "placeholder": "Enter type surcharges",
+        "error_required": "Please enter type surcharges"
     },
     "currency_form": {
         "title": "Currency",

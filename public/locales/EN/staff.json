@@ -1,7 +1,7 @@
 {
     "title": "List of Staff",
     "code": "No",
-    "information_add_staff": "Create a new staff",
+    "information_add_staff": "New a staff",
     "information_edit_staff": "Edit a staff",
     "employeeCode_form": {
         "title": "Employee Code",

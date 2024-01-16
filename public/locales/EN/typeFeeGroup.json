@@ -1,5 +1,5 @@
 {
-    "title": "List type of Fee Group",
+    "title": "List type of Group of Surcharges",
     "no" : "No",
     "type_fee_group_code": "Code",
     "type_fee_group_name": "Name",
@@ -9,19 +9,19 @@
     "date_inserted": "Date updated",
     "inserter": "Update by user",
 
-    "information_add_type_fee_group": "Add New type of Fee Group",
-    "information_edit_type_fee_group": "Edit type of Fee Group",
+    "information_add_type_fee_group": "Add New type of Group of Surcharge",
+    "information_edit_type_fee_group": "Edit type of Group of Surcharge",
 
     "type_fee_group_code_form": {
         "title": "Code",
-        "placeholder": "Enter type of Fee Group code",
-        "error_required": "Please enter type of Fee Group Code"
+        "placeholder": "Enter type of Group of Surcharge code",
+        "error_required": "Please enter type of Group of Surcharge Code"
     },
     "type_fee_group_name_form": {
         "title": "Name",
-        "titleEn": "Type of Fee Group name (EN)",
-        "titleVn": "Type of Fee Group name (VN)",
-        "placeholder": "Enter type of Fee Group name",
-        "error_required": "Please enter type of Fee Group name"
+        "titleEn": "Type of Group of Surcharges name (EN)",
+        "titleVn": "Type of Group of Surcharges name (VN)",
+        "placeholder": "Enter type of Group of Surcharge name",
+        "error_required": "Please enter type of Group of Surcharge name"
     }
 }

@@ -3,7 +3,7 @@
     "no" : "No",
     "fee_group_code": "Code",
     "fee_group_name": "Name",
-    "type_of_fee_group": "Type of Fee Group",
+    "type_of_fee_group": "Type of Other Charges Group",
     "status": "Status",
     "date_created": "Date created",
     "creator": "Creator",
@@ -12,13 +12,13 @@
     "date_inserted": "Date updated",
     "inserter": "Update by user",
 
-    "information_add_fee_group": "Add New Fee Group",
-    "information_edit_fee_group": "Edit Fee Group",
+    "information_add_fee_group": "New Other Charges Group",
+    "information_edit_fee_group": "Edit Other Charges Group",
 
     "fee_group_code_form": {
         "title": "Code",
-        "placeholder": "Enter Fee Group code",
-        "error_required": "Please enter Fee Group Code"
+        "placeholder": "Enter Other Charges Group code",
+        "error_required": "Please enter Other Charges Group Code"
     },
     "type_fee_group_code_form": {
         "title": "Type",
@@ -27,14 +27,14 @@
     },
     "fee_group_name_form": {
         "title": "Name",
-        "titleEn": "Fee Group name (EN)",
-        "titleVn": "Fee Group name (VN)",
-        "placeholder": "Enter Fee Group name",
-        "error_required": "Please enter Fee Group name"
+        "titleEn": "Other Charges Group name (EN)",
+        "titleVn": "Other Charges Group name (VN)",
+        "placeholder": "Enter Other Charges Group name",
+        "error_required": "Please enter Other Charges Group name"
     },
     "type_of_fee_group_form": {
-        "title": "Type of Fee Group",
-        "placeholder": "Enter type of Fee Group",
-        "error_required": "Please enter type of Fee Group"
+        "title": "Type of Other Charges Group",
+        "placeholder": "Enter type of Other Charges Group",
+        "error_required": "Please enter type of Other Charges Group"
     }
 }

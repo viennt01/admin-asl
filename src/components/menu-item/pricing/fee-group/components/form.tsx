@@ -547,7 +547,7 @@ const FeeGroupForm = ({
         </Card>
 
         <CollapseCard
-          title="List Fee"
+          title="List Surcharge"
           style={{ marginBottom: '24px' }}
           defaultActive={true}
         >

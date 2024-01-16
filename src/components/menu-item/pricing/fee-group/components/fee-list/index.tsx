@@ -179,7 +179,7 @@ const FeeList = ({
     dataIndex: string;
   })[] = [
     {
-      title: 'Fee',
+      title: 'Surcharge',
       dataIndex: 'feeID',
       width: '30%',
       editable: !isCheckPermissionEdit,

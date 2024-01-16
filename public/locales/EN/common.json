@@ -21,11 +21,11 @@
     "load_capacity_catalog": "Load Capacity Catalog",
     "load_capacity": "Load Capacity",
     "type_load_capacity": "Type of Load Capacity",
-    "fee_catalog": "Fee Catalog",
-    "fee": "Fee",
-    "type_fee": "Type Fee",
+    "fee_catalog": "Surcharges Catalog",
+    "fee": "Surcharges",
+    "type_fee": "Types of surcharges",
     "fee_group": "Other Charges Group",
-    "type_fee_group": "Type of Fee Group",
+    "type_fee_group": "Group of surcharges",
     "commodity": "Commodity",
     "type_of_container": "Type of Container",
     "unit_catalog": "Unit Catalog",
@@ -67,19 +67,16 @@
     "date_expiration": "Expire date",
     "search": "Search",
     "reset": "Reset",
-
     "modal_delete": {
         "title": "Are you sure you want to delete?",
         "button_ok": "Yes",
         "button_cancel": "No"
     },
-
     "modal_close": {
         "title": "Are you sure you want to exit this screen?",
         "button_ok": "Yes",
         "button_cancel": "No"
     },
-
     "button_bottom_form": {
         "close": "Close",
         "save": "Save",

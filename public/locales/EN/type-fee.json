@@ -1,23 +1,23 @@
 {
-    "title": "List Type Fee",
+    "title": "List Type Surcharges",
     "type_fee_no": "No",
     "code": "Code",
     "name": "Name",
     "status":"Status",
 
-    "information_add_type_fee": "Add new type fee",
-    "information_edit_type_fee": "Edit type fee",
+    "information_add_type_fee": "Add new type surcharge",
+    "information_edit_type_fee": "Edit type surcharge",
 
     "type_fee_code_form": {
         "title": "Fee No",
-        "placeholder": "Enter type fee no",
-        "error_required": "Please enter type fee no"
+        "placeholder": "Enter type surcharge no",
+        "error_required": "Please enter type surcharge no"
     },
 
     "type_fee_name_form": {
         "title_EN": "Name(EN)",
         "title_VN": "Name(VN)",
-        "placeholder": "Enter fee name",
-        "error_required": "Please enter fee name"
+        "placeholder": "Enter surcharge name",
+        "error_required": "Please enter surcharge name"
     }
 }

@@ -9,7 +9,7 @@
     "company":"Management Company",
     "status":"Status",
     
-    "information_add_port": "Add New Location",
+    "information_add_port": "New Location",
     "information_edit_port": "Edit Location",
 
     "location_code_form": {
