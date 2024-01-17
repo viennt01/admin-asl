@@ -29,7 +29,8 @@ import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import { getDeclarationSearch } from '../../master-data/sale-activity/type-sale-activity/fetcher';
 import dayjs from 'dayjs';
-import { getAllPartner } from '../../pricing/sea/fetcher';
+import { getAllPartner, getUserPartnerId } from '../../pricing/sea/fetcher';
+import { PartnerData } from '../../pricing/sea/interface';
 
 const initialValue = {
   address: '',
@@ -71,6 +72,8 @@ const SaleActivityForm = ({
   const [typeSaleActivity, setTypeSaleActivity] = useState<
     { label: string; value: string }[]
   >([]);
+  const [dataPartner, setDataPartner] = useState<PartnerData[]>([]);
+  const idPartners = Form.useWatch('partnerID', form);
 
   const getPartner = useQuery({
     queryKey: [API_PARTNER.GET_ALL_PARTNER],
@@ -84,6 +87,20 @@ const SaleActivityForm = ({
     onError: () => {
       router.back();
       errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  useQuery({
+    queryKey: [API_PARTNER.GET_ALL_PARTNER_BY_IDS, idPartners],
+    queryFn: () => getUserPartnerId({ ids: [idPartners] }),
+    enabled: idPartners !== undefined,
+    onSuccess(data) {
+      setDataPartner([]);
+      if (data.status) {
+        if (data.data) {
+          setDataPartner(data.data);
+        }
+      }
     },
   });
 
@@ -477,7 +494,7 @@ const SaleActivityForm = ({
                 />
               </Form.Item>
             </Col>
-            <Col lg={12} span={24}>
+            <Col span={idPartners ? 24 : 0}>
               <Form.Item
                 label={translatePartner('user_form.title')}
                 name="listUserID"
@@ -504,10 +521,10 @@ const SaleActivityForm = ({
                       .localeCompare((optionB?.label ?? '').toLowerCase())
                   }
                   options={
-                    getPartner.data?.data?.map((item) => {
+                    dataPartner?.[0]?.userBaseDTOs?.map((item) => {
                       return {
-                        value: item.partnerID,
-                        label: item.name,
+                        value: item.userID,
+                        label: item.fullName,
                       };
                     }) || []
                   }
