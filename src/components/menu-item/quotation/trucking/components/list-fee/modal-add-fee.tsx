@@ -198,7 +198,6 @@ const AddFeeModal: React.FC<ImportModalProps> = ({
       },
     },
     {
-      title: 'Type fee',
       dataIndex: 'typeFeeName',
       key: 'typeFeeName',
       fixed: 'left',

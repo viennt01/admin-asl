@@ -176,7 +176,6 @@ const TableFeeGroup: React.FC<ImportModalProps> = ({ dataTable }) => {
       },
     },
     {
-      title: 'Type fee',
       dataIndex: 'typeFeeName',
       key: 'typeFeeName',
       fixed: 'left',
