@@ -230,6 +230,9 @@ export const ROUTERS = {
 
   LCL_DETAIL: (id: string) => `/booking/lcl-detail/${id}`,
   FCL_DETAIL: (id: string) => `/booking/fcl-detail/${id}`,
+  LTL_DETAIL: (id: string) => `/booking/ltl-detail/${id}`,
+  FTL_DETAIL: (id: string) => `/booking/ftl-detail/${id}`,
+  AIR_DETAIL: (id: string) => `/booking/air-detail/${id}`,
 };
 export type NotificationType =
   | 'Sea Quotation'

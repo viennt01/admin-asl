@@ -217,6 +217,24 @@ const SHOW_ROUTER_HEADER = () => {
       },
       { title: `${translateCommon('detail')}` },
     ],
+    '/booking/ftl-detail/[id]': [
+      {
+        title: <Link href={ROUTERS.BOOKING}>{translateCommon('booking')}</Link>,
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/booking/ltl-detail/[id]': [
+      {
+        title: <Link href={ROUTERS.BOOKING}>{translateCommon('booking')}</Link>,
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
+    '/booking/air-detail/[id]': [
+      {
+        title: <Link href={ROUTERS.BOOKING}>{translateCommon('booking')}</Link>,
+      },
+      { title: `${translateCommon('detail')}` },
+    ],
 
     '/pricing/fee-group': [
       { title: `${translateCommon('pricing')}` },

@@ -7,6 +7,14 @@ export enum TYPE_TABS {
   GET_HISTORY_BOOKING_BY_ASL_CANCELLED = 'GET_HISTORY_BOOKING_BY_ASL_CANCELLED',
 }
 
+export enum TYPE_SERVICE {
+  'FCL' = 'FCL',
+  'LCL' = 'LCL',
+  'FTL' = 'FTL',
+  'LTL' = 'LTL',
+  'AIR' = 'True',
+}
+
 export interface IQueryInputParamType {
   bookingNo: string;
   startDate?: number;

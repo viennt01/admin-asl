@@ -10,6 +10,7 @@ import { formatDate } from '@/utils/format';
 import {
   IDataHistoryTable,
   IRequestStatusHistoryBooking,
+  TYPE_SERVICE,
   TYPE_TABS,
 } from '../interface';
 import {
@@ -138,6 +139,31 @@ export default function PendingTable() {
     setQuerySelectParams(value);
   };
 
+  const handleChangePage = (page: string, data: string) => {
+    console.log(page);
+
+    switch (page) {
+      case TYPE_SERVICE.FCL:
+        router.push(ROUTERS.FCL_DETAIL(data as string));
+        break;
+      case TYPE_SERVICE.LCL:
+        router.push(ROUTERS.LCL_DETAIL(data as string));
+        break;
+      case TYPE_SERVICE.LTL:
+        router.push(ROUTERS.LTL_DETAIL(data));
+        break;
+      case TYPE_SERVICE.FTL:
+        router.push(ROUTERS.FTL_DETAIL(data));
+        break;
+      case TYPE_SERVICE.AIR:
+        router.push(ROUTERS.AIR_DETAIL(data));
+        break;
+      default:
+        router.push(ROUTERS.BOOKING);
+        break;
+    }
+  };
+
   // Handle data show table
   const columns: ProColumns<IDataHistoryTable>[] = [
     {
@@ -160,9 +186,7 @@ export default function PendingTable() {
         <div style={{ display: 'flex' }}>
           <Button
             onClick={() =>
-              recode.typeOfSeaService === 'FCL'
-                ? router.push(ROUTERS.FCL_DETAIL(value as string))
-                : router.push(ROUTERS.LCL_DETAIL(value as string))
+              handleChangePage(recode.typeOfSeaService, recode.key)
             }
             icon={<EyeOutlined />}
             style={{ marginRight: '10px' }}

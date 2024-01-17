@@ -437,6 +437,8 @@ export const API_BOOKING = {
   GET_HISTORY_BOOKING_BY_ASL_Ca: '/get-booking-by-asl',
   UPDATE_STATUS_BOOKING: '/update-status-booking',
   GET_SEA_BOOKING_BY_ID: '/get-sea-booking-by-id',
+  GET_TRUCK_BOOKING_BY_ID: '/get-truck-booking-by-id',
+  GET_AIR_BOOKING_BY_ID: '/get-air-booking-by-id',
   SEND_FILE_IN_EMAIL_BOOKING_BY_USER: '/send-file-in-email-booking',
 };
 export const API_CHART = {
