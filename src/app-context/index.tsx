@@ -1,4 +1,3 @@
-import AppWebsocket from '@/fetcher/ws';
 import { UserInfo } from '@/layout/fetcher';
 import { INotification } from '@/layout/interface';
 import React, { useEffect, useState } from 'react';
@@ -8,8 +7,6 @@ interface AppContext {
   setUserInfo?: (userInfo: UserInfo) => void;
   role: string;
   setRole?: (role: string) => void;
-  appWebbsocket?: AppWebsocket;
-  setAppWebsocket?: (appWebbsocket: AppWebsocket) => void;
   notification: INotification;
   setNotification?: (notification: INotification) => void;
 }
@@ -120,10 +117,6 @@ export default function AppContextProvider({
     setValueContext((prev) => ({ ...prev, role }));
   };
 
-  const setAppWebsocket = (appWebbsocket: AppWebsocket) => {
-    setValueContext((prev) => ({ ...prev, appWebbsocket }));
-  };
-
   const setNotification = (notification: INotification) => {
     setValueContext((prev) => ({ ...prev, notification }));
   };
@@ -132,7 +125,6 @@ export default function AppContextProvider({
       ...prev,
       setUserInfo,
       setRole,
-      setAppWebsocket,
       setNotification,
     }));
   }, []);

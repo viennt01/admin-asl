@@ -350,6 +350,7 @@ export default function PendingTable() {
   };
 
   const handleOnDoubleClick = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     e: MouseEvent<any, globalThis.MouseEvent>,
     record: IDataHistoryTable
   ) => {

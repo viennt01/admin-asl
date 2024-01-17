@@ -125,6 +125,7 @@ export const ColumnSearchTableProps = <T,>({
         />
       );
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onFilter: (value: any, record: any) =>
       record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
     onFilterDropdownOpenChange: (visible: boolean) => {
@@ -132,6 +133,7 @@ export const ColumnSearchTableProps = <T,>({
         setTimeout(() => searchInput.current?.select(), 100);
       }
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: (text: any) => (
       <Highlighter
         highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}

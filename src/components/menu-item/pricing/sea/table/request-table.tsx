@@ -550,6 +550,7 @@ export default function RequestDataTable() {
 
   const handleSelectionChange = (selectedRowKey: Key[]) => {
     const keyData = dataTable.map((item) => item.key);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const uniqueDataAndSelectedRowKeys = selectedRowKeys.filter((item: any) =>
       keyData.includes(item)
     );
@@ -588,6 +589,7 @@ export default function RequestDataTable() {
   };
 
   const handleOnDoubleClick = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     e: MouseEvent<any, globalThis.MouseEvent>,
     record: SeaPricingTable
   ) => {

@@ -575,6 +575,7 @@ export default function RequestTable() {
 
   const handleSelectionChange = (selectedRowKey: Key[]) => {
     const keyData = dataTable.map((item) => item.key);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const uniqueDataAndSelectedRowKeys = selectedRowKeys.filter((item: any) =>
       keyData.includes(item)
     );
@@ -613,6 +614,7 @@ export default function RequestTable() {
   };
 
   const handleOnDoubleClick = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     e: MouseEvent<any, globalThis.MouseEvent>,
     record: ITruckingPricingTable
   ) => {

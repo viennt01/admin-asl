@@ -102,8 +102,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         item.key !== 'Other'
     );
     const profitRateOfLoadCapacityType =
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       profitRateOfLoadCapacityTypeFilter.reduce((result: any, item) => {
-        result[item.key] = item.profitRate;
+        const key = String(item.key); // Chuyển đổi key thành string
+        result[key] = item.profitRate;
         return result;
       }, {});
 
@@ -114,8 +116,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         item.key !== 'Other'
     );
     const profitRateOfUnitforFee = profitRateOfUnitforFeeFilter.reduce(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (result: any, item) => {
-        result[item.key] = item.profitRate;
+        const key = String(item.key); // Chuyển đổi key thành string
+        result[key] = item.profitRate;
         return result;
       },
       {}

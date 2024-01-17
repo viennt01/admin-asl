@@ -590,6 +590,7 @@ const CardMain = ({
               min={0}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -615,6 +616,7 @@ const CardMain = ({
               min={0}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -641,6 +643,7 @@ const CardMain = ({
               min={0}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -666,6 +669,7 @@ const CardMain = ({
               min={0}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>

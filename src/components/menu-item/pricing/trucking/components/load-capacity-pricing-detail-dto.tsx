@@ -19,6 +19,7 @@ import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import useI18n from '@/i18n/useI18N';
 import { formatNumber } from '@/utils/format';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {

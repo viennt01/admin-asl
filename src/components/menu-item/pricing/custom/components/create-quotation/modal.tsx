@@ -100,8 +100,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         item.key !== 'Other'
     );
     const profitRateOfUnitforFee = profitRateOfUnitforFeeFilter.reduce(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (result: any, item) => {
-        result[item.key] = item.profitRate;
+        const key = String(item.key);
+        result[key] = item.profitRate;
         return result;
       },
       {}
@@ -275,6 +277,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                           'customGreenPrice_form.placeholder'
                         )}
                         formatter={(value) => formatNumber(Number(value) || 0)}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         parser={(value: any) =>
                           value.replace().replace(/,/g, '')
                         }
@@ -302,6 +305,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                           'customYellowPrice_form.placeholder'
                         )}
                         formatter={(value) => formatNumber(Number(value) || 0)}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         parser={(value: any) =>
                           value.replace().replace(/,/g, '')
                         }
@@ -329,6 +333,7 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
                           'customRedPrice_form.placeholder'
                         )}
                         formatter={(value) => formatNumber(Number(value) || 0)}
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         parser={(value: any) =>
                           value.replace().replace(/,/g, '')
                         }

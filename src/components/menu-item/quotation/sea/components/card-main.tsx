@@ -484,6 +484,7 @@ const CardMain = ({
               disabled={checkRow && isCheckPermissionEdit}
               placeholder={translateQuotationSea('STO_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
               style={{ width: '100%' }}
             />
@@ -499,6 +500,7 @@ const CardMain = ({
               placeholder={translateQuotationSea('DEM_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -513,6 +515,7 @@ const CardMain = ({
               placeholder={translateQuotationSea('DET_form.placeholder')}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -530,6 +533,7 @@ const CardMain = ({
               min={0}
               disabled={checkRow && isCheckPermissionEdit}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
@@ -542,6 +546,7 @@ const CardMain = ({
             <InputNumber
               placeholder={translateQuotationSea('LCL_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}
@@ -556,6 +561,7 @@ const CardMain = ({
             <InputNumber
               placeholder={translateQuotationSea('LCLMin_form.placeholder')}
               formatter={(value) => formatNumber(Number(value) || '0')}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               parser={(value: any) => value.replace().replace(/,/g, '')}
               style={{ width: '100%' }}
               disabled={checkRow && isCheckPermissionEdit}

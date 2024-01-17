@@ -25,6 +25,7 @@ import { AppContext } from '@/app-context';
 import { ROLE } from '@/constant/permission';
 
 export const COUNT_DATA = 2147483640;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface Props<T extends Record<string, any>> {
   dataTable: T[];
   columns: ProColumns<T>[];
@@ -36,6 +37,7 @@ interface Props<T extends Record<string, any>> {
   handleSearchInputKeyAll?: (value: string) => void;
   valueSearchAll?: string;
   handleOnDoubleClick: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     e: MouseEvent<any, globalThis.MouseEvent>,
     record: T
   ) => void;
@@ -58,6 +60,7 @@ interface Props<T extends Record<string, any>> {
   handleApproveAndReject?: (status: string) => void;
   itemDataQuotation?: React.Key[];
 }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Table = <T extends Record<string, any>>({
   dataTable,
   columns,

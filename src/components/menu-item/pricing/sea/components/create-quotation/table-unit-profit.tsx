@@ -16,9 +16,11 @@ export interface ImportFormValues {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ImportModalProps {
   dataSourceProfit: DataTypeProfit[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setDataSourceProfit: any;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
@@ -153,6 +155,7 @@ const UnitProfit: React.FC<ImportModalProps> = ({
           unitName: unit.internationalCode,
           profitRate: '',
         }));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setDataSourceProfit((prevData: any) => [...prevData, ...newData]);
       }
     },

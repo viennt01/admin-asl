@@ -105,8 +105,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         item.key !== 'profitRateOfLCLMin'
     );
     const profitRateOfContainerType = profitRateOfContainerTypeFilter.reduce(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (result: any, item) => {
-        result[item.key] = item.profitRate;
+        const key = String(item.key);
+        result[key] = item.profitRate;
         return result;
       },
       {}
@@ -119,8 +121,10 @@ const CreateQuotationModal: React.FC<ImportModalProps> = ({
         item.key !== 'Other'
     );
     const profitRateOfUnitforFee = profitRateOfUnitforFeeFilter.reduce(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (result: any, item) => {
-        result[item.key] = item.profitRate;
+        const key = String(item.key);
+        result[key] = item.profitRate;
         return result;
       },
       {}

@@ -59,6 +59,7 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
 
   const options: SelectProps['options'] = [];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onFinish = (formValues: any) => {
     const _requestData = {
       bookingID: (id as string) || '',

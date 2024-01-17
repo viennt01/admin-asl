@@ -9,6 +9,7 @@ interface PropsLCL {
   form: FormInstance<IFormValues>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
