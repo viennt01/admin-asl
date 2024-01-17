@@ -184,6 +184,11 @@ export const PERMISSION_RULES = () => {
       '/system/permission/create': PERMISSION.EDIT,
       '/system/permission/edit/[id]': PERMISSION.EDIT,
       '/system/permission/manager-admin/[id]': PERMISSION.EDIT,
+
+      '/sale-activity/': PERMISSION.EDIT,
+      '/sale-activity/create': PERMISSION.EDIT,
+      '/sale-activity/edit/[id]': PERMISSION.EDIT,
+      '/sale-activity/manager-admin/[id]': PERMISSION.EDIT,
     },
     SALE: {
       '/quotation/fee-group': PERMISSION.VIEW,
@@ -350,6 +355,11 @@ export const PERMISSION_RULES = () => {
       '/system/permission/create': PERMISSION.NO_VIEW,
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/sale-activity/': PERMISSION.EDIT,
+      '/sale-activity/create': PERMISSION.EDIT,
+      '/sale-activity/edit/[id]': PERMISSION.EDIT,
+      '/sale-activity/manager-admin/[id]': PERMISSION.EDIT,
     },
     AGENT: {
       '/quotation/fee-group': PERMISSION.NO_VIEW,
@@ -518,6 +528,11 @@ export const PERMISSION_RULES = () => {
       '/system/permission/create': PERMISSION.NO_VIEW,
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/sale-activity/': PERMISSION.NO_VIEW,
+      '/sale-activity/create': PERMISSION.NO_VIEW,
+      '/sale-activity/edit/[id]': PERMISSION.NO_VIEW,
+      '/sale-activity/manager-admin/[id]': PERMISSION.NO_VIEW,
     },
     LINER: {
       '/quotation/fee-group': PERMISSION.NO_VIEW,
@@ -686,6 +701,11 @@ export const PERMISSION_RULES = () => {
       '/system/permission/create': PERMISSION.NO_VIEW,
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/sale-activity/': PERMISSION.NO_VIEW,
+      '/sale-activity/create': PERMISSION.NO_VIEW,
+      '/sale-activity/edit/[id]': PERMISSION.NO_VIEW,
+      '/sale-activity/manager-admin/[id]': PERMISSION.NO_VIEW,
     },
     AIR_LINER: {
       '/quotation/fee-group': PERMISSION.NO_VIEW,
@@ -854,6 +874,11 @@ export const PERMISSION_RULES = () => {
       '/system/permission/create': PERMISSION.NO_VIEW,
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
+
+      '/sale-activity/': PERMISSION.NO_VIEW,
+      '/sale-activity/create': PERMISSION.NO_VIEW,
+      '/sale-activity/edit/[id]': PERMISSION.NO_VIEW,
+      '/sale-activity/manager-admin/[id]': PERMISSION.NO_VIEW,
     },
   };
 };

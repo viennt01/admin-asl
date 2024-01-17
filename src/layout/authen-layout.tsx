@@ -232,7 +232,6 @@ export function AppLayout(props: Props) {
       const data = JSON.parse(event.data);
       if (data.status) {
         if (setNotification) {
-          console.log(1);
           setNotification(data.data);
         }
       }

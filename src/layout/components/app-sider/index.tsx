@@ -217,6 +217,112 @@ const AppSider = ({ collapsed }: Props) => {
       : null,
 
     displayRouter([
+      ROUTERS.SEA_PRICING,
+      ROUTERS.AIR_PRICING,
+      ROUTERS.CUSTOMS_PRICING,
+      ROUTERS.TRUCKING_PRICING,
+      ROUTERS.PRICING_FEE_GROUP,
+    ])
+      ? getItem(
+          `${translateCommon('pricing')}`,
+          '2',
+          <Badge
+            dot={
+              Number(userInfo?.totalSeaPricing) +
+                Number(userInfo?.totalTruckingPricing) +
+                Number(userInfo?.totalCustomsPricing) +
+                Number(userInfo?.totalOtherChargesGroupPricing) +
+                Number(userInfo?.totalAirPricing) >
+              0
+            }
+            style={{
+              marginTop: '4px',
+            }}
+          >
+            <AuditOutlined ref={refPricing} />
+          </Badge>,
+          [
+            displayRouter(ROUTERS.SEA_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(userInfo?.totalSeaPricing)}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('sea_pricing')}`}
+                  </Badge>,
+                  ROUTERS.SEA_PRICING,
+                  <AuditOutlined ref={refSeaPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.AIR_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(userInfo?.totalAirPricing)}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('air_pricing')}`}
+                  </Badge>,
+                  ROUTERS.AIR_PRICING,
+                  <AuditOutlined ref={refAirPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.CUSTOMS_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalCustomsPricing
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('customs_pricing')}`}
+                  </Badge>,
+                  ROUTERS.CUSTOMS_PRICING,
+                  <AuditOutlined ref={refCustomsPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.TRUCKING_PRICING)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalTruckingPricing
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('trucking_pricing')}`}
+                  </Badge>,
+                  ROUTERS.TRUCKING_PRICING,
+                  <AuditOutlined ref={refTruckingPricing} />
+                )
+              : null,
+            displayRouter(ROUTERS.PRICING_FEE_GROUP)
+              ? getItem(
+                  <Badge
+                    count={GetTitleNotificationTab(
+                      userInfo?.totalOtherChargesGroupPricing
+                    )}
+                    style={{
+                      marginRight: '-12px',
+                    }}
+                  >
+                    {`${translateCommon('fee_group')}`}
+                  </Badge>,
+                  ROUTERS.PRICING_FEE_GROUP,
+                  <AuditOutlined ref={refFeeGroupPricing} />
+                )
+              : null,
+          ]
+        )
+      : null,
+
+    displayRouter([
       ROUTERS.SEA_QUOTATION,
       ROUTERS.AIR_QUOTATION,
       ROUTERS.CUSTOMS_QUOTATION,
@@ -334,112 +440,6 @@ const AppSider = ({ collapsed }: Props) => {
           >
             <SolutionOutlined ref={refBooking} />
           </Badge>
-        )
-      : null,
-
-    displayRouter([
-      ROUTERS.SEA_PRICING,
-      ROUTERS.AIR_PRICING,
-      ROUTERS.CUSTOMS_PRICING,
-      ROUTERS.TRUCKING_PRICING,
-      ROUTERS.PRICING_FEE_GROUP,
-    ])
-      ? getItem(
-          `${translateCommon('pricing')}`,
-          '2',
-          <Badge
-            dot={
-              Number(userInfo?.totalSeaPricing) +
-                Number(userInfo?.totalTruckingPricing) +
-                Number(userInfo?.totalCustomsPricing) +
-                Number(userInfo?.totalOtherChargesGroupPricing) +
-                Number(userInfo?.totalAirPricing) >
-              0
-            }
-            style={{
-              marginTop: '4px',
-            }}
-          >
-            <AuditOutlined ref={refPricing} />
-          </Badge>,
-          [
-            displayRouter(ROUTERS.SEA_PRICING)
-              ? getItem(
-                  <Badge
-                    count={GetTitleNotificationTab(userInfo?.totalSeaPricing)}
-                    style={{
-                      marginRight: '-12px',
-                    }}
-                  >
-                    {`${translateCommon('sea_pricing')}`}
-                  </Badge>,
-                  ROUTERS.SEA_PRICING,
-                  <AuditOutlined ref={refSeaPricing} />
-                )
-              : null,
-            displayRouter(ROUTERS.AIR_PRICING)
-              ? getItem(
-                  <Badge
-                    count={GetTitleNotificationTab(userInfo?.totalAirPricing)}
-                    style={{
-                      marginRight: '-12px',
-                    }}
-                  >
-                    {`${translateCommon('air_pricing')}`}
-                  </Badge>,
-                  ROUTERS.AIR_PRICING,
-                  <AuditOutlined ref={refAirPricing} />
-                )
-              : null,
-            displayRouter(ROUTERS.CUSTOMS_PRICING)
-              ? getItem(
-                  <Badge
-                    count={GetTitleNotificationTab(
-                      userInfo?.totalCustomsPricing
-                    )}
-                    style={{
-                      marginRight: '-12px',
-                    }}
-                  >
-                    {`${translateCommon('customs_pricing')}`}
-                  </Badge>,
-                  ROUTERS.CUSTOMS_PRICING,
-                  <AuditOutlined ref={refCustomsPricing} />
-                )
-              : null,
-            displayRouter(ROUTERS.TRUCKING_PRICING)
-              ? getItem(
-                  <Badge
-                    count={GetTitleNotificationTab(
-                      userInfo?.totalTruckingPricing
-                    )}
-                    style={{
-                      marginRight: '-12px',
-                    }}
-                  >
-                    {`${translateCommon('trucking_pricing')}`}
-                  </Badge>,
-                  ROUTERS.TRUCKING_PRICING,
-                  <AuditOutlined ref={refTruckingPricing} />
-                )
-              : null,
-            displayRouter(ROUTERS.PRICING_FEE_GROUP)
-              ? getItem(
-                  <Badge
-                    count={GetTitleNotificationTab(
-                      userInfo?.totalOtherChargesGroupPricing
-                    )}
-                    style={{
-                      marginRight: '-12px',
-                    }}
-                  >
-                    {`${translateCommon('fee_group')}`}
-                  </Badge>,
-                  ROUTERS.PRICING_FEE_GROUP,
-                  <AuditOutlined ref={refFeeGroupPricing} />
-                )
-              : null,
-          ]
         )
       : null,
 
