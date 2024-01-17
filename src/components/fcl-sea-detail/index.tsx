@@ -1,55 +1,29 @@
 import React, { useState } from 'react';
-import Step5 from './components/step-5';
-import {
-  DEFAULT_PAGINATION,
-  IDetailBooking,
-  ISeaPricingDetail,
-  TYPE_SERVICE,
-} from './interface';
+import style from './index.module.scss';
+import { Button, Card, Col, Flex, Modal, Row } from 'antd';
+import Step5 from './components';
 import { useQuery } from '@tanstack/react-query';
-import { getDetailBooking } from './fetcher';
 import { errorToast } from '@/hook/toast';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import router from 'next/router';
 import { API_MESSAGE } from '@/constant/message';
-import { Button, Card, Col, Modal, Row } from 'antd';
-import useI18n from '@/i18n/useI18N';
-const { confirm } = Modal;
+import { IDetailBooking } from './interface';
+import { getDetailBooking } from './fetcher';
 import { ExclamationCircleFilled } from '@ant-design/icons';
+import useI18n from '@/i18n/useI18N';
 
 export interface IDataBookingProps {
-  idBooking?: string;
-  idQuotation: string;
-  dataQuotation?: ISeaPricingDetail;
   detailBooking?: IDetailBooking;
 }
 
-export const initalValueProps = {
-  idQuotation: '',
-  idBooking: '',
-};
-
-export const initalValueForm = {
-  polid: '',
-  podid: '',
-  typeSeaService: TYPE_SERVICE.FCL,
-  cargoReady: 1,
-  commodities: [''],
-  containers: [''],
-  paginateRequest: {
-    currentPage: DEFAULT_PAGINATION.current,
-    pageSize: DEFAULT_PAGINATION.pageSize,
-  },
-};
+const { confirm } = Modal;
 
 export default function FclOceanFreightDetail() {
   const { id } = router.query;
-  const displayStep = 5;
+  const [dataPropsBooking, setDataPropsBooking] = useState<IDataBookingProps>();
   const { translate: translateCommon } = useI18n('common');
 
-  const [dataPropsBooking, setDataPropsBooking] =
-    useState<IDataBookingProps>(initalValueProps);
   useQuery({
     queryKey: [API_BOOKING.GET_SEA_BOOKING_BY_ID, id],
     queryFn: () => getDetailBooking({ id: id as string }),
@@ -84,15 +58,22 @@ export default function FclOceanFreightDetail() {
       </Button>
     );
   };
+
   return (
-    <section>
-      <Step5 displayStep={displayStep} dataPropsBooking={dataPropsBooking} />
+    <>
+      <section className={style.wrapper}>
+        <Flex className={style.checkPrice} vertical>
+          <div className={style.content}>
+            <Step5 dataPropsBooking={dataPropsBooking} />
+          </div>
+        </Flex>
+      </section>
       <Card
         style={{
           position: 'sticky',
           bottom: 0,
           zIndex: 11,
-          marginTop: 16,
+          marginTop: 8,
         }}
       >
         <Row gutter={12}>
@@ -101,6 +82,6 @@ export default function FclOceanFreightDetail() {
           </Col>
         </Row>
       </Card>
-    </section>
+    </>
   );
 }

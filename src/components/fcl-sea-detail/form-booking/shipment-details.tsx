@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { ConfigProvider, Table } from 'antd';
+import { Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '..';
-import { formatDate } from '@/utils/format';
+import { IDetailBooking } from '../interface';
+import { formatDateYYYYMMDD } from '@/utils/format';
 import COLORS from '@/constant/color';
+import { DAY_WEEK } from '@/constant';
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: string;
   right: string;
   left: string;
   'Mode of transportation'?: string;
+  'Type of service'?: string;
   'Port of loading'?: string;
   'Port of discharge'?: string;
   Commodity?: string;
   'Quotation no'?: string;
-  Date?: string;
-  'Validity to'?: string;
-  'Gross weight'?: string;
-  Mearsurement?: string;
+  'Date Booking'?: string;
+  'Expire date'?: string;
+  'Effective date'?: string;
+  Frequency?: string;
+  Storage?: string;
+  Demurrage?: string;
+  Detention?: string;
+  'Transit time'?: string;
+  'Shipping Lines'?: string;
+  'Cargo ready'?: string;
+  'Cargo cutoff to'?: string;
   Quantity?: string;
 }
 export default function ShipmentDetail({ dataPropsBooking }: Props) {
@@ -30,12 +39,21 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     pol,
     pod,
     quotationNo,
-    date,
+    bookingDated,
     valitidyTo,
     commodity,
     seaBookingFCLDetailDTOs,
     bookingNo,
-  } = dataPropsBooking?.detailBooking?.shipmentDetail || {};
+    cargoReadyDated,
+    demSeaQuotation,
+    detSeaQuotation,
+    stoSeaQuotation,
+    effectDated,
+    freqDate,
+    transitTimeSeaQuotation,
+    typeOfServiceTransportation,
+    vendorName,
+  } = dataPropsBooking?.shipmentDetail || {};
 
   const columns: ColumnsType<DataType> = [
     {
@@ -44,12 +62,12 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
       width: '50%',
       render: (text, record) => {
         return (
-          <div style={{ flex: 1 }}>
+          <Flex style={{ flex: 1 }}>
             <div
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '220px',
+                width: '180px',
               }}
             >
               {text}:
@@ -61,9 +79,11 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
                 // width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
-          </div>
+          </Flex>
         );
       },
     },
@@ -73,7 +93,7 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
       width: '50%',
       render: (text, record) => {
         return (
-          <div style={{ flex: 1 }}>
+          <Flex style={{ flex: 1 }}>
             <div
               style={{
                 fontSize: '12px',
@@ -90,9 +110,11 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
                 // width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
-          </div>
+          </Flex>
         );
       },
     },
@@ -104,34 +126,57 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '1',
         right: 'Mode of transportation',
         'Mode of transportation': modeOfTransportation || '',
-        left: 'Quotation no',
-        'Quotation no': quotationNo || '',
+        left: 'Type of service',
+        'Type of service': typeOfServiceTransportation || '',
       },
       {
         key: '2',
         right: 'Port of loading',
         'Port of loading': pol || '',
-        left: 'Date',
-        Date: formatDate(Number(date)) || '',
+        left: 'Port of discharge',
+        'Port of discharge': pod || '',
       },
       {
         key: '3',
-        right: 'Port of discharge',
-        'Port of discharge': pod || '',
-        left: 'Validity to',
-        'Validity to': formatDate(Number(valitidyTo)) || '',
+        right: 'Effective date',
+        'Effective date': formatDateYYYYMMDD(Number(effectDated)) || '',
+        left: 'Expire date',
+        'Expire date': formatDateYYYYMMDD(Number(valitidyTo)) || '',
       },
       {
         key: '4',
-        right: 'Commodity',
-        Commodity: commodity || '',
-        left: 'Gross weight',
-        'Gross weight': '',
+        right: 'Quotation no',
+        'Quotation no': quotationNo || '',
+        left: 'Cargo ready',
+        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
       },
       {
         key: '5',
-        right: 'Mearsurement',
-        Mearsurement: '',
+        right: 'Frequency',
+        Frequency:
+          DAY_WEEK.find((date) => date.value === freqDate)?.label || '',
+        left: 'Storage',
+        Storage: stoSeaQuotation || '',
+      },
+      {
+        key: '6',
+        right: 'Demurrage',
+        Demurrage: demSeaQuotation || '',
+        left: 'Detention',
+        Detention: detSeaQuotation || '',
+      },
+      {
+        key: '7',
+        right: 'Transit time',
+        'Transit time': transitTimeSeaQuotation || '',
+
+        left: 'Commodity',
+        Commodity: commodity || '',
+      },
+      {
+        key: '9',
+        right: 'Shipping Lines',
+        'Shipping Lines': vendorName || '',
         left: 'Quantity',
         Quantity:
           seaBookingFCLDetailDTOs
@@ -148,9 +193,13 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
       theme={{
         components: {
           Table: {
-            // borderColor: 'rgba(0, 0, 0, 1)',
+            borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
         },
       }}
@@ -176,7 +225,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Booking details - {bookingNo}
+          Booking details - {bookingNo} -{' '}
+          {formatDateYYYYMMDD(Number(bookingDated)) || ''}
         </div>
         <Table
           style={{ width: '100%' }}

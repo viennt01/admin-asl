@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { ConfigProvider, Table } from 'antd';
+import { Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '..';
+import { IDetailBooking } from '../interface';
 import COLORS from '@/constant/color';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: string;
@@ -55,7 +55,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
     tel,
     mobil,
     contact,
-  } = dataPropsBooking?.detailBooking?.customerInformation || {};
+  } = dataPropsBooking?.customerInformation || {};
 
   const columns: ColumnsType<DataType> = [
     {
@@ -64,7 +64,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
       width: '50%',
       render: (text, record) => {
         return (
-          <div>
+          <Flex>
             <div
               style={{
                 fontSize: '12px',
@@ -81,9 +81,11 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
                 width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
-          </div>
+          </Flex>
         );
       },
     },
@@ -93,7 +95,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
       width: '50%',
       render: (text, record) => {
         return (
-          <div>
+          <Flex>
             <div
               style={{
                 fontSize: '12px',
@@ -110,9 +112,11 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
                 width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
-          </div>
+          </Flex>
         );
       },
     },
@@ -156,9 +160,13 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
       theme={{
         components: {
           Table: {
-            // borderColor: 'rgba(0, 0, 0, 1)',
+            borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
         },
       }}

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '..';
+import { IDetailBooking } from '../interface';
 import { formatNumber } from '@/utils/format';
 import COLORS from '@/constant/color';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -67,8 +67,12 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
           Quantity
         </div>
       ),
+      align: 'right',
       dataIndex: 'quantity',
       key: 'quantity',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -85,8 +89,12 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
           Unit
         </div>
       ),
+      align: 'right',
       dataIndex: 'unit',
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -104,7 +112,11 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -122,6 +134,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'basePriceGreenLane',
+      align: 'right',
       key: 'basePriceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -143,6 +156,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'basePriceYellowLane',
+      align: 'right',
       key: 'basePriceYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -164,6 +178,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'basePriceRedLane',
+      align: 'right',
       key: 'basePriceRedLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -185,6 +200,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceGreenLane',
+      align: 'right',
       key: 'priceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -206,6 +222,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceYellowLane',
+      align: 'right',
       key: 'priceYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -227,6 +244,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceRedLane',
+      align: 'right',
       key: 'priceRedLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -248,6 +266,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -269,6 +288,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalYellowLane',
+      align: 'right',
       key: 'totalYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -286,10 +306,11 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Red Router
+          Total Red Lane
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -299,7 +320,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.customQuotationFCLDetailSelecteds?.map(
+      dataPropsBooking?.customQuotationPODSelected?.customQuotationFCLDetailSelecteds?.map(
         (item, index) => ({
           key: index,
           basePriceRedLane: item.basePriceRedLane,
@@ -323,11 +344,15 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
       theme={{
         components: {
           Table: {
-            // headerBg: '#e7eeff',
-            // headerColor: COLORS.GREY_COLOR_HOVER,
-            // borderColor: 'rgba(0, 0, 0, 1)',
+            headerBg: '#e7eeff',
+            headerColor: COLORS.GREY_COLOR_HOVER,
+            borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,
@@ -359,7 +384,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Customs service (DESTINATION)
+          Customs broker (DESTINATION)
         </div>
         <Table
           style={{ width: '100%' }}
@@ -367,9 +392,9 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
       </div>
     </ConfigProvider>

@@ -3,12 +3,12 @@ import { ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '..';
-import { formatNumber } from '@/utils/format';
 import COLORS from '@/constant/color';
+import { formatNumber } from '@/utils/format';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -66,6 +66,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -82,8 +85,13 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Quantity
         </div>
       ),
+      align: 'right',
+      width: 95,
       dataIndex: 'quantity',
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -100,8 +108,13 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Unit
         </div>
       ),
+      width: 95,
+      align: 'left',
       dataIndex: 'unit',
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -118,8 +131,10 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Price
         </div>
       ),
+      align: 'right',
       dataIndex: 'price',
       key: 'price',
+      width: 170,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -139,8 +154,36 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Currency
         </div>
       ),
+      width: 95,
+      align: 'left',
       dataIndex: 'currency',
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          VAT
+        </div>
+      ),
+      width: 80,
+      align: 'right',
+      dataIndex: 'vat',
+      key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -157,6 +200,8 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
+      width: 200,
+      fixed: 'right',
       dataIndex: 'total',
       key: 'total',
       render: (value) => {
@@ -167,7 +212,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationFCLDetails?.map(
+      dataPropsBooking?.seaQuotationBooking?.seaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -176,6 +221,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           unit: item.unit,
           currency: item.currency,
           total: item.totalAmount,
+          vat: item.vat,
         })
       ) || []
     );
@@ -183,7 +229,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails?.map(
+      dataPropsBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -197,11 +243,15 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       theme={{
         components: {
           Table: {
-            // headerBg: '#e7eeff',
-            // headerColor: COLORS.GREY_COLOR_HOVER,
-            // borderColor: 'rgba(0, 0, 0, 1)',
+            headerBg: '#e7eeff',
+            headerColor: COLORS.GREY_COLOR_HOVER,
+            borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,
@@ -241,9 +291,6 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
         />
         <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>

@@ -3,12 +3,12 @@ import { ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '..';
+import { IDetailBooking } from '../interface';
 import { formatNumber } from '@/utils/format';
 import COLORS from '@/constant/color';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -84,7 +84,12 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
+      width: 95,
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -102,7 +107,11 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'unit',
+      width: 95,
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -119,8 +128,10 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
           Price
         </div>
       ),
+      align: 'right',
       dataIndex: 'price',
       key: 'price',
+      width: 170,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -142,6 +153,10 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'currency',
       key: 'currency',
+      width: 95,
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -159,7 +174,12 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
+      width: 80,
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -176,8 +196,11 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
+      fixed: 'right',
+      align: 'right',
       dataIndex: 'total',
       key: 'total',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -186,7 +209,7 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.truckingQuotationFCLDetails?.map(
+      dataPropsBooking?.truckingQuotationPOLSelected?.truckingQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +226,7 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.sumTruckingQuotationFCLDetails?.map(
+      dataPropsBooking?.truckingQuotationPOLSelected?.sumTruckingQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -217,11 +240,15 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
       theme={{
         components: {
           Table: {
-            // headerBg: '#e7eeff',
-            // headerColor: COLORS.GREY_COLOR_HOVER,
-            // borderColor: 'rgba(0, 0, 0, 1)',
+            headerBg: '#e7eeff',
+            headerColor: COLORS.GREY_COLOR_HOVER,
+            borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,

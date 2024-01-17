@@ -1,5 +1,4 @@
 import React from 'react';
-import { IDataBookingProps } from '..';
 import CustomerInformation from './customer-information';
 import ShipmentDetail from './shipment-details';
 import QuotationDetail from './sea-quotation-detail';
@@ -15,9 +14,10 @@ import CustomsQuotationPOL from './customs-quotation-POL';
 import CustomsOtherChargesPOL from './customs-other-charge-POL';
 import CustomsQuotationPOD from './customs-quotation-POD';
 import CustomsOtherChargesPOD from './customs-other-charge-POD';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 
 export default function FormBookingPDF({ dataPropsBooking }: Props) {

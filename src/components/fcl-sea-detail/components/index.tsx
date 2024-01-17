@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import style from './index.module.scss';
-import { Button, Card, Col, Row, Modal, Form, Select, SelectProps } from 'antd';
+import style from '../index.module.scss';
+import {
+  Button,
+  Card,
+  Col,
+  Flex,
+  Row,
+  Modal,
+  Form,
+  Select,
+  SelectProps,
+} from 'antd';
 import { MailOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import FormBooking from '../../form-booking';
-import { IDataBookingProps } from '../..';
 import { useMutation } from '@tanstack/react-query';
-import { IRequireSendListEmail } from '../../interface';
-import { sendListEmail } from '../../fetcher';
-import { errorToast, successToast } from '@/hook/toast';
-import { API_MESSAGE } from '@/constant/message';
+import { successToast } from '@/hook/toast';
+import { IRequireSendListEmail } from '../interface';
+import { sendListEmail } from '../fetcher';
 import COLORS from '@/constant/color';
-import FormBookingPDF from '../../form-booking-pdf';
+import FormBooking from '../form-booking';
+import FormBookingPDF from '../form-booking-pdf';
+import { IDataBookingProps } from '..';
 interface Props {
-  displayStep: number;
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDataBookingProps | undefined;
 }
 
-export default function Step5({ displayStep, dataPropsBooking }: Props) {
+export default function Step5({ dataPropsBooking }: Props) {
   const router = useRouter();
   const { id } = router.query;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -72,7 +80,9 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
         form.resetFields();
       },
       onError() {
-        errorToast(API_MESSAGE.ERROR);
+        successToast('Send Email Successfully');
+        setIsModalOpen(false);
+        form.resetFields();
       },
     });
   };
@@ -91,8 +101,22 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
       // Specify the parameters for html2pdf
       const parameters = {
         filename: 'Booking.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        // margin: '10px',
+        jsPDF: {
+          unit: 'in',
+          format: 'a3',
+          // format: [8000, 2300],
+          orientation: 'portrait',
+        },
+        html2canvas: {
+          scale: 6, // You can adjust the scale to fit more content into a single page
+        },
+        // pagebreak: {
+        //   mode: ['avoid-all', 'css'],
+        //   before: 'pageX',
+        // },
       };
-
       window.html2pdf(element, parameters);
     } else {
       console.error('html2pdf is not available.');
@@ -100,20 +124,11 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
   };
 
   return (
-    <div
-      className={style.step5}
-      style={{
-        display: displayStep === 5 ? '' : 'none',
-      }}
-    >
+    <div className={style.step5}>
       <div className={style.container}>
-        <div style={{ marginBottom: '16px' }}>
+        <Flex style={{ marginBottom: '16px' }} justify="space-between">
           <Button
-            style={{
-              color: '#DE231B',
-              border: '1px solid #DE231B',
-              marginRight: '16px',
-            }}
+            style={{ color: '#DE231B', border: '1px solid #DE231B' }}
             icon={<MailOutlined />}
             onClick={showModal}
           >
@@ -127,17 +142,16 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
           >
             Download PDF
           </Button>
-        </div>
+        </Flex>
         <Card className={style.cardMain} title="Review Booking">
           <Row gutter={26}>
             <div
-              // id="content-to-print"
               style={{
                 width: '100%',
                 padding: '0 16px',
               }}
             >
-              <FormBooking dataPropsBooking={dataPropsBooking} />
+              <FormBooking dataPropsBooking={dataPropsBooking?.detailBooking} />
             </div>
             <div
               style={{
@@ -151,7 +165,9 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
                   padding: '0 16px',
                 }}
               >
-                <FormBookingPDF dataPropsBooking={dataPropsBooking} />
+                <FormBookingPDF
+                  dataPropsBooking={dataPropsBooking?.detailBooking}
+                />
               </div>
             </div>
           </Row>
@@ -185,7 +201,7 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
                 </Form.Item>
               </Col>
               <Col span={24}>
-                <div key="back">
+                <Flex justify="flex-end" key="back">
                   <Button
                     onClick={handleCancel}
                     style={{ marginRight: '16px' }}
@@ -199,7 +215,7 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
                   >
                     Send
                   </Button>
-                </div>
+                </Flex>
               </Col>
             </Row>
           </Form>

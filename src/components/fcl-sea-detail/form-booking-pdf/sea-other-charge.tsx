@@ -3,12 +3,12 @@ import { ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '..';
+import { IDetailBooking } from '../interface';
 import { formatNumber } from '@/utils/format';
 import COLORS from '@/constant/color';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -67,6 +67,9 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -84,7 +87,12 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
+      width: 95,
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -102,7 +110,11 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'unit',
+      width: 95,
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -120,6 +132,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'price',
+      width: 170,
       key: 'price',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -141,7 +154,11 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'currency',
+      width: 95,
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -159,7 +176,12 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      width: 80,
+      align: 'right',
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -178,6 +200,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'total',
       key: 'total',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -186,7 +209,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.ortherChargeDetailForBookings?.map(
+      dataPropsBooking?.seaQuotationBooking?.ortherChargeDetailForBookings?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +226,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumOrtherChargeDetailForBooking?.map(
+      dataPropsBooking?.seaQuotationBooking?.sumOrtherChargeDetailForBooking?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -217,11 +240,15 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       theme={{
         components: {
           Table: {
-            // headerBg: '#e7eeff',
-            // headerColor: COLORS.GREY_COLOR_HOVER,
-            // borderColor: 'rgba(0, 0, 0, 1)',
+            headerBg: '#e7eeff',
+            headerColor: COLORS.GREY_COLOR_HOVER,
+            borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,
@@ -262,12 +289,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
         />
         <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>
+      <div id="pageX"></div>
     </ConfigProvider>
   );
 }

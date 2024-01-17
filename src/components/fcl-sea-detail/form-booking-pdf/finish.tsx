@@ -4,29 +4,30 @@ import {
   ConfigProvider,
   Descriptions,
   DescriptionsProps,
+  Flex,
   Typography,
 } from 'antd';
-import { IDataBookingProps } from '..';
+import { IDetailBooking } from '../interface';
 import COLORS from '@/constant/color';
 const { Text } = Typography;
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 
 export default function Finish({ dataPropsBooking }: Props) {
   const { issuedBy, possition, email, tel } =
-    dataPropsBooking?.detailBooking?.aslContactBooking || {};
+    dataPropsBooking?.aslContactBooking || {};
   const items: DescriptionsProps['items'] = [
     {
       label: (
-        <div
-          // align="center"
-          // justify="center"
+        <Flex
+          align="center"
+          justify="center"
           style={{ fontSize: '14px', fontWeight: '720' }}
         >
           Issued by
-        </div>
+        </Flex>
       ),
       children: (
         <div style={{ fontSize: '14px', fontWeight: '720' }}>
@@ -36,13 +37,13 @@ export default function Finish({ dataPropsBooking }: Props) {
     },
     {
       label: (
-        <div
-          // align="center"
-          // justify="center"
+        <Flex
+          align="center"
+          justify="center"
           style={{ fontSize: '14px', fontWeight: '720' }}
         >
           Email
-        </div>
+        </Flex>
       ),
       children: (
         <div style={{ fontSize: '14px', fontWeight: '720' }}>{email || ''}</div>
@@ -50,13 +51,13 @@ export default function Finish({ dataPropsBooking }: Props) {
     },
     {
       label: (
-        <div
-          // align="center"
-          // justify="center"
+        <Flex
+          align="center"
+          justify="center"
           style={{ fontSize: '14px', fontWeight: '720' }}
         >
           Possition
-        </div>
+        </Flex>
       ),
       children: (
         <div style={{ fontSize: '14px', fontWeight: '720' }}>
@@ -67,13 +68,13 @@ export default function Finish({ dataPropsBooking }: Props) {
     },
     {
       label: (
-        <div
-          // align="center"
-          // justify="center"
+        <Flex
+          align="center"
+          justify="center"
           style={{ fontSize: '14px', fontWeight: '720' }}
         >
           Mobile
-        </div>
+        </Flex>
       ),
       children: (
         <div style={{ fontSize: '14px', fontWeight: '720' }}> {tel || ''}</div>
@@ -100,9 +101,13 @@ export default function Finish({ dataPropsBooking }: Props) {
             components: {
               Descriptions: {
                 colorTextSecondary: COLORS.GREY_COLOR_HOVER,
-                colorFillAlter: '#e7eeff',
                 colorSplit: '#000',
+                // labelBg: '#e7eeff',
                 borderRadiusLG: 0,
+                padding: 8,
+                paddingLG: 8,
+                paddingSM: 8,
+                paddingXS: 8,
               },
             },
           }}
@@ -110,18 +115,16 @@ export default function Finish({ dataPropsBooking }: Props) {
           <Descriptions
             style={{
               width: '100%',
-              display: dataPropsBooking?.detailBooking?.aslContactBooking
-                ? ''
-                : 'none',
+              display: dataPropsBooking?.aslContactBooking ? '' : 'none',
             }}
             bordered
             column={{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2, xxl: 2 }}
             items={items}
           />
         </ConfigProvider>
-        <div
-          // align="center"
-          // justify="center"
+        <Flex
+          align="center"
+          justify="center"
           style={{
             width: '100%',
             height: '50px',
@@ -130,13 +133,10 @@ export default function Finish({ dataPropsBooking }: Props) {
             fontSize: '18px',
             fontWeight: '700',
             textAlign: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
           }}
         >
           THANK YOU FOR YOUR SUPPORTING TO ASL LOGISTICS
-        </div>
+        </Flex>
       </div>
     </div>
   );
