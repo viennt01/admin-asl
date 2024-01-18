@@ -28,29 +28,29 @@ export default function LoginPageV2() {
                 <div className={style.cssTyping}>
                   <p>
                     <span className={style.textBlue}>
-                      Amerasian Shipping Logistics Corporation (ASL Logistics)
+                      ASL Logistics was established in 2005,
                     </span>{' '}
-                    is an
+                    specializing in providing
                   </p>
 
                   <p>
-                    International Sea-Air Freight Forwarding and Logistics
-                    Company based in
+                    international freight forwarding services. Over 19 years of
+                    development,
                   </p>
 
                   <p>
-                    Vietnam. We’re first established in 2005 with just a modest
-                    staff of
+                    ASL Logistics has become one of the Top logistics company
+                    providing
                   </p>
 
                   <p>
-                    10 employees. Nowadays, we have expanded to a moderate staff
-                    of
+                    international multimodal transportation services, customs
+                    broker,
                   </p>
 
-                  <p>100 experienced employees working at our four offices</p>
-
-                  <p>throughout Vietnam.</p>
+                  <p>
+                    domestic transportation and distribution service in Vietnam.
+                  </p>
                 </div>
               </div>
             </Col>
