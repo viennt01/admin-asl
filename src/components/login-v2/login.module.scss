@@ -128,7 +128,7 @@
 
 
                         &:nth-child(1) {
-                            width: 53ch;
+                            width: 55ch;
                             -webkit-animation: type 4s steps(40, end);
                             animation: type 4s steps(40, end);
                             -webkit-animation-fill-mode: forwards;
@@ -169,22 +169,12 @@
                         }
 
                         &:nth-child(5) {
-                            width: 45ch;
+                            width: 52ch;
                             opacity: 0;
                             -webkit-animation: type2 4s steps(40, end);
                             animation: type2 4s steps(40, end);
                             -webkit-animation-delay: 16s;
                             animation-delay: 16s;
-                            -webkit-animation-fill-mode: forwards;
-                            animation-fill-mode: forwards;
-                        }
-
-                        &:nth-child(6) {
-                            width: 18ch;
-                            opacity: 0;
-                            -webkit-animation: type6 4s steps(40, end), blink .5s step-end infinite alternate;
-                            animation: type6 4s steps(40, end), blink .5s step-end infinite alternate;
-                            animation-delay: 20s;
                             -webkit-animation-fill-mode: forwards;
                             animation-fill-mode: forwards;
                         }
