@@ -401,6 +401,7 @@ export const API_PARTNER = {
   GET_ALL: '/get-all-partner',
   ADD_USER_PARTNER: '/add-user-partner',
   GET_ALL_PRICING_BY_PARTNER: '/get-all-prictng-by-partner',
+  GET_ALL_BOOKING_BY_PARTNER: '/get-all-booking-by-partner',
 };
 export const API_PARTNER_ROLE = {
   GET_ALL: '/get-all-partner-role',

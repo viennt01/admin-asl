@@ -12,7 +12,7 @@ export enum TYPE_SERVICE {
   'LCL' = 'LCL',
   'FTL' = 'FTL',
   'LTL' = 'LTL',
-  'AIR' = 'True',
+  'AIR' = 'AIR',
 }
 
 export interface IQueryInputParamType {

@@ -276,3 +276,10 @@ export interface RequestPricing {
   typePricing: string;
   paginateRequest: IPagination;
 }
+
+export interface RequestBooking {
+  searchAll: string;
+  partnerID: string;
+  typeBooking: string;
+  paginateRequest: IPagination;
+}

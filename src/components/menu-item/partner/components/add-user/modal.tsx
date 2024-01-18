@@ -56,7 +56,8 @@ const AddUserModal: React.FC<ImportModalProps> = ({
           handleOk(),
           queryClient.invalidateQueries({
             queryKey: [API_PARTNER.GET_DETAIL],
-          }))
+          }),
+          form.resetFields())
         : errorToast(data.message);
     },
     onError() {

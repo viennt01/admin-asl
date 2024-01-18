@@ -23,6 +23,7 @@ import {
   IDataChartPricing,
   IRequestChartPricing,
   RequestPricing,
+  RequestBooking,
 } from './interface';
 import {
   API_COLUMN,
@@ -39,6 +40,7 @@ import { AirPricingRequire } from '../pricing/air/interface';
 import { SeaPricingRequire } from '../pricing/sea/interface';
 import { ITruckingRequire } from '../pricing/trucking/interface';
 import { ICustomPricingRequire } from '../pricing/custom/interface';
+import { IHistoryBookingRequire } from '../booking/interface';
 
 export const getUnitSearch = (data: IRequestPartnerType) => {
   return post<IRequestPartnerType, ResponseWithPayload<IPartnerRequire>>({
@@ -154,4 +156,9 @@ export const getCustomsPricing = (data: RequestPricing) => {
   return post<RequestPricing, ResponseWithPayload<ICustomPricingRequire>>({
     data,
   })(API_PARTNER.GET_ALL_PRICING_BY_PARTNER);
+};
+export const getBooking = (data: RequestBooking) => {
+  return post<RequestBooking, ResponseWithPayload<IHistoryBookingRequire>>({
+    data,
+  })(API_PARTNER.GET_ALL_BOOKING_BY_PARTNER);
 };

@@ -880,7 +880,7 @@ const UnitForm = ({
             header={
               <Badge count={0} style={{ marginRight: '-10px' }}>
                 <Title level={3} style={{ margin: '-4px 0' }}>
-                  Chart pricing
+                  Booking
                 </Title>
               </Badge>
             }

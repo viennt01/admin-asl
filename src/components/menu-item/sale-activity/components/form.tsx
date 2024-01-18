@@ -431,7 +431,6 @@ const SaleActivityForm = ({
                       .toLowerCase()
                       .localeCompare((optionB?.label ?? '').toLowerCase())
                   }
-                  mode="multiple"
                   options={typeSaleActivity}
                 />
               </Form.Item>
@@ -498,12 +497,12 @@ const SaleActivityForm = ({
               <Form.Item
                 label={translatePartner('user_form.title')}
                 name="listUserID"
-                rules={[
-                  {
-                    required: true,
-                    message: translatePartner('user_form.error_required'),
-                  },
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: translatePartner('user_form.error_required'),
+                //   },
+                // ]}
               >
                 <Select
                   showSearch

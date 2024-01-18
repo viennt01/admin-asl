@@ -23,6 +23,7 @@ export const getStaticProps = getStatic([
   'pricingSea',
   'pricingCustoms',
   'pricingTrucking',
+  'booking',
 ]);
 export const getStaticPaths = () => {
   return {
