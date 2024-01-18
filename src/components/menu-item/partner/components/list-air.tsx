@@ -1,5 +1,5 @@
-import { EyeOutlined, FilterFilled } from '@ant-design/icons';
-import { Button, PaginationProps, Tag } from 'antd';
+import { FilterFilled, EyeOutlined } from '@ant-design/icons';
+import { Button, PaginationProps, Tag, Checkbox } from 'antd';
 import { ChangeEvent, Key, MouseEvent, useMemo, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
 import { useRouter } from 'next/router';
@@ -7,50 +7,41 @@ import useI18n from '@/i18n/useI18N';
 import COLORS from '@/constant/color';
 import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   formatCurrencyHasCurrency,
   formatDate,
   formatNumber,
 } from '@/utils/format';
-
 import {
   DEFAULT_PAGINATION,
-  DENSITY,
   IPaginationOfAntd,
   SkeletonTable,
-  TABLE_NAME,
 } from '@/components/commons/table/table-default';
-import { getSeaPricing } from '../fetcher';
 import style from '@/components/commons/table/index.module.scss';
-import { STATUS_MASTER_COLORS, STATUS_MATER_LABELS } from '@/constant/form';
+import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { DAY_WEEK } from '@/constant';
-import { API_COLUMN } from '@/fetcherAxios/endpoint';
 import {
-  getColumnTable,
-  updateColumnTable,
-} from '@/components/menu-item/pricing/fee-group/fetcher';
-import {
+  AirPricingDetailDTOs,
+  AirPricingTable,
   QueryInputParamType,
   QuerySelectParamType,
-  SeaPricingDetailDTOs,
-  SeaPricingTable,
   SelectSearch,
-} from '../../pricing/sea/interface';
+} from '../../pricing/air/interface';
 import {
   initalSelectSearchMaster,
   initalValueDisplayColumnMaster,
   initalValueQueryInputParamsMaster,
   initalValueQuerySelectParamsMaster,
-} from '../../pricing/sea/constant';
+} from '../../pricing/air/constant';
 import Table from '@/components/commons/table/table';
+import { getAirPricing } from '../fetcher';
 
-export default function MasterDataTable() {
+export default function AirPricing() {
   const router = useRouter();
   const { id } = router.query;
-  const queryClient = useQueryClient();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-  const { translate: translatePricingSea } = useI18n('pricingSea');
+  const { translate: translatePricingAir } = useI18n('pricingAir');
   const { translate: translateCommon } = useI18n('common');
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
@@ -59,7 +50,7 @@ export default function MasterDataTable() {
   );
   const [querySelectParams, setQuerySelectParams] =
     useState<QuerySelectParamType>(initalValueQuerySelectParamsMaster);
-  const [dataTable, setDataTable] = useState<SeaPricingTable[]>([]);
+  const [dataTable, setDataTable] = useState<AirPricingTable[]>([]);
   const [selectedActiveKey, setSelectedActiveKey] = useState<SelectSearch>(
     initalSelectSearchMaster
   );
@@ -68,30 +59,14 @@ export default function MasterDataTable() {
   >(initalValueDisplayColumnMaster);
   const [refreshingLoading, setRefreshingLoading] = useState(false);
 
-  // Handle data
-  useQuery({
-    queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
-    queryFn: () =>
-      getColumnTable({
-        tableName: TABLE_NAME.SEA_PRICING,
-      }),
-    onSuccess(data) {
-      data.status
-        ? !('operation' in data.data.columnFixed)
-          ? setColumnsStateMap(initalValueDisplayColumnMaster)
-          : setColumnsStateMap(data.data.columnFixed)
-        : setColumnsStateMap(initalValueDisplayColumnMaster);
-    },
-  });
-
-  const locationsQuerySearch = useQuery({
-    queryKey: ['SEA PRICING', queryInputParams, id],
+  const QuerySearch = useQuery({
+    queryKey: ['AIR PRICING', queryInputParams, id],
     enabled: id !== undefined,
     queryFn: () =>
-      getSeaPricing({
+      getAirPricing({
         searchAll: queryInputParams.searchAll,
         partnerID: id as string,
-        typePricing: 'SEA',
+        typePricing: 'AIR',
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -100,39 +75,37 @@ export default function MasterDataTable() {
     onSuccess(data) {
       if (data.status) {
         const { currentPage, pageSize, totalPages } = data.data;
-
         setDataTable(
           data.data.data.map((data) => ({
-            key: data.seaPricingID,
-            seaPricingID: data.seaPricingID,
-            podid: data.podid,
-            podName: data.podName,
-            polid: data.polid,
-            polName: data.polName,
+            key: data.airPricingID,
+            aodid: data.aodid,
+            aodName: data.aodName,
+            aolid: data.aolid,
+            aolName: data.aolName,
             commodityID: data.commodityID,
             commodityName: data.commodityName,
             currencyID: data.currencyID,
             currencyAbbreviations: data.currencyAbbreviations,
             note: data.note,
-            effectDated: data.effectDated,
             validityDate: data.validityDate,
+            effectDated: data.effectDated,
             freqDate: data.freqDate,
-            demSeaPricing: data.demSeaPricing,
-            detSeaPricing: data.detSeaPricing,
-            stoSeaPricing: data.stoSeaPricing,
-            lclMinSeaPricing: data.lclMinSeaPricing,
-            lclSeaPricing: data.lclSeaPricing,
             public: data.public,
-            statusSeaPricing: data.statusSeaPricing,
+            statusAirPricing: data.statusAirPricing,
             confirmDated: data.confirmDated,
             confirmByUser: data.confirmByUser,
-            seaPricingDetailDTOs: data.seaPricingDetailDTOs,
+            airPricingDetailDTOs: data.airPricingDetailDTOs,
             dateInserted: data.dateInserted,
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
             vendorName: data.vendorName,
-            transitTimeSeaPricing: data.transitTimeSeaPricing,
+            transitTimeAirPricing: data.transitTimeAirPricing,
+            fscAirPricing: data.fscAirPricing,
+            sscAirPricing: data.sscAirPricing,
+            gw: data.gw,
+            loadCapacityMinAirPricing: data.loadCapacityMinAirPricing,
+            priceLoadCapacityMinAirPricing: data.priceLoadCapacityMinAirPricing,
             searchAll: '',
           }))
         );
@@ -147,28 +120,12 @@ export default function MasterDataTable() {
     },
   });
 
-  const updateColumnMutation = useMutation({
-    mutationFn: () =>
-      updateColumnTable({
-        tableName: TABLE_NAME.SEA_PRICING,
-        density: DENSITY.Middle,
-        columnFixed: columnsStateMap,
-      }),
-    onSuccess: (data) => {
-      if (data.status) {
-        queryClient.invalidateQueries({
-          queryKey: [API_COLUMN.GET_COLUMN_TABLE_NAME],
-        });
-      }
-    },
-  });
-
   const refreshingQuery = () => {
     setSelectedActiveKey(initalSelectSearchMaster);
     setQueryInputParams(initalValueQueryInputParamsMaster);
     setRefreshingLoading(true);
     pagination.current = 1;
-    locationsQuerySearch.refetch();
+    QuerySearch.refetch();
     setTimeout(() => {
       setRefreshingLoading(false);
     }, 500);
@@ -199,22 +156,22 @@ export default function MasterDataTable() {
     const newQueryParams = {
       ...querySelectParams,
       searchAll: '',
-      statusSeaPricing:
-        filters.statusSeaPricing?.length !== 0 && filters.statusSeaPricing
-          ? (filters.statusSeaPricing as string[])
+      statusAirPricing:
+        filters.statusAirPricing?.length !== 0 && filters.statusAirPricing
+          ? (filters.statusAirPricing as string[])
           : [],
     };
     setQuerySelectParams(newQueryParams);
   };
   const columnDTOs = useMemo(() => {
     const result = [{}];
-    for (const key in dataTable[0]?.seaPricingDetailDTOs) {
-      if (dataTable[0].seaPricingDetailDTOs.hasOwnProperty(key)) {
+    for (const key in dataTable[0]?.airPricingDetailDTOs) {
+      if (dataTable[0].airPricingDetailDTOs.hasOwnProperty(key)) {
         const obj = {
-          title: <div className={style.title}>{key}</div>,
+          title: key,
           width: 200,
-          dataIndex: 'seaPricingDetailDTOs',
-          render: (value: SeaPricingDetailDTOs) =>
+          dataIndex: 'airPricingDetailDTOs',
+          render: (value: AirPricingDetailDTOs) =>
             formatCurrencyHasCurrency(value[key]),
         };
         result.push(obj);
@@ -223,50 +180,50 @@ export default function MasterDataTable() {
     return result;
   }, [dataTable]);
 
-  const columns: ProColumns<SeaPricingTable>[] = [
+  const columns: ProColumns<AirPricingTable>[] = [
     {
-      title: <div className={style.title}>{translatePricingSea('no')}</div>,
+      title: <div className={style.title}>{translatePricingAir('code')}</div>,
       dataIndex: 'index',
       width: 50,
-      align: 'right',
+      align: 'center',
       render: (_, record, index) => {
         const { pageSize = 0, current = 0 } = pagination ?? {};
         return index + pageSize * (current - 1) + 1;
       },
     },
     {
-      title: <div className={style.title}>{translatePricingSea('POL')}</div>,
+      title: <div className={style.title}>{translatePricingAir('AOL')}</div>,
       width: 200,
-      dataIndex: 'polName',
-      key: 'polName',
+      dataIndex: 'aolName',
+      key: 'aolName',
       align: 'left',
       render: (value) => value,
     },
     {
-      title: <div className={style.title}>{translatePricingSea('POD')}</div>,
+      title: <div className={style.title}>{translatePricingAir('AOD')}</div>,
       width: 200,
-      dataIndex: 'podName',
-      key: 'podName',
+      dataIndex: 'aodName',
+      key: 'aodName',
       align: 'left',
     },
     {
-      title: <div className={style.title}>{translatePricingSea('status')}</div>,
+      title: <div className={style.title}>{translatePricingAir('status')}</div>,
       width: 120,
-      dataIndex: 'statusSeaPricing',
-      key: 'statusSeaPricing',
+      dataIndex: 'statusAirPricing',
+      key: 'statusAirPricing',
       align: 'center',
-      filters: Object.keys(STATUS_MATER_LABELS).map((key) => ({
+      filters: Object.keys(STATUS_ALL_LABELS).map((key) => ({
         text: key,
         value: key,
       })),
       filterSearch: false,
-      filteredValue: querySelectParams.statusSeaPricing || null,
+      filteredValue: querySelectParams.statusAirPricing || null,
       filterIcon: () => {
         return (
           <FilterFilled
             style={{
               color:
-                querySelectParams.statusSeaPricing.length !== 0
+                querySelectParams.statusAirPricing.length !== 0
                   ? COLORS.SEARCH.FILTER_ACTIVE
                   : COLORS.SEARCH.FILTER_DEFAULT,
             }}
@@ -275,20 +232,18 @@ export default function MasterDataTable() {
       },
       render: (value) => (
         <Tag
-          color={
-            STATUS_MASTER_COLORS[value as keyof typeof STATUS_MASTER_COLORS]
-          }
+          color={STATUS_ALL_COLORS[value as keyof typeof STATUS_ALL_COLORS]}
           style={{
             margin: 0,
           }}
         >
-          {STATUS_MATER_LABELS[value as keyof typeof STATUS_MATER_LABELS]}
+          {STATUS_ALL_LABELS[value as keyof typeof STATUS_ALL_LABELS]}
         </Tag>
       ),
     },
     {
       title: (
-        <div className={style.title}>{translatePricingSea('carrier')}</div>
+        <div className={style.title}>{translatePricingAir('carrier')}</div>
       ),
       width: 300,
       dataIndex: 'vendorName',
@@ -297,7 +252,7 @@ export default function MasterDataTable() {
     },
     {
       title: (
-        <div className={style.title}>{translatePricingSea('commodity')}</div>
+        <div className={style.title}>{translatePricingAir('commodity')}</div>
       ),
       width: 300,
       dataIndex: 'commodityName',
@@ -306,35 +261,110 @@ export default function MasterDataTable() {
     },
     {
       title: (
-        <div className={style.title}>{translatePricingSea('currency')}</div>
+        <div className={style.title}>{translatePricingAir('Currency')}</div>
       ),
-      width: 100,
+      width: 200,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'right',
     },
     {
       title: (
-        <div className={style.title}>{translatePricingSea('effect_date')}</div>
+        <div className={style.title}>
+          {translatePricingAir('effect_date_form.title')}
+        </div>
       ),
       width: 200,
       dataIndex: 'effectDated',
       key: 'effectDated',
-      align: 'right',
+      align: 'center',
       render: (value) => formatDate(Number(value)),
     },
     {
       title: (
-        <div className={style.title}>{translatePricingSea('validity')}</div>
+        <div className={style.title}>{translatePricingAir('validity')}</div>
       ),
       width: 200,
       dataIndex: 'validityDate',
       key: 'validityDate',
-      align: 'right',
+      align: 'center',
       render: (value) => formatDate(Number(value)),
     },
     {
-      title: <div className={style.title}>{translatePricingSea('freq')}</div>,
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('transitTime_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'transitTimeAirPricing',
+      key: 'transitTimeAirPricing',
+      align: 'right',
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('sscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'sscAirPricing',
+      key: 'sscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('fscAirPricing_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'fscAirPricing',
+      key: 'fscAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('loadCapacityMin_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'loadCapacityMinAirPricing',
+      key: 'loadCapacityMinAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: (
+        <div className={style.title}>
+          {translatePricingAir('priceLoadCapacityMin_form.title')}
+        </div>
+      ),
+      width: 200,
+      dataIndex: 'priceLoadCapacityMinAirPricing',
+      key: 'priceLoadCapacityMinAirPricing',
+      render: (value) => {
+        return value ? formatNumber(Number(value)) : '-';
+      },
+    },
+    {
+      title: 'GW',
+      dataIndex: 'gw',
+      width: 50,
+      key: 'gw',
+      align: 'center',
+      render: (value) => {
+        return <Checkbox checked={value as boolean} />;
+      },
+    },
+    {
+      title: translatePricingAir('freq'),
       width: 150,
       dataIndex: 'freqDate',
       key: 'freqDate',
@@ -343,51 +373,7 @@ export default function MasterDataTable() {
         DAY_WEEK.find((date) => date.value === value)?.label || '-',
     },
     {
-      title: <div className={style.title}>{translatePricingSea('DEM')}</div>,
-      width: 200,
-      dataIndex: 'demSeaPricing',
-      key: 'demSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <div className={style.title}>{translatePricingSea('STO')}</div>,
-      width: 200,
-      dataIndex: 'stoSeaPricing',
-      key: 'stoSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <div className={style.title}>{translatePricingSea('DET')}</div>,
-      width: 200,
-      dataIndex: 'detSeaPricing',
-      key: 'detSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePricingSea('transitTimeSeaPricing_form.title')}
-        </div>
-      ),
-      width: 200,
-      dataIndex: 'transitTimeSeaPricing',
-      key: 'transitTimeSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value));
-      },
-    },
-    {
-      title: <div className={style.title}>{translatePricingSea('note')}</div>,
+      title: translatePricingAir('note'),
       width: 200,
       dataIndex: 'note',
       key: 'note',
@@ -400,7 +386,7 @@ export default function MasterDataTable() {
       width: 150,
       dataIndex: 'dateInserted',
       key: 'dateInserted',
-      align: 'center',
+      align: 'right',
       render: (value) => formatDate(Number(value)),
     },
     {
@@ -408,7 +394,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'insertedByUser',
       key: 'insertedByUser',
-      align: 'center',
+      align: 'left',
     },
     {
       title: (
@@ -425,7 +411,7 @@ export default function MasterDataTable() {
       width: 200,
       dataIndex: 'updatedByUser',
       key: 'updatedByUser',
-      align: 'center',
+      align: 'left',
     },
     {
       key: 'operation',
@@ -441,82 +427,29 @@ export default function MasterDataTable() {
               marginRight: '10px',
             }}
           />
-          {/* <Popconfirm
-            title={translateCommon('modal_delete.title')}
-            okText={translateCommon('modal_delete.button_ok')}
-            cancelText={translateCommon('modal_delete.button_cancel')}
-            onConfirm={() => {
-              setSelectedRowKeys([value as string]);
-              deleteMutation.mutate();
-            }}
-          >
-            <Button
-              icon={<DeleteOutlined />}
-              style={{
-                color: COLORS.ERROR,
-                borderColor: COLORS.ERROR,
-              }}
-            />
-          </Popconfirm> */}
         </div>
       ),
-    },
-    {
-      title: <div className={style.title}>{translatePricingSea('LCLMin')}</div>,
-      width: 200,
-      dataIndex: 'lclMinSeaPricing',
-      key: 'lclMinSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <div className={style.title}>{translatePricingSea('LCL')}</div>,
-      width: 200,
-      dataIndex: 'lclSeaPricing',
-      key: 'lclSeaPricing',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
     },
     ...columnDTOs,
   ];
   // Handle logic table
   const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.SEA_PRICING_EDIT(id, true));
+    router.push(ROUTERS.AIR_PRICING_EDIT(id, true));
   };
 
-  const handleSelectionChange = (selectedRowKey: Key[]) => {
-    const keyData = dataTable.map((item) => item.key);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const uniqueDataAndSelectedRowKeys = selectedRowKeys.filter((item: any) =>
-      keyData.includes(item)
-    );
-    const unique1AndSelectedRowKey = uniqueDataAndSelectedRowKeys.filter(
-      (item) => !selectedRowKey.includes(item)
-    );
-    const uniqueSelection = selectedRowKey.filter(
-      (item) => !selectedRowKeys.includes(item)
-    );
-    const result = selectedRowKeys
-      .concat(uniqueSelection)
-      .filter((item) => !unique1AndSelectedRowKey.includes(item));
-
-    setSelectedRowKeys(result);
+  const handleSelectionChange = (selectedRowKeys: Key[]) => {
+    setSelectedRowKeys(selectedRowKeys);
   };
 
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     pagination.current = page;
     pagination.pageSize = size;
 
-    locationsQuerySearch.refetch();
+    QuerySearch.refetch();
   };
 
   const handleColumnsStateChange = (map: Record<string, ColumnsState>) => {
     setColumnsStateMap(map);
-    updateColumnMutation.mutate();
   };
 
   const handleChangeInputSearchAll = (e: ChangeEvent<HTMLInputElement>) => {
@@ -532,17 +465,17 @@ export default function MasterDataTable() {
   const handleOnDoubleClick = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     e: MouseEvent<any, globalThis.MouseEvent>,
-    record: SeaPricingTable
+    record: AirPricingTable
   ) => {
     const target = e.target as HTMLElement;
     if (!target.closest('button')) {
-      router.push(ROUTERS.SEA_PRICING_EDIT(record.key, true));
+      router.push(ROUTERS.AIR_PRICING_EDIT(record.key, true));
     }
   };
 
   return (
     <div style={{ marginTop: -18 }}>
-      {locationsQuerySearch.isLoading ? (
+      {QuerySearch.isLoading ? (
         <SkeletonTable />
       ) : (
         <>

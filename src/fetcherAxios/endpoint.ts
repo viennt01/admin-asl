@@ -400,6 +400,7 @@ export const API_PARTNER = {
   EXPORT: '/export-partner-with-excel',
   GET_ALL: '/get-all-partner',
   ADD_USER_PARTNER: '/add-user-partner',
+  GET_ALL_PRICING_BY_PARTNER: '/get-all-prictng-by-partner',
 };
 export const API_PARTNER_ROLE = {
   GET_ALL: '/get-all-partner-role',

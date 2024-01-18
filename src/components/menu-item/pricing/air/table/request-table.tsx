@@ -125,7 +125,7 @@ export default function RequestTable() {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            vendor: data.vendor,
+            vendorName: data.vendorName,
             transitTimeAirPricing: data.transitTimeAirPricing,
             gw: data.gw,
             fscAirPricing: data.fscAirPricing,
@@ -282,12 +282,6 @@ export default function RequestTable() {
             style={{
               color: COLORS.ERROR,
               borderColor: COLORS.ERROR,
-              display:
-                role === ROLE.AGENT ||
-                role === ROLE.LINER ||
-                role === ROLE.AIR_LINER
-                  ? 'none'
-                  : '',
             }}
           />
         </div>
@@ -330,8 +324,8 @@ export default function RequestTable() {
         <div className={style.title}>{translatePricingAir('carrier')}</div>
       ),
       width: 200,
-      dataIndex: 'vendor', // TODO:Check again
-      key: 'vendor',
+      dataIndex: 'vendorName', // TODO:Check again
+      key: 'vendorName',
       align: 'left',
     },
     {
@@ -591,6 +585,13 @@ export default function RequestTable() {
             columnsStateMap={columnsStateMap}
             handleSearchSelect={handleSearchSelect}
             checkTableMaster={true}
+            handleApproveAndReject={
+              role === ROLE.LINER ||
+              role === ROLE.AGENT ||
+              role === ROLE.AIR_LINER
+                ? undefined
+                : handleApproveAndReject
+            }
           />
         </>
       )}

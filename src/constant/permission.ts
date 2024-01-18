@@ -185,7 +185,7 @@ export const PERMISSION_RULES = () => {
       '/system/permission/edit/[id]': PERMISSION.EDIT,
       '/system/permission/manager-admin/[id]': PERMISSION.EDIT,
 
-      '/sale-activity/': PERMISSION.EDIT,
+      '/sale-activity': PERMISSION.EDIT,
       '/sale-activity/create': PERMISSION.EDIT,
       '/sale-activity/edit/[id]': PERMISSION.EDIT,
       '/sale-activity/manager-admin/[id]': PERMISSION.EDIT,
@@ -356,7 +356,7 @@ export const PERMISSION_RULES = () => {
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/sale-activity/': PERMISSION.EDIT,
+      '/sale-activity': PERMISSION.EDIT,
       '/sale-activity/create': PERMISSION.EDIT,
       '/sale-activity/edit/[id]': PERMISSION.EDIT,
       '/sale-activity/manager-admin/[id]': PERMISSION.EDIT,
@@ -529,7 +529,7 @@ export const PERMISSION_RULES = () => {
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/sale-activity/': PERMISSION.NO_VIEW,
+      '/sale-activity': PERMISSION.NO_VIEW,
       '/sale-activity/create': PERMISSION.NO_VIEW,
       '/sale-activity/edit/[id]': PERMISSION.NO_VIEW,
       '/sale-activity/manager-admin/[id]': PERMISSION.NO_VIEW,
@@ -702,12 +702,12 @@ export const PERMISSION_RULES = () => {
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/sale-activity/': PERMISSION.NO_VIEW,
+      '/sale-activity': PERMISSION.NO_VIEW,
       '/sale-activity/create': PERMISSION.NO_VIEW,
       '/sale-activity/edit/[id]': PERMISSION.NO_VIEW,
       '/sale-activity/manager-admin/[id]': PERMISSION.NO_VIEW,
     },
-    AIR_LINER: {
+    AIRLINE: {
       '/quotation/fee-group': PERMISSION.NO_VIEW,
       '/quotation/fee-group/create': PERMISSION.NO_VIEW,
       '/quotation/fee-group/edit/[id]': PERMISSION.NO_VIEW,
@@ -742,25 +742,25 @@ export const PERMISSION_RULES = () => {
       '/pricing/fee-group/edit/[id]': PERMISSION.VIEW,
       '/pricing/fee-group/manager-admin/[id]': PERMISSION.VIEW,
 
-      '/pricing/pricing-sea': PERMISSION.VIEW,
-      '/pricing/pricing-sea/create': PERMISSION.EDIT,
-      '/pricing/pricing-sea/edit/[id]': PERMISSION.VIEW,
-      '/pricing/pricing-sea/manager-admin/[id]': PERMISSION.VIEW,
+      '/pricing/pricing-sea': PERMISSION.NO_VIEW,
+      '/pricing/pricing-sea/create': PERMISSION.NO_VIEW,
+      '/pricing/pricing-sea/edit/[id]': PERMISSION.NO_VIEW,
+      '/pricing/pricing-sea/manager-admin/[id]': PERMISSION.NO_VIEW,
 
       '/pricing/pricing-air': PERMISSION.VIEW,
       '/pricing/pricing-air/create': PERMISSION.EDIT,
       '/pricing/pricing-air/edit/[id]': PERMISSION.VIEW,
       '/pricing/pricing-air/manager-admin/[id]': PERMISSION.VIEW,
 
-      '/pricing/pricing-customs': PERMISSION.VIEW,
-      '/pricing/pricing-customs/create': PERMISSION.EDIT,
-      '/pricing/pricing-customs/edit/[id]': PERMISSION.VIEW,
-      '/pricing/pricing-customs/manager-admin/[id]': PERMISSION.VIEW,
+      '/pricing/pricing-customs': PERMISSION.NO_VIEW,
+      '/pricing/pricing-customs/create': PERMISSION.NO_VIEW,
+      '/pricing/pricing-customs/edit/[id]': PERMISSION.NO_VIEW,
+      '/pricing/pricing-customs/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/pricing/pricing-trucking': PERMISSION.EDIT,
-      '/pricing/pricing-trucking/create': PERMISSION.EDIT,
-      '/pricing/pricing-trucking/edit/[id]': PERMISSION.EDIT,
-      '/pricing/pricing-trucking/manager-admin/[id]': PERMISSION.VIEW,
+      '/pricing/pricing-trucking': PERMISSION.NO_VIEW,
+      '/pricing/pricing-trucking/create': PERMISSION.NO_VIEW,
+      '/pricing/pricing-trucking/edit/[id]': PERMISSION.NO_VIEW,
+      '/pricing/pricing-trucking/manager-admin/[id]': PERMISSION.NO_VIEW,
 
       '/partner': PERMISSION.NO_VIEW,
       '/partner/create': PERMISSION.NO_VIEW,
@@ -875,7 +875,7 @@ export const PERMISSION_RULES = () => {
       '/system/permission/edit/[id]': PERMISSION.NO_VIEW,
       '/system/permission/manager-admin/[id]': PERMISSION.NO_VIEW,
 
-      '/sale-activity/': PERMISSION.NO_VIEW,
+      '/sale-activity': PERMISSION.NO_VIEW,
       '/sale-activity/create': PERMISSION.NO_VIEW,
       '/sale-activity/edit/[id]': PERMISSION.NO_VIEW,
       '/sale-activity/manager-admin/[id]': PERMISSION.NO_VIEW,

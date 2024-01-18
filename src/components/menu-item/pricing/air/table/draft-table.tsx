@@ -95,7 +95,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
             transitTimeAirPricing: data.transitTimeAirPricing,
-            vendor: data.vendor,
+            vendorName: data.vendorName,
             gw: data.gw,
             fscAirPricing: data.fscAirPricing,
             sscAirPricing: data.sscAirPricing,
@@ -233,8 +233,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
         <div className={style.title}>{translatePricingAir('carrier')}</div>
       ),
       width: 200,
-      dataIndex: 'vendor', // TODO: check again
-      key: 'vendor',
+      dataIndex: 'vendorName', // TODO: check again
+      key: 'vendorName',
       align: 'left',
     },
     {

@@ -238,6 +238,7 @@ const Table = <T extends Record<string, any>>({
                   loading={exportLoading}
                   icon={<CheckOutlined />}
                   size="large"
+                  disabled={selectedRowKeys?.length === 0 ? true : false}
                   onClick={() =>
                     handleApproveAndReject &&
                     handleApproveAndReject(STATUS_ALL_LABELS.ACTIVE)
@@ -248,8 +249,9 @@ const Table = <T extends Record<string, any>>({
                     fontSize: '14px',
                     padding: '4px 15px',
                     borderRadius: '6px',
-                    color: COLORS.SUCCESS,
-                    borderColor: COLORS.SUCCESS,
+                    color: selectedRowKeys?.length === 0 ? '' : COLORS.SUCCESS,
+                    borderColor:
+                      selectedRowKeys?.length === 0 ? '' : COLORS.SUCCESS,
                     display: handleApproveAndReject ? '' : 'none',
                   }}
                 >
@@ -264,6 +266,7 @@ const Table = <T extends Record<string, any>>({
                   loading={exportLoading}
                   icon={<CloseOutlined />}
                   size="large"
+                  disabled={selectedRowKeys?.length === 0 ? true : false}
                   onClick={() =>
                     handleApproveAndReject &&
                     handleApproveAndReject(STATUS_ALL_LABELS.REJECT)
@@ -274,8 +277,9 @@ const Table = <T extends Record<string, any>>({
                     fontSize: '14px',
                     padding: '4px 15px',
                     borderRadius: '6px',
-                    color: COLORS.ERROR,
-                    borderColor: COLORS.ERROR,
+                    color: selectedRowKeys?.length === 0 ? '' : COLORS.RED,
+                    borderColor:
+                      selectedRowKeys?.length === 0 ? '' : COLORS.RED,
                     display: handleApproveAndReject ? '' : 'none',
                   }}
                 >

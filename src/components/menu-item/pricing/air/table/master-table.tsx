@@ -170,7 +170,7 @@ export default function MasterDataTable() {
             insertedByUser: data.insertedByUser,
             dateUpdated: data.dateUpdated,
             updatedByUser: data.updatedByUser,
-            vendor: data.vendor,
+            vendorName: data.vendorName,
             transitTimeAirPricing: data.transitTimeAirPricing,
             fscAirPricing: data.fscAirPricing,
             sscAirPricing: data.sscAirPricing,
@@ -380,9 +380,9 @@ export default function MasterDataTable() {
       title: (
         <div className={style.title}>{translatePricingAir('carrier')}</div>
       ),
-      width: 200,
-      dataIndex: '', // TODO:Check again
-      key: 'vendor',
+      width: 300,
+      dataIndex: 'vendorName',
+      key: 'vendorName',
       align: 'left',
     },
     {

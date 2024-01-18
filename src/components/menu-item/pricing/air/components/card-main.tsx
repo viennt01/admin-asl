@@ -674,7 +674,7 @@ const CardMain = ({
             />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Form.Item label={'GW'} name="gw">
             <Checkbox
               disabled={checkRow && isCheckPermissionEdit}

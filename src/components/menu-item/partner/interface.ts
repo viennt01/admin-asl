@@ -269,3 +269,10 @@ export interface IDataChartPricing {
   totalPricing: string;
   date: 0;
 }
+//----------------------------------------------------------------
+export interface RequestPricing {
+  searchAll: string;
+  partnerID: string;
+  typePricing: string;
+  paginateRequest: IPagination;
+}

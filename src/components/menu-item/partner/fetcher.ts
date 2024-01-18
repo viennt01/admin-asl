@@ -22,6 +22,7 @@ import {
   IRequestAddUserPartner,
   IDataChartPricing,
   IRequestChartPricing,
+  RequestPricing,
 } from './interface';
 import {
   API_COLUMN,
@@ -34,6 +35,10 @@ import {
   ColumnTable,
   TABLE_NAME,
 } from '@/components/commons/table/table-default';
+import { AirPricingRequire } from '../pricing/air/interface';
+import { SeaPricingRequire } from '../pricing/sea/interface';
+import { ITruckingRequire } from '../pricing/trucking/interface';
+import { ICustomPricingRequire } from '../pricing/custom/interface';
 
 export const getUnitSearch = (data: IRequestPartnerType) => {
   return post<IRequestPartnerType, ResponseWithPayload<IPartnerRequire>>({
@@ -128,4 +133,25 @@ export const getChartPricing = (data: IRequestChartPricing) => {
   return post<IRequestChartPricing, ResponseWithPayload<IDataChartPricing[]>>({
     data,
   })(API_CHART.GET_CHART_PRICING);
+};
+//pricing
+export const getAirPricing = (data: RequestPricing) => {
+  return post<RequestPricing, ResponseWithPayload<AirPricingRequire>>({
+    data,
+  })(API_PARTNER.GET_ALL_PRICING_BY_PARTNER);
+};
+export const getSeaPricing = (data: RequestPricing) => {
+  return post<RequestPricing, ResponseWithPayload<SeaPricingRequire>>({
+    data,
+  })(API_PARTNER.GET_ALL_PRICING_BY_PARTNER);
+};
+export const getTruckPricing = (data: RequestPricing) => {
+  return post<RequestPricing, ResponseWithPayload<ITruckingRequire>>({
+    data,
+  })(API_PARTNER.GET_ALL_PRICING_BY_PARTNER);
+};
+export const getCustomsPricing = (data: RequestPricing) => {
+  return post<RequestPricing, ResponseWithPayload<ICustomPricingRequire>>({
+    data,
+  })(API_PARTNER.GET_ALL_PRICING_BY_PARTNER);
 };

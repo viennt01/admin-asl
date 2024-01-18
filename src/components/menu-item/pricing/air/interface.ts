@@ -35,7 +35,7 @@ export interface AirPricing {
   dateUpdated: string;
   updatedByUser: string;
   airPricingDetailDTOs: { [key: string]: string };
-  vendor: string;
+  vendorName: string;
   transitTimeAirPricing: string;
   fscAirPricing: string;
   sscAirPricing: string;

@@ -43,6 +43,7 @@ import ListSea from './list-sea';
 import ListTrucking from './list-trucking';
 import ListCustoms from './list-customs';
 import ChartPricing from './chart-pricing';
+import AirPricing from './list-air';
 
 const { Panel } = Collapse;
 
@@ -729,7 +730,10 @@ const UnitForm = ({
             background: 'white',
             border: 'none',
             marginBottom: '16px',
-            display: create ? 'none' : '',
+            display:
+              create || valueRole?.length > 1 || !checkRoleCustomer
+                ? ''
+                : 'none',
           }}
         >
           <Panel
@@ -749,7 +753,7 @@ const UnitForm = ({
             }
             key="1"
           >
-            <ListSea form={form} />
+            <ListSea />
           </Panel>
         </Collapse>
 
@@ -760,7 +764,44 @@ const UnitForm = ({
             background: 'white',
             border: 'none',
             marginBottom: '16px',
-            display: create ? 'none' : '',
+            display:
+              create || valueRole?.length > 1 || !checkRoleCustomer
+                ? ''
+                : 'none',
+          }}
+        >
+          <Panel
+            style={{
+              borderRadius: 4,
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+              background: 'white',
+              border: 'none',
+            }}
+            forceRender
+            header={
+              <Badge count={0} style={{ marginRight: '-10px' }}>
+                <Title level={3} style={{ margin: '-4px 0' }}>
+                  List air pricing
+                </Title>
+              </Badge>
+            }
+            key="1"
+          >
+            <AirPricing />
+          </Panel>
+        </Collapse>
+
+        <Collapse
+          style={{
+            borderRadius: 4,
+            boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+            background: 'white',
+            border: 'none',
+            marginBottom: '16px',
+            display:
+              create || valueRole?.length > 1 || !checkRoleCustomer
+                ? ''
+                : 'none',
           }}
         >
           <Panel
@@ -780,7 +821,7 @@ const UnitForm = ({
             }
             key="1"
           >
-            <ListTrucking form={form} />
+            <ListTrucking />
           </Panel>
         </Collapse>
 
@@ -791,7 +832,10 @@ const UnitForm = ({
             background: 'white',
             border: 'none',
             marginBottom: '16px',
-            display: create ? 'none' : '',
+            display:
+              create || valueRole?.length > 1 || !checkRoleCustomer
+                ? ''
+                : 'none',
           }}
         >
           <Panel
@@ -811,7 +855,7 @@ const UnitForm = ({
             }
             key="1"
           >
-            <ListCustoms form={form} />
+            <ListCustoms />
           </Panel>
         </Collapse>
 
@@ -822,7 +866,7 @@ const UnitForm = ({
             background: 'white',
             border: 'none',
             marginBottom: '16px',
-            display: create ? 'none' : '',
+            display: create || !checkRoleCustomer ? 'none' : '',
           }}
         >
           <Panel

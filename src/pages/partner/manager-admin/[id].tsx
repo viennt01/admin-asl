@@ -15,7 +15,14 @@ function ManagerPartnerPage() {
 
 export default withAuthentication(ManagerPartnerPage);
 import { getStatic } from '@/lib/getStaticProps';
-export const getStaticProps = getStatic(['common', 'partner']);
+export const getStaticProps = getStatic([
+  'common',
+  'partner',
+  'pricingAir',
+  'pricingSea',
+  'pricingCustoms',
+  'pricingTrucking',
+]);
 export const getStaticPaths = () => {
   return {
     paths: [],
