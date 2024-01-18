@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import FtlTruckDetail from '@/components/ftl-truck-detail';
+import FtlTruckDetail from '@/components/menu-item/booking/ftl-truck-detail';
+
 function BookingEditPage() {
   return (
     <>

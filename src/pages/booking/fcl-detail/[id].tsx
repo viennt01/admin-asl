@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import FclOceanFreightDetail from '@/components/fcl-sea-detail';
+import FclOceanFreightDetail from '@/components/menu-item/booking/fcl-sea-detail';
+
 function BookingEditPage() {
   return (
     <>

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import AirDetail from '@/components/air-detail';
+import AirDetail from '@/components/menu-item/booking/air-detail';
+
 function BookingEditPage() {
   return (
     <>

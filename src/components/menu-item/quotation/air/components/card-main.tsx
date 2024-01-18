@@ -42,7 +42,7 @@ import {
   getAllLiner,
   getAllLocation,
 } from '@/components/menu-item/pricing/sea/fetcher';
-import { TYPE_LOCATION } from '@/components/fcl-sea-detail/interface';
+import { TYPE_LOCATION } from '@/components/menu-item/booking/fcl-sea-detail/interface';
 
 interface Props {
   create?: boolean;

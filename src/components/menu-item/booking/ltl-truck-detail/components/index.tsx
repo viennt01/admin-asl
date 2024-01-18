@@ -16,11 +16,11 @@ import { useRouter } from 'next/router';
 import { IDataBookingProps } from '..';
 import { useMutation } from '@tanstack/react-query';
 import { successToast } from '@/hook/toast';
-import { IRequireSendListEmail } from '@/components/fcl-sea-detail/interface';
-import { sendListEmail } from '@/components/fcl-sea-detail/fetcher';
 import FormBooking from '../form-booking';
 import FormBookingPDF from '../form-booking-pdf';
 import COLORS from '@/constant/color';
+import { IRequireSendListEmail } from '../../fcl-sea-detail/interface';
+import { sendListEmail } from '../../fcl-sea-detail/fetcher';
 interface Props {
   dataPropsBooking: IDataBookingProps | undefined;
 }

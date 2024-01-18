@@ -13,14 +13,14 @@ import {
 } from 'antd';
 import { MailOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { IDataBookingProps } from '..';
 import { useMutation } from '@tanstack/react-query';
 import { successToast } from '@/hook/toast';
-import { IDataBookingProps } from '..';
-import { IRequireSendListEmail } from '@/components/fcl-sea-detail/interface';
-import { sendListEmail } from '@/components/fcl-sea-detail/fetcher';
 import COLORS from '@/constant/color';
 import FormBooking from '../form-booking';
 import FormBookingPDF from '../form-booking-pdf';
+import { IRequireSendListEmail } from '../../fcl-sea-detail/interface';
+import { sendListEmail } from '../../fcl-sea-detail/fetcher';
 interface Props {
   dataPropsBooking: IDataBookingProps | undefined;
 }
@@ -112,10 +112,10 @@ export default function Step5({ dataPropsBooking }: Props) {
         html2canvas: {
           scale: 6, // You can adjust the scale to fit more content into a single page
         },
-        // pagebreak: {
-        //   mode: ['avoid-all', 'css'],
-        //   before: 'pageX',
-        // },
+        pagebreak: {
+          mode: ['avoid-all', 'css'],
+          before: 'pageX',
+        },
       };
       window.html2pdf(element, parameters);
     } else {

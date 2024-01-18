@@ -1,6 +1,7 @@
 import Head from 'next/head';
-import LtlTruckDetail from '@/components/ltl-truck-detail';
 import withAuthentication from '@/hook/useAuthentication';
+import LtlTruckDetail from '@/components/menu-item/booking/ltl-truck-detail';
+
 function BookingEditPage() {
   return (
     <>

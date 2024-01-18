@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import withAuthentication from '@/hook/useAuthentication';
-import LclOceanFreightDetail from '@/components/lcl-sea-detail';
+import LclOceanFreightDetail from '@/components/menu-item/booking/lcl-sea-detail';
+
 function BookingEditPage() {
   return (
     <>
