@@ -110,7 +110,7 @@ export default function Step5({ dataPropsBooking }: Props) {
           orientation: 'portrait',
         },
         html2canvas: {
-          scale: 6, // You can adjust the scale to fit more content into a single page
+          scale: 2, // You can adjust the scale to fit more content into a single page
         },
         pagebreak: {
           mode: ['avoid-all', 'css'],
