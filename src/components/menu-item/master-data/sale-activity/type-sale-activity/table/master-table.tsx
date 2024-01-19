@@ -1,5 +1,4 @@
 import {
-  EditOutlined,
   ExclamationCircleFilled,
   FilterFilled,
   DeleteOutlined,
@@ -398,13 +397,13 @@ export default function MasterDataTable() {
               marginRight: '10px',
             }}
           />
-          <Button
+          {/* <Button
             onClick={() => handleEditCustomer(value as string)}
             icon={<EditOutlined />}
             style={{
               marginRight: '10px',
             }}
-          />
+          /> */}
           <Popconfirm
             title={translateCommon('modal_delete.title')}
             okText={translateCommon('modal_delete.button_ok')}
@@ -428,9 +427,9 @@ export default function MasterDataTable() {
   ];
 
   // Handle logic table
-  const handleEditCustomer = (id: string) => {
-    router.push(ROUTERS.TYPE_SALE_ACTIVITY_EDIT(id));
-  };
+  // const handleEditCustomer = (id: string) => {
+  //   router.push(ROUTERS.TYPE_SALE_ACTIVITY_EDIT(id));
+  // };
 
   const handleSelectionChange = (selectedRowKeys: Key[]) => {
     setSelectedRowKeys(selectedRowKeys);

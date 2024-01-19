@@ -323,18 +323,18 @@ export default function SaleActivity() {
       align: 'left',
       render: (value) => formatDateYYYYMMDD(Number(value)),
     },
-    {
-      title: (
-        <div className={style.title}>
-          {translatePartner('timeNextAppointmentSaleActivity_form.title')}
-        </div>
-      ),
-      dataIndex: 'timeNextAppointmentSaleActivity',
-      key: 'timeNextAppointmentSaleActivity',
-      width: 250,
-      align: 'left',
-      render: (value) => formatDateYYYYMMDD(Number(value)),
-    },
+    // {
+    //   title: (
+    //     <div className={style.title}>
+    //       {translatePartner('timeNextAppointmentSaleActivity_form.title')}
+    //     </div>
+    //   ),
+    //   dataIndex: 'timeNextAppointmentSaleActivity',
+    //   key: 'timeNextAppointmentSaleActivity',
+    //   width: 250,
+    //   align: 'left',
+    //   render: (value) => formatDateYYYYMMDD(Number(value)),
+    // },
     {
       title: (
         <div className={style.title}>
