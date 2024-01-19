@@ -362,23 +362,23 @@ export default function MasterDataTable() {
       key: 'insertedByUser',
       align: 'center',
     },
-    {
-      title: (
-        <div className={style.title}>{translateCommon('date_inserted')}</div>
-      ),
-      width: 150,
-      dataIndex: 'dateUpdated',
-      key: 'dateUpdated',
-      align: 'center',
-      render: (value) => formatDate(Number(value)),
-    },
-    {
-      title: <div className={style.title}>{translateCommon('inserter')}</div>,
-      width: 200,
-      dataIndex: 'updatedByUser',
-      key: 'updatedByUser',
-      align: 'center',
-    },
+    // {
+    //   title: (
+    //     <div className={style.title}>{translateCommon('date_inserted')}</div>
+    //   ),
+    //   width: 150,
+    //   dataIndex: 'dateUpdated',
+    //   key: 'dateUpdated',
+    //   align: 'center',
+    //   render: (value) => formatDate(Number(value)),
+    // },
+    // {
+    //   title: <div className={style.title}>{translateCommon('inserter')}</div>,
+    //   width: 200,
+    //   dataIndex: 'updatedByUser',
+    //   key: 'updatedByUser',
+    //   align: 'center',
+    // },
     {
       key: 'operation',
       width: 50,
