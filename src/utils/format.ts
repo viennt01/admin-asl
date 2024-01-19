@@ -6,7 +6,7 @@ export const formatDateTime = (date: Date) => {
 
 export function formatDate(
   value: dayjs.ConfigType,
-  formatString = 'YYYY-MM-DD HH:MM'
+  formatString = 'YYYY-MM-DD'
 ) {
   if (value) {
     return dayjs(value).format(formatString);
