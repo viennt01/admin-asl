@@ -1,4 +1,4 @@
-import { EyeOutlined } from '@ant-design/icons';
+import { EyeOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, PaginationProps } from 'antd';
 import { Key, MouseEvent, useContext, useState } from 'react';
 import { ROUTERS } from '@/constant/router';
@@ -27,6 +27,7 @@ import {
 } from '../fetcher';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
+import COLORS from '@/constant/color';
 import { API_USER } from '@/fetcherAxios/endpoint';
 import { getUserInfo } from '@/layout/fetcher';
 import { appLocalStorage } from '@/utils/localstorage';
@@ -34,7 +35,7 @@ import { getPriorityRole } from '@/hook/useAuthentication';
 import { AppContext } from '@/app-context';
 import { LOCAL_STORAGE_KEYS } from '@/constant/localstorage';
 
-export default function PendingTable() {
+export default function RequestTable() {
   const router = useRouter();
   const { translate: translatePartner } = useI18n('booking');
   const { translate: translateCommon } = useI18n('common');
@@ -70,11 +71,11 @@ export default function PendingTable() {
   });
 
   const pendingQuerySearch = useQuery({
-    queryKey: [TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PENDING, querySelectParams],
+    queryKey: [TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_REQUEST, querySelectParams],
     queryFn: () =>
       getHistoryBooking({
         bookingNo: querySelectParams,
-        statusBooking: [TYPE_STATUS_BOOKING.PENDING_CONFIRMATION],
+        statusBooking: [TYPE_STATUS_BOOKING.REQUEST],
         paginateRequest: {
           currentPage: pagination.current,
           pageSize: pagination.pageSize,
@@ -190,9 +191,9 @@ export default function PendingTable() {
             icon={<EyeOutlined />}
             style={{ marginRight: '10px' }}
           />
-          {/* <Button
+          <Button
             onClick={() => {
-              handleUpdateMutation(TYPE_STATUS_BOOKING.PROCESSING, [
+              handleUpdateMutation(TYPE_STATUS_BOOKING.PENDING_CONFIRMATION, [
                 value as React.Key,
               ]);
             }}
@@ -211,7 +212,7 @@ export default function PendingTable() {
             }}
             icon={<CloseOutlined />}
             style={{ color: COLORS.ERROR, borderColor: COLORS.ERROR }}
-          /> */}
+          />
         </div>
       ),
     },
@@ -391,7 +392,6 @@ export default function PendingTable() {
     },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleUpdateMutation = (status: string, id?: React.Key[]) => {
     const _requestData: IRequestStatusHistoryBooking = {
       id: id || selectedRowKeys,
@@ -403,7 +403,7 @@ export default function PendingTable() {
           ? (successToast(data.message),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
-              queryKey: [TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PENDING],
+              queryKey: [TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_REQUEST],
             }),
             checkUser.refetch())
           : errorToast(data.message);

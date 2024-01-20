@@ -9,10 +9,11 @@ import { GetTitleNotificationTab } from '@/utils/common';
 import { useContext, useState } from 'react';
 import { AppContext } from '@/app-context';
 import { TYPE_TABS } from './interface';
+import RequestTable from './table/request-table';
 
 export default function Booking() {
   const [keyActive, setKeyActive] = useState<TYPE_TABS>(
-    TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PENDING
+    TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_REQUEST
   );
   const queryClient = useQueryClient();
   const { userInfo } = useContext(AppContext);
@@ -41,15 +42,20 @@ export default function Booking() {
                 <div
                   style={{
                     color:
-                      keyActive === TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PENDING
+                      keyActive === TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_REQUEST
                         ? COLORS.GREEN
                         : COLORS.BLACK_BLUR,
                   }}
                 >
-                  Pending confirmation
+                  Request
                 </div>
               </Badge>
             ),
+            key: TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_REQUEST,
+            children: <RequestTable />,
+          },
+          {
+            label: 'Pending',
             key: TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_PENDING,
             children: <PendingTable />,
           },

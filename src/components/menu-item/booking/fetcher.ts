@@ -7,6 +7,7 @@ import {
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 
 export enum TYPE_STATUS_BOOKING {
+  'REQUEST' = 'REQUEST',
   'PENDING_CONFIRMATION' = 'PENDING',
   'PROCESSING' = 'PROCESSING',
   'COMPLETED' = 'COMPLETED',
