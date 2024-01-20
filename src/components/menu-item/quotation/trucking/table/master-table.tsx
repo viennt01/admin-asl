@@ -123,6 +123,7 @@ export default function MasterDataTable() {
         setDataTable(
           data.data.data.map((data) => ({
             key: data.truckingQuotationID,
+            truckingQuotationNo: data.truckingQuotationNo,
             pickupID: data.pickupID,
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
@@ -301,8 +302,8 @@ export default function MasterDataTable() {
         <div className={style.title}>{translateQuotationTruck('code')}</div>
       ),
       width: 200,
-      dataIndex: 'truckQuotationNo',
-      key: 'truckQuotationNo',
+      dataIndex: 'truckingQuotationNo',
+      key: 'truckingQuotationNo',
       align: 'left',
       render: (value) => value,
     },

@@ -8,6 +8,7 @@ export enum TYPE_TABS {
 }
 export interface ITruckingQuotation {
   truckingQuotationID: string;
+  truckingQuotationNo: string;
   pickupID: string;
   pickupName: string;
   deliveryID: string;

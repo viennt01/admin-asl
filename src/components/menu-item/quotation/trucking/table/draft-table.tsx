@@ -63,6 +63,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
           data.data.data.map((data) => ({
             key: data.truckingQuotationID,
             pickupID: data.pickupID,
+            truckingQuotationNo: data.truckingQuotationNo,
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
             deliveryName: data.deliveryName,
@@ -165,8 +166,8 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
     {
       title: translateQuotationTruck('code'),
       width: 200,
-      dataIndex: 'truckQuotationNo',
-      key: 'truckQuotationNo',
+      dataIndex: 'truckingQuotationNo',
+      key: 'truckingQuotationNo',
       align: 'left',
       render: (value) => value,
     },

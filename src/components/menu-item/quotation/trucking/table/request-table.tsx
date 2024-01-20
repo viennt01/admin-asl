@@ -83,6 +83,7 @@ const RequestTable = () => {
         setDataTable(
           data.data.data.map((data) => ({
             key: data.truckingQuotationID,
+            truckingQuotationNo: data.truckingQuotationNo,
             pickupID: data.pickupID,
             pickupName: data.pickupName,
             deliveryID: data.deliveryID,
@@ -212,8 +213,8 @@ const RequestTable = () => {
     {
       title: <div className={style.title}>{translateQuotationTruck('no')}</div>,
       width: 200,
-      dataIndex: 'seaQuotationNo',
-      key: 'seaQuotationNo',
+      dataIndex: 'truckingQuotationNo',
+      key: 'truckingQuotationNo',
       align: 'left',
       render: (value) => value,
     },
