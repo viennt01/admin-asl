@@ -455,7 +455,7 @@ export default function RequestDataTable() {
       key: 'transitTimeSeaPricing',
       align: 'right',
       render: (value) => {
-        return formatNumber(Number(value));
+        return value ? value : '-';
       },
     },
     {

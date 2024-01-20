@@ -469,7 +469,7 @@ export default function MasterDataTable() {
       key: 'transitTimeSeaPricing',
       align: 'right',
       render: (value) => {
-        return formatNumber(Number(value));
+        return value ? value : '-';
       },
     },
     {

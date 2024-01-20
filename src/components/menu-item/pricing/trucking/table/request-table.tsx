@@ -16,11 +16,7 @@ import { ColumnsState, ProColumns } from '@ant-design/pro-components';
 import { FilterValue, TablePaginationConfig } from 'antd/es/table/interface';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { API_COLUMN, API_USER } from '@/fetcherAxios/endpoint';
-import {
-  formatCurrencyHasCurrency,
-  formatDate,
-  formatNumber,
-} from '@/utils/format';
+import { formatCurrencyHasCurrency, formatDate } from '@/utils/format';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
 import {
@@ -480,7 +476,7 @@ export default function RequestTable() {
       key: 'transitTimeSeaPricing',
       align: 'right',
       render: (value) => {
-        return formatNumber(Number(value));
+        return value ? value : '-';
       },
     },
     {

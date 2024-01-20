@@ -509,16 +509,12 @@ const CardMain = ({
             label={translatePricingSea('transitTimeSeaPricing_form.title')}
             name="transitTimeSeaPricing"
           >
-            <InputNumber
+            <Input
               style={{ width: '100%' }}
               placeholder={translatePricingSea(
                 'transitTimeSeaPricing_form.placeholder'
               )}
-              min={0}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
         </Col>

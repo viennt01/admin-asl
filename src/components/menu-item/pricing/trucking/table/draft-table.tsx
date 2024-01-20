@@ -16,7 +16,7 @@ import {
 } from '@/components/commons/table/table-default';
 import { STATUS_ALL_COLORS, STATUS_ALL_LABELS } from '@/constant/form';
 import { ProColumns } from '@ant-design/pro-components';
-import { formatDate, formatNumber } from '@/utils/format';
+import { formatDate } from '@/utils/format';
 import COLORS from '@/constant/color';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constant/message';
@@ -252,7 +252,7 @@ const DraftTable = ({ handleIdQuery }: PortFormProps) => {
       key: 'transitTimeSeaPricing',
       align: 'right',
       render: (value) => {
-        return formatNumber(Number(value));
+        return value ? value : '-';
       },
     },
     {

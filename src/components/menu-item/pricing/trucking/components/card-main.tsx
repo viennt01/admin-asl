@@ -12,7 +12,6 @@ import {
   Switch,
   FormInstance,
   Tag,
-  InputNumber,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -38,7 +37,6 @@ import { TYPE_FEE_GROUP } from '@/components/menu-item/quotation/fee-group/inter
 import { getAllLocation } from '../../sea/fetcher';
 import { TYPE_LOCATION } from '../../sea/interface';
 import { DAY_WEEK } from '@/constant';
-import { formatNumber } from '@/utils/format';
 
 interface Props {
   create?: boolean;
@@ -464,16 +462,12 @@ const CardMain = ({
             label={translatePricingTrucking('transitTimeSeaPricing_form.title')}
             name="transitTimeSeaPricing"
           >
-            <InputNumber
+            <Input
               style={{ width: '100%' }}
               placeholder={translatePricingTrucking(
                 'transitTimeSeaPricing_form.placeholder'
               )}
-              min={0}
               disabled={checkRow && isCheckPermissionEdit}
-              formatter={(value) => formatNumber(Number(value) || '0')}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              parser={(value: any) => value.replace(/\$\s?|(,*)/g, '')}
             />
           </Form.Item>
         </Col>
