@@ -33,7 +33,7 @@ export default function Booking() {
           {
             label: (
               <Badge
-                count={GetTitleNotificationTab(userInfo?.totalBookingPending)}
+                count={GetTitleNotificationTab(userInfo?.totalBookingRequest)}
                 style={{
                   marginRight: '-4px',
                   marginTop: '-2px',

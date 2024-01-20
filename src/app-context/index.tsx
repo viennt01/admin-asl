@@ -72,6 +72,7 @@ export const INITIAL_VALUE_USER_INFO = {
   totalTypeFee: '', //
   totalTypeOfLoadCapacity: '', //
   totalTypeUnit: '', //
+  totalBookingRequest: '',
 };
 export const INITIAL_VALUE_NOTIFICATION = {
   totalNotification: '0',

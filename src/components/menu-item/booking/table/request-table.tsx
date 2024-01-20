@@ -26,7 +26,6 @@ import {
   updateStatusBooking,
 } from '../fetcher';
 import { errorToast, successToast } from '@/hook/toast';
-import { API_MESSAGE } from '@/constant/message';
 import COLORS from '@/constant/color';
 import { API_USER } from '@/fetcherAxios/endpoint';
 import { getUserInfo } from '@/layout/fetcher';
@@ -400,16 +399,16 @@ export default function RequestTable() {
     updateMutation.mutate(_requestData, {
       onSuccess: (data) => {
         data.status
-          ? (successToast(data.message),
+          ? (successToast('Status update successful'),
             setSelectedRowKeys([]),
             queryClient.invalidateQueries({
               queryKey: [TYPE_TABS.GET_HISTORY_BOOKING_BY_ASL_REQUEST],
             }),
             checkUser.refetch())
-          : errorToast(data.message);
+          : errorToast('Status update successful');
       },
       onError() {
-        errorToast(API_MESSAGE.ERROR);
+        errorToast('Status update successful');
       },
     });
   };

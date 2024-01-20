@@ -70,6 +70,7 @@ export interface UserInfo {
   totalTypeFee: string;
   totalTypeOfLoadCapacity: string;
   totalTypeUnit: string;
+  totalBookingRequest: string;
 }
 
 export const getUserInfo = () => {

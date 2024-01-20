@@ -433,7 +433,7 @@ const AppSider = ({ collapsed }: Props) => {
           `${translateCommon('booking')}`,
           ROUTERS.BOOKING,
           <Badge
-            dot={Number(userInfo?.totalBookingPending) > 0}
+            dot={Number(userInfo?.totalBookingRequest) > 0}
             style={{
               marginTop: '4px',
             }}
