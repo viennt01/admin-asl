@@ -144,7 +144,7 @@ const UnitProfit: React.FC<ImportModalProps> = ({
   // get container type
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ type: TYPE_UNIT.SEA }),
+    queryFn: () => getListTypeUnit({ type: TYPE_UNIT.AIR }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
